@@ -1,0 +1,31 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlatformSpecific/Unity/UnityHttpClient.cs">
+    <Files>
+      <File FileName="Assets/TestNewCloudBuilder.cs" Line="16" Column="3" />
+      <File FileName="Assets/Scripts/HttpManager.cs" Line="24" Column="40" />
+      <File FileName="Assets/Scripts/PlatformSpecific/Unity/UnityHttpClient.cs" Line="214" Column="39" />
+      <File FileName="Assets/Scripts/CClan.cs" Line="23" Column="40" />
+      <File FileName="Assets/Scripts/CloudBuilder.cs" Line="16" Column="4" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="Assembly-CSharp" expanded="True">
+            <Node name="Scripts" expanded="True">
+              <Node name="PlatformSpecific" expanded="True">
+                <Node name="Unity" expanded="True">
+                  <Node name="UnityHttpClient.cs" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

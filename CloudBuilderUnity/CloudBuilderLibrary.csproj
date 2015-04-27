@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{ADE08701-0C47-2AF9-001B-88B23B43D081}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <BaseDirectory>Assets</BaseDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>Temp\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_0_1;UNITY_5_0;UNITY_5;ENABLE_LICENSE_RENAME;ENABLE_NEW_BUGREPORTER;ENABLE_2D_PHYSICS;ENABLE_4_6_FEATURES;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_NEW_HIERARCHY;ENABLE_PHYSICS;ENABLE_PHYSICS_PHYSX3;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_AUDIOMIXER_SUSPEND;ENABLE_NONPRO;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;UNITY_STANDALONE_OSX;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_GAMECENTER;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_MONO;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_OSX</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>Temp\bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\..\Applications\Unity\Unity.app\Contents\Frameworks\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>..\..\..\..\Applications\Unity\Unity.app\Contents\Frameworks\Managed\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Scripts\CClan.cs" />
+    <Compile Include="Assets\Scripts\CloudBuilder.cs" />
+    <Compile Include="Assets\Scripts\LitJson\IJsonWrapper.cs" />
+    <Compile Include="Assets\Scripts\LitJson\JsonData.cs" />
+    <Compile Include="Assets\Scripts\LitJson\JsonException.cs" />
+    <Compile Include="Assets\Scripts\LitJson\JsonMapper.cs" />
+    <Compile Include="Assets\Scripts\LitJson\JsonReader.cs" />
+    <Compile Include="Assets\Scripts\LitJson\JsonWriter.cs" />
+    <Compile Include="Assets\Scripts\LitJson\Lexer.cs" />
+    <Compile Include="Assets\Scripts\LitJson\ParserToken.cs" />
+    <Compile Include="Assets\Scripts\PlatformSpecific\Interfaces\IHttpClient.cs" />
+    <Compile Include="Assets\Scripts\PlatformSpecific\Interfaces\ILogger.cs" />
+    <Compile Include="Assets\Scripts\PlatformSpecific\Unity\UnityHttpClient.cs" />
+    <Compile Include="Assets\Scripts\PlatformSpecific\Unity\UnityLogger.cs" />
+    <Compile Include="Assets\TestNewCloudBuilder.cs" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-pt\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-zh-rTW\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-nb\values.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\values-mdpi\dimens.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_placepickerfragment.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-ko\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-tr\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-en-rIN\values.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_picker_list_section_header.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-ru\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-hr\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-fr-rCA\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-cs\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-zh-rHK\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-hi\values.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\values-hdpi\dimens.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-nb\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-ar\values.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_picker_image.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-pt-rPT\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-sw\strings.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_picker_list_selector.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-it\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-pt\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-ar\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-es\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-hr\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-de\values.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\values-es\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\README.txt" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-lo-rLA\values.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\values\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-et\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-hi\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-et\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\incremental\mergeAssets\debug\merger.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values\colors.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-zu\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\drawable\common_signin_btn_text_dark.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_picker_activity_circle_row.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\proguard.txt" />
+    <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_usersettingsfragment.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-pt-rBR\values.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_loginbutton_silver.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_search_bar_layout.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_picker_search_box.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-hy-rAM\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-uk\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-mn-rMN\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-hu\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-lt\strings.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_placepickerfragment_list_row.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-ro\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-bg\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\color\common_signin_btn_text_dark.xml" />
+    <None Include="Assets\Plugins\Android\facebook\bin\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-zh-rHK\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-ar\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\incremental\packageResources\release\merger.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-en-rGB\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-sk\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-fa\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\R.txt" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\drawable\common_signin_btn_text_dark.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\values\drawables.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-hy-rAM\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-fr-rCA\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-da\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-ms\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-de\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-sv\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-et-rEE\strings.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\values\styles.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-ms\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-zh-rCN\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-pl\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-am\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-de\values.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_picker_list_selector_background_transition.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-ca\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-zh-rCN\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-sl\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-am\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-pt-rBR\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-nl\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values\ads_attrs.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-fi\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-fr\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-km-rKH\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\bin\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-ja\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-et-rEE\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-sl\strings.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_picker_checkbox.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-ms\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\drawable\common_signin_btn_icon_dark.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-bg\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-in\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\drawable\common_signin_btn_icon_dark.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-zu\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\drawable\common_signin_btn_text_light.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\outputs\lint-results.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values\version.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-km-rKH\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-sl\values.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\values-iw\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-es-rUS\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-pt-rBR\values.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_tooltip_bubble.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-tr\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\drawable\common_signin_btn_text_light.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-mn-rMN\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-sw\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-ms-rMY\values.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\values\colors.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-sv\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-tl\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-ru\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-pl\values.xml" />
+    <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-el\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\color\common_signin_btn_text_light.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-mn-rMN\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-be\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-in\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-lv\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-el\strings.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_button_like.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-bg\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-lt\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-hu\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\incremental\packageResources\debug\merger.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-et-rEE\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-en-rIN\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-th\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\color\common_signin_btn_text_dark.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-af\strings.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_button_check.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-ca\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\drawable\common_signin_btn_icon_light.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-fr-rCA\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-nb\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-tl\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-be\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-ka-rGE\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-hi\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\R.txt" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-fa\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-cs\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-da\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-et\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-ka-rGE\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\drawable\common_signin_btn_text_dark.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-zh-rCN\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-zu\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-sr\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-es\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\drawable\common_signin_btn_icon_light.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-ja\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-ms-rMY\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\color\common_signin_btn_text_light.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_button_blue.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-th\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-tr\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-fi\strings.xml" />
+    <None Include="Assets\Plugins\Android\res\values\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-hr\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-cs\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-da\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-en-rIN\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-ka-rGE\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-ru\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-ro\strings.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_friendpickerfragment.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-iw\strings.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_picker_item_background.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-tl\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-sk\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-uk\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-af\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-sw\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-vi\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-hy-rAM\values.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_button_like_selected.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-iw\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-pt-rPT\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-pt-rPT\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-zh-rTW\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-lt\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-en-rGB\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-fa\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-nl\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-ca\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-es\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-el\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-es-rUS\values.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\values-he\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-uk\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-it\values.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\values-ldpi\dimens.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_top_button.xml" />
+    <None Include="Assets\Plugins\Android\facebook\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-in\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-ms-rMY\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-fr\strings.xml" />
+    <None Include="Assets\Plugins\Android\facebook\build.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-fi\values.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_picker_list_row.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-ko\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-ko\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\incremental\mergeAssets\release\merger.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_picker_title_bar.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-af\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\bin\R.txt" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-vi\values.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_usersettingsfragment_background_gradient.xml" />
+    <None Include="Assets\Plugins\Android\facebook\bin\R.txt" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-fr\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-sv\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-zh-rTW\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-be\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-zh-rHK\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-ja\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values\maps_attrs.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-es-rUS\strings.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\values-xhdpi\dimens.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_top_background.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-lo-rLA\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-iw\values.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\values\attrs.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-pt\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-lo-rLA\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-sr\strings.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_picker_top_button.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-km-rKH\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\color\common_signin_btn_text_light.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-th\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\drawable\common_signin_btn_icon_light.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\drawable\common_signin_btn_text_light.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-vi\values.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_picker_title_bar_stub.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-sr\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\color\common_signin_btn_text_dark.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-ro\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-en-rGB\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-lv\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-lv\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-it\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\drawable\common_signin_btn_icon_dark.xml" />
+    <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_login_activity_layout.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-am\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-pl\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-nl\strings.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\release\res\values-hu\values.xml" />
+    <None Include="Assets\Plugins\Android\google-play-services_lib\build\intermediates\bundles\debug\res\values-sk\values.xml" />
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\..\..\..\Applications\Unity\Unity.app\Contents\UnityExtensions\Unity\GUISystem\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>..\..\..\..\Applications\Unity\Unity.app\Contents\PlaybackEngines\iossupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Compile Include="Assets\Scripts\HttpManager.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	   Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
