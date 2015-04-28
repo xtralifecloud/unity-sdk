@@ -48,17 +48,16 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\HighLevel\CClan.cs" />
      <Compile Include="Assets\Scripts\HighLevel\CloudBuilder.cs" />
+     <Compile Include="Assets\Scripts\Internal\Bundle.cs" />
      <Compile Include="Assets\Scripts\Internal\HttpManager.cs" />
-     <Compile Include="Assets\Scripts\Internal\Json.cs" />
-     <Compile Include="Assets\Scripts\LitJson\IJsonWrapper.cs" />
-     <Compile Include="Assets\Scripts\LitJson\JsonData.cs" />
-     <Compile Include="Assets\Scripts\LitJson\JsonException.cs" />
-     <Compile Include="Assets\Scripts\LitJson\JsonMapper.cs" />
-     <Compile Include="Assets\Scripts\LitJson\JsonMockWrapper.cs" />
-     <Compile Include="Assets\Scripts\LitJson\JsonReader.cs" />
-     <Compile Include="Assets\Scripts\LitJson\JsonWriter.cs" />
-     <Compile Include="Assets\Scripts\LitJson\Lexer.cs" />
-     <Compile Include="Assets\Scripts\LitJson\ParserToken.cs" />
+     <Compile Include="Assets\Scripts\Libs\LitJson\IJsonWrapper.cs" />
+     <Compile Include="Assets\Scripts\Libs\LitJson\JsonData.cs" />
+     <Compile Include="Assets\Scripts\Libs\LitJson\JsonException.cs" />
+     <Compile Include="Assets\Scripts\Libs\LitJson\JsonMapper.cs" />
+     <Compile Include="Assets\Scripts\Libs\LitJson\JsonReader.cs" />
+     <Compile Include="Assets\Scripts\Libs\LitJson\JsonWriter.cs" />
+     <Compile Include="Assets\Scripts\Libs\LitJson\Lexer.cs" />
+     <Compile Include="Assets\Scripts\Libs\LitJson\ParserToken.cs" />
      <Compile Include="Assets\Scripts\PlatformSpecific\Interfaces\IHttpClient.cs" />
      <Compile Include="Assets\Scripts\PlatformSpecific\Interfaces\ILogger.cs" />
      <Compile Include="Assets\Scripts\PlatformSpecific\Interfaces\ISystemFunctions.cs" />

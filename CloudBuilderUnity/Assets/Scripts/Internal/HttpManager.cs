@@ -9,7 +9,6 @@
 // ------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
-using LitJson;
 
 namespace CloudBuilderLibrary {
 
@@ -24,8 +23,8 @@ namespace CloudBuilderLibrary {
 			get { return body; }
 			set { body = value; }
 		}
-		public JsonData BodyJson {
-			set { body = JsonMapper.ToJson(value); }
+		public Bundle BodyJson {
+			set { body = value.ToJson(); }
 		}
 		public Action<HttpResponse> Callback;
 		public bool HasBody {
@@ -46,7 +45,10 @@ namespace CloudBuilderLibrary {
 	public class HttpResponse {
 		public string BodyString {
 			get { return body; }
-			set { body = value; }
+			set { body = value; cachedBundle = null; }
+		}
+		public Bundle BodyJson {
+			get { cachedBundle = cachedBundle?? Bundle.FromJson(body); return cachedBundle; }
 		}
 		public Exception Exception;
 		public bool HasBody {
@@ -75,6 +77,7 @@ namespace CloudBuilderLibrary {
 		public HttpResponse(Exception e) { Exception = e; }
 
 		private string body;
+		private Bundle cachedBundle;
 	}
 
 	public class HttpTimeoutException: Exception {
