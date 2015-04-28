@@ -22,6 +22,7 @@ namespace CloudBuilderLibrary {
 			apiSecret = configuration.GetString("secret");
 			// TODO support predefined constants
 			server = configuration.GetString("env");
+			LoadBalancerCount = 2;
 			if (apiKey == null || apiSecret == null) {
 				throw new ArgumentException("key, secret required");
 			}
@@ -59,7 +60,7 @@ namespace CloudBuilderLibrary {
 
 		#region Members
 		private string apiKey, apiSecret, sdkVersion, server;
-		public int LoadBalancerCount = 2;
+		public int LoadBalancerCount;
 		public long HttpTimeoutMillis;
 		#endregion
 	}
