@@ -1,24 +1,28 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlatformSpecific/Unity/UnityHttpClient.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/TestNewCloudBuilder.cs">
     <Files>
-      <File FileName="Assets/TestNewCloudBuilder.cs" Line="16" Column="3" />
-      <File FileName="Assets/Scripts/HttpManager.cs" Line="24" Column="40" />
-      <File FileName="Assets/Scripts/PlatformSpecific/Unity/UnityHttpClient.cs" Line="214" Column="39" />
-      <File FileName="Assets/Scripts/CClan.cs" Line="23" Column="40" />
-      <File FileName="Assets/Scripts/CloudBuilder.cs" Line="16" Column="4" />
+      <File FileName="Assets/TestNewCloudBuilder.cs" Line="30" Column="1" />
+      <File FileName="Assets/Scripts/CloudBuilder.cs" Line="35" Column="1" />
+      <File FileName="Assets/Scripts/PlatformSpecific/Unity/UnityHttpClient.cs" Line="134" Column="1" />
+      <File FileName="Assets/Scripts/CClan.cs" Line="30" Column="1" />
+      <File FileName="Assets/Scripts/HttpManager.cs" Line="35" Column="1" />
+      <File FileName="Assets/Scripts/PlatformSpecific/Interfaces/IHttpClient.cs" Line="21" Column="1" />
+      <File FileName="Assets/Scripts/Json.cs" Line="29" Column="1" />
+      <File FileName="Assets/Scripts/LitJson/JsonData.cs" Line="32" Column="52" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="Scripts" expanded="True">
+              <Node name="LitJson" expanded="True" />
               <Node name="PlatformSpecific" expanded="True">
-                <Node name="Unity" expanded="True">
-                  <Node name="UnityHttpClient.cs" selected="True" />
-                </Node>
+                <Node name="Interfaces" expanded="True" />
+                <Node name="Unity" expanded="True" />
               </Node>
             </Node>
+            <Node name="TestNewCloudBuilder.cs" selected="True" />
           </Node>
         </State>
       </Pad>

@@ -418,30 +418,33 @@ namespace LitJson
 
         public static explicit operator Double (JsonData data)
         {
-            if (data.type != JsonType.Double)
-                throw new InvalidCastException (
-                    "Instance of JsonData doesn't hold a double");
-
-            return data.inst_double;
-        }
+			switch (data.type) {
+			case JsonType.Double: return data.inst_double;
+			case JsonType.Int: return data.inst_int;
+			case JsonType.Long: return data.inst_long;
+			}
+			throw new InvalidCastException ("Instance of JsonData doesn't hold a number");
+		}
 
         public static explicit operator Int32 (JsonData data)
         {
-            if (data.type != JsonType.Int)
-                throw new InvalidCastException (
-                    "Instance of JsonData doesn't hold an int");
-
-            return data.inst_int;
-        }
+			switch (data.type) {
+			case JsonType.Double: return (Int32) data.inst_double;
+			case JsonType.Int: return data.inst_int;
+			case JsonType.Long: return (Int32) data.inst_long;
+			}
+			throw new InvalidCastException ("Instance of JsonData doesn't hold a number");
+		}
 
         public static explicit operator Int64 (JsonData data)
         {
-            if (data.type != JsonType.Long)
-                throw new InvalidCastException (
-                    "Instance of JsonData doesn't hold an int");
-
-            return data.inst_long;
-        }
+			switch (data.type) {
+			case JsonType.Double: return (Int64) data.inst_double;
+			case JsonType.Int: return data.inst_int;
+			case JsonType.Long: return data.inst_long;
+			}
+			throw new InvalidCastException ("Instance of JsonData doesn't hold a number");
+		}
 
         public static explicit operator String (JsonData data)
         {
@@ -520,47 +523,27 @@ namespace LitJson
         #region IJsonWrapper Methods
         bool IJsonWrapper.GetBoolean ()
         {
-            if (type != JsonType.Boolean)
-                throw new InvalidOperationException (
-                    "JsonData instance doesn't hold a boolean");
-
-            return inst_boolean;
+			return (bool) this;
         }
 
         double IJsonWrapper.GetDouble ()
         {
-            if (type != JsonType.Double)
-                throw new InvalidOperationException (
-                    "JsonData instance doesn't hold a double");
-
-            return inst_double;
+			return (double) this;
         }
 
         int IJsonWrapper.GetInt ()
         {
-            if (type != JsonType.Int)
-                throw new InvalidOperationException (
-                    "JsonData instance doesn't hold an int");
-
-            return inst_int;
+			return (int) this;
         }
 
         long IJsonWrapper.GetLong ()
         {
-            if (type != JsonType.Long)
-                throw new InvalidOperationException (
-                    "JsonData instance doesn't hold a long");
-
-            return inst_long;
+			return (long) this;
         }
 
         string IJsonWrapper.GetString ()
         {
-            if (type != JsonType.String)
-                throw new InvalidOperationException (
-                    "JsonData instance doesn't hold a string");
-
-            return inst_string;
+			return (string) this;
         }
 
         void IJsonWrapper.SetBoolean (bool val)

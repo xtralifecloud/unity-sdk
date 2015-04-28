@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Threading;
 
 namespace CloudBuilderLibrary {
 	public class CloudBuilder {
@@ -26,13 +27,17 @@ namespace CloudBuilderLibrary {
 		public static void Log(LogLevel level, string text) {
 			loggerInstance.Log(level, text);
 		}
+		public static void TEMP(string text) {
+			// All references to this should be removed at some point
+			loggerInstance.Log (LogLevel.Verbose, text);
+		}
 		public static void StartLogTime(string description = null) {
 			initialTicks = DateTime.UtcNow.Ticks;
 			LogTime(description);
 		}
 		public static void LogTime(string description = null) {
 			TimeSpan span = new TimeSpan(DateTime.UtcNow.Ticks - initialTicks);
-			loggerInstance.Log(LogLevel.Verbose, "[" + span.TotalMilliseconds  + "] " + description);
+			loggerInstance.Log(LogLevel.Verbose, "[" + span.TotalMilliseconds  + "/" + Thread.CurrentThread.ManagedThreadId + "] " + description);
 		}
 
 		#region Internal stuff

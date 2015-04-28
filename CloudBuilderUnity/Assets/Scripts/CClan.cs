@@ -27,6 +27,7 @@ namespace CloudBuilderLibrary {
 			}
 
 			CloudBuilder.HttpClient.VerboseMode = configuration.GetBool("httpVerbose");
+			HttpTimeoutMillis = configuration.GetLong("httpTimeout", 60 * 1000);
 			sdkVersion = configuration.GetString("sdkVersion");
 		}
 
@@ -36,8 +37,11 @@ namespace CloudBuilderLibrary {
 
 			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/login/anonymous");
 			req.BodyJson = config;
-			req.Callback = (HttpResponse response, Exception exception) => {
-				CloudBuilder.Log(LogLevel.Verbose, "Request done with " + response.BodyString + ", " + exception);
+			req.Callback = (HttpResponse response) => {
+				if (response.HasFailed)
+					CloudBuilder.Log("Failed");
+				else
+					CloudBuilder.Log(LogLevel.Verbose, "Request done with " + response.BodyString + ", " + response.StatusCode);
 			};
 			CloudBuilder.HttpClient.Run(req);
 		}
@@ -45,7 +49,6 @@ namespace CloudBuilderLibrary {
 		#region Private
 		private HttpRequest MakeUnauthenticatedHttpRequest(string path) {
 			HttpRequest result = new HttpRequest();
-			// TODO
 			result.Url = server + path;
 			result.Headers["x-apikey"] = apiKey;
 			result.Headers["x-sdkversion"] = sdkVersion;
@@ -56,6 +59,8 @@ namespace CloudBuilderLibrary {
 
 		#region Members
 		private string apiKey, apiSecret, sdkVersion, server;
+		public int LoadBalancerCount = 2;
+		public long HttpTimeoutMillis;
 		#endregion
 	}
 }
