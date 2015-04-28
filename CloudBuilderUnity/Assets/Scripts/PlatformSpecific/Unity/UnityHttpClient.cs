@@ -81,6 +81,8 @@ namespace CloudBuilderLibrary
 		private void FinishWithRequest(HttpRequest request, HttpResponse response) {
 			// IDEA This function could probably be moved to another file with a little gymnastic…
 			HttpRequest nextReq;
+			// Avoid timeout to be triggered after that
+			allDone.Set();
 			// Has failed?
 			if (response.ShouldBeRetried(request))  {
 				// Will try again
@@ -292,4 +294,3 @@ namespace CloudBuilderLibrary
 		#endregion
 	}
 }
-
