@@ -38,9 +38,9 @@ namespace CloudBuilderLibrary {
 			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/login/anonymous");
 			req.BodyJson = config;
 			req.Callback = (HttpResponse response) => {
-				if (response.HasFailed)
+				if (response.HasFailed) {
 					CloudBuilder.Log("Failed");
-				else {
+				} else {
 					CloudBuilder.Log(LogLevel.Verbose, "Request done with " + response.BodyJson.GetString("gamer_id") + ", " + response.StatusCode);
 				}
 			};
@@ -48,7 +48,7 @@ namespace CloudBuilderLibrary {
 		}
 
 		#region Private
-		private HttpRequest MakeUnauthenticatedHttpRequest(string path) {
+		internal HttpRequest MakeUnauthenticatedHttpRequest(string path) {
 			HttpRequest result = new HttpRequest();
 			result.Url = server + path;
 			result.Headers["x-apikey"] = apiKey;
@@ -62,6 +62,7 @@ namespace CloudBuilderLibrary {
 		private string apiKey, apiSecret, sdkVersion, server;
 		public int LoadBalancerCount;
 		public long HttpTimeoutMillis;
+		public string UserAgent = "TEMP-TODO-UA";
 		#endregion
 	}
 }

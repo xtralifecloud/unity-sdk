@@ -10,18 +10,9 @@
 using System;
 using System.Collections.Generic;
 
+namespace CloudBuilderLibrary {
 
-namespace CloudBuilderLibrary
-{
-	/**
-	 * Platform-specific HTTP client.
-	 */
-	public interface IHttpClient
-	{
-		bool VerboseMode { get; set; }
 
-		void Run(HttpRequest request);
-		HttpResponse RunSynchronously(HttpRequest request);
-	}
+
 }
 
