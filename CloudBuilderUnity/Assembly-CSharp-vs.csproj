@@ -55,6 +55,7 @@
      <Compile Include="Assets\Scripts\Internal\HttpRequest.cs" />
      <Compile Include="Assets\Scripts\Internal\HttpResponse.cs" />
      <Compile Include="Assets\Scripts\Internal\HttpTimeoutException.cs" />
+     <Compile Include="Assets\Scripts\Internal\UrlBuilder.cs" />
      <Compile Include="Assets\Scripts\Internal\UserManager.cs" />
      <Compile Include="Assets\Scripts\Libs\LitJson\IJsonWrapper.cs" />
      <Compile Include="Assets\Scripts\Libs\LitJson\JsonData.cs" />

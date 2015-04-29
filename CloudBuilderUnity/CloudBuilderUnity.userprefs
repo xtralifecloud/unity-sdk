@@ -1,29 +1,32 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Internal/UserManager.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/HighLevel/CloudBuilder.cs">
     <Files>
-      <File FileName="Assets/TestNewCloudBuilder.cs" Line="16" Column="34" />
-      <File FileName="Assets/Scripts/PlatformSpecific/Unity/UnityHttpClient.cs" Line="16" Column="10" />
-      <File FileName="Assets/Scripts/HighLevel/Clan.cs" Line="31" Column="17" />
-      <File FileName="Assets/Scripts/HighLevel/CloudBuilder.cs" Line="38" Column="11" />
-      <File FileName="Assets/Scripts/Internal/HttpManager.cs" Line="29" Column="57" />
-      <File FileName="Assets/Scripts/Internal/UserManager.cs" Line="18" Column="4" />
-      <File FileName="Assets/Scripts/PlatformSpecific/Interfaces/IHttpClient.cs" Line="17" Column="2" />
-      <File FileName="Assets/Scripts/PlatformSpecific/Interfaces/ILogger.cs" Line="5" Column="10" />
-      <File FileName="Assets/Scripts/PlatformSpecific/Interfaces/ISystemFunctions.cs" Line="5" Column="10" />
-      <File FileName="Assets/Scripts/PlatformSpecific/Unity/UnityLogger.cs" Line="6" Column="10" />
-      <File FileName="Assets/Scripts/PlatformSpecific/Unity/UnitySystemFunctions.cs" Line="6" Column="10" />
-      <File FileName="Assets/Scripts/HighLevel/Bundle.cs" Line="157" Column="25" />
+      <File FileName="Assets/TestNewCloudBuilder.cs" Line="15" Column="32" />
+      <File FileName="Assets/Scripts/PlatformSpecific/Unity/UnityHttpClient.cs" Line="187" Column="1" />
+      <File FileName="Assets/Scripts/HighLevel/Clan.cs" Line="80" Column="4" />
+      <File FileName="Assets/Scripts/HighLevel/CloudBuilder.cs" Line="24" Column="42" />
+      <File FileName="Assets/Scripts/Internal/UserManager.cs" Line="20" Column="61" />
+      <File FileName="Assets/Scripts/PlatformSpecific/Interfaces/IHttpClient.cs" Line="14" Column="34" />
+      <File FileName="Assets/Scripts/PlatformSpecific/Interfaces/ILogger.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PlatformSpecific/Interfaces/ISystemFunctions.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PlatformSpecific/Unity/UnityLogger.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PlatformSpecific/Unity/UnitySystemFunctions.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/HighLevel/Bundle.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Internal/HttpRequest.cs" Line="26" Column="6" />
+      <File FileName="Assets/Scripts/HighLevel/ErrorCode.cs" Line="132" Column="12" />
+      <File FileName="Assets/Scripts/HighLevel/CloudResult.cs" Line="35" Column="38" />
+      <File FileName="Assets/Scripts/Internal/UrlBuilder.cs" Line="27" Column="16" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="Scripts" expanded="True">
-              <Node name="HighLevel" expanded="True" />
-              <Node name="Internal" expanded="True">
-                <Node name="UserManager.cs" selected="True" />
+              <Node name="HighLevel" expanded="True">
+                <Node name="CloudBuilder.cs" selected="True" />
               </Node>
+              <Node name="Internal" expanded="True" />
               <Node name="PlatformSpecific" expanded="True">
                 <Node name="Interfaces" expanded="True" />
                 <Node name="Unity" expanded="True" />
