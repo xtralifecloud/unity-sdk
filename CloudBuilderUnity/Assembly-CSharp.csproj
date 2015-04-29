@@ -45,10 +45,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\HighLevel\CClan.cs" />
+    <Compile Include="Assets\Scripts\HighLevel\Bundle.cs" />
+    <Compile Include="Assets\Scripts\HighLevel\Clan.cs" />
     <Compile Include="Assets\Scripts\HighLevel\CloudBuilder.cs" />
-    <Compile Include="Assets\Scripts\Internal\Bundle.cs" />
-    <Compile Include="Assets\Scripts\Internal\HttpManager.cs" />
+    <Compile Include="Assets\Scripts\HighLevel\CloudResult.cs" />
+    <Compile Include="Assets\Scripts\HighLevel\Common.cs" />
+    <Compile Include="Assets\Scripts\HighLevel\ErrorCode.cs" />
+    <Compile Include="Assets\Scripts\Internal\HttpRequest.cs" />
+    <Compile Include="Assets\Scripts\Internal\HttpResponse.cs" />
+    <Compile Include="Assets\Scripts\Internal\HttpTimeoutException.cs" />
+    <Compile Include="Assets\Scripts\Internal\UserManager.cs" />
     <Compile Include="Assets\Scripts\Libs\LitJson\IJsonWrapper.cs" />
     <Compile Include="Assets\Scripts\Libs\LitJson\JsonData.cs" />
     <Compile Include="Assets\Scripts\Libs\LitJson\JsonException.cs" />
@@ -70,7 +76,7 @@
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>..\..\..\..\..\..\Applications\Unity\Unity.app\Contents\PlaybackEngines\iossupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
     </Reference>
-    <Compile Include="Assets\Scripts\Internal\UserManager.cs" />
+    <Compile Include="Assets\Scripts\Internal\UrlBuilder.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

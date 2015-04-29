@@ -14,7 +14,9 @@ public class TestNewCloudBuilder : MonoBehaviour {
 		config["env"] = "https://sandbox-api[id].clanofthecloud.mobi";
 		config["httpVerbose"] = true;
 //		config["httpTimeout"] = 2000;
-		CloudBuilder.Clan.Setup(config);
+		CloudBuilder.Clan.Setup(delegate(CloudResult result) {
+			Debug.Log("Done: " + result.ToString());
+		}, config);
 	}
 	
 	// Update is called once per frame
@@ -23,6 +25,14 @@ public class TestNewCloudBuilder : MonoBehaviour {
 	}
 
 	public void DoLogin() {
-		CloudBuilder.Clan.LoginAnonymous();
+		CloudBuilder.Clan.LoginAnonymous(delegate(CloudResult result) {
+			Debug.Log("Login done: " + result.ToString());
+        }, Bundle.Empty);
     }
+
+	public void DoGetProfile() {
+		CloudBuilder.Clan.TEMP_GetUserProfile(delegate(CloudResult result) {
+			Debug.Log("Get profile done: " + result.ToString());
+		}, Bundle.Empty);
+	}
 }
