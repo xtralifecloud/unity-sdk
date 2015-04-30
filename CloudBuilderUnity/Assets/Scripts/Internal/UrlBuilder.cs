@@ -5,32 +5,36 @@ namespace CloudBuilderLibrary {
 
 	internal class UrlBuilder {
 		public UrlBuilder(string path, string server = null) {
-			url = server ?? "";
+			Url = server ?? "";
 		}
 
 		public UrlBuilder Subpath(string path) {
-			if (url.Length > 0 && url[url.Length - 1] != '/') {
-				url += '/';
+			if (Url.Length > 0 && Url[Url.Length - 1] != '/') {
+				Url += '/';
 			}
 			// Skip leading slash
-			if (path[0] == '/') url += path.Substring(1);
-			else url += path;
+			if (path[0] == '/') Url += path.Substring(1);
+			else Url += path;
 			return this;
 		}
 
 		public UrlBuilder QueryParam(string name, string value = null) {
-			url += url.Contains('?') ? '&' : '?';
-			url += name;
+			Url += Url.Contains("?") ? '&' : '?';
+			Url += name;
 			if (value != null) {
-				url += '=' + value;
+				Url += '=' + value;
 			}
 			return this;
 		}
 
-		public string Url {
-			get { return url; }
+		public UrlBuilder QueryParam(string name, int value) {
+			return QueryParam(name, value.ToString());
 		}
 
-		private string url;
+		public static implicit operator string(UrlBuilder b) {
+			return b.Url;
+		}
+
+		private string Url;
 	}
 }

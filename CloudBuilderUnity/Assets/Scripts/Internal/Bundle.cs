@@ -40,6 +40,11 @@ namespace CloudBuilderLibrary
         public static implicit operator Bundle(long value) { return new Bundle(value); }
         public static implicit operator Bundle(double value) { return new Bundle(value); }
         public static implicit operator Bundle(string value) { return new Bundle(value); }
+		public static implicit operator bool(Bundle b) { return b.AsBool(); }
+		public static implicit operator int(Bundle b) { return b.AsInt(); }
+		public static implicit operator long(Bundle b) { return b.AsLong(); }
+		public static implicit operator double(Bundle b) { return b.AsDouble(); }
+		public static implicit operator string(Bundle b) { return b.AsString(); }
 
         public virtual Bundle this [string key] {
             get { return Has(key) ? Dictionary[key] : Empty; }

@@ -4,15 +4,15 @@ using System.Collections.Generic;
 namespace CloudBuilderLibrary {
 	internal class HttpResponse {
 		public string BodyString {
-			get { return body; }
-			set { body = value; cachedBundle = null; }
+			get { return Body; }
+			set { Body = value; CachedBundle = null; }
 		}
 		public Bundle BodyJson {
-			get { cachedBundle = cachedBundle?? Bundle.FromJson(body); return cachedBundle; }
+			get { CachedBundle = CachedBundle?? Bundle.FromJson(Body); return CachedBundle; }
 		}
 		public Exception Exception;
 		public bool HasBody {
-			get { return body != null; }
+			get { return Body != null; }
 		}
 		public bool HasFailed {
 			get { return Exception != null; }
@@ -35,8 +35,8 @@ namespace CloudBuilderLibrary {
 		public HttpResponse() {}
 		public HttpResponse(Exception e) { Exception = e; }
 
-		private string body;
-		private Bundle cachedBundle;
+		private string Body;
+		private Bundle CachedBundle;
 	}
 }
 

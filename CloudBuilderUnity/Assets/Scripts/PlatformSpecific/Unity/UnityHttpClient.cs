@@ -12,15 +12,15 @@ namespace CloudBuilderLibrary
 	internal class UnityHttpClient: IHttpClient {
 		#region IHttpClient implementation
 		void IHttpClient.Run(HttpRequest request, Action<HttpResponse> callback) {
-			request.callback = callback;
+			request.Callback = callback;
 			EnqueueRequest(request);
         }
 
 		HttpResponse IHttpClient.RunSynchronously(HttpRequest request) {
 			// If the previous request failed, use the last delay directly (avoid retrying too many times)
-			int retryCount = lastRequestFailed ? request.TimeBetweenTries.Length - 1 : 0;
+			int retryCount = LastRequestFailed ? request.TimeBetweenTries.Length - 1 : 0;
 			HttpResponse[] responsePointer = new HttpResponse[1];
-			synchronousRequestLock.Reset();
+			SynchronousRequestLock.Reset();
 			// We'll use the asynchronous functions but set up a lock to get the response back
 			ProcessRequest(request, delegate(RequestState state, HttpResponse response) {
 				// Failed request
@@ -39,23 +39,23 @@ namespace CloudBuilderLibrary
 					else {
 						// Maximum failure count reached, will simply process the next request
 						CloudBuilder.Log(LogLevel.Warning, "[" + state.RequestId + "] Sync request failed too many times, giving up.");
-						lastRequestFailed = true;
+						LastRequestFailed = true;
 					}
 				}
 				else {
-					lastRequestFailed = false;
+					LastRequestFailed = false;
 				}
 				// Done
 				responsePointer[0] = response;
-				synchronousRequestLock.Set();
+				SynchronousRequestLock.Set();
 			});
-			synchronousRequestLock.WaitOne();
+			SynchronousRequestLock.WaitOne();
 			return responsePointer[0];
 		}
 
 		bool IHttpClient.VerboseMode {
-			get { return verboseMode; }
-			set { verboseMode = value; }
+			get { return VerboseMode; }
+			set { VerboseMode = value; }
 		}
 		#endregion
 
@@ -82,30 +82,30 @@ namespace CloudBuilderLibrary
 				RequestData = new StringBuilder("");
 				Request = req;
 				StreamResponse = null;
-				RequestId = (self.requestCount += 1);
+				RequestId = (self.RequestCount += 1);
 			}
 		}
 
 		private void ChooseLoadBalancer() {
-			currentLoadBalancerId = random.Next(1, CloudBuilder.Clan.LoadBalancerCount + 1);
+			CurrentLoadBalancerId = Random.Next(1, CloudBuilder.Clan.LoadBalancerCount + 1);
 		}
 
 		/** Enqueues a request to make it processed asynchronously. Will potentially wait for the other requests enqueued to finish. */
 		private void EnqueueRequest(HttpRequest req) {
 			// On the first time, choose a load balancer
-			if (currentLoadBalancerId == -1) {
+			if (CurrentLoadBalancerId == -1) {
 				ChooseLoadBalancer();
 			}
 			lock (this) {
 				// Need to enqueue process?
-				if (isProcessingRequest) {
-					pendingRequests.Add(req);
+				if (IsProcessingRequest) {
+					PendingRequests.Add(req);
 					return;
 				}
-				isProcessingRequest = true;
+				IsProcessingRequest = true;
 			}
 			// Or start immediately (if the previous request failed, use the last delay directly)
-			currentRequestTryCount = lastRequestFailed ? req.TimeBetweenTries.Length - 1 : 0;
+			CurrentRequestTryCount = LastRequestFailed ? req.TimeBetweenTries.Length - 1 : 0;
 			ProcessRequest(req);
 		}
 
@@ -114,7 +114,7 @@ namespace CloudBuilderLibrary
 			// IDEA This function could probably be moved to another file with a little gymnastic…
 			HttpRequest nextReq;
 			// Avoid timeout to be triggered after that
-			allDone.Set();
+			AllDone.Set();
 			// Prevent doing the next tasks
 			if (state.FinishRequestOverride != null) {
 				state.FinishRequestOverride(state, response);
@@ -124,35 +124,39 @@ namespace CloudBuilderLibrary
 			if (response.ShouldBeRetried(state.OriginalRequest))  {
 				// Will try again
 				int[] retryTimes = state.OriginalRequest.TimeBetweenTries;
-				if (currentRequestTryCount < retryTimes.Length) {
-					CloudBuilder.Log(LogLevel.Warning, "[" + state.RequestId + "] Request failed, retrying in " + retryTimes[currentRequestTryCount] + "ms.");
-					Thread.Sleep(retryTimes[currentRequestTryCount]);
-					currentRequestTryCount += 1;
+				if (CurrentRequestTryCount < retryTimes.Length) {
+					CloudBuilder.Log(LogLevel.Warning, "[" + state.RequestId + "] Request failed, retrying in " + retryTimes[CurrentRequestTryCount] + "ms.");
+					Thread.Sleep(retryTimes[CurrentRequestTryCount]);
+					CurrentRequestTryCount += 1;
 					ChooseLoadBalancer();
 					ProcessRequest(state.OriginalRequest);
 					return;
 				}
 				// Maximum failure count reached, will simply process the next request
 				CloudBuilder.Log(LogLevel.Warning, "[" + state.RequestId + "] Request failed too many times, giving up.");
-				lastRequestFailed = true;
+				LastRequestFailed = true;
 			}
 			else {
-				lastRequestFailed = false;
+				LastRequestFailed = false;
 			}
 			// Final result for this request
-			if (state.OriginalRequest.callback != null) {
-				state.OriginalRequest.callback(response);
+			if (state.OriginalRequest.Callback != null) {
+				try {
+					state.OriginalRequest.Callback(response);
+				} catch (Exception e) {
+					CloudBuilder.Log(LogLevel.Error, "Error happened when processing the response: " + e.ToString());
+				}
 			}
 			
 			// Process next request
 			lock (this) {
 				// Note: currently another request is only launched after synchronously processed by the callback. This behavior is slower but might be safer.
-				if (pendingRequests.Count == 0) {
-					isProcessingRequest = false;
+				if (PendingRequests.Count == 0) {
+					IsProcessingRequest = false;
 					return;
 				}
-				nextReq = pendingRequests[0];
-				pendingRequests.RemoveAt(0);
+				nextReq = PendingRequests[0];
+				PendingRequests.RemoveAt(0);
 			}
 			ProcessRequest(nextReq);
 		}
@@ -181,7 +185,7 @@ namespace CloudBuilderLibrary
 		        
         /** Prints the current request for user convenience. */
         private void LogRequest(RequestState state) {
-			if (!verboseMode) { return; }
+			if (!VerboseMode) { return; }
 
 			StringBuilder sb = new StringBuilder();
 			HttpWebRequest request = state.Request;
@@ -198,7 +202,7 @@ namespace CloudBuilderLibrary
 
 		/** Prints information about the response for debugging purposes. */
 		private void LogResponse(RequestState state, HttpResponse response) {
-			if (!verboseMode) { return; }
+			if (!VerboseMode) { return; }
 
 			StringBuilder sb = new StringBuilder();
 			HttpWebRequest req = state.Request;
@@ -215,7 +219,7 @@ namespace CloudBuilderLibrary
 
 		/** Processes a single request asynchronously. Will continue to FinishWithRequest in some way. */
 		private void ProcessRequest(HttpRequest request, Action<RequestState, HttpResponse> bypassProcessNextRequest = null) {
-			String url = request.Url.Replace("[id]", currentLoadBalancerId.ToString("00"));
+			String url = request.Url.Replace("[id]", CurrentLoadBalancerId.ToString("00"));
 			HttpWebRequest req = HttpWebRequest.Create(url) as HttpWebRequest;
 
 			// Auto choose HTTP method
@@ -230,7 +234,7 @@ namespace CloudBuilderLibrary
 			state.FinishRequestOverride = bypassProcessNextRequest;
 			LogRequest(state);
             
-			allDone.Reset();
+			AllDone.Reset();
             if (request.BodyString != null) {
 				req.BeginGetRequestStream(new AsyncCallback(GetRequestStreamCallback), state);
 			}
@@ -239,7 +243,7 @@ namespace CloudBuilderLibrary
 			}
 			// Setup timeout
 			if (request.TimeoutMillisec > 0) {
-				ThreadPool.RegisterWaitForSingleObject(allDone, new WaitOrTimerCallback(TimeoutCallback), state, request.TimeoutMillisec, true);
+				ThreadPool.RegisterWaitForSingleObject(AllDone, new WaitOrTimerCallback(TimeoutCallback), state, request.TimeoutMillisec, true);
 			}
         }
 
@@ -271,7 +275,7 @@ namespace CloudBuilderLibrary
 				FinishWithRequest(state, new HttpResponse(e));
 			}
 			if (state.Response != null) { state.Response.Close(); }
-			allDone.Set();
+			AllDone.Set();
 		}
 
 		/** Reads the response buffer little by little. */
@@ -307,7 +311,7 @@ namespace CloudBuilderLibrary
 				CloudBuilder.Log(LogLevel.Warning, "Failed to read response: " + e.Message);
 				FinishWithRequest(state, new HttpResponse(e));
 			}
-			allDone.Set();
+			AllDone.Set();
 		}
 
 		/** Called upon timeout. */
@@ -324,16 +328,16 @@ namespace CloudBuilderLibrary
 		}
 
 		// Request processing
-		private ManualResetEvent allDone = new ManualResetEvent(false);
-		private ManualResetEvent synchronousRequestLock = new ManualResetEvent(false);
-		private bool isProcessingRequest = false;
-		private List<HttpRequest> pendingRequests = new List<HttpRequest>();
+		private ManualResetEvent AllDone = new ManualResetEvent(false);
+		private ManualResetEvent SynchronousRequestLock = new ManualResetEvent(false);
+		private bool IsProcessingRequest = false;
+		private List<HttpRequest> PendingRequests = new List<HttpRequest>();
 		// Others
-		private bool verboseMode;
-		private int currentRequestTryCount = 0, currentLoadBalancerId = -1;
-		private bool lastRequestFailed;
-		private System.Random random = new System.Random();
-		private int requestCount = 0;
+		private bool VerboseMode;
+		private int CurrentRequestTryCount = 0, CurrentLoadBalancerId = -1;
+		private bool LastRequestFailed;
+		private System.Random Random = new System.Random();
+		private int RequestCount = 0;
 		#endregion
 	}
 }

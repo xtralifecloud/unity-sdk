@@ -8,14 +8,14 @@ namespace CloudBuilderLibrary
 {
 	public class CloudResult {
 		public Bundle Data {
-			get { return json; }
+			get { return Json; }
 		}
 		public ErrorCode ErrorCode;
 		public string ErrorInformation;
 		public int HttpStatusCode;
 
 		internal CloudResult(HttpResponse response) {
-			json = response.BodyJson;
+			Json = response.BodyJson;
 			HttpStatusCode = response.StatusCode;
 			if (response.HasFailed) {
 				ErrorCode = ErrorCode.enNetworkError;
@@ -27,7 +27,7 @@ namespace CloudBuilderLibrary
 				ErrorCode = ErrorCode.enNoErr;
 			}
 		}
-		internal CloudResult(ErrorCode code, string description) {
+		internal CloudResult(ErrorCode code, string description = null) {
 			ErrorCode = code;
 			ErrorInformation = description;
 		}
@@ -46,6 +46,6 @@ namespace CloudBuilderLibrary
 			return start + "]";
 		}
 
-		private Bundle json;
+		private Bundle Json;
     }
 }

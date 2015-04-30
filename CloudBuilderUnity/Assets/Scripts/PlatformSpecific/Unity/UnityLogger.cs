@@ -5,12 +5,12 @@ namespace CloudBuilderLibrary
 {
 	internal class UnityLogger: ILogger
 	{
-		private static readonly UnityLogger instance = new UnityLogger();
+		private static readonly UnityLogger Instance_ = new UnityLogger();
 		
 		private UnityLogger() {}
 		
 		public static UnityLogger Instance {
-			get { return instance; }
+			get { return Instance_; }
 		}
 
 		#region ILogger implementation

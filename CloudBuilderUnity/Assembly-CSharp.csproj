@@ -46,17 +46,20 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\HighLevel\Bundle.cs" />
      <Compile Include="Assets\Scripts\HighLevel\Clan.cs" />
      <Compile Include="Assets\Scripts\HighLevel\CloudBuilder.cs" />
      <Compile Include="Assets\Scripts\HighLevel\CloudResult.cs" />
      <Compile Include="Assets\Scripts\HighLevel\Common.cs" />
      <Compile Include="Assets\Scripts\HighLevel\ErrorCode.cs" />
+     <Compile Include="Assets\Scripts\HighLevel\Model\Gamer\LoggedGamerData.cs" />
+     <Compile Include="Assets\Scripts\HighLevel\UserManager.cs" />
+     <Compile Include="Assets\Scripts\Internal\Bundle.cs" />
      <Compile Include="Assets\Scripts\Internal\HttpRequest.cs" />
      <Compile Include="Assets\Scripts\Internal\HttpResponse.cs" />
      <Compile Include="Assets\Scripts\Internal\HttpTimeoutException.cs" />
+     <Compile Include="Assets\Scripts\Internal\ManagerBase.cs" />
+     <Compile Include="Assets\Scripts\Internal\SystemPopEventLoopThread.cs" />
      <Compile Include="Assets\Scripts\Internal\UrlBuilder.cs" />
-     <Compile Include="Assets\Scripts\Internal\UserManager.cs" />
      <Compile Include="Assets\Scripts\Libs\LitJson\IJsonWrapper.cs" />
      <Compile Include="Assets\Scripts\Libs\LitJson\JsonData.cs" />
      <Compile Include="Assets\Scripts\Libs\LitJson\JsonException.cs" />

@@ -11,14 +11,14 @@ namespace CloudBuilderLibrary {
 		};
 
 		public string BodyString {
-			get { return body; }
-			set { body = value; }
+			get { return Body; }
+			set { Body = value; }
 		}
 		public Bundle BodyJson {
-			set { body = value.ToJson(); }
+			set { Body = value.ToJson(); }
 		}
 		public bool HasBody {
-			get { return body != null; }
+			get { return Body != null; }
 		}
 		public Dictionary<String, String> Headers = new Dictionary<string, string>();
 		/**
@@ -26,13 +26,13 @@ namespace CloudBuilderLibrary {
 		 */
 		public string Method;
 		public Policy RetryPolicy = Policy.NonpermanentErrors;
-		public int[] TimeBetweenTries = defaultTimeBetweenTries;
+		public int[] TimeBetweenTries = DefaultTimeBetweenTries;
 		public string Url;
-		public long TimeoutMillisec;
+		public int TimeoutMillisec;
 
 		// Please do not access this by yourself, this is only kept track of internally and will be ignored if set by you
-		internal Action<HttpResponse> callback;
-		private string body;
-		private static readonly int[] defaultTimeBetweenTries = {1, 100, 1000, 1500, 2000, 3000, 4000, 6000, 8000};
+		internal Action<HttpResponse> Callback;
+		private string Body;
+		private static readonly int[] DefaultTimeBetweenTries = {1, 100, 1000, 1500, 2000, 3000, 4000, 6000, 8000};
 	}
 }

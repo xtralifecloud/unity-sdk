@@ -1,22 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 using CloudBuilderLibrary;
+using CloudBuilderLibrary.Model.Gamer;
 
 public class TestNewCloudBuilder : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
-		Bundle config = Bundle.CreateObject();
-		config["key"] = "cloudbuilder-key";
-		config["secret"] = "azerty";
-//		config["env"] = "http://195.154.227.44:8000";
-//		config["env"] = "http://localhost:8000";
-		config["env"] = "https://sandbox-api[id].clanofthecloud.mobi";
-		config["httpVerbose"] = true;
-//		config["httpTimeout"] = 2000;
-		CloudBuilder.Clan.Setup(delegate(CloudResult result) {
-			Debug.Log("Done: " + result.ToString());
-		}, config);
+		CloudBuilder.Clan.Setup(
+			apiKey: "cloudbuilder-key",
+			apiSecret: "azerty",
+//			environment: "http://localhost:8000",
+			environment: Clan.SandboxEnvironment,
+			httpVerbose: true,
+			done: () => {
+				Debug.Log("Setup done");
+			}
+		);
 	}
 	
 	// Update is called once per frame
@@ -25,14 +25,17 @@ public class TestNewCloudBuilder : MonoBehaviour {
 	}
 
 	public void DoLogin() {
-		CloudBuilder.Clan.LoginAnonymous(delegate(CloudResult result) {
-			Debug.Log("Login done: " + result.ToString());
-        }, Bundle.Empty);
+		CloudBuilder.UserManager.LoginAnonymous((CloudResult result, LoggedGamerData gamerData) => {
+			if (result.ErrorCode == ErrorCode.enNoErr)
+				Debug.Log("Login done! Welcome " + gamerData.GamerId + "!");
+			else
+				Debug.Log("Login failed :(");
+        });
     }
 
 	public void DoGetProfile() {
-		CloudBuilder.Clan.TEMP_GetUserProfile(delegate(CloudResult result) {
+		CloudBuilder.UserManager.TEMP_GetUserProfile((CloudResult result, string unused) => {
 			Debug.Log("Get profile done: " + result.ToString());
-		}, Bundle.Empty);
+		});
 	}
 }

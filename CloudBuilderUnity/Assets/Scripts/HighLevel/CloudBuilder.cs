@@ -5,15 +5,20 @@ using System.Threading;
 
 namespace CloudBuilderLibrary {
 	public class CloudBuilder {
-		private static Clan clanInstance;
-		private static IHttpClient httpClientInstance;
-		private static ILogger loggerInstance;
-		private static ISystemFunctions systemFunctionsInstance;
+		private static Clan ClanInstance;
+		private static IHttpClient HttpClientInstance;
+		private static ILogger LoggerInstance;
+		private static ISystemFunctions SystemFunctionsInstance;
+		private static UserManager UserManagerInstance;
 		// TODO
 		internal const string Version = "1";
 
 		public static Clan Clan {
-			get { return clanInstance; }
+			get { return ClanInstance; }
+		}
+
+		public static UserManager UserManager {
+			get { return UserManagerInstance; }
 		}
 
 		// You need to call this from the update of your current scene!
@@ -22,43 +27,44 @@ namespace CloudBuilderLibrary {
 		}*/
 
 		internal static void Log(string text) {
-			loggerInstance.Log(LogLevel.Verbose, text);
+			LoggerInstance.Log(LogLevel.Verbose, text);
 		}
 		internal static void Log(LogLevel level, string text) {
-			loggerInstance.Log(level, text);
+			LoggerInstance.Log(level, text);
 		}
 		internal static void TEMP(string text) {
 			// All references to this should be removed at some point
-			loggerInstance.Log (LogLevel.Verbose, text);
+			LoggerInstance.Log (LogLevel.Verbose, text);
 		}
 		internal static void StartLogTime(string description = null) {
-			initialTicks = DateTime.UtcNow.Ticks;
+			InitialTicks = DateTime.UtcNow.Ticks;
 			LogTime(description);
 		}
 		internal static void LogTime(string description = null) {
-			TimeSpan span = new TimeSpan(DateTime.UtcNow.Ticks - initialTicks);
-			loggerInstance.Log(LogLevel.Verbose, "[" + span.TotalMilliseconds  + "/" + Thread.CurrentThread.ManagedThreadId + "] " + description);
+			TimeSpan span = new TimeSpan(DateTime.UtcNow.Ticks - InitialTicks);
+			LoggerInstance.Log(LogLevel.Verbose, "[" + span.TotalMilliseconds  + "/" + Thread.CurrentThread.ManagedThreadId + "] " + description);
 		}
 
 		#region Internal stuff
 		static CloudBuilder() {
-			clanInstance = new Clan();
-			httpClientInstance = new UnityHttpClient();
-			loggerInstance = UnityLogger.Instance;
-			systemFunctionsInstance = new UnitySystemFunctions();
+			ClanInstance = new Clan();
+			HttpClientInstance = new UnityHttpClient();
+			LoggerInstance = UnityLogger.Instance;
+			SystemFunctionsInstance = new UnitySystemFunctions();
+			UserManagerInstance = new UserManager();
         }
 
 		internal static IHttpClient HttpClient {
-			get { return httpClientInstance; }
+			get { return HttpClientInstance; }
 		}
 
 		internal static ISystemFunctions SystemFunctions {
-			get { return systemFunctionsInstance; }
+			get { return SystemFunctionsInstance; }
 		}
 		#endregion
 
 		#region Private
-		private static long initialTicks;
+		private static long InitialTicks;
 		#endregion
 	}
 }
