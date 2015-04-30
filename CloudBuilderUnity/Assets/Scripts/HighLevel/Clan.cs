@@ -4,37 +4,47 @@ using System.Collections.Generic;
 
 namespace CloudBuilderLibrary
 {
-	public class Clan: ManagerBase {
-		public const string DevEnvironment = "http://195.154.227.44:8000";
-		public const string SandboxEnvironment = "https://sandbox-api[id].clanofthecloud.mobi";
-		public const string ProdEnvironment = "https://prod-api[id].clanofthecloud.mobi";
-
-		/**
-		 * Call this at the very beginning to start using the library.
-		 * @param done Called when the process has finished (most likely synchronously).
-		 * @param apiKey The community key.
-		 * @param apiSecret The community secret (credentials when registering to CotC).
-		 * @param environment The URL of the server. Should use one of the predefined constants.
-		 * @param httpVerbose Set to true to output detailed information about the requests performed to CotC servers. Can be used
-		 *     for debugging, though it does pollute the logs.
-		 * @param httpTimeout Sets a custom timeout for all requests in seconds. Defaults to 1 minute.
-		 * @param eventLoopTimeout Sets a custom timeout in seconds for the long polling event loop. Should be used with care
-		 *     and set to a high value (at least 60). Defaults to 590 (~10 min).
-		 */
-		public void Setup(Action done, string apiKey, string apiSecret, string environment = SandboxEnvironment, bool httpVerbose = false, int httpTimeout = DefaultTimeoutSec, int eventLoopTimeout = DefaultPopEventTimeoutSec) {
+	public class Clan {
+		internal Clan(string apiKey, string apiSecret, string environment, bool httpVerbose, int httpTimeout, int eventLoopTimeout) {
 			this.ApiKey = apiKey;
 			this.ApiSecret = apiSecret;
 			this.Server = environment;
 			LoadBalancerCount = 2;
-			CloudBuilder.HttpClient.VerboseMode = httpVerbose;
+			Directory.HttpClient.VerboseMode = httpVerbose;
 			HttpTimeoutMillis = httpTimeout * 1000;
 			PopEventDelay = eventLoopTimeout * 1000;
 			NetworkIsOnline = true;
-			Common.InvokeHandler(done);
+		}
+
+		/**
+		 * Logs the current user in anonymously.
+		 * @param done callback invoked when the login has finished, either successfully or not.
+		 */
+		public void LoginAnonymously(Action<CloudResult, User> done) {
+			if (LoggedInUser != null) {
+				Common.InvokeHandler(done, ErrorCode.enAlreadyLogged);
+				return;
+			}
+
+			Bundle config = Bundle.CreateObject();
+			config["device"] = Directory.SystemFunctions.CollectDeviceInformation();
+			
+			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/login/anonymous");
+			req.BodyJson = config;
+			Directory.HttpClient.Run(req, (HttpResponse response) => {
+				CloudResult result = new CloudResult(response);
+				if (response.HasFailed) {
+					Common.InvokeHandler(done, result);
+					return;
+				}
+
+				LoggedInUser = new User(this, result.Data);
+				Common.InvokeHandler(done, result, LoggedInUser);
+			});
 		}
 
 		#region Internal HTTP helpers
-		internal override HttpRequest MakeUnauthenticatedHttpRequest(string path) {
+		internal HttpRequest MakeUnauthenticatedHttpRequest(string path) {
 			HttpRequest result = new HttpRequest();
 			result.Url = Server + path;
 			result.Headers["x-apikey"] = ApiKey;
@@ -46,20 +56,15 @@ namespace CloudBuilderLibrary
         #endregion
 
 		#region Internal
-		internal Clan() {}
-
-		internal bool IsSetup {
-			get { return ApiKey != null && ApiSecret != null; }
-		}
 		#endregion
 
 		#region Members
-		private const int DefaultTimeoutSec = 60, DefaultPopEventTimeoutSec = 590;
 		private const string SdkVersion = "1";
 
 		private string ApiKey, ApiSecret, Server;
 		private int HttpTimeoutMillis;
 		public int LoadBalancerCount;
+		private User LoggedInUser;
 		public bool NetworkIsOnline;
 		public int PopEventDelay;
 		public string UserAgent = "TEMP-TODO-UA";

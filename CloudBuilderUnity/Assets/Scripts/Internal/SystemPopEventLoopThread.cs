@@ -12,9 +12,11 @@ namespace CloudBuilderLibrary {
 		private Random Random = new Random();
 		private bool Stop = false;
 		private const int PopEventDelayAfterFailure = 2000, PopEventDelayThreadHold = 20000;
+		private User User;
 
-		public SystemPopEventLoopThread(String domain) {
+		public SystemPopEventLoopThread(User user, String domain) {
 			Domain = domain;
+			User = user;
 		}
 
 		public bool IsMainDomain {
@@ -26,7 +28,8 @@ namespace CloudBuilderLibrary {
 		}
 
 		private void Run() {
-			int delay = CloudBuilder.Clan.PopEventDelay;
+			Clan clan = User.Clan;
+			int delay = clan.PopEventDelay;
 			int correlationId = Random.Next();
 			string messageToAcknowledge = null;
 			bool lastResultPositive = true;
@@ -47,10 +50,10 @@ namespace CloudBuilderLibrary {
 					url.QueryParam("ack", messageToAcknowledge);
 				}
 
-				HttpRequest req = CloudBuilder.Clan.MakeHttpRequest(url);
+				HttpRequest req = User.MakeHttpRequest(url);
 				req.RetryPolicy = HttpRequest.Policy.NonpermanentErrors;
 				req.TimeoutMillisec = delay + 30000;
-				HttpResponse res = CloudBuilder.HttpClient.RunSynchronously(req);
+				HttpResponse res = Directory.HttpClient.RunSynchronously(req);
 				lastResultPositive = true;
                 
                 if (res.StatusCode == 200) {
@@ -66,7 +69,7 @@ namespace CloudBuilderLibrary {
 
 				// Notify connection status to main thread
 				if (IsMainDomain) {
-					CloudBuilder.Clan.NetworkIsOnline = lastResultPositive;
+					clan.NetworkIsOnline = lastResultPositive;
                 }
             }
 		}

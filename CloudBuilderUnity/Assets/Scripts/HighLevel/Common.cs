@@ -19,6 +19,11 @@ namespace CloudBuilderLibrary
 				handler(new CloudResult(code, description), null);
 			}
 		}
+		internal static void InvokeHandler<T>(Action<CloudResult, T> handler, T value) where T: class {
+			if (handler != null) {
+				handler(new CloudResult(ErrorCode.enNoErr), value);
+			}
+		}
 		internal static void InvokeHandler<T>(Action<CloudResult, T> handler, CloudResult result, T value) {
 			if (handler != null) {
 				handler(result, value);

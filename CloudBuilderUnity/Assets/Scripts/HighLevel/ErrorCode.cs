@@ -93,6 +93,9 @@ namespace CloudBuilderLibrary
 		
 		/// 1027 - Internal error with the library
 		enInternalError,
+
+		// KEEP FROM THERE
+		enSetupAlreadyCalled,
 		
 		/// You shouldn't receive this error, it's just a convenient value
 		enLastError
@@ -128,6 +131,7 @@ namespace CloudBuilderLibrary
 			case ErrorCode.enErrorWithExternalStore: return "Error with the external store";
 			case ErrorCode.enUserCanceledPurchase: return "User canceled the purchase";
 			case ErrorCode.enInternalError: return "Internal error";
+			case ErrorCode.enSetupAlreadyCalled: return "Cannot set up twice";
 			}
 			return "No description available";
 		}

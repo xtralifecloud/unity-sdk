@@ -87,7 +87,7 @@ namespace CloudBuilderLibrary
 		}
 
 		private void ChooseLoadBalancer() {
-			CurrentLoadBalancerId = Random.Next(1, CloudBuilder.Clan.LoadBalancerCount + 1);
+			CurrentLoadBalancerId = Random.Next(1, CloudBuilder.ClanInstance.LoadBalancerCount + 1);
 		}
 
 		/** Enqueues a request to make it processed asynchronously. Will potentially wait for the other requests enqueued to finish. */
@@ -224,7 +224,7 @@ namespace CloudBuilderLibrary
 
 			// Auto choose HTTP method
 			req.Method = request.Method ?? (request.BodyString != null ? "POST" : "GET");
-			req.UserAgent = CloudBuilder.Clan.UserAgent;
+			req.UserAgent = CloudBuilder.ClanInstance.UserAgent;
 			foreach (var pair in request.Headers) {
 				req.Headers[pair.Key] = pair.Value;
 			}
