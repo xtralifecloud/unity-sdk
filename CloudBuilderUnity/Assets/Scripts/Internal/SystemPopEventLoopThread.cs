@@ -39,7 +39,7 @@ namespace CloudBuilderLibrary {
 					// Last time failed, wait a bit to avoid bombing the Internet.
 					Thread.Sleep(PopEventDelayThreadHold);
 					// And try with a smaller delay so that we can notify success (connection back) quickly.
-                    if (IsMainDomain) {
+					if (IsMainDomain) {
 						delay = PopEventDelayAfterFailure;
 					}
 				}
@@ -55,8 +55,8 @@ namespace CloudBuilderLibrary {
 				req.TimeoutMillisec = delay + 30000;
 				HttpResponse res = Directory.HttpClient.RunSynchronously(req);
 				lastResultPositive = true;
-                
-                if (res.StatusCode == 200) {
+				
+				if (res.StatusCode == 200) {
 					messageToAcknowledge = res.BodyJson["id"];
 				}
 				else if (res.StatusCode != 204) {
@@ -70,8 +70,8 @@ namespace CloudBuilderLibrary {
 				// Notify connection status to main thread
 				if (IsMainDomain) {
 					clan.NetworkIsOnline = lastResultPositive;
-                }
-            }
+				}
+			}
 		}
 	}
 

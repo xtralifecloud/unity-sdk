@@ -47,5 +47,5 @@ namespace CloudBuilderLibrary
 		}
 
 		private Bundle Json;
-    }
+	}
 }
