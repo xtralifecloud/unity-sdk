@@ -8,15 +8,15 @@ public class TestNewCloudBuilder : MonoBehaviour {
 	// Use this for initialization
 	void Start() {
 		CloudBuilder.Clan.Setup(
-			eventLoopTimeout: 10,
+            done: () =>
+            {
+                Debug.Log("Setup done");
+            },
 			apiKey: "cloudbuilder-key",
 			apiSecret: "azerty",
-//			environment: "http://localhost:8000",
-			environment: Clan.SandboxEnvironment,
+            environment: Clan.SandboxEnvironment,
 			httpVerbose: true,
-			done: () => {
-				Debug.Log("Setup done");
-			}
+            eventLoopTimeout: 10
 		);
 	}
 	
