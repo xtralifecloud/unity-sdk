@@ -6,6 +6,7 @@ namespace CloudBuilderLibrary {
 	internal class UrlBuilder {
 		public UrlBuilder(string path, string server = null) {
 			Url = server ?? "";
+			Subpath(path);
 		}
 
 		public UrlBuilder Subpath(string path) {

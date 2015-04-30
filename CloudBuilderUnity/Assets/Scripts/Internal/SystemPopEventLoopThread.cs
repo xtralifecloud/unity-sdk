@@ -21,7 +21,11 @@ namespace CloudBuilderLibrary {
 			get { return Domain == Common.PrivateDomain; }
 		}
 
-		public void Run() {
+		public void Start() {
+			new Thread(new ThreadStart(this.Run)).Start();
+		}
+
+		private void Run() {
 			int delay = CloudBuilder.Clan.PopEventDelay;
 			int correlationId = Random.Next();
 			string messageToAcknowledge = null;

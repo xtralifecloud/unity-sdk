@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\HighLevel\CloudResult.cs" />
      <Compile Include="Assets\Scripts\HighLevel\Common.cs" />
      <Compile Include="Assets\Scripts\HighLevel\ErrorCode.cs" />
+     <Compile Include="Assets\Scripts\HighLevel\EventListener.cs" />
      <Compile Include="Assets\Scripts\HighLevel\Model\Gamer\LoggedGamerData.cs" />
      <Compile Include="Assets\Scripts\HighLevel\UserManager.cs" />
      <Compile Include="Assets\Scripts\Internal\Bundle.cs" />

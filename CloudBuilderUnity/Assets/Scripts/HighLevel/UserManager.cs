@@ -25,6 +25,7 @@ namespace CloudBuilderLibrary
 					return;
 				}
 				GamerData = new LoggedGamerData(result.Data);
+				DidLogin();
 				Common.InvokeHandler(done, result, GamerData);
 			});
 		}
@@ -35,6 +36,18 @@ namespace CloudBuilderLibrary
 			HttpRequest req = MakeHttpRequest("/v1/gamer/profile");
 			CloudBuilder.HttpClient.Run(req, (HttpResponse response) => {
 			});
+		}
+
+		public void RegisterPopEventLoop(string domain) {
+			SystemPopEventLoopThread thread;
+			// Only register threads once
+			lock (this) {
+				if (PopEventThreads.ContainsKey(domain)) {
+					return;
+				}
+				thread = new SystemPopEventLoopThread(domain);
+			}
+			thread.Start();
 		}
 
 		#region Internal
@@ -50,10 +63,16 @@ namespace CloudBuilderLibrary
 		}
 		#endregion
 
+		#region Private
+		public void DidLogin() {
+			RegisterPopEventLoop(Common.PrivateDomain);
+		}
+		#endregion
+
 		#region Members
 		// About the logged in user
 		private LoggedGamerData GamerData;
-		private Dictionary<string, SystemPopEventLoopThread> PopEventThreads;
+		private Dictionary<string, SystemPopEventLoopThread> PopEventThreads = new Dictionary<string, SystemPopEventLoopThread>();
         #endregion
 	}
 }
