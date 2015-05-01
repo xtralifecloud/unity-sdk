@@ -22,14 +22,14 @@ namespace CloudBuilderLibrary {
 		 * @param eventLoopTimeout Sets a custom timeout in seconds for the long polling event loop. Should be used with care
 		 *	 and set to a high value (at least 60). Defaults to 590 (~10 min).
 		 */
-		public static void Setup(Action<CloudResult, Clan> done, string apiKey, string apiSecret, string environment = SandboxEnvironment, bool httpVerbose = false, int httpTimeout = DefaultTimeoutSec, int eventLoopTimeout = DefaultPopEventTimeoutSec) {
+		public static void Setup(SetupParams param) {
 			lock (SpinLock) {
 				if (ClanInstance != null) {
-					Common.InvokeHandler(done, ErrorCode.enSetupAlreadyCalled);
+					Common.InvokeHandler(param.done, ErrorCode.enSetupAlreadyCalled);
 					return;
 				}
-				ClanInstance = new Clan(apiKey, apiSecret, environment, httpVerbose, httpTimeout, eventLoopTimeout);
-				Common.InvokeHandler(done, ClanInstance);
+				ClanInstance = new Clan(param.apiKey, param.apiSecret, param.environment, param.httpVerbose, param.httpTimeout, param.eventLoopTimeout);
+				Common.InvokeHandler(param.done, ClanInstance);
 			}
 		}
 
@@ -41,6 +41,20 @@ namespace CloudBuilderLibrary {
 			// TODO
 		}
 
+
+		#region Function parameter classes
+		public class SetupParams {
+			public Action<CloudResult, Clan> done;
+			public string apiKey;
+			public string apiSecret;
+			public string environment = SandboxEnvironment;
+			public bool httpVerbose = false;
+			public int httpTimeout = DefaultTimeoutSec;
+			public int eventLoopTimeout = DefaultPopEventTimeoutSec;
+		}
+		#endregion
+
+		#region Internal
 		internal static void Log(string text) {
 			Directory.Logger.Log(LogLevel.Verbose, text);
 		}
@@ -59,6 +73,7 @@ namespace CloudBuilderLibrary {
 			TimeSpan span = new TimeSpan(DateTime.UtcNow.Ticks - InitialTicks);
 			Directory.Logger.Log(LogLevel.Verbose, "[" + span.TotalMilliseconds  + "/" + Thread.CurrentThread.ManagedThreadId + "] " + description);
 		}
+		#endregion
 
 		#region Private
 		private static object SpinLock = new object();

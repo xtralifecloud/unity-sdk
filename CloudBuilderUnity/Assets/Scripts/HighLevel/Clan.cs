@@ -5,6 +5,11 @@ using System.Collections.Generic;
 namespace CloudBuilderLibrary
 {
 	public class Clan {
+
+		public class LoginAnonymouslyParams {
+			public Action<CloudResult, User> done;
+		}
+
 		internal Clan(string apiKey, string apiSecret, string environment, bool httpVerbose, int httpTimeout, int eventLoopTimeout) {
 			this.ApiKey = apiKey;
 			this.ApiSecret = apiSecret;
@@ -20,9 +25,9 @@ namespace CloudBuilderLibrary
 		 * Logs the current user in anonymously.
 		 * @param done callback invoked when the login has finished, either successfully or not.
 		 */
-		public void LoginAnonymously(Action<CloudResult, User> done) {
+		public void LoginAnonymously(LoginAnonymouslyParams param) {
 			if (LoggedInUser != null) {
-				Common.InvokeHandler(done, ErrorCode.enAlreadyLogged);
+				Common.InvokeHandler(param.done, ErrorCode.enAlreadyLogged);
 				return;
 			}
 
@@ -34,12 +39,12 @@ namespace CloudBuilderLibrary
 			Directory.HttpClient.Run(req, (HttpResponse response) => {
 				CloudResult result = new CloudResult(response);
 				if (response.HasFailed) {
-					Common.InvokeHandler(done, result);
+					Common.InvokeHandler(param.done, result);
 					return;
 				}
 
 				LoggedInUser = new User(this, result.Data);
-				Common.InvokeHandler(done, result, LoggedInUser);
+				Common.InvokeHandler(param.done, result, LoggedInUser);
 			});
 		}
 

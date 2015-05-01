@@ -4,12 +4,6 @@ using System.Collections.Generic;
 
 namespace CloudBuilderLibrary
 {
-	public enum LoginNetwork {
-		Anonymous,
-		Facebook,
-		GooglePlus,
-	}
-
 	public class User {
 
 		/**
@@ -27,9 +21,17 @@ namespace CloudBuilderLibrary
 			RegisterPopEventLoop(Common.PrivateDomain);
 		}
 
-		public void TEMP_GetProfile(Action<CloudResult, string> done = null) {
+		public void TEMP_GetProfile(GetProfileParams param) {
 			HttpRequest req = MakeHttpRequest("/v1/gamer/profile");
 			Directory.HttpClient.Run(req, (HttpResponse response) => {
+				CloudResult result = new CloudResult(response);
+				if (response.HasFailed) {
+					Common.InvokeHandler(param.done, result);
+					return;
+				}
+				
+				UserProfile profile = new UserProfile(result.Data);
+				Common.InvokeHandler(param.done, result, profile);
 			});
 		}
 
@@ -52,6 +54,12 @@ namespace CloudBuilderLibrary
 		public string GamerSecret { get; private set; }
 		public DateTime RegisterTime { get; private set; }
 		public List<string> Domains { get; private set; }
+		#endregion
+
+		#region Function parameter classes
+		public class GetProfileParams {
+			public Action<CloudResult, UserProfile> done;
+		}
 		#endregion
 
 		#region Internal
