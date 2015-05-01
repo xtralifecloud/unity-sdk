@@ -6,33 +6,31 @@ namespace CloudBuilderLibrary
 {
 	public class User {
 
-		/**
-		 * Only instantiated internally.
-		 * @param gamerData Gamer data as returned by our API calls (loginanonymous, etc.).
-		 */
-		internal User(Clan clan, Bundle gamerData) {
-			Clan = clan;
-			GamerData = gamerData;
-			Network = Common.ParseEnum<LoginNetwork>(gamerData["network"]);
-			NetworkId = gamerData["networkid"];
-			GamerId = gamerData["gamer_id"];
-			GamerSecret = gamerData["gamer_secret"];
-			RegisterTime = Common.ParseHttpDate(gamerData["registerTime"]);
-			RegisterPopEventLoop(Common.PrivateDomain);
-		}
+		public class ProfileMethods {
 
-		public void TEMP_GetProfile(GetProfileParams param) {
-			HttpRequest req = MakeHttpRequest("/v1/gamer/profile");
-			Directory.HttpClient.Run(req, (HttpResponse response) => {
-				CloudResult result = new CloudResult(response);
-				if (response.HasFailed) {
-					Common.InvokeHandler(param.done, result);
-					return;
-				}
-				
-				UserProfile profile = new UserProfile(result.Data);
-				Common.InvokeHandler(param.done, result, profile);
-			});
+			/**
+			 * Method used to retrieve some optional data of the logged in profile previously set by
+			 * method SetProfile.
+			 * @param done callback invoked when the login has finished, either successfully or not.
+			 */
+			public void Get(GetProfileParams param) {
+				HttpRequest req = User.MakeHttpRequest("/v1/gamer/profile");
+				Directory.HttpClient.Run(req, (HttpResponse response) => {
+					CloudResult result = new CloudResult(response);
+					if (response.HasFailed) {
+						Common.InvokeHandler(param.done, result);
+						return;
+					}
+					
+					UserProfile profile = new UserProfile(result.Data);
+					Common.InvokeHandler(param.done, result, profile);
+				});
+			}
+
+			internal ProfileMethods(User user) {
+				User = user;
+			}
+			private User User;
 		}
 
 		public void RegisterPopEventLoop(string domain) {
@@ -54,6 +52,10 @@ namespace CloudBuilderLibrary
 		public string GamerSecret { get; private set; }
 		public DateTime RegisterTime { get; private set; }
 		public List<string> Domains { get; private set; }
+
+		public ProfileMethods Profile {
+			get { return new ProfileMethods(this); }
+		}
 		#endregion
 
 		#region Function parameter classes
@@ -63,6 +65,21 @@ namespace CloudBuilderLibrary
 		#endregion
 
 		#region Internal
+		/**
+		 * Only instantiated internally.
+		 * @param gamerData Gamer data as returned by our API calls (loginanonymous, etc.).
+		 */
+		internal User(Clan clan, Bundle gamerData) {
+			Clan = clan;
+			GamerData = gamerData;
+			Network = Common.ParseEnum<LoginNetwork>(gamerData["network"]);
+			NetworkId = gamerData["networkid"];
+			GamerId = gamerData["gamer_id"];
+			GamerSecret = gamerData["gamer_secret"];
+			RegisterTime = Common.ParseHttpDate(gamerData["registerTime"]);
+			RegisterPopEventLoop(Common.PrivateDomain);
+		}
+
 		internal HttpRequest MakeHttpRequest(string path) {
 			HttpRequest result = Clan.MakeUnauthenticatedHttpRequest(path);
 			string authInfo = GamerId + ":" + GamerSecret;

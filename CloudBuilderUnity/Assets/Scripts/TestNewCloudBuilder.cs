@@ -54,7 +54,7 @@ public class TestNewCloudBuilder : MonoBehaviour {
 			return;
 		}
 
-		User.TEMP_GetProfile(new User.GetProfileParams {
+		User.Profile.Get(new User.GetProfileParams {
 			done = (CloudResult result, UserProfile profile) => {
 				Debug.Log("Get profile done: " + profile.Properties.ToJson());
 			}
