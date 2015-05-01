@@ -60,4 +60,8 @@ public class TestNewCloudBuilder : MonoBehaviour {
 			}
 		});
 	}
+
+	public void DoTerminate() {
+		CloudBuilder.Terminate();
+	}
 }

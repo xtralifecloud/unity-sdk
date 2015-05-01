@@ -10,7 +10,7 @@ namespace CloudBuilderLibrary {
 		}
 
 		public UrlBuilder Subpath(string path) {
-			if (Url.Length > 0 && Url[Url.Length - 1] != '/') {
+			if (Url.Length == 0 || Url[Url.Length - 1] != '/') {
 				Url += '/';
 			}
 			// Skip leading slash

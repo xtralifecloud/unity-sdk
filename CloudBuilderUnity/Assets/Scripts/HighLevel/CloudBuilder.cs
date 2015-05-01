@@ -38,7 +38,7 @@ namespace CloudBuilderLibrary {
 		 * Works synchronously so might take a bit of time.
 		 */
 		public static void Terminate() {
-			// TODO
+			Directory.HttpClient.Terminate();
 		}
 
 

@@ -30,7 +30,7 @@ namespace CloudBuilderLibrary {
 		private void Run() {
 			Clan clan = User.Clan;
 			int delay = clan.PopEventDelay;
-			int correlationId = Random.Next();
+			int CorrelationId = Random.Next();
 			string messageToAcknowledge = null;
 			bool lastResultPositive = true;
 
@@ -45,7 +45,7 @@ namespace CloudBuilderLibrary {
 				}
 
 				UrlBuilder url = new UrlBuilder("/v1/gamer/event");
-				url.Subpath(Domain).QueryParam("timeout", delay).QueryParam("correlationId", correlationId);
+				url.Subpath(Domain).QueryParam("timeout", delay).QueryParam("correlationId", CorrelationId);
 				if (messageToAcknowledge != null) {
 					url.QueryParam("ack", messageToAcknowledge);
 				}
@@ -55,7 +55,7 @@ namespace CloudBuilderLibrary {
 				req.TimeoutMillisec = delay + 30000;
 				HttpResponse res = Directory.HttpClient.RunSynchronously(req);
 				lastResultPositive = true;
-				
+
 				if (res.StatusCode == 200) {
 					messageToAcknowledge = res.BodyJson["id"];
 				}
@@ -72,6 +72,7 @@ namespace CloudBuilderLibrary {
 					clan.NetworkIsOnline = lastResultPositive;
 				}
 			}
+			CloudBuilder.Log("Finished pop event thread " + CorrelationId);
 		}
 	}
 

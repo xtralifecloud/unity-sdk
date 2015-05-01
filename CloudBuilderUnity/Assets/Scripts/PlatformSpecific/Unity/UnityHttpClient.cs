@@ -20,6 +20,12 @@ namespace CloudBuilderLibrary
 			// If the previous request failed, use the last delay directly (avoid retrying too many times)
 			int retryCount = LastRequestFailed ? request.TimeBetweenTries.Length - 1 : 0;
 			HttpResponse[] responsePointer = new HttpResponse[1];
+			// Dismiss additional requests
+			lock (this) {
+				if (Terminated) {
+					return new HttpResponse(new ArgumentException("Attempted to run a request after having terminated"));
+				}
+			}
 			SynchronousRequestLock.Reset();
 			// We'll use the asynchronous functions but set up a lock to get the response back
 			ProcessRequest(request, delegate(RequestState state, HttpResponse response) {
@@ -51,6 +57,17 @@ namespace CloudBuilderLibrary
 			});
 			SynchronousRequestLock.WaitOne();
 			return responsePointer[0];
+		}
+
+		void IHttpClient.Terminate() {
+			// Abort all pending requests
+			lock (this) {
+				Terminated = true;
+                foreach (HttpWebRequest req in RunningRequests) {
+					req.Abort();
+				}
+				RunningRequests.Clear();
+			}
 		}
 
 		bool IHttpClient.VerboseMode {
@@ -97,6 +114,11 @@ namespace CloudBuilderLibrary
 				ChooseLoadBalancer();
 			}
 			lock (this) {
+				// Dismiss additional requests
+				if (Terminated) {
+					CloudBuilder.Log(LogLevel.Error, "Attempted to run a request after having terminated");
+					return;
+				}
 				// Need to enqueue process?
 				if (IsProcessingRequest) {
 					PendingRequests.Add(req);
@@ -115,6 +137,13 @@ namespace CloudBuilderLibrary
 			HttpRequest nextReq;
 			// Avoid timeout to be triggered after that
 			AllDone.Set();
+            lock (this) {
+				// No need to continue, dismiss the result
+				if (Terminated) {
+					return;
+				}
+				RunningRequests.Remove(state.Request);
+			}
 			// Prevent doing the next tasks
 			if (state.FinishRequestOverride != null) {
 				state.FinishRequestOverride(state, response);
@@ -233,7 +262,10 @@ namespace CloudBuilderLibrary
 			RequestState state = new RequestState(this, request, req);
 			state.FinishRequestOverride = bypassProcessNextRequest;
 			LogRequest(state);
-			
+			lock (this) {
+				RunningRequests.Add(req);
+			}
+
 			AllDone.Reset();
 			if (request.BodyString != null) {
 				req.BeginGetRequestStream(new AsyncCallback(GetRequestStreamCallback), state);
@@ -248,7 +280,7 @@ namespace CloudBuilderLibrary
 		}
 
 		/** Called when a response has been received by the HttpWebRequest. */
-		private void RespCallback(IAsyncResult asynchronousResult) {  
+		private void RespCallback(IAsyncResult asynchronousResult) {
 			RequestState state = asynchronousResult.AsyncState as RequestState;
 			try {
 				// State of request is asynchronous.
@@ -263,6 +295,11 @@ namespace CloudBuilderLibrary
 				return;
 			}
 			catch (WebException e) {
+				if (e.Response == null) {
+					CloudBuilder.Log(LogLevel.Warning, "Failed to get response: " + e.Message);
+					FinishWithRequest(state, new HttpResponse(e));
+					return;
+				}
 				// When there is a ProtocolError or such (HTTP code 4xx…), there is also a response associated, so read it anyway.
 				state.Response = e.Response as HttpWebResponse;
 				Stream responseStream = state.Response.GetResponseStream();
@@ -332,12 +369,14 @@ namespace CloudBuilderLibrary
 		private ManualResetEvent SynchronousRequestLock = new ManualResetEvent(false);
 		private bool IsProcessingRequest = false;
 		private List<HttpRequest> PendingRequests = new List<HttpRequest>();
+		private List<HttpWebRequest> RunningRequests = new List<HttpWebRequest>();
 		// Others
 		private bool VerboseMode;
 		private int CurrentRequestTryCount = 0, CurrentLoadBalancerId = -1;
 		private bool LastRequestFailed;
 		private System.Random Random = new System.Random();
 		private int RequestCount = 0;
+		private bool Terminated = false;
 		#endregion
 	}
 }
