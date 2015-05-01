@@ -9,15 +9,15 @@ public class TestNewCloudBuilder : MonoBehaviour {
 	// Use this for initialization
 	void Start() {
 		CloudBuilder.Setup(
-            done: (CloudResult result, Clan clan) => {
+			done: (CloudResult result, Clan clan) => {
 				Clan = clan;
-                Debug.Log("Setup done");
-            },
+				Debug.Log("Setup done");
+			},
 			apiKey: "cloudbuilder-key",
 			apiSecret: "azerty",
-            environment: CloudBuilder.SandboxEnvironment,
+			environment: CloudBuilder.SandboxEnvironment,
 			httpVerbose: true,
-            eventLoopTimeout: 10
+			eventLoopTimeout: 10
 		);
 	}
 	
@@ -43,8 +43,8 @@ public class TestNewCloudBuilder : MonoBehaviour {
 			}
 			else
 				Debug.Log("Login failed :(");
-        });
-    }
+		});
+	}
 
 	public void DoGetProfile() {
 		if (User == null) {

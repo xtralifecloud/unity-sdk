@@ -17,10 +17,10 @@ namespace CloudBuilderLibrary {
 		 * @param apiSecret The community secret (credentials when registering to CotC).
 		 * @param environment The URL of the server. Should use one of the predefined constants.
 		 * @param httpVerbose Set to true to output detailed information about the requests performed to CotC servers. Can be used
-		 *     for debugging, though it does pollute the logs.
+		 *	 for debugging, though it does pollute the logs.
 		 * @param httpTimeout Sets a custom timeout for all requests in seconds. Defaults to 1 minute.
 		 * @param eventLoopTimeout Sets a custom timeout in seconds for the long polling event loop. Should be used with care
-		 *     and set to a high value (at least 60). Defaults to 590 (~10 min).
+		 *	 and set to a high value (at least 60). Defaults to 590 (~10 min).
 		 */
 		public static void Setup(Action<CloudResult, Clan> done, string apiKey, string apiSecret, string environment = SandboxEnvironment, bool httpVerbose = false, int httpTimeout = DefaultTimeoutSec, int eventLoopTimeout = DefaultPopEventTimeoutSec) {
 			lock (SpinLock) {

@@ -71,6 +71,6 @@ namespace CloudBuilderLibrary
 		// About the logged in user
 		private Bundle GamerData;
 		private Dictionary<string, SystemPopEventLoopThread> PopEventThreads = new Dictionary<string, SystemPopEventLoopThread>();
-        #endregion
+		#endregion
 	}
 }

@@ -14,7 +14,7 @@ namespace CloudBuilderLibrary
 		void IHttpClient.Run(HttpRequest request, Action<HttpResponse> callback) {
 			request.Callback = callback;
 			EnqueueRequest(request);
-        }
+		}
 
 		HttpResponse IHttpClient.RunSynchronously(HttpRequest request) {
 			// If the previous request failed, use the last delay directly (avoid retrying too many times)
@@ -163,9 +163,9 @@ namespace CloudBuilderLibrary
 
 		/** Got a network stream to write to. */
 		private void GetRequestStreamCallback(IAsyncResult asynchronousResult) {
-            RequestState state = asynchronousResult.AsyncState as RequestState;
+			RequestState state = asynchronousResult.AsyncState as RequestState;
 			try {
-                // End the operation
+				// End the operation
 				Stream postStream = state.Request.EndGetRequestStream(asynchronousResult);
 				// Convert the string into a byte array. 
 				byte[] byteArray = Encoding.UTF8.GetBytes(state.OriginalRequest.BodyString);
@@ -173,7 +173,7 @@ namespace CloudBuilderLibrary
 				postStream.Write(byteArray, 0, byteArray.Length);
 				postStream.Close();
 				// Start the asynchronous operation to get the response
-	            state.Request.BeginGetResponse(new AsyncCallback(RespCallback), state);
+				state.Request.BeginGetResponse(new AsyncCallback(RespCallback), state);
 			}
 			catch (WebException e) {
 				CloudBuilder.Log(LogLevel.Warning, "Failed to send data: " + e.Message + ", status=" + e.Status);
@@ -181,10 +181,10 @@ namespace CloudBuilderLibrary
 					FinishWithRequest(state, new HttpResponse(e));
 				}
 			}
-        }
-		        
-        /** Prints the current request for user convenience. */
-        private void LogRequest(RequestState state) {
+		}
+				
+		/** Prints the current request for user convenience. */
+		private void LogRequest(RequestState state) {
 			if (!VerboseMode) { return; }
 
 			StringBuilder sb = new StringBuilder();
@@ -233,9 +233,9 @@ namespace CloudBuilderLibrary
 			RequestState state = new RequestState(this, request, req);
 			state.FinishRequestOverride = bypassProcessNextRequest;
 			LogRequest(state);
-            
+			
 			AllDone.Reset();
-            if (request.BodyString != null) {
+			if (request.BodyString != null) {
 				req.BeginGetRequestStream(new AsyncCallback(GetRequestStreamCallback), state);
 			}
 			else {
@@ -245,7 +245,7 @@ namespace CloudBuilderLibrary
 			if (request.TimeoutMillisec > 0) {
 				ThreadPool.RegisterWaitForSingleObject(AllDone, new WaitOrTimerCallback(TimeoutCallback), state, request.TimeoutMillisec, true);
 			}
-        }
+		}
 
 		/** Called when a response has been received by the HttpWebRequest. */
 		private void RespCallback(IAsyncResult asynchronousResult) {  

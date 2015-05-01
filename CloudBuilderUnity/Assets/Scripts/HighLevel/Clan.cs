@@ -52,8 +52,8 @@ namespace CloudBuilderLibrary
 			result.Headers["x-apisecret"] = ApiSecret;
 			result.TimeoutMillisec = HttpTimeoutMillis;
 			return result;
-        }
-        #endregion
+		}
+		#endregion
 
 		#region Internal
 		#endregion
@@ -68,6 +68,6 @@ namespace CloudBuilderLibrary
 		public bool NetworkIsOnline;
 		public int PopEventDelay;
 		public string UserAgent = "TEMP-TODO-UA";
-        #endregion
+		#endregion
 	}
 }
