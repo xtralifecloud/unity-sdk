@@ -196,6 +196,7 @@ namespace CloudBuilderLibrary
 		private JsonData ToJson(Bundle bundle) {
 			JsonData target = new JsonData();
 			if (bundle.Type == DataType.Object) {
+				target.SetJsonType(JsonType.Object);
 				foreach (KeyValuePair<string, Bundle> entry in bundle.Dictionary) {
 					switch (entry.Value.Type) {
 					case DataType.Boolean: target[entry.Key] = entry.Value.AsBool(); break;
@@ -207,6 +208,7 @@ namespace CloudBuilderLibrary
 				}
 			}
 			else {
+				target.SetJsonType(JsonType.Array);
 				foreach (Bundle entry in bundle.Array) {
 					switch (entry.Type) {
 					case DataType.Boolean: target.Add(entry.AsBool()); break;

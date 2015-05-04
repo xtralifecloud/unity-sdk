@@ -7,7 +7,9 @@ namespace CloudBuilderLibrary {
 	public delegate void EventLoopHandler(DomainEventLoop sender, EventLoopArgs e);
 
 	public class EventLoopArgs {
-		Bundle Message;
+		public Bundle Message {
+			get; private set;
+		}
 
 		internal EventLoopArgs(Bundle message) {
 			Message = message;

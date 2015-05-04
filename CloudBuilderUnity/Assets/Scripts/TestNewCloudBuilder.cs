@@ -43,7 +43,7 @@ public class TestNewCloudBuilder : MonoBehaviour {
 			return;
 		}
 
-		Clan.LoginAnonymously(this.DidLogin);
+		Clan.LoginAnonymously(done: this.DidLogin);
 	}
 
 	public void DoRestoreSession() {

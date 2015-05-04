@@ -12,6 +12,7 @@ namespace CloudBuilderLibrary
 
 	public sealed partial class Gamer {
 
+		public List<string> Domains { get; private set; }
 		/**
 		 * Gamer credential. Use it to gain access to user related tasks.
 		 */
@@ -20,8 +21,6 @@ namespace CloudBuilderLibrary
 		 * Gamer credential (secret). Same purpose as GamerId, and you will need those in pair.
 		 */
 		public string GamerSecret { get; private set; }
-
-		public List<string> Domains { get; private set; }
 		public LoginNetwork Network { get; private set; }
 		public string NetworkId { get; private set; }
 		public ProfileMethods Profile {
