@@ -27,49 +27,6 @@ namespace CloudBuilderLibrary
 			EnqueueRequest(request);
 		}
 
-		HttpResponse IHttpClient.RunSynchronously(HttpRequest request) {
-			// If the previous request failed, use the last delay directly (avoid retrying too many times)
-			int retryCount = LastRequestFailed ? request.TimeBetweenTries.Length - 1 : 0;
-			HttpResponse[] responsePointer = new HttpResponse[1];
-			// Dismiss additional requests
-			lock (this) {
-				if (Terminated) {
-					return new HttpResponse(new ArgumentException("Attempted to run a request after having terminated"));
-				}
-			}
-			SynchronousRequestLock.Reset();
-			// We'll use the asynchronous functions but set up a lock to get the response back
-			ProcessRequest(request, delegate(RequestState state, HttpResponse response) {
-				// Failed request
-				if (response.ShouldBeRetried(state.OriginalRequest))  {
-					// Will try again
-					int[] retryTimes = state.OriginalRequest.TimeBetweenTries;
-					if (retryCount < retryTimes.Length) {
-						CloudBuilder.Log(LogLevel.Warning, "[" + state.RequestId + "] Sync request failed, retrying in " + retryTimes[retryCount] + "ms.");
-						Thread.Sleep(retryTimes[retryCount]);
-						retryCount += 1;
-						ChooseLoadBalancer();
-						// Will call this delegate again upon finish
-						ProcessRequest(request, state.FinishRequestOverride);
-						return;
-					}
-					else {
-						// Maximum failure count reached, will simply process the next request
-						CloudBuilder.Log(LogLevel.Warning, "[" + state.RequestId + "] Sync request failed too many times, giving up.");
-						LastRequestFailed = true;
-					}
-				}
-				else {
-					LastRequestFailed = false;
-				}
-				// Done
-				responsePointer[0] = response;
-				SynchronousRequestLock.Set();
-			});
-			SynchronousRequestLock.WaitOne();
-			return responsePointer[0];
-		}
-
 		void IHttpClient.Terminate() {
 			// Abort all pending requests
 			lock (this) {
@@ -378,7 +335,6 @@ namespace CloudBuilderLibrary
 
 		// Request processing
 		private ManualResetEvent AllDone = new ManualResetEvent(false);
-		private ManualResetEvent SynchronousRequestLock = new ManualResetEvent(false);
 		private bool IsProcessingRequest = false;
 		private List<HttpRequest> PendingRequests = new List<HttpRequest>();
 		private List<RequestState> RunningRequests = new List<RequestState>();
