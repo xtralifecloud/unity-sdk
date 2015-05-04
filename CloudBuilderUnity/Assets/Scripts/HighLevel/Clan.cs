@@ -12,7 +12,7 @@ namespace CloudBuilderLibrary
 		 */
 		public void LoginAnonymously(ResultHandler<User> done) {
 			if (LoggedInUser != null) {
-				Common.InvokeHandler(done, ErrorCode.enAlreadyLogged);
+				Common.InvokeHandler(done, ErrorCode.AlreadyLoggedIn);
 				return;
 			}
 
@@ -30,6 +30,15 @@ namespace CloudBuilderLibrary
 				LoggedInUser = new User(this, response.BodyJson);
 				Common.InvokeHandler(done, LoggedInUser, response.BodyJson);
 			});
+		}
+
+		/**
+		 * As the Clan allows only one logged in user at a time (you must call Logout before being able to log again),
+		 * you can use this property to fetch the currently logged in user. You can also use it as a test: it will
+		 * return null in case the user is not logged in.
+		 */
+		public User LoggedInUser {
+			get; private set;
 		}
 
 		#region Internal HTTP helpers
@@ -53,20 +62,23 @@ namespace CloudBuilderLibrary
 			Directory.HttpClient.VerboseMode = httpVerbose;
 			HttpTimeoutMillis = httpTimeout * 1000;
 			PopEventDelay = eventLoopTimeout * 1000;
-			NetworkIsOnline = true;
+			UserAgent = String.Format(Common.UserAgent, Directory.SystemFunctions.GetOsName(), Common.SdkVersion);
 		}
 		#endregion
 
 		#region Members
 		private const string SdkVersion = "1";
-
 		private string ApiKey, ApiSecret, Server;
 		private int HttpTimeoutMillis;
-		public int LoadBalancerCount;
-		private User LoggedInUser;
-		public bool NetworkIsOnline;
-		public int PopEventDelay;
-		public string UserAgent = "TEMP-TODO-UA";
+		public int LoadBalancerCount {
+			get; private set;
+		}
+		public int PopEventDelay {
+			get; private set;
+		}
+		public string UserAgent {
+			get; private set;
+		}
 		#endregion
 	}
 }

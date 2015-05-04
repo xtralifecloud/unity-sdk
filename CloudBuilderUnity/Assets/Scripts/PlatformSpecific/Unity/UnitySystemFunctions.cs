@@ -10,10 +10,15 @@ namespace CloudBuilderLibrary
 		{
 			Bundle result = Bundle.CreateObject();
 			result["model"] = SystemInfo.deviceModel;
-			result["version"] = CloudBuilder.Version;
-			result["osname"] = SystemInfo.operatingSystem;
+			result["version"] = Common.SdkVersion;
+			result["osname"] = ((ISystemFunctions)this).GetOsName();
+			result["osversion"] = SystemInfo.operatingSystem;
 			result["name"] = SystemInfo.deviceName;
 			return result;
+		}
+
+		string ISystemFunctions.GetOsName() {
+			return Application.platform.ToString();
 		}
 		#endregion
 	}

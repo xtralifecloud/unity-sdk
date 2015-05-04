@@ -6,18 +6,6 @@ namespace CloudBuilderLibrary
 {
 	public partial class User {
 
-		public void RegisterPopEventLoop(string domain) {
-			SystemPopEventLoopThread thread;
-			// Only register threads once
-			lock (this) {
-				if (PopEventThreads.ContainsKey(domain)) {
-					return;
-				}
-				thread = new SystemPopEventLoopThread(this, domain);
-			}
-			thread.Start();
-		}
-
 		#region Public members
 		public LoginNetwork Network { get; private set; }
 		public string NetworkId { get; private set; }
@@ -44,6 +32,7 @@ namespace CloudBuilderLibrary
 			GamerId = gamerData["gamer_id"];
 			GamerSecret = gamerData["gamer_secret"];
 			RegisterTime = Common.ParseHttpDate(gamerData["registerTime"]);
+			NetworkIsOnline = true;
 			RegisterPopEventLoop(Common.PrivateDomain);
 		}
 
@@ -53,6 +42,35 @@ namespace CloudBuilderLibrary
 			result.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
 			return result;
 		}
+
+		/**
+		 * This function may be called many times with the same value.
+		 * It will only trigger the required work if the status actually changes.
+		 * @param currentState state of the connection (true=up, false=down).
+		 */
+		internal void NotifyNetworkState(bool currentState) {
+			// Nothing changes
+			if (currentState == NetworkIsOnline) {
+				return;
+			}
+			
+			NetworkIsOnline = currentState;
+		}
+
+		/**
+		 * Starts a thread watching for messages on a given domain. Only starts the thread once.
+		 */
+		internal void RegisterPopEventLoop(string domain) {
+			SystemPopEventLoopThread thread;
+			// Only register threads once
+			lock (this) {
+				if (PopEventThreads.ContainsKey(domain)) {
+					return;
+				}
+				thread = new SystemPopEventLoopThread(this, domain);
+			}
+			thread.Start();
+		}
 		#endregion
 
 		#region Private
@@ -60,10 +78,13 @@ namespace CloudBuilderLibrary
 
 		#region Members
 		internal Clan Clan;
-		private CachedMember<ProfileMethods> profileMethods;
 		// About the logged in user
 		private Bundle GamerData;
+		public bool NetworkIsOnline {
+			get; private set;
+		}
 		private Dictionary<string, SystemPopEventLoopThread> PopEventThreads = new Dictionary<string, SystemPopEventLoopThread>();
+		private CachedMember<ProfileMethods> profileMethods;
 		#endregion
 	}
 }

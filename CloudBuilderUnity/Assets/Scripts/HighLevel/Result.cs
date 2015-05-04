@@ -10,7 +10,7 @@ namespace CloudBuilderLibrary
 		public ErrorCode ErrorCode;
 		public string ErrorInformation;
 		public bool IsSuccessful {
-			get { return ErrorCode == ErrorCode.enNoErr; }
+			get { return ErrorCode == ErrorCode.Ok; }
 		}
 		public int HttpStatusCode;
 		public Bundle ServerData {
@@ -26,13 +26,13 @@ namespace CloudBuilderLibrary
 			HttpStatusCode = response.StatusCode;
 			ErrorInformation = failureDescription;
 			if (response.HasFailed) {
-				ErrorCode = ErrorCode.enNetworkError;
+				ErrorCode = ErrorCode.NetworkError;
 			}
 			else if (response.StatusCode < 200 || response.StatusCode >= 300) {
-				ErrorCode = ErrorCode.enServerError;
+				ErrorCode = ErrorCode.ServerError;
 			}
 			else {
-				ErrorCode = ErrorCode.enNoErr;
+				ErrorCode = ErrorCode.Ok;
 			}
 		}
 		/**
@@ -46,14 +46,14 @@ namespace CloudBuilderLibrary
 		 * To be used when successful. The "no error" code will be attached and the result forwarded. The serverData can be attached (response.BodyJson) for more information.
 		 */
 		internal Result(T value, Bundle serverData) {
-			ErrorCode = ErrorCode.enNoErr;
+			ErrorCode = ErrorCode.Ok;
 			Json = serverData;
 			Value = value;
 		}
 
 		public override string ToString() {
 			string start = String.Format("[CloudResult error={0}", ErrorCode);
-			if (ErrorCode != ErrorCode.enNoErr) {
+			if (ErrorCode != ErrorCode.Ok) {
 				start += String.Format(" ({0})", ErrorInformation ?? ErrorCode.Description());
 			}
 			if (HttpStatusCode != 0) {

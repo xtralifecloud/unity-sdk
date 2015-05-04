@@ -12,20 +12,20 @@ namespace CloudBuilderLibrary {
 
 		/**
 		 * Call this at the very beginning to start using the library.
-		 * @param done Called when the process has finished with the Clan to be used for your operations (most likely synchronously).
-		 * @param apiKey The community key.
+		 * @param done called when the process has finished with the Clan to be used for your operations (most likely synchronously).
+		 * @param apiKey the community key.
 		 * @param apiSecret The community secret (credentials when registering to CotC).
-		 * @param environment The URL of the server. Should use one of the predefined constants.
-		 * @param httpVerbose Set to true to output detailed information about the requests performed to CotC servers. Can be used
+		 * @param environment the URL of the server. Should use one of the predefined constants.
+		 * @param httpVerbose set to true to output detailed information about the requests performed to CotC servers. Can be used
 		 *	 for debugging, though it does pollute the logs.
-		 * @param httpTimeout Sets a custom timeout for all requests in seconds. Defaults to 1 minute.
-		 * @param eventLoopTimeout Sets a custom timeout in seconds for the long polling event loop. Should be used with care
+		 * @param httpTimeout sets a custom timeout for all requests in seconds. Defaults to 1 minute.
+		 * @param eventLoopTimeout sets a custom timeout in seconds for the long polling event loop. Should be used with care
 		 *	 and set to a high value (at least 60). Defaults to 590 (~10 min).
 		 */
 		public static void Setup(ResultHandler<Clan> done, string apiKey, string apiSecret, string environment = SandboxEnvironment, bool httpVerbose = false, int httpTimeout = DefaultTimeoutSec, int eventLoopTimeout = DefaultPopEventTimeoutSec) {
 			lock (SpinLock) {
 				if (ClanInstance != null) {
-					Common.InvokeHandler(done, ErrorCode.enSetupAlreadyCalled);
+					Common.InvokeHandler(done, ErrorCode.AlreadySetup);
 					return;
 				}
 				ClanInstance = new Clan(apiKey, apiSecret, environment, httpVerbose, httpTimeout, eventLoopTimeout);
@@ -65,8 +65,6 @@ namespace CloudBuilderLibrary {
 		#region Private
 		private static object SpinLock = new object();
 		internal static Clan ClanInstance { get; private set; }
-		// TODO
-		internal const string Version = "1";
 		private static long InitialTicks;
 		#endregion
 	}
