@@ -255,7 +255,10 @@ namespace CloudBuilderLibrary
 			req.Method = request.Method ?? (request.BodyString != null ? "POST" : "GET");
 			req.UserAgent = CloudBuilder.ClanInstance.UserAgent;
 			foreach (var pair in request.Headers) {
-				req.Headers[pair.Key] = pair.Value;
+				if (String.Compare(pair.Key, "Content-Type", true) == 0)
+					req.ContentType = pair.Value;
+				else
+					req.Headers[pair.Key] = pair.Value;
 			}
 
 			// Configure & perform the request

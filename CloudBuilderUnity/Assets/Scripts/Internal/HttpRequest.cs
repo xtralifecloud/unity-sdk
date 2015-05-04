@@ -15,7 +15,7 @@ namespace CloudBuilderLibrary {
 			set { Body = value; }
 		}
 		public Bundle BodyJson {
-			set { Body = value.ToJson(); }
+			set { Body = value.ToJson(); Headers["Content-Type"] = "application/json"; }
 		}
 		public bool HasBody {
 			get { return Body != null; }

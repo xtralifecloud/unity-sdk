@@ -47,8 +47,8 @@ public class TestNewCloudBuilder : MonoBehaviour {
 
 		Clan.ResumeSession(
 			done: this.DidLogin,
-			gamerId: "541429b6dc346f01314edef3",
-			gamerSecret: "6809888abc46b67105aea4c3583cd1e8e035a353"
+			gamerId: "5547438f454c74f11ca98177",
+			gamerSecret: "e785694c0607c38f5674aa1621da9016c8b52262"
 		);
 	}
 
