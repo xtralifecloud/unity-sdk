@@ -9,8 +9,19 @@ using System.Collections.Generic;
 
 namespace CloudBuilderLibrary
 {
-	internal class UnityHttpClient: IHttpClient {
+	internal class UnityHttpClient : IHttpClient {
 		#region IHttpClient implementation
+		void IHttpClient.Abort(HttpRequest request) {
+			foreach (RequestState state in RunningRequests) {
+				if (state.OriginalRequest == request) {
+					state.Aborted = true;
+					state.Request.Abort();
+					return;
+				}
+			}
+			CloudBuilder.Log(LogLevel.Error, "Unable to abort " + request.ToString() + ", probably not running anymore");
+		}
+
 		void IHttpClient.Run(HttpRequest request, Action<HttpResponse> callback) {
 			request.Callback = callback;
 			EnqueueRequest(request);
@@ -63,8 +74,9 @@ namespace CloudBuilderLibrary
 			// Abort all pending requests
 			lock (this) {
 				Terminated = true;
-                foreach (HttpWebRequest req in RunningRequests) {
-					req.Abort();
+                foreach (RequestState state in RunningRequests) {
+					state.Aborted = true;
+					state.Request.Abort();
 				}
 				RunningRequests.Clear();
 			}
@@ -92,6 +104,7 @@ namespace CloudBuilderLibrary
 			public Stream StreamResponse;
 			public UnityHttpClient self;
 			public Action<RequestState, HttpResponse> FinishRequestOverride;
+			public bool Aborted;
 			public RequestState(UnityHttpClient inst, HttpRequest originalReq, HttpWebRequest req) {
 				self = inst;
 				BufferRead = new byte[BufferSize];
@@ -139,10 +152,8 @@ namespace CloudBuilderLibrary
 			AllDone.Set();
             lock (this) {
 				// No need to continue, dismiss the result
-				if (Terminated) {
-					return;
-				}
-				RunningRequests.Remove(state.Request);
+				if (Terminated) return;
+				RunningRequests.Remove(state);
 			}
 			// Prevent doing the next tasks
 			if (state.FinishRequestOverride != null) {
@@ -150,7 +161,7 @@ namespace CloudBuilderLibrary
 				return;
 			}
 			// Has failed?
-			if (response.ShouldBeRetried(state.OriginalRequest))  {
+			if (response.ShouldBeRetried(state.OriginalRequest) && !state.Aborted) {
 				// Will try again
 				int[] retryTimes = state.OriginalRequest.TimeBetweenTries;
 				if (CurrentRequestTryCount < retryTimes.Length) {
@@ -266,7 +277,7 @@ namespace CloudBuilderLibrary
 			state.FinishRequestOverride = bypassProcessNextRequest;
 			LogRequest(state);
 			lock (this) {
-				RunningRequests.Add(req);
+				RunningRequests.Add(state);
 			}
 
 			AllDone.Reset();
@@ -299,7 +310,6 @@ namespace CloudBuilderLibrary
 			}
 			catch (WebException e) {
 				if (e.Response == null) {
-					CloudBuilder.Log(LogLevel.Warning, "Failed to get response: " + e.Message);
 					FinishWithRequest(state, new HttpResponse(e));
 					return;
 				}
@@ -311,7 +321,6 @@ namespace CloudBuilderLibrary
 				return;
 			}
 			catch (Exception e) {
-				CloudBuilder.Log(LogLevel.Warning, "Failed to get response: " + e.Message);
 				FinishWithRequest(state, new HttpResponse(e));
 			}
 			if (state.Response != null) { state.Response.Close(); }
@@ -372,7 +381,7 @@ namespace CloudBuilderLibrary
 		private ManualResetEvent SynchronousRequestLock = new ManualResetEvent(false);
 		private bool IsProcessingRequest = false;
 		private List<HttpRequest> PendingRequests = new List<HttpRequest>();
-		private List<HttpWebRequest> RunningRequests = new List<HttpWebRequest>();
+		private List<RequestState> RunningRequests = new List<RequestState>();
 		// Others
 		private bool VerboseMode;
 		private int CurrentRequestTryCount = 0, CurrentLoadBalancerId = -1;

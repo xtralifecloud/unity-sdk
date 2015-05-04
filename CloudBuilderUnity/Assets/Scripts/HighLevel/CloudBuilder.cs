@@ -35,10 +35,25 @@ namespace CloudBuilderLibrary {
 		}
 
 		/**
+		 * Please call this in an override of OnApplicationFocus on your main object (e.g. scene).
+		 * http://docs.unity3d.com/ScriptReference/MonoBehaviour.OnApplicationFocus.html
+		 */
+		public static void OnApplicationFocus(bool focused) {
+			foreach (DomainEventLoop loop in RunningEventLoops) {
+				if (focused) {
+					loop.Resume();
+				}
+				else {
+					loop.Suspend();
+				}
+			}
+		}
+
+		/**
 		 * Shuts off the existing instance of the Clan and its descendent objects.
 		 * Works synchronously so might take a bit of time.
 		 */
-		public static void Terminate() {
+		public static void OnApplicationQuit() {
 			// Stop all running loops (in case the developer forgot to do it)
 			foreach (DomainEventLoop loop in RunningEventLoops) {
 				loop.Stop();

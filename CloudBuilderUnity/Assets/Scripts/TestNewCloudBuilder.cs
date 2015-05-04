@@ -22,11 +22,18 @@ public class TestNewCloudBuilder : MonoBehaviour {
 		);
 	}
 
-	void Update() {
+	void OnApplicationFocus(bool focused) {
+		if (EventLoop != null) {
+			if (focused)	EventLoop.Resume();
+			else			EventLoop.Suspend();
+		}
+		CloudBuilder.OnApplicationFocus(focused);
 	}
 
 	void OnApplicationQuit() {
-		DoTerminate();
+		if (EventLoop != null)
+			EventLoop.Stop();
+		CloudBuilder.OnApplicationQuit();
 	}
 
 	// Responding to events
@@ -64,12 +71,6 @@ public class TestNewCloudBuilder : MonoBehaviour {
 			else
 				Debug.Log("Get profile failed " + result.ToString());
 		});
-	}
-
-	public void DoTerminate() {
-		if (EventLoop != null)
-			EventLoop.Stop();
-		CloudBuilder.Terminate();
 	}
 
 	// Private

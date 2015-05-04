@@ -59,6 +59,12 @@ namespace CloudBuilderLibrary {
 		 */
 		public DomainEventLoop Stop() {
 			Stopped = true;
+			Resume();
+			// Stop and exit cleanly
+			if (CurrentRequest != null) {
+				Directory.HttpClient.Abort(CurrentRequest);
+				CurrentRequest = null;
+			}
 			return this;
 		}
 
@@ -66,7 +72,11 @@ namespace CloudBuilderLibrary {
 		 * Suspends the event thread.
 		 */
 		public DomainEventLoop Suspend() {
-			// TODO
+			Paused = true;
+			if (CurrentRequest != null) {
+				Directory.HttpClient.Abort(CurrentRequest);
+				CurrentRequest = null;
+			}
 			return this;
 		}
 
@@ -74,7 +84,10 @@ namespace CloudBuilderLibrary {
 		 * Resumes a suspended event thread.
 		 */
 		public DomainEventLoop Resume() {
-			// TODO
+			if (Paused) {
+				SynchronousRequestLock.Set();
+				Paused = false;
+			}
 			return this;
 		}
 
@@ -100,32 +113,51 @@ namespace CloudBuilderLibrary {
 					url.QueryParam("ack", messageToAcknowledge);
 				}
 
-				HttpRequest req = Gamer.MakeHttpRequest(url);
-				req.RetryPolicy = HttpRequest.Policy.NonpermanentErrors;
-				req.TimeoutMillisec = delay + 30000;
-				HttpResponse res = Directory.HttpClient.RunSynchronously(req);
-				lastResultPositive = true;
+				CurrentRequest = Gamer.MakeHttpRequest(url);
+				CurrentRequest.RetryPolicy = HttpRequest.Policy.NonpermanentErrors;
+				CurrentRequest.TimeoutMillisec = delay + 30000;
 
-				if (res.StatusCode == 200) {
-					messageToAcknowledge = res.BodyJson["id"];
-					if (ReceivedEvent != null) ReceivedEvent(this, new EventLoopArgs(res.BodyJson));
-				}
-				else if (res.StatusCode != 204) {
-					lastResultPositive = false;
-					// Non retriable error -> kill ourselves
-					if (res.StatusCode >= 400 && res.StatusCode < 500) {
-						Stopped = true;
+				Directory.HttpClient.Run(CurrentRequest, (HttpResponse res) => {
+					try {
+						lastResultPositive = true;
+
+						if (res.StatusCode == 200) {
+							messageToAcknowledge = res.BodyJson["id"];
+							if (ReceivedEvent != null) ReceivedEvent(this, new EventLoopArgs(res.BodyJson));
+						}
+						else if (res.StatusCode != 204) {
+							lastResultPositive = false;
+							// Non retriable error -> kill ourselves
+							if (res.StatusCode >= 400 && res.StatusCode < 500) {
+								Stopped = true;
+							}
+						}
 					}
+					catch (Exception e) {
+						CloudBuilder.Log(LogLevel.Error, "Exception happened in pop event loop: " + e.ToString());
+					}
+					SynchronousRequestLock.Set();
+				});
+
+				// Wait for request (synchronous)
+				SynchronousRequestLock.WaitOne();
+				CurrentRequest = null;
+
+				// Wait if suspended
+				if (Paused) {
+					SynchronousRequestLock.WaitOne();
+					lastResultPositive = true;
 				}
 			}
 			CloudBuilder.Log("Finished pop event thread " + CorrelationId);
 		}
 
 		private Random Random = new Random();
-		private bool Stopped = false, AlreadyStarted = false;
+		private AutoResetEvent SynchronousRequestLock = new AutoResetEvent(false);
+		private HttpRequest CurrentRequest;
+		private bool Stopped = false, AlreadyStarted = false, Paused = false;
 		private const int PopEventDelayAfterFailure = 2000, PopEventDelayThreadHold = 20000;
 		private Gamer Gamer;
 		#endregion
 	}
 }
-
