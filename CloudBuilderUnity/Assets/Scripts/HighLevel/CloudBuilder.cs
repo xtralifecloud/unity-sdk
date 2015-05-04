@@ -50,7 +50,7 @@ namespace CloudBuilderLibrary {
 		}
 		internal static void TEMP(string text) {
 			// All references to this should be removed at some point
-			Directory.Logger.Log (LogLevel.Verbose, text);
+			Directory.Logger.Log(LogLevel.Verbose, text);
 		}
 		internal static void StartLogTime(string description = null) {
 			InitialTicks = DateTime.UtcNow.Ticks;
@@ -58,7 +58,7 @@ namespace CloudBuilderLibrary {
 		}
 		internal static void LogTime(string description = null) {
 			TimeSpan span = new TimeSpan(DateTime.UtcNow.Ticks - InitialTicks);
-			Directory.Logger.Log(LogLevel.Verbose, "[" + span.TotalMilliseconds  + "/" + Thread.CurrentThread.ManagedThreadId + "] " + description);
+			Directory.Logger.Log(LogLevel.Verbose, "[" + span.TotalMilliseconds + "/" + Thread.CurrentThread.ManagedThreadId + "] " + description);
 		}
 		#endregion
 

@@ -41,6 +41,13 @@ namespace CloudBuilderLibrary
 			get; private set;
 		}
 
+		/**
+		 * Tells whether the network is only. Only works once an user is logged.
+		 */
+		public bool NetworkIsOnline {
+			get; private set;
+		}
+
 		#region Internal HTTP helpers
 		internal HttpRequest MakeUnauthenticatedHttpRequest(string path) {
 			HttpRequest result = new HttpRequest();
@@ -63,6 +70,21 @@ namespace CloudBuilderLibrary
 			HttpTimeoutMillis = httpTimeout * 1000;
 			PopEventDelay = eventLoopTimeout * 1000;
 			UserAgent = String.Format(Common.UserAgent, Directory.SystemFunctions.GetOsName(), Common.SdkVersion);
+			NetworkIsOnline = true;
+		}
+
+		/**
+		 * This function may be called many times with the same value.
+		 * It will only trigger the required work if the status actually changes.
+		 * @param currentState state of the connection (true=up, false=down).
+		 */
+		internal void NotifyNetworkState(bool currentState) {
+			// Nothing changes
+			if (currentState == NetworkIsOnline) {
+				return;
+			}
+
+			NetworkIsOnline = currentState;
 		}
 		#endregion
 

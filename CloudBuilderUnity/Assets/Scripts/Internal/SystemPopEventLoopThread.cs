@@ -69,7 +69,7 @@ namespace CloudBuilderLibrary {
 
 				// Notify connection status to main thread
 				if (IsMainDomain) {
-					User.NotifyNetworkState(lastResultPositive);
+					clan.NotifyNetworkState(lastResultPositive);
 				}
 			}
 			CloudBuilder.Log("Finished pop event thread " + CorrelationId);

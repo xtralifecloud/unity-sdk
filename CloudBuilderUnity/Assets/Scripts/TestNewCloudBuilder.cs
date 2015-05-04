@@ -5,7 +5,7 @@ using CloudBuilderLibrary;
 public class TestNewCloudBuilder : MonoBehaviour {
 	private Clan Clan;
 	private User User;
-	
+
 	// Use this for initialization
 	void Start() {
 		CloudBuilder.Setup(
@@ -20,10 +20,9 @@ public class TestNewCloudBuilder : MonoBehaviour {
 			eventLoopTimeout: 10
 		);
 	}
-	
+
 	// Update is called once per frame
 	void Update() {
-	
 	}
 
 	void OnApplicationQuit() {

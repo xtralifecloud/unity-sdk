@@ -6,18 +6,29 @@ namespace CloudBuilderLibrary
 {
 	public partial class User {
 
-		#region Public members
-		public LoginNetwork Network { get; private set; }
-		public string NetworkId { get; private set; }
+		public List<string> Domains { get; private set; }
 		public string GamerId { get; private set; }
 		public string GamerSecret { get; private set; }
+		public LoginNetwork Network { get; private set; }
+		public string NetworkId { get; private set; }
 		public DateTime RegisterTime { get; private set; }
-		public List<string> Domains { get; private set; }
 
 		public ProfileMethods Profile {
 			get { return profileMethods.Get(() => new ProfileMethods(this)); }
 		}
-		#endregion
+
+		/**
+		 * Subscribe to this to be notified when an event is raised for a given domain.
+		 * @param domain the domain for which to watch. Will start an event listening thread if not running already.
+		 * @param action an action to perform when an event is raised.
+		 * @return whether the event listener was added done properly.
+		 */
+		public ErrorCode RegisterEventListener(string domain, EventReceivedDelegate action) {
+			if (!CheckValidSync()) return ErrorCode.NotLoggedInAnymore;
+
+			RegisterPopEventLoop(domain);
+			return ErrorCode.Ok;
+		}
 
 		#region Internal
 		/**
@@ -32,7 +43,6 @@ namespace CloudBuilderLibrary
 			GamerId = gamerData["gamer_id"];
 			GamerSecret = gamerData["gamer_secret"];
 			RegisterTime = Common.ParseHttpDate(gamerData["registerTime"]);
-			NetworkIsOnline = true;
 			RegisterPopEventLoop(Common.PrivateDomain);
 		}
 
@@ -41,20 +51,6 @@ namespace CloudBuilderLibrary
 			string authInfo = GamerId + ":" + GamerSecret;
 			result.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
 			return result;
-		}
-
-		/**
-		 * This function may be called many times with the same value.
-		 * It will only trigger the required work if the status actually changes.
-		 * @param currentState state of the connection (true=up, false=down).
-		 */
-		internal void NotifyNetworkState(bool currentState) {
-			// Nothing changes
-			if (currentState == NetworkIsOnline) {
-				return;
-			}
-			
-			NetworkIsOnline = currentState;
 		}
 
 		/**
@@ -74,15 +70,20 @@ namespace CloudBuilderLibrary
 		#endregion
 
 		#region Private
-		#endregion
+		private bool CheckValid<T>(ResultHandler<T> calledOnFailure) {
+			if (!CheckValidSync()) {
+				Common.InvokeHandler(calledOnFailure, ErrorCode.NotLoggedInAnymore);
+				return false;
+			}
+			return true;
+		}
+		private bool CheckValidSync() {
+			return Clan.LoggedInUser == this;
+		}
 
-		#region Members
 		internal Clan Clan;
 		// About the logged in user
 		private Bundle GamerData;
-		public bool NetworkIsOnline {
-			get; private set;
-		}
 		private Dictionary<string, SystemPopEventLoopThread> PopEventThreads = new Dictionary<string, SystemPopEventLoopThread>();
 		private CachedMember<ProfileMethods> profileMethods;
 		#endregion

@@ -6,6 +6,10 @@ using System.Collections;
 
 namespace CloudBuilderLibrary
 {
+	public delegate void EventReceivedDelegate(EventReceivedArgs e);
 
-
+	public class EventReceivedArgs {
+		public string Domain;
+		public Bundle EventData;
+	}
 }
