@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace CloudBuilderLibrary
 {
-	public partial class User {
+	public sealed partial class Gamer {
 
 		public class ProfileMethods {
 
@@ -13,24 +13,24 @@ namespace CloudBuilderLibrary
 			 * method SetProfile.
 			 * @param done callback invoked when the login has finished, either successfully or not.
 			 */
-			public void Get(ResultHandler<UserProfile> done) {
+			public void Get(ResultHandler<GamerProfile> done) {
 				HttpRequest req = User.MakeHttpRequest("/v1/gamer/profile");
 				Directory.HttpClient.Run(req, (HttpResponse response) => {
-					if (response.HasFailed) {
+					if (Common.HasFailed(response)) {
 						Common.InvokeHandler(done, response);
 						return;
 					}
 
-					UserProfile profile = new UserProfile(response.BodyJson);
+					GamerProfile profile = new GamerProfile(response.BodyJson);
 					Common.InvokeHandler(done, profile, response.BodyJson);
 				});
 			}
 
 			#region Internal
-			internal ProfileMethods(User user) {
+			internal ProfileMethods(Gamer user) {
 				User = user;
 			}
-			private User User;
+			private Gamer User;
 			#endregion
 		}
 	}

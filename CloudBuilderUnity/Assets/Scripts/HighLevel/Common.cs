@@ -4,6 +4,18 @@ using System.Collections.Generic;
 namespace CloudBuilderLibrary
 {
 	public static class Common {
+		/**
+		 * Checks whether the response is negative (either it has failed completely,
+		 * either it has given an error status code. You should not attempt to process
+		 * the entity from the response if this method return yes. Just build a Result
+		 * object with the response in question, add an error message and invoke the
+		 * result handler with it.
+		 * @return whether the server response is considered as failed
+		 */
+		internal static bool HasFailed(HttpResponse response) {
+			return response.HasFailed || response.StatusCode < 200 || response.StatusCode >= 300;
+		}
+
 		internal static void InvokeHandler<T>(ResultHandler<T> handler, Result<T> result) {
 			if (handler != null) {
 				handler(result);

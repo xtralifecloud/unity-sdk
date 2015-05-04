@@ -4,9 +4,10 @@ using CloudBuilderLibrary;
 
 public class TestNewCloudBuilder : MonoBehaviour {
 	private Clan Clan;
-	private User User;
+	private DomainEventLoop EventLoop;
+	private Gamer Gamer;
 
-	// Use this for initialization
+	// Inherited
 	void Start() {
 		CloudBuilder.Setup(
 			done: (Result<Clan> result) => {
@@ -21,45 +22,64 @@ public class TestNewCloudBuilder : MonoBehaviour {
 		);
 	}
 
-	// Update is called once per frame
 	void Update() {
 	}
 
 	void OnApplicationQuit() {
-		CloudBuilder.Terminate();
+		DoTerminate();
 	}
 
+	// Responding to events
 	public void DoLogin() {
 		if (Clan == null) {
 			Debug.Log("Please wait for setup to finish first");
 			return;
 		}
 
-		Clan.LoginAnonymously((Result<User> result) => {
-			if (result.IsSuccessful) {
-				User = result.Value;
-				Debug.Log("Login done! Welcome " + User.GamerId + "!");
-			}
-			else
-				Debug.Log("Login failed :(");
-		});
+		Clan.LoginAnonymously(this.DidLogin);
+	}
+
+	public void DoRestoreSession() {
+		if (Clan == null) {
+			Debug.Log("Please wait for setup to finish first");
+			return;
+		}
+
+		Clan.ResumeSession(
+			done: this.DidLogin,
+			gamerId: "541429b6dc346f01314edef3",
+			gamerSecret: "6809888abc46b67105aea4c3583cd1e8e035a353"
+		);
 	}
 
 	public void DoGetProfile() {
-		if (User == null) {
+		if (Gamer == null) {
 			Debug.Log("Please log in first");
 			return;
 		}
 
-		User.Profile.Get((Result<UserProfile> result) => {
+		Gamer.Profile.Get((Result<GamerProfile> result) => {
 			if (result.IsSuccessful)
 				Debug.Log("Get profile done: " + result.Value.Properties.ToJson());
 			else
-				Debug.Log("Get profile failed");
+				Debug.Log("Get profile failed " + result.ToString());
 		});
 	}
 
 	public void DoTerminate() {
+		if (EventLoop != null)
+			EventLoop.Stop();
 		CloudBuilder.Terminate();
+	}
+
+	// Private
+	private void DidLogin(Result<Gamer> result) {
+		if (result.IsSuccessful) {
+			Gamer = result.Value;
+			EventLoop = new DomainEventLoop(Gamer).Start();
+			Debug.Log("Login done! Welcome " + Gamer.GamerId + "!");
+		}
+		else
+			Debug.Log("Login failed :( " + result.ToString());
 	}
 }

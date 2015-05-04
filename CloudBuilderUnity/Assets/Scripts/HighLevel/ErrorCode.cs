@@ -22,11 +22,9 @@ namespace CloudBuilderLibrary
 		NotSetup = 2100,
 		BadAppCredentials = 2101,
 		NotLoggedIn = 2102,
-		AlreadyLoggedIn = 2103,
 		BadParameters = 2104,
 		EventListenerAlreadyRegistered = 2105,
 		AlreadySetup = 2106,
-		NotLoggedInAnymore = 2107,
 
 		/// You shouldn't receive this error, it's just a convenient value
 		LastError
@@ -48,8 +46,6 @@ namespace CloudBuilderLibrary
 			case ErrorCode.NotSetup: return "Please call setup prior to issuing this command";
 			case ErrorCode.BadAppCredentials: return "Bad application credentials passed at Setup";
 			case ErrorCode.NotLoggedIn: return "You need be logged in to use this functionality";
-			case ErrorCode.NotLoggedInAnymore: return "You were logged out but continued to use the User object";
-			case ErrorCode.AlreadyLoggedIn: return "User already logged, call Logout before Login";
 			case ErrorCode.BadParameters: return "Parameters passed to the function are either out of constraints or missing some field";
 			case ErrorCode.EventListenerAlreadyRegistered: return "An event listener for this domain is already registered";
 			case ErrorCode.AlreadySetup: return "Cannot set up twice";

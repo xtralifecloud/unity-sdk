@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace CloudBuilderLibrary
 {
-	public class Result <T> {
+	public sealed class Result <T> {
 		public ErrorCode ErrorCode;
 		public string ErrorInformation;
 		public bool IsSuccessful {

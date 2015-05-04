@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace CloudBuilderLibrary {
 	public static class CloudBuilder {
@@ -38,6 +39,10 @@ namespace CloudBuilderLibrary {
 		 * Works synchronously so might take a bit of time.
 		 */
 		public static void Terminate() {
+			// Stop all running loops (in case the developer forgot to do it)
+			foreach (DomainEventLoop loop in RunningEventLoops) {
+				loop.Stop();
+			}
 			Directory.HttpClient.Terminate();
 		}
 
@@ -60,6 +65,9 @@ namespace CloudBuilderLibrary {
 			TimeSpan span = new TimeSpan(DateTime.UtcNow.Ticks - InitialTicks);
 			Directory.Logger.Log(LogLevel.Verbose, "[" + span.TotalMilliseconds + "/" + Thread.CurrentThread.ManagedThreadId + "] " + description);
 		}
+
+		// For cleanup upon terminate
+		internal static List<DomainEventLoop> RunningEventLoops = new List<DomainEventLoop>();
 		#endregion
 
 		#region Private

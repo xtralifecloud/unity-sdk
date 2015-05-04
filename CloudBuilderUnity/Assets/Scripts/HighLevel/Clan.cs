@@ -4,48 +4,53 @@ using System.Collections.Generic;
 
 namespace CloudBuilderLibrary
 {
-	public class Clan {
+	public sealed class Clan {
 
 		/**
 		 * Logs the current user in anonymously.
 		 * @param done callback invoked when the login has finished, either successfully or not.
 		 */
-		public void LoginAnonymously(ResultHandler<User> done) {
-			if (LoggedInUser != null) {
-				Common.InvokeHandler(done, ErrorCode.AlreadyLoggedIn);
-				return;
-			}
-
+		public void LoginAnonymously(ResultHandler<Gamer> done) {
 			Bundle config = Bundle.CreateObject();
 			config["device"] = Directory.SystemFunctions.CollectDeviceInformation();
 			
 			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/login/anonymous");
 			req.BodyJson = config;
 			Directory.HttpClient.Run(req, (HttpResponse response) => {
-				if (response.HasFailed) {
+				if (Common.HasFailed(response)) {
 					Common.InvokeHandler(done, response);
 					return;
 				}
 
-				LoggedInUser = new User(this, response.BodyJson);
-				Common.InvokeHandler(done, LoggedInUser, response.BodyJson);
+				Gamer gamer = new Gamer(this, response.BodyJson);
+				Common.InvokeHandler(done, gamer, response.BodyJson);
 			});
 		}
 
 		/**
-		 * As the Clan allows only one logged in user at a time (you must call Logout before being able to log again),
-		 * you can use this property to fetch the currently logged in user. You can also use it as a test: it will
-		 * return null in case the user is not logged in.
+		 * Logs back in with existing credentials. Should be used for users who have already been logged in
+		 * previously and the application has been quit for instance.
+		 * @param gamerId credentials of the previous session (Gamer.GamerId)
+		 * @param gamerSecret credentials of the previous session (Gamer.GamerSecret)
 		 */
-		public User LoggedInUser {
-			get; private set;
-		}
+		public void ResumeSession(ResultHandler<Gamer> done, string gamerId, string gamerSecret) {
+			Bundle config = Bundle.CreateObject();
+			config["network"] = "anonymous";
+			config["id"] = gamerId;
+			config["secret"] = gamerSecret;
+			config["device"] = Directory.SystemFunctions.CollectDeviceInformation();
 
-		/**
-		 * Tells whether the network is only. Only works once an user is logged.
-		 */
-		public bool NetworkIsOnline {
-			get; private set;
+			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/login");
+			req.BodyJson = config;
+			Directory.HttpClient.Run(req, (HttpResponse response) => {
+				if (Common.HasFailed(response)) {
+					Common.InvokeHandler(done, response);
+					return;
+				}
+
+				Gamer gamer = new Gamer(this, response.BodyJson);
+				Common.InvokeHandler(done, gamer, response.BodyJson);
+			});
 		}
 
 		#region Internal HTTP helpers
@@ -70,21 +75,6 @@ namespace CloudBuilderLibrary
 			HttpTimeoutMillis = httpTimeout * 1000;
 			PopEventDelay = eventLoopTimeout * 1000;
 			UserAgent = String.Format(Common.UserAgent, Directory.SystemFunctions.GetOsName(), Common.SdkVersion);
-			NetworkIsOnline = true;
-		}
-
-		/**
-		 * This function may be called many times with the same value.
-		 * It will only trigger the required work if the status actually changes.
-		 * @param currentState state of the connection (true=up, false=down).
-		 */
-		internal void NotifyNetworkState(bool currentState) {
-			// Nothing changes
-			if (currentState == NetworkIsOnline) {
-				return;
-			}
-
-			NetworkIsOnline = currentState;
 		}
 		#endregion
 

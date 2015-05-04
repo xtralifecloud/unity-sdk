@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace CloudBuilderLibrary
 {
-	public class UserProfile {
+	public sealed class GamerProfile {
 		/**
 		 * Might contain the following:
 			{
@@ -15,7 +15,7 @@ namespace CloudBuilderLibrary
 		 */
 		public Bundle Properties;
 
-		internal UserProfile(Bundle data) {
+		internal GamerProfile(Bundle data) {
 			Properties = data["properties"];
 		}
 	}
