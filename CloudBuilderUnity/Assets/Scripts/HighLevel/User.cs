@@ -4,34 +4,7 @@ using System.Collections.Generic;
 
 namespace CloudBuilderLibrary
 {
-	public class User {
-
-		public class ProfileMethods {
-
-			/**
-			 * Method used to retrieve some optional data of the logged in profile previously set by
-			 * method SetProfile.
-			 * @param done callback invoked when the login has finished, either successfully or not.
-			 */
-			public void Get(Action<CloudResult, UserProfile> done) {
-				HttpRequest req = User.MakeHttpRequest("/v1/gamer/profile");
-				Directory.HttpClient.Run(req, (HttpResponse response) => {
-					CloudResult result = new CloudResult(response);
-					if (response.HasFailed) {
-						Common.InvokeHandler(done, result);
-						return;
-					}
-					
-					UserProfile profile = new UserProfile(result.Data);
-					Common.InvokeHandler(done, result, profile);
-				});
-			}
-
-			internal ProfileMethods(User user) {
-				User = user;
-			}
-			private User User;
-		}
+	public partial class User {
 
 		public void RegisterPopEventLoop(string domain) {
 			SystemPopEventLoopThread thread;
@@ -54,7 +27,7 @@ namespace CloudBuilderLibrary
 		public List<string> Domains { get; private set; }
 
 		public ProfileMethods Profile {
-			get { return new ProfileMethods(this); }
+			get { return profileMethods.Get(() => new ProfileMethods(this)); }
 		}
 		#endregion
 
@@ -87,6 +60,7 @@ namespace CloudBuilderLibrary
 
 		#region Members
 		internal Clan Clan;
+		private CachedMember<ProfileMethods> profileMethods;
 		// About the logged in user
 		private Bundle GamerData;
 		private Dictionary<string, SystemPopEventLoopThread> PopEventThreads = new Dictionary<string, SystemPopEventLoopThread>();

@@ -5,19 +5,19 @@ using CloudBuilderLibrary;
 public class TestNewCloudBuilder : MonoBehaviour {
 	private Clan Clan;
 	private User User;
-
+	
 	// Use this for initialization
 	void Start() {
 		CloudBuilder.Setup(
+			done: (Result<Clan> result) => {
+				Clan = result.Value;
+				Debug.Log("Setup done");
+			},
 			apiKey: "cloudbuilder-key",
 			apiSecret: "azerty",
 			environment: CloudBuilder.SandboxEnvironment,
 			httpVerbose: true,
-			eventLoopTimeout: 10,
-			done: (CloudResult result, Clan clan) => {
-				Clan = clan;
-				Debug.Log("Setup done");
-			}
+			eventLoopTimeout: 10
 		);
 	}
 	
@@ -36,10 +36,10 @@ public class TestNewCloudBuilder : MonoBehaviour {
 			return;
 		}
 
-		Clan.LoginAnonymously((CloudResult result, User user) => {
-			if (result.ErrorCode == ErrorCode.enNoErr) {
-				User = user;
-				Debug.Log("Login done! Welcome " + user.GamerId + "!");
+		Clan.LoginAnonymously((Result<User> result) => {
+			if (result.IsSuccessful) {
+				User = result.Value;
+				Debug.Log("Login done! Welcome " + User.GamerId + "!");
 			}
 			else
 				Debug.Log("Login failed :(");
@@ -52,8 +52,11 @@ public class TestNewCloudBuilder : MonoBehaviour {
 			return;
 		}
 
-		User.Profile.Get((CloudResult result, UserProfile profile) => {
-			Debug.Log("Get profile done: " + profile.Properties.ToJson());
+		User.Profile.Get((Result<UserProfile> result) => {
+			if (result.IsSuccessful)
+				Debug.Log("Get profile done: " + result.Value.Properties.ToJson());
+			else
+				Debug.Log("Get profile failed");
 		});
 	}
 

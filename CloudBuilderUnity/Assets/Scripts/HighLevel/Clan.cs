@@ -10,7 +10,7 @@ namespace CloudBuilderLibrary
 		 * Logs the current user in anonymously.
 		 * @param done callback invoked when the login has finished, either successfully or not.
 		 */
-		public void LoginAnonymously(Action<CloudResult, User> done) {
+		public void LoginAnonymously(ResultHandler<User> done) {
 			if (LoggedInUser != null) {
 				Common.InvokeHandler(done, ErrorCode.enAlreadyLogged);
 				return;
@@ -22,14 +22,13 @@ namespace CloudBuilderLibrary
 			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/login/anonymous");
 			req.BodyJson = config;
 			Directory.HttpClient.Run(req, (HttpResponse response) => {
-				CloudResult result = new CloudResult(response);
 				if (response.HasFailed) {
-					Common.InvokeHandler(done, result);
+					Common.InvokeHandler(done, response);
 					return;
 				}
 
-				LoggedInUser = new User(this, result.Data);
-				Common.InvokeHandler(done, result, LoggedInUser);
+				LoggedInUser = new User(this, response.BodyJson);
+				Common.InvokeHandler(done, LoggedInUser, response.BodyJson);
 			});
 		}
 

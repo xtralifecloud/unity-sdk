@@ -22,7 +22,7 @@ namespace CloudBuilderLibrary {
 		 * @param eventLoopTimeout Sets a custom timeout in seconds for the long polling event loop. Should be used with care
 		 *	 and set to a high value (at least 60). Defaults to 590 (~10 min).
 		 */
-		public static void Setup(Action<CloudResult, Clan> done, string apiKey, string apiSecret, string environment = SandboxEnvironment, bool httpVerbose = false, int httpTimeout = DefaultTimeoutSec, int eventLoopTimeout = DefaultPopEventTimeoutSec) {
+		public static void Setup(ResultHandler<Clan> done, string apiKey, string apiSecret, string environment = SandboxEnvironment, bool httpVerbose = false, int httpTimeout = DefaultTimeoutSec, int eventLoopTimeout = DefaultPopEventTimeoutSec) {
 			lock (SpinLock) {
 				if (ClanInstance != null) {
 					Common.InvokeHandler(done, ErrorCode.enSetupAlreadyCalled);
