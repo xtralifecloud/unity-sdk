@@ -6,28 +6,13 @@ namespace CloudBuilderLibrary
 {
 	public class Clan {
 
-		public class LoginAnonymouslyParams {
-			public Action<CloudResult, User> done;
-		}
-
-		internal Clan(string apiKey, string apiSecret, string environment, bool httpVerbose, int httpTimeout, int eventLoopTimeout) {
-			this.ApiKey = apiKey;
-			this.ApiSecret = apiSecret;
-			this.Server = environment;
-			LoadBalancerCount = 2;
-			Directory.HttpClient.VerboseMode = httpVerbose;
-			HttpTimeoutMillis = httpTimeout * 1000;
-			PopEventDelay = eventLoopTimeout * 1000;
-			NetworkIsOnline = true;
-		}
-
 		/**
 		 * Logs the current user in anonymously.
 		 * @param done callback invoked when the login has finished, either successfully or not.
 		 */
-		public void LoginAnonymously(LoginAnonymouslyParams param) {
+		public void LoginAnonymously(Action<CloudResult, User> done) {
 			if (LoggedInUser != null) {
-				Common.InvokeHandler(param.done, ErrorCode.enAlreadyLogged);
+				Common.InvokeHandler(done, ErrorCode.enAlreadyLogged);
 				return;
 			}
 
@@ -39,12 +24,12 @@ namespace CloudBuilderLibrary
 			Directory.HttpClient.Run(req, (HttpResponse response) => {
 				CloudResult result = new CloudResult(response);
 				if (response.HasFailed) {
-					Common.InvokeHandler(param.done, result);
+					Common.InvokeHandler(done, result);
 					return;
 				}
 
 				LoggedInUser = new User(this, result.Data);
-				Common.InvokeHandler(param.done, result, LoggedInUser);
+				Common.InvokeHandler(done, result, LoggedInUser);
 			});
 		}
 
@@ -61,6 +46,16 @@ namespace CloudBuilderLibrary
 		#endregion
 
 		#region Internal
+		internal Clan(string apiKey, string apiSecret, string environment, bool httpVerbose, int httpTimeout, int eventLoopTimeout) {
+			this.ApiKey = apiKey;
+			this.ApiSecret = apiSecret;
+			this.Server = environment;
+			LoadBalancerCount = 2;
+			Directory.HttpClient.VerboseMode = httpVerbose;
+			HttpTimeoutMillis = httpTimeout * 1000;
+			PopEventDelay = eventLoopTimeout * 1000;
+			NetworkIsOnline = true;
+		}
 		#endregion
 
 		#region Members

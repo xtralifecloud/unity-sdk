@@ -13,17 +13,17 @@ namespace CloudBuilderLibrary
 			 * method SetProfile.
 			 * @param done callback invoked when the login has finished, either successfully or not.
 			 */
-			public void Get(GetProfileParams param) {
+			public void Get(Action<CloudResult, UserProfile> done) {
 				HttpRequest req = User.MakeHttpRequest("/v1/gamer/profile");
 				Directory.HttpClient.Run(req, (HttpResponse response) => {
 					CloudResult result = new CloudResult(response);
 					if (response.HasFailed) {
-						Common.InvokeHandler(param.done, result);
+						Common.InvokeHandler(done, result);
 						return;
 					}
 					
 					UserProfile profile = new UserProfile(result.Data);
-					Common.InvokeHandler(param.done, result, profile);
+					Common.InvokeHandler(done, result, profile);
 				});
 			}
 
@@ -55,12 +55,6 @@ namespace CloudBuilderLibrary
 
 		public ProfileMethods Profile {
 			get { return new ProfileMethods(this); }
-		}
-		#endregion
-
-		#region Function parameter classes
-		public class GetProfileParams {
-			public Action<CloudResult, UserProfile> done;
 		}
 		#endregion
 

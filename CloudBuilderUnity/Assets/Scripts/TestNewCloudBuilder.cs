@@ -8,17 +8,17 @@ public class TestNewCloudBuilder : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
-		CloudBuilder.Setup(new CloudBuilder.SetupParams {
-			apiKey = "cloudbuilder-key",
-			apiSecret = "azerty",
-			environment = CloudBuilder.SandboxEnvironment,
-			httpVerbose = true,
-			eventLoopTimeout = 10,
-			done = (CloudResult result, Clan clan) => {
+		CloudBuilder.Setup(
+			apiKey: "cloudbuilder-key",
+			apiSecret: "azerty",
+			environment: CloudBuilder.SandboxEnvironment,
+			httpVerbose: true,
+			eventLoopTimeout: 10,
+			done: (CloudResult result, Clan clan) => {
 				Clan = clan;
 				Debug.Log("Setup done");
 			}
-		});
+		);
 	}
 	
 	// Update is called once per frame
@@ -36,15 +36,13 @@ public class TestNewCloudBuilder : MonoBehaviour {
 			return;
 		}
 
-		Clan.LoginAnonymously(new Clan.LoginAnonymouslyParams {
-			done = (CloudResult result, User user) => {
-				if (result.ErrorCode == ErrorCode.enNoErr) {
-					User = user;
-					Debug.Log("Login done! Welcome " + user.GamerId + "!");
-				}
-				else
-					Debug.Log("Login failed :(");
+		Clan.LoginAnonymously((CloudResult result, User user) => {
+			if (result.ErrorCode == ErrorCode.enNoErr) {
+				User = user;
+				Debug.Log("Login done! Welcome " + user.GamerId + "!");
 			}
+			else
+				Debug.Log("Login failed :(");
 		});
 	}
 
@@ -54,10 +52,8 @@ public class TestNewCloudBuilder : MonoBehaviour {
 			return;
 		}
 
-		User.Profile.Get(new User.GetProfileParams {
-			done = (CloudResult result, UserProfile profile) => {
-				Debug.Log("Get profile done: " + profile.Properties.ToJson());
-			}
+		User.Profile.Get((CloudResult result, UserProfile profile) => {
+			Debug.Log("Get profile done: " + profile.Properties.ToJson());
 		});
 	}
 
