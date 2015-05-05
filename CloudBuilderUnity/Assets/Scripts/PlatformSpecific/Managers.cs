@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace CloudBuilderLibrary
 {
-	internal static class Directory
+	internal static class Managers
 	{
-		static Directory() {
+		static Managers() {
 			HttpClient = new UnityHttpClient();
 			Logger = UnityLogger.Instance;
 			SystemFunctions = new UnitySystemFunctions();

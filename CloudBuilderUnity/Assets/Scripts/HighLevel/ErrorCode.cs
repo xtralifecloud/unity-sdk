@@ -25,6 +25,8 @@ namespace CloudBuilderLibrary
 		BadParameters = 2104,
 		EventListenerAlreadyRegistered = 2105,
 		AlreadySetup = 2106,
+		SocialNetworkError = 2107,
+		LoginCanceled = 2108,
 
 		/// You shouldn't receive this error, it's just a convenient value
 		LastError
@@ -49,6 +51,8 @@ namespace CloudBuilderLibrary
 			case ErrorCode.BadParameters: return "Parameters passed to the function are either out of constraints or missing some field";
 			case ErrorCode.EventListenerAlreadyRegistered: return "An event listener for this domain is already registered";
 			case ErrorCode.AlreadySetup: return "Cannot set up twice";
+			case ErrorCode.SocialNetworkError: return "Error with a social network";
+			case ErrorCode.LoginCanceled: return "The login was canceled by the player";
 			}
 			return "No description available";
 		}

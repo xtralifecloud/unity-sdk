@@ -16,7 +16,7 @@ namespace CloudBuilderLibrary
 		public Bundle Properties;
 
 		internal GamerProfile(Bundle data) {
-			Properties = data["properties"];
+			Properties = data;
 		}
 	}
 	

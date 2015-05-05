@@ -46,7 +46,7 @@ namespace CloudBuilderLibrary
 		public static implicit operator double(Bundle b) { return b.AsDouble(); }
 		public static implicit operator string(Bundle b) { return b.AsString(); }
 
-		public virtual Bundle this [string key] {
+		public virtual Bundle this[string key] {
 			get { return Has(key) ? Dictionary[key] : Empty; }
 			set { Dictionary[key] = value; }
 		}
@@ -156,6 +156,12 @@ namespace CloudBuilderLibrary
 				case DataType.String: return stringValue;
 			}
 			return defaultValue;
+		}
+		public List<Bundle> AsArray() {
+			return Array;
+		}
+		public Dictionary<string, Bundle> AsDictionary() {
+			return Dictionary;
 		}
 
 		// Json methods

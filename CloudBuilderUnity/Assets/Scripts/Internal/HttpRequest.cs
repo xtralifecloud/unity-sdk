@@ -17,6 +17,10 @@ namespace CloudBuilderLibrary {
 		public Bundle BodyJson {
 			set { Body = value.ToJson(); Headers["Content-Type"] = "application/json"; }
 		}
+		/**
+		 * Set to perform the request immediately, regardless of a request already being run.
+		 */
+		public bool DoNotEnqueue;
 		public bool HasBody {
 			get { return Body != null; }
 		}

@@ -60,8 +60,8 @@ namespace CloudBuilderLibrary
 			public HttpWebResponse Response;
 			public Stream StreamResponse;
 			public UnityHttpClient self;
-			public Action<RequestState, HttpResponse> FinishRequestOverride;
 			public bool Aborted;
+			public int TryCount = 0;
 			public RequestState(UnityHttpClient inst, HttpRequest originalReq, HttpWebRequest req) {
 				self = inst;
 				BufferRead = new byte[BufferSize];
@@ -90,14 +90,15 @@ namespace CloudBuilderLibrary
 					return;
 				}
 				// Need to enqueue process?
-				if (IsProcessingRequest) {
-					PendingRequests.Add(req);
-					return;
+				if (!req.DoNotEnqueue) {
+					if (IsProcessingRequest) {
+						PendingRequests.Add(req);
+						return;
+					}
+					IsProcessingRequest = true;
 				}
-				IsProcessingRequest = true;
 			}
 			// Or start immediately (if the previous request failed, use the last delay directly)
-			CurrentRequestTryCount = LastRequestFailed ? req.TimeBetweenTries.Length - 1 : 0;
 			ProcessRequest(req);
 		}
 
@@ -112,21 +113,15 @@ namespace CloudBuilderLibrary
 				if (Terminated) return;
 				RunningRequests.Remove(state);
 			}
-			// Prevent doing the next tasks
-			if (state.FinishRequestOverride != null) {
-				state.FinishRequestOverride(state, response);
-				return;
-			}
 			// Has failed?
 			if (response.ShouldBeRetried(state.OriginalRequest) && !state.Aborted) {
 				// Will try again
 				int[] retryTimes = state.OriginalRequest.TimeBetweenTries;
-				if (CurrentRequestTryCount < retryTimes.Length) {
-					CloudBuilder.Log(LogLevel.Warning, "[" + state.RequestId + "] Request failed, retrying in " + retryTimes[CurrentRequestTryCount] + "ms.");
-					Thread.Sleep(retryTimes[CurrentRequestTryCount]);
-					CurrentRequestTryCount += 1;
+				if (state.TryCount < retryTimes.Length) {
+					CloudBuilder.Log(LogLevel.Warning, "[" + state.RequestId + "] Request failed, retrying in " + retryTimes[state.TryCount] + "ms.");
+					Thread.Sleep(retryTimes[state.TryCount]);
 					ChooseLoadBalancer();
-					ProcessRequest(state.OriginalRequest);
+					ProcessRequest(state.OriginalRequest, state.TryCount + 1);
 					return;
 				}
 				// Maximum failure count reached, will simply process the next request
@@ -144,11 +139,13 @@ namespace CloudBuilderLibrary
 					CloudBuilder.Log(LogLevel.Error, "Error happened when processing the response: " + e.ToString());
 				}
 			}
+			// Was independent?
+			if (state.OriginalRequest.DoNotEnqueue) return;
 			
 			// Process next request
 			lock (this) {
 				// Note: currently another request is only launched after synchronously processed by the callback. This behavior is slower but might be safer.
-				if (PendingRequests.Count == 0) {
+				if (!state.OriginalRequest.DoNotEnqueue && PendingRequests.Count == 0) {
 					IsProcessingRequest = false;
 					return;
 				}
@@ -215,7 +212,7 @@ namespace CloudBuilderLibrary
 		}
 
 		/** Processes a single request asynchronously. Will continue to FinishWithRequest in some way. */
-		private void ProcessRequest(HttpRequest request, Action<RequestState, HttpResponse> bypassProcessNextRequest = null) {
+		private void ProcessRequest(HttpRequest request, int startupTryCount) {
 			String url = request.Url.Replace("[id]", CurrentLoadBalancerId.ToString("00"));
 			HttpWebRequest req = HttpWebRequest.Create(url) as HttpWebRequest;
 
@@ -231,7 +228,7 @@ namespace CloudBuilderLibrary
 
 			// Configure & perform the request
 			RequestState state = new RequestState(this, request, req);
-			state.FinishRequestOverride = bypassProcessNextRequest;
+			state.TryCount = startupTryCount;
 			LogRequest(state);
 			lock (this) {
 				RunningRequests.Add(state);
@@ -248,6 +245,10 @@ namespace CloudBuilderLibrary
 			if (request.TimeoutMillisec > 0) {
 				ThreadPool.RegisterWaitForSingleObject(AllDone, new WaitOrTimerCallback(TimeoutCallback), state, request.TimeoutMillisec, true);
 			}
+		}
+
+		private void ProcessRequest(HttpRequest request) {
+			ProcessRequest(request, LastRequestFailed ? request.TimeBetweenTries.Length - 1 : 0);
 		}
 
 		/** Called when a response has been received by the HttpWebRequest. */
@@ -335,12 +336,12 @@ namespace CloudBuilderLibrary
 
 		// Request processing
 		private ManualResetEvent AllDone = new ManualResetEvent(false);
-		private bool IsProcessingRequest = false;
+		private bool IsProcessingRequest = false;	// Only affected for enqueued requests
 		private List<HttpRequest> PendingRequests = new List<HttpRequest>();
 		private List<RequestState> RunningRequests = new List<RequestState>();
 		// Others
 		private bool VerboseMode;
-		private int CurrentRequestTryCount = 0, CurrentLoadBalancerId = -1;
+		private int CurrentLoadBalancerId = -1;
 		private bool LastRequestFailed;
 		private System.Random Random = new System.Random();
 		private int RequestCount = 0;

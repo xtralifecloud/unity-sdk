@@ -17,10 +17,10 @@ public class TestNewCloudBuilder : MonoBehaviour {
 			},
 			apiKey: "cloudbuilder-key",
 			apiSecret: "azerty",
-			environment: CloudBuilder.SandboxEnvironment,
-			httpVerbose: true,
-			eventLoopTimeout: 10
+//			environment: "http://10.211.55.2:2000/",
+			httpVerbose: true
 		);
+		FB.Init(() => Debug.Log("FB Inited"), "296632777192084");
 	}
 
 	void OnApplicationFocus(bool focused) {
@@ -39,24 +39,18 @@ public class TestNewCloudBuilder : MonoBehaviour {
 
 	// Responding to events
 	public void DoLogin() {
-		if (Clan == null) {
-			Debug.Log("Please wait for setup to finish first");
-			return;
-		}
-
 		Clan.LoginAnonymously(done: this.DidLogin);
 	}
 
-	public void DoRestoreSession() {
-		if (Clan == null) {
-			Debug.Log("Please wait for setup to finish first");
-			return;
-		}
+	public void DoLoginWithFacebook() {
+		Clan.LoginWithFacebook(done: this.DidLogin);
+	}
 
+	public void DoRestoreSession() {
 		Clan.ResumeSession(
 			done: this.DidLogin,
-			gamerId: "5547438f454c74f11ca98177",
-			gamerSecret: "e785694c0607c38f5674aa1621da9016c8b52262"
+			gamerId: "55481f4ed9768e9b3d31864b",
+			gamerSecret: "4102d2295329d73c58f96347f42790b320b5b1f1"
 		);
 	}
 
@@ -74,10 +68,35 @@ public class TestNewCloudBuilder : MonoBehaviour {
 		});
 	}
 
+	public void DoSetProfile() {
+		if (Gamer == null) {
+			Debug.Log("Please log in first");
+			return;
+		}
+
+		Bundle profile = Bundle.CreateObject();
+		profile["displayName"] = "Florian du clan";
+
+		Gamer.Profile.Set(
+			done: (Result<bool> result) => {
+				Debug.Log("Profile set: " + result);
+			},
+			data: profile
+		);
+	}
+
+	public void DoGetFacebookFriends() {
+		Gamer.FetchFacebookFriends(done: (Result<bool> result) => {
+			Debug.Log("Fetched fb friends: " + result.ToString());
+		});
+	}
+
 	// Private
 	private void DidLogin(Result<Gamer> result) {
 		if (result.IsSuccessful) {
 			Gamer = result.Value;
+			// Run an event loop
+			if (EventLoop != null) EventLoop.Stop();
 			EventLoop = new DomainEventLoop(Gamer).Start();
 			Debug.Log("Login done! Welcome " + Gamer.GamerId + "!");
 		}

@@ -24,12 +24,13 @@ namespace CloudBuilderLibrary
 		internal Result(HttpResponse response, string failureDescription = null) {
 			Json = response.BodyJson;
 			HttpStatusCode = response.StatusCode;
-			ErrorInformation = failureDescription;
 			if (response.HasFailed) {
 				ErrorCode = ErrorCode.NetworkError;
+				ErrorInformation = failureDescription;
 			}
 			else if (response.StatusCode < 200 || response.StatusCode >= 300) {
 				ErrorCode = ErrorCode.ServerError;
+				ErrorInformation = failureDescription;
 			}
 			else {
 				ErrorCode = ErrorCode.Ok;

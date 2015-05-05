@@ -64,7 +64,7 @@ namespace CloudBuilderLibrary {
 			Resume();
 			// Stop and exit cleanly
 			if (CurrentRequest != null) {
-				Directory.HttpClient.Abort(CurrentRequest);
+				Managers.HttpClient.Abort(CurrentRequest);
 				CurrentRequest = null;
 			}
 			return this;
@@ -76,7 +76,7 @@ namespace CloudBuilderLibrary {
 		public DomainEventLoop Suspend() {
 			Paused = true;
 			if (CurrentRequest != null) {
-				Directory.HttpClient.Abort(CurrentRequest);
+				Managers.HttpClient.Abort(CurrentRequest);
 				CurrentRequest = null;
 			}
 			return this;
@@ -118,8 +118,9 @@ namespace CloudBuilderLibrary {
 				CurrentRequest = Gamer.MakeHttpRequest(url);
 				CurrentRequest.RetryPolicy = HttpRequest.Policy.NonpermanentErrors;
 				CurrentRequest.TimeoutMillisec = delay + 30000;
+				CurrentRequest.DoNotEnqueue = true;
 
-				Directory.HttpClient.Run(CurrentRequest, (HttpResponse res) => {
+				Managers.HttpClient.Run(CurrentRequest, (HttpResponse res) => {
 					try {
 						lastResultPositive = true;
 

@@ -58,19 +58,19 @@ namespace CloudBuilderLibrary {
 			foreach (DomainEventLoop loop in RunningEventLoops) {
 				loop.Stop();
 			}
-			Directory.HttpClient.Terminate();
+			Managers.HttpClient.Terminate();
 		}
 
 		#region Internal
 		internal static void Log(string text) {
-			Directory.Logger.Log(LogLevel.Verbose, text);
+			Managers.Logger.Log(LogLevel.Verbose, text);
 		}
 		internal static void Log(LogLevel level, string text) {
-			Directory.Logger.Log(level, text);
+			Managers.Logger.Log(level, text);
 		}
 		internal static void TEMP(string text) {
 			// All references to this should be removed at some point
-			Directory.Logger.Log(LogLevel.Verbose, text);
+			Managers.Logger.Log(LogLevel.Verbose, text);
 		}
 		internal static void StartLogTime(string description = null) {
 			InitialTicks = DateTime.UtcNow.Ticks;
@@ -78,7 +78,7 @@ namespace CloudBuilderLibrary {
 		}
 		internal static void LogTime(string description = null) {
 			TimeSpan span = new TimeSpan(DateTime.UtcNow.Ticks - InitialTicks);
-			Directory.Logger.Log(LogLevel.Verbose, "[" + span.TotalMilliseconds + "/" + Thread.CurrentThread.ManagedThreadId + "] " + description);
+			Managers.Logger.Log(LogLevel.Verbose, "[" + span.TotalMilliseconds + "/" + Thread.CurrentThread.ManagedThreadId + "] " + description);
 		}
 
 		// For cleanup upon terminate
