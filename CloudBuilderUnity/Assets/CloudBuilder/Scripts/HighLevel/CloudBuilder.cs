@@ -6,10 +6,6 @@ using System.Collections.Generic;
 
 namespace CloudBuilderLibrary {
 	public static class CloudBuilder {
-		// TODO are these good in there?
-		public const string DevEnvironment = "http://195.154.227.44:8000";
-		public const string SandboxEnvironment = "https://sandbox-api[id].clanofthecloud.mobi";
-		public const string ProdEnvironment = "https://prod-api[id].clanofthecloud.mobi";
 
 		/**
 		 * Call this at the very beginning to start using the library.
@@ -38,7 +34,7 @@ namespace CloudBuilderLibrary {
 		 * Please call this in an override of OnApplicationFocus on your main object (e.g. scene).
 		 * http://docs.unity3d.com/ScriptReference/MonoBehaviour.OnApplicationFocus.html
 		 */
-		public static void OnApplicationFocus(bool focused) {
+		internal static void OnApplicationFocus(bool focused) {
 			foreach (DomainEventLoop loop in RunningEventLoops) {
 				if (focused) {
 					loop.Resume();
@@ -53,7 +49,7 @@ namespace CloudBuilderLibrary {
 		 * Shuts off the existing instance of the Clan and its descendent objects.
 		 * Works synchronously so might take a bit of time.
 		 */
-		public static void OnApplicationQuit() {
+		internal static void OnApplicationQuit() {
 			// Stop all running loops (in case the developer forgot to do it)
 			foreach (DomainEventLoop loop in RunningEventLoops) {
 				loop.Stop();
@@ -61,7 +57,6 @@ namespace CloudBuilderLibrary {
 			Managers.HttpClient.Terminate();
 		}
 
-		#region Internal
 		internal static void Log(string text) {
 			Managers.Logger.Log(LogLevel.Verbose, text);
 		}
@@ -83,7 +78,6 @@ namespace CloudBuilderLibrary {
 
 		// For cleanup upon terminate
 		internal static List<DomainEventLoop> RunningEventLoops = new List<DomainEventLoop>();
-		#endregion
 
 		#region Private
 		private static object SpinLock = new object();

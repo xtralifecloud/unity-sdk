@@ -48,6 +48,13 @@ namespace CloudBuilderLibrary
 			}, s.ApiKey, s.ApiSecret, s.Environment, s.HttpVerbose, s.HttpTimeout, s.EventLoopTimeout);
 		}
 
+		void OnApplicationFocus(bool focused) {
+			CloudBuilder.OnApplicationFocus(focused);
+		}
+
+		void OnApplicationQuit() {
+			CloudBuilder.OnApplicationQuit();
+		}
 	}
 
 }

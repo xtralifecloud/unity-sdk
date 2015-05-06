@@ -22,13 +22,11 @@ public class TestNewCloudBuilder : MonoBehaviour {
 			if (focused)	EventLoop.Resume();
 			else			EventLoop.Suspend();
 		}
-		CloudBuilder.OnApplicationFocus(focused);
 	}
 
 	void OnApplicationQuit() {
 		if (EventLoop != null)
 			EventLoop.Stop();
-		CloudBuilder.OnApplicationQuit();
 	}
 
 	// Responding to events

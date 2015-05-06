@@ -22,7 +22,7 @@ namespace CloudBuilderLibrary {
 			set { EditorPrefs.SetString("CloudBuilder.ApiSecret", value); }
 		}
 		public string Environment {
-			get { return EditorPrefs.GetString("CloudBuilder.Environment", CloudBuilder.SandboxEnvironment); }
+			get { return EditorPrefs.GetString("CloudBuilder.Environment"); }
 			set { EditorPrefs.SetString("CloudBuilder.Environment", value); }
 		}
 
