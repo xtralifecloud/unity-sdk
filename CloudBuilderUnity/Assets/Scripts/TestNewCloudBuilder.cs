@@ -60,7 +60,7 @@ public class TestNewCloudBuilder : MonoBehaviour {
 			return;
 		}
 
-		Gamer.Profile.Get((Result<GamerProfile> result) => {
+		Gamer.GetProfile((Result<GamerProfile> result) => {
 			if (result.IsSuccessful)
 				Debug.Log("Get profile done: " + result.Value.Properties.ToJson());
 			else
@@ -77,7 +77,7 @@ public class TestNewCloudBuilder : MonoBehaviour {
 		Bundle profile = Bundle.CreateObject();
 		profile["displayName"] = "Florian du clan";
 
-		Gamer.Profile.Set(
+		Gamer.SetProfile(
 			done: (Result<bool> result) => {
 				Debug.Log("Profile set: " + result);
 			},
@@ -86,8 +86,8 @@ public class TestNewCloudBuilder : MonoBehaviour {
 	}
 
 	public void DoGetFacebookFriends() {
-		Gamer.FetchFacebookFriends(done: (Result<bool> result) => {
-			Debug.Log("Fetched fb friends: " + result.ToString());
+		Gamer.FetchFacebookFriends(done: (Result<int> result) => {
+			Debug.Log("Fetched fb friends: " + result.ToString() + " with " + result.Value);
 		});
 	}
 
