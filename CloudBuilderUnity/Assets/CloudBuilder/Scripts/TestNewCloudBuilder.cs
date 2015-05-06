@@ -10,16 +10,11 @@ public class TestNewCloudBuilder : MonoBehaviour {
 
 	// Inherited
 	void Start() {
-/*		CloudBuilder.Setup(
-			done: (Result<Clan> result) => {
-				Clan = result.Value;
-				Debug.Log("Setup done");
-			},
-			apiKey: "cloudbuilder-key",
-			apiSecret: "azerty",
-//			environment: "http://10.211.55.2:2000/",
-			httpVerbose: true
-		);*/
+		CloudBuilderGameObject cb = FindObjectOfType<CloudBuilderGameObject>();
+		cb.GetClan(result => {
+			Clan = result;
+			Debug.Log("Setup done");
+		});
 	}
 
 	void OnApplicationFocus(bool focused) {
