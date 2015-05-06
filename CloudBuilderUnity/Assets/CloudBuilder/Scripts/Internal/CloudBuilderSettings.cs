@@ -32,7 +32,7 @@ namespace CloudBuilderLibrary {
 		}
 
 		public bool HttpVerbose {
-			get { return EditorPrefs.GetBool("CloudBuilder.HttpVerbose"); }
+			get { return EditorPrefs.GetBool("CloudBuilder.HttpVerbose", true); }
 			set { EditorPrefs.SetBool("CloudBuilder.HttpVerbose", value); }
 		}
 		public int HttpTimeout {
@@ -44,10 +44,5 @@ namespace CloudBuilderLibrary {
 			set { EditorPrefs.SetInt("CloudBuilder.EventLoopTimeout", value); }
 		}
 		private static CloudBuilderSettings instance;
-	
-		[MenuItem("Window/CloudBuilder settings")]
-		public static void ActivateSettings() {
-			Selection.activeObject = Instance;
-		}
 	}
 }

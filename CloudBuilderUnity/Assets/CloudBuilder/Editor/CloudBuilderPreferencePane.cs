@@ -1,20 +1,38 @@
 using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
 namespace CloudBuilderLibrary
 {
-	[CustomEditor(typeof(CloudBuilderSettings))]
-	public class CloudBuilderPreferencePane : Editor {
+	public class CloudBuilderPreferencePane : EditorWindow {
+		private Dictionary<string, string> PredefinedEnvironments = new Dictionary<string,string>() {
+			{"Sandbox", "https://sandbox-api[id].clanofthecloud.mobi"},
+			{"Production", "https://prod-api[id].clanofthecloud.mobi"},
+			{"Dev Server", "http://195.154.227.44:8000"},
+			{"Local Server", "http://127.0.0.1:3000"},
+		};
 		private bool FacebookGroupEnabled = true;
 		private bool HttpGroupEnabled = false;
 
-		public override void OnInspectorGUI() {
-			CloudBuilderSettings s = (CloudBuilderSettings)target;
+		[MenuItem("Window/CloudBuilder settings")]
+		static void ShowWindow() {
+			EditorWindow.GetWindow<CloudBuilderPreferencePane>().Show();
+		}
+
+		void OnGUI() {
+			CloudBuilderSettings s = CloudBuilderSettings.Instance;
 		
-			GUILayout.Label("Base Settings", EditorStyles.boldLabel);
+			GUILayout.Label("CloudBuilder Library Settings", EditorStyles.boldLabel);
 			s.ApiKey = EditorGUILayout.TextField("API Key", s.ApiKey);
 			s.ApiSecret = EditorGUILayout.TextField("API Secret", s.ApiSecret);
+			string[] keys = new string[PredefinedEnvironments.Keys.Count];
+			PredefinedEnvironments.Keys.CopyTo(keys, 0);
+			s.Environment = PredefinedEnvironments[
+				keys[
+					EditorGUILayout.Popup("Environment", IndexInDict(s.Environment, PredefinedEnvironments), keys)
+				]
+			];
 
 			EditorGUILayout.GetControlRect(true, 16f, EditorStyles.foldout);
 			FacebookGroupEnabled = EditorGUI.Foldout(GUILayoutUtility.GetLastRect(), FacebookGroupEnabled, "Facebook Settings");
@@ -38,6 +56,17 @@ namespace CloudBuilderLibrary
 				}
 				EditorGUI.indentLevel--;
 			}
+		}
+
+		private int IndexInDict(string value, Dictionary<string, string> choices, int defaultChoice = 0) {
+			int index = 0;
+			foreach (string v in choices.Values) {
+				if (value == v) {
+					return index;
+				}
+				index++;
+			}
+			return defaultChoice;
 		}
 	}
 
