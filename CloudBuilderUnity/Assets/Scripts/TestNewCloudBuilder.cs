@@ -10,7 +10,7 @@ public class TestNewCloudBuilder : MonoBehaviour {
 
 	// Inherited
 	void Start() {
-		CloudBuilder.Setup(
+/*		CloudBuilder.Setup(
 			done: (Result<Clan> result) => {
 				Clan = result.Value;
 				Debug.Log("Setup done");
@@ -19,8 +19,7 @@ public class TestNewCloudBuilder : MonoBehaviour {
 			apiSecret: "azerty",
 //			environment: "http://10.211.55.2:2000/",
 			httpVerbose: true
-		);
-		FB.Init(() => Debug.Log("FB Inited"), "296632777192084");
+		);*/
 	}
 
 	void OnApplicationFocus(bool focused) {

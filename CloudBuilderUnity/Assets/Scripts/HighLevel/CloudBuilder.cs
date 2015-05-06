@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace CloudBuilderLibrary {
 	public static class CloudBuilder {
-		private const int DefaultTimeoutSec = 60, DefaultPopEventTimeoutSec = 590;
+		// TODO are these good in there?
 		public const string DevEnvironment = "http://195.154.227.44:8000";
 		public const string SandboxEnvironment = "https://sandbox-api[id].clanofthecloud.mobi";
 		public const string ProdEnvironment = "https://prod-api[id].clanofthecloud.mobi";
@@ -23,7 +23,7 @@ namespace CloudBuilderLibrary {
 		 * @param eventLoopTimeout sets a custom timeout in seconds for the long polling event loop. Should be used with care
 		 *	 and set to a high value (at least 60). Defaults to 590 (~10 min).
 		 */
-		public static void Setup(ResultHandler<Clan> done, string apiKey, string apiSecret, string environment = SandboxEnvironment, bool httpVerbose = false, int httpTimeout = DefaultTimeoutSec, int eventLoopTimeout = DefaultPopEventTimeoutSec) {
+		internal static void Setup(ResultHandler<Clan> done, string apiKey, string apiSecret, string environment, bool httpVerbose, int httpTimeout, int eventLoopTimeout) {
 			lock (SpinLock) {
 				if (ClanInstance != null) {
 					Common.InvokeHandler(done, ErrorCode.AlreadySetup);
