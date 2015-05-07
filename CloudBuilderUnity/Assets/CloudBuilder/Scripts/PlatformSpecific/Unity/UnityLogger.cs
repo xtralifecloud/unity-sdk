@@ -14,9 +14,13 @@ namespace CloudBuilderLibrary
 		}
 
 		#region ILogger implementation
-		void ILogger.Log(LogLevel level, string text)
-		{
-			Debug.Log(text);
+		void ILogger.Log(LogLevel level, string text) {
+			switch (level) {
+				case LogLevel.Error: Debug.LogError(text); break;
+				case LogLevel.Info:
+				case LogLevel.Verbose: Debug.Log(text); break;
+				case LogLevel.Warning: Debug.LogWarning(text); break;
+			}
 		}
 		#endregion
 	}

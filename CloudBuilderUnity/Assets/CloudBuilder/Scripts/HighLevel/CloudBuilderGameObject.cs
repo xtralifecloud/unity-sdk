@@ -41,6 +41,7 @@ namespace CloudBuilderLibrary
 		}
 
 		void OnApplicationFocus(bool focused) {
+			CloudBuilder.Log(focused ? "CloudBuilder resumed" : "CloudBuilder suspended");
 			CloudBuilder.OnApplicationFocus(focused);
 		}
 
