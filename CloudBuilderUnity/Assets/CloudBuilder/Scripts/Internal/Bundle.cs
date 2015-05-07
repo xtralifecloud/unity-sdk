@@ -39,7 +39,7 @@ namespace CloudBuilderLibrary
 		public static implicit operator Bundle(bool value) { return new Bundle(value); }
 		public static implicit operator Bundle(long value) { return new Bundle(value); }
 		public static implicit operator Bundle(double value) { return new Bundle(value); }
-		public static implicit operator Bundle(string value) { return new Bundle(value); }
+		public static implicit operator Bundle(string value) { return value != null ? new Bundle(value) : Empty; }
 		public static implicit operator bool(Bundle b) { return b.AsBool(); }
 		public static implicit operator int(Bundle b) { return b.AsInt(); }
 		public static implicit operator long(Bundle b) { return b.AsLong(); }
@@ -48,7 +48,7 @@ namespace CloudBuilderLibrary
 
 		public virtual Bundle this[string key] {
 			get { return Has(key) ? Dictionary[key] : Empty; }
-			set { Dictionary[key] = value; }
+			set { if (value != Empty) Dictionary[key] = value; }
 		}
 		public virtual Bundle this[int index] {
 			get { return Array[index]; }

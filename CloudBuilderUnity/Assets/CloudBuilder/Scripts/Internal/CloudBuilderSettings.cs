@@ -26,11 +26,6 @@ namespace CloudBuilderLibrary {
 			set { EditorPrefs.SetString("CloudBuilder.Environment", value); }
 		}
 
-		public string FacebookAppId {
-			get { return EditorPrefs.GetString("CloudBuilder.FacebookAppId"); }
-			set { EditorPrefs.SetString("CloudBuilder.FacebookAppId", value); }
-		}
-
 		public bool HttpVerbose {
 			get { return EditorPrefs.GetBool("CloudBuilder.HttpVerbose", true); }
 			set { EditorPrefs.SetBool("CloudBuilder.HttpVerbose", value); }

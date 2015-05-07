@@ -30,14 +30,6 @@ namespace CloudBuilderLibrary
 				return;
 			}
 
-			if (string.IsNullOrEmpty(s.FacebookAppId)) {
-				CloudBuilder.Log(LogLevel.Info, "No facebook credential. Facebook will be unavailable.");
-			}
-			else {
-				// TODO make the setup to wait on this operation (a chain of initialization callbacks for example)
-				FB.Init(() => CloudBuilder.Log("FB inited"), s.FacebookAppId);
-			}
-
 			CloudBuilder.Setup((Result<Clan> result) => {
 				clan = result.Value;
 				CloudBuilder.Log("CloudBuilder inited");

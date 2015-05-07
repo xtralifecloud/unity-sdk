@@ -1,15 +1,10 @@
 using System;
 using System.Text;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace CloudBuilderLibrary
 {
-	public enum LoginNetwork {
-		Anonymous,
-		Facebook,
-		GooglePlus,
-	}
-
 	public sealed partial class Gamer {
 
 		public List<string> Domains { get; private set; }
@@ -24,6 +19,33 @@ namespace CloudBuilderLibrary
 		public LoginNetwork Network { get; private set; }
 		public string NetworkId { get; private set; }
 		public DateTime RegisterTime { get; private set; }
+
+		/**
+		 * When you have data about friends from another social network, you can post them using these function.
+		 * This will automatically add them as a friend on CotC as they get recognized on our servers.
+		 * @param done callback invoked when the login has finished, either successfully or not. The attached boolean
+		 *     indicates success if true.
+		 * @param network the network with which these friends are associated
+		 * @param friends a list of data about the friends fetched on the social network.
+		 */
+		public void PostSocialNetworkFriends(ResultHandler<bool> done, LoginNetwork network, List<SocialNetworkFriend> friends) {
+			UrlBuilder url = new UrlBuilder("/v1/gamer/friends").QueryParam("network", network.Describe());
+			HttpRequest req = MakeHttpRequest(url);
+			Bundle friendData = Bundle.CreateArray();
+			foreach (SocialNetworkFriend f in friends) {
+				friendData.Add(f.ToBundle());
+			}
+
+			req.BodyJson = friendData;
+			Managers.HttpClient.Run(req, (HttpResponse response) => {
+				if (Common.HasFailed(response)) {
+					Common.InvokeHandler(done, response);
+					return;
+				}
+
+				Common.InvokeHandler(done, true, response.BodyJson);
+			});
+		}
 
 		#region Internal
 		/**
@@ -48,24 +70,6 @@ namespace CloudBuilderLibrary
 			string authInfo = GamerId + ":" + GamerSecret;
 			result.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
 			return result;
-		}
-		#endregion
-
-		#region Private
-		// FriendData contains an array of objects with first_name, last_name, name, id
-		private void PostNetworkFriends(ResultHandler<int> done, string network, Bundle friendData) {
-			UrlBuilder url = new UrlBuilder("/v1/gamer/friends").QueryParam("network", network);
-			HttpRequest req = MakeHttpRequest(url);
-			req.BodyJson = friendData;
-			// TODO
-			Managers.HttpClient.Run(req, (HttpResponse response) => {
-				if (Common.HasFailed(response)) {
-					Common.InvokeHandler(done, response);
-					return;
-				}
-
-				Common.InvokeHandler(done, friendData.AsArray().Count);
-			});
 		}
 
 		internal Clan Clan;

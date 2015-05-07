@@ -12,7 +12,6 @@ namespace CloudBuilderLibrary
 			{"Dev Server", "http://195.154.227.44:8000"},
 			{"Local Server", "http://127.0.0.1:3000"},
 		};
-		private bool FacebookGroupEnabled = true;
 		private bool HttpGroupEnabled = false;
 
 		[MenuItem("Window/CloudBuilder settings")]
@@ -35,15 +34,7 @@ namespace CloudBuilderLibrary
 			];
 
 			EditorGUILayout.GetControlRect(true, 16f, EditorStyles.foldout);
-			FacebookGroupEnabled = EditorGUI.Foldout(GUILayoutUtility.GetLastRect(), FacebookGroupEnabled, "Facebook Settings");
-			if (FacebookGroupEnabled) {
-				EditorGUI.indentLevel++;
-				s.FacebookAppId = EditorGUILayout.TextField("App ID", s.FacebookAppId);
-				EditorGUI.indentLevel--;
-			}
-
-			EditorGUILayout.GetControlRect(true, 16f, EditorStyles.foldout);
-			HttpGroupEnabled = EditorGUI.Foldout(GUILayoutUtility.GetLastRect(), FacebookGroupEnabled, "Network Connection Settings");
+			HttpGroupEnabled = EditorGUI.Foldout(GUILayoutUtility.GetLastRect(), HttpGroupEnabled, "Network Connection Settings");
 			if (HttpGroupEnabled) {
 				int tmpInt;
 				EditorGUI.indentLevel++;

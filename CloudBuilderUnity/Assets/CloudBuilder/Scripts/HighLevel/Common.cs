@@ -16,12 +16,12 @@ namespace CloudBuilderLibrary
 			return response.HasFailed || response.StatusCode < 200 || response.StatusCode >= 300;
 		}
 
-		internal static void InvokeHandler<T>(ResultHandler<T> handler, Result<T> result) {
+		public static void InvokeHandler<T>(ResultHandler<T> handler, Result<T> result) {
 			if (handler != null) {
 				handler(result);
 			}
 		}
-		internal static void InvokeHandler<T>(ResultHandler<T> handler, ErrorCode code, string reason = null) {
+		public static void InvokeHandler<T>(ResultHandler<T> handler, ErrorCode code, string reason = null) {
 			if (handler != null) {
 				handler(new Result<T>(code, reason));
 			}
@@ -33,7 +33,7 @@ namespace CloudBuilderLibrary
 				handler(result);
 			}
 		}
-		internal static void InvokeHandler<T>(ResultHandler<T> handler, T value, Bundle serverData = null) {
+		public static void InvokeHandler<T>(ResultHandler<T> handler, T value, Bundle serverData = null) {
 			if (handler != null) {
 				handler(new Result<T>(value, serverData));
 			}

@@ -35,7 +35,8 @@ public class TestNewCloudBuilder : MonoBehaviour {
 	}
 
 	public void DoLoginWithFacebook() {
-		Clan.LoginWithFacebook(done: this.DidLogin);
+		CloudBuilderFacebookIntegration cb = FindObjectOfType<CloudBuilderFacebookIntegration>();
+		cb.LoginWithFacebook(clan: Clan, done: this.DidLogin);
 	}
 
 	public void DoRestoreSession() {
@@ -78,9 +79,10 @@ public class TestNewCloudBuilder : MonoBehaviour {
 	}
 
 	public void DoGetFacebookFriends() {
-		Gamer.FetchFacebookFriends(done: (Result<int> result) => {
+		CloudBuilderFacebookIntegration cb = FindObjectOfType<CloudBuilderFacebookIntegration>();
+		cb.FetchFriends((Result<bool> result) => {
 			Debug.Log("Fetched fb friends: " + result.ToString() + " with " + result.Value);
-		});
+		}, Gamer);
 	}
 
 	// Private
