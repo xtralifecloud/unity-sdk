@@ -45,7 +45,7 @@ public class CloudBuilderFacebookIntegration : MonoBehaviour {
 				}
 				else {
 					string userId = FB.UserId, token = FB.AccessToken;
-					CloudBuilder.Log("Logged in through facebook");
+					Debug.Log("Logged in through facebook");
 					clan.Login(done, LoginNetwork.Facebook, userId, token);
 				}
 			});
@@ -101,7 +101,7 @@ public class CloudBuilderFacebookIntegration : MonoBehaviour {
 			});
 		}
 		catch (Exception e) {
-			CloudBuilder.Log(LogLevel.Warning, "Error decoding FB data: " + e.ToString());
+			Debug.LogError("Error decoding FB data: " + e.ToString());
 			Common.InvokeHandler(done, ErrorCode.SocialNetworkError, "Decoding facebook data: " + e.Message);
 			return;
 		}

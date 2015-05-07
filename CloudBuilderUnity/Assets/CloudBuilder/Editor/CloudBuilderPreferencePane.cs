@@ -24,7 +24,7 @@ namespace CloudBuilderLibrary
 		
 			GUILayout.Label("CloudBuilder Library Settings", EditorStyles.boldLabel);
 			s.ApiKey = EditorGUILayout.TextField("API Key", s.ApiKey);
-			s.ApiSecret = EditorGUILayout.TextField("API Secret", s.ApiSecret);
+			s.ApiSecret = EditorGUILayout.PasswordField("API Secret", s.ApiSecret);
 			string[] keys = new string[PredefinedEnvironments.Keys.Count];
 			PredefinedEnvironments.Keys.CopyTo(keys, 0);
 			s.Environment = PredefinedEnvironments[
