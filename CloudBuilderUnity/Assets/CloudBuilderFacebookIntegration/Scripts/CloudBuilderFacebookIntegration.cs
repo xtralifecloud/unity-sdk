@@ -7,11 +7,10 @@ using UnityEditor;
 
 namespace CloudBuilderLibrary
 {
+	[Serializable]
 	public class CloudBuilderFacebookIntegration : MonoBehaviour {
-		public string AppId {
-			get { return EditorPrefs.GetString("CloudBuilder.Facebook.AppId"); }
-			set { EditorPrefs.SetString("CloudBuilder.Facebook.AppId", value); }
-		}
+		[SerializeField]
+		public string AppId;
 
 		// Use this for initialization
 		void Start() {

@@ -16,7 +16,13 @@ namespace CloudBuilderLibrary
 		private bool HttpGroupEnabled = true;
 
 		public override void OnInspectorGUI() {
+			// Auto-create the asset on the first time
 			CloudBuilderSettings s = CloudBuilderSettings.Instance;
+			if (s == null) {
+				s = CreateInstance<CloudBuilderSettings>();
+				AssetDatabase.CreateAsset(s, CloudBuilderSettings.AssetPath);
+				s = CloudBuilderSettings.Instance;
+			}
 		
 			GUILayout.Label("CloudBuilder Library Settings", EditorStyles.boldLabel);
 			s.ApiKey = EditorGUILayout.TextField("API Key", s.ApiKey);
@@ -43,6 +49,9 @@ namespace CloudBuilderLibrary
 				}
 				EditorGUI.indentLevel--;
 			}
+
+			// So that the asset will be saved eventually
+			EditorUtility.SetDirty(s);
 		}
 
 		private int IndexInDict(string value, Dictionary<string, string> choices, int defaultChoice = 0) {
