@@ -19,9 +19,8 @@ namespace CloudBuilderLibrary
 				s = CloudBuilderFacebookIntegrationSettings.Instance;
 			}
 
-			CloudBuilderFacebookIntegration inst = target as CloudBuilderFacebookIntegration;
 			EditorGUILayout.BeginVertical();
-			inst.AppId = EditorGUILayout.TextField("Facebook App ID", inst.AppId);
+			s.AppId = EditorGUILayout.TextField("Facebook App ID", s.AppId);
 			EditorGUILayout.EndVertical();
 
 			// So that the asset will be saved eventually

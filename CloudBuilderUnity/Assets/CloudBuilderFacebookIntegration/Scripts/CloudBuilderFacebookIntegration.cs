@@ -9,12 +9,11 @@ namespace CloudBuilderLibrary
 {
 	[Serializable]
 	public class CloudBuilderFacebookIntegration : MonoBehaviour {
-		[SerializeField]
-		public string AppId;
 
 		// Use this for initialization
 		void Start() {
-			if (string.IsNullOrEmpty(AppId)) {
+			CloudBuilderFacebookIntegrationSettings s = CloudBuilderFacebookIntegrationSettings.Instance;
+			if (string.IsNullOrEmpty(s.AppId)) {
 				Debug.LogError("Facebook Credentials missing, facebook integration will NOT work.");
 				return;
 			}
@@ -28,7 +27,7 @@ namespace CloudBuilderLibrary
 					DoWhenFbLoaded.Clear();
 					FbIsLoaded = true;
 				}
-			}, AppId);
+			}, s.AppId);
 		}
 
 		/**
