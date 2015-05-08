@@ -1,43 +1,86 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
 
 namespace CloudBuilderLibrary {
+	[Serializable]
 	public class CloudBuilderSettings : ScriptableObject {
-
 		public static CloudBuilderSettings Instance {
 			get {
-				return instance = instance ?? CreateInstance<CloudBuilderSettings>();
+				if (instance == null) {
+					instance = AssetDatabase.LoadAssetAtPath("Assets/Resources/CloudBuilderSettings.asset", typeof(CloudBuilderSettings)) as CloudBuilderSettings;
+					if (instance == null) {
+#if UNITY_EDITOR
+						instance = CreateInstance<CloudBuilderSettings>();
+						AssetDatabase.CreateAsset(instance, "Assets/Resources/CloudBuilderSettings.asset");
+#endif
+					}
+				}
+				return instance;
 			}
 		}
+
 		public string ApiKey {
-			get { return EditorPrefs.GetString("CloudBuilder.ApiKey"); }
-			set { EditorPrefs.SetString("CloudBuilder.ApiKey", value); }
+			get { return apiKey; }
+			set {
+				apiKey = value;
+				EditorUtility.SetDirty(Instance);
+			}
 		}
 		public string ApiSecret {
-			get { return EditorPrefs.GetString("CloudBuilder.ApiSecret"); }
-			set { EditorPrefs.SetString("CloudBuilder.ApiSecret", value); }
+			get { return apiSecret; }
+			set {
+				apiSecret = value;
+				EditorUtility.SetDirty(Instance);
+			}
 		}
 		public string Environment {
-			get { return EditorPrefs.GetString("CloudBuilder.Environment"); }
-			set { EditorPrefs.SetString("CloudBuilder.Environment", value); }
+			get { return environment; }
+			set {
+				environment = value;
+				EditorUtility.SetDirty(Instance);
+			}
 		}
 
 		public bool HttpVerbose {
-			get { return EditorPrefs.GetBool("CloudBuilder.HttpVerbose", true); }
-			set { EditorPrefs.SetBool("CloudBuilder.HttpVerbose", value); }
+			get { return httpVerbose; }
+			set {
+				httpVerbose = value;
+				EditorUtility.SetDirty(Instance);
+			}
 		}
 		public int HttpTimeout {
-			get { return EditorPrefs.GetInt("CloudBuilder.HttpTimeout", 60); }
-			set { EditorPrefs.SetInt("CloudBuilder.HttpTimeout", value); }
+			get { return httpTimeout; }
+			set {
+				httpTimeout = value;
+				EditorUtility.SetDirty(Instance);
+			}
 		}
 		public int EventLoopTimeout {
-			get { return EditorPrefs.GetInt("CloudBuilder.EventLoopTimeout", 590); }
-			set { EditorPrefs.SetInt("CloudBuilder.EventLoopTimeout", value); }
+			get { return eventLoopTimeout; }
+			set {
+				eventLoopTimeout = value;
+				EditorUtility.SetDirty(Instance);
+			}
 		}
+
 		private static CloudBuilderSettings instance;
+
+		[SerializeField]
+		private string apiKey;
+		[SerializeField]
+		private string apiSecret;
+		[SerializeField]
+		private string environment;
+		[SerializeField]
+		private bool httpVerbose = true;
+		[SerializeField]
+		private int httpTimeout = 60;
+		[SerializeField]
+		private int eventLoopTimeout = 590;
 	}
 }
