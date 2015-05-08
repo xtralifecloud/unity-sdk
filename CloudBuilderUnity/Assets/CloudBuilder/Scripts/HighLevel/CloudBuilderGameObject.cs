@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CloudBuilderLibrary
 {
-	class CloudBuilderGameObject : MonoBehaviour {
+	public class CloudBuilderGameObject : MonoBehaviour {
 
 		private static Clan clan = null;
 		private List<Action<Clan>> pendingClanHandlers = new List<Action<Clan>>();

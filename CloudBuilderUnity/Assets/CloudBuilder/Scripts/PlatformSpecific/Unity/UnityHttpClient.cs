@@ -170,7 +170,7 @@ namespace CloudBuilderLibrary
 				state.Request.BeginGetResponse(new AsyncCallback(RespCallback), state);
 			}
 			catch (WebException e) {
-				CloudBuilder.Log(LogLevel.Warning, "Failed to send data: " + e.Message + ", status=" + e.Status);
+				CloudBuilder.Log("Failed to send data: " + e.Message + ", status=" + e.Status);
 				if (e.Status != WebExceptionStatus.RequestCanceled) {
 					FinishWithRequest(state, new HttpResponse(e));
 				}

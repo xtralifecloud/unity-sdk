@@ -5,21 +5,17 @@ using UnityEngine;
 
 namespace CloudBuilderLibrary
 {
-	public class CloudBuilderPreferencePane : EditorWindow {
+	[CustomEditor(typeof(CloudBuilderGameObject))]
+	public class CloudBuilderPreferencePane : Editor {
 		private Dictionary<string, string> PredefinedEnvironments = new Dictionary<string,string>() {
 			{"Sandbox", "https://sandbox-api[id].clanofthecloud.mobi"},
 			{"Production", "https://prod-api[id].clanofthecloud.mobi"},
 			{"Dev Server", "http://195.154.227.44:8000"},
 			{"Local Server", "http://127.0.0.1:3000"},
 		};
-		private bool HttpGroupEnabled = false;
+		private bool HttpGroupEnabled = true;
 
-		[MenuItem("Window/CloudBuilder settings")]
-		static void ShowWindow() {
-			EditorWindow.GetWindow<CloudBuilderPreferencePane>().Show();
-		}
-
-		void OnGUI() {
+		public override void OnInspectorGUI() {
 			CloudBuilderSettings s = CloudBuilderSettings.Instance;
 		
 			GUILayout.Label("CloudBuilder Library Settings", EditorStyles.boldLabel);
