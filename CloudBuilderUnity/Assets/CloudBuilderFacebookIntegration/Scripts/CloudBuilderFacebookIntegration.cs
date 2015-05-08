@@ -12,12 +12,6 @@ namespace CloudBuilderLibrary
 
 		// Use this for initialization
 		void Start() {
-			CloudBuilderFacebookIntegrationSettings s = CloudBuilderFacebookIntegrationSettings.Instance;
-			if (string.IsNullOrEmpty(s.AppId)) {
-				Debug.LogError("Facebook Credentials missing, facebook integration will NOT work.");
-				return;
-			}
-
 			FB.Init(() => {
 				Debug.Log("FB initialized properly.");
 				lock (DoWhenFbLoaded) {
@@ -27,7 +21,7 @@ namespace CloudBuilderLibrary
 					DoWhenFbLoaded.Clear();
 					FbIsLoaded = true;
 				}
-			}, s.AppId);
+			});
 		}
 
 		/**
