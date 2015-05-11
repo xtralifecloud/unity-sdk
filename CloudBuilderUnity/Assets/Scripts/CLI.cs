@@ -16,6 +16,7 @@ namespace CLI
 
 		// Inherited
 		void Start() {
+			InputField.name = "InputField";
 		}
 
 		public void OnGUI() {
@@ -29,20 +30,23 @@ namespace CLI
 
 			if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Return) {
 				string command = InputField.text;
+				AppendLine("\n> " + command);
 				try {
 					Lexer lex = new Lexer(command);
 					Parser parser = new Parser(Commands.Definitions(), lex);
 					parser.RunAllCommands();
 				}
 				catch (ScriptException ex) {
+					AppendLine(">> Error in script around " + command.Substring(ex.Position) + ": " + ex.Message);
 					Debug.LogError("Error in script around " + command.Substring(ex.Position) + ", " + ex.ToString());
 				}
 				InputField.text = "";
 			}
+			GUI.FocusControl("InputField");
 		}
 
-		public void AppendText(string text) {
-			ConsoleText += text;
+		public void AppendLine(string text) {
+			ConsoleText += "\n" + text;
 			ScrollPosition = new Vector2(0, float.PositiveInfinity);
 		}
 	}

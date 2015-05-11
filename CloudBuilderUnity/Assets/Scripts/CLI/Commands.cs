@@ -7,9 +7,11 @@ using UnityEngine;
 
 namespace CLI {
 	public class Commands : MonoBehaviour {
+		#region Definitions
 		public List<CommandDefinition> Definitions() {
 			return new List<CommandDefinition>() {
-				new CommandDefinition("loginanonymous", "loginanonymous", LoginAnonymous),
+				new CommandDefinition("test", "locally tests the interpreter", Test),
+				new CommandDefinition("loginanonymous", "loginanonymous (no arg)", LoginAnonymous),
 				new CommandDefinition("match", "match commands", MatchDefinitions()),
 			};
 		}
@@ -19,21 +21,34 @@ namespace CLI {
 				new CommandDefinition("create", "creates a match", CreateMatch),
 			};
 		}
+		#endregion
 
-		public void LoginAnonymous(Arguments args) {
+		#region Clan commands
+		private void Test(Arguments args) {
+			args.ExpectingArgs(0, ArgumentType.String);
+			Log("In test method with value " + args.StringArg(0));
+		}
+		private void LoginAnonymous(Arguments args) {
 			Clan.LoginAnonymously(SuccessHandler<Gamer>(result => {
 				Gamer = result.Value;
+				// Only one loop at a time
+				if (PrivateEventLoop != null) PrivateEventLoop.Stop();
+				PrivateEventLoop = new DomainEventLoop(Gamer);
 			}));
 		}
+		#endregion
 
-		public void CreateMatch(Arguments args) {
+		#region Match commands
+		private void CreateMatch(Arguments args) {
 			args.ExpectingArgs(1, ArgumentType.String, ArgumentType.Double);
 			Log("Here: " + args.StringArg(0) + ", " + args.DoubleArg(1));
 		}
+		#endregion
 
-		#region Not exposed
+		#region Variables / Internal methods
 		private Clan Clan;
 		private Gamer Gamer;
+		private DomainEventLoop PrivateEventLoop;
 		public CloudBuilderGameObject CloudBuilderGameObject;
 		public CLI Cli;
 
@@ -45,18 +60,15 @@ namespace CLI {
 		}
 
 		private void Log(string text) {
-			Cli.AppendText(text);
+			Cli.AppendLine(text);
 		}
 
 		private ResultHandler<T> SuccessHandler<T>(ResultHandler<T> subHandler) {
 			return result => {
 				if (result.IsSuccessful) {
 					subHandler(result);
-					Debug.Log("Done! " + result.ToString());
 				}
-				else {
-					Debug.Log("Failed! " + result.ToString());
-				}
+				Log(">> " + result.ToString());
 			};
 		}
 		#endregion

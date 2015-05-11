@@ -15,7 +15,8 @@ namespace CLI
 		String,
 		Comma,
 		Dot,
-		End
+		EndOfLine,
+		End,
 	}
 
 	public class Token {
@@ -114,6 +115,7 @@ namespace CLI
 				switch (c) {
 					case '.': return new Token(TokenType.Dot, CurrentIndex - 1, c);
 					case ',': return new Token(TokenType.Comma, CurrentIndex - 1, c);
+					case '\n': return new Token(TokenType.EndOfLine, CurrentIndex - 1, c);
 					case '\"':
 					case '\'':
 						int startIndex = CurrentIndex;
@@ -169,7 +171,11 @@ namespace CLI
 		}
 
 		public void RunAllCommands() {
-			while (RunNextCommand()) ;
+			while (RunNextCommand()) {
+				// Skip to the end of the line
+				while (!Lex.NextIs(TokenType.EndOfLine) && !Lex.NextIs(TokenType.End))
+					Lex.PullNextToken();
+			}
 		}
 
 		public bool RunNextCommand() {
