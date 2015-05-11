@@ -6,28 +6,36 @@ using CloudBuilderLibrary;
 using UnityEngine;
 
 namespace CLI {
-	public class Commands: MonoBehaviour {
-		public class Match {
-			public void create(Arguments parser) {
-				parser.ExpectingArgs(1, ArgumentType.String, ArgumentType.Double);
-				Debug.Log("ICI " + parser.StringArg(0) + ", " + parser.DoubleArg(1));
-			}
+	public class Commands : MonoBehaviour {
+		public List<CommandDefinition> Definitions() {
+			return new List<CommandDefinition>() {
+				new CommandDefinition("loginanonymous", "loginanonymous", LoginAnonymous),
+				new CommandDefinition("match", "match commands", MatchDefinitions()),
+			};
 		}
 
-		public void loginanonymous(Arguments args) {
-			Clan.LoginAnonymously(StandardHandler<Gamer>(result => {
-				if (result.IsSuccessful) {
-					Gamer = result.Value;
-				}
+		private List<CommandDefinition> MatchDefinitions() {
+			return new List<CommandDefinition>() {
+				new CommandDefinition("create", "creates a match", CreateMatch),
+			};
+		}
+
+		public void LoginAnonymous(Arguments args) {
+			Clan.LoginAnonymously(SuccessHandler<Gamer>(result => {
+				Gamer = result.Value;
 			}));
 		}
 
-		public Match match = new Match();
+		public void CreateMatch(Arguments args) {
+			args.ExpectingArgs(1, ArgumentType.String, ArgumentType.Double);
+			Log("Here: " + args.StringArg(0) + ", " + args.DoubleArg(1));
+		}
 
 		#region Not exposed
 		private Clan Clan;
 		private Gamer Gamer;
 		public CloudBuilderGameObject CloudBuilderGameObject;
+		public CLI Cli;
 
 		void Start() {
 			CloudBuilderGameObject.GetClan(result => {
@@ -36,14 +44,18 @@ namespace CLI {
 			});
 		}
 
-		private ResultHandler<T> StandardHandler<T>(ResultHandler<T> subHandler) {
+		private void Log(string text) {
+			Cli.AppendText(text);
+		}
+
+		private ResultHandler<T> SuccessHandler<T>(ResultHandler<T> subHandler) {
 			return result => {
-				subHandler(result);
 				if (result.IsSuccessful) {
-					Debug.Log("Done! Result: " + result.ToString());
+					subHandler(result);
+					Debug.Log("Done! " + result.ToString());
 				}
 				else {
-					Debug.Log("Failed! Result: " + result.ToString());
+					Debug.Log("Failed! " + result.ToString());
 				}
 			};
 		}

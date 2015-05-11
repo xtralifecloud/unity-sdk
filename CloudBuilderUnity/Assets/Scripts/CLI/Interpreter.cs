@@ -5,6 +5,7 @@ using CloudBuilderLibrary;
 using System;
 using System.Reflection;
 using System.Globalization;
+using System.Collections.Generic;
 
 namespace CLI
 {
@@ -149,10 +150,9 @@ namespace CLI
 			get;
 			private set;
 		}
-		private Commands Commands;
-		private object[] EmptyArray = new object[0];
+		private List<CommandDefinition> Commands;
 
-		public Parser(Commands commands, Lexer lex) {
+		public Parser(List<CommandDefinition> commands, Lexer lex) {
 			Commands = commands;
 			Lex = lex;
 		}
@@ -177,31 +177,26 @@ namespace CLI
 				return false;
 			}
 
-			object previousObj = Commands;
-			while (true) {
-				string name = Expect(TokenType.Identifier).Text;
-				MemberInfo[] info = previousObj.GetType().GetMember(name);
-				// Subobject expected
-				if (info[0].MemberType == MemberTypes.Property) {
-					previousObj = previousObj.GetType().GetProperty(name).GetValue(previousObj, EmptyArray);
-					Expect(TokenType.Dot);
-					continue;
-				}
-				else if (info[0].MemberType == MemberTypes.Field) {
-					previousObj = previousObj.GetType().GetField(name).GetValue(previousObj);
-					Expect(TokenType.Dot);
-					continue;
-				}
-				else if (info[0].MemberType == MemberTypes.Method) {
-					object[] args = new object[] { new Arguments(GetCopyHere()) };
-					previousObj.GetType().GetMethod(name).Invoke(previousObj, args);
-					break;
-				}
-				else {
-					throw new ScriptException(Lex.NextToken, "Invalid method to call: " + name);
+			return RunFromSubObject(Commands);
+		}
+
+		private bool RunFromSubObject(List<CommandDefinition> defs) {
+			Token token = Expect(TokenType.Identifier);
+			string name = token.Text;
+			foreach (CommandDefinition def in defs) {
+				if (name == def.Name) {
+					// Now that we found it, we need to see if it is supposed to be a sub-object or directly callable
+					if (def.Code != null) {
+						def.Code(new Arguments(GetCopyHere()));
+						return true;
+					}
+					else {
+						Expect(TokenType.Dot);
+						return RunFromSubObject(def.Subobject);
+					}
 				}
 			}
-			return true;
+			throw new ScriptException(Lex.NextToken, "Invalid method to call: " + name);
 		}
 	}
 
@@ -280,6 +275,19 @@ namespace CLI
 			}
 			ParsedArgs = new object[i];
 			Array.Copy(result, ParsedArgs, i);
+		}
+	}
+
+	public class CommandDefinition {
+		public string Name;
+		public string Help;
+		public Action<Arguments> Code;
+		public List<CommandDefinition> Subobject;
+		public CommandDefinition(string name, string help, Action<Arguments> code) {
+			Name = name; Help = help; Code = code;
+		}
+		public CommandDefinition(string name, string help, List<CommandDefinition> subobject) {
+			Name = name; Help = help; Subobject = subobject;
 		}
 	}
 }
