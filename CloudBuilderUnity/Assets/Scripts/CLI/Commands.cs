@@ -1,41 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using CloudBuilderLibrary;
 using UnityEngine;
 
 namespace CLI {
-	public class Commands : MonoBehaviour {
-		#region Clan commands
-		void test(Arguments args) {
-			args.ExpectingArgs(0, ArgumentType.String);
-			Log("In test method with value " + args.StringArg(0));
-		}
-		
-		void loginanonymous(Arguments args) {
-			Clan.LoginAnonymously(SuccessHandler<Gamer>(result => {
-				Gamer = result.Value;
-				// Only one loop at a time
-				if (PrivateEventLoop != null) PrivateEventLoop.Stop();
-				PrivateEventLoop = new DomainEventLoop(Gamer);
-			}));
-		}
-		#endregion
 
-		#region Match commands
-		void match_create(Arguments args) {
-			args.ExpectingArgs(1, ArgumentType.String, ArgumentType.Double);
-			Log("Here: " + args.StringArg(0) + ", " + args.DoubleArg(1));
-		}
-		#endregion
+	/**
+	 * Base principle about commands.
+	 * Commands is a partial class, with specialized methods implemented in different files.
+	 * The convention is that a method belonging to a sub-object corresponds to an underscore
+	 * in the name. For instance, the match.create will be match_create.
+	 * There is no need to declare the methods anywhere else as they are found by reflection.
+	 * Only methods fully written in lowercase letters may be called from the script. The name
+	 * is case-lowered before being looked up in this class.
+	 */
+	public partial class Commands : MonoBehaviour {
+		public CloudBuilderGameObject CloudBuilderGameObject;
+		public CLI Cli;
 
-		#region Variables / Internal methods
+		// Look for example in Commands.Basic.cs for method implementations
+		[CommandInfo("Gives help about all or a given command.", "[command_name]")]
+		void help(Arguments args) {
+			// Optionally help on a given method
+			string name = "";
+			while (args.Lex.NextIs(TokenType.Identifier)) {
+				name += args.Lex.PullNextToken().Text;
+				if (args.Lex.EatTokenIf(TokenType.Dot))
+					name += '.';
+			}
+
+			// List all
+			StringBuilder sb = new StringBuilder();
+			foreach (var info in GetType().GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)) {
+				// Filter by name
+				if (name != "" && info.Name != name) continue;
+				// Only list lowercase ones
+				if (info.Name.ToLower() == info.Name) {
+					foreach (var att in info.GetCustomAttributes(typeof(CommandInfo), false)) {
+						CommandInfo attInfo = (CommandInfo)att;
+						sb.AppendLine(info.Name.Replace('_', '.') + " " + attInfo.Usage);
+						sb.AppendLine(">> " + attInfo.Description);
+					}
+				}
+			}
+			Log(sb.ToString().TrimEnd());
+		}
+
 		private Clan Clan;
 		private Gamer Gamer;
 		private DomainEventLoop PrivateEventLoop;
-		public CloudBuilderGameObject CloudBuilderGameObject;
-		public CLI Cli;
 
 		void Start() {
 			CloudBuilderGameObject.GetClan(result => {
@@ -56,6 +72,5 @@ namespace CLI {
 				Log(">> " + result.ToString());
 			};
 		}
-		#endregion
 	}
 }

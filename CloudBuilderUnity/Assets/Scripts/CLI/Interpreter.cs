@@ -78,6 +78,14 @@ namespace CLI {
 			private set;
 		}
 
+		public bool EatTokenIf(TokenType type) {
+			if (NextIs(type)) {
+				PullNextToken();
+				return true;
+			}
+			return false;
+		}
+
 		public Token PullNextToken() {
 			Token result = NextToken;
 			NextToken = FetchNextToken();
@@ -184,31 +192,26 @@ namespace CLI {
 				return false;
 			}
 
-			return RunFromSubObject(Commands);
-		}
-
-		private bool RunFromSubObject(object obj) {
+			// Compose name
 			Token token = Expect(TokenType.Identifier);
 			string name = token.Text.ToLower();
-			MemberInfo[] info = obj.GetType().GetMember(name);
-			// Subobject expected
-			if (info[0].MemberType == MemberTypes.Property) {
-				obj = obj.GetType().GetProperty(name).GetValue(obj, EmptyArray);
-				Expect(TokenType.Dot);
-				return RunFromSubObject(obj);
+			while (Lex.EatTokenIf(TokenType.Dot)) {
+				name += '_' + Expect(TokenType.Identifier).Text;
 			}
-			else if (info[0].MemberType == MemberTypes.Field) {
-				obj = obj.GetType().GetField(name).GetValue(obj);
-				Expect(TokenType.Dot);
-				return RunFromSubObject(obj);
+
+			// Call method
+			MethodInfo info = Commands.GetType().GetMethod(name, BindingFlags.NonPublic | BindingFlags.Instance);
+			if (info == null) {
+				throw new ScriptException(token, "Command " + name + " not found");
 			}
-			else if (info[0].MemberType == MemberTypes.Method) {
-				object[] args = new object[] { new Arguments(GetCopyHere()) };
-				obj.GetType().GetMethod(name).Invoke(obj, args);
+			object[] args = new object[] { new Arguments(GetCopyHere()) };
+
+			try {
+				info.Invoke(Commands, args);
 				return true;
 			}
-			else {
-				throw new ScriptException(token, "Invalid method to call: " + name);
+			catch (TargetInvocationException tie) {
+				throw tie.InnerException;
 			}
 		}
 	}
@@ -247,28 +250,33 @@ namespace CLI {
 			return pos >= ParsedArgs.Length ? null : (string)ParsedArgs[pos];
 		}
 
-		public void ExpectingArgs(int minimumArgs, params ArgumentType[] types) {
+		public void Expecting(int minimumArgs, params ArgumentType[] types) {
 			object[] result = new object[types.Length];
 			int i;
 			ExpectedArgs = types;
 			for (i = 0; i < types.Length; i++) {
-				// Skip separating comma
+				bool hasArg = false;
+				// Check for end of arg list
 				if (i > 0) {
-					// End of arg list
-					if (!Lex.NextIs(TokenType.Comma)) {
-						if (i < minimumArgs) {
-							throw new ScriptException(Lex.NextToken, "Invalid: " + minimumArgs + " args required, " + i + " passed");
-						}
-						else {
-							break;
-						}
+					hasArg = Lex.EatTokenIf(TokenType.Comma);
+				}
+				else {
+					hasArg = !Lex.NextIs(TokenType.EndOfLine) && !Lex.NextIs(TokenType.End);
+				}
+
+				// Do we have enough args then?
+				if (!hasArg) {
+					if (i < minimumArgs) {
+						throw new ScriptException(Lex.NextToken, "Invalid: " + minimumArgs + " args required, " + i + " passed");
 					}
-					Lex.PullNextToken();
+					else {
+						break;
+					}
 				}
 
 				switch (types[i]) {
 					case ArgumentType.String:
-						if (Lex.NextIs(TokenType.String) || Lex.NextIs(TokenType.Number))
+						if (Lex.NextIs(TokenType.String) || Lex.NextIs(TokenType.Number) || Lex.NextIs(TokenType.Identifier))
 							result[i] = Lex.PullNextToken().Text;
 						else
 							throw new ScriptException(Lex.NextToken, "Argument " + (i + 1) + " must be a string");
@@ -288,6 +296,14 @@ namespace CLI {
 			}
 			ParsedArgs = new object[i];
 			Array.Copy(result, ParsedArgs, i);
+		}
+	}
+
+	public class CommandInfo : Attribute {
+		public readonly string Usage, Description;
+
+		public CommandInfo(string description, string usage = "") {
+			Description = description; Usage = usage;
 		}
 	}
 }

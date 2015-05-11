@@ -11,7 +11,7 @@ namespace CLI
 		public Commands Commands;
 		public InputField InputField;
 		public GUIStyle FixedFontStyle;
-		private string ConsoleText = "Welcome to Unity CLI!";
+		private string ConsoleText = "Welcome to Unity CLI! Type help to list available commands!";
 		private Vector2 ScrollPosition = new Vector2(0, float.PositiveInfinity);
 
 		// Inherited
@@ -33,7 +33,7 @@ namespace CLI
 				AppendLine("\n> " + command);
 				try {
 					Lexer lex = new Lexer(command);
-					Parser parser = new Parser(Commands.Definitions(), lex);
+					Parser parser = new Parser(Commands, lex);
 					parser.RunAllCommands();
 				}
 				catch (ScriptException ex) {
