@@ -7,8 +7,7 @@ using System.Reflection;
 using System.Globalization;
 using System.Collections.Generic;
 
-namespace CLI
-{
+namespace CLI {
 	public enum TokenType {
 		Identifier,
 		Number,
@@ -38,7 +37,8 @@ namespace CLI
 
 	public class ScriptException : Exception {
 		public int Position {
-			get; private set;
+			get;
+			private set;
 		}
 		public ScriptException(Token token, string message)
 			: base(
@@ -152,9 +152,10 @@ namespace CLI
 			get;
 			private set;
 		}
-		private List<CommandDefinition> Commands;
+		private Commands Commands;
+		private static object[] EmptyArray = new object[0];
 
-		public Parser(List<CommandDefinition> commands, Lexer lex) {
+		public Parser(Commands commands, Lexer lex) {
 			Commands = commands;
 			Lex = lex;
 		}
@@ -186,23 +187,29 @@ namespace CLI
 			return RunFromSubObject(Commands);
 		}
 
-		private bool RunFromSubObject(List<CommandDefinition> defs) {
+		private bool RunFromSubObject(object obj) {
 			Token token = Expect(TokenType.Identifier);
-			string name = token.Text;
-			foreach (CommandDefinition def in defs) {
-				if (name == def.Name) {
-					// Now that we found it, we need to see if it is supposed to be a sub-object or directly callable
-					if (def.Code != null) {
-						def.Code(new Arguments(GetCopyHere()));
-						return true;
-					}
-					else {
-						Expect(TokenType.Dot);
-						return RunFromSubObject(def.Subobject);
-					}
-				}
+			string name = token.Text.ToLower();
+			MemberInfo[] info = obj.GetType().GetMember(name);
+			// Subobject expected
+			if (info[0].MemberType == MemberTypes.Property) {
+				obj = obj.GetType().GetProperty(name).GetValue(obj, EmptyArray);
+				Expect(TokenType.Dot);
+				return RunFromSubObject(obj);
 			}
-			throw new ScriptException(Lex.NextToken, "Invalid method to call: " + name);
+			else if (info[0].MemberType == MemberTypes.Field) {
+				obj = obj.GetType().GetField(name).GetValue(obj);
+				Expect(TokenType.Dot);
+				return RunFromSubObject(obj);
+			}
+			else if (info[0].MemberType == MemberTypes.Method) {
+				object[] args = new object[] { new Arguments(GetCopyHere()) };
+				obj.GetType().GetMethod(name).Invoke(obj, args);
+				return true;
+			}
+			else {
+				throw new ScriptException(token, "Invalid method to call: " + name);
+			}
 		}
 	}
 
@@ -281,19 +288,6 @@ namespace CLI
 			}
 			ParsedArgs = new object[i];
 			Array.Copy(result, ParsedArgs, i);
-		}
-	}
-
-	public class CommandDefinition {
-		public string Name;
-		public string Help;
-		public Action<Arguments> Code;
-		public List<CommandDefinition> Subobject;
-		public CommandDefinition(string name, string help, Action<Arguments> code) {
-			Name = name; Help = help; Code = code;
-		}
-		public CommandDefinition(string name, string help, List<CommandDefinition> subobject) {
-			Name = name; Help = help; Subobject = subobject;
 		}
 	}
 }

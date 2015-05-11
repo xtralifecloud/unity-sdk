@@ -7,28 +7,13 @@ using UnityEngine;
 
 namespace CLI {
 	public class Commands : MonoBehaviour {
-		#region Definitions
-		public List<CommandDefinition> Definitions() {
-			return new List<CommandDefinition>() {
-				new CommandDefinition("test", "locally tests the interpreter", Test),
-				new CommandDefinition("loginanonymous", "loginanonymous (no arg)", LoginAnonymous),
-				new CommandDefinition("match", "match commands", MatchDefinitions()),
-			};
-		}
-
-		private List<CommandDefinition> MatchDefinitions() {
-			return new List<CommandDefinition>() {
-				new CommandDefinition("create", "creates a match", CreateMatch),
-			};
-		}
-		#endregion
-
 		#region Clan commands
-		private void Test(Arguments args) {
+		void test(Arguments args) {
 			args.ExpectingArgs(0, ArgumentType.String);
 			Log("In test method with value " + args.StringArg(0));
 		}
-		private void LoginAnonymous(Arguments args) {
+		
+		void loginanonymous(Arguments args) {
 			Clan.LoginAnonymously(SuccessHandler<Gamer>(result => {
 				Gamer = result.Value;
 				// Only one loop at a time
@@ -39,7 +24,7 @@ namespace CLI {
 		#endregion
 
 		#region Match commands
-		private void CreateMatch(Arguments args) {
+		void match_create(Arguments args) {
 			args.ExpectingArgs(1, ArgumentType.String, ArgumentType.Double);
 			Log("Here: " + args.StringArg(0) + ", " + args.DoubleArg(1));
 		}
