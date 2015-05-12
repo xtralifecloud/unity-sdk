@@ -48,7 +48,7 @@ namespace CLI
 
 		private T ParseEnum<T>(string value, T defaultValue = default(T)) {
 			try {
-				return (T)Enum.Parse(typeof(T), value);
+				return (T)Enum.Parse(typeof(T), value, true);
 			}
 			catch (Exception) {
 				return defaultValue;
