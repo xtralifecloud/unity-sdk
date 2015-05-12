@@ -20,6 +20,7 @@ namespace CLI {
 	public partial class Commands : MonoBehaviour {
 		public CloudBuilderGameObject CloudBuilderGameObject;
 		public CLI Cli;
+		internal Dictionary<string, Variable> Variables = new Dictionary<string, Variable>();
 
 		// Look for example in Commands.Basic.cs for method implementations
 		[CommandInfo("Gives help about all or a given command.", "[command_name]")]
@@ -47,11 +48,15 @@ namespace CLI {
 				}
 			}
 			Log(sb.ToString().TrimEnd());
+			args.Return();
 		}
 
-		private Clan Clan;
-		private Gamer Gamer;
-		private DomainEventLoop PrivateEventLoop;
+		[CommandInfo("Prints the value of a variable", "value")]
+		void print(Arguments args) {
+			args.Expecting(1, ArgumentType.String);
+			Log(args.StringArg(0));
+			args.Return();
+		}
 
 		void Start() {
 			CloudBuilderGameObject.GetClan(result => {
@@ -66,11 +71,15 @@ namespace CLI {
 
 		private ResultHandler<T> SuccessHandler<T>(ResultHandler<T> subHandler) {
 			return result => {
+				Log(">> " + result.ToString());
 				if (result.IsSuccessful) {
 					subHandler(result);
 				}
-				Log(">> " + result.ToString());
 			};
 		}
+
+		private Clan Clan;
+		private Gamer Gamer;
+		private DomainEventLoop PrivateEventLoop;
 	}
 }

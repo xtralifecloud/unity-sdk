@@ -13,6 +13,7 @@ namespace CLI
 		public GUIStyle FixedFontStyle;
 		private string ConsoleText = "Welcome to Unity CLI! Type help to list available commands!";
 		private Vector2 ScrollPosition = new Vector2(0, float.PositiveInfinity);
+		private bool RunningCommand = false;
 
 		// Inherited
 		void Start() {
@@ -31,15 +32,28 @@ namespace CLI
 			if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Return) {
 				string command = InputField.text;
 				AppendLine("\n> " + command);
-				try {
-					Lexer lex = new Lexer(command);
-					Parser parser = new Parser(Commands, lex);
-					parser.RunAllCommands();
+				if (RunningCommand) {
+					AppendLine(">> A command is already running, please wait.");
+					return;
 				}
-				catch (ScriptException ex) {
-					AppendLine(">> Error in script around " + command.Substring(ex.Position) + ": " + ex.Message);
-					Debug.LogError("Error in script around " + command.Substring(ex.Position) + ", " + ex.ToString());
-				}
+				Lexer lex = new Lexer(command);
+				Parser parser = new Parser(Commands, lex);
+				// Print some feedback at the end
+				parser.AllDoneCallback = ex => {
+					if (ex is ScriptException) {
+						ScriptException e = ex as ScriptException;
+						AppendLine(">> Error in script around " + command.Substring(e.Position) + ": " + e.Message);
+						Debug.LogError("Error in script around " + command.Substring(e.Position) + ", " + e.ToString());
+					}
+					else {
+						if (Commands.Variables.ContainsKey("result") && Commands.Variables["result"].Value != null) {
+							AppendLine(">> result = " + Commands.Variables["result"].Value.ToJson());
+						}
+					}
+					RunningCommand = false;
+				};
+				RunningCommand = true;
+				parser.RunNextCommand();
 				InputField.text = "";
 			}
 			GUI.FocusControl("InputField");

@@ -152,7 +152,7 @@ namespace CloudBuilderLibrary
 			switch (Type) {
 				case DataType.Boolean: return longValue != 0 ? "true" : "false";
 				case DataType.Integer: return longValue.ToString();
-				case DataType.Double: return longValue.ToString();
+				case DataType.Double: return doubleValue.ToString();
 				case DataType.String: return stringValue;
 			}
 			return defaultValue;
