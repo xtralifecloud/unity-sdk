@@ -26,7 +26,7 @@ namespace CloudBuilderLibrary
 				return;
 			}
 			if (string.IsNullOrEmpty(s.ApiKey) || string.IsNullOrEmpty(s.ApiSecret)) {
-				Debug.LogError("!!!! You need to set up the credentials of your application in the CloudBuilder settings pane under the Window menu !!!!");
+				Debug.LogError("!!!! You need to set up the credentials of your application in the settings of your CloudBuilder object !!!!");
 				return;
 			}
 
