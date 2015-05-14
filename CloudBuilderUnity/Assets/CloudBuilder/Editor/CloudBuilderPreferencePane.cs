@@ -65,7 +65,6 @@ namespace CloudBuilderLibrary
 			return defaultChoice;
 		}
 	}
-
 }
 
 
