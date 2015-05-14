@@ -40,6 +40,10 @@ namespace CloudBuilderLibrary
 			}, s.ApiKey, s.ApiSecret, s.Environment, s.HttpVerbose, s.HttpTimeout, s.EventLoopTimeout);
 		}
 
+		void Update() {
+			CloudBuilder.Update();
+		}
+
 		void OnApplicationFocus(bool focused) {
 			CloudBuilder.Log(focused ? "CloudBuilder resumed" : "CloudBuilder suspended");
 			CloudBuilder.OnApplicationFocus(focused);

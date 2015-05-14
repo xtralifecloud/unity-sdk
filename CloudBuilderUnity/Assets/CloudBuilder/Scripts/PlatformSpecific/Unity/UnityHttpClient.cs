@@ -73,15 +73,15 @@ namespace CloudBuilderLibrary
 			}
 		}
 
-		private void ChooseLoadBalancer() {
-			CurrentLoadBalancerId = Random.Next(1, CloudBuilder.ClanInstance.LoadBalancerCount + 1);
+		private void ChooseLoadBalancer(HttpRequest req) {
+			CurrentLoadBalancerId = Random.Next(1, req.LoadBalancerCount + 1);
 		}
 
 		/** Enqueues a request to make it processed asynchronously. Will potentially wait for the other requests enqueued to finish. */
 		private void EnqueueRequest(HttpRequest req) {
 			// On the first time, choose a load balancer
 			if (CurrentLoadBalancerId == -1) {
-				ChooseLoadBalancer();
+				ChooseLoadBalancer(req);
 			}
 			lock (this) {
 				// Dismiss additional requests
@@ -120,7 +120,7 @@ namespace CloudBuilderLibrary
 				if (state.TryCount < retryTimes.Length) {
 					CloudBuilder.Log(LogLevel.Warning, "[" + state.RequestId + "] Request failed, retrying in " + retryTimes[state.TryCount] + "ms.");
 					Thread.Sleep(retryTimes[state.TryCount]);
-					ChooseLoadBalancer();
+					ChooseLoadBalancer(state.OriginalRequest);
 					ProcessRequest(state.OriginalRequest, state.TryCount + 1);
 					return;
 				}
@@ -133,11 +133,7 @@ namespace CloudBuilderLibrary
 			}
 			// Final result for this request
 			if (state.OriginalRequest.Callback != null) {
-				try {
-					state.OriginalRequest.Callback(response);
-				} catch (Exception e) {
-					CloudBuilder.Log(LogLevel.Error, "Error happened when processing the response: " + e.ToString());
-				}
+				CloudBuilder.RunOnMainThread(() => state.OriginalRequest.Callback(response));
 			}
 			// Was independent?
 			if (state.OriginalRequest.DoNotEnqueue) return;
@@ -218,7 +214,7 @@ namespace CloudBuilderLibrary
 
 			// Auto choose HTTP method
 			req.Method = request.Method ?? (request.BodyString != null ? "POST" : "GET");
-			req.UserAgent = CloudBuilder.ClanInstance.UserAgent;
+			req.UserAgent = request.UserAgent;
 			foreach (var pair in request.Headers) {
 				if (String.Compare(pair.Key, "Content-Type", true) == 0)
 					req.ContentType = pair.Value;

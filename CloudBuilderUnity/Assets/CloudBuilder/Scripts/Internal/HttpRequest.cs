@@ -25,6 +25,7 @@ namespace CloudBuilderLibrary {
 			get { return Body != null; }
 		}
 		public Dictionary<String, String> Headers = new Dictionary<string, string>();
+		public int LoadBalancerCount = 1;
 		/**
 		 * When not set (null), uses GET if no body is provided, or POST otherwise.
 		 */
@@ -33,6 +34,7 @@ namespace CloudBuilderLibrary {
 		public int[] TimeBetweenTries = DefaultTimeBetweenTries;
 		public string Url;
 		public int TimeoutMillisec;
+		public string UserAgent;
 
 		// Please do not access this by yourself, this is only kept track of internally and will be ignored if set by you
 		internal Action<HttpResponse> Callback;

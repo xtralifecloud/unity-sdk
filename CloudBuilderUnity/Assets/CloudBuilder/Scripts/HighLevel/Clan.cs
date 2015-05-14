@@ -29,10 +29,12 @@ namespace CloudBuilderLibrary
 			else {
 				result.Url = path;
 			}
+			result.LoadBalancerCount = LoadBalancerCount;
 			result.Headers["x-apikey"] = ApiKey;
 			result.Headers["x-sdkversion"] = SdkVersion;
 			result.Headers["x-apisecret"] = ApiSecret;
 			result.TimeoutMillisec = HttpTimeoutMillis;
+			result.UserAgent = UserAgent;
 			return result;
 		}
 		#endregion

@@ -19,14 +19,10 @@ namespace CloudBuilderLibrary {
 		 * @param eventLoopTimeout sets a custom timeout in seconds for the long polling event loop. Should be used with care
 		 *	 and set to a high value (at least 60). Defaults to 590 (~10 min).
 		 */
-		internal static void Setup(ResultHandler<Clan> done, string apiKey, string apiSecret, string environment, bool httpVerbose, int httpTimeout, int eventLoopTimeout) {
+		public static void Setup(ResultHandler<Clan> done, string apiKey, string apiSecret, string environment, bool httpVerbose, int httpTimeout, int eventLoopTimeout) {
 			lock (SpinLock) {
-				if (ClanInstance != null) {
-					Common.InvokeHandler(done, ErrorCode.AlreadySetup);
-					return;
-				}
-				ClanInstance = new Clan(apiKey, apiSecret, environment, httpVerbose, httpTimeout, eventLoopTimeout);
-				Common.InvokeHandler(done, ClanInstance);
+				Clan clan = new Clan(apiKey, apiSecret, environment, httpVerbose, httpTimeout, eventLoopTimeout);
+				Common.InvokeHandler(done, clan);
 			}
 		}
 
@@ -34,7 +30,7 @@ namespace CloudBuilderLibrary {
 		 * Please call this in an override of OnApplicationFocus on your main object (e.g. scene).
 		 * http://docs.unity3d.com/ScriptReference/MonoBehaviour.OnApplicationFocus.html
 		 */
-		internal static void OnApplicationFocus(bool focused) {
+		public static void OnApplicationFocus(bool focused) {
 			foreach (DomainEventLoop loop in RunningEventLoops) {
 				if (focused) {
 					loop.Resume();
@@ -49,7 +45,7 @@ namespace CloudBuilderLibrary {
 		 * Shuts off the existing instance of the Clan and its descendent objects.
 		 * Works synchronously so might take a bit of time.
 		 */
-		internal static void OnApplicationQuit() {
+		public static void OnApplicationQuit() {
 			// Stop all running loops (in case the developer forgot to do it)
 			foreach (DomainEventLoop loop in RunningEventLoops) {
 				loop.Stop();
@@ -57,6 +53,30 @@ namespace CloudBuilderLibrary {
 			Managers.HttpClient.Terminate();
 		}
 
+		/**
+		 * Needs to be called from the update method of your main game object.
+		 * Not needed if the CloudBuilderGameObject is used...
+		 */
+		public static void Update() {
+			// Run pending actions
+			lock (PendingForMainThread) {
+				CurrentActions.Clear();
+				CurrentActions.AddRange(PendingForMainThread);
+				PendingForMainThread.Clear();
+			}
+			foreach (Action a in CurrentActions) {
+				a();
+			}
+		}
+		
+		/**
+		 * Runs a method on the main thread (actually at the next update).
+		 */
+		internal static void RunOnMainThread(Action action) {
+			lock (PendingForMainThread) {
+				PendingForMainThread.Add(action);
+			}
+		}
 		internal static void Log(string text) {
 			Managers.Logger.Log(LogLevel.Verbose, text);
 		}
@@ -76,13 +96,14 @@ namespace CloudBuilderLibrary {
 			Managers.Logger.Log(LogLevel.Verbose, "[" + span.TotalMilliseconds + "/" + Thread.CurrentThread.ManagedThreadId + "] " + description);
 		}
 
+		internal static List<Action> PendingForMainThread = new List<Action>();
 		// For cleanup upon terminate
 		internal static List<DomainEventLoop> RunningEventLoops = new List<DomainEventLoop>();
 
 		#region Private
 		private static object SpinLock = new object();
-		internal static Clan ClanInstance { get; private set; }
 		private static long InitialTicks;
+		private static List<Action> CurrentActions = new List<Action>();
 		#endregion
 	}
 }
