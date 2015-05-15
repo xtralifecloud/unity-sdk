@@ -8,15 +8,8 @@ public class ClanTests : MonoBehaviour
 	[InstanceMethodAttribute(typeof(ClanTests))]
 	public string TestMethodName;
 
-    public void Start()
-    {
-		var method = typeof(ClanTests).GetMethod(TestMethodName, BindingFlags.NonPublic | BindingFlags.Instance);
-		if (method == null) {
-			IntegrationTest.Fail("Invalid method " + TestMethodName + " on ClanTests");
-		}
-		else {
-			method.Invoke(this, null);
-		}
+    public void Start() {
+		typeof(ClanTests).GetMethod(TestMethodName, BindingFlags.NonPublic | BindingFlags.Instance).Invoke(this, null);
     }
 
 	void ShouldSetupProperly() {

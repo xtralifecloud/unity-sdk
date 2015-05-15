@@ -6,13 +6,11 @@ using System.Collections.Generic;
 
 [CustomPropertyDrawer(typeof(InstanceMethodAttribute))]
 public class InstanceMethodDrawer : PropertyDrawer {
-    // Provide easy access to the RegexAttribute for reading information from it.
     InstanceMethodAttribute instMethod { get { return ((InstanceMethodAttribute)attribute); } }
 
-    // Here you can define the GUI for your property drawer. Called by Unity.
     public override void OnGUI (Rect position, SerializedProperty prop, GUIContent label) {
 		InstanceMethodAttribute attrs = (InstanceMethodAttribute)attribute;
-		var mbs = attrs.CallerType.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
+		var mbs = attrs.CallerType.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
 		string[] keys = new string[mbs.Length];
 		for (int i = 0; i < mbs.Length; i++) {
 			keys[i] = mbs[i].Name;
