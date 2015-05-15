@@ -39,12 +39,17 @@ namespace CloudBuilderLibrary
 		 * @param networkSecret the secret for the network. For e-mail accounts, this would be the passord. For
 		 *     facebook or other SNS accounts, this would be the user token.
 		 */
-		public void Login(ResultHandler<Gamer> done, LoginNetwork network, string networkId, string networkSecret) {
+		public void Login(ResultHandler<Gamer> done, LoginNetwork network, string networkId, string networkSecret, bool preventRegistration = false) {
 			Bundle config = Bundle.CreateObject();
 			config["network"] = network.Describe();
 			config["id"] = networkId;
 			config["secret"] = networkSecret;
 			config["device"] = Managers.SystemFunctions.CollectDeviceInformation();
+			if (preventRegistration) {
+				Bundle options = Bundle.CreateObject();
+				options["preventRegistration"] = preventRegistration;
+				config["options"] = options;
+			}
 
 			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/login");
 			req.BodyJson = config;

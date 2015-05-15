@@ -15,7 +15,7 @@ namespace CloudBuilderLibrary
 			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/ping");
 			Managers.HttpClient.Run(req, (HttpResponse response) => {
 				Result<bool> result = new Result<bool>(response);
-				result.Value = Common.HasFailed(response);
+				result.Value = !Common.HasFailed(response);
 				Common.InvokeHandler(done, result);
 			});
 		}
