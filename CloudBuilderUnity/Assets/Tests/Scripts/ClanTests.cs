@@ -149,6 +149,42 @@ public class ClanTests : MonoBehaviour {
 		);
 	}
 
+	[Test("Checks the 'find user' functionality.")]
+	public void ShouldCheckIfUserExists(Clan clan) {
+		// Ensures that a fake account has been created
+		clan.Login(
+			network: LoginNetwork.Email,
+			networkId: "clan@localhost.localdomain",
+			networkSecret: "Password123",
+			done: loginResult => {
+				if (!loginResult.IsSuccessful) IntegrationTest.Fail("Creation of fake account failed");
+				clan.UserExists(
+					network: LoginNetwork.Email,
+					networkId: "clan@localhost.localdomain",
+					done: checkResult => {
+						IntegrationTest.Assert(checkResult.IsSuccessful && checkResult.Value);
+					}
+				);
+			}
+		);
+	}
+
+	[Test("Checks the send reset link functionality.")]
+	public void ShouldSendAccountResetLink(Clan clan) {
+		// This method is broken because we cannot GET somewhere with a body
+		// We have to fix the server or get rid of this method & test
+		clan.SendMailPassword(
+			userEmail: "clan@localhost.localdomain",
+			mailSender: "admin@localhost.localdomain",
+			mailTitle: "Reset link",
+			mailBody: "Here is your link: [[SHORTCODE]]",
+			done: result => {
+				IntegrationTest.Assert(result.IsSuccessful && result.Value);
+			}
+		);
+
+	}
+
 	#region Private helper methods
 	private string RandomEmailAddress() {
 		string randomPart = Guid.NewGuid().ToString();

@@ -12,6 +12,7 @@ namespace CloudBuilderLibrary
 			{"Production", "https://prod-api[id].clanofthecloud.mobi"},
 			{"Dev Server", "http://195.154.227.44:8000"},
 			{"Local Server", "http://127.0.0.1:3000"},
+			{"Parallels VM", "http://10.211.55.2:2000"},
 		};
 		private bool HttpGroupEnabled = true;
 
