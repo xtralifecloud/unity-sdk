@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudBuilderLibrary", "CloudBuilderLibrary.csproj", "{BDD85764-D606-4F8F-AEA8-8B5D52EB9D38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudBuilderLibrary-Editor", "..\CloudBuilderLibrary-Editor\CloudBuilderLibrary-Editor.csproj", "{CB7CA499-F657-4EF4-9543-8192E748D979}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudBuilderLibrary-Editor", "CloudBuilderLibrary-Editor\CloudBuilderLibrary-Editor.csproj", "{CB7CA499-F657-4EF4-9543-8192E748D979}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

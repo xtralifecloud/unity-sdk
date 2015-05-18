@@ -44,14 +44,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CloudBuilderLibrary\CloudBuilderLibrary.csproj">
+    <ProjectReference Include="..\CloudBuilderLibrary.csproj">
       <Project>{bdd85764-d606-4f8f-aea8-8b5d52eb9d38}</Project>
       <Name>CloudBuilderLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>cp $(TargetPath) $(ProjectDir)/../Assets/Plugins</PostBuildEvent>
+    <PostBuildEvent>cp $(TargetPath) $(SolutionDir)/../CloudBuilderUnity/Assets/Plugins</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
