@@ -28,7 +28,5 @@ namespace CloudBuilderLibrary {
 		public bool HttpVerbose = true;
 		[SerializeField]
 		public int HttpTimeout = 60;
-		[SerializeField]
-		public int EventLoopTimeout = 590;
 	}
 }

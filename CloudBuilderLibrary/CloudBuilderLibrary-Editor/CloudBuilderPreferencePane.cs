@@ -44,9 +44,6 @@ namespace CloudBuilderLibrary
 				if (int.TryParse(EditorGUILayout.TextField("Request timeout (sec)", s.HttpTimeout.ToString()), out tmpInt)) {
 					s.HttpTimeout = tmpInt;
 				}
-				if (int.TryParse(EditorGUILayout.TextField("Event loop iteration (sec)", s.EventLoopTimeout.ToString()), out tmpInt)) {
-					s.EventLoopTimeout = tmpInt;
-				}
 				EditorGUI.indentLevel--;
 			}
 

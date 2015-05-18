@@ -40,14 +40,13 @@ namespace CloudBuilderLibrary
 		#endregion
 
 		#region Private
-		internal Clan(string apiKey, string apiSecret, string environment, bool httpVerbose, int httpTimeout, int eventLoopTimeout) {
+		internal Clan(string apiKey, string apiSecret, string environment, bool httpVerbose, int httpTimeout) {
 			this.ApiKey = apiKey;
 			this.ApiSecret = apiSecret;
 			this.Server = environment;
 			LoadBalancerCount = 2;
 			Managers.HttpClient.VerboseMode = httpVerbose;
 			HttpTimeoutMillis = httpTimeout * 1000;
-			PopEventDelay = eventLoopTimeout * 1000;
 			UserAgent = String.Format(Common.UserAgent, Managers.SystemFunctions.GetOsName(), Common.SdkVersion);
 		}
 		#endregion
@@ -57,9 +56,6 @@ namespace CloudBuilderLibrary
 		private string ApiKey, ApiSecret, Server;
 		private int HttpTimeoutMillis;
 		public int LoadBalancerCount {
-			get; private set;
-		}
-		public int PopEventDelay {
 			get; private set;
 		}
 		public string UserAgent {

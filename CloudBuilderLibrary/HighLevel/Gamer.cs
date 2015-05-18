@@ -27,7 +27,7 @@ namespace CloudBuilderLibrary
 		 * e-mail address, this is the method that you will want to call.
 		 * In order to convert the account successfully, the provided network credentials need to be acceptable,
 		 * just as when calling Clan.Login.
-		 * @param done callback invoked when the login has finished, either successfully or not. The boolean inside
+		 * @param done callback invoked when the operation has completed, either successfully or not. The boolean inside
 		 *     is not important.
 		 * @param network the target network to connect with later on.
 		 * @param networkId the ID on the network. For example, with the facebook network, this would be the User ID.
@@ -48,7 +48,6 @@ namespace CloudBuilderLibrary
 					Common.InvokeHandler(done, response);
 					return;
 				}
-
 				Common.InvokeHandler(done, true, response.BodyJson);
 			});
 		}
@@ -60,6 +59,38 @@ namespace CloudBuilderLibrary
 		 */
 		public void DeleteAccount(ResultHandler<bool> done) {
 			Common.InvokeHandler(done, ErrorCode.NotImplemented);
+		}
+
+		/**
+		 * Links the account with an external network service.
+		 * @param done callback invoked when the operation has completed, either successfully or not. The boolean inside
+		 *     is not important.
+		 * @param network the target network to link the account with. Can not be a simple anonymous or email account.
+		 * @param networkId the ID on the network. For example, with the facebook network, this would be the User ID.
+		 *     On e-mail accounts e-mail then, this would be the e-mail address.
+		 * @param networkSecret the secret for the network. For e-mail accounts, this would be the passord. For
+		 *     facebook or other SNS accounts, this would be the user token.
+		 */
+		public void LinkAccount(ResultHandler<bool> done, LoginNetwork network, string networkId, string networkSecret) {
+			if (network == LoginNetwork.Email || network == LoginNetwork.Anonymous) {
+				Common.InvokeHandler(done, ErrorCode.BadParameters, "Cannot convert to this network");
+				return;
+			}
+
+			Bundle config = Bundle.CreateObject();
+			config["network"] = network.Describe();
+			config["id"] = networkId;
+			config["secret"] = networkSecret;
+
+			HttpRequest req = MakeHttpRequest("/v1/gamer/link");
+			req.BodyJson = config;
+			Managers.HttpClient.Run(req, (HttpResponse response) => {
+				if (Common.HasFailed(response)) {
+					Common.InvokeHandler(done, response);
+					return;
+				}
+				Common.InvokeHandler(done, true, response.BodyJson);
+			});
 		}
 
 		/**
@@ -85,6 +116,32 @@ namespace CloudBuilderLibrary
 					return;
 				}
 
+				Common.InvokeHandler(done, true, response.BodyJson);
+			});
+		}
+
+		/**
+		 * Unlinks the account from an external network service.
+		 * @param done callback invoked when the operation has completed, either successfully or not. The boolean
+		 *     inside is not important.
+		 * @param network the target network to unlink the account from.
+		 */
+		public void UnlinkAccount(ResultHandler<bool> done, LoginNetwork network) {
+			if (network == LoginNetwork.Email || network == LoginNetwork.Anonymous) {
+				Common.InvokeHandler(done, ErrorCode.BadParameters, "Cannot convert to this network");
+				return;
+			}
+
+			Bundle config = Bundle.CreateObject();
+			config["network"] = network.Describe();
+
+			HttpRequest req = MakeHttpRequest("/v1/gamer/unlink");
+			req.BodyJson = config;
+			Managers.HttpClient.Run(req, (HttpResponse response) => {
+				if (Common.HasFailed(response)) {
+					Common.InvokeHandler(done, response);
+					return;
+				}
 				Common.InvokeHandler(done, true, response.BodyJson);
 			});
 		}

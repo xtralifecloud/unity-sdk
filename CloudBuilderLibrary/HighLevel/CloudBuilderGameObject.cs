@@ -37,7 +37,7 @@ namespace CloudBuilderLibrary
 				foreach (var handler in pendingClanHandlers) {
 					handler(clan);
 				}
-			}, s.ApiKey, s.ApiSecret, s.Environment, s.HttpVerbose, s.HttpTimeout, s.EventLoopTimeout);
+			}, s.ApiKey, s.ApiSecret, s.Environment, s.HttpVerbose, s.HttpTimeout);
 		}
 
 		void Update() {

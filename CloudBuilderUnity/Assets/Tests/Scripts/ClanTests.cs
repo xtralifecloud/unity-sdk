@@ -12,7 +12,7 @@ public class ClanTests : MonoBehaviour {
 		// Invoke the method described on the integration test script (TestMethodName)
 		var met = GetType().GetMethod(TestMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 		var parms = met.GetParameters();
-		// We may help simplify the tests by doing the setup on our side
+		// Test methods can either have no param, either have one "Clan" param, in which case we do the setup here to simplify
 		if (parms.Length >= 1 && parms[0].ParameterType == typeof(Clan)) {
 			FindObjectOfType<CloudBuilderGameObject>().GetClan(clan => {
 				met.Invoke(this, new object[] { clan });

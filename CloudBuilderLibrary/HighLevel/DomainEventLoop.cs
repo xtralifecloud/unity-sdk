@@ -28,10 +28,13 @@ namespace CloudBuilderLibrary {
 		 * @param domain the domain on which to listen for events. Note that you may create multiple event loops,
 		 * especially if you are using multiple domains. The default domain, that you should use unless you are
 		 * explicitly using multiple domains, is the private domain.
+		 * @param sets a custom timeout in seconds for the long polling event loop. Should be used with care and
+		 *	 set to a high value (at least 60). Defaults to 590 (~10 min).
 		 */
-		public DomainEventLoop(Gamer gamer, String domain = Common.PrivateDomain) {
+		public DomainEventLoop(Gamer gamer, String domain = Common.PrivateDomain, int iterationDuration = 590) {
 			Domain = domain;
 			Gamer = gamer;
+			LoopIterationDuration = iterationDuration * 1000;
 		}
 
 		/**
@@ -96,7 +99,7 @@ namespace CloudBuilderLibrary {
 		#region Private
 		private void Run() {
 			Clan clan = Gamer.Clan;
-			int delay = clan.PopEventDelay;
+			int delay = LoopIterationDuration;
 			int CorrelationId = Random.Next();
 			string messageToAcknowledge = null;
 			bool lastResultPositive = true;
@@ -159,6 +162,7 @@ namespace CloudBuilderLibrary {
 		private AutoResetEvent SynchronousRequestLock = new AutoResetEvent(false);
 		private HttpRequest CurrentRequest;
 		private bool Stopped = false, AlreadyStarted = false, Paused = false;
+		private int LoopIterationDuration;
 		private const int PopEventDelayAfterFailure = 2000, PopEventDelayThreadHold = 20000;
 		private Gamer Gamer;
 		#endregion

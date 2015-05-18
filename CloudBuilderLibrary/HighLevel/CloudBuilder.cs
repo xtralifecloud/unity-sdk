@@ -16,12 +16,10 @@ namespace CloudBuilderLibrary {
 		 * @param httpVerbose set to true to output detailed information about the requests performed to CotC servers. Can be used
 		 *	 for debugging, though it does pollute the logs.
 		 * @param httpTimeout sets a custom timeout for all requests in seconds. Defaults to 1 minute.
-		 * @param eventLoopTimeout sets a custom timeout in seconds for the long polling event loop. Should be used with care
-		 *	 and set to a high value (at least 60). Defaults to 590 (~10 min).
 		 */
-		public static void Setup(ResultHandler<Clan> done, string apiKey, string apiSecret, string environment, bool httpVerbose, int httpTimeout, int eventLoopTimeout) {
+		public static void Setup(ResultHandler<Clan> done, string apiKey, string apiSecret, string environment, bool httpVerbose, int httpTimeout) {
 			lock (SpinLock) {
-				Clan clan = new Clan(apiKey, apiSecret, environment, httpVerbose, httpTimeout, eventLoopTimeout);
+				Clan clan = new Clan(apiKey, apiSecret, environment, httpVerbose, httpTimeout);
 				Common.InvokeHandler(done, clan);
 			}
 		}
