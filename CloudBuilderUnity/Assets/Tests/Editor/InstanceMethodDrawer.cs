@@ -15,7 +15,6 @@ namespace IntegrationTests {
 		public override void OnGUI(Rect position, SerializedProperty prop, GUIContent label) {
 			Dictionary<string, string> methods = GetMethodList();
 			string[] keys = new string[methods.Keys.Count];
-			float startY = position.y;
 			methods.Keys.CopyTo(keys, 0);
 
 			EditorGUI.BeginChangeCheck();

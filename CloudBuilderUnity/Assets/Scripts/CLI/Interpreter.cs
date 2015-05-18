@@ -192,7 +192,6 @@ namespace CLI {
 			private set;
 		}
 		public Action<Exception> AllDoneCallback;
-		private static object[] EmptyArray = new object[0];
 
 		public Parser(Commands commands, Lexer lex) {
 			Commands = commands;
@@ -313,7 +312,6 @@ namespace CLI {
 			get;
 			private set;
 		}
-		private ArgumentType[] ExpectedArgs;
 		private object[] ParsedArgs;
 		private Action CommandDone;
 
@@ -326,7 +324,6 @@ namespace CLI {
 		public void Expecting(int minimumArgs, params ArgumentType[] types) {
 			object[] result = new object[types.Length];
 			int i;
-			ExpectedArgs = types;
 			for (i = 0; i < types.Length; i++) {
 				bool hasArg = true;
 				// Check for end of arg list (comma is optional)
