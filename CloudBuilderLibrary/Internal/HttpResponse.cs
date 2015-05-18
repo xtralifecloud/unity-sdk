@@ -14,6 +14,8 @@ namespace CloudBuilderLibrary {
 		public bool HasBody {
 			get { return Body != null; }
 		}
+		/** If true, means that the request has completely failed, not that it received an error code such as 400.
+		 * This will appear as completely normal. Use Common.HasFailed in that case. */
 		public bool HasFailed {
 			get { return Exception != null; }
 		}
