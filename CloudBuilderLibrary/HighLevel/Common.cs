@@ -47,6 +47,23 @@ namespace CloudBuilderLibrary
 			return DateTime.Parse(httpDate);
 		}
 
+		/**
+		 * Wrapper around our standard work on Managers.HttpClient.Run. Automatically notifies the passed handler
+		 * of a failure.
+		 * @param req request to perform.
+		 * @param handler handler to call in case of failure.
+		 * @param onSuccess callback called in case of success only (handler untouched in that case).
+		 */
+		internal static void RunHandledRequest<T>(HttpRequest req, ResultHandler<T> handler, Action<HttpResponse> onSuccess) {
+			Managers.HttpClient.Run(req, (HttpResponse response) => {
+				if (HasFailed(response)) {
+					InvokeHandler(handler, response);
+					return;
+				}
+				if (onSuccess != null) onSuccess(response);
+			});
+		}
+
 		internal static string ToHttpDateString(this DateTime d) {
 			return d.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
 		}

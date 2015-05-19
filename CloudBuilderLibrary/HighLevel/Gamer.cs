@@ -34,11 +34,7 @@ namespace CloudBuilderLibrary
 
 			HttpRequest req = MakeHttpRequest("/v1/gamer/password");
 			req.BodyJson = config;
-			Managers.HttpClient.Run(req, (HttpResponse response) => {
-				if (Common.HasFailed(response)) {
-					Common.InvokeHandler(done, response);
-					return;
-				}
+			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Common.InvokeHandler(done, response.BodyJson["done"], response.BodyJson);
 			});
 		}
@@ -66,11 +62,7 @@ namespace CloudBuilderLibrary
 
 			HttpRequest req = MakeHttpRequest("/v1/gamer/convert");
 			req.BodyJson = config;
-			Managers.HttpClient.Run(req, (HttpResponse response) => {
-				if (Common.HasFailed(response)) {
-					Common.InvokeHandler(done, response);
-					return;
-				}
+			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Common.InvokeHandler(done, response.BodyJson["done"], response.BodyJson);
 			});
 		}
@@ -92,12 +84,7 @@ namespace CloudBuilderLibrary
 			}
 
 			req.BodyJson = friendData;
-			Managers.HttpClient.Run(req, (HttpResponse response) => {
-				if (Common.HasFailed(response)) {
-					Common.InvokeHandler(done, response);
-					return;
-				}
-
+			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Common.InvokeHandler(done, true, response.BodyJson);
 			});
 		}

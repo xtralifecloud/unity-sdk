@@ -17,12 +17,7 @@ namespace CloudBuilderLibrary
 			
 			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/login/anonymous");
 			req.BodyJson = config;
-			Managers.HttpClient.Run(req, (HttpResponse response) => {
-				if (Common.HasFailed(response)) {
-					Common.InvokeHandler(done, response);
-					return;
-				}
-
+			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Gamer gamer = new Gamer(this, response.BodyJson);
 				Common.InvokeHandler(done, gamer, response.BodyJson);
 			});
@@ -53,12 +48,7 @@ namespace CloudBuilderLibrary
 
 			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/login");
 			req.BodyJson = config;
-			Managers.HttpClient.Run(req, (HttpResponse response) => {
-				if (Common.HasFailed(response)) {
-					Common.InvokeHandler(done, response);
-					return;
-				}
-
+			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Gamer gamer = new Gamer(this, response.BodyJson);
 				Common.InvokeHandler(done, gamer, response.BodyJson);
 			});
@@ -94,11 +84,7 @@ namespace CloudBuilderLibrary
 			config["body"] = mailBody;
 			req.BodyJson = config;
 
-			Managers.HttpClient.Run(req, (HttpResponse response) => {
-				if (Common.HasFailed(response)) {
-					Common.InvokeHandler(done, response);
-					return;
-				}
+			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Common.InvokeHandler(done, response.BodyJson["done"], response.BodyJson);
 			});
 		}
@@ -113,11 +99,7 @@ namespace CloudBuilderLibrary
 			UrlBuilder url = new UrlBuilder("/v1/users")
 				.Subpath(network.Describe()).Subpath(networkId);
 			HttpRequest req = MakeUnauthenticatedHttpRequest(url);
-			Managers.HttpClient.Run(req, (HttpResponse response) => {
-				if (Common.HasFailed(response)) {
-					Common.InvokeHandler(done, response);
-					return;
-				}
+			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Common.InvokeHandler(done, true, response.BodyJson);
 			});
 		}

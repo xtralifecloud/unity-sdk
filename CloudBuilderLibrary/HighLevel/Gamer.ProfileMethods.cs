@@ -13,12 +13,7 @@ namespace CloudBuilderLibrary
 			*/
 		public void GetProfile(ResultHandler<GamerProfile> done) {
 			HttpRequest req = MakeHttpRequest("/v1/gamer/profile");
-			Managers.HttpClient.Run(req, (HttpResponse response) => {
-				if (Common.HasFailed(response)) {
-					Common.InvokeHandler(done, response);
-					return;
-				}
-
+			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				GamerProfile profile = new GamerProfile(response.BodyJson);
 				Common.InvokeHandler(done, profile, response.BodyJson);
 			});
@@ -38,12 +33,8 @@ namespace CloudBuilderLibrary
 		public void SetProfile(ResultHandler<bool> done, Bundle data) {
 			HttpRequest req = MakeHttpRequest("/v1/gamer/profile");
 			req.BodyJson = data;
-			Managers.HttpClient.Run(req, (HttpResponse response) => {
-				Result<bool> result = new Result<bool>(response);
-				if (!Common.HasFailed(response)) {
-					result.Value = (response.BodyJson["done"] == 1);
-				}
-				Common.InvokeHandler(done, result);
+			Common.RunHandledRequest(req, done, (HttpResponse response) => {
+				Common.InvokeHandler(done, response.BodyJson["done"]);
 			});
 		}
 	}
