@@ -21,6 +21,29 @@ namespace CloudBuilderLibrary
 		public DateTime RegisterTime { get; private set; }
 
 		/**
+		 * Changes the password of the current user. Works for e-mail type accounts.
+		 */
+		public void ChangePassword(ResultHandler<bool> done, string newPassword) {
+			if (Network != LoginNetwork.Email) {
+				Common.InvokeHandler(done, ErrorCode.BadParameters, "Unavailable for " + Network.Describe() + " accounts");
+				return;
+			}
+
+			Bundle config = Bundle.CreateObject();
+			config["password"] = newPassword;
+
+			HttpRequest req = MakeHttpRequest("/v1/gamer/password");
+			req.BodyJson = config;
+			Managers.HttpClient.Run(req, (HttpResponse response) => {
+				if (Common.HasFailed(response)) {
+					Common.InvokeHandler(done, response);
+					return;
+				}
+				Common.InvokeHandler(done, response.BodyJson["done"], response.BodyJson);
+			});
+		}
+
+		/**
 		 * Converts the account to sign in through another network.
 		 * For instance, you might have created an anonymous account, that you later want to convert to an account
 		 * logged on through a facebook account. Or, should you later want to convert this account to simply use an

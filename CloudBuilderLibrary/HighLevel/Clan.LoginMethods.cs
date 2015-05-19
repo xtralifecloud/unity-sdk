@@ -85,7 +85,7 @@ namespace CloudBuilderLibrary
 		 * @param mailBody the body of the mail. You should include the string [[SHORTCODE]], which will
 		 *     be replaced by the generated short code.
 		 */
-		public void SendMailPassword(ResultHandler<bool> done, string userEmail, string mailSender, string mailTitle, string mailBody) {
+		public void SendResetPasswordEmail(ResultHandler<bool> done, string userEmail, string mailSender, string mailTitle, string mailBody) {
 			UrlBuilder url = new UrlBuilder("/v1/login").Subpath(userEmail);
 			HttpRequest req = MakeUnauthenticatedHttpRequest(url);
 			Bundle config = Bundle.CreateObject();

@@ -173,7 +173,7 @@ public class ClanTests : MonoBehaviour {
 	public void ShouldSendAccountResetLink(Clan clan) {
 		// This method is broken because we cannot GET somewhere with a body
 		// We have to fix the server or get rid of this method & test
-		clan.SendMailPassword(
+		clan.SendResetPasswordEmail(
 			userEmail: "clan@localhost.localdomain",
 			mailSender: "admin@localhost.localdomain",
 			mailTitle: "Reset link",
