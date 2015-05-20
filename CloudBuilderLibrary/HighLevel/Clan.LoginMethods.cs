@@ -76,7 +76,7 @@ namespace CloudBuilderLibrary
 		 *     be replaced by the generated short code.
 		 */
 		public void SendResetPasswordEmail(ResultHandler<bool> done, string userEmail, string mailSender, string mailTitle, string mailBody) {
-			UrlBuilder url = new UrlBuilder("/v1/login").Subpath(userEmail);
+			UrlBuilder url = new UrlBuilder("/v1/login").Path(userEmail);
 			HttpRequest req = MakeUnauthenticatedHttpRequest(url);
 			Bundle config = Bundle.CreateObject();
 			config["from"] = mailSender;
@@ -97,7 +97,7 @@ namespace CloudBuilderLibrary
 		 */
 		public void UserExists(ResultHandler<bool> done, LoginNetwork network, string networkId) {
 			UrlBuilder url = new UrlBuilder("/v1/users")
-				.Subpath(network.Describe()).Subpath(networkId);
+				.Path(network.Describe()).Path(networkId);
 			HttpRequest req = MakeUnauthenticatedHttpRequest(url);
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Common.InvokeHandler(done, true, response.BodyJson);

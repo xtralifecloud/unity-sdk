@@ -36,6 +36,13 @@ namespace CloudBuilderLibrary
 			result[key2] = value2;
 			return result;
 		}
+		public static Bundle CreateObject(string key1, Bundle value1, string key2, Bundle value2, string key3, Bundle value3) {
+			Bundle result = new Bundle(DataType.Object);
+			result[key1] = value1;
+			result[key2] = value2;
+			result[key3] = value3;
+			return result;
+		}
 		public static Bundle CreateArray(params Bundle[] values) {
 			Bundle result = new Bundle(DataType.Array);
 			foreach (Bundle b in values) result.Add(b);

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CloudBuilderLibrary {
 
-	public class GamerProperties {
+	public sealed class GamerProperties {
 
 		internal GamerProperties(Gamer parent, string domain) {
 			Domain = domain;
@@ -13,7 +13,7 @@ namespace CloudBuilderLibrary {
 		}
 
 		public void GetKey(ResultHandler<Bundle> done, string key) {
-			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Subpath(Domain).Subpath(key);
+			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(Domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Common.InvokeHandler(done, response.BodyJson["properties"], response.BodyJson);
@@ -21,7 +21,7 @@ namespace CloudBuilderLibrary {
 		}
 
 		public void GetAll(ResultHandler<Bundle> done) {
-			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Subpath(Domain);
+			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(Domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Common.InvokeHandler(done, response.BodyJson["properties"], response.BodyJson);
@@ -29,7 +29,7 @@ namespace CloudBuilderLibrary {
 		}
 
 		public void SetKey(ResultHandler<int> done, string key, Bundle value) {
-			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Subpath(Domain).Subpath(key);
+			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(Domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("value", value);
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
@@ -38,7 +38,7 @@ namespace CloudBuilderLibrary {
 		}
 
 		public void SetAll(ResultHandler<int> done, Bundle properties) {
-			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Subpath(Domain);
+			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(Domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = properties;
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
@@ -47,7 +47,7 @@ namespace CloudBuilderLibrary {
 		}
 
 		public void RemoveKey(ResultHandler<bool> done, string key) {
-			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Subpath(Domain).Subpath(key);
+			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(Domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
@@ -56,7 +56,7 @@ namespace CloudBuilderLibrary {
 		}
 
 		public void RemoveAll(ResultHandler<bool> done) {
-			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Subpath(Domain);
+			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(Domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {

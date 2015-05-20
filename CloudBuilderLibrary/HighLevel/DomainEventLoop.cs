@@ -113,7 +113,7 @@ namespace CloudBuilderLibrary {
 				}
 
 				UrlBuilder url = new UrlBuilder("/v1/gamer/event");
-				url.Subpath(Domain).QueryParam("timeout", delay).QueryParam("correlationId", CorrelationId);
+				url.Path(Domain).QueryParam("timeout", delay).QueryParam("correlationId", CorrelationId);
 				if (messageToAcknowledge != null) {
 					url.QueryParam("ack", messageToAcknowledge);
 				}

@@ -6,10 +6,10 @@ namespace CloudBuilderLibrary {
 	internal class UrlBuilder {
 		public UrlBuilder(string path, string server = null) {
 			Url = server ?? "";
-			Subpath(path);
+			Path(path);
 		}
 
-		public UrlBuilder Subpath(string path) {
+		public UrlBuilder Path(string path) {
 			if (Url.Length == 0 || Url[Url.Length - 1] != '/') {
 				Url += '/';
 			}
