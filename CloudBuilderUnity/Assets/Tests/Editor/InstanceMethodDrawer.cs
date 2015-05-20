@@ -9,7 +9,7 @@ namespace IntegrationTests {
 
 	[CustomPropertyDrawer(typeof(InstanceMethod))]
 	public class InstanceMethodDrawer : PropertyDrawer {
-		private const string SelectMethodMessage = "(Please choose a method)";
+		private const string SelectMethodMessage = "Please choose a method!";
 		private Dictionary<string, string> methods;
 
 		public override void OnGUI(Rect position, SerializedProperty prop, GUIContent label) {
@@ -23,10 +23,11 @@ namespace IntegrationTests {
 			];
 
 			// Method info
-			string helpMessage = methods.ContainsKey(value) ? methods[value] : SelectMethodMessage;
+			bool hasChosenMethod = methods.ContainsKey(prop.stringValue);
+			string helpMessage = hasChosenMethod ? methods[value] : SelectMethodMessage;
 			position.height = new GUIStyle(GUI.skin.GetStyle("HelpBox")).CalcHeight(new GUIContent(helpMessage), position.width - 20);
 			position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-			EditorGUI.HelpBox(position, helpMessage, MessageType.Info);
+			EditorGUI.HelpBox(position, helpMessage, hasChosenMethod ? MessageType.Info : MessageType.Error);
 			if (EditorGUI.EndChangeCheck())
 				prop.stringValue = value;
 		}

@@ -30,6 +30,17 @@ namespace CloudBuilderLibrary
 			result[onlyKey] = onlyValue;
 			return result;
 		}
+		public static Bundle CreateObject(string key1, Bundle value1, string key2, Bundle value2) {
+			Bundle result = new Bundle(DataType.Object);
+			result[key1] = value1;
+			result[key2] = value2;
+			return result;
+		}
+		public static Bundle CreateArray(params Bundle[] values) {
+			Bundle result = new Bundle(DataType.Array);
+			foreach (Bundle b in values) result.Add(b);
+			return result;
+		}
 
 		// Construction (internal)
 		protected Bundle(DataType dataType) {
@@ -105,6 +116,16 @@ namespace CloudBuilderLibrary
 		// Key management
 		public bool Has(string key) {
 			return Dictionary.ContainsKey(key);
+		}
+		public bool IsEmpty {
+			get {
+				switch (type) {
+					case DataType.Object: return Dictionary.Count == 0;
+					case DataType.Array: return Array.Count == 0;
+					case DataType.None: return true;
+					default: return false;
+				}
+			}
 		}
 		public void Remove(string key) {
 			Dictionary.Remove(key);
