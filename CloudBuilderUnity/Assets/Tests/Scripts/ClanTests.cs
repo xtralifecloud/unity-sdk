@@ -182,7 +182,56 @@ public class ClanTests : MonoBehaviour {
 				IntegrationTest.Assert(result.IsSuccessful && result.Value);
 			}
 		);
+	}
 
+	[Test("Changes the password of an e-mail account.")]
+	public void ShouldChangePassword(Clan clan) {
+		clan.Login(
+			network: LoginNetwork.Email,
+			networkId: RandomEmailAddress(),
+			networkSecret: "Password123",
+			done: result => {
+				if (!result.IsSuccessful) IntegrationTest.Fail("Creation of fake account failed");
+				var gamer = result.Value;
+				gamer.ChangePassword(pswResult => {
+					IntegrationTest.Assert(pswResult.IsSuccessful && pswResult.Value);
+				}, "Password124");
+			}
+		);
+	}
+
+	[Test("Changes the e-mail address associated to an e-mail account.")]
+	public void ShouldChangeEmailAddress(Clan clan) {
+		clan.Login(
+			network: LoginNetwork.Email,
+			networkId: RandomEmailAddress(),
+			networkSecret: "Password123",
+			done: result => {
+				if (!result.IsSuccessful) IntegrationTest.Fail("Creation of fake account failed");
+				var gamer = result.Value;
+				gamer.ChangeEmailAddress(pswResult => {
+					IntegrationTest.Assert(pswResult.IsSuccessful && pswResult.Value);
+				}, RandomEmailAddress());
+			}
+		);
+	}
+
+	[Test("Changes the e-mail address associated to an e-mail account.")]
+	public void ShouldFailToChangeEmailAddressToExistingOne(Clan clan) {
+		clan.Login(
+			network: LoginNetwork.Email,
+			networkId: RandomEmailAddress(),
+			networkSecret: "Password123",
+			done: result => {
+				if (!result.IsSuccessful) IntegrationTest.Fail("Creation of fake account failed");
+				var gamer = result.Value;
+				gamer.ChangeEmailAddress(pswResult => {
+					IntegrationTest.Assert(!pswResult.IsSuccessful && !pswResult.Value);
+					IntegrationTest.Assert(pswResult.HttpStatusCode == 400);
+					IntegrationTest.Assert(pswResult.ServerData["message"] == "UserExists");
+				}, "clan@localhost.localdomain");
+			}
+		);
 	}
 
 	#region Private helper methods

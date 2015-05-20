@@ -21,53 +21,6 @@ namespace CloudBuilderLibrary
 		public DateTime RegisterTime { get; private set; }
 
 		/**
-		 * Changes the password of the current user. Works for e-mail type accounts.
-		 */
-		public void ChangePassword(ResultHandler<bool> done, string newPassword) {
-			if (Network != LoginNetwork.Email) {
-				Common.InvokeHandler(done, ErrorCode.BadParameters, "Unavailable for " + Network.Describe() + " accounts");
-				return;
-			}
-
-			Bundle config = Bundle.CreateObject();
-			config["password"] = newPassword;
-
-			HttpRequest req = MakeHttpRequest("/v1/gamer/password");
-			req.BodyJson = config;
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, response.BodyJson["done"], response.BodyJson);
-			});
-		}
-
-		/**
-		 * Converts the account to sign in through another network.
-		 * For instance, you might have created an anonymous account, that you later want to convert to an account
-		 * logged on through a facebook account. Or, should you later want to convert this account to simply use an
-		 * e-mail address, this is the method that you will want to call.
-		 * In order to convert the account successfully, the provided network credentials need to be acceptable,
-		 * just as when calling Clan.Login.
-		 * @param done callback invoked when the operation has completed, either successfully or not. The boolean inside
-		 *     is not important.
-		 * @param network the target network to connect with later on.
-		 * @param networkId the ID on the network. For example, with the facebook network, this would be the User ID.
-		 *     On e-mail accounts e-mail then, this would be the e-mail address.
-		 * @param networkSecret the secret for the network. For e-mail accounts, this would be the passord. For
-		 *     facebook or other SNS accounts, this would be the user token.
-		 */
-		public void ConvertAccount(ResultHandler<bool> done, LoginNetwork network, string networkId, string networkSecret) {
-			Bundle config = Bundle.CreateObject();
-			config["network"] = network.Describe();
-			config["id"] = networkId;
-			config["secret"] = networkSecret;
-
-			HttpRequest req = MakeHttpRequest("/v1/gamer/convert");
-			req.BodyJson = config;
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, response.BodyJson["done"], response.BodyJson);
-			});
-		}
-
-		/**
 		 * When you have data about friends from another social network, you can post them using these function.
 		 * This will automatically add them as a friend on CotC as they get recognized on our servers.
 		 * @param done callback invoked when the login has finished, either successfully or not. The attached boolean
@@ -88,7 +41,16 @@ namespace CloudBuilderLibrary
 				Common.InvokeHandler(done, true, response.BodyJson);
 			});
 		}
-		
+
+		/**
+		 * Allows to manipulate the properties of the current gamer.
+		 * @param domain optional domain on which to scope the properties. Default to `private`.
+		 * @return an object that allows to set, delete, etc. property values.
+		 */
+		public GamerProperties Properties(string domain = Common.PrivateDomain) {
+			return new GamerProperties(this, domain);
+		}
+
 		#region Internal
 		/**
 		 * Only instantiated internally.

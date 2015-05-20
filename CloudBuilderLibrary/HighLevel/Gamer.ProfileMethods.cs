@@ -7,10 +7,10 @@ namespace CloudBuilderLibrary
 	public sealed partial class Gamer {
 
 		/**
-			* Method used to retrieve some optional data of the logged in profile previously set by
-			* method SetProfile.
-			* @param done callback invoked when the login has finished, either successfully or not.
-			*/
+		 * Method used to retrieve some optional data of the logged in profile previously set by
+		 * method SetProfile.
+		 * @param done callback invoked when the login has finished, either successfully or not.
+		 */
 		public void GetProfile(ResultHandler<GamerProfile> done) {
 			HttpRequest req = MakeHttpRequest("/v1/gamer/profile");
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
@@ -20,16 +20,16 @@ namespace CloudBuilderLibrary
 		}
 
 		/**
-			* Method used to associate some optional data to the logged in profile in a JSON dictionary.
-			* You can fill fields with keys "email", "displayName", "lang", "firstName", "lastName",
-			* "addr1", "addr2", "addr3" and "avatar". Other fields will be ignored. These fields must be
-			* strings, and some are pre-populated when the account is created, using the available info
-			* from the social network used to create the account.
-			* @param done callback invoked when the login has finished, either successfully or not. The
-			*     boolean value indicates whether the operation was completed on the server.
-			* @param data is a Bundle holding the data to save for this user. The object can hold the
-			*     whole profile or just a subset of the keys.
-			*/
+		 * Method used to associate some optional data to the logged in profile in a JSON dictionary.
+		 * You can fill fields with keys "email", "displayName", "lang", "firstName", "lastName",
+		 * "addr1", "addr2", "addr3" and "avatar". Other fields will be ignored. These fields must be
+		 * strings, and some are pre-populated when the account is created, using the available info
+		 * from the social network used to create the account.
+		 * @param done callback invoked when the login has finished, either successfully or not. The
+		 *     boolean value indicates whether the operation was completed on the server.
+		 * @param data is a Bundle holding the data to save for this user. The object can hold the
+		 *     whole profile or just a subset of the keys.
+		 */
 		public void SetProfile(ResultHandler<bool> done, Bundle data) {
 			HttpRequest req = MakeHttpRequest("/v1/gamer/profile");
 			req.BodyJson = data;

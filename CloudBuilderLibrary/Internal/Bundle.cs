@@ -25,6 +25,11 @@ namespace CloudBuilderLibrary
 		public static Bundle CreateObject() {
 			return new Bundle(DataType.Object);
 		}
+		public static Bundle CreateObject(string onlyKey, Bundle onlyValue) {
+			Bundle result = new Bundle(DataType.Object);
+			result[onlyKey] = onlyValue;
+			return result;
+		}
 
 		// Construction (internal)
 		protected Bundle(DataType dataType) {
