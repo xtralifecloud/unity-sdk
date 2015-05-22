@@ -29,7 +29,6 @@ namespace CloudBuilderLibrary {
 			get { return Exception != null; }
 		}
 		public Dictionary<String, String> Headers = new Dictionary<string, string>();
-		public HttpRequest OriginalRequest;
 		/** Returns whether this response is in an error state that should be retried according to the request configuration. */
 		public bool ShouldBeRetried(HttpRequest request) {
 			switch (request.RetryPolicy) {

@@ -132,7 +132,6 @@ namespace CloudBuilderLibrary
 				LastRequestFailed = false;
 			}
 			// Final result for this request
-			response.OriginalRequest = state.OriginalRequest;
 			if (state.OriginalRequest.Callback != null) {
 				CloudBuilder.RunOnMainThread(() => state.OriginalRequest.Callback(response));
 			}
