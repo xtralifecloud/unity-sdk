@@ -27,7 +27,7 @@ public class GamerTests : TestBase {
 				value: "value",
 				done: setResult => {
 					Assert(setResult.IsSuccessful, "Error when setting property");
-					Assert(setResult.Value != 1, "Expected done = 1");
+					Assert(setResult.Value == 1, "Expected done = 1");
 
 					gamer.Properties.GetAll(getResult => {
 						Assert(getResult.IsSuccessful);
