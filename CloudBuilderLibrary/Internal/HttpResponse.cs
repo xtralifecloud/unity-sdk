@@ -9,7 +9,12 @@ namespace CloudBuilderLibrary {
 			set { body = value; CachedBundle = null; CachedString = null; }
 		}
 		public string BodyString {
-			get { CachedString = CachedString ?? Encoding.UTF8.GetString(Body); return CachedString; }
+			get {
+				if (CachedString == null && body != null) {
+					CachedString = Encoding.UTF8.GetString(Body);
+				}
+				return CachedString;
+			}
 		}
 		public Bundle BodyJson {
 			get { CachedBundle = CachedBundle ?? Bundle.FromJson(BodyString); return CachedBundle; }
@@ -24,6 +29,7 @@ namespace CloudBuilderLibrary {
 			get { return Exception != null; }
 		}
 		public Dictionary<String, String> Headers = new Dictionary<string, string>();
+		public HttpRequest OriginalRequest;
 		/** Returns whether this response is in an error state that should be retried according to the request configuration. */
 		public bool ShouldBeRetried(HttpRequest request) {
 			switch (request.RetryPolicy) {

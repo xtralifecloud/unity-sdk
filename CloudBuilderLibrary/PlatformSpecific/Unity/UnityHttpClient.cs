@@ -132,6 +132,7 @@ namespace CloudBuilderLibrary
 				LastRequestFailed = false;
 			}
 			// Final result for this request
+			response.OriginalRequest = state.OriginalRequest;
 			if (state.OriginalRequest.Callback != null) {
 				CloudBuilder.RunOnMainThread(() => state.OriginalRequest.Callback(response));
 			}
@@ -242,7 +243,7 @@ namespace CloudBuilderLibrary
 		}
 
 		private void ProcessRequest(HttpRequest request) {
-			ProcessRequest(request, LastRequestFailed ? request.TimeBetweenTries.Length - 1 : 0);
+			ProcessRequest(request, LastRequestFailed ? Math.Max(0, request.TimeBetweenTries.Length - 1) : 0);
 		}
 
 		/** Called when a response has been received by the HttpWebRequest. */

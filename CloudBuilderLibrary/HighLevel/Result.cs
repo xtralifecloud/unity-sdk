@@ -4,19 +4,31 @@ using System.Text;
 using LitJson;
 using System.Collections;
 
-namespace CloudBuilderLibrary
-{
-	public class Result <T> {
+namespace CloudBuilderLibrary {
+	public class Result<T> {
+		public bool CanRetry {
+			get { return !IsSuccessful && OriginalRequest != null; }
+		}
 		public ErrorCode ErrorCode;
 		public string ErrorInformation;
 		public bool IsSuccessful {
 			get { return ErrorCode == ErrorCode.Ok; }
 		}
 		public int HttpStatusCode;
+		internal HttpRequest OriginalRequest;
 		public Bundle ServerData {
 			get { return Json; }
 		}
 		public T Value;
+
+		/**
+		 * Tries the request again and calls the same result handler.
+		 */
+		public void TryAgain() {
+			if (CanRetry) {
+				Managers.HttpClient.Run(OriginalRequest, OriginalRequest.Callback);
+			}
+		}
 
 		/**
 		 * To be used when an HTTP request has failed. Will extract a default error code (server error, network error) from the HTTP request.
@@ -24,6 +36,7 @@ namespace CloudBuilderLibrary
 		internal Result(HttpResponse response, string failureDescription = null) {
 			Json = response.BodyJson;
 			HttpStatusCode = response.StatusCode;
+			OriginalRequest = response.OriginalRequest;
 			if (response.HasFailed) {
 				ErrorCode = ErrorCode.NetworkError;
 				ErrorInformation = failureDescription;

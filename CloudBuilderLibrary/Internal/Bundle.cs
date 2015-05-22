@@ -199,6 +199,7 @@ namespace CloudBuilderLibrary
 
 		// Json methods
 		public static Bundle FromJson(string json) {
+			if (json == null) return null;
 			return FromJson(JsonMapper.ToObject(json));
 		}
 

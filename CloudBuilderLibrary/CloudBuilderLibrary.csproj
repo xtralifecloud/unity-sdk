@@ -45,7 +45,6 @@
     <Compile Include="HighLevel\CloudBuilder.cs" />
     <Compile Include="HighLevel\CloudBuilderGameObject.cs" />
     <Compile Include="HighLevel\Common.cs" />
-    <Compile Include="HighLevel\Gamer.AchievementMethods.cs" />
     <Compile Include="HighLevel\DomainEventLoop.cs" />
     <Compile Include="HighLevel\ErrorCode.cs" />
     <Compile Include="HighLevel\Gamer.cs" />
