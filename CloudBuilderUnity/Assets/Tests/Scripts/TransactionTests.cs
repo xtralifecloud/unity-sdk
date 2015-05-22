@@ -4,9 +4,9 @@ using CloudBuilderLibrary;
 using System.Reflection;
 using IntegrationTests;
 
-public class AchievementTests : MonoBehaviour {
+public class TransactionTests : MonoBehaviour {
 
-	[InstanceMethod(typeof(AchievementTests))]
+	[InstanceMethod(typeof(TransactionTests))]
 	public string TestMethodName;
 
 	void Start() {
@@ -26,7 +26,7 @@ public class AchievementTests : MonoBehaviour {
 			Gamer gamer = loginResult.Value;
 			Bundle tx = Bundle.CreateObject("gold", 10, "silver", 100);
 			// Set property, then get all and check it
-			gamer.Transaction(
+			gamer.Transactions().Post(
 				transaction: tx,
 				description: "Transaction run by integration test.",
 				done: txResult => {
@@ -34,7 +34,7 @@ public class AchievementTests : MonoBehaviour {
 					Assert(txResult.Value.Balance["gold"] == 10, "Gold is not set properly");
 					Assert(txResult.Value.Balance["silver"] == 100, "Silver is not set properly");
 
-					gamer.Balance(balance => {
+					gamer.Transactions().Balance(balance => {
 						Assert(balance.IsSuccessful);
 						Assert(balance.Value["gold"] == 10);
 						Assert(balance.Value["silver"] == 100);
@@ -50,11 +50,11 @@ public class AchievementTests : MonoBehaviour {
 		clan.LoginAnonymously(gamer => {
 			Assert(gamer.IsSuccessful, "Failed to log in");
 			// Set property, then get all and check it
-			gamer.Value.Transaction(txResult => {
+			gamer.Value.Transactions().Post(txResult => {
 				Assert(txResult.IsSuccessful, "Error when running transaction");
 				Assert(txResult.Value.Balance["gold"] == 10, "Balance not affected properly");
 
-				gamer.Value.Transaction(txResult2 => {
+				gamer.Value.Transactions().Post(txResult2 => {
 					Assert(txResult2.IsSuccessful);
 					Assert(txResult2.Value.Balance["gold"] == 0);
 					IntegrationTest.Pass();
@@ -67,7 +67,7 @@ public class AchievementTests : MonoBehaviour {
 	public void ShouldTriggerAchievement(Clan clan) {
 		clan.LoginAnonymously(gamer => {
 			if (!gamer.IsSuccessful) IntegrationTest.Fail("Failed to log in");
-			gamer.Value.Transaction(txResult => {
+			gamer.Value.Transactions().Post(txResult => {
 				Assert(txResult.IsSuccessful);
 				Assert(txResult.Value.TriggeredAchievements.Count == 1);
 				Assert(txResult.Value.TriggeredAchievements["testAch"].Name == "testAch");
@@ -82,9 +82,9 @@ public class AchievementTests : MonoBehaviour {
 	public void ShouldFetchTransactionHistory(Clan clan) {
 		clan.LoginAnonymously(gamer => {
 			if (!gamer.IsSuccessful) IntegrationTest.Fail("Failed to log in");
-			gamer.Value.Transaction(txResult => {
+			gamer.Value.Transactions().Post(txResult => {
 				if (!txResult.IsSuccessful) IntegrationTest.Fail("Failed to run transaction");
-				gamer.Value.TransactionHistory(histResult => {
+				gamer.Value.Transactions().History(histResult => {
 					Assert(histResult.IsSuccessful);
 					Assert(histResult.Values.Count == 1);
 					Assert(histResult.Values[0].Description == "Transaction run by integration test.");
@@ -104,7 +104,7 @@ public class AchievementTests : MonoBehaviour {
 			bool alreadyWentBack = false;
 			ExecuteTransactions(gamer.Value, transactions, () => {
 				// All transactions have been executed. Default to page 1.
-				gamer.Value.TransactionHistory(histResult => {
+				gamer.Value.Transactions().History(histResult => {
 					Assert(histResult.IsSuccessful);
 					if (histResult.Offset == 0) {
 						// Even though there are three, only two results should be returned
@@ -142,7 +142,7 @@ public class AchievementTests : MonoBehaviour {
 			Bundle[] transactions = { Bundle.CreateObject("gold", 1), Bundle.CreateObject("gold", 2, "silver", 10), Bundle.CreateObject("gold", 3) };
 			ExecuteTransactions(gamer.Value, transactions, () => {
 				// All transactions have been executed. Default to page 1.
-				gamer.Value.TransactionHistory(histResult => {
+				gamer.Value.Transactions().History(histResult => {
 					Assert(histResult.IsSuccessful);
 					Assert(histResult.Values.Count == 1);
 					Assert(histResult.Values[0].TxData["gold"] == 2);
@@ -156,7 +156,7 @@ public class AchievementTests : MonoBehaviour {
 	private ResultHandler<TransactionResult> ExecuteTransactions(Gamer gamer, Bundle[] transactionList, Action done, int txCounter = 0) {
 		return txResult => {
 			if (txCounter < transactionList.Length) {
-				gamer.Transaction(
+				gamer.Transactions().Post(
 					ExecuteTransactions(gamer, transactionList, done, txCounter + 1),
 					transactionList[txCounter]
 				);

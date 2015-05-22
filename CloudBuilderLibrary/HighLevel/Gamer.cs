@@ -60,6 +60,15 @@ namespace CloudBuilderLibrary
 			return new GamerProperties(this, domain);
 		}
 
+		/**
+		 * Allows to manipulate the transactions and related achievements of an user.
+		 * @param domain optional domain on which to scope the operations. Default to `private`.
+		 * @return an object that allows to manipulate transactions and query achievements.
+		 */
+		public GamerTransactions Transactions(string domain = Common.PrivateDomain) {
+			return new GamerTransactions(this, domain);
+		}
+
 		#region Internal
 		/**
 		 * Only instantiated internally.
