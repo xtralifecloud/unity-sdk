@@ -4,7 +4,7 @@ using CloudBuilderLibrary;
 using System.Reflection;
 using IntegrationTests;
 
-public class VfsTests: MonoBehaviour {
+public class VfsTests: TestBase {
 
 	[InstanceMethod(typeof(VfsTests))]
 	public string TestMethodName;
@@ -21,11 +21,12 @@ public class VfsTests: MonoBehaviour {
 	[Test("Tries to query a non existing key.")]
 	public void ShouldNotReadInexistingKey(Clan clan) {
 		clan.LoginAnonymously(gamer => {
-			if (!gamer.IsSuccessful) IntegrationTest.Fail("Failed to log in");
+			Assert(gamer.IsSuccessful, "Failed to log in");
 			gamer.Value.GamerVfs.GetKey(getRes => {
-				IntegrationTest.Assert(!getRes.IsSuccessful, "Request marked as succeeded");
-				IntegrationTest.Assert(getRes.HttpStatusCode == 404, "Wrong error code (404)");
-				IntegrationTest.Assert(getRes.ServerData["name"] == "KeyNotFound", "Wrong error message");
+				Assert(!getRes.IsSuccessful, "Request marked as succeeded");
+				Assert(getRes.HttpStatusCode == 404, "Wrong error code (404)");
+				Assert(getRes.ServerData["name"] == "KeyNotFound", "Wrong error message");
+				CompleteTest();
 			}, "nonexistingkey");
 		});
 	}
@@ -35,8 +36,9 @@ public class VfsTests: MonoBehaviour {
 		Login(clan, gamer => {
 			gamer.GamerVfs.SetKey(setRes => {
 				gamer.GamerVfs.GetKey(getRes => {
-					IntegrationTest.Assert(getRes.IsSuccessful, "Request failed");
-					IntegrationTest.Assert(getRes.Value == "hello world", "Wrong key value");
+					Assert(getRes.IsSuccessful, "Request failed");
+					Assert(getRes.Value == "hello world", "Wrong key value");
+					CompleteTest();
 				}, "testkey");
 			}, "testkey", "hello world");
 		});
@@ -48,8 +50,9 @@ public class VfsTests: MonoBehaviour {
 			gamer.GamerVfs.SetKey(setRes => {
 				gamer.GamerVfs.RemoveKey(remRes => {
 					gamer.GamerVfs.GetKey(getRes => {
-						IntegrationTest.Assert(!getRes.IsSuccessful, "Request marked as succeeded");
-						IntegrationTest.Assert(getRes.HttpStatusCode == 404, "Wrong error code (404)");
+						Assert(!getRes.IsSuccessful, "Request marked as succeeded");
+						Assert(getRes.HttpStatusCode == 404, "Wrong error code (404)");
+						CompleteTest();
 					}, "testkey");
 				}, "testkey");
 			}, "testkey", "value");
@@ -63,25 +66,12 @@ public class VfsTests: MonoBehaviour {
 			byte[] data = { 1, 2, 3, 4 };
 			gamer.GamerVfs.SetKeyBinary(setRes => {
 				gamer.GamerVfs.GetKeyBinary(getRes => {
-					IntegrationTest.Assert(getRes.IsSuccessful, "Request failed");
-					IntegrationTest.Assert(getRes.Value.Length == 4, "Wrong key length");
-					IntegrationTest.Assert(getRes.Value[2] == 3, "Wrong key value");
+					Assert(getRes.IsSuccessful, "Request failed");
+					Assert(getRes.Value.Length == 4, "Wrong key length");
+					Assert(getRes.Value[2] == 3, "Wrong key value");
+					CompleteTest();
 				}, "testkey");
 			}, "testkey", data);
 		});
 	}
-
-	#region Private helpers
-	private void Login(Clan clan, Action<Gamer> done) {
-		clan.Login(
-			network: LoginNetwork.Email,
-			networkId: "clan@localhost.localdomain",
-			networkSecret: "Password123",
-			done: result => {
-				if (!result.IsSuccessful) IntegrationTest.Fail("Failed to log in");
-				done(result.Value);
-			}
-		);
-	}
-	#endregion
 }

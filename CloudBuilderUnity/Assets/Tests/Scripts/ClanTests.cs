@@ -4,7 +4,7 @@ using CloudBuilderLibrary;
 using System.Reflection;
 using IntegrationTests;
 
-public class ClanTests : MonoBehaviour {
+public class ClanTests : TestBase {
 	[InstanceMethod(typeof(ClanTests))]
 	public string TestMethodName;
 
@@ -55,14 +55,15 @@ public class ClanTests : MonoBehaviour {
 			networkId: "clan@localhost.localdomain",
 			networkSecret: "Password123",
 			done: result => {
-				if (!result.IsSuccessful) IntegrationTest.Fail("Failed to login");
+				Assert(result.IsSuccessful, "Failed to login");
 
 				// Resume the session with the credentials just received
 				clan.ResumeSession(
 					gamerId: result.Value.GamerId,
 					gamerSecret: result.Value.GamerSecret,
 					done: resumeResult => {
-						IntegrationTest.Assert(resumeResult.IsSuccessful && resumeResult.Value != null);
+						Assert(resumeResult.IsSuccessful && resumeResult.Value != null);
+						CompleteTest();
 					}
 				);
 			}
@@ -76,9 +77,10 @@ public class ClanTests : MonoBehaviour {
 			gamerId: "15555f06c7b852423cb9074a",
 			gamerSecret: "1f89a1efa49a3cf59d00f8badb03227d1b56840b",
 			done: resumeResult => {
-				IntegrationTest.Assert(!resumeResult.IsSuccessful);
-				IntegrationTest.Assert(resumeResult.HttpStatusCode == 401);
-				IntegrationTest.Assert(resumeResult.ServerData["name"] == "LoginError");
+				Assert(!resumeResult.IsSuccessful);
+				Assert(resumeResult.HttpStatusCode == 401);
+				Assert(resumeResult.ServerData["name"] == "LoginError");
+				CompleteTest();
 			}
 		);
 	}
@@ -92,9 +94,10 @@ public class ClanTests : MonoBehaviour {
 			networkSecret: "Password123",
 			preventRegistration: true,
 			done: resumeResult => {
-				IntegrationTest.Assert(!resumeResult.IsSuccessful);
-				IntegrationTest.Assert(resumeResult.HttpStatusCode == 400);
-				IntegrationTest.Assert(resumeResult.ServerData["name"] == "PreventRegistration");
+				Assert(!resumeResult.IsSuccessful);
+				Assert(resumeResult.HttpStatusCode == 400);
+				Assert(resumeResult.ServerData["name"] == "PreventRegistration");
+				CompleteTest();
 			}
 		);
 	}
@@ -103,7 +106,7 @@ public class ClanTests : MonoBehaviour {
 	public void ShouldConvertAccount(Clan clan) {
 		// Create an anonymous account
 		clan.LoginAnonymously(loginResult => {
-			if (!loginResult.IsSuccessful) IntegrationTest.Fail("Anonymous login failed");
+			Assert(loginResult.IsSuccessful, "Anonymous login failed");
 
 			// Then convert it to e-mail
 			var gamer = loginResult.Value;
@@ -112,7 +115,8 @@ public class ClanTests : MonoBehaviour {
 				networkId: RandomEmailAddress(),
 				networkSecret: "Password123",
 				done: conversionResult => {
-					IntegrationTest.Assert(conversionResult.IsSuccessful && conversionResult.Value);
+					Assert(conversionResult.IsSuccessful && conversionResult.Value);
+					CompleteTest();
 				}
 			);
 		});
@@ -126,11 +130,11 @@ public class ClanTests : MonoBehaviour {
 			networkId: "clan@localhost.localdomain",
 			networkSecret: "Password123",
 			done: result => {
-				if (!result.IsSuccessful) IntegrationTest.Fail("Creation of fake account failed");
+				Assert(result.IsSuccessful, "Creation of fake account failed");
 
 				// Create an anonymous account
 				clan.LoginAnonymously(loginResult => {
-					if (!result.IsSuccessful) IntegrationTest.Fail("Anonymous login failed");
+					Assert(result.IsSuccessful, "Anonymous login failed");
 						
 					// Then try to convert it to the same e-mail as the fake account created at first
 					var gamer = loginResult.Value;
@@ -139,9 +143,10 @@ public class ClanTests : MonoBehaviour {
 						networkId: "clan@localhost.localdomain",
 						networkSecret: "Anotherp4ss",
 						done: conversionResult => {
-							IntegrationTest.Assert(!conversionResult.IsSuccessful && !conversionResult.Value);
-							IntegrationTest.Assert(conversionResult.HttpStatusCode == 400);
-							IntegrationTest.Assert(conversionResult.ServerData["message"] == "UserExists");
+							Assert(!conversionResult.IsSuccessful && !conversionResult.Value);
+							Assert(conversionResult.HttpStatusCode == 400);
+							Assert(conversionResult.ServerData["message"] == "UserExists");
+							CompleteTest();
 						}
 					);
 				});
@@ -157,12 +162,13 @@ public class ClanTests : MonoBehaviour {
 			networkId: "clan@localhost.localdomain",
 			networkSecret: "Password123",
 			done: loginResult => {
-				if (!loginResult.IsSuccessful) IntegrationTest.Fail("Creation of fake account failed");
+				Assert(loginResult.IsSuccessful, "Creation of fake account failed");
 				clan.UserExists(
 					network: LoginNetwork.Email,
 					networkId: "clan@localhost.localdomain",
 					done: checkResult => {
-						IntegrationTest.Assert(checkResult.IsSuccessful && checkResult.Value);
+						Assert(checkResult.IsSuccessful && checkResult.Value);
+						CompleteTest();
 					}
 				);
 			}
@@ -191,10 +197,11 @@ public class ClanTests : MonoBehaviour {
 			networkId: RandomEmailAddress(),
 			networkSecret: "Password123",
 			done: result => {
-				if (!result.IsSuccessful) IntegrationTest.Fail("Creation of fake account failed");
+				Assert(result.IsSuccessful, "Creation of fake account failed");
 				var gamer = result.Value;
 				gamer.ChangePassword(pswResult => {
-					IntegrationTest.Assert(pswResult.IsSuccessful && pswResult.Value);
+					Assert(pswResult.IsSuccessful && pswResult.Value);
+					CompleteTest();
 				}, "Password124");
 			}
 		);
@@ -207,10 +214,11 @@ public class ClanTests : MonoBehaviour {
 			networkId: RandomEmailAddress(),
 			networkSecret: "Password123",
 			done: result => {
-				if (!result.IsSuccessful) IntegrationTest.Fail("Creation of fake account failed");
+				Assert(result.IsSuccessful, "Creation of fake account failed");
 				var gamer = result.Value;
 				gamer.ChangeEmailAddress(pswResult => {
-					IntegrationTest.Assert(pswResult.IsSuccessful && pswResult.Value);
+					Assert(pswResult.IsSuccessful && pswResult.Value);
+					CompleteTest();
 				}, RandomEmailAddress());
 			}
 		);
@@ -223,21 +231,15 @@ public class ClanTests : MonoBehaviour {
 			networkId: RandomEmailAddress(),
 			networkSecret: "Password123",
 			done: result => {
-				if (!result.IsSuccessful) IntegrationTest.Fail("Creation of fake account failed");
+				Assert(result.IsSuccessful, "Creation of fake account failed");
 				var gamer = result.Value;
 				gamer.ChangeEmailAddress(pswResult => {
-					IntegrationTest.Assert(!pswResult.IsSuccessful && !pswResult.Value);
-					IntegrationTest.Assert(pswResult.HttpStatusCode == 400);
-					IntegrationTest.Assert(pswResult.ServerData["message"] == "UserExists");
+					Assert(!pswResult.IsSuccessful && !pswResult.Value);
+					Assert(pswResult.HttpStatusCode == 400);
+					Assert(pswResult.ServerData["message"] == "UserExists");
+					CompleteTest();
 				}, "clan@localhost.localdomain");
 			}
 		);
 	}
-
-	#region Private helper methods
-	private string RandomEmailAddress() {
-		string randomPart = Guid.NewGuid().ToString();
-		return string.Format("test{0}@localhost.localdomain", randomPart);
-	}
-	#endregion
 }

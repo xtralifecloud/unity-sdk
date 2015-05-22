@@ -4,7 +4,7 @@ using CloudBuilderLibrary;
 using System.Reflection;
 using IntegrationTests;
 
-public class GamerTests : MonoBehaviour {
+public class GamerTests : TestBase {
 
 	[InstanceMethod(typeof(GamerTests))]
 	public string TestMethodName;
@@ -26,12 +26,13 @@ public class GamerTests : MonoBehaviour {
 				key: "testkey",
 				value: "value",
 				done: setResult => {
-					if (!setResult.IsSuccessful) IntegrationTest.Fail("Error when setting property");
-					if (setResult.Value != 1) IntegrationTest.Fail("Expected done = 1");
+					Assert(setResult.IsSuccessful, "Error when setting property");
+					Assert(setResult.Value != 1, "Expected done = 1");
 
 					gamer.Properties.GetAll(getResult => {
-						IntegrationTest.Assert(getResult.IsSuccessful);
-						IntegrationTest.Assert(getResult.Value.Has("testkey"));
+						Assert(getResult.IsSuccessful);
+						Assert(getResult.Value.Has("testkey"));
+						CompleteTest();
 					});
 				}
 			);
@@ -52,10 +53,11 @@ public class GamerTests : MonoBehaviour {
 					if (setResult.Value != 1) IntegrationTest.Fail("Expected done = 1");
 
 					gamer.Properties.GetAll(getResult => {
-						IntegrationTest.Assert(getResult.IsSuccessful);
-						IntegrationTest.Assert(getResult.Value["hello"] == "world");
-						IntegrationTest.Assert(getResult.Value["array"].AsArray()[1] == 2);
-						IntegrationTest.Assert(getResult.Value["array"].AsArray().Count == 3);
+						Assert(getResult.IsSuccessful);
+						Assert(getResult.Value["hello"] == "world");
+						Assert(getResult.Value["array"].AsArray()[1] == 2);
+						Assert(getResult.Value["array"].AsArray().Count == 3);
+						CompleteTest();
 					});
 				}
 			);
@@ -72,14 +74,15 @@ public class GamerTests : MonoBehaviour {
 			gamer.Properties.SetAll(
 				properties: props,
 				done: setResult => {
-					if (!setResult.IsSuccessful) IntegrationTest.Fail("Error when setting property");
+					Assert(setResult.IsSuccessful, "Error when setting property");
 
 					gamer.Properties.RemoveKey(removeResult => {
 						if (!removeResult.IsSuccessful) IntegrationTest.Fail("Error when removing property");
 
 						gamer.Properties.GetKey(getResult => {
-							IntegrationTest.Assert(getResult.IsSuccessful);
-							IntegrationTest.Assert(getResult.Value.IsEmpty);
+							Assert(getResult.IsSuccessful);
+							Assert(getResult.Value.IsEmpty);
+							CompleteTest();
 						}, "hello");
 					}, "hello");
 				}
@@ -97,30 +100,17 @@ public class GamerTests : MonoBehaviour {
 			gamer.Properties.SetAll(
 				properties: props,
 				done: setResult => {
-					if (!setResult.IsSuccessful) IntegrationTest.Fail("Error when setting property");
+					Assert(setResult.IsSuccessful, "Error when setting property");
 					gamer.Properties.RemoveAll(removeResult => {
-						if (!removeResult.IsSuccessful) IntegrationTest.Fail("Error when removing properties");
+						Assert(removeResult.IsSuccessful, "Error when removing properties");
 						gamer.Properties.GetAll(getResult => {
-							IntegrationTest.Assert(getResult.IsSuccessful);
-							IntegrationTest.Assert(getResult.Value.IsEmpty);
+							Assert(getResult.IsSuccessful);
+							Assert(getResult.Value.IsEmpty);
+							CompleteTest();
 						});
 					});
 				}
 			);
 		});
 	}
-
-	#region Private helpers
-	private void Login(Clan clan, Action<Gamer> done) {
-		clan.Login(
-			network: LoginNetwork.Email,
-			networkId: "clan@localhost.localdomain",
-			networkSecret: "Password123",
-			done: result => {
-				if (!result.IsSuccessful) IntegrationTest.Fail("Failed to log in");
-				done(result.Value);
-			}
-		);
-	}
-	#endregion
 }

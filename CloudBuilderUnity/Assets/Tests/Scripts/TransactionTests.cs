@@ -4,7 +4,7 @@ using CloudBuilderLibrary;
 using System.Reflection;
 using IntegrationTests;
 
-public class TransactionTests : MonoBehaviour {
+public class TransactionTests : TestBase {
 
 	[InstanceMethod(typeof(TransactionTests))]
 	public string TestMethodName;
@@ -38,7 +38,7 @@ public class TransactionTests : MonoBehaviour {
 						Assert(balance.IsSuccessful);
 						Assert(balance.Value["gold"] == 10);
 						Assert(balance.Value["silver"] == 100);
-						IntegrationTest.Pass();
+						CompleteTest();
 					});
 				}
 			);
@@ -57,7 +57,7 @@ public class TransactionTests : MonoBehaviour {
 				gamer.Value.Transactions.Post(txResult2 => {
 					Assert(txResult2.IsSuccessful);
 					Assert(txResult2.Value.Balance["gold"] == 0);
-					IntegrationTest.Pass();
+					CompleteTest();
 				}, Bundle.CreateObject("gold", "-auto"), "Run from integration test");
 			}, Bundle.CreateObject("gold", 10), "Transaction run by integration test.");
 		});
@@ -66,14 +66,14 @@ public class TransactionTests : MonoBehaviour {
 	[Test("Runs a transaction that should trigger an achievement. The corresponding achievement ('testAch' with gold reaching 100) must be configured on the server.")]
 	public void ShouldTriggerAchievement(Clan clan) {
 		clan.LoginAnonymously(gamer => {
-			if (!gamer.IsSuccessful) IntegrationTest.Fail("Failed to log in");
+			Assert(gamer.IsSuccessful, "Failed to log in");
 			gamer.Value.Transactions.Post(txResult => {
 				Assert(txResult.IsSuccessful);
 				Assert(txResult.Value.TriggeredAchievements.Count == 1);
 				Assert(txResult.Value.TriggeredAchievements["testAch"].Name == "testAch");
 				Assert(txResult.Value.TriggeredAchievements["testAch"].Type == AchievementType.Limit);
 				Assert(txResult.Value.TriggeredAchievements["testAch"].Config["maxValue"] == 100);
-				IntegrationTest.Pass();
+				CompleteTest();
 			}, Bundle.CreateObject("gold", 100), "Transaction run by integration test.");
 		});
 	}
@@ -81,15 +81,15 @@ public class TransactionTests : MonoBehaviour {
 	[Test("Fetches the transaction history.")]
 	public void ShouldFetchTransactionHistory(Clan clan) {
 		clan.LoginAnonymously(gamer => {
-			if (!gamer.IsSuccessful) IntegrationTest.Fail("Failed to log in");
+			Assert(gamer.IsSuccessful, "Failed to log in");
 			gamer.Value.Transactions.Post(txResult => {
-				if (!txResult.IsSuccessful) IntegrationTest.Fail("Failed to run transaction");
+				Assert(txResult.IsSuccessful, "Failed to run transaction");
 				gamer.Value.Transactions.History(histResult => {
 					Assert(histResult.IsSuccessful);
 					Assert(histResult.Values.Count == 1);
 					Assert(histResult.Values[0].Description == "Transaction run by integration test.");
 					Assert(histResult.Values[0].TxData["gold"] == 10);
-					IntegrationTest.Pass();
+					CompleteTest();
 				});
 			}, Bundle.CreateObject("gold", 10), "Transaction run by integration test.");
 		});
@@ -114,7 +114,7 @@ public class TransactionTests : MonoBehaviour {
 						Assert(histResult.HasNext);
 						// Coming back from the second page
 						if (alreadyWentBack) {
-							IntegrationTest.Pass();
+							CompleteTest();
 							return;
 						}
 						histResult.FetchNext();
@@ -146,7 +146,7 @@ public class TransactionTests : MonoBehaviour {
 					Assert(histResult.IsSuccessful);
 					Assert(histResult.Values.Count == 1);
 					Assert(histResult.Values[0].TxData["gold"] == 2);
-					IntegrationTest.Pass();
+					CompleteTest();
 				}, unit: "silver");
 			})(null);
 		});
@@ -166,22 +166,4 @@ public class TransactionTests : MonoBehaviour {
 			}
 		};
 	}
-
-	#region Private helpers
-	private void Assert(bool condition, string message = null) {
-		if (!condition) IntegrationTest.Assert(condition, message);
-	}
-
-	private void Login(Clan clan, Action<Gamer> done) {
-		clan.Login(
-			network: LoginNetwork.Email,
-			networkId: "clan@localhost.localdomain",
-			networkSecret: "Password123",
-			done: result => {
-				if (!result.IsSuccessful) IntegrationTest.Fail("Failed to log in");
-				done(result.Value);
-			}
-		);
-	}
-	#endregion
 }
