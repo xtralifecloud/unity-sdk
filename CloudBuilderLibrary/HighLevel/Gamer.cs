@@ -21,11 +21,27 @@ namespace CloudBuilderLibrary
 		public DateTime RegisterTime { get; private set; }
 
 		/**
+		 * Provides account related functions for the current gamer.
+		 * @return an object allowing to manipulate the account of the current gamer.
+		 */
+		public GamerAccountMethods Account {
+			get { return new GamerAccountMethods(this); }
+		}
+
+		/**
+		 * Provides an API to manipulate game data, such as key/value or leaderboards.
+		 * @return an object that allow to manipulate game specific data.
+		 */
+		public Game Game {
+			get { return new Game(this); }
+		}
+
+		/**
 		 * Returns an object that allows to manipulate the key/value system associated with this user.
 		 * @return an object allowing to manipulate key/values for this user/domain.
 		 */
-		public KeyValueSystem GamerVfs {
-			get { return new KeyValueSystem(this, "/v1/gamer/vfs"); }
+		public GamerVfs GamerVfs {
+			get { return new GamerVfs(this); }
 		}
 
 		/**
@@ -48,6 +64,14 @@ namespace CloudBuilderLibrary
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Common.InvokeHandler(done, true, response.BodyJson);
 			});
+		}
+
+		/**
+		 * Allows to manipulate information related to the gamer profile.
+		 * @return an object that allows to read and set the profile.
+		 */
+		public GamerProfileMethods Profile {
+			get { return new GamerProfileMethods(this); }
 		}
 
 		/**

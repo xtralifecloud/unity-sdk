@@ -53,7 +53,7 @@ public class TestNewCloudBuilder : MonoBehaviour {
 			return;
 		}
 
-		Gamer.GetProfile((Result<GamerProfile> result) => {
+		Gamer.Profile.Get((Result<GamerProfile> result) => {
 			if (result.IsSuccessful)
 				Debug.Log("Get profile done: " + result.Value.Properties.ToJson());
 			else
@@ -70,7 +70,7 @@ public class TestNewCloudBuilder : MonoBehaviour {
 		Bundle profile = Bundle.CreateObject();
 		profile["displayName"] = "Florian du clan";
 
-		Gamer.SetProfile(
+		Gamer.Profile.Set(
 			done: (Result<bool> result) => {
 				Debug.Log("Profile set: " + result);
 			},

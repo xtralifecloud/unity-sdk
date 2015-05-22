@@ -45,10 +45,12 @@
     <Compile Include="HighLevel\CloudBuilder.cs" />
     <Compile Include="HighLevel\CloudBuilderGameObject.cs" />
     <Compile Include="HighLevel\Common.cs" />
+    <Compile Include="HighLevel\GameVfs.cs" />
     <Compile Include="HighLevel\DomainEventLoop.cs" />
     <Compile Include="HighLevel\ErrorCode.cs" />
+    <Compile Include="HighLevel\Game.cs" />
     <Compile Include="HighLevel\Gamer.cs" />
-    <Compile Include="HighLevel\Gamer.ProfileMethods.cs" />
+    <Compile Include="HighLevel\GamerProfileMethods.cs" />
     <Compile Include="HighLevel\GamerTransactions.cs" />
     <Compile Include="HighLevel\Model\AchievementDefinition.cs" />
     <Compile Include="HighLevel\Model\GamerProfile.cs" />
@@ -59,7 +61,7 @@
     <Compile Include="HighLevel\Model\TransactionResult.cs" />
     <Compile Include="HighLevel\PagedResult.cs" />
     <Compile Include="HighLevel\Result.cs" />
-    <Compile Include="HighLevel\KeyValueSystem.cs" />
+    <Compile Include="HighLevel\GamerVfs.cs" />
     <Compile Include="Internal\Bundle.cs" />
     <Compile Include="Internal\CloudBuilderSettings.cs" />
     <Compile Include="Internal\HttpRequest.cs" />
@@ -84,7 +86,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HighLevel\Gamer.AccountMethods.cs" />
+    <Compile Include="HighLevel\GamerAccountMethods.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -7,11 +7,10 @@ namespace CloudBuilderLibrary {
 
 	/**
 	 * Represents a key/value system, also known as virtual file system.
-	 * Subclasses implement this functionality: Gamer.GamerVfs and Game.GameVfs.
 	 * This class is scoped by domain, meaning that you can call .Domain("yourdomain") and perform
 	 * additional calls that are scoped.
 	 */
-	public class KeyValueSystem {
+	public sealed class GamerVfs {
 
 		/**
 		 * Sets the domain affected by this object.
@@ -30,7 +29,7 @@ namespace CloudBuilderLibrary {
 		 * @param key the name of the key to be fetched.
 		 */
 		public void GetKey(ResultHandler<Bundle> done, string key) {
-			UrlBuilder url = new UrlBuilder(BaseUrl).Path(domain).Path(key);
+			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Common.InvokeHandler(done, response.BodyJson["value"], response.BodyJson);
@@ -45,7 +44,7 @@ namespace CloudBuilderLibrary {
 		 * @param key the name of the key to be fetched.
 		 */
 		public void GetKeyBinary(ResultHandler<byte[]> done, string key) {
-			UrlBuilder url = new UrlBuilder(BaseUrl).Path(domain).Path(key).QueryParam("binary");
+			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key).QueryParam("binary");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				// We must then download the received URL
@@ -66,7 +65,7 @@ namespace CloudBuilderLibrary {
 		 *     call this method passing an integer or string as value for instance.
 		 */
 		public void SetKey(ResultHandler<bool> done, string key, Bundle value) {
-			UrlBuilder url = new UrlBuilder(BaseUrl).Path(domain).Path(key);
+			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("value", value);
 			req.Method = "PUT";
@@ -83,7 +82,7 @@ namespace CloudBuilderLibrary {
 		 * @param binaryData the value to set as binary data.
 		 */
 		public void SetKeyBinary(ResultHandler<bool> done, string key, byte[] binaryData) {
-			UrlBuilder url = new UrlBuilder(BaseUrl).Path(domain).Path(key).QueryParam("binary");
+			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key).QueryParam("binary");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Body = binaryData;
 			req.Method = "PUT";
@@ -99,7 +98,7 @@ namespace CloudBuilderLibrary {
 		 * @param key the name of the key to remove.
 		 */
 		public void RemoveKey(ResultHandler<bool> done, string key) {
-			UrlBuilder url = new UrlBuilder(BaseUrl).Path(domain).Path(key);
+			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
@@ -108,12 +107,11 @@ namespace CloudBuilderLibrary {
 		}
 
 		#region Private
-		internal KeyValueSystem(Gamer gamer, string baseUrl) {
+		internal GamerVfs(Gamer gamer) {
 			Gamer = gamer;
-			BaseUrl = baseUrl;
 		}
 
-		private string BaseUrl, domain = Common.PrivateDomain;
+		private string domain = Common.PrivateDomain;
 		private Gamer Gamer;
 		#endregion
 	}

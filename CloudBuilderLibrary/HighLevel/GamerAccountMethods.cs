@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace CloudBuilderLibrary
 {
-	public sealed partial class Gamer {
+	public sealed class GamerAccountMethods {
 
 		/**
 		 * Changes the e-mail address of the current user. Works for e-mail type accounts.
@@ -13,15 +13,15 @@ namespace CloudBuilderLibrary
 		 * @param newEmailAddress the new e-mail address to be used for signing in.
 		 */
 		public void ChangeEmailAddress(ResultHandler<bool> done, string newEmailAddress) {
-			if (Network != LoginNetwork.Email) {
-				Common.InvokeHandler(done, ErrorCode.BadParameters, "Unavailable for " + Network.Describe() + " accounts");
+			if (Gamer.Network != LoginNetwork.Email) {
+				Common.InvokeHandler(done, ErrorCode.BadParameters, "Unavailable for " + Gamer.Network.Describe() + " accounts");
 				return;
 			}
 
 			Bundle config = Bundle.CreateObject();
 			config["email"] = newEmailAddress;
 
-			HttpRequest req = MakeHttpRequest("/v1/gamer/email");
+			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/email");
 			req.BodyJson = config;
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Common.InvokeHandler(done, response.BodyJson["done"], response.BodyJson);
@@ -35,12 +35,12 @@ namespace CloudBuilderLibrary
 		 * @param newPassword the new password to be used for signing in.
 		 */
 		public void ChangePassword(ResultHandler<bool> done, string newPassword) {
-			if (Network != LoginNetwork.Email) {
-				Common.InvokeHandler(done, ErrorCode.BadParameters, "Unavailable for " + Network.Describe() + " accounts");
+			if (Gamer.Network != LoginNetwork.Email) {
+				Common.InvokeHandler(done, ErrorCode.BadParameters, "Unavailable for " + Gamer.Network.Describe() + " accounts");
 				return;
 			}
 
-			HttpRequest req = MakeHttpRequest("/v1/gamer/password");
+			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/password");
 			req.BodyJson = Bundle.CreateObject("password", newPassword);
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Common.InvokeHandler(done, response.BodyJson["done"], response.BodyJson);
@@ -62,18 +62,24 @@ namespace CloudBuilderLibrary
 		 * @param networkSecret the secret for the network. For e-mail accounts, this would be the passord. For
 		 *     facebook or other SNS accounts, this would be the user token.
 		 */
-		public void ConvertAccount(ResultHandler<bool> done, LoginNetwork network, string networkId, string networkSecret) {
+		public void Convert(ResultHandler<bool> done, LoginNetwork network, string networkId, string networkSecret) {
 			Bundle config = Bundle.CreateObject();
 			config["network"] = network.Describe();
 			config["id"] = networkId;
 			config["secret"] = networkSecret;
 
-			HttpRequest req = MakeHttpRequest("/v1/gamer/convert");
+			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/convert");
 			req.BodyJson = config;
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Common.InvokeHandler(done, response.BodyJson["done"], response.BodyJson);
 			});
 		}
 
+		#region Private
+		internal GamerAccountMethods(Gamer parent) {
+			Gamer = parent;
+		}
+		private Gamer Gamer;
+		#endregion
 	}
 }

@@ -4,15 +4,15 @@ using System.Collections.Generic;
 
 namespace CloudBuilderLibrary
 {
-	public sealed partial class Gamer {
+	public sealed class GamerProfileMethods {
 
 		/**
 		 * Method used to retrieve some optional data of the logged in profile previously set by
 		 * method SetProfile.
 		 * @param done callback invoked when the login has finished, either successfully or not.
 		 */
-		public void GetProfile(ResultHandler<GamerProfile> done) {
-			HttpRequest req = MakeHttpRequest("/v1/gamer/profile");
+		public void Get(ResultHandler<GamerProfile> done) {
+			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/profile");
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				GamerProfile profile = new GamerProfile(response.BodyJson);
 				Common.InvokeHandler(done, profile, response.BodyJson);
@@ -30,12 +30,19 @@ namespace CloudBuilderLibrary
 		 * @param data is a Bundle holding the data to save for this user. The object can hold the
 		 *     whole profile or just a subset of the keys.
 		 */
-		public void SetProfile(ResultHandler<bool> done, Bundle data) {
-			HttpRequest req = MakeHttpRequest("/v1/gamer/profile");
+		public void Set(ResultHandler<bool> done, Bundle data) {
+			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/profile");
 			req.BodyJson = data;
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Common.InvokeHandler(done, response.BodyJson["done"]);
 			});
 		}
+
+		#region Private
+		internal GamerProfileMethods(Gamer parent) {
+			Gamer = parent;
+		}
+		private Gamer Gamer;
+		#endregion
 	}
 }

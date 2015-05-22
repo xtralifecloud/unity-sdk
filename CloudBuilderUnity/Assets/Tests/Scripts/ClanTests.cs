@@ -110,7 +110,7 @@ public class ClanTests : TestBase {
 
 			// Then convert it to e-mail
 			var gamer = loginResult.Value;
-			gamer.ConvertAccount(
+			gamer.Account.Convert(
 				network: LoginNetwork.Email,
 				networkId: RandomEmailAddress(),
 				networkSecret: "Password123",
@@ -138,7 +138,7 @@ public class ClanTests : TestBase {
 						
 					// Then try to convert it to the same e-mail as the fake account created at first
 					var gamer = loginResult.Value;
-					gamer.ConvertAccount(
+					gamer.Account.Convert(
 						network: LoginNetwork.Email,
 						networkId: "clan@localhost.localdomain",
 						networkSecret: "Anotherp4ss",
@@ -199,7 +199,7 @@ public class ClanTests : TestBase {
 			done: result => {
 				Assert(result.IsSuccessful, "Creation of fake account failed");
 				var gamer = result.Value;
-				gamer.ChangePassword(pswResult => {
+				gamer.Account.ChangePassword(pswResult => {
 					Assert(pswResult.IsSuccessful && pswResult.Value);
 					CompleteTest();
 				}, "Password124");
@@ -216,7 +216,7 @@ public class ClanTests : TestBase {
 			done: result => {
 				Assert(result.IsSuccessful, "Creation of fake account failed");
 				var gamer = result.Value;
-				gamer.ChangeEmailAddress(pswResult => {
+				gamer.Account.ChangeEmailAddress(pswResult => {
 					Assert(pswResult.IsSuccessful && pswResult.Value);
 					CompleteTest();
 				}, RandomEmailAddress());
@@ -233,7 +233,7 @@ public class ClanTests : TestBase {
 			done: result => {
 				Assert(result.IsSuccessful, "Creation of fake account failed");
 				var gamer = result.Value;
-				gamer.ChangeEmailAddress(pswResult => {
+				gamer.Account.ChangeEmailAddress(pswResult => {
 					Assert(!pswResult.IsSuccessful && !pswResult.Value);
 					Assert(pswResult.HttpStatusCode == 400);
 					Assert(pswResult.ServerData["message"] == "UserExists");
