@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace CloudBuilderLibrary {
 
@@ -10,12 +11,16 @@ namespace CloudBuilderLibrary {
 			Never,
 		};
 
+		public byte[] Body {
+			get { return body; }
+			set { body = value; }
+		}
 		public string BodyString {
-			get { return Body; }
-			set { Body = value; }
+			get { return Encoding.UTF8.GetString(body); }
+			set { body = Encoding.UTF8.GetBytes(value); }
 		}
 		public Bundle BodyJson {
-			set { Body = value.ToJson(); Headers["Content-Type"] = "application/json"; }
+			set { BodyString = value.ToJson(); Headers["Content-Type"] = "application/json"; }
 		}
 		/**
 		 * Set to perform the request immediately, regardless of a request already being run.
@@ -38,7 +43,7 @@ namespace CloudBuilderLibrary {
 
 		// Please do not access this by yourself, this is only kept track of internally and will be ignored if set by you
 		internal Action<HttpResponse> Callback;
-		private string Body;
+		private byte[] body;
 		private static readonly int[] DefaultTimeBetweenTries = {1, 100, 1000, 1500, 2000, 3000, 4000, 6000, 8000};
 	}
 }

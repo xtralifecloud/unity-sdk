@@ -5,6 +5,9 @@ using System.Text;
 
 namespace CloudBuilderLibrary {
 
+	/**
+	 * Allows to manipulate the gamer properties.
+	 */
 	public sealed class GamerProperties {
 
 		internal GamerProperties(Gamer parent, string domain) {

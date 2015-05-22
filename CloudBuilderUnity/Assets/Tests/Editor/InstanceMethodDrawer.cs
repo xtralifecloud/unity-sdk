@@ -25,7 +25,7 @@ namespace IntegrationTests {
 			// Method info
 			bool hasChosenMethod = methods.ContainsKey(prop.stringValue);
 			string helpMessage = hasChosenMethod ? methods[value] : SelectMethodMessage;
-			position.height = new GUIStyle(GUI.skin.GetStyle("HelpBox")).CalcHeight(new GUIContent(helpMessage), position.width - 20);
+			position.height = new GUIStyle(GUI.skin.GetStyle("HelpBox")).CalcHeight(new GUIContent(helpMessage), position.width - 30);
 			position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
 			EditorGUI.HelpBox(position, helpMessage, hasChosenMethod ? MessageType.Info : MessageType.Error);
 			if (EditorGUI.EndChangeCheck())
@@ -38,7 +38,7 @@ namespace IntegrationTests {
 			string helpMessage = methods.ContainsKey(prop.stringValue) ? methods[prop.stringValue] : SelectMethodMessage;
 			// Popup + help box
 			return EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing
-				+ new GUIStyle(GUI.skin.GetStyle("HelpBox")).CalcHeight(new GUIContent(helpMessage), EditorGUIUtility.currentViewWidth - 19 - 20);
+				+ new GUIStyle(GUI.skin.GetStyle("HelpBox")).CalcHeight(new GUIContent(helpMessage), EditorGUIUtility.currentViewWidth - 19 - 30);
 		}
 
 		private Dictionary<string, string> GetMethodList() {

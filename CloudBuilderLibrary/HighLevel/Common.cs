@@ -38,13 +38,25 @@ namespace CloudBuilderLibrary
 				handler(new Result<T>(value, serverData));
 			}
 		}
+		internal static void InvokeHandler<T>(PagedResultHandler<T> handler, HttpResponse response, string reason = null) {
+			if (handler != null) {
+				PagedResult<T> result = new PagedResult<T>(response);
+				result.ErrorInformation = reason;
+				handler(result);
+			}
+		}
+		public static void InvokeHandler<T>(PagedResultHandler<T> handler, PagedResult<T> result) {
+			if (handler != null) {
+				handler(result);
+			}
+		}
 
 		internal static T ParseEnum<T>(string value) {
 			return (T) Enum.Parse(typeof(T), value, true);
 		}
 
 		internal static DateTime ParseHttpDate(string httpDate) {
-			return DateTime.Parse(httpDate);
+			return httpDate != null ? DateTime.Parse(httpDate) : DateTime.MinValue;
 		}
 
 		/**
@@ -55,6 +67,17 @@ namespace CloudBuilderLibrary
 		 * @param onSuccess callback called in case of success only (handler untouched in that case).
 		 */
 		internal static void RunHandledRequest<T>(HttpRequest req, ResultHandler<T> handler, Action<HttpResponse> onSuccess) {
+			Managers.HttpClient.Run(req, (HttpResponse response) => {
+				if (HasFailed(response)) {
+					InvokeHandler(handler, response);
+					return;
+				}
+				if (onSuccess != null) onSuccess(response);
+			});
+		}
+
+		// Same, but for paged result handlers.
+		internal static void RunHandledRequest<T>(HttpRequest req, PagedResultHandler<T> handler, Action<HttpResponse> onSuccess) {
 			Managers.HttpClient.Run(req, (HttpResponse response) => {
 				if (HasFailed(response)) {
 					InvokeHandler(handler, response);
@@ -79,6 +102,8 @@ namespace CloudBuilderLibrary
 	 * To obtain the wrapped object, fetch the Value member of the result.
 	 */
 	public delegate void ResultHandler<T>(Result<T> obj);
+
+	public delegate void PagedResultHandler<T>(PagedResult<T> obj);
 	
 	/**
 	 * Holds a cached single-time-instantiated member.

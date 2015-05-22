@@ -1,18 +1,22 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace CloudBuilderLibrary {
 	internal class HttpResponse {
+		public byte[] Body {
+			get { return body; }
+			set { body = value; CachedBundle = null; CachedString = null; }
+		}
 		public string BodyString {
-			get { return Body; }
-			set { Body = value; CachedBundle = null; }
+			get { CachedString = CachedString ?? Encoding.UTF8.GetString(Body); return CachedString; }
 		}
 		public Bundle BodyJson {
-			get { CachedBundle = CachedBundle?? Bundle.FromJson(Body); return CachedBundle; }
+			get { CachedBundle = CachedBundle ?? Bundle.FromJson(BodyString); return CachedBundle; }
 		}
 		public Exception Exception;
 		public bool HasBody {
-			get { return Body != null; }
+			get { return body != null; }
 		}
 		/** If true, means that the request has completely failed, not that it received an error code such as 400.
 		 * This will appear as completely normal. Use Common.HasFailed in that case. */
@@ -37,8 +41,9 @@ namespace CloudBuilderLibrary {
 		public HttpResponse() {}
 		public HttpResponse(Exception e) { Exception = e; }
 
-		private string Body;
+		private byte[] body;
 		private Bundle CachedBundle;
+		private string CachedString;
 	}
 }
 

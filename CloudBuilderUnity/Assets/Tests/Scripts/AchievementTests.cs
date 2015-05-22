@@ -21,6 +21,8 @@ public class AchievementTests : MonoBehaviour {
 	[Test("Runs a transaction and checks the balance. Tests both the transaction and the balance calls.")]
 	public void ShouldRunTransaction(Clan clan) {
 		clan.LoginAnonymously(loginResult => {
+			Assert(loginResult.IsSuccessful, "Failed to log in");
+
 			Gamer gamer = loginResult.Value;
 			Bundle tx = Bundle.CreateObject("gold", 10, "silver", 100);
 			// Set property, then get all and check it
@@ -28,14 +30,15 @@ public class AchievementTests : MonoBehaviour {
 				transaction: tx,
 				description: "Transaction run by integration test.",
 				done: txResult => {
-					if (!txResult.IsSuccessful) IntegrationTest.Fail("Error when running transaction");
-					if (txResult.Value["balance"]["gold"] != 10) IntegrationTest.Fail("Gold is not set properly");
-					if (txResult.Value["balance"]["silver"] != 100) IntegrationTest.Fail("Silver is not set properly");
+					Assert(txResult.IsSuccessful, "Error when running transaction");
+					Assert(txResult.Value.Balance["gold"] == 10, "Gold is not set properly");
+					Assert(txResult.Value.Balance["silver"] == 100, "Silver is not set properly");
 
 					gamer.Balance(balance => {
-						if (!balance.IsSuccessful) IntegrationTest.Fail("Error when running balance");
-						IntegrationTest.Assert(balance.Value["gold"] == 10);
-						IntegrationTest.Assert(balance.Value["silver"] == 100);
+						Assert(balance.IsSuccessful);
+						Assert(balance.Value["gold"] == 10);
+						Assert(balance.Value["silver"] == 100);
+						IntegrationTest.Pass();
 					});
 				}
 			);
@@ -44,23 +47,131 @@ public class AchievementTests : MonoBehaviour {
 
 	[Test("Runs a transaction that resets the balance. Tests the transaction syntax and read balance.")]
 	public void ShouldResetBalance(Clan clan) {
-		clan.LoginAnonymously(loginResult => {
-			Gamer gamer = loginResult.Value;
+		clan.LoginAnonymously(gamer => {
+			Assert(gamer.IsSuccessful, "Failed to log in");
 			// Set property, then get all and check it
-			gamer.Transaction(txResult => {
-				if (!txResult.IsSuccessful) IntegrationTest.Fail("Error when running transaction");
-				if (txResult.Value["balance"]["gold"] != 10) IntegrationTest.Fail("Balance not affected properly");
+			gamer.Value.Transaction(txResult => {
+				Assert(txResult.IsSuccessful, "Error when running transaction");
+				Assert(txResult.Value.Balance["gold"] == 10, "Balance not affected properly");
 
-				gamer.Transaction(txResult2 => {
-					IntegrationTest.Assert(txResult2.IsSuccessful);
-					IntegrationTest.Assert(txResult2.Value["gold"] == 0);
+				gamer.Value.Transaction(txResult2 => {
+					Assert(txResult2.IsSuccessful);
+					Assert(txResult2.Value.Balance["gold"] == 0);
+					IntegrationTest.Pass();
 				}, Bundle.CreateObject("gold", "-auto"), "Run from integration test");
 			}, Bundle.CreateObject("gold", 10), "Transaction run by integration test.");
 		});
 	}
 
+	[Test("Runs a transaction that should trigger an achievement. The corresponding achievement ('testAch' with gold reaching 100) must be configured on the server.")]
+	public void ShouldTriggerAchievement(Clan clan) {
+		clan.LoginAnonymously(gamer => {
+			if (!gamer.IsSuccessful) IntegrationTest.Fail("Failed to log in");
+			gamer.Value.Transaction(txResult => {
+				Assert(txResult.IsSuccessful);
+				Assert(txResult.Value.TriggeredAchievements.Count == 1);
+				Assert(txResult.Value.TriggeredAchievements["testAch"].Name == "testAch");
+				Assert(txResult.Value.TriggeredAchievements["testAch"].Type == AchievementType.Limit);
+				Assert(txResult.Value.TriggeredAchievements["testAch"].Config["maxValue"] == 100);
+				IntegrationTest.Pass();
+			}, Bundle.CreateObject("gold", 100), "Transaction run by integration test.");
+		});
+	}
+
+	[Test("Fetches the transaction history.")]
+	public void ShouldFetchTransactionHistory(Clan clan) {
+		clan.LoginAnonymously(gamer => {
+			if (!gamer.IsSuccessful) IntegrationTest.Fail("Failed to log in");
+			gamer.Value.Transaction(txResult => {
+				if (!txResult.IsSuccessful) IntegrationTest.Fail("Failed to run transaction");
+				gamer.Value.TransactionHistory(histResult => {
+					Assert(histResult.IsSuccessful);
+					Assert(histResult.Values.Count == 1);
+					Assert(histResult.Values[0].Description == "Transaction run by integration test.");
+					Assert(histResult.Values[0].TxData["gold"] == 10);
+					IntegrationTest.Pass();
+				});
+			}, Bundle.CreateObject("gold", 10), "Transaction run by integration test.");
+		});
+	}
+
+	[Test("Tests the pagination feature of the transaction history by creating one user and three transactions.")]
+	public void ShouldHavePaginationInTxHistory(Clan clan) {
+		clan.LoginAnonymously(gamer => {
+			Assert(gamer.IsSuccessful, "Failed to log in");
+			// Run 3 transactions serially
+			Bundle[] transactions = { Bundle.CreateObject("gold", 1), Bundle.CreateObject("gold", 2, "silver", 10), Bundle.CreateObject("gold", 3) };
+			bool alreadyWentBack = false;
+			ExecuteTransactions(gamer.Value, transactions, () => {
+				// All transactions have been executed. Default to page 1.
+				gamer.Value.TransactionHistory(histResult => {
+					Assert(histResult.IsSuccessful);
+					if (histResult.Offset == 0) {
+						// Even though there are three, only two results should be returned
+						Assert(histResult.Values.Count == 2);
+						// Then fetch the next page
+						Assert(!histResult.HasPrevious);
+						Assert(histResult.HasNext);
+						// Coming back from the second page
+						if (alreadyWentBack) {
+							IntegrationTest.Pass();
+							return;
+						}
+						histResult.FetchNext();
+					}
+					else {
+						// Last result
+						Assert(histResult.Offset == 2);
+						Assert(histResult.Values.Count == 1);
+						Assert(histResult.HasPrevious);
+						Assert(!histResult.HasNext);
+						histResult.FetchPrevious();
+						alreadyWentBack = true;
+					}
+				}, limit: 2);
+
+			})(null);
+		});
+	}
+
+	[Test("Tests the filter by unit feature of the transaction history")]
+	public void ShouldFilterTransactionsByUnit(Clan clan) {
+		clan.LoginAnonymously(gamer => {
+			Assert(gamer.IsSuccessful, "Failed to log in");
+			// Run 3 transactions serially
+			Bundle[] transactions = { Bundle.CreateObject("gold", 1), Bundle.CreateObject("gold", 2, "silver", 10), Bundle.CreateObject("gold", 3) };
+			ExecuteTransactions(gamer.Value, transactions, () => {
+				// All transactions have been executed. Default to page 1.
+				gamer.Value.TransactionHistory(histResult => {
+					Assert(histResult.IsSuccessful);
+					Assert(histResult.Values.Count == 1);
+					Assert(histResult.Values[0].TxData["gold"] == 2);
+					IntegrationTest.Pass();
+				}, unit: "silver");
+			})(null);
+		});
+	}
+
+	// Makes a handler that allows to execute several sample transactions and a handler when done
+	private ResultHandler<TransactionResult> ExecuteTransactions(Gamer gamer, Bundle[] transactionList, Action done, int txCounter = 0) {
+		return txResult => {
+			if (txCounter < transactionList.Length) {
+				gamer.Transaction(
+					ExecuteTransactions(gamer, transactionList, done, txCounter + 1),
+					transactionList[txCounter]
+				);
+			}
+			else {
+				done();
+			}
+		};
+	}
 
 	#region Private helpers
+	private void Assert(bool condition, string message = null) {
+		if (!condition) IntegrationTest.Assert(condition, message);
+	}
+
 	private void Login(Clan clan, Action<Gamer> done) {
 		clan.Login(
 			network: LoginNetwork.Email,

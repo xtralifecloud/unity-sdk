@@ -21,6 +21,15 @@ namespace CloudBuilderLibrary
 		public DateTime RegisterTime { get; private set; }
 
 		/**
+		 * Returns an object that allows to manipulate the key/value system associated with this user.
+		 * @param domain optional domain on which to scope the VFS. Default to `private`.
+		 * @return an object allowing to manipulate key/values for this user/domain.
+		 */
+		public KeyValueSystem GamerVfs(string domain = Common.PrivateDomain) {
+			return new KeyValueSystem(this, domain, "/v1/gamer/vfs");
+		}
+
+		/**
 		 * When you have data about friends from another social network, you can post them using these function.
 		 * This will automatically add them as a friend on CotC as they get recognized on our servers.
 		 * @param done callback invoked when the login has finished, either successfully or not. The attached boolean

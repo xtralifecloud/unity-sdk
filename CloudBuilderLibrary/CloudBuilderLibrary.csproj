@@ -50,11 +50,17 @@
     <Compile Include="HighLevel\ErrorCode.cs" />
     <Compile Include="HighLevel\Gamer.cs" />
     <Compile Include="HighLevel\Gamer.ProfileMethods.cs" />
+    <Compile Include="HighLevel\Model\AchievementDefinition.cs" />
     <Compile Include="HighLevel\Model\GamerProfile.cs" />
     <Compile Include="HighLevel\GamerProperties.cs" />
     <Compile Include="HighLevel\Model\LoginNetwork.cs" />
     <Compile Include="HighLevel\Model\SocialNetworkFriend.cs" />
+    <Compile Include="HighLevel\Model\Transaction.cs" />
+    <Compile Include="HighLevel\Model\TransactionHistory.cs" />
+    <Compile Include="HighLevel\Model\TransactionResult.cs" />
+    <Compile Include="HighLevel\PagedResult.cs" />
     <Compile Include="HighLevel\Result.cs" />
+    <Compile Include="HighLevel\KeyValueSystem.cs" />
     <Compile Include="Internal\Bundle.cs" />
     <Compile Include="Internal\CloudBuilderSettings.cs" />
     <Compile Include="Internal\HttpRequest.cs" />

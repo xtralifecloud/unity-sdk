@@ -52,7 +52,7 @@ namespace CloudBuilderLibrary
 		private class RequestState {
 			// This class stores the State of the request.
 			public const int BufferSize = 1024;
-			public StringBuilder RequestData;
+			public MemoryStream ResponseBuffer;
 			public byte[] BufferRead;
 			public int RequestId;
 			public HttpRequest OriginalRequest;
@@ -66,7 +66,7 @@ namespace CloudBuilderLibrary
 				self = inst;
 				BufferRead = new byte[BufferSize];
 				OriginalRequest = originalReq;
-				RequestData = new StringBuilder("");
+				ResponseBuffer = new MemoryStream();
 				Request = req;
 				StreamResponse = null;
 				RequestId = (self.RequestCount += 1);
@@ -157,10 +157,8 @@ namespace CloudBuilderLibrary
 			try {
 				// End the operation
 				Stream postStream = state.Request.EndGetRequestStream(asynchronousResult);
-				// Convert the string into a byte array. 
-				byte[] byteArray = Encoding.UTF8.GetBytes(state.OriginalRequest.BodyString);
 				// Write to the request stream.
-				postStream.Write(byteArray, 0, byteArray.Length);
+				postStream.Write(state.OriginalRequest.Body, 0, state.OriginalRequest.Body.Length);
 				postStream.Close();
 				// Start the asynchronous operation to get the response
 				state.Request.BeginGetResponse(new AsyncCallback(RespCallback), state);
@@ -213,7 +211,7 @@ namespace CloudBuilderLibrary
 			HttpWebRequest req = HttpWebRequest.Create(url) as HttpWebRequest;
 
 			// Auto choose HTTP method
-			req.Method = request.Method ?? (request.BodyString != null ? "POST" : "GET");
+			req.Method = request.Method ?? (request.Body != null ? "POST" : "GET");
 			req.UserAgent = request.UserAgent;
 			foreach (var pair in request.Headers) {
 				if (String.Compare(pair.Key, "Content-Type", true) == 0)
@@ -231,7 +229,7 @@ namespace CloudBuilderLibrary
 			}
 
 			AllDone.Reset();
-			if (request.BodyString != null) {
+			if (request.Body != null) {
 				req.BeginGetRequestStream(new AsyncCallback(GetRequestStreamCallback), state);
 			}
 			else {
@@ -264,6 +262,7 @@ namespace CloudBuilderLibrary
 			}
 			catch (WebException e) {
 				if (e.Response == null) {
+					CloudBuilder.Log("Error: " + e.Message);
 					FinishWithRequest(state, new HttpResponse(e));
 					return;
 				}
@@ -275,6 +274,7 @@ namespace CloudBuilderLibrary
 				return;
 			}
 			catch (Exception e) {
+				CloudBuilder.Log("Error: " + e.Message);
 				FinishWithRequest(state, new HttpResponse(e));
 			}
 			if (state.Response != null) { state.Response.Close(); }
@@ -289,7 +289,7 @@ namespace CloudBuilderLibrary
 				int read = responseStream.EndRead(asyncResult);
 				// Read the HTML page and then print it to the console. 
 				if (read > 0) {
-					state.RequestData.Append(Encoding.UTF8.GetString(state.BufferRead, 0, read));
+					state.ResponseBuffer.Write(state.BufferRead, 0, read);
 					responseStream.BeginRead(state.BufferRead, 0, RequestState.BufferSize, new AsyncCallback(ReadCallBack), state);
 					return;
 				}
@@ -304,14 +304,14 @@ namespace CloudBuilderLibrary
 						result.Headers[key] = response.Headers[key];
 					}
 					// Read the body
-					result.BodyString = state.RequestData.ToString();
+					result.Body = state.ResponseBuffer.ToArray();
 					// Logging
 					LogResponse(state, result);
 					FinishWithRequest(state, result);
 				}
 			}
 			catch (Exception e) {
-				CloudBuilder.Log(LogLevel.Warning, "Failed to read response: " + e.Message);
+				CloudBuilder.Log(LogLevel.Warning, "Failed to read response: " + e.ToString());
 				FinishWithRequest(state, new HttpResponse(e));
 			}
 			AllDone.Set();

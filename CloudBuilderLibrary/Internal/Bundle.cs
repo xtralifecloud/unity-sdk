@@ -217,7 +217,8 @@ namespace CloudBuilderLibrary
 				Bundle subBundle = Bundle.CreateObject();
 				IDictionary dict = (IDictionary) data;
 				foreach (string key in dict.Keys) {
-					subBundle[key] = FromJson((JsonData) dict[key]);
+					JsonData item = (JsonData)dict[key];
+					if (item != null) subBundle[key] = FromJson(item);
 				}
 				return subBundle;
 			}
@@ -225,7 +226,7 @@ namespace CloudBuilderLibrary
 				Bundle subBundle = Bundle.CreateArray();
 				IList dict = (IList) data;
 				foreach (JsonData value in dict) {
-					subBundle.Add(FromJson(value));
+					if (value != null) subBundle.Add(FromJson(value));
 				}
 				return subBundle;
 			}
