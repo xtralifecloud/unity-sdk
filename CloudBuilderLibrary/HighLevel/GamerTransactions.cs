@@ -5,6 +5,11 @@ using System.Text;
 
 namespace CloudBuilderLibrary {
 
+	/**
+	 * Class allowing to manipulate the transactions and perform tasks related to achievements.
+	 * This class is scoped by domain, meaning that you can call .Domain("yourdomain") and perform
+	 * additional calls that are scoped.
+	 */
 	public class GamerTransactions {
 
 		/**

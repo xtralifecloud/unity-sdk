@@ -7,7 +7,9 @@ namespace CloudBuilderLibrary {
 
 	/**
 	 * Represents a key/value system, also known as virtual file system.
-	 * Subclasses implement this functionality: Gamer.Vfs and .
+	 * Subclasses implement this functionality: Gamer.GamerVfs and Game.GameVfs.
+	 * This class is scoped by domain, meaning that you can call .Domain("yourdomain") and perform
+	 * additional calls that are scoped.
 	 */
 	public class KeyValueSystem {
 		internal KeyValueSystem(Gamer gamer, string baseUrl) {
