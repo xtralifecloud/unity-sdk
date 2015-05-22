@@ -10,13 +10,21 @@ namespace CloudBuilderLibrary {
 	 */
 	public sealed class GamerProperties {
 
-		internal GamerProperties(Gamer parent, string domain) {
-			Domain = domain;
+		internal GamerProperties(Gamer parent) {
 			Gamer = parent;
 		}
 
+		/**
+		 * Sets the domain affected by this object.
+		 * You should typically use it this way: `gamer.Properties.Domain("private").Post(...);`
+		 * @param domain optional domain on which to scope the properties. Default to `private` if unmodified.
+		 */
+		public void Domain(string domain) {
+			this.domain = domain;
+		}
+
 		public void GetKey(ResultHandler<Bundle> done, string key) {
-			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(Domain).Path(key);
+			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Common.InvokeHandler(done, response.BodyJson["properties"], response.BodyJson);
@@ -24,7 +32,7 @@ namespace CloudBuilderLibrary {
 		}
 
 		public void GetAll(ResultHandler<Bundle> done) {
-			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(Domain);
+			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Common.InvokeHandler(done, response.BodyJson["properties"], response.BodyJson);
@@ -32,7 +40,7 @@ namespace CloudBuilderLibrary {
 		}
 
 		public void SetKey(ResultHandler<int> done, string key, Bundle value) {
-			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(Domain).Path(key);
+			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("value", value);
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
@@ -41,7 +49,7 @@ namespace CloudBuilderLibrary {
 		}
 
 		public void SetAll(ResultHandler<int> done, Bundle properties) {
-			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(Domain);
+			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = properties;
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
@@ -50,7 +58,7 @@ namespace CloudBuilderLibrary {
 		}
 
 		public void RemoveKey(ResultHandler<bool> done, string key) {
-			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(Domain).Path(key);
+			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
@@ -59,7 +67,7 @@ namespace CloudBuilderLibrary {
 		}
 
 		public void RemoveAll(ResultHandler<bool> done) {
-			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(Domain);
+			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
@@ -67,7 +75,7 @@ namespace CloudBuilderLibrary {
 			});
 		}
 
-		private string Domain;
+		private string domain = Common.PrivateDomain;
 		private Gamer Gamer;
 	}
 }

@@ -22,7 +22,7 @@ public class VfsTests: MonoBehaviour {
 	public void ShouldNotReadInexistingKey(Clan clan) {
 		clan.LoginAnonymously(gamer => {
 			if (!gamer.IsSuccessful) IntegrationTest.Fail("Failed to log in");
-			gamer.Value.GamerVfs().GetKey(getRes => {
+			gamer.Value.GamerVfs.GetKey(getRes => {
 				IntegrationTest.Assert(!getRes.IsSuccessful, "Request marked as succeeded");
 				IntegrationTest.Assert(getRes.HttpStatusCode == 404, "Wrong error code (404)");
 				IntegrationTest.Assert(getRes.ServerData["name"] == "KeyNotFound", "Wrong error message");
@@ -33,8 +33,8 @@ public class VfsTests: MonoBehaviour {
 	[Test("Sets a few keys, then reads them.")]
 	public void ShouldWriteKeys(Clan clan) {
 		Login(clan, gamer => {
-			gamer.GamerVfs().SetKey(setRes => {
-				gamer.GamerVfs().GetKey(getRes => {
+			gamer.GamerVfs.SetKey(setRes => {
+				gamer.GamerVfs.GetKey(getRes => {
 					IntegrationTest.Assert(getRes.IsSuccessful, "Request failed");
 					IntegrationTest.Assert(getRes.Value == "hello world", "Wrong key value");
 				}, "testkey");
@@ -45,9 +45,9 @@ public class VfsTests: MonoBehaviour {
 	[Test("Sets a key, deletes it and then rereads it.")]
 	public void ShouldDeleteKey(Clan clan) {
 		Login(clan, gamer => {
-			gamer.GamerVfs().SetKey(setRes => {
-				gamer.GamerVfs().RemoveKey(remRes => {
-					gamer.GamerVfs().GetKey(getRes => {
+			gamer.GamerVfs.SetKey(setRes => {
+				gamer.GamerVfs.RemoveKey(remRes => {
+					gamer.GamerVfs.GetKey(getRes => {
 						IntegrationTest.Assert(!getRes.IsSuccessful, "Request marked as succeeded");
 						IntegrationTest.Assert(getRes.HttpStatusCode == 404, "Wrong error code (404)");
 					}, "testkey");
@@ -61,8 +61,8 @@ public class VfsTests: MonoBehaviour {
 	public void ShouldWriteBinaryKey(Clan clan) {
 		Login(clan, gamer => {
 			byte[] data = { 1, 2, 3, 4 };
-			gamer.GamerVfs().SetKeyBinary(setRes => {
-				gamer.GamerVfs().GetKeyBinary(getRes => {
+			gamer.GamerVfs.SetKeyBinary(setRes => {
+				gamer.GamerVfs.GetKeyBinary(getRes => {
 					IntegrationTest.Assert(getRes.IsSuccessful, "Request failed");
 					IntegrationTest.Assert(getRes.Value.Length == 4, "Wrong key length");
 					IntegrationTest.Assert(getRes.Value[2] == 3, "Wrong key value");

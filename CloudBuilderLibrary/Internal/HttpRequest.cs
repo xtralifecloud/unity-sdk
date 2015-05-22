@@ -44,6 +44,7 @@ namespace CloudBuilderLibrary {
 		// Please do not access this by yourself, this is only kept track of internally and will be ignored if set by you
 		internal Action<HttpResponse> Callback;
 		private byte[] body;
-		private static readonly int[] DefaultTimeBetweenTries = {1, 100, 1000, 1500, 2000, 3000, 4000, 6000, 8000};
+//		private static readonly int[] DefaultTimeBetweenTries = {1, 100, 1000, 1500, 2000, 3000, 4000, 6000, 8000};
+		private static readonly int[] DefaultTimeBetweenTries = {};
 	}
 }

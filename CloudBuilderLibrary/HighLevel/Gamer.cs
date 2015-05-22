@@ -22,11 +22,10 @@ namespace CloudBuilderLibrary
 
 		/**
 		 * Returns an object that allows to manipulate the key/value system associated with this user.
-		 * @param domain optional domain on which to scope the VFS. Default to `private`.
 		 * @return an object allowing to manipulate key/values for this user/domain.
 		 */
-		public KeyValueSystem GamerVfs(string domain = Common.PrivateDomain) {
-			return new KeyValueSystem(this, domain, "/v1/gamer/vfs");
+		public KeyValueSystem GamerVfs {
+			get { return new KeyValueSystem(this, "/v1/gamer/vfs"); }
 		}
 
 		/**
@@ -53,20 +52,18 @@ namespace CloudBuilderLibrary
 
 		/**
 		 * Allows to manipulate the properties of the current gamer.
-		 * @param domain optional domain on which to scope the properties. Default to `private`.
 		 * @return an object that allows to set, delete, etc. property values.
 		 */
-		public GamerProperties Properties(string domain = Common.PrivateDomain) {
-			return new GamerProperties(this, domain);
+		public GamerProperties Properties {
+			get { return new GamerProperties(this); }
 		}
 
 		/**
 		 * Allows to manipulate the transactions and related achievements of an user.
-		 * @param domain optional domain on which to scope the operations. Default to `private`.
 		 * @return an object that allows to manipulate transactions and query achievements.
 		 */
-		public GamerTransactions Transactions(string domain = Common.PrivateDomain) {
-			return new GamerTransactions(this, domain);
+		public GamerTransactions Transactions {
+			get { return new GamerTransactions(this); }
 		}
 
 		#region Internal

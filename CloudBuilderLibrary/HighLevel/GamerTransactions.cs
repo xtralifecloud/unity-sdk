@@ -14,11 +14,21 @@ namespace CloudBuilderLibrary {
 		 *     contains the balance. You can query the individual items by doing result.Value["gold"] for instance.
 		 */
 		public void Balance(ResultHandler<Bundle> done) {
-			UrlBuilder url = new UrlBuilder("/v1/gamer/tx").Path(Domain).Path("balance");
+			UrlBuilder url = new UrlBuilder("/v1/gamer/tx").Path(domain).Path("balance");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Common.InvokeHandler(done, response.BodyJson, response.BodyJson);
 			});
+		}
+
+		/**
+		 * Changes the domain affected by the next operations.
+		 * You should typically use it this way: `gamer.Transactions.Domain("private").Post(...);`
+		 * @param domain optional domain on which to scope the transactions. Default to `private` if unmodified.
+		 */
+		public GamerTransactions Domain(string domain) {
+			this.domain = domain;
+			return this;
 		}
 
 		/**
@@ -31,7 +41,7 @@ namespace CloudBuilderLibrary {
 		 * @param offset for pagination, avoid using it explicitly.
 		 */
 		public void History(PagedResultHandler<Transaction> done, string unit = null, int limit = 30, int offset = 0) {
-			UrlBuilder url = new UrlBuilder("/v1/gamer/tx").Path(Domain).QueryParam("skip", offset).QueryParam("limit", limit);
+			UrlBuilder url = new UrlBuilder("/v1/gamer/tx").Path(domain).QueryParam("skip", offset).QueryParam("limit", limit);
 			if (unit != null) url.QueryParam("unit", unit);
 			// Request for current results
 			Common.RunHandledRequest(Gamer.MakeHttpRequest(url), done, (HttpResponse response) => {
@@ -61,7 +71,7 @@ namespace CloudBuilderLibrary {
 		 * @param description description of the transaction. Will appear in the back office.
 		 */
 		public void Post(ResultHandler<TransactionResult> done, Bundle transaction, string description = null) {
-			UrlBuilder url = new UrlBuilder("/v2.2/gamer/tx").Path(Domain);
+			UrlBuilder url = new UrlBuilder("/v2.2/gamer/tx").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("transaction", transaction, "description", description);
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
@@ -70,11 +80,10 @@ namespace CloudBuilderLibrary {
 		}
 
 		#region Private
-		internal GamerTransactions(Gamer gamer, string domain) {
+		internal GamerTransactions(Gamer gamer) {
 			Gamer = gamer;
-			Domain = domain;
 		}
-		private string Domain;
+		private string domain = Common.PrivateDomain;
 		private Gamer Gamer;
 		#endregion
 	}

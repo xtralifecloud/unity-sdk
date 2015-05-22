@@ -22,14 +22,14 @@ public class GamerTests : MonoBehaviour {
 	public void ShouldSetProperty(Clan clan) {
 		Login(clan, gamer => {
 			// Set property, then get all and check it
-			gamer.Properties().SetKey(
+			gamer.Properties.SetKey(
 				key: "testkey",
 				value: "value",
 				done: setResult => {
 					if (!setResult.IsSuccessful) IntegrationTest.Fail("Error when setting property");
 					if (setResult.Value != 1) IntegrationTest.Fail("Expected done = 1");
 
-					gamer.Properties().GetAll(getResult => {
+					gamer.Properties.GetAll(getResult => {
 						IntegrationTest.Assert(getResult.IsSuccessful);
 						IntegrationTest.Assert(getResult.Value.Has("testkey"));
 					});
@@ -45,13 +45,13 @@ public class GamerTests : MonoBehaviour {
 			props["hello"] = "world";
 			props["array"] = Bundle.CreateArray(1, 2, 3);
 			// Set property, then get all and check it
-			gamer.Properties().SetAll(
+			gamer.Properties.SetAll(
 				properties: props,
 				done: setResult => {
 					if (!setResult.IsSuccessful) IntegrationTest.Fail("Error when setting property");
 					if (setResult.Value != 1) IntegrationTest.Fail("Expected done = 1");
 
-					gamer.Properties().GetAll(getResult => {
+					gamer.Properties.GetAll(getResult => {
 						IntegrationTest.Assert(getResult.IsSuccessful);
 						IntegrationTest.Assert(getResult.Value["hello"] == "world");
 						IntegrationTest.Assert(getResult.Value["array"].AsArray()[1] == 2);
@@ -69,15 +69,15 @@ public class GamerTests : MonoBehaviour {
 			props["hello"] = "world";
 			props["prop2"] = 123;
 			// Set properties, remove one, then get it and check
-			gamer.Properties().SetAll(
+			gamer.Properties.SetAll(
 				properties: props,
 				done: setResult => {
 					if (!setResult.IsSuccessful) IntegrationTest.Fail("Error when setting property");
 
-					gamer.Properties().RemoveKey(removeResult => {
+					gamer.Properties.RemoveKey(removeResult => {
 						if (!removeResult.IsSuccessful) IntegrationTest.Fail("Error when removing property");
 
-						gamer.Properties().GetKey(getResult => {
+						gamer.Properties.GetKey(getResult => {
 							IntegrationTest.Assert(getResult.IsSuccessful);
 							IntegrationTest.Assert(getResult.Value.IsEmpty);
 						}, "hello");
@@ -94,13 +94,13 @@ public class GamerTests : MonoBehaviour {
 			props["hello"] = "world";
 			props["prop2"] = 123;
 			// Set properties, remove them, then get all and check it
-			gamer.Properties().SetAll(
+			gamer.Properties.SetAll(
 				properties: props,
 				done: setResult => {
 					if (!setResult.IsSuccessful) IntegrationTest.Fail("Error when setting property");
-					gamer.Properties().RemoveAll(removeResult => {
+					gamer.Properties.RemoveAll(removeResult => {
 						if (!removeResult.IsSuccessful) IntegrationTest.Fail("Error when removing properties");
-						gamer.Properties().GetAll(getResult => {
+						gamer.Properties.GetAll(getResult => {
 							IntegrationTest.Assert(getResult.IsSuccessful);
 							IntegrationTest.Assert(getResult.Value.IsEmpty);
 						});
