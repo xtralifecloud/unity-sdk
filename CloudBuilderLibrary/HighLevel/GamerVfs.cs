@@ -50,7 +50,7 @@ namespace CloudBuilderLibrary {
 				// We must then download the received URL
 				string downloadUrl = response.BodyString.Trim('"');
 				HttpRequest binaryRequest = Gamer.MakeHttpRequest(downloadUrl);
-				Managers.HttpClient.Run(binaryRequest, binaryResponse => {
+				Common.RunHandledRequest(binaryRequest, done, binaryResponse => {
 					Common.InvokeHandler(done, response.Body, response.BodyJson);
 				});
 			});
@@ -84,10 +84,18 @@ namespace CloudBuilderLibrary {
 		public void SetKeyBinary(ResultHandler<bool> done, string key, byte[] binaryData) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key).QueryParam("binary");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
-			req.Body = binaryData;
 			req.Method = "PUT";
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, response.BodyJson["done"], response.BodyJson);
+				// Now we have an URL to upload the data to
+				HttpRequest binaryRequest = new HttpRequest();
+				binaryRequest.Url = response.BodyJson["putURL"];
+				binaryRequest.Body = binaryData;
+				binaryRequest.Method = "PUT";
+				binaryRequest.TimeoutMillisec = Gamer.Clan.HttpTimeoutMillis;
+				binaryRequest.UserAgent = Gamer.Clan.UserAgent;
+				Common.RunHandledRequest(binaryRequest, done, binaryResponse => {
+					Common.InvokeHandler(done, true);
+				});
 			});
 		}
 

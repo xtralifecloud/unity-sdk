@@ -52,7 +52,9 @@ namespace CloudBuilderLibrary
 		#region Members
 		private const string SdkVersion = "1";
 		private string ApiKey, ApiSecret, Server;
-		private int HttpTimeoutMillis;
+		internal int HttpTimeoutMillis {
+			get; private set;
+		}
 		public int LoadBalancerCount {
 			get; private set;
 		}
