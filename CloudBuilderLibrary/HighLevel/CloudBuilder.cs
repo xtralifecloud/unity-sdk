@@ -78,8 +78,11 @@ namespace CloudBuilderLibrary {
 		internal static void Log(string text) {
 			Managers.Logger.Log(LogLevel.Verbose, text);
 		}
-		internal static void Log(LogLevel level, string text) {
-			Managers.Logger.Log(level, text);
+		internal static void LogWarning(string text) {
+			Managers.Logger.Log(LogLevel.Warning, text);
+		}
+		internal static void LogError(string text) {
+			Managers.Logger.Log(LogLevel.Error, text);
 		}
 		internal static void TEMP(string text) {
 			// All references to this should be removed at some point

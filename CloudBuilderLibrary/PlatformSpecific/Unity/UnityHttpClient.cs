@@ -19,7 +19,7 @@ namespace CloudBuilderLibrary
 					return;
 				}
 			}
-			CloudBuilder.Log(LogLevel.Error, "Unable to abort " + request.ToString() + ", probably not running anymore");
+			CloudBuilder.LogError("Unable to abort " + request.ToString() + ", probably not running anymore");
 		}
 
 		void IHttpClient.Run(HttpRequest request, Action<HttpResponse> callback) {
@@ -61,8 +61,8 @@ namespace CloudBuilderLibrary
 			public Stream StreamResponse;
 			public UnityHttpClient self;
 			public bool Aborted;
-			public int TryCount = 0;
-			public RequestState(UnityHttpClient inst, HttpRequest originalReq, HttpWebRequest req) {
+			public object PreviousUserData;
+			public RequestState(UnityHttpClient inst, HttpRequest originalReq, HttpWebRequest req, object previousUserData) {
 				self = inst;
 				BufferRead = new byte[BufferSize];
 				OriginalRequest = originalReq;
@@ -70,6 +70,7 @@ namespace CloudBuilderLibrary
 				Request = req;
 				StreamResponse = null;
 				RequestId = (self.RequestCount += 1);
+				PreviousUserData = previousUserData;
 			}
 		}
 
@@ -86,7 +87,7 @@ namespace CloudBuilderLibrary
 			lock (this) {
 				// Dismiss additional requests
 				if (Terminated) {
-					CloudBuilder.Log(LogLevel.Error, "Attempted to run a request after having terminated");
+					CloudBuilder.LogError("Attempted to run a request after having terminated");
 					return;
 				}
 				// Need to enqueue process?
@@ -115,21 +116,27 @@ namespace CloudBuilderLibrary
 			}
 			// Has failed?
 			if (response.ShouldBeRetried(state.OriginalRequest) && !state.Aborted) {
-				// Will try again
-				int[] retryTimes = state.OriginalRequest.TimeBetweenTries;
-				if (state.TryCount < retryTimes.Length) {
-					CloudBuilder.Log(LogLevel.Warning, "[" + state.RequestId + "] Request failed, retrying in " + retryTimes[state.TryCount] + "ms.");
-					Thread.Sleep(retryTimes[state.TryCount]);
-					ChooseLoadBalancer(state.OriginalRequest);
-					ProcessRequest(state.OriginalRequest, state.TryCount + 1);
-					return;
+				if (state.OriginalRequest.FailedHandler != null) {
+					// See whether to try again
+					var eventArgs = new HttpRequestFailedEventArgs(state.OriginalRequest, state.PreviousUserData);
+					// Invoke the failure handler
+					try {
+						state.OriginalRequest.FailedHandler(eventArgs);
+						if (eventArgs.RetryDelay < 0) throw new InvalidOperationException("HTTP request failed handler called but didn't tell what to do next.");
+						if (eventArgs.RetryDelay > 0) {
+							CloudBuilder.LogWarning("[" + state.RequestId + "] Request failed, retrying in " + eventArgs.RetryDelay + "ms.");
+							Thread.Sleep(eventArgs.RetryDelay);
+							ChooseLoadBalancer(state.OriginalRequest);
+							ProcessRequest(state.OriginalRequest, eventArgs.UserData);
+							return;
+						}
+					}
+					catch (Exception e) {
+						CloudBuilder.LogError("Error in failure handler: " + e.ToString());
+					}
 				}
 				// Maximum failure count reached, will simply process the next request
-				CloudBuilder.Log(LogLevel.Warning, "[" + state.RequestId + "] Request failed too many times, giving up.");
-				LastRequestFailed = true;
-			}
-			else {
-				LastRequestFailed = false;
+				CloudBuilder.LogWarning("[" + state.RequestId + "] Request failed.");
 			}
 			// Final result for this request
 			if (state.OriginalRequest.Callback != null) {
@@ -206,7 +213,7 @@ namespace CloudBuilderLibrary
 		}
 
 		/** Processes a single request asynchronously. Will continue to FinishWithRequest in some way. */
-		private void ProcessRequest(HttpRequest request, int startupTryCount) {
+		private void ProcessRequest(HttpRequest request, object previousUserData = null) {
 			String url = request.Url.Replace("[id]", CurrentLoadBalancerId.ToString("00"));
 			HttpWebRequest req = HttpWebRequest.Create(url) as HttpWebRequest;
 
@@ -221,8 +228,7 @@ namespace CloudBuilderLibrary
 			}
 
 			// Configure & perform the request
-			RequestState state = new RequestState(this, request, req);
-			state.TryCount = startupTryCount;
+			RequestState state = new RequestState(this, request, req, previousUserData);
 			LogRequest(state);
 			lock (this) {
 				RunningRequests.Add(state);
@@ -239,10 +245,6 @@ namespace CloudBuilderLibrary
 			if (request.TimeoutMillisec > 0) {
 				ThreadPool.RegisterWaitForSingleObject(AllDone, new WaitOrTimerCallback(TimeoutCallback), state, request.TimeoutMillisec, true);
 			}
-		}
-
-		private void ProcessRequest(HttpRequest request) {
-			ProcessRequest(request, LastRequestFailed ? Math.Max(0, request.TimeBetweenTries.Length - 1) : 0);
 		}
 
 		/** Called when a response has been received by the HttpWebRequest. */
@@ -311,7 +313,7 @@ namespace CloudBuilderLibrary
 				}
 			}
 			catch (Exception e) {
-				CloudBuilder.Log(LogLevel.Warning, "Failed to read response: " + e.ToString());
+				CloudBuilder.LogWarning("Failed to read response: " + e.ToString());
 				FinishWithRequest(state, new HttpResponse(e));
 			}
 			AllDone.Set();
@@ -325,7 +327,7 @@ namespace CloudBuilderLibrary
 					requestState.Request.Abort();
 				}
 				HttpResponse response = new HttpResponse(new HttpTimeoutException());
-				CloudBuilder.Log (LogLevel.Warning, "Request timed out");
+				CloudBuilder.LogWarning("Request timed out");
 				requestState.self.FinishWithRequest(requestState, response);
 			}
 		}
@@ -338,7 +340,6 @@ namespace CloudBuilderLibrary
 		// Others
 		private bool VerboseMode;
 		private int CurrentLoadBalancerId = -1;
-		private bool LastRequestFailed;
 		private System.Random Random = new System.Random();
 		private int RequestCount = 0;
 		private bool Terminated = false;

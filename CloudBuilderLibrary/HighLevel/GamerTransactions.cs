@@ -57,10 +57,10 @@ namespace CloudBuilderLibrary {
 				// Handle pagination
 				PagedResult<Transaction> result = new PagedResult<Transaction>(transactions, response.BodyJson, offset);
 				if (offset > 0) {
-					result.Previous = () => History(done, unit, offset - limit, limit);
+					result.Previous = () => History(done, unit, limit, offset - limit);
 				}
 				if (offset + transactions.Count < result.Total) {
-					result.Next = () => History(done, unit, offset + limit, limit);
+					result.Next = () => History(done, unit, limit, offset + limit);
 				}
 				Common.InvokeHandler(done, result);
 			});

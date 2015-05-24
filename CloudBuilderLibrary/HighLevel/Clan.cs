@@ -18,6 +18,18 @@ namespace CloudBuilderLibrary
 			});
 		}
 
+		/**
+		 * This handler, when set, is called synchronously whenever an HTTP request fails with a recoverable
+		 * error.
+		 * Some errors won't call this handler and will fail directly, such as when providing invalid
+		 * arguments. This handler rather covers network errors.
+		 * You need to call one of the methods of the HttpRequestFailedArgs in order to tell what to do next:
+		 * either retry or abort the request.
+		 * Changing this value only affects the calls made later on, not the requests currently running. You
+		 * should set it once at startup.
+		 */
+		public HttpRequestFailedHandler HttpRequestFailedHandler;
+
 		#region Internal HTTP helpers
 		internal HttpRequest MakeUnauthenticatedHttpRequest(string path) {
 			HttpRequest result = new HttpRequest();
@@ -31,6 +43,7 @@ namespace CloudBuilderLibrary
 			result.Headers["x-apikey"] = ApiKey;
 			result.Headers["x-sdkversion"] = SdkVersion;
 			result.Headers["x-apisecret"] = ApiSecret;
+			result.FailedHandler = HttpRequestFailedHandler;
 			result.TimeoutMillisec = HttpTimeoutMillis;
 			result.UserAgent = UserAgent;
 			return result;
@@ -55,10 +68,10 @@ namespace CloudBuilderLibrary
 		internal int HttpTimeoutMillis {
 			get; private set;
 		}
-		public int LoadBalancerCount {
+		internal int LoadBalancerCount {
 			get; private set;
 		}
-		public string UserAgent {
+		internal string UserAgent {
 			get; private set;
 		}
 		#endregion

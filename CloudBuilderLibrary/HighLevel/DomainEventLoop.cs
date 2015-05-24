@@ -140,7 +140,7 @@ namespace CloudBuilderLibrary {
 						}
 					}
 					catch (Exception e) {
-						CloudBuilder.Log(LogLevel.Error, "Exception happened in pop event loop: " + e.ToString());
+						CloudBuilder.LogError("Exception happened in pop event loop: " + e.ToString());
 					}
 					SynchronousRequestLock.Set();
 				});

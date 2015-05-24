@@ -30,13 +30,13 @@ namespace CloudBuilderLibrary {
 			get { return Body != null; }
 		}
 		public Dictionary<String, String> Headers = new Dictionary<string, string>();
+		public HttpRequestFailedHandler FailedHandler;
 		public int LoadBalancerCount = 1;
 		/**
 		 * When not set (null), uses GET if no body is provided, or POST otherwise.
 		 */
 		public string Method;
 		public Policy RetryPolicy = Policy.NonpermanentErrors;
-		public int[] TimeBetweenTries = DefaultTimeBetweenTries;
 		public string Url;
 		public int TimeoutMillisec;
 		public string UserAgent;
@@ -44,7 +44,5 @@ namespace CloudBuilderLibrary {
 		// Please do not access this by yourself, this is only kept track of internally and will be ignored if set by you
 		internal Action<HttpResponse> Callback;
 		private byte[] body;
-//		private static readonly int[] DefaultTimeBetweenTries = {1, 100, 1000, 1500, 2000, 3000, 4000, 6000, 8000};
-		private static readonly int[] DefaultTimeBetweenTries = {};
 	}
 }

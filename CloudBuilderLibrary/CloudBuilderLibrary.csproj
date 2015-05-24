@@ -52,6 +52,7 @@
     <Compile Include="HighLevel\Gamer.cs" />
     <Compile Include="HighLevel\GamerProfileMethods.cs" />
     <Compile Include="HighLevel\GamerTransactions.cs" />
+    <Compile Include="HighLevel\HttpRequestFailedEventArgs.cs" />
     <Compile Include="HighLevel\Model\AchievementDefinition.cs" />
     <Compile Include="HighLevel\Model\GamerProfile.cs" />
     <Compile Include="HighLevel\GamerProperties.cs" />

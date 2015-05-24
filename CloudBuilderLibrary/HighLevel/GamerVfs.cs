@@ -90,6 +90,7 @@ namespace CloudBuilderLibrary {
 				HttpRequest binaryRequest = new HttpRequest();
 				binaryRequest.Url = response.BodyJson["putURL"];
 				binaryRequest.Body = binaryData;
+				binaryRequest.FailedHandler = Gamer.Clan.HttpRequestFailedHandler;
 				binaryRequest.Method = "PUT";
 				binaryRequest.TimeoutMillisec = Gamer.Clan.HttpTimeoutMillis;
 				binaryRequest.UserAgent = Gamer.Clan.UserAgent;
