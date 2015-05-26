@@ -26,6 +26,10 @@ namespace CloudBuilderLibrary
 			}
 		
 			GUILayout.Label("CloudBuilder Library Settings", EditorStyles.boldLabel);
+			GUILayout.Label("These are global to all scenes in your project (stored under Assets/Resources/).");
+			GUI.skin.label.wordWrap = true;
+			GUILayout.Space(5);
+
 			s.ApiKey = EditorGUILayout.TextField("API Key", s.ApiKey);
 			s.ApiSecret = EditorGUILayout.PasswordField("API Secret", s.ApiSecret);
 			string[] keys = new string[PredefinedEnvironments.Keys.Count];

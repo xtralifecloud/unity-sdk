@@ -28,6 +28,10 @@ namespace CloudBuilderLibrary {
 			return this;
 		}
 
+		public UrlBuilder QueryParam(string name, bool value) {
+			return QueryParam(name, value.ToString());
+		}
+
 		public UrlBuilder QueryParam(string name, int value) {
 			return QueryParam(name, value.ToString());
 		}

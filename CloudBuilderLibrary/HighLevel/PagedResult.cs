@@ -63,6 +63,11 @@ namespace CloudBuilderLibrary {
 			Offset = currentOffset;
 			Total = serverData["count"];
 		}
+		internal PagedResult(List<T> values, Bundle serverData, int currentOffset, int totalResults)
+			: base(values, serverData) {
+			Offset = currentOffset;
+			Total = totalResults;
+		}
 		internal Action Next, Previous;
 	}
 

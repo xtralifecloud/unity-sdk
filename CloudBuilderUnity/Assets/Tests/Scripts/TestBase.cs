@@ -55,9 +55,27 @@ public class TestBase : MonoBehaviour {
 		);
 	}
 
+	protected void Login2Users(Clan clan, Action<Gamer, Gamer> done) {
+		Login(clan, gamer1 => {
+			// Second user
+			clan.Login(
+				network: LoginNetwork.Email,
+				networkId: "clan2@localhost.localdomain",
+				networkSecret: "Password123",
+				done: result => {
+					if (!result.IsSuccessful) IntegrationTest.Fail("Failed to log in");
+					done(gamer1, result.Value);
+				}
+			);
+		});
+	}
+
 	protected string RandomEmailAddress() {
 		string randomPart = Guid.NewGuid().ToString();
 		return string.Format("test{0}@localhost.localdomain", randomPart);
 	}
 
+	protected string GetAllTestScopedId(string prefix) {
+		return FindObjectOfType<TestUtilities>().GetAllTestScopedId(prefix);
+	}
 }

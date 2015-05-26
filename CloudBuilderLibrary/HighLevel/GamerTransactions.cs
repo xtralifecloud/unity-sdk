@@ -29,7 +29,7 @@ namespace CloudBuilderLibrary {
 		/**
 		 * Changes the domain affected by the next operations.
 		 * You should typically use it this way: `gamer.Transactions.Domain("private").Post(...);`
-		 * @param domain optional domain on which to scope the transactions. Default to `private` if unmodified.
+		 * @param domain domain on which to scope the transactions. Default to `private` if unmodified.
 		 */
 		public GamerTransactions Domain(string domain) {
 			this.domain = domain;

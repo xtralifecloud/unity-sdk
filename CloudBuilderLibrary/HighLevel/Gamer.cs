@@ -28,6 +28,10 @@ namespace CloudBuilderLibrary
 			get { return new GamerAccountMethods(this); }
 		}
 
+		public GamerCommunity Community {
+			get { return new GamerCommunity(this); }
+		}
+
 		/**
 		 * Provides an API to manipulate game data, such as key/value or leaderboards.
 		 * @return an object that allow to manipulate game specific data.
@@ -45,28 +49,6 @@ namespace CloudBuilderLibrary
 		}
 
 		/**
-		 * When you have data about friends from another social network, you can post them using these function.
-		 * This will automatically add them as a friend on CotC as they get recognized on our servers.
-		 * @param done callback invoked when the login has finished, either successfully or not. The attached boolean
-		 *     indicates success if true.
-		 * @param network the network with which these friends are associated
-		 * @param friends a list of data about the friends fetched on the social network.
-		 */
-		public void PostSocialNetworkFriends(ResultHandler<bool> done, LoginNetwork network, List<SocialNetworkFriend> friends) {
-			UrlBuilder url = new UrlBuilder("/v1/gamer/friends").QueryParam("network", network.Describe());
-			HttpRequest req = MakeHttpRequest(url);
-			Bundle friendData = Bundle.CreateArray();
-			foreach (SocialNetworkFriend f in friends) {
-				friendData.Add(f.ToBundle());
-			}
-
-			req.BodyJson = friendData;
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, true, response.BodyJson);
-			});
-		}
-
-		/**
 		 * Allows to manipulate information related to the gamer profile.
 		 * @return an object that allows to read and set the profile.
 		 */
@@ -80,6 +62,14 @@ namespace CloudBuilderLibrary
 		 */
 		public GamerProperties Properties {
 			get { return new GamerProperties(this); }
+		}
+
+		/**
+		 * Provides an API able to handle functionality related to the leaderboards and scores.
+		 * @return an object that allows to manipulate scores.
+		 */
+		public GamerScores Scores {
+			get { return new GamerScores(this); }
 		}
 
 		/**

@@ -59,7 +59,7 @@ namespace CloudBuilderLibrary
 		public void FetchFriends(ResultHandler<bool> done, Gamer gamer) {
 			EnsureFacebookLoaded(() => {
 				DoFacebookRequestWithPagination((Result<List<SocialNetworkFriend>> result) => {
-					gamer.PostSocialNetworkFriends(done, LoginNetwork.Facebook, result.Value);
+					gamer.Community.PostSocialNetworkFriends(done, LoginNetwork.Facebook, result.Value);
 				}, "/me/friends", Facebook.HttpMethod.GET);
 			});
 		}

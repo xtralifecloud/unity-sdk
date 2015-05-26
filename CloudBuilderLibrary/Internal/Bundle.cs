@@ -71,11 +71,12 @@ namespace CloudBuilderLibrary
 
 		public virtual Bundle this[string key] {
 			get { return Has(key) ? Dictionary[key] : Empty; }
-			set { if (value != Empty) Dictionary[key] = value; }
+			set { if (value != null && value != Empty) Dictionary[key] = value; }
 		}
 		public virtual Bundle this[int index] {
 			get { return Array[index]; }
 			set {
+				if (value == null || value == Empty) return;
 				if (index != -1)
 					Array[index] = value;
 				else
