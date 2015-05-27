@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace IntegrationTests {
 	public class Test : Attribute {
-		public string Description;
-		public Test(string description) { Description = description; }
+		public string Description, Requisite;
+		public Test(string description, string requisite = null) { Description = description; Requisite = requisite; }
 	}
 }

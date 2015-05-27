@@ -28,7 +28,7 @@ public class GameTests : TestBase {
 		});
 	}
 
-	[Test("Fetches a key on the game and checks that it worked properly. It needs the current game to be set-up with a key of name 'testkey' and value '{\"test\": 2}'.")]
+	[Test("Fetches a key on the game and checks that it worked properly.", requisite: "The current game must be set-up with a key of name 'testkey' and value '{\"test\": 2}'.")]
 	public void ShouldFetchGameKey(Clan clan) {
 		Login(clan, gamer => {
 			gamer.Game.GameVfs.GetKey(getResult => {

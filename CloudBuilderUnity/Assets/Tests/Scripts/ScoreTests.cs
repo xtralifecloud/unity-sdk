@@ -134,14 +134,16 @@ public class ScoreTests : TestBase {
 						Assert(postResult2.IsSuccessful, "Post P2 failed");
 						// Ok so now the two friends are not friends, so the scores returned should not include the other
 						gamer1.Value.Scores.ListFriendScores(scores => {
-							Assert(!scores.IsSuccessful, "Fetch scores should not succeed");
+							Assert(scores.IsSuccessful, "Fetch scores failed");
+							Assert(scores.Value.Count == 1, "Should have one score only");
+							Assert(scores.Value[0].GamerInfo.GamerId == gamer1.Value.GamerId, "Should contain my score");
 							// So let's become friends!
 							gamer2.Value.Community.AddFriend(friendResult => {
 								Assert(friendResult.IsSuccessful, "Become friends failed");
 								// And try again fetching scores
 								gamer1.Value.Scores.ListFriendScores(scoresWhenFriend => {
 									Assert(scoresWhenFriend.IsSuccessful, "Fetch scores failed");
-									Assert(scoresWhenFriend.Value.Count == 1, "Should have one score only");
+									Assert(scoresWhenFriend.Value.Count == 2, "Should have two scores only");
 									CompleteTest();
 								}, board);
 							}, gamer1.Value.GamerId);
