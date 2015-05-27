@@ -94,6 +94,7 @@ public class ScoreTests : TestBase {
 						Assert(scores.Total == 2, "Should have two scores");
 						Assert(scores.Values[0].Value == 1500, "First score not as expected");
 						Assert(scores.Values[0].Info == "TestGamer2", "First score info not as expected");
+						Assert(scores.Values[0].Rank == 1, "First score should have rank 1");
 						Assert(scores.Values[1].Value == 1000, "2nd score not as expected");
 						Assert(scores.Values[1].GamerInfo.GamerId == gamer1.GamerId, "2nd score not as expected");
 						CompleteTest();
@@ -144,6 +145,7 @@ public class ScoreTests : TestBase {
 								gamer1.Value.Scores.ListFriendScores(scoresWhenFriend => {
 									Assert(scoresWhenFriend.IsSuccessful, "Fetch scores failed");
 									Assert(scoresWhenFriend.Value.Count == 2, "Should have two scores only");
+									Assert(scoresWhenFriend.Value[1].Rank == 2, "Second score should have rank 2");
 									CompleteTest();
 								}, board);
 							}, gamer1.Value.GamerId);
@@ -151,6 +153,28 @@ public class ScoreTests : TestBase {
 					}, 1500, board, ScoreOrder.HighToLow, "TestGamer2", false);
 				}, 1000, board, ScoreOrder.HighToLow, "TestGamer1", false);
 			});
+		});
+	}
+
+	[Test("Creates two boards, posts scores to it and lists the best scores.")]
+	public void ShouldListUserBestScores(Clan clan) {
+		clan.LoginAnonymously(gamerResult => {
+			Gamer gamer = gamerResult.Value;
+			Assert(gamerResult.IsSuccessful, "Login failed");
+			string board1 = RandomBoardName(), board2 = RandomBoardName();
+			gamer.Scores.Post(postResult1 => {
+				Assert(postResult1.IsSuccessful, "Post #1 failed");
+				gamer.Scores.Post(postResult2 => {
+					Assert(postResult2.IsSuccessful, "Post #2 failed");
+					// Then the scores should return the two boards
+					gamer.Scores.ListUserBestScores(result => {
+						Assert(result.IsSuccessful, "Get user best scores failed");
+						Assert(result.Value[board1].Rank == 1, "Rank is not 1");
+						Assert(result.Value[board2].Rank == 1, "Rank board #2 should be 1");
+						CompleteTest();
+					});
+				}, 1200, board2, ScoreOrder.HighToLow, "Test2", false);
+			}, 1000, board1, ScoreOrder.HighToLow, "Test1", false);
 		});
 	}
 

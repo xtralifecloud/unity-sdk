@@ -52,7 +52,8 @@ namespace CloudBuilderLibrary
 		}
 
 		internal static T ParseEnum<T>(string value) {
-			return (T) Enum.Parse(typeof(T), value, true);
+			if (value != null) return (T)Enum.Parse(typeof(T), value, true);
+			else return default(T);
 		}
 
 		internal static DateTime ParseHttpDate(string httpDate) {

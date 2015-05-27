@@ -45,6 +45,7 @@
     <Compile Include="HighLevel\CloudBuilder.cs" />
     <Compile Include="HighLevel\CloudBuilderGameObject.cs" />
     <Compile Include="HighLevel\Common.cs" />
+    <Compile Include="HighLevel\GamerMatches.cs" />
     <Compile Include="HighLevel\GamerCommunity.cs" />
     <Compile Include="HighLevel\GamerScores.cs" />
     <Compile Include="HighLevel\GameVfs.cs" />
@@ -55,11 +56,13 @@
     <Compile Include="HighLevel\GamerProfileMethods.cs" />
     <Compile Include="HighLevel\GamerTransactions.cs" />
     <Compile Include="HighLevel\HttpRequestFailedEventArgs.cs" />
+    <Compile Include="HighLevel\Match.cs" />
     <Compile Include="HighLevel\Model\AchievementDefinition.cs" />
     <Compile Include="HighLevel\Model\GamerInfo.cs" />
     <Compile Include="HighLevel\Model\GamerProfile.cs" />
     <Compile Include="HighLevel\GamerProperties.cs" />
     <Compile Include="HighLevel\Model\LoginNetwork.cs" />
+    <Compile Include="HighLevel\Model\MatchEvents.cs" />
     <Compile Include="HighLevel\Model\PostedGameScore.cs" />
     <Compile Include="HighLevel\Model\Score.cs" />
     <Compile Include="HighLevel\Model\SocialNetworkFriend.cs" />

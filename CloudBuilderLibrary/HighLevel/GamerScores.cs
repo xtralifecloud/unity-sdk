@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace CloudBuilderLibrary {
 
@@ -35,8 +33,9 @@ namespace CloudBuilderLibrary {
 			Common.RunHandledRequest(Gamer.MakeHttpRequest(url), done, (HttpResponse response) => {
 				List<Score> scores = new List<Score>();
 				Bundle boardData = response.BodyJson[board];
+				int rank = boardData["rankOfFirst"];
 				foreach (Bundle b in boardData["scores"].AsArray()) {
-					scores.Add(new Score(b));
+					scores.Add(new Score(b, rank++));
 				}
 				// Handle pagination
 				int total = Math.Min(boardData["maxpage"] * limit, offset + scores.Count);
@@ -54,7 +53,7 @@ namespace CloudBuilderLibrary {
 		/**
 		 * Fetch the score list for a given board, restricting to the scores made by the friends of the current user.
 		 * @param done callback invoked when the operation has finished, either successfully or not. The attached value
-		 *     describes a list of scores, and provides pagination functionality.
+		 *     describes a list of scores, without pagination functionality.
 		 * @param board the name of the board to fetch scores from.
 		 */
 		public void ListFriendScores(ResultHandler<List<Score>> done, string board) {
@@ -63,6 +62,26 @@ namespace CloudBuilderLibrary {
 				List<Score> scores = new List<Score>();
 				foreach (Bundle b in response.BodyJson[board].AsArray()) {
 					scores.Add(new Score(b));
+				}
+				Common.InvokeHandler(done, scores, response.BodyJson);
+			});
+		}
+
+		/**
+		 * Retrieves the best scores of this gamer, on all board he has posted one score to.
+		 * @param done callback invoked when the operation has finished, either successfully or not. The attached value
+		 *     contains information about the best scores of the user, indexed by board name.
+		 *     IMPORTANT: in the results, the gamer information is not provided. GamerInfo is always null.
+		 */
+		public void ListUserBestScores(ResultHandler<Dictionary<string, Score>> done) {
+			UrlBuilder url = new UrlBuilder("/v2.6/gamer/bestscores").Path(domain);
+			HttpRequest req = Gamer.MakeHttpRequest(url);
+			Common.RunHandledRequest(req, done, (HttpResponse response) => {
+				Dictionary<string, Score> scores = new Dictionary<string, Score>();
+				foreach (var pair in response.BodyJson.AsDictionary()) {
+					Score s = new Score(pair.Value);
+					s.GamerInfo = null;
+					scores[pair.Key] = s;
 				}
 				Common.InvokeHandler(done, scores, response.BodyJson);
 			});

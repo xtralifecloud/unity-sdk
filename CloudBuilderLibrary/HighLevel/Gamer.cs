@@ -49,6 +49,15 @@ namespace CloudBuilderLibrary
 		}
 
 		/**
+		 * Provides an API to manipulate matches (mainly start them, since working with
+		 * existing matches is provided by the Match class).
+		 * @return an object that allows to perform basic operations on matches.
+		 */
+		public GamerMatches Matches {
+			get { return new GamerMatches(this); }
+		}
+
+		/**
 		 * Allows to manipulate information related to the gamer profile.
 		 * @return an object that allows to read and set the profile.
 		 */
