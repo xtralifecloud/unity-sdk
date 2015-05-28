@@ -46,7 +46,22 @@ namespace CloudBuilderLibrary {
 			config["shoe"] = shoe;
 			req.BodyJson = config;
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, new Match(response.BodyJson["match"]), response.BodyJson);
+				Common.InvokeHandler(done, new Match(Gamer, response.BodyJson["match"]), response.BodyJson);
+			});
+		}
+
+		/**
+		 * Deletes a match. Only works if you are the one who created it and it is already finished.
+		 * @param done callback invoked when the operation has finished, either successfully or not. The attached boolean
+		 *     indicates success when true.
+		 * @param matchId ID of the match to delete.
+		 */
+		public void DeleteMatch(ResultHandler<bool> done, string matchId) {
+			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(matchId);
+			HttpRequest req = Gamer.MakeHttpRequest(url);
+			req.Method = "DELETE";
+			Common.RunHandledRequest(req, done, (HttpResponse response) => {
+				Common.InvokeHandler(done, response.BodyJson["done"], response.BodyJson);
 			});
 		}
 
@@ -64,7 +79,7 @@ namespace CloudBuilderLibrary {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(matchId);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, new Match(response.BodyJson["match"]), response.BodyJson);
+				Common.InvokeHandler(done, new Match(Gamer, response.BodyJson["match"]), response.BodyJson);
 			});
 		}
 
@@ -82,7 +97,7 @@ namespace CloudBuilderLibrary {
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, new Match(response.BodyJson["match"]), response.BodyJson);
+				Common.InvokeHandler(done, new Match(Gamer, response.BodyJson["match"]), response.BodyJson);
 			});
 		}
 

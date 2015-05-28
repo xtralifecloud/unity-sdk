@@ -22,10 +22,12 @@ namespace CloudBuilderLibrary {
 			get { return Properties[key]; }
 		}
 
+		#region Private
 		internal GamerInfo(Bundle serverData) {
 			GamerId = serverData["gamer_id"];
 			Properties = serverData;
 		}
 		private Bundle Properties;
+		#endregion
 	}
 }

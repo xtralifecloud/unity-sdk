@@ -29,6 +29,10 @@ namespace CloudBuilderLibrary {
 		 */
 		public List<MatchEvent> Events { get; private set; }
 		/**
+		 * Parent gamer object.
+		 */
+		public Gamer Gamer { get; private set; }
+		/**
 		 * The global state of the game, which may be modified using a move.
 		 */
 		public Bundle GlobalState { get; private set; }
@@ -63,8 +67,38 @@ namespace CloudBuilderLibrary {
 		 */
 		public Bundle Shoe { get; private set; }
 
+		/**
+		 * Draws an item from the shoe.
+		 * @param done callback invoked when the operation has finished, either successfully or not.
+		 */
+		public void DrawFromShoe(Result<Bundle> done) {
+			// TODO
+		}
+
+		/**
+		 * Allows to invite a player to join a match. You need to be part of the match to send an invitation.
+		 * This can be used to invite an opponent to a match that is not shown publicly.
+		 * @param done callback invoked when the operation has finished, either successfully or not. The attached boolean
+		 *     indicates success when true.
+		 * @param playerId ID of the player to invite to the match. Player IDs 
+		 */
+		public void InvitePlayer(ResultHandler<bool> done, string playerId, PushNotification notification = null) {
+			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("invite").Path(playerId);
+			HttpRequest req = Gamer.MakeHttpRequest(url);
+			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
+			Common.RunHandledRequest(req, done, (HttpResponse response) => {
+				UpdateWithServerData(response.BodyJson["match"]);
+				Common.InvokeHandler(done, true, response.BodyJson);
+			});
+		}
+
 		#region Private
-		internal Match(Bundle serverData) {
+		internal Match(Gamer gamer, Bundle serverData) {
+			Gamer = gamer;
+			UpdateWithServerData(serverData);
+		}
+
+		private void UpdateWithServerData(Bundle serverData) {
 			Creator = new GamerInfo(serverData["creator"]);
 			CustomProperties = serverData["customProperties"];
 			Domain = serverData["domain"];
@@ -79,7 +113,7 @@ namespace CloudBuilderLibrary {
 			Shoe = serverData["shoe"];
 			// Process pending events
 			foreach (var b in serverData["events"].AsArray()) {
-				MatchEvent e = MatchEvent.Make(b);
+				MatchEvent e = MatchEvent.Make(this, b);
 				if (e != null) Events.Add(e);
 			}
 			// Players

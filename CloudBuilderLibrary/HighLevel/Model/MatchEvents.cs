@@ -8,26 +8,26 @@ namespace CloudBuilderLibrary {
 		 * The unique ID of the event. Might match the last event ID of an existing match.
 		 */
 		public string MatchEventId { get; private set; }
-		public string MatchId { get; private set; }
+		public MatchInfo Match { get; private set; }
 
 		/**
 		 * Builds the right type of event based on the server data received.
 		 */
-		internal static MatchEvent Make(Bundle serverData) {
+		internal static MatchEvent Make(Match match, Bundle serverData) {
 			switch (serverData["type"].AsString()) {
-				case "match.join": return new MatchJoinEvent(serverData);
-				case "match.leave": return new MatchLeaveEvent(serverData);
-				case "match.finish": return new MatchFinishEvent(serverData);
-				case "match.move": return new MatchMoveEvent(serverData);
-				case "match.invite": return new MatchInviteEvent(serverData);
+				case "match.join": return new MatchJoinEvent(match, serverData);
+				case "match.leave": return new MatchLeaveEvent(match, serverData);
+				case "match.finish": return new MatchFinishEvent(match, serverData);
+				case "match.move": return new MatchMoveEvent(match, serverData);
+				case "match.invite": return new MatchInviteEvent(match, serverData);
 			}
 			CloudBuilder.LogError("Unknown match event type " + serverData["type"]);
 			return null;
 		}
 
-		protected MatchEvent(Bundle serverData) {
+		protected MatchEvent(Match match, Bundle serverData) {
 			MatchEventId = serverData["event"]["_id"];
-			MatchId = serverData["event"]["match_id"];
+			Match = new MatchInfo(match.Gamer, serverData["event"]["match_id"]);
 		}
 	}
 
@@ -41,7 +41,7 @@ namespace CloudBuilderLibrary {
 		 */
 		public List<GamerInfo> PlayersJoined = new List<GamerInfo>();
 
-		internal MatchJoinEvent(Bundle serverData) : base(serverData) {
+		internal MatchJoinEvent(Match match, Bundle serverData) : base(match, serverData) {
 			foreach (Bundle b in serverData["event"]["playersJoined"].AsArray()) {
 				PlayersJoined.Add(new GamerInfo(b));
 			}
@@ -58,7 +58,7 @@ namespace CloudBuilderLibrary {
 		 */
 		public List<GamerInfo> PlayersLeft;
 
-		internal MatchLeaveEvent(Bundle serverData) : base(serverData) {
+		internal MatchLeaveEvent(Match match, Bundle serverData) : base(match, serverData) {
 			foreach (Bundle b in serverData["event"]["playersLeft"].AsArray()) {
 				PlayersLeft.Add(new GamerInfo(b));
 			}
@@ -75,7 +75,7 @@ namespace CloudBuilderLibrary {
 		 */
 		public bool Finished;
 
-		internal MatchFinishEvent(Bundle serverData) : base(serverData) {
+		internal MatchFinishEvent(Match match, Bundle serverData) : base(match, serverData) {
 			Finished = serverData["event"]["finished"];
 		}
 	}
@@ -94,7 +94,7 @@ namespace CloudBuilderLibrary {
 		 */
 		public string PlayerId;
 
-		internal MatchMoveEvent(Bundle serverData) : base(serverData) {
+		internal MatchMoveEvent(Match match, Bundle serverData) : base(match, serverData) {
 			MoveData = serverData["event"]["move"];
 			PlayerId = serverData["event"]["player_id"];
 		}
@@ -110,7 +110,7 @@ namespace CloudBuilderLibrary {
 		 */
 		public GamerInfo Inviter;
 
-		internal MatchInviteEvent(Bundle serverData) : base(serverData) {
+		internal MatchInviteEvent(Match match, Bundle serverData) : base(match, serverData) {
 			Inviter = new GamerInfo(serverData["event"]["inviter"]);
 		}
 	}

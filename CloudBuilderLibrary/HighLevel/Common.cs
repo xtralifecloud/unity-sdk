@@ -93,7 +93,7 @@ namespace CloudBuilderLibrary
 		}
 
 		// TODO Replace by a soft value (changed upon branching?)
-		public const string SdkVersion = "2.9";
+		public const string SdkVersion = "2.11";
 		public const string PrivateDomain = "private";
 		public const string UserAgent = "cloudbuilder-unity-{0}-{1}";	// os, sdkversion
 	}

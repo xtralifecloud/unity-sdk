@@ -100,6 +100,20 @@ public class MatchTests : TestBase {
 		});
 	}
 
+	[Test("Creates a match and attempts to delete it, and expects it to fail.")]
+	public void ShouldFailToDeleteMatch(Clan clan) {
+		Login(clan, gamer => {
+			gamer.Matches.Create(createResult => {
+				Assert(createResult.IsSuccessful, "Failed to create match");
+				gamer.Matches.DeleteMatch(deleteResult => {
+					Assert(!deleteResult.IsSuccessful, "Failed to delete match");
+					Assert(deleteResult.ServerData["name"] == "MatchNotFinished", "Should not be able to delete match");
+					CompleteTest();
+				}, createResult.Value.MatchId);
+			}, 2);
+		});
+	}
+
 	#region Private
 	private string RandomBoardName() {
 		return "board-" + Guid.NewGuid().ToString();

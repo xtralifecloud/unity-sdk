@@ -6,7 +6,6 @@ using System.Collections;
 
 namespace CloudBuilderLibrary
 {
-	// TODO Rework these? (no need to be the same as on the C++ API?)
 	public enum ErrorCode {
 		/// No error.
 		Ok = 0,
