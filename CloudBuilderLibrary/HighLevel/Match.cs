@@ -87,7 +87,7 @@ namespace CloudBuilderLibrary {
 				Players.Add(new GamerInfo(b));
 			}
 			// Last event ID (null if 0; =first time)
-			Bundle lastEvent = serverData["lastEventId"];
+			string lastEvent = serverData["lastEventId"];
 			if (lastEvent != "0") LastEventId = lastEvent;
 		}
 		#endregion

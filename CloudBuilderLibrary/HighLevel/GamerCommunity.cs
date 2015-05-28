@@ -11,7 +11,7 @@ namespace CloudBuilderLibrary {
 		 * @param gamerId ID of the gamer to add as a friend (fetched using ListFriends for instance).
 		 * @param notification optional OS notification to be sent to indicate the player that the status has changed.
 		 */
-		public void AddFriend(ResultHandler<bool> done, string gamerId, Bundle notification = null) {
+		public void AddFriend(ResultHandler<bool> done, string gamerId, PushNotification notification = null) {
 			ChangeRelationshipStatus(done, gamerId, FriendRelationshipStatus.Add, notification);
 		}
 
@@ -22,10 +22,10 @@ namespace CloudBuilderLibrary {
 		 * @param state the new state to set.
 		 * @param notification optional OS notification to be sent to indicate the player that the status has changed.
 		 */
-		public void ChangeRelationshipStatus(ResultHandler<bool> done, string gamerId, FriendRelationshipStatus state, Bundle notification = null) {
+		public void ChangeRelationshipStatus(ResultHandler<bool> done, string gamerId, FriendRelationshipStatus state, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/friends").Path(domain).Path(gamerId).QueryParam("status", state.ToString().ToLower());
 			HttpRequest req = Gamer.MakeHttpRequest(url);
-			req.BodyJson = Bundle.CreateObject("osn", notification);
+			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Common.InvokeHandler(done, response.BodyJson["done"], response.BodyJson);
 			});

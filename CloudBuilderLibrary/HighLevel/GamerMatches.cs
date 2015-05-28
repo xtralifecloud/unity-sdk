@@ -2,6 +2,10 @@
 
 namespace CloudBuilderLibrary {
 
+	/**
+	 * Some methods accept a PushNotification parameter. This parameter can be used to forward a push notification to the
+	 * users who are not active at the moment.
+	 */
 	public class GamerMatches {
 
 		/**
@@ -47,17 +51,40 @@ namespace CloudBuilderLibrary {
 		}
 
 		/**
-		 * High level method to fetch a Match object corresponding to a match which the player already belongs to.
-		 * It basically allows to continue the game in the same state as when the match has initially been created
-		 * or joined to, all in a transparent manner.
+		 * Fetches a Match object corresponding to a match which the player already belongs to.
+		 * It can be used either to obtain additional information about a running match (by inspecting the resulting
+		 * match object), or to continue an existing match (by keeping the match object which corresponds to the one
+		 * that was returned by the Create method).
+		 * This call is not scoped by domain (it uses the Match ID directly).
 		 * @param done callback invoked when the operation has finished, either successfully or not. The attached Match
 		 *     object allows to operate with the match.
-		 * @param matchId the ID of the match to resume. It can be fetched from the Match object (MatchId).
+		 * @param matchId the ID of an existing match to resume. It can be fetched from the Match object (MatchId).
 		 */
-		public void Resume(ResultHandler<Match> done, string matchId) {
-			// TODO Florian
+		public void Fetch(ResultHandler<Match> done, string matchId) {
+			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(matchId);
+			HttpRequest req = Gamer.MakeHttpRequest(url);
+			Common.RunHandledRequest(req, done, (HttpResponse response) => {
+				Common.InvokeHandler(done, new Match(response.BodyJson["match"]), response.BodyJson);
+			});
 		}
 
+		/**
+		 * Asks to join the match with a given ID. Do not use this if you are already part of the match.
+		 * This call is not scoped by domain (it uses the Match ID directly).
+		 * @param done callback invoked when the operation has finished, either successfully or not. In case of success,
+		 *     you get the exact same match object that would be returned by a call to Create or Fetch. It can be used
+		 *     to interact with the match as the user who just joined.
+		 * @param matchId the ID of an existing match to join. It can be fetched from the Match object (MatchId).
+		 * @param notification optional push notification to be sent to inactive players (see class definition).
+		 */
+		public void Join(ResultHandler<Match> done, string matchId, PushNotification notification = null) {
+			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(matchId).Path("join");
+			HttpRequest req = Gamer.MakeHttpRequest(url);
+			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
+			Common.RunHandledRequest(req, done, (HttpResponse response) => {
+				Common.InvokeHandler(done, new Match(response.BodyJson["match"]), response.BodyJson);
+			});
+		}
 
 		#region Private
 		internal GamerMatches(Gamer gamer) {
