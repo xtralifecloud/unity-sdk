@@ -48,8 +48,8 @@ namespace CloudBuilderLibrary {
 		 *     list of friends.
 		 */
 		public void FindOpponents(ResultHandler<List<GamerInfo>> done) {
-			// TODO Florian
-			throw new NotImplementedException("Not implemented");
+			UrlBuilder url = new UrlBuilder("/v2.6/gamer/matchproperties");
+			// TODO
 		}
 
 		/**

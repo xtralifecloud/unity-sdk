@@ -44,6 +44,8 @@ namespace CloudBuilderLibrary {
 			get; private set;
 		}
 
+		public Gamer Gamer { get; private set; }
+
 		public event EventLoopHandler ReceivedEvent;
 
 		/**
@@ -97,6 +99,10 @@ namespace CloudBuilderLibrary {
 		}
 
 		#region Private
+		private void ProcessEvent(HttpResponse res) {
+			if (ReceivedEvent != null) ReceivedEvent(this, new EventLoopArgs(res.BodyJson));
+		}
+
 		private void Run() {
 			Clan clan = Gamer.Clan;
 			int delay = LoopIterationDuration;
@@ -126,10 +132,9 @@ namespace CloudBuilderLibrary {
 				Managers.HttpClient.Run(CurrentRequest, (HttpResponse res) => {
 					try {
 						lastResultPositive = true;
-
 						if (res.StatusCode == 200) {
 							messageToAcknowledge = res.BodyJson["id"];
-							if (ReceivedEvent != null) ReceivedEvent(this, new EventLoopArgs(res.BodyJson));
+							ProcessEvent(res);
 						}
 						else if (res.StatusCode != 204) {
 							lastResultPositive = false;
@@ -164,7 +169,6 @@ namespace CloudBuilderLibrary {
 		private bool Stopped = false, AlreadyStarted = false, Paused = false;
 		private int LoopIterationDuration;
 		private const int PopEventDelayAfterFailure = 2000, PopEventDelayThreadHold = 20000;
-		private Gamer Gamer;
 		#endregion
 	}
 }

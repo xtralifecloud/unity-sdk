@@ -6,6 +6,7 @@ namespace CloudBuilderLibrary {
 	/**
 	 * Represents a match with which you can interact through high level functionality.
 	 * A match object is returned when you create a match, join it and so on.
+	 * You should subscribe to ReceivedEvent right after you got this object.
 	 */
 	public class Match {
 		/**
@@ -24,10 +25,6 @@ namespace CloudBuilderLibrary {
 		 * Description of the match, as defined by the user upon creation.
 		 */
 		public string Description { get; private set; }
-		/**
-		 * List of existing events, which may be used to reproduce the state of the game.
-		 */
-		public List<MatchEvent> Events { get; private set; }
 		/**
 		 * Parent gamer object.
 		 */
@@ -56,9 +53,17 @@ namespace CloudBuilderLibrary {
 		 */
 		public int MaxPlayers { get; private set; }
 		/**
+		 * List of existing events, which may be used to reproduce the state of the game.
+		 */
+		public List<MatchMove> Moves { get; private set; }
+		/**
 		 * IDs of players participating to the match, including the creator (which is reported alone there at creation).
 		 */
 		public List<GamerInfo> Players { get; private set; }
+		/**
+		 * Subscribe to this event to be notified of events related to the match, such as when a move was posted.
+		 */
+		public event MatchEventHandler ReceivedEvent;
 		/**
 		 * A random seed that can be used to ensure consistent state across players of the game.
 		 * This is a 31 bit number.
@@ -108,7 +113,6 @@ namespace CloudBuilderLibrary {
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				UpdateWithServerData(response.BodyJson["match"]);
 				// Affect match
-				Events.Add(new MatchFinishEvent(this, MakeLocalEvent(Bundle.CreateObject("finished", true))));
 				Status = MatchStatus.Finished;
 				// Also delete match
 				if (deleteToo) {
@@ -135,10 +139,6 @@ namespace CloudBuilderLibrary {
 			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				UpdateWithServerData(response.BodyJson["match"]);
-				// This event doesn't generate another last event ID
-				Bundle eventData = MakeLocalEvent(Bundle.CreateObject("inviter", Bundle.CreateObject("gamer_id", Gamer.GamerId)));
-				eventData["event"].Remove("_id");
-				Events.Add(new MatchInviteEvent(this, eventData));
 				Common.InvokeHandler(done, true, response.BodyJson);
 			});
 		}
@@ -183,54 +183,31 @@ namespace CloudBuilderLibrary {
 				UpdateWithServerData(response.BodyJson["match"]);
 				// Record event
 				if (updatedGameState != null) {
-					Events.Clear();
+					Moves.Clear();
 					GlobalState = updatedGameState;
 				}
-				Bundle eventData = Bundle.CreateObject("move", moveData, "player_id", Gamer.GamerId);
-				Events.Add(new MatchMoveEvent(this, MakeLocalEvent(eventData)));
+				Moves.Add(new MatchMove(Gamer.GamerId, moveData));
 				Common.InvokeHandler(done, true, response.BodyJson);
 			});
-		}
-
-		/**
-		 * Registers an event listener linked to a running event loop.
-		 * @param action the delegate to be called when an event related to the match is received.
-		 * @param loop domain event loop to subscribe to. It should be the event loop matching the domain on which the
-		 *     match is running. Typically Common.PrivateDomain by default.
-		 */
-		public void RegisterEventListener(Action<MatchEvent> action, DomainEventLoop loop) {
-			EventHandlers.Add(action);
-			if (!AlreadyRegisteredHandler) {
-				AlreadyRegisteredHandler = true;
-				loop.ReceivedEvent += ReceivedLoopEvent;
-			}
-		}
-
-		/**
-		 * Unregisters a previously registered event listener.
-		 * @param action the delegate that was previously passed to RegisterEventListener.
-		 */
-		public void UnregisterEventListener(Action<MatchEvent> action) {
-			if (!EventHandlers.Contains(action)) throw new ArgumentException("This event handler is not registered");
-			EventHandlers.Remove(action);
 		}
 
 		#region Private
 		internal Match(Gamer gamer, Bundle serverData) {
 			Gamer = gamer;
 			CustomProperties = Bundle.Empty;
-			Events = new List<MatchEvent>();
+			Moves = new List<MatchMove>();
 			GlobalState = Bundle.Empty;
 			Players = new List<GamerInfo>();
 			Shoe = Bundle.Empty;
 			UpdateWithServerData(serverData);
-		}
-
-		private Bundle MakeLocalEvent(Bundle additionalData) {
-			Bundle result = Bundle.CreateObject("event", additionalData);
-			additionalData["_id"] = LastEventId;
-			additionalData["match_id"] = MatchId;
-			return result;
+			// Register for pop events
+			DomainEventLoop loop = CloudBuilder.GetEventLoopFor(Gamer.GamerId, Domain);
+			if (loop == null) {
+				CloudBuilder.LogError("No pop event loop for match " + MatchId + " on domain " + Domain + ", won't work correctly");
+			}
+			else {
+				loop.ReceivedEvent += this.ReceivedLoopEvent;
+			}
 		}
 
 		private void ReceivedLoopEvent(DomainEventLoop sender, EventLoopArgs e) {
@@ -238,9 +215,7 @@ namespace CloudBuilderLibrary {
 			if (!e.Message["type"].AsString().StartsWith("match.")) return;
 			// Make and notify event
 			MatchEvent me = MatchEvent.Make(this, e.Message);
-			foreach (var action in EventHandlers) {
-				action(me);
-			}
+			if (ReceivedEvent != null) ReceivedEvent(this, me);
 		}
 
 		private void UpdateWithServerData(Bundle serverData) {
@@ -256,10 +231,11 @@ namespace CloudBuilderLibrary {
 			if (serverData.Has("shoe")) Shoe = serverData["shoe"];
 			// Process pending events
 			if (serverData.Has("events")) {
-				Events.Clear();
+				Moves.Clear();
 				foreach (var b in serverData["events"].AsArray()) {
-					MatchEvent e = MatchEvent.Make(this, b);
-					if (e != null) Events.Add(e);
+					if (b["type"] == "match.move") {
+						Moves.Add(new MatchMove(serverData["event"]["player_id"], serverData["event"]["move"]));
+					}
 				}
 			}
 			// Players
@@ -273,9 +249,6 @@ namespace CloudBuilderLibrary {
 			string lastEvent = serverData["lastEventId"];
 			if (lastEvent != "0") LastEventId = lastEvent;
 		}
-
-		private bool AlreadyRegisteredHandler = false;
-		private List<Action<MatchEvent>> EventHandlers = new List<Action<MatchEvent>>();
 		#endregion
 	}
 
@@ -283,4 +256,23 @@ namespace CloudBuilderLibrary {
 		Running,
 		Finished,
 	}
+
+	public delegate void MatchEventHandler(Match sender, MatchEvent e);
+
+	public class MatchMove {
+		/**
+		 * The data passed by the player when performing the move.
+		 */
+		public Bundle MoveData;
+		/**
+		 * The ID of the player who made the move.
+		 */
+		public string PlayerId;
+
+		internal MatchMove(string playerId, Bundle moveData) {
+			MoveData = moveData;
+			PlayerId = playerId;
+		}
+	}
+	
 }

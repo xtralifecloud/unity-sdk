@@ -96,6 +96,14 @@ namespace CloudBuilderLibrary {
 			TimeSpan span = new TimeSpan(DateTime.UtcNow.Ticks - InitialTicks);
 			Managers.Logger.Log(LogLevel.Verbose, "[" + span.TotalMilliseconds + "/" + Thread.CurrentThread.ManagedThreadId + "] " + description);
 		}
+		internal static DomainEventLoop GetEventLoopFor(string gamerId, string domain) {
+			foreach (DomainEventLoop loop in RunningEventLoops) {
+				if (loop.Domain == domain && loop.Gamer.GamerId == gamerId) {
+					return loop;
+				}
+			}
+			return null;
+		}
 
 		internal static List<Action> PendingForMainThread = new List<Action>();
 		// For cleanup upon terminate

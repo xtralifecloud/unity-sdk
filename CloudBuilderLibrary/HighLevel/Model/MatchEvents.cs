@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace CloudBuilderLibrary {
 
+	/**
+	 * Basis for a match event. An event is actually always one of the subclasses (Match*Event).
+	 */
 	public abstract class MatchEvent {
 		/**
 		 * The unique ID of the event. Might match the last event ID of an existing match.
