@@ -192,6 +192,29 @@ namespace CloudBuilderLibrary {
 			});
 		}
 
+		/**
+		 * Registers an event listener linked to a running event loop.
+		 * @param action the delegate to be called when an event related to the match is received.
+		 * @param loop domain event loop to subscribe to. It should be the event loop matching the domain on which the
+		 *     match is running. Typically Common.PrivateDomain by default.
+		 */
+		public void RegisterEventListener(Action<MatchEvent> action, DomainEventLoop loop) {
+			EventHandlers.Add(action);
+			if (!AlreadyRegisteredHandler) {
+				AlreadyRegisteredHandler = true;
+				loop.ReceivedEvent += ReceivedLoopEvent;
+			}
+		}
+
+		/**
+		 * Unregisters a previously registered event listener.
+		 * @param action the delegate that was previously passed to RegisterEventListener.
+		 */
+		public void UnregisterEventListener(Action<MatchEvent> action) {
+			if (!EventHandlers.Contains(action)) throw new ArgumentException("This event handler is not registered");
+			EventHandlers.Remove(action);
+		}
+
 		#region Private
 		internal Match(Gamer gamer, Bundle serverData) {
 			Gamer = gamer;
@@ -208,6 +231,16 @@ namespace CloudBuilderLibrary {
 			additionalData["_id"] = LastEventId;
 			additionalData["match_id"] = MatchId;
 			return result;
+		}
+
+		private void ReceivedLoopEvent(DomainEventLoop sender, EventLoopArgs e) {
+			// Ignore messages not for us
+			if (!e.Message["type"].AsString().StartsWith("match.")) return;
+			// Make and notify event
+			MatchEvent me = MatchEvent.Make(this, e.Message);
+			foreach (var action in EventHandlers) {
+				action(me);
+			}
 		}
 
 		private void UpdateWithServerData(Bundle serverData) {
@@ -240,6 +273,9 @@ namespace CloudBuilderLibrary {
 			string lastEvent = serverData["lastEventId"];
 			if (lastEvent != "0") LastEventId = lastEvent;
 		}
+
+		private bool AlreadyRegisteredHandler = false;
+		private List<Action<MatchEvent>> EventHandlers = new List<Action<MatchEvent>>();
 		#endregion
 	}
 

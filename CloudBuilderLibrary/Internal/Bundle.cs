@@ -45,12 +45,23 @@ namespace CloudBuilderLibrary
 	 * ```Bundle b = Bundle.Empty;
 	 * b["value"] = "something"; // Exception```
 	 * 
-	 * The bundle hierarchy doesn't accept null values (it just rejects them). You should avoid manipulating null Bundles
-	 * and use `Bundle.Empty` wherever possible, however you may assign a null bundle to a key, which will have no effect.
+	 * The bundle hierarchy doesn't accept null or `Bundle.Empty` values (it just rejects them). You should avoid
+	 * manipulating null Bundles and use `Bundle.Empty` wherever possible, however you may assign a null bundle to a key,
+	 * which will have no effect.
 	 * This can be useful for optional arguments. For instance, the following snippet will not affect the bundle.
 	 * 
-	 * ```string value = null;
+	 * ```string value = null; // converts to Empty.Bundle and rejects assignment
 	 * bundle["key"] = value;```
+	 * 
+	 * Note that `Bundle.Empty` is not strictly identical to an empty bundle object. `Bundle.Empty` is never considered
+	 * as a value and is discarded upon assignment. For instance:
+	 * 
+	 * ```Bundle a = Bundle.CreateObject();
+	 * Bundle b = Bundle.CreateObject();
+	 * a["key"] = Bundle.Empty;
+	 * b["key"] = Bundle.CreateObject();
+	 * Log(a.ToJson()); // {}
+	 * Log(b.ToJson()); // {"key": {}}```
 	 * 
 	 * If you need a special value for keys that do not match the expected type or are not found in the hierarchy, you
 	 * may as well use the .As* methods. For instance, the previous snippet could be written as follows to have a default

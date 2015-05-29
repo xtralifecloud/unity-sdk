@@ -174,6 +174,41 @@ public class MatchTests : TestBase {
 		});
 	}
 
+	[Test("Creates a match and plays it as two users. Checks that events are broadcasted appropriately.")]
+	public void ShouldReceiveEvents(Clan clan) {
+		Login2Users(clan, (Gamer gamer1, Gamer gamer2) => {
+			// We need two event loops, one for each player on the private domain
+			DomainEventLoop loopP1 = new DomainEventLoop(gamer1).Start();
+			DomainEventLoop loopP2 = new DomainEventLoop(gamer2).Start();
+			gamer1.Matches.Create(createdMatch => {
+				Assert(createdMatch.IsSuccessful, "Failed to create match");
+				// P1 will receive the join event
+				createdMatch.Value.RegisterEventListener(e => {
+					if (e is MatchJoinEvent) {
+						// Ok so now P2 has joined and is ready, we can go forward and post a move
+						createdMatch.Value.PostMove(postedMove => {
+							Assert(postedMove.IsSuccessful, "Failed to post move");
+						}, Bundle.CreateObject("x", 3));
+					}
+					else {
+						Assert(false, "Received inappropriate event " + e.ToString());
+					}
+				}, loopP1);
+				// Join as P2
+				gamer2.Matches.Join(joinedMatch => {
+					Assert(joinedMatch.IsSuccessful, "Failed to join match");
+					// P2 will receive the move event
+					joinedMatch.Value.RegisterEventListener(e => {
+						if (!(e is MatchMoveEvent)) {
+							Assert(false, "Received inappropriate event " + e.ToString());
+						}
+						CompleteTest();
+					}, loopP2);
+				}, createdMatch.Value.MatchId);
+			}, 2);
+		});
+	}
+
 	#region Private
 	private string RandomBoardName() {
 		return "board-" + Guid.NewGuid().ToString();
