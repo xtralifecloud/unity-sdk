@@ -56,7 +56,7 @@ namespace CloudBuilderLibrary {
 		/**
 		 * The list of players who just joined the match.
 		 */
-		public List<GamerInfo> PlayersLeft;
+		public List<GamerInfo> PlayersLeft = new List<GamerInfo>();
 
 		internal MatchLeaveEvent(Match match, Bundle serverData) : base(match, serverData) {
 			foreach (Bundle b in serverData["event"]["playersLeft"].AsArray()) {

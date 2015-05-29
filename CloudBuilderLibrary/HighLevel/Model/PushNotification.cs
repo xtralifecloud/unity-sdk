@@ -8,10 +8,24 @@ namespace CloudBuilderLibrary {
 	 * Here is an example: `Bundle.CreateObject("en", "Help me!", "fr", "Aidez moi!")`.
 	 */
 	public class PushNotification {
-		public Bundle Data;
 
-		public PushNotification(Bundle data) {
-			Data = data;
+		/**
+		 * Default constructor.
+		 */
+		public PushNotification() {
+			Data = Bundle.CreateObject();
 		}
+
+		/**
+		 * Adds or replaces a string for a given language.
+		 * @param language language code, ex. "en", "ja", etc.
+		 * @param text the text for this language.
+		 */
+		public PushNotification Message(string language, string text) {
+			Data[language] = text;
+			return this;
+		}
+
+		internal Bundle Data;
 	}
 }

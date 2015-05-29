@@ -37,6 +37,13 @@ namespace CloudBuilderLibrary {
 		 */
 		public Bundle GlobalState { get; private set; }
 		/**
+		 * @return whether you are the creator of the match, and as such have special privileges (like the ability
+		 *     to finish and delete a match).
+		 */
+		public bool IsCreator {
+			get { return Creator.GamerId == Gamer.GamerId; }
+		}
+		/**
 		 * The ID of the last event happened during this game; keep this for later, you might need it for some calls.
 		 */
 		public string LastEventId { get; private set; }
@@ -69,10 +76,48 @@ namespace CloudBuilderLibrary {
 
 		/**
 		 * Draws an item from the shoe.
-		 * @param done callback invoked when the operation has finished, either successfully or not.
+		 * @param done callback invoked when the operation has finished, either successfully or not. The attached bundle
+		 *     contains an array of items drawn from the shoe. You may do `(int)result.Value[0]` to fetch the first
+		 *     value as integer.
+		 * @param count the number of items to draw from the shoe.
+		 * @param notification a notification that can be sent to all players currently playing the match (except you).
 		 */
-		public void DrawFromShoe(Result<Bundle> done) {
-			// TODO
+		public void DrawFromShoe(ResultHandler<Bundle> done, int count = 1, PushNotification notification = null) {
+			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("shoe").Path("draw");
+			url.QueryParam("count", count).QueryParam("lastEventId", LastEventId);
+			HttpRequest req = Gamer.MakeHttpRequest(url);
+			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
+			Common.RunHandledRequest(req, done, (HttpResponse response) => {
+				UpdateWithServerData(response.BodyJson["match"]);
+				Common.InvokeHandler(done, response.BodyJson["drawnItems"], response.BodyJson);
+			});
+		}
+
+		/**
+		 * Termintates the match. You need to be the creator of the match to perform this operation.
+		 * @param done callback invoked when the operation has finished, either successfully or not. The attached boolean
+		 *     indicates success when true.
+		 * @param deleteToo if true, deletes the match if it finishes successfully or is already finished.
+		 * @param notification a notification that can be sent to all players currently playing the match (except you).
+		 */
+		public void Finish(ResultHandler<bool> done, bool deleteToo = false, PushNotification notification = null) {
+			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("finish");
+			url.QueryParam("lastEventId", LastEventId);
+			HttpRequest req = Gamer.MakeHttpRequest(url);
+			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
+			Common.RunHandledRequest(req, done, (HttpResponse response) => {
+				UpdateWithServerData(response.BodyJson["match"]);
+				// Affect match
+				Events.Add(new MatchFinishEvent(this, MakeLocalEvent(Bundle.CreateObject("finished", true))));
+				Status = MatchStatus.Finished;
+				// Also delete match
+				if (deleteToo) {
+					Gamer.Matches.DeleteMatch(done, MatchId);
+				}
+				else {
+					Common.InvokeHandler(done, true, response.BodyJson);
+				}
+			});
 		}
 
 		/**
@@ -80,10 +125,32 @@ namespace CloudBuilderLibrary {
 		 * This can be used to invite an opponent to a match that is not shown publicly.
 		 * @param done callback invoked when the operation has finished, either successfully or not. The attached boolean
 		 *     indicates success when true.
-		 * @param playerId ID of the player to invite to the match. Player IDs 
+		 * @param playerId ID of the player to invite to the match. Player IDs can be found in the properties of the
+		 *     match (GamerInfo.GamerId).
+		 * @param notification a push notification that can be sent to the invitee.
 		 */
 		public void InvitePlayer(ResultHandler<bool> done, string playerId, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("invite").Path(playerId);
+			HttpRequest req = Gamer.MakeHttpRequest(url);
+			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
+			Common.RunHandledRequest(req, done, (HttpResponse response) => {
+				UpdateWithServerData(response.BodyJson["match"]);
+				// This event doesn't generate another last event ID
+				Bundle eventData = MakeLocalEvent(Bundle.CreateObject("inviter", Bundle.CreateObject("gamer_id", Gamer.GamerId)));
+				eventData["event"].Remove("_id");
+				Events.Add(new MatchInviteEvent(this, eventData));
+				Common.InvokeHandler(done, true, response.BodyJson);
+			});
+		}
+
+		/**
+		 * Leaves the match.
+		 * @param done callback invoked when the operation has finished, either successfully or not. The attached boolean
+		 *     indicates success when true.
+		 * @param notification a push notification that can be sent to all players except you.
+		 */
+		public void Leave(ResultHandler<bool> done, PushNotification notification = null) {
+			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("leave");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
@@ -92,33 +159,82 @@ namespace CloudBuilderLibrary {
 			});
 		}
 
+		/**
+		 * Posts a move to other players.
+		 * @param done callback invoked when the operation has finished, either successfully or not. The attached boolean
+		 *     indicates success when true.
+		 * @param moveData a freeform object indicating the move data to be posted and transfered to other players. This
+		 *     move data will be kept in the events, and new players should be able to use it to reproduce the local game
+		 *     state.
+		 * @param updatedGameState a freeform object replacing the global game state, to be used by players who join from
+		 *     now on. Passing a non null value clears the pending events in the match.
+		 * @param notification a push notification that can be sent to all players except you.
+		 */
+		public void PostMove(ResultHandler<bool> done, Bundle moveData, Bundle updatedGameState = null, PushNotification notification = null) {
+			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("move").QueryParam("lastEventId", LastEventId);
+			Bundle config = Bundle.CreateObject();
+			config["move"] = moveData;
+			config["globalState"] = updatedGameState;
+			if (notification != null) config["osn"] = notification.Data;
+
+			HttpRequest req = Gamer.MakeHttpRequest(url);
+			req.BodyJson = config;
+			Common.RunHandledRequest(req, done, (HttpResponse response) => {
+				UpdateWithServerData(response.BodyJson["match"]);
+				// Record event
+				if (updatedGameState != null) {
+					Events.Clear();
+					GlobalState = updatedGameState;
+				}
+				Bundle eventData = Bundle.CreateObject("move", moveData, "player_id", Gamer.GamerId);
+				Events.Add(new MatchMoveEvent(this, MakeLocalEvent(eventData)));
+				Common.InvokeHandler(done, true, response.BodyJson);
+			});
+		}
+
 		#region Private
 		internal Match(Gamer gamer, Bundle serverData) {
 			Gamer = gamer;
+			CustomProperties = Bundle.Empty;
+			Events = new List<MatchEvent>();
+			GlobalState = Bundle.Empty;
+			Players = new List<GamerInfo>();
+			Shoe = Bundle.Empty;
 			UpdateWithServerData(serverData);
 		}
 
+		private Bundle MakeLocalEvent(Bundle additionalData) {
+			Bundle result = Bundle.CreateObject("event", additionalData);
+			additionalData["_id"] = LastEventId;
+			additionalData["match_id"] = MatchId;
+			return result;
+		}
+
 		private void UpdateWithServerData(Bundle serverData) {
-			Creator = new GamerInfo(serverData["creator"]);
-			CustomProperties = serverData["customProperties"];
-			Domain = serverData["domain"];
-			Description = serverData["description"];
-			Events = new List<MatchEvent>();
-			GlobalState = serverData["globalState"];
+			if (serverData.Has("creator")) Creator = new GamerInfo(serverData["creator"]);
+			if (serverData.Has("customProperties")) CustomProperties = serverData["customProperties"];
+			if (serverData.Has("domain")) Domain = serverData["domain"];
+			if (serverData.Has("description")) Description = serverData["description"];
+			if (serverData.Has("globalState")) GlobalState = serverData["globalState"];
 			MatchId = serverData["_id"];
-			MaxPlayers = serverData["maxPlayers"];
-			Players = new List<GamerInfo>();
-			Seed = serverData["seed"];
+			if (serverData.Has("maxPlayers")) MaxPlayers = serverData["maxPlayers"];
+			if (serverData.Has("seed")) Seed = serverData["seed"];
 			Status = Common.ParseEnum<MatchStatus>(serverData["status"]);
-			Shoe = serverData["shoe"];
+			if (serverData.Has("shoe")) Shoe = serverData["shoe"];
 			// Process pending events
-			foreach (var b in serverData["events"].AsArray()) {
-				MatchEvent e = MatchEvent.Make(this, b);
-				if (e != null) Events.Add(e);
+			if (serverData.Has("events")) {
+				Events.Clear();
+				foreach (var b in serverData["events"].AsArray()) {
+					MatchEvent e = MatchEvent.Make(this, b);
+					if (e != null) Events.Add(e);
+				}
 			}
 			// Players
-			foreach (var b in serverData["players"].AsArray()) {
-				Players.Add(new GamerInfo(b));
+			if (serverData.Has("players")) {
+				Players.Clear();
+				foreach (var b in serverData["players"].AsArray()) {
+					Players.Add(new GamerInfo(b));
+				}
 			}
 			// Last event ID (null if 0; =first time)
 			string lastEvent = serverData["lastEventId"];

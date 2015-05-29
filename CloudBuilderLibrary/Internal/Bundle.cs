@@ -6,6 +6,97 @@ using System.Collections;
 
 namespace CloudBuilderLibrary
 {
+	/**
+	 * The bundle is a main concept of the CloudBuilder SDK. It is basically the equivalent of a JSON object, behaving
+	 * like a C# dictionary, but with inferred typing and more safety.
+	 *
+	 * You need bundles in many calls, either to decode generic data received by the server (when such data can be
+	 * enriched by hooks typically) or to pass generic user parameters, such as when creating a match.
+	 * 
+	 * Bundles are instantiated through their factory methods: Bundle.CreateObject or Bundle.CreateArray. The type of
+	 * the resulting object can be inspected via the Type member. While objects and arrays are containers for further
+	 * objects, a bundle is a simple node in the graph and may as such contain a value, such as a string.
+	 * 
+	 * Sub-objects are fetched using the index operator (brackets), either with a numeric argument for arrays or a
+	 * string argument for dictionaries. Conversions are performed automatically based. Let's consider the following
+	 * example:
+	 * 
+	 * ```Bundle b = Bundle.CreateObject();
+	 * b["hello"] = "world";```
+	 * 
+	 * The bundle object, considered as dictionary will have its key "hello" set with a new Bundle node of type string
+	 * (implicitly created from the string). So later on, you might fetch this value as well:
+	 * 
+	 * ```string value = b["hello"];```
+	 * 
+	 * What happens here is that the bundle under the key "hello" is fetched, and then implicitly converted to a string.
+	 * 
+	 * Bundle provides a safe way to browse a predefined graph, as when a key doesn't exist it returns the
+	 * `Bundle.Empty` (no null value). This special bundle allows to fetch sub-objects but they will always translate to
+	 * `Bundle.Empty` as well. If the values are to be converted to a primitive type, the result will be the default
+	 * value for this type (null for a string, 0 for an int, etc.). As such, you may do this:
+	 * 
+	 * ```int value = bundle["nonexisting"]["key"];```
+	 * 
+	 * Since the "nonexisting" key is not found on bundle, `Bundle.Empty` is returned. Further fetching "key" will return
+	 * an empty bundle as well. Which will be converted implicitly to an integer as 0. `Bundle.Empty` is a constant value
+	 * that always refers to an empty bundle, and attempting to modify it will result in an exception.
+	 * 
+	 * ```Bundle b = Bundle.Empty;
+	 * b["value"] = "something"; // Exception```
+	 * 
+	 * The bundle hierarchy doesn't accept null values (it just rejects them). You should avoid manipulating null Bundles
+	 * and use `Bundle.Empty` wherever possible, however you may assign a null bundle to a key, which will have no effect.
+	 * This can be useful for optional arguments. For instance, the following snippet will not affect the bundle.
+	 * 
+	 * ```string value = null;
+	 * bundle["key"] = value;```
+	 * 
+	 * If you need a special value for keys that do not match the expected type or are not found in the hierarchy, you
+	 * may as well use the .As* methods. For instance, the previous snippet could be written as follows to have a default
+	 * value of one:
+	 * 
+	 * ```int value = bundle["nonexisting"]["key"].AsInt(1);```
+	 * 
+	 * It is also possible to inspect the Type property of the Bundle in order to ensure that the value was provided as
+	 * expected.
+	 * 
+	 * A bundle may be pre-filled at creation by passing arguments to Bundle.CreateObject and Bundle.CreateArray. For
+	 * instance:
+	 * 
+	 * ```Bundle b = Bundle.CreateObject("key1", "value1", "key2", "value2");```
+	 * 
+	 * Is equivalent to writing:
+	 * 
+	 * ```Bundle b = Bundle.CreateObject();
+	 * b["key1"] = "value1";
+	 * b["key2"] = "value2";```
+	 * 
+	 * A bundle can quickly be transformed from/to JSON using ToJson and Bundle.FromJson methods. One can also check
+	 * for the presence of keys and remove them with the .Has respectively .Remove methods.
+	 * 
+	 * Iterating a JSON object is made using the explicit .As* methods. For instance, here how you iterate over an
+	 * array bundle (no harm will happen if the key doesn't exist or is not an array, since an empty array is returned):
+	 * 
+	 * ```Bundle b;
+	 * foreach (Bundle value in b) { ... }```
+	 * 
+	 * For an object, use AsDictionary().
+	 *
+	 * ```Bundle b;
+	 * foreach (KeyValuePair<string, Bundle> pair in b["key"].AsDictionary()) { ... }```
+	 * 
+	 * This loop is safe as well even if the bundle doesn't contain a "key" entry or the "key" entry is not an object.
+	 * 
+	 * Null bundles should be avoided! Use Bundle. Empty everytime you need a "void", non mutable bundle value.
+	 * Converting from a null bundle will result in an exception.
+	 * 
+	 * ```Bundle b = null;
+	 * string value = b; // Null pointer exception!```
+	 * 
+	 * That's all what there is to know about bundles. In general they should make any code interacting with generic
+	 * objects simple and safe.
+	 */
 	public class Bundle {
 		public enum DataType {
 			None, Boolean, Integer, Double, String, Array, Object

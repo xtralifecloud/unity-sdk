@@ -114,6 +114,66 @@ public class MatchTests : TestBase {
 		});
 	}
 
+	[Test("Big test that creates a match and simulates playing it with two players. Tries a bit of everything in the API.")]
+	public void ShouldPlayMatch(Clan clan) {
+		Login2Users(clan, (Gamer gamer1, Gamer gamer2) => {
+			// Create a match
+			gamer1.Matches.Create(matchCreated => {
+				var matchP1 = matchCreated.Value;
+				Assert(matchCreated.IsSuccessful, "Failed to create match");
+
+				// Join with P2
+				gamer2.Matches.Join(matchJoined => {
+					var matchP2 = matchJoined.Value;
+					Assert(matchJoined.IsSuccessful, "Failed to join match");
+					Assert(matchP2.Events.Count == 1, "Should have one join event");
+					Assert(matchP2.Events[0] is MatchJoinEvent, "First event should be join");
+					
+					// Post a move
+					matchP2.PostMove(matchPosted => {
+						Assert(matchP2.Events.Count == 2, "Should have a move event");
+						Assert(matchP2.LastEventId != null, "Last event ID shouldn't be null");
+						Assert(matchP2.Players.Count == 2, "Should contain two players");
+
+						MatchMoveEvent e = (MatchMoveEvent)matchP2.Events[1];
+						Assert(e.Match.MatchId == matchP2.MatchId, "The match in the event doesn't match");
+						
+						// Post another move with global state
+						matchP2.PostMove(matchPostedGlobalState => {
+							Assert(matchPostedGlobalState.IsSuccessful, "Failed to post global move");
+							Assert(matchP2.Events.Count == 1, "Posting a global state should clear events");
+							Assert(matchP2.GlobalState["key"] == "value", "The global state should have been updated");
+
+							// Now make P2 leave
+							matchP2.Leave(leftMatch => {
+								// Then update P1's match, and check that it reflects changes made by P2.
+								// Normally these changes should be fetched automatically via events, but we don't handle them in this test.
+								gamer1.Matches.Fetch(matchRefreshed => {
+									Assert(matchRefreshed.IsSuccessful, "Failed to refresh match");
+									matchP1 = matchRefreshed.Value;
+									Assert(matchP1.Events.Count == 2, "Should have a move & refresh events (after refresh)");
+									Assert(matchP1.LastEventId == matchP2.LastEventId, "Last event ID should match");
+									Assert(matchP1.Players.Count == 1, "Should only contain one player after P2 has left");
+
+									// Then finish the match & delete for good
+									matchP1.Finish(matchFinished => {
+										Assert(matchFinished.IsSuccessful, "Failed to finish the match");
+										// The match should have been deleted
+										gamer1.Matches.Fetch(deletedMatch => {
+											Assert(!deletedMatch.IsSuccessful, "The match shouldn't exist");
+											Assert(deletedMatch.ServerData["name"] == "BadMatchID", "Expected bad match ID");
+											CompleteTest();
+										}, matchP1.MatchId);
+									}, true);
+								}, matchP1.MatchId);
+							});
+						}, Bundle.CreateObject("x", 2), Bundle.CreateObject("key", "value"));
+					}, Bundle.CreateObject("x", 1));
+				}, matchCreated.Value.MatchId);
+			}, 2);
+		});
+	}
+
 	#region Private
 	private string RandomBoardName() {
 		return "board-" + Guid.NewGuid().ToString();
