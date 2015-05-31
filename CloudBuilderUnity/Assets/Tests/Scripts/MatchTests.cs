@@ -46,7 +46,7 @@ public class MatchTests : TestBase {
 					Assert(match.Creator.GamerId == gamer.GamerId, "Match creator not set properly");
 					Assert(match.CustomProperties["test"] == "value", "Missing custom property");
 					Assert(match.Description == matchDesc, "Invalid match description");
-					Assert(match.Events.Count == 0, "Should not have any event at first");
+					Assert(match.Moves.Count == 0, "Should not have any move at first");
 					Assert(match.GlobalState.AsDictionary().Count == 0, "Global state should be empty initially");
 					Assert(match.LastEventId == null, "Last event should be null");
 					Assert(match.MatchId != null, "Match ID shouldn't be null");
@@ -126,22 +126,17 @@ public class MatchTests : TestBase {
 				gamer2.Matches.Join(matchJoined => {
 					var matchP2 = matchJoined.Value;
 					Assert(matchJoined.IsSuccessful, "Failed to join match");
-					Assert(matchP2.Events.Count == 1, "Should have one join event");
-					Assert(matchP2.Events[0] is MatchJoinEvent, "First event should be join");
 					
 					// Post a move
 					matchP2.PostMove(matchPosted => {
-						Assert(matchP2.Events.Count == 2, "Should have a move event");
+						Assert(matchP2.Moves.Count == 1, "Should have a move event");
 						Assert(matchP2.LastEventId != null, "Last event ID shouldn't be null");
 						Assert(matchP2.Players.Count == 2, "Should contain two players");
-
-						MatchMoveEvent e = (MatchMoveEvent)matchP2.Events[1];
-						Assert(e.Match.MatchId == matchP2.MatchId, "The match in the event doesn't match");
 						
 						// Post another move with global state
 						matchP2.PostMove(matchPostedGlobalState => {
 							Assert(matchPostedGlobalState.IsSuccessful, "Failed to post global move");
-							Assert(matchP2.Events.Count == 1, "Posting a global state should clear events");
+							Assert(matchP2.Moves.Count == 1, "Posting a global state should clear events");
 							Assert(matchP2.GlobalState["key"] == "value", "The global state should have been updated");
 
 							// Now make P2 leave
@@ -151,7 +146,7 @@ public class MatchTests : TestBase {
 								gamer1.Matches.Fetch(matchRefreshed => {
 									Assert(matchRefreshed.IsSuccessful, "Failed to refresh match");
 									matchP1 = matchRefreshed.Value;
-									Assert(matchP1.Events.Count == 2, "Should have a move & refresh events (after refresh)");
+									Assert(matchP1.Moves.Count == 1, "Should have a move event (after refresh)");
 									Assert(matchP1.LastEventId == matchP2.LastEventId, "Last event ID should match");
 									Assert(matchP1.Players.Count == 1, "Should only contain one player after P2 has left");
 
@@ -176,34 +171,27 @@ public class MatchTests : TestBase {
 
 	[Test("Creates a match and plays it as two users. Checks that events are broadcasted appropriately.")]
 	public void ShouldReceiveEvents(Clan clan) {
-		Login2Users(clan, (Gamer gamer1, Gamer gamer2) => {
+		Login2NewUsers(clan, (Gamer gamer1, Gamer gamer2) => {
 			// We need two event loops, one for each player on the private domain
 			DomainEventLoop loopP1 = new DomainEventLoop(gamer1).Start();
 			DomainEventLoop loopP2 = new DomainEventLoop(gamer2).Start();
 			gamer1.Matches.Create(createdMatch => {
 				Assert(createdMatch.IsSuccessful, "Failed to create match");
 				// P1 will receive the join event
-				createdMatch.Value.RegisterEventListener(e => {
-					if (e is MatchJoinEvent) {
-						// Ok so now P2 has joined and is ready, we can go forward and post a move
-						createdMatch.Value.PostMove(postedMove => {
-							Assert(postedMove.IsSuccessful, "Failed to post move");
-						}, Bundle.CreateObject("x", 3));
-					}
-					else {
-						Assert(false, "Received inappropriate event " + e.ToString());
-					}
-				}, loopP1);
+				createdMatch.Value.OnPlayerJoined += (Match sender, MatchJoinEvent e) => {
+					// Ok so now P2 has joined and is ready, we can go forward and post a move
+					createdMatch.Value.PostMove(postedMove => {
+						Assert(postedMove.IsSuccessful, "Failed to post move");
+					}, Bundle.CreateObject("x", 3));
+				};
 				// Join as P2
 				gamer2.Matches.Join(joinedMatch => {
-					Assert(joinedMatch.IsSuccessful, "Failed to join match");
+					CompleteTest();
+/*					Assert(joinedMatch.IsSuccessful, "Failed to join match");
 					// P2 will receive the move event
-					joinedMatch.Value.RegisterEventListener(e => {
-						if (!(e is MatchMoveEvent)) {
-							Assert(false, "Received inappropriate event " + e.ToString());
-						}
+					joinedMatch.Value.OnMovePosted += (Match sender, MatchMoveEvent e) => {
 						CompleteTest();
-					}, loopP2);
+					};*/
 				}, createdMatch.Value.MatchId);
 			}, 2);
 		});

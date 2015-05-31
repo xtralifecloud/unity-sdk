@@ -13,21 +13,6 @@ namespace CloudBuilderLibrary {
 		public string MatchEventId { get; private set; }
 		public MatchInfo Match { get; private set; }
 
-		/**
-		 * Builds the right type of event based on the server data received.
-		 */
-		internal static MatchEvent Make(Match match, Bundle serverData) {
-			switch (serverData["type"].AsString()) {
-				case "match.join": return new MatchJoinEvent(match, serverData);
-				case "match.leave": return new MatchLeaveEvent(match, serverData);
-				case "match.finish": return new MatchFinishEvent(match, serverData);
-				case "match.move": return new MatchMoveEvent(match, serverData);
-				case "match.invite": return new MatchInviteEvent(match, serverData);
-			}
-			CloudBuilder.LogError("Unknown match event type " + serverData["type"]);
-			return null;
-		}
-
 		protected MatchEvent(Match match, Bundle serverData) {
 			MatchEventId = serverData["event"]["_id"];
 			Match = new MatchInfo(match.Gamer, serverData["event"]["match_id"]);
@@ -103,6 +88,7 @@ namespace CloudBuilderLibrary {
 		}
 	}
 
+#if false
 	/**
 	 * Event of type match.invite.
 	 * Received by another player when someone invites him to the match.
@@ -117,4 +103,5 @@ namespace CloudBuilderLibrary {
 			Inviter = new GamerInfo(serverData["event"]["inviter"]);
 		}
 	}
+#endif
 }

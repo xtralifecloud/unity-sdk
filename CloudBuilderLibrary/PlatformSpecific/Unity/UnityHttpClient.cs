@@ -289,7 +289,7 @@ namespace CloudBuilderLibrary
 			try {
 				Stream responseStream = state.StreamResponse;
 				int read = responseStream.EndRead(asyncResult);
-				// Read the HTML page and then print it to the console. 
+				// Read the HTML page and then print it to the console.
 				if (read > 0) {
 					state.ResponseBuffer.Write(state.BufferRead, 0, read);
 					responseStream.BeginRead(state.BufferRead, 0, RequestState.BufferSize, new AsyncCallback(ReadCallBack), state);

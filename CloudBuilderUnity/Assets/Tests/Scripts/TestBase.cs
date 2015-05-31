@@ -70,6 +70,17 @@ public class TestBase : MonoBehaviour {
 		});
 	}
 
+	protected void Login2NewUsers(Clan clan, Action<Gamer, Gamer> done) {
+		clan.LoginAnonymously(gamer1 => {
+			if (!gamer1.IsSuccessful) IntegrationTest.Fail("Failed to log in");
+			// Second user
+			clan.LoginAnonymously(gamer2 => {
+				if (!gamer2.IsSuccessful) IntegrationTest.Fail("Failed to log in");
+				done(gamer1.Value, gamer2.Value);
+			});
+		});
+	}
+
 	protected string RandomEmailAddress() {
 		string randomPart = Guid.NewGuid().ToString();
 		return string.Format("test{0}@localhost.localdomain", randomPart);

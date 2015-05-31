@@ -56,14 +56,15 @@ namespace CloudBuilderLibrary {
 		 * List of existing events, which may be used to reproduce the state of the game.
 		 */
 		public List<MatchMove> Moves { get; private set; }
+		// Subscribe to these events to be notified of events related to the match, such as when a move was posted.
+		public event Action<Match, MatchFinishEvent> OnMatchFinished;
+		public event Action<Match, MatchJoinEvent> OnPlayerJoined;
+		public event Action<Match, MatchLeaveEvent> OnPlayerLeft;
+		public event Action<Match, MatchMoveEvent> OnMovePosted;
 		/**
 		 * IDs of players participating to the match, including the creator (which is reported alone there at creation).
 		 */
 		public List<GamerInfo> Players { get; private set; }
-		/**
-		 * Subscribe to this event to be notified of events related to the match, such as when a move was posted.
-		 */
-		public event MatchEventHandler ReceivedEvent;
 		/**
 		 * A random seed that can be used to ensure consistent state across players of the game.
 		 * This is a 31 bit number.
@@ -78,6 +79,17 @@ namespace CloudBuilderLibrary {
 		 * it as values for your next game. This field is only returned when finishing a match.
 		 */
 		public Bundle Shoe { get; private set; }
+
+		/**
+		 * Clears all event handlers subscribed, ensuring that a match object can be dismissed without causing further
+		 * actions in the background.
+		 */
+		public void DiscardEventHandlers() {
+			foreach (Action<Match, MatchFinishEvent> e in OnMatchFinished.GetInvocationList()) OnMatchFinished -= e;
+			foreach (Action<Match, MatchJoinEvent> e in OnPlayerJoined.GetInvocationList()) OnPlayerJoined -= e;
+			foreach (Action<Match, MatchLeaveEvent> e in OnPlayerLeft.GetInvocationList()) OnPlayerLeft -= e;
+			foreach (Action<Match, MatchMoveEvent> e in OnMovePosted.GetInvocationList()) OnMovePosted -= e;
+		}
 
 		/**
 		 * Draws an item from the shoe.
@@ -203,7 +215,7 @@ namespace CloudBuilderLibrary {
 			// Register for pop events
 			DomainEventLoop loop = CloudBuilder.GetEventLoopFor(Gamer.GamerId, Domain);
 			if (loop == null) {
-				CloudBuilder.LogError("No pop event loop for match " + MatchId + " on domain " + Domain + ", won't work correctly");
+				CloudBuilder.LogWarning("No pop event loop for match " + MatchId + " on domain " + Domain + ", match events/updates will not work");
 			}
 			else {
 				loop.ReceivedEvent += this.ReceivedLoopEvent;
@@ -211,11 +223,39 @@ namespace CloudBuilderLibrary {
 		}
 
 		private void ReceivedLoopEvent(DomainEventLoop sender, EventLoopArgs e) {
-			// Ignore messages not for us
+			// Ignore events not for us
 			if (!e.Message["type"].AsString().StartsWith("match.")) return;
-			// Make and notify event
-			MatchEvent me = MatchEvent.Make(this, e.Message);
-			if (ReceivedEvent != null) ReceivedEvent(this, me);
+			// Update last event ID
+			if (e.Message["event"].Has("_id")) {
+				LastEventId = e.Message["event"]["_id"];
+			}
+
+			switch (e.Message["type"].AsString()) {
+				case "match.join":
+					var joinEvent = new MatchJoinEvent(this, e.Message);
+					Players.AddRange(joinEvent.PlayersJoined);
+					if (OnPlayerJoined != null) OnPlayerJoined(this, joinEvent);
+					break;
+				case "match.leave":
+					var leaveEvent = new MatchLeaveEvent(this, e.Message);
+					foreach (var p in leaveEvent.PlayersLeft) Players.Remove(p);
+					if (OnPlayerLeft != null) OnPlayerLeft(this, leaveEvent);
+					break;
+				case "match.finish":
+					Status = MatchStatus.Finished;
+					if (OnMatchFinished != null) OnMatchFinished(this, new MatchFinishEvent(this, e.Message));
+					break;
+				case "match.move":
+					var moveEvent = new MatchMoveEvent(this, e.Message);
+					Moves.Add(new MatchMove(moveEvent.PlayerId, moveEvent.MoveData));
+					if (OnMovePosted != null) OnMovePosted(this, moveEvent);
+					break;
+				case "match.invite":	// Do not notify them since we are already playing the match
+					break;
+				default:
+					CloudBuilder.LogError("Unknown match event type " + e.Message["type"]);
+					break;
+			}
 		}
 
 		private void UpdateWithServerData(Bundle serverData) {
@@ -256,8 +296,6 @@ namespace CloudBuilderLibrary {
 		Running,
 		Finished,
 	}
-
-	public delegate void MatchEventHandler(Match sender, MatchEvent e);
 
 	public class MatchMove {
 		/**

@@ -35,6 +35,7 @@ namespace CloudBuilderLibrary {
 			Domain = domain;
 			Gamer = gamer;
 			LoopIterationDuration = iterationDuration * 1000;
+			Random = new Random((int)DateTime.UtcNow.Ticks);
 		}
 
 		/**
@@ -100,7 +101,12 @@ namespace CloudBuilderLibrary {
 
 		#region Private
 		private void ProcessEvent(HttpResponse res) {
-			if (ReceivedEvent != null) ReceivedEvent(this, new EventLoopArgs(res.BodyJson));
+			try {
+				if (ReceivedEvent != null) ReceivedEvent(this, new EventLoopArgs(res.BodyJson));
+			}
+			catch (Exception e) {
+				CloudBuilder.LogError("Exception in the event chain: " + e.ToString());
+			}
 		}
 
 		private void Run() {
@@ -163,7 +169,7 @@ namespace CloudBuilderLibrary {
 			CloudBuilder.Log("Finished pop event thread " + CorrelationId);
 		}
 
-		private Random Random = new Random();
+		private Random Random;
 		private AutoResetEvent SynchronousRequestLock = new AutoResetEvent(false);
 		private HttpRequest CurrentRequest;
 		private bool Stopped = false, AlreadyStarted = false, Paused = false;
