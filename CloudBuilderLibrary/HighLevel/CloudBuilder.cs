@@ -86,7 +86,7 @@ namespace CloudBuilderLibrary {
 		}
 		internal static void TEMP(string text) {
 			// All references to this should be removed at some point
-			Managers.Logger.Log(LogLevel.Verbose, text);
+			Managers.Logger.Log(LogLevel.Warning, text);
 		}
 		internal static void StartLogTime(string description = null) {
 			InitialTicks = DateTime.UtcNow.Ticks;

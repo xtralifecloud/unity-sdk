@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -20,11 +21,15 @@ namespace CloudBuilderLibrary
 			// Auto-create the asset on the first time
 			CloudBuilderSettings s = CloudBuilderSettings.Instance;
 			if (s == null) {
+                string properPath = Path.Combine(Application.dataPath, Path.GetDirectoryName(CloudBuilderSettings.AssetPath));
+                if (!Directory.Exists(properPath)) {
+                    AssetDatabase.CreateFolder("Assets", "Resources");
+                }
 				s = CreateInstance<CloudBuilderSettings>();
 				AssetDatabase.CreateAsset(s, CloudBuilderSettings.AssetPath);
 				s = CloudBuilderSettings.Instance;
 			}
-		
+
 			GUILayout.Label("CloudBuilder Library Settings", EditorStyles.boldLabel);
 			GUILayout.Label("These are global to all scenes in your project (stored under Assets/Resources/).");
 			GUI.skin.label.wordWrap = true;

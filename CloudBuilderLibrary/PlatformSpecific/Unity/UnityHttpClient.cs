@@ -24,6 +24,7 @@ namespace CloudBuilderLibrary
 
 		void IHttpClient.Run(HttpRequest request, Action<HttpResponse> callback) {
 			request.Callback = callback;
+			request.DoNotEnqueue = true;
 			EnqueueRequest(request);
 		}
 
@@ -220,6 +221,7 @@ namespace CloudBuilderLibrary
 			// Auto choose HTTP method
 			req.Method = request.Method ?? (request.Body != null ? "POST" : "GET");
 			req.UserAgent = request.UserAgent;
+			req.ServicePoint.ConnectionLimit = ConcurrentHttpRequestLimit;
 			foreach (var pair in request.Headers) {
 				if (String.Compare(pair.Key, "Content-Type", true) == 0)
 					req.ContentType = pair.Value;
@@ -338,6 +340,7 @@ namespace CloudBuilderLibrary
 		private List<HttpRequest> PendingRequests = new List<HttpRequest>();
 		private List<RequestState> RunningRequests = new List<RequestState>();
 		// Others
+		private const int ConcurrentHttpRequestLimit = 100;
 		private bool VerboseMode;
 		private int CurrentLoadBalancerId = -1;
 		private System.Random Random = new System.Random();
