@@ -113,7 +113,7 @@ public class ScoreTests : TestBase {
 
 				gamer.Scores.GetRank(result => {
 					Assert(result.IsSuccessful, "Get rank failed");
-					Assert(result.Value == 2);
+					Assert(result.Value == 2, "Expected rank: 2");
 					CompleteTest();
 				}, 800, board);
 			}, 1000, board, ScoreOrder.HighToLow);

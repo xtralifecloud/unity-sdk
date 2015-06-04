@@ -15,7 +15,7 @@ Note: if you want to start from zero, you may simply add a new scene and drag&dr
 
 # Usage
 
-Basic usage is provided by the CloudBuilder prefab object. You just have to put it on your scene and invoke the GetClan method on it to fetch a Clan object allowing to use most features. For that, you may simply use `FindObjectOfType<CloudBuilderGameObject>()`.
+Basic usage is provided by the CloudBuilder prefab object. You just have to put it on your scene and invoke the GetClan method on it to fetch a #CloudBuilderLibrary.Clan object allowing to use most features. For that, you may simply use `FindObjectOfType<CloudBuilderGameObject>()`.
 
 ~~~~{.cs}
 	private Clan Clan;
@@ -29,7 +29,7 @@ Basic usage is provided by the CloudBuilder prefab object. You just have to put 
 
 This code will fetch a clan object. This operation is asynchronous and may take a bit of time or operate instantly, depending on various conditions. You should do it at startup as shown above and keep it as a member of your class.
 
-Another very important object is the `Gamer` object. This represents a signed in user, and provides all functionality that requires to be logged in. You will obtain it by logging in through the clan object.
+Another very important object is the #CloudBuilderLibrary.Gamer object. This represents a signed in user, and provides all functionality that requires to be logged in. You will obtain it by logging in through the clan object.
 
 ~~~~{.cs}
 	Clan.LoginAnonymously((Result<Gamer> result) => {

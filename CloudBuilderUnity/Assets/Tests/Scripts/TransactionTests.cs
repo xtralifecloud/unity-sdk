@@ -35,9 +35,9 @@ public class TransactionTests : TestBase {
 					Assert(txResult.Value.Balance["silver"] == 100, "Silver is not set properly");
 
 					gamer.Transactions.Balance(balance => {
-						Assert(balance.IsSuccessful);
-						Assert(balance.Value["gold"] == 10);
-						Assert(balance.Value["silver"] == 100);
+						Assert(balance.IsSuccessful, "Failed to fetch balance");
+						Assert(balance.Value["gold"] == 10, "Expected gold: 10 in balance");
+						Assert(balance.Value["silver"] == 100, "Expected silver: 100 in balance");
 						CompleteTest();
 					});
 				}
@@ -55,8 +55,8 @@ public class TransactionTests : TestBase {
 				Assert(txResult.Value.Balance["gold"] == 10, "Balance not affected properly");
 
 				gamer.Value.Transactions.Post(txResult2 => {
-					Assert(txResult2.IsSuccessful);
-					Assert(txResult2.Value.Balance["gold"] == 0);
+					Assert(txResult2.IsSuccessful, "Failed to post transaction");
+					Assert(txResult2.Value.Balance["gold"] == 0, "Expected gold: 0 balance");
 					CompleteTest();
 				}, Bundle.CreateObject("gold", "-auto"), "Run from integration test");
 			}, Bundle.CreateObject("gold", 10), "Transaction run by integration test.");
@@ -69,10 +69,10 @@ public class TransactionTests : TestBase {
 			Assert(gamer.IsSuccessful, "Failed to log in");
 			gamer.Value.Transactions.Post(txResult => {
 				Assert(txResult.IsSuccessful, "Failed transaction");
-				Assert(txResult.Value.TriggeredAchievements.Count == 1);
-				Assert(txResult.Value.TriggeredAchievements["testAch"].Name == "testAch");
-				Assert(txResult.Value.TriggeredAchievements["testAch"].Type == AchievementType.Limit);
-				Assert(txResult.Value.TriggeredAchievements["testAch"].Config["maxValue"] == 100);
+				Assert(txResult.Value.TriggeredAchievements.Count == 1, "Expected one achievement triggered");
+				Assert(txResult.Value.TriggeredAchievements["testAch"].Name == "testAch", "Expected testAch to be triggered");
+				Assert(txResult.Value.TriggeredAchievements["testAch"].Type == AchievementType.Limit, "Expected testAch.type: limit");
+				Assert(txResult.Value.TriggeredAchievements["testAch"].Config["maxValue"] == 100, "Expected testAch.maxValue: 100");
 				CompleteTest();
 			}, Bundle.CreateObject("gold", 100), "Transaction run by integration test.");
 		});
@@ -85,10 +85,10 @@ public class TransactionTests : TestBase {
 			gamer.Value.Transactions.Post(txResult => {
 				Assert(txResult.IsSuccessful, "Failed to run transaction");
 				gamer.Value.Transactions.History(histResult => {
-					Assert(histResult.IsSuccessful);
-					Assert(histResult.Values.Count == 1);
-					Assert(histResult.Values[0].Description == "Transaction run by integration test.");
-					Assert(histResult.Values[0].TxData["gold"] == 10);
+					Assert(histResult.IsSuccessful, "Failed to fetch history");
+					Assert(histResult.Values.Count == 1, "Expected one history entry");
+					Assert(histResult.Values[0].Description == "Transaction run by integration test.", "Wrong description");
+					Assert(histResult.Values[0].TxData["gold"] == 10, "Wrong tx data");
 					CompleteTest();
 				});
 			}, Bundle.CreateObject("gold", 10), "Transaction run by integration test.");
@@ -105,13 +105,13 @@ public class TransactionTests : TestBase {
 			ExecuteTransactions(gamer.Value, transactions, () => {
 				// All transactions have been executed. Default to page 1.
 				gamer.Value.Transactions.History(histResult => {
-					Assert(histResult.IsSuccessful);
+					Assert(histResult.IsSuccessful, "Failed to fetch history");
 					if (histResult.Offset == 0) {
 						// Even though there are three, only two results should be returned
-						Assert(histResult.Values.Count == 2);
+						Assert(histResult.Values.Count == 2, "Expected two entries in history");
 						// Then fetch the next page
-						Assert(!histResult.HasPrevious);
-						Assert(histResult.HasNext);
+						Assert(!histResult.HasPrevious, "Should not have previous page");
+						Assert(histResult.HasNext, "Should have next page");
 						// Coming back from the second page
 						if (alreadyWentBack) {
 							CompleteTest();
@@ -121,10 +121,10 @@ public class TransactionTests : TestBase {
 					}
 					else {
 						// Last result
-						Assert(histResult.Offset == 2);
-						Assert(histResult.Values.Count == 1);
-						Assert(histResult.HasPrevious);
-						Assert(!histResult.HasNext);
+						Assert(histResult.Offset == 2, "Expected offset: 2");
+						Assert(histResult.Values.Count == 1, "Expected one value at page 2");
+						Assert(histResult.HasPrevious, "Should have previous page");
+						Assert(!histResult.HasNext, "Should not have next page");
 						histResult.FetchPrevious();
 						alreadyWentBack = true;
 					}
@@ -143,9 +143,9 @@ public class TransactionTests : TestBase {
 			ExecuteTransactions(gamer.Value, transactions, () => {
 				// All transactions have been executed. Default to page 1.
 				gamer.Value.Transactions.History(histResult => {
-					Assert(histResult.IsSuccessful);
-					Assert(histResult.Values.Count == 1);
-					Assert(histResult.Values[0].TxData["gold"] == 2);
+					Assert(histResult.IsSuccessful, "Failed to fetch history");
+					Assert(histResult.Values.Count == 1, "Expected one value in history");
+					Assert(histResult.Values[0].TxData["gold"] == 2, "Expected tx: {gold: 2}");
 					CompleteTest();
 				}, unit: "silver");
 			})(null);

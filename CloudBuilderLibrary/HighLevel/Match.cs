@@ -128,7 +128,7 @@ namespace CloudBuilderLibrary {
 				Status = MatchStatus.Finished;
 				// Also delete match
 				if (deleteToo) {
-					Gamer.Matches.DeleteMatch(done, MatchId);
+					Gamer.Matches.Delete(done, MatchId);
 				}
 				else {
 					Common.InvokeHandler(done, true, response.BodyJson);

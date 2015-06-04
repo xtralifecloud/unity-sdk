@@ -56,7 +56,7 @@ namespace CloudBuilderLibrary {
 		 *     indicates success when true.
 		 * @param matchId ID of the match to delete.
 		 */
-		public void DeleteMatch(ResultHandler<bool> done, string matchId) {
+		public void Delete(ResultHandler<bool> done, string matchId) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(matchId);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";

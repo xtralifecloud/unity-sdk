@@ -62,7 +62,7 @@ public class ClanTests : TestBase {
 					gamerId: result.Value.GamerId,
 					gamerSecret: result.Value.GamerSecret,
 					done: resumeResult => {
-						Assert(resumeResult.IsSuccessful && resumeResult.Value != null);
+						Assert(resumeResult.IsSuccessful && resumeResult.Value != null, "Resume failed");
 						CompleteTest();
 					}
 				);
@@ -77,9 +77,9 @@ public class ClanTests : TestBase {
 			gamerId: "15555f06c7b852423cb9074a",
 			gamerSecret: "1f89a1efa49a3cf59d00f8badb03227d1b56840b",
 			done: resumeResult => {
-				Assert(!resumeResult.IsSuccessful);
-				Assert(resumeResult.HttpStatusCode == 401);
-				Assert(resumeResult.ServerData["name"] == "LoginError");
+				Assert(!resumeResult.IsSuccessful, "Resume should fail");
+				Assert(resumeResult.HttpStatusCode == 401, "401 status code expected");
+				Assert(resumeResult.ServerData["name"] == "LoginError", "LoginError expected");
 				CompleteTest();
 			}
 		);
@@ -94,9 +94,9 @@ public class ClanTests : TestBase {
 			networkSecret: "Password123",
 			preventRegistration: true,
 			done: resumeResult => {
-				Assert(!resumeResult.IsSuccessful);
-				Assert(resumeResult.HttpStatusCode == 400);
-				Assert(resumeResult.ServerData["name"] == "PreventRegistration");
+				Assert(!resumeResult.IsSuccessful, "Resume should fail");
+				Assert(resumeResult.HttpStatusCode == 400, "400 expected");
+				Assert(resumeResult.ServerData["name"] == "PreventRegistration", "PreventRegistration error expected");
 				CompleteTest();
 			}
 		);
@@ -115,7 +115,7 @@ public class ClanTests : TestBase {
 				networkId: RandomEmailAddress(),
 				networkSecret: "Password123",
 				done: conversionResult => {
-					Assert(conversionResult.IsSuccessful && conversionResult.Value);
+					Assert(conversionResult.IsSuccessful && conversionResult.Value, "Convert account failed");
 					CompleteTest();
 				}
 			);
@@ -143,9 +143,9 @@ public class ClanTests : TestBase {
 						networkId: "clan@localhost.localdomain",
 						networkSecret: "Anotherp4ss",
 						done: conversionResult => {
-							Assert(!conversionResult.IsSuccessful && !conversionResult.Value);
-							Assert(conversionResult.HttpStatusCode == 400);
-							Assert(conversionResult.ServerData["message"] == "UserExists");
+							Assert(!conversionResult.IsSuccessful && !conversionResult.Value, "Conversion should fail");
+							Assert(conversionResult.HttpStatusCode == 400, "400 expected");
+							Assert(conversionResult.ServerData["message"] == "UserExists", "UserExists error expected");
 							CompleteTest();
 						}
 					);
@@ -167,7 +167,7 @@ public class ClanTests : TestBase {
 					network: LoginNetwork.Email,
 					networkId: "clan@localhost.localdomain",
 					done: checkResult => {
-						Assert(checkResult.IsSuccessful && checkResult.Value);
+						Assert(checkResult.IsSuccessful && checkResult.Value, "UserExists failed");
 						CompleteTest();
 					}
 				);
@@ -200,7 +200,7 @@ public class ClanTests : TestBase {
 				Assert(result.IsSuccessful, "Creation of fake account failed");
 				var gamer = result.Value;
 				gamer.Account.ChangePassword(pswResult => {
-					Assert(pswResult.IsSuccessful && pswResult.Value);
+					Assert(pswResult.IsSuccessful && pswResult.Value, "Change password failed");
 					CompleteTest();
 				}, "Password124");
 			}
@@ -217,7 +217,7 @@ public class ClanTests : TestBase {
 				Assert(result.IsSuccessful, "Creation of fake account failed");
 				var gamer = result.Value;
 				gamer.Account.ChangeEmailAddress(pswResult => {
-					Assert(pswResult.IsSuccessful && pswResult.Value);
+					Assert(pswResult.IsSuccessful && pswResult.Value, "Change email failed");
 					CompleteTest();
 				}, RandomEmailAddress());
 			}
@@ -234,9 +234,9 @@ public class ClanTests : TestBase {
 				Assert(result.IsSuccessful, "Creation of fake account failed");
 				var gamer = result.Value;
 				gamer.Account.ChangeEmailAddress(pswResult => {
-					Assert(!pswResult.IsSuccessful && !pswResult.Value);
-					Assert(pswResult.HttpStatusCode == 400);
-					Assert(pswResult.ServerData["message"] == "UserExists");
+					Assert(!pswResult.IsSuccessful && !pswResult.Value, "Email change should fail");
+					Assert(pswResult.HttpStatusCode == 400, "400 expected");
+					Assert(pswResult.ServerData["message"] == "UserExists", "UserExists error expected");
 					CompleteTest();
 				}, "clan@localhost.localdomain");
 			}

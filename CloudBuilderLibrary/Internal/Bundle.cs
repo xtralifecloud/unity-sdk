@@ -29,7 +29,9 @@ namespace CloudBuilderLibrary
 	 * The bundle object, considered as dictionary will have its key "hello" set with a new Bundle node of type string
 	 * (implicitly created from the string). So later on, you might fetch this value as well:
 	 * 
-	 * `string value = b["hello"];`
+	 * ~~~~{.cs}
+	 * string value = b["hello"];
+	 * ~~~~
 	 * 
 	 * What happens here is that the bundle under the key "hello" is fetched, and then implicitly converted to a string.
 	 * 
@@ -38,7 +40,9 @@ namespace CloudBuilderLibrary
 	 * `Bundle.Empty` as well. If the values are to be converted to a primitive type, the result will be the default
 	 * value for this type (null for a string, 0 for an int, etc.). As such, you may do this:
 	 * 
-	 * `int value = bundle["nonexisting"]["key"];`
+	 * ~~~~{.cs}
+	 * int value = bundle["nonexisting"]["key"];
+	 * ~~~~
 	 * 
 	 * Since the "nonexisting" key is not found on bundle, `Bundle.Empty` is returned. Further fetching "key" will return
 	 * an empty bundle as well. Which will be converted implicitly to an integer as 0. `Bundle.Empty` is a constant value
@@ -75,7 +79,9 @@ namespace CloudBuilderLibrary
 	 * may as well use the .As* methods. For instance, the previous snippet could be written as follows to have a default
 	 * value of one:
 	 * 
-	 * `int value = bundle["nonexisting"]["key"].AsInt(1);`
+	 * ~~~~{.cs}
+	 * int value = bundle["nonexisting"]["key"].AsInt(1);
+	 * ~~~~
 	 * 
 	 * It is also possible to inspect the Type property of the Bundle in order to ensure that the value was provided as
 	 * expected.
@@ -83,7 +89,9 @@ namespace CloudBuilderLibrary
 	 * A bundle may be pre-filled at creation by passing arguments to Bundle.CreateObject and Bundle.CreateArray. For
 	 * instance:
 	 * 
-	 * `Bundle b = Bundle.CreateObject("key1", "value1", "key2", "value2");`
+	 * ~~~~{.cs}
+	 * Bundle b = Bundle.CreateObject("key1", "value1", "key2", "value2");
+	 * ~~~~
 	 * 
 	 * Is equivalent to writing:
 	 * 

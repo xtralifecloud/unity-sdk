@@ -35,7 +35,7 @@ using UnityEngine;
  */
 public class TestBase : MonoBehaviour {
 
-	protected void Assert(bool condition, string message = null) {
+	protected void Assert(bool condition, string message) {
 		if (!condition) IntegrationTest.Assert(condition, message);
 	}
 

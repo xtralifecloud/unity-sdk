@@ -32,8 +32,8 @@ public class GameTests : TestBase {
 	public void ShouldFetchGameKey(Clan clan) {
 		Login(clan, gamer => {
 			gamer.Game.GameVfs.GetKey(getResult => {
-				Assert(getResult.IsSuccessful);
-				Assert(getResult.Value["test"] == 2);
+				Assert(getResult.IsSuccessful, "Failed to fetch key");
+				Assert(getResult.Value["test"] == 2, "Expected test: 2 key");
 				CompleteTest();
 			}, "testkey");
 		});

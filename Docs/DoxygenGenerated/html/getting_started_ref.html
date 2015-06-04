@@ -90,7 +90,7 @@ Import package screen</div></div>
 <p> You can deselect SampleScript.cs and SampleScene.unity if you do not need the sample code. After having imported the package, you just need to configure the CloudBuilder settings. For that, open the SampleScene and select the CloudBuilder object. In the inspector, set the appropriate values (API Key and API Secret) as configured in the backoffice.</p>
 <p>Note: if you want to start from zero, you may simply add a new scene and drag&amp;drop the CloudBuilder prefab object from the CloudBuilder/Prefabs folder into your scene. This object needs to be placed on any scene where you want to use CloudBuilder functionality.</p>
 <h1>Usage</h1>
-<p>Basic usage is provided by the CloudBuilder prefab object. You just have to put it on your scene and invoke the GetClan method on it to fetch a Clan object allowing to use most features. For that, you may simply use <code>FindObjectOfType&lt;CloudBuilderGameObject&gt;()</code>.</p>
+<p>Basic usage is provided by the CloudBuilder prefab object. You just have to put it on your scene and invoke the GetClan method on it to fetch a <a class="el" href="class_cloud_builder_library_1_1_clan.html">CloudBuilderLibrary.Clan</a> object allowing to use most features. For that, you may simply use <code>FindObjectOfType&lt;CloudBuilderGameObject&gt;()</code>.</p>
 <div class="fragment"><div class="line"><span class="keyword">private</span> Clan Clan;</div>
 <div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> Setup() {</div>
@@ -99,7 +99,7 @@ Import package screen</div></div>
 <div class="line">    });</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>This code will fetch a clan object. This operation is asynchronous and may take a bit of time or operate instantly, depending on various conditions. You should do it at startup as shown above and keep it as a member of your class.</p>
-<p>Another very important object is the <code>Gamer</code> object. This represents a signed in user, and provides all functionality that requires to be logged in. You will obtain it by logging in through the clan object.</p>
+<p>Another very important object is the <a class="el" href="class_cloud_builder_library_1_1_gamer.html">CloudBuilderLibrary.Gamer</a> object. This represents a signed in user, and provides all functionality that requires to be logged in. You will obtain it by logging in through the clan object.</p>
 <div class="fragment"><div class="line">Clan.LoginAnonymously((Result&lt;Gamer&gt; result) =&gt; {</div>
 <div class="line">    <span class="keywordflow">if</span> (!result.IsSuccessful)</div>
 <div class="line">        Debug.LogError(<span class="stringliteral">&quot;Login failed: &quot;</span> + result.ToString());</div>
@@ -130,7 +130,7 @@ Import package screen</div></div>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 3 2015 16:28:42 for CloudBuilder Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jun 3 2015 16:34:59 for CloudBuilder Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

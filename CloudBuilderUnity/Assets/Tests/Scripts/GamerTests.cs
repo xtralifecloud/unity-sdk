@@ -30,8 +30,8 @@ public class GamerTests : TestBase {
 					Assert(setResult.Value == 1, "Expected done = 1");
 
 					gamer.Properties.GetAll(getResult => {
-						Assert(getResult.IsSuccessful);
-						Assert(getResult.Value.Has("testkey"));
+						Assert(getResult.IsSuccessful, "Failed to fetch properties");
+						Assert(getResult.Value.Has("testkey"), "Previously set key is missing");
 						CompleteTest();
 					});
 				}
@@ -53,10 +53,10 @@ public class GamerTests : TestBase {
 					if (setResult.Value != 1) IntegrationTest.Fail("Expected done = 1");
 
 					gamer.Properties.GetAll(getResult => {
-						Assert(getResult.IsSuccessful);
-						Assert(getResult.Value["hello"] == "world");
-						Assert(getResult.Value["array"].AsArray()[1] == 2);
-						Assert(getResult.Value["array"].AsArray().Count == 3);
+						Assert(getResult.IsSuccessful, "Get all keys failed");
+						Assert(getResult.Value["hello"] == "world", "Should contain hello: world key");
+						Assert(getResult.Value["array"].AsArray().Count == 3, "Should have a 3-item array");
+						Assert(getResult.Value["array"].AsArray()[1] == 2, "Item 2 of array invalid");
 						CompleteTest();
 					});
 				}
@@ -80,8 +80,8 @@ public class GamerTests : TestBase {
 						if (!removeResult.IsSuccessful) IntegrationTest.Fail("Error when removing property");
 
 						gamer.Properties.GetKey(getResult => {
-							Assert(getResult.IsSuccessful);
-							Assert(getResult.Value.IsEmpty);
+							Assert(getResult.IsSuccessful, "Failed to fetch key");
+							Assert(getResult.Value.IsEmpty, "The key should be empty");
 							CompleteTest();
 						}, "hello");
 					}, "hello");
@@ -104,8 +104,8 @@ public class GamerTests : TestBase {
 					gamer.Properties.RemoveAll(removeResult => {
 						Assert(removeResult.IsSuccessful, "Error when removing properties");
 						gamer.Properties.GetAll(getResult => {
-							Assert(getResult.IsSuccessful);
-							Assert(getResult.Value.IsEmpty);
+							Assert(getResult.IsSuccessful, "Failed to get all properties");
+							Assert(getResult.Value.IsEmpty, "Expected no properties");
 							CompleteTest();
 						});
 					});

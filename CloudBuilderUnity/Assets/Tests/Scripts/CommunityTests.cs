@@ -22,21 +22,21 @@ public class CommunityTests : TestBase {
 	public void ShouldAddFriend(Clan clan) {
 		// Use two test accounts
 		clan.LoginAnonymously(gamer1 => {
-			Assert(gamer1.IsSuccessful);
+			Assert(gamer1.IsSuccessful, "Failed to login P1");
 			clan.LoginAnonymously(gamer2 => {
-				Assert(gamer2.IsSuccessful);
+				Assert(gamer2.IsSuccessful, "Failed to login P2");
 
 				// Add gamer1 as a friend of gamer2
 				gamer2.Value.Community.AddFriend(
 					gamerId: gamer1.Value.GamerId,
 					done: addResult => {
-						Assert(addResult.IsSuccessful);
+						Assert(addResult.IsSuccessful, "Failed to add friend");
 
 						// Then list the friends of gamer1, gamer2 should be in it
 						gamer1.Value.Community.ListFriends(gamerInfo => {
-							Assert(gamerInfo.IsSuccessful);
-							Assert(gamerInfo.Value.Count == 1);
-							Assert(gamerInfo.Value[0].GamerId == gamer2.Value.GamerId);
+							Assert(gamerInfo.IsSuccessful, "Failed to list friends");
+							Assert(gamerInfo.Value.Count == 1, "Expects one friend");
+							Assert(gamerInfo.Value[0].GamerId == gamer2.Value.GamerId, "Wrong friend ID");
 							CompleteTest();
 						});
 					}
