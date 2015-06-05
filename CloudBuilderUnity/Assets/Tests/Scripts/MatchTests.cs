@@ -108,7 +108,7 @@ public class MatchTests : TestBase {
 		Login(clan, gamer => {
 			gamer.Matches.Create(createResult => {
 				Assert(createResult.IsSuccessful, "Failed to create match");
-				gamer.Matches.DeleteMatch(deleteResult => {
+				gamer.Matches.Delete(deleteResult => {
 					Assert(!deleteResult.IsSuccessful, "Failed to delete match");
 					Assert(deleteResult.ServerData["name"] == "MatchNotFinished", "Should not be able to delete match");
 					CompleteTest();
@@ -181,17 +181,23 @@ public class MatchTests : TestBase {
 				Assert(createdMatch.IsSuccessful, "Failed to create match");
 				// P1 will receive the join event
 				createdMatch.Value.OnPlayerJoined += (Match sender, MatchJoinEvent e) => {
-					// Ok so now P2 has joined and is ready, we can go forward and post a move
-					createdMatch.Value.PostMove(postedMove => {
-						Assert(postedMove.IsSuccessful, "Failed to post move");
-					}, Bundle.CreateObject("x", 3));
+					// P2 has joined; wait that he subscribes to the movePosted event.
+					RunLater(millisec: 500, action: () => {
+						// Ok so now P2 has joined and is ready, we can go forward and post a move
+						createdMatch.Value.PostMove(postedMove => {
+							Assert(postedMove.IsSuccessful, "Failed to post move");
+						}, Bundle.CreateObject("x", 3));
+					});
 				};
 				// Join as P2
 				gamer2.Matches.Join(joinedMatch => {
-					CompleteTest();
 					Assert(joinedMatch.IsSuccessful, "Failed to join match");
 					// P2 will receive the move event
 					joinedMatch.Value.OnMovePosted += (Match sender, MatchMoveEvent e) => {
+						Assert(e.MoveData["x"] == 3, "Invalid move data");
+						Assert(e.PlayerId == gamer1.GamerId, "Expected P1 to make move");
+						loopP1.Stop();
+						loopP2.Stop();
 						CompleteTest();
 					};
 				}, createdMatch.Value.MatchId);
@@ -199,165 +205,25 @@ public class MatchTests : TestBase {
 		});
 	}
 
-	#region Please remove
-	[Test("Tests buggy HTTP client")]
-	public void TEMP_TestBuggyHttpClient(Clan clan) {
-		HttpWebRequest req1 = TEMP_CreateReq("http://10.211.55.2:2000/v1/gamer/event/private?timeout=5000");
-		req1.BeginGetResponse(result => {
-			Debug.LogWarning("Got response for req 1");
-		}, null);
-
-		HttpWebRequest req2 = TEMP_CreateReq("http://10.211.55.2:2000/v1/gamer/event/private?timeout=8000");
-		req2.Headers["Authorization"] = "Basic NTU2YmZhYTUxNDYxODg2NDNkNTZhNzRiOmZlNWZjZjdiYzcwYTBjY2QwOGJjM2QyMTRjZmVhYzY4NzQxNDM0OTA=";
-		req2.BeginGetResponse(result2 => {
-			Debug.LogWarning("Got response for req 2");
-		}, null);
-
-		HttpWebRequest req3 = TEMP_CreateReq("http://10.211.55.2:2000/v1/vfs/private/key1");
-		req3.BeginGetResponse(result3 => {
-			Debug.LogWarning("Got response for key1");
-
-			HttpWebRequest req4 = TEMP_CreateReq("http://10.211.55.2:2000/v1/vfs/private/key2");
-			req4.BeginGetResponse(result4 => {
-				Debug.LogWarning("Got response for key2");
-			}, null);
-		}, null);
-	}
-
-	[Test("Tests buggy HTTP client with threads")]
-	public void TEMP_TestBuggyHttpClientThread(Clan clan) {
-		ThreadPool.SetMinThreads(100, 4);
-		ServicePointManager.DefaultConnectionLimit = 100;
-		new Thread(new ThreadStart(() => {
-			Debug.LogWarning("Req #1 on " + Thread.CurrentThread.ManagedThreadId);
-			try {
-				HttpWebRequest req1 = TEMP_CreateReq("http://10.211.55.2:2000/v1/gamer/event/private?timeout=5000");
-				req1.GetResponse();
-				Debug.LogWarning("Got response for req 1");
-			}
-			catch (Exception e) {
-				Debug.LogWarning("EX: " + e.ToString());
-			}
-		})).Start();
-
-		new Thread(new ThreadStart(() => {
-			Debug.LogWarning("Req 2 on " + Thread.CurrentThread.ManagedThreadId);
-			HttpWebRequest req2 = TEMP_CreateReq("http://10.211.55.2:2000/v1/gamer/event/private?timeout=7000");
-//			HttpWebRequest req2 = TEMP_CreateReq("https://sandbox-api01.clanofthecloud.mobi/v1/gamer/event/private?timeout=10000");
-//			req2.Headers["Authorization"] = "Basic NTU2YmZmNDk2YzM0MGU4YjNmZGEyN2QyOmJlMDM3OWU2YTlmZGMxNmEwYTE4NmY5ZTYxN2FjYTM4Y2YxOWU4Njg=";
-//			req2.Headers["Authorization"] = "Basic NTU2YmZiZTcyOWFkMTQ0YTFiNzkwZjgzOmFmYjA4NjM0MDBkMzIyNmU1N2QzMDllNmYxNWQzNTBkZTY5ZTRkYzY=";
-			req2.GetResponse();
-			Debug.LogWarning("Got response for req 2");
-		})).Start();
-
-		new Thread(new ThreadStart(() => {
-			Debug.LogWarning("Req 3 on " + Thread.CurrentThread.ManagedThreadId);
-			HttpWebRequest req2 = TEMP_CreateReq("http://10.211.55.2:2000/v1/gamer/event/private?timeout=4000");
-//			HttpWebRequest req2 = TEMP_CreateReq("https://sandbox-api01.clanofthecloud.mobi/v1/gamer/event/private?timeout=8000");
-			//			req2.Headers["Authorization"] = "Basic NTU2YmZmNDk2YzM0MGU4YjNmZGEyN2QyOmJlMDM3OWU2YTlmZGMxNmEwYTE4NmY5ZTYxN2FjYTM4Y2YxOWU4Njg=";
-//			req2.Headers["Authorization"] = "Basic NTU2YmZiZTcyOWFkMTQ0YTFiNzkwZjgzOmFmYjA4NjM0MDBkMzIyNmU1N2QzMDllNmYxNWQzNTBkZTY5ZTRkYzY=";
-			req2.GetResponse();
-			Debug.LogWarning("Got response for req 3");
-		})).Start();
-
-		new Thread(new ThreadStart(() => {
-			Debug.LogWarning("Req 4 on " + Thread.CurrentThread.ManagedThreadId);
-			HttpWebRequest req2 = TEMP_CreateReq("http://10.211.55.2:2000/v1/gamer/event/private?timeout=6000");
-//			HttpWebRequest req2 = TEMP_CreateReq("https://sandbox-api01.clanofthecloud.mobi/v1/gamer/event/private?timeout=9000");
-			//			req2.Headers["Authorization"] = "Basic NTU2YmZmNDk2YzM0MGU4YjNmZGEyN2QyOmJlMDM3OWU2YTlmZGMxNmEwYTE4NmY5ZTYxN2FjYTM4Y2YxOWU4Njg=";
-//			req2.Headers["Authorization"] = "Basic NTU2YmZiZTcyOWFkMTQ0YTFiNzkwZjgzOmFmYjA4NjM0MDBkMzIyNmU1N2QzMDllNmYxNWQzNTBkZTY5ZTRkYzY=";
-			req2.GetResponse();
-			Debug.LogWarning("Got response for req 4");
-		})).Start();
-
-		new Thread(new ThreadStart(() => {
-			Debug.LogWarning("Req 5 on " + Thread.CurrentThread.ManagedThreadId);
-			HttpWebRequest req2 = TEMP_CreateReq("http://10.211.55.2:2000/v1/gamer/event/private?timeout=5000");
-//			HttpWebRequest req2 = TEMP_CreateReq("https://sandbox-api01.clanofthecloud.mobi/v1/gamer/event/private?timeout=12000");
-			// req2.Headers["Authorization"] = "Basic NTU2YmZmNDk2YzM0MGU4YjNmZGEyN2QyOmJlMDM3OWU2YTlmZGMxNmEwYTE4NmY5ZTYxN2FjYTM4Y2YxOWU4Njg=";
-			// req2.Headers["Authorization"] = "Basic NTU2YmZiZTcyOWFkMTQ0YTFiNzkwZjgzOmFmYjA4NjM0MDBkMzIyNmU1N2QzMDllNmYxNWQzNTBkZTY5ZTRkYzY=";
-			req2.GetResponse();
-			Debug.LogWarning("Got response for req 5");
-		})).Start();
-
-		new Thread(new ThreadStart(() => {
-			try {
-				Debug.LogWarning("Req A on " + Thread.CurrentThread.ManagedThreadId);
-				HttpWebRequest req3 = TEMP_CreateReq("http://10.211.55.2:2000/v1/vfs/private/key1");
-				req3.GetResponse();
-				Debug.LogWarning("Got response for key1");
-			} 
-			catch (Exception e) {
-				Debug.LogWarning("EX: " + e.ToString());
-			}
-
-			try {
-				Debug.LogWarning("Req B on " + Thread.CurrentThread.ManagedThreadId);
-				HttpWebRequest req4 = TEMP_CreateReq("http://10.211.55.2:2000/v1/vfs/private/key2");
-				req4.GetResponse();
-				Debug.LogWarning("Got response for key2");
-			} catch (Exception e) {
-				Debug.LogWarning("EX: " + e.ToString());
-			}
-		})).Start();
-	}
-
-#if false
-	[Test("Tests another HTTP client")]
-	public void TEMP_TestOtherHttpClient(Clan clan) {
-		string serv = "http://10.211.55.2:2000";
-//		string serv = ""https://sandbox-api01.clanofthecloud.mobi";
-		HTTP.Request req = TEMP_CreateReq2(serv + "/v1/gamer/event/private?timeout=5000");
-		req.whenFinished = response => {
-			Debug.LogWarning("Response from req1 " + response.message);
-		};
-		req.Send();
-
-		req = TEMP_CreateReq2(serv + "/v1/gamer/event/private?timeout=8000");
-		req.whenFinished = response => {
-			Debug.LogWarning("Response from req2 " + response.message);
-		};
-		req.Send();
-
-		req = TEMP_CreateReq2(serv + "/v1/vfs/private/key1");
-		req.whenFinished = response1 => {
-			Debug.LogWarning("Response for key1");
-
-			req = TEMP_CreateReq2(serv + "/v1/vfs/private/key2");
-			req.whenFinished = response2 => {
-				Debug.LogWarning("Response for key2");
+	[Test("Tests the reception of an invitation between two players")]
+	public void ShouldReceiveInvitation(Clan clan) {
+		Login2NewUsers(clan, (Gamer gamer1, Gamer gamer2) => {
+			// P1 will be invited
+			DomainEventLoop loopP1 = new DomainEventLoop(gamer1).Start();
+			gamer1.Matches.OnMatchInvitation += (MatchInviteEvent e) => {
+				Assert(e.Inviter.GamerId == gamer2.GamerId, "Invitation should come from P2");
+				// Test dismiss functionality (function not needed since we are stopping the loop it is registered to)
+				gamer1.Matches.Dismiss();
+				loopP1.Stop();
+				CompleteTest();
 			};
-			req.Send();
-		};
-		req.Send();
+			// P2 will create a match and invite P1
+			gamer2.Matches.Create(createResult => {
+				Assert(createResult.IsSuccessful, "Failed to create match");
+				createResult.Value.InvitePlayer(null, gamer1.GamerId);
+			}, 2);
+		});
 	}
-#endif
-
-	private HttpWebRequest TEMP_CreateReq(string url) {
-		HttpWebRequest req1 = HttpWebRequest.Create(url) as HttpWebRequest;
-		req1.UserAgent = "cloudbuilder-unity-WindowsEditor-2.11";
-		req1.Headers["x-apikey"] = "testgame-key";
-		req1.Headers["x-sdkversion"] = "1";
-		req1.Headers["x-apisecret"] = "testgame-secret";
-		req1.KeepAlive = false;
-		req1.Headers["Authorization"] = "Basic NTU2YmZhYTUxNDYxODg2NDNkNTZhNzRjOjkxZWU2YzA2NTVhZjMwZWMzZjViZjI3ZDAxY2Y4MmQ3ODYxODY0OGE=";
-		req1.ServicePoint.ConnectionLimit = 10;
-//		req1.Headers["Authorization"] = "Basic NTU2YzA0NmIyOWFkMTQ0YTFiNzkwZjg3OmEwMmRiZTU1MTUzMDYwN2VmZTBhNDg3Njg2OTAxYjE5M2Q3ZTJiZjM=";
-		return req1;
-	}
-
-#if false
-	private HTTP.Request TEMP_CreateReq2(string url) {
-		HTTP.Request req1 = new HTTP.Request("GET", url);
-		req1.SetHeader("User-Agent", "cloudbuilder-unity-WindowsEditor-2.11");
-		req1.SetHeader("x-apikey", "testgame-key");
-		req1.SetHeader("x-sdkversion", "1");
-		req1.SetHeader("x-apisecret", "testgame-secret");
-		req1.SetHeader("Authorization", "Basic NTU2YmNiMjY4YjhmZGNlZDFjNGFlNWFmOjRmMWJhYWRhYjAxNmJhZGRjYWJlZDM5MWY5NzQ4ZDI3MmM2YjJhN2M=");
-		return req1;
-	}
-#endif
-	#endregion
 
 	#region Private
 	private string RandomBoardName() {

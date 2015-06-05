@@ -50,19 +50,18 @@ A delegate for a given Entity is called `ResultHandler<Entity>` and is basically
 
 # Error handlers
 
-In case a network error happens, the request is not retried by default. But there is a `HttpRequestFailedHandler` member on Clan which can be set to an user defined callback. This callback tells what to do with the error (retry it, cancel it).
+In case a network error happens, the request is not retried by default. But there is a `HttpRequestFailedHandler` member on Clan which can be set to an user defined callback. This callback tells what to do with the error (retry it, cancel it). The following code retries any failed request twice, once after 100ms, once after 5s, then aborts it.
 
 ~~~~{.cs}
+	const int RetryTimes = {100 /* ms */, 5000 /* ms */};
 	clan.HttpRequestFailedHandler = (HttpRequestFailedEventArgs e) => {
-		int retriedAlready = 0;
-		if (e.UserData != null)
-			retriedAlready = (int)e.UserData;
-		retriedAlready += 1;
-		e.UserData = retriedAlready;
-		if (retriedAlready >= 10)
+		// Store retry count in UserData field (persisted among retries of a given request)
+		int retriedCount = e.UserData != null ? (int)e.UserData : 0;
+		e.UserData = retriedCount + 1;
+		if (retriedAlready >= RetryTimes.Length)
 			e.Abort();
 		else
-			e.RetryIn(milliseconds: 100);
+			e.RetryIn(RetryTimes[retriedAlready]);
 	};
 ~~~~
 

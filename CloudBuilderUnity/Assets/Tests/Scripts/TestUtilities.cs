@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TestUtilities : MonoBehaviour {
 	private Dictionary<string, string> GeneratedIds = new Dictionary<string,string>();
-	private System.Random random = new System.Random();
 
 	void Start() {
 	}

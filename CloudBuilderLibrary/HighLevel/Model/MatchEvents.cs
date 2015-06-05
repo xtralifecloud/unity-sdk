@@ -13,9 +13,9 @@ namespace CloudBuilderLibrary {
 		public string MatchEventId { get; private set; }
 		public MatchInfo Match { get; private set; }
 
-		protected MatchEvent(Match match, Bundle serverData) {
+		protected MatchEvent(Gamer gamer, Bundle serverData) {
 			MatchEventId = serverData["event"]["_id"];
-			Match = new MatchInfo(match.Gamer, serverData["event"]["match_id"]);
+			Match = new MatchInfo(gamer, serverData["event"]["match_id"]);
 		}
 	}
 
@@ -29,7 +29,7 @@ namespace CloudBuilderLibrary {
 		 */
 		public List<GamerInfo> PlayersJoined = new List<GamerInfo>();
 
-		internal MatchJoinEvent(Match match, Bundle serverData) : base(match, serverData) {
+		internal MatchJoinEvent(Gamer gamer, Bundle serverData) : base(gamer, serverData) {
 			foreach (Bundle b in serverData["event"]["playersJoined"].AsArray()) {
 				PlayersJoined.Add(new GamerInfo(b));
 			}
@@ -46,7 +46,7 @@ namespace CloudBuilderLibrary {
 		 */
 		public List<GamerInfo> PlayersLeft = new List<GamerInfo>();
 
-		internal MatchLeaveEvent(Match match, Bundle serverData) : base(match, serverData) {
+		internal MatchLeaveEvent(Gamer gamer, Bundle serverData) : base(gamer, serverData) {
 			foreach (Bundle b in serverData["event"]["playersLeft"].AsArray()) {
 				PlayersLeft.Add(new GamerInfo(b));
 			}
@@ -63,7 +63,7 @@ namespace CloudBuilderLibrary {
 		 */
 		public bool Finished;
 
-		internal MatchFinishEvent(Match match, Bundle serverData) : base(match, serverData) {
+		internal MatchFinishEvent(Gamer gamer, Bundle serverData) : base(gamer, serverData) {
 			Finished = serverData["event"]["finished"];
 		}
 	}
@@ -82,13 +82,12 @@ namespace CloudBuilderLibrary {
 		 */
 		public string PlayerId;
 
-		internal MatchMoveEvent(Match match, Bundle serverData) : base(match, serverData) {
+		internal MatchMoveEvent(Gamer gamer, Bundle serverData) : base(gamer, serverData) {
 			MoveData = serverData["event"]["move"];
 			PlayerId = serverData["event"]["player_id"];
 		}
 	}
 
-#if false
 	/**
 	 * Event of type match.invite.
 	 * Received by another player when someone invites him to the match.
@@ -99,9 +98,8 @@ namespace CloudBuilderLibrary {
 		 */
 		public GamerInfo Inviter;
 
-		internal MatchInviteEvent(Match match, Bundle serverData) : base(match, serverData) {
+		internal MatchInviteEvent(Gamer gamer, Bundle serverData) : base(gamer, serverData) {
 			Inviter = new GamerInfo(serverData["event"]["inviter"]);
 		}
 	}
-#endif
 }

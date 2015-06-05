@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using CloudBuilderLibrary;
 using UnityEngine;
 
@@ -41,6 +42,10 @@ public class TestBase : MonoBehaviour {
 
 	protected void CompleteTest() {
 		IntegrationTest.Pass();
+	}
+
+	protected string GetAllTestScopedId(string prefix) {
+		return FindObjectOfType<TestUtilities>().GetAllTestScopedId(prefix);
 	}
 
 	protected void Login(Clan clan, Action<Gamer> done) {
@@ -86,7 +91,10 @@ public class TestBase : MonoBehaviour {
 		return string.Format("test{0}@localhost.localdomain", randomPart);
 	}
 
-	protected string GetAllTestScopedId(string prefix) {
-		return FindObjectOfType<TestUtilities>().GetAllTestScopedId(prefix);
+	protected void RunLater(int millisec, Action action) {
+		new Thread(new ThreadStart(() => {
+			Thread.Sleep(millisec);
+			action();
+		})).Start();
 	}
 }

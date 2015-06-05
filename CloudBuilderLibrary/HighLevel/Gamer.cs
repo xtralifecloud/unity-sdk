@@ -54,7 +54,7 @@ namespace CloudBuilderLibrary
 		 * @return an object that allows to perform basic operations on matches.
 		 */
 		public GamerMatches Matches {
-			get { return new GamerMatches(this); }
+			get { MatchesInstance = MatchesInstance ?? new GamerMatches(this); return MatchesInstance; }
 		}
 
 		/**
@@ -115,6 +115,7 @@ namespace CloudBuilderLibrary
 		}
 
 		internal Clan Clan;
+		private GamerMatches MatchesInstance;
 		#endregion
 	}
 }

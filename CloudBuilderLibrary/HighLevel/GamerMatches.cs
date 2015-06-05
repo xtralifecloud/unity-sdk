@@ -8,14 +8,9 @@ namespace CloudBuilderLibrary {
 	 */
 	public class GamerMatches {
 
-		/**
-		 * Changes the domain affected by the next operations.
-		 * You should typically use it this way: `gamer.Mathes.Domain("private").List(...);`
-		 * @param domain domain on which to scope the matches. Default to `private` if unmodified.
-		 */
-		public GamerMatches Domain(string domain) {
-			this.domain = domain;
-			return this;
+		public event Action<MatchInviteEvent> OnMatchInvitation {
+			add { onMatchInvitation += value; CheckEventLoopNeeded(); }
+			remove { onMatchInvitation -= value; CheckEventLoopNeeded(); }
 		}
 
 		/**
@@ -66,6 +61,25 @@ namespace CloudBuilderLibrary {
 		}
 
 		/**
+		 * Clears all event handlers subscribed, ensuring that a match object can be dismissed without causing further
+		 * actions in the background.
+		 */
+		public void Dismiss() {
+			foreach (Action<MatchInviteEvent> e in onMatchInvitation.GetInvocationList()) onMatchInvitation -= e;
+			CheckEventLoopNeeded();
+		}
+
+		/**
+		 * Changes the domain affected by the next operations.
+		 * You should typically use it this way: `gamer.Mathes.Domain("private").List(...);`
+		 * @param domain domain on which to scope the matches. Default to `private` if unmodified.
+		 */
+		public GamerMatches Domain(string domain) {
+			this.domain = domain;
+			return this;
+		}
+
+		/**
 		 * Fetches a Match object corresponding to a match which the player already belongs to.
 		 * It can be used either to obtain additional information about a running match (by inspecting the resulting
 		 * match object), or to continue an existing match (by keeping the match object which corresponds to the one
@@ -105,8 +119,37 @@ namespace CloudBuilderLibrary {
 		internal GamerMatches(Gamer gamer) {
 			Gamer = gamer;
 		}
+
+		private void CheckEventLoopNeeded() {
+			if (onMatchInvitation != null) {
+				// Register if needed
+				if (RegisteredEventLoop == null) {
+					RegisteredEventLoop = CloudBuilder.GetEventLoopFor(Gamer.GamerId, domain);
+					if (RegisteredEventLoop == null) {
+						CloudBuilder.LogWarning("No pop event loop for domain " + domain + ", match invitations will not work");
+					}
+					else {
+						RegisteredEventLoop.ReceivedEvent += this.ReceivedLoopEvent;
+					}
+				}
+			}
+			else if (RegisteredEventLoop != null) {
+				// Unregister from event loop
+				RegisteredEventLoop.ReceivedEvent -= this.ReceivedLoopEvent;
+				RegisteredEventLoop = null;
+			}
+		}
+
+		private void ReceivedLoopEvent(DomainEventLoop sender, EventLoopArgs e) {
+			if (e.Message["type"].AsString() == "match.invite") {
+				if (onMatchInvitation != null) onMatchInvitation(new MatchInviteEvent(Gamer, e.Message));
+			}
+		}
+
 		private string domain = Common.PrivateDomain;
 		private Gamer Gamer;
+		private event Action<MatchInviteEvent> onMatchInvitation;
+		private DomainEventLoop RegisteredEventLoop;
 		#endregion
 	}
 

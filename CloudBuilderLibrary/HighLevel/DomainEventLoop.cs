@@ -136,6 +136,7 @@ namespace CloudBuilderLibrary {
 				CurrentRequest.DoNotEnqueue = true;
 
 				Managers.HttpClient.Run(CurrentRequest, (HttpResponse res) => {
+					CurrentRequest = null;
 					try {
 						lastResultPositive = true;
 						if (res.StatusCode == 200) {
@@ -158,7 +159,6 @@ namespace CloudBuilderLibrary {
 
 				// Wait for request (synchronous)
 				SynchronousRequestLock.WaitOne();
-				CurrentRequest = null;
 
 				// Wait if suspended
 				if (Paused) {

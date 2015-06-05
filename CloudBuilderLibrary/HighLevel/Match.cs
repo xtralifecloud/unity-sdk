@@ -57,10 +57,22 @@ namespace CloudBuilderLibrary {
 		 */
 		public List<MatchMove> Moves { get; private set; }
 		// Subscribe to these events to be notified of events related to the match, such as when a move was posted.
-		public event Action<Match, MatchFinishEvent> OnMatchFinished;
-		public event Action<Match, MatchJoinEvent> OnPlayerJoined;
-		public event Action<Match, MatchLeaveEvent> OnPlayerLeft;
-		public event Action<Match, MatchMoveEvent> OnMovePosted;
+		public event Action<Match, MatchFinishEvent> OnMatchFinished {
+			add { onMatchFinished += value; CheckEventLoopNeeded(); }
+			remove { onMatchFinished -= value; CheckEventLoopNeeded(); }
+		}
+		public event Action<Match, MatchJoinEvent> OnPlayerJoined {
+			add { onPlayerJoined += value; CheckEventLoopNeeded(); }
+			remove { onPlayerJoined -= value; CheckEventLoopNeeded(); }
+		}
+		public event Action<Match, MatchLeaveEvent> OnPlayerLeft {
+			add { onPlayerLeft += value; CheckEventLoopNeeded(); }
+			remove { onPlayerLeft -= value; CheckEventLoopNeeded(); }
+		}
+		public event Action<Match, MatchMoveEvent> OnMovePosted {
+			add { onMovePosted += value; CheckEventLoopNeeded(); }
+			remove { onMovePosted -= value; CheckEventLoopNeeded(); }
+		}
 		/**
 		 * IDs of players participating to the match, including the creator (which is reported alone there at creation).
 		 */
@@ -84,11 +96,12 @@ namespace CloudBuilderLibrary {
 		 * Clears all event handlers subscribed, ensuring that a match object can be dismissed without causing further
 		 * actions in the background.
 		 */
-		public void DiscardEventHandlers() {
-			foreach (Action<Match, MatchFinishEvent> e in OnMatchFinished.GetInvocationList()) OnMatchFinished -= e;
-			foreach (Action<Match, MatchJoinEvent> e in OnPlayerJoined.GetInvocationList()) OnPlayerJoined -= e;
-			foreach (Action<Match, MatchLeaveEvent> e in OnPlayerLeft.GetInvocationList()) OnPlayerLeft -= e;
-			foreach (Action<Match, MatchMoveEvent> e in OnMovePosted.GetInvocationList()) OnMovePosted -= e;
+		public void Dismiss() {
+			foreach (Action<Match, MatchFinishEvent> e in onMatchFinished.GetInvocationList()) onMatchFinished -= e;
+			foreach (Action<Match, MatchJoinEvent> e in onPlayerJoined.GetInvocationList()) onPlayerJoined -= e;
+			foreach (Action<Match, MatchLeaveEvent> e in onPlayerLeft.GetInvocationList()) onPlayerLeft -= e;
+			foreach (Action<Match, MatchMoveEvent> e in onMovePosted.GetInvocationList()) onMovePosted -= e;
+			CheckEventLoopNeeded();
 		}
 
 		/**
@@ -204,6 +217,13 @@ namespace CloudBuilderLibrary {
 		}
 
 		#region Private
+		// Modify the CheckEventLoopNeeded method when adding an event!
+		private event Action<Match, MatchFinishEvent> onMatchFinished;
+		private event Action<Match, MatchJoinEvent> onPlayerJoined;
+		private event Action<Match, MatchLeaveEvent> onPlayerLeft;
+		private event Action<Match, MatchMoveEvent> onMovePosted;
+		private DomainEventLoop RegisteredEventLoop;
+
 		internal Match(Gamer gamer, Bundle serverData) {
 			Gamer = gamer;
 			CustomProperties = Bundle.Empty;
@@ -212,13 +232,26 @@ namespace CloudBuilderLibrary {
 			Players = new List<GamerInfo>();
 			Shoe = Bundle.Empty;
 			UpdateWithServerData(serverData);
-			// Register for pop events
-			DomainEventLoop loop = CloudBuilder.GetEventLoopFor(Gamer.GamerId, Domain);
-			if (loop == null) {
-				CloudBuilder.LogWarning("No pop event loop for match " + MatchId + " on domain " + Domain + ", match events/updates will not work");
+		}
+
+		private void CheckEventLoopNeeded() {
+			// One event registered?
+			if (onMatchFinished != null || onPlayerJoined != null || onPlayerLeft != null || onMovePosted != null) {
+				// Register event loop if not already
+				if (RegisteredEventLoop == null) {
+					RegisteredEventLoop = CloudBuilder.GetEventLoopFor(Gamer.GamerId, Domain);
+					if (RegisteredEventLoop == null) {
+						CloudBuilder.LogWarning("No pop event loop for match " + MatchId + " on domain " + Domain + ", match events/updates will not work");
+					}
+					else {
+						RegisteredEventLoop.ReceivedEvent += this.ReceivedLoopEvent;
+					}
+				}
 			}
-			else {
-				loop.ReceivedEvent += this.ReceivedLoopEvent;
+			else if (RegisteredEventLoop != null) {
+				// Unregister from event loop
+				RegisteredEventLoop.ReceivedEvent -= this.ReceivedLoopEvent;
+				RegisteredEventLoop = null;
 			}
 		}
 
@@ -232,23 +265,23 @@ namespace CloudBuilderLibrary {
 
 			switch (e.Message["type"].AsString()) {
 				case "match.join":
-					var joinEvent = new MatchJoinEvent(this, e.Message);
+					var joinEvent = new MatchJoinEvent(Gamer, e.Message);
 					Players.AddRange(joinEvent.PlayersJoined);
-					if (OnPlayerJoined != null) OnPlayerJoined(this, joinEvent);
+					if (onPlayerJoined != null) onPlayerJoined(this, joinEvent);
 					break;
 				case "match.leave":
-					var leaveEvent = new MatchLeaveEvent(this, e.Message);
+					var leaveEvent = new MatchLeaveEvent(Gamer, e.Message);
 					foreach (var p in leaveEvent.PlayersLeft) Players.Remove(p);
-					if (OnPlayerLeft != null) OnPlayerLeft(this, leaveEvent);
+					if (onPlayerLeft != null) onPlayerLeft(this, leaveEvent);
 					break;
 				case "match.finish":
 					Status = MatchStatus.Finished;
-					if (OnMatchFinished != null) OnMatchFinished(this, new MatchFinishEvent(this, e.Message));
+					if (onMatchFinished != null) onMatchFinished(this, new MatchFinishEvent(Gamer, e.Message));
 					break;
 				case "match.move":
-					var moveEvent = new MatchMoveEvent(this, e.Message);
+					var moveEvent = new MatchMoveEvent(Gamer, e.Message);
 					Moves.Add(new MatchMove(moveEvent.PlayerId, moveEvent.MoveData));
-					if (OnMovePosted != null) OnMovePosted(this, moveEvent);
+					if (onMovePosted != null) onMovePosted(this, moveEvent);
 					break;
 				case "match.invite":	// Do not notify them since we are already playing the match
 					break;
