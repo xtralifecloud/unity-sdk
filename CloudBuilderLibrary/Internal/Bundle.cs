@@ -335,7 +335,7 @@ namespace CloudBuilderLibrary
 			return JsonMapper.ToJson(ToJson(this));
 		}
 
-		public string ToString() { return ToJson(); }
+		public override string ToString() { return ToJson(); }
 
 		private static Bundle FromJson(JsonData data) {
 			if (data.IsBoolean) return ((IJsonWrapper) data).GetBoolean();

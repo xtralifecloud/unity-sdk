@@ -5,8 +5,18 @@ namespace CloudBuilderLibrary {
 
 	public class ClanIndexing {
 
+		/**
+		 * Deletes an indexed entry. If you just want to update an entry, simply use IndexObject.
+		 * @param done callback invoked when the operation has finished, either successfully or not.
+		 * @param objectId ID of the object to delete, as passed when indexing.
+		 */
 		public void DeleteObject(ResultHandler<bool> done, string objectId) {
-
+			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName).Path(objectId);
+			HttpRequest req = Clan.MakeUnauthenticatedHttpRequest(url);
+			req.Method = "DELETE";
+			Common.RunHandledRequest(req, done, (HttpResponse response) => {
+				Common.InvokeHandler(done, true, response.BodyJson);
+			});
 		}
 
 		/**

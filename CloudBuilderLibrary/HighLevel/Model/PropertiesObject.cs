@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace CloudBuilderLibrary {
 
@@ -21,24 +19,24 @@ namespace CloudBuilderLibrary {
 	 * PropertiesObject methods to query additional properties that might have been enriched in a hook for instance.
 	 */
 	public class PropertiesObject {
-		protected Bundle Properties;
+		protected Bundle Props;
 
 		protected PropertiesObject(Bundle baseData) {
-			Properties = baseData;
+			Props = baseData;
 		}
 
 		/**
 		 * Allows to query additional properties via an indexer (can be enriched via hooks).
 		 */
 		public Bundle this[string key] {
-			get { return Properties[key]; }
+			get { return Props[key]; }
 		}
 		/**
 		 * Allows to browse all keys (might include some that are already exposed as typed properties in the object).
 		 * @return the list of keys.
 		 */
 		public Dictionary<string, Bundle>.KeyCollection Keys() {
-			return Properties.AsDictionary().Keys;
+			return Props.AsDictionary().Keys;
 		}
 		/**
 		 * Allows to browse all keys (might include some that are already exposed as typed properties in the object).
@@ -47,15 +45,15 @@ namespace CloudBuilderLibrary {
 		 * string for instance.
 		 */
 		public Dictionary<string, Bundle>.Enumerator GetEnumerator() {
-			return Properties.AsDictionary().GetEnumerator();
+			return Props.AsDictionary().GetEnumerator();
 		}
 
 		/**
 		 * You may use this to debug what is inside this property object.
 		 * @return a JSON string representing the object.
 		 */
-		public string ToString() {
-			return Properties.ToJson();
+		public override string ToString() {
+			return Props.ToJson();
 		}
 	}
 }

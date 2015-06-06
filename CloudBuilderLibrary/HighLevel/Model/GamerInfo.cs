@@ -15,7 +15,7 @@ namespace CloudBuilderLibrary {
 		 * Id of the gamer.
 		 */
 		public string GamerId {
-			get { return Properties["gamer_id"]; }
+			get { return Props["gamer_id"]; }
 		}
 
 		#region Private

@@ -20,13 +20,13 @@ namespace CloudBuilderLibrary {
 		 * Document payload; passed upon indexing the object.
 		 */
 		public Bundle Payload {
-			get { return Properties["_source"]["payload"]; }
+			get { return Props["_source"]["payload"]; }
 		}
 		/**
 		 * Indexed properties. Passed upon indexing the object.
 		 */
 		public Bundle Properties {
-			get { return Properties["_source"]; }
+			get { return Props["_source"]; }
 		}
 		/**
 		 * Score (elastic search term) of the document.
@@ -35,9 +35,9 @@ namespace CloudBuilderLibrary {
 
 		#region Private
 		internal IndexResult(Bundle serverData) : base(serverData) {
-			IndexName = Properties["_index"];
-			ObjectId = Properties["_id"];
-			ResultScore = Properties["_score"];
+			IndexName = serverData["_type"];
+			ObjectId = serverData["_id"];
+			ResultScore = serverData["_score"];
 		}
 		#endregion
 	}

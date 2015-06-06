@@ -41,6 +41,34 @@ public class IndexTests : TestBase {
 				);
 			}
 		);
+	}
 
+	[Test("Indexes an object and deletes it. Checks that it cannot be accessed anymore then.")]
+	public void ShouldDeleteObject(Clan clan) {
+		string indexName = "test" + Guid.NewGuid().ToString();
+		string objectId = Guid.NewGuid().ToString();
+		// Index
+		clan.Index(indexName).IndexObject(
+			objectId: objectId,
+			properties: Bundle.CreateObject("prop", "value"),
+			payload: Bundle.CreateObject("pkey", "pvalue"),
+			done: result => {
+				Assert(result.IsSuccessful, "Failed to index object");
+				// Delete
+				clan.Index(indexName).DeleteObject(
+					objectId: objectId,
+					done: deleted => {
+						Assert(deleted.IsSuccessful, "Failed to delete object");
+						Assert(deleted.ServerData["found"] == true, "Expected the item to be found");
+						// Should not find anymore
+						clan.Index(indexName).GetObject(objectId: objectId, done: gotObject => {
+							Assert(!gotObject.IsSuccessful, "Should not find object anymore");
+							Assert(gotObject.HttpStatusCode == 404, "Should return 404");
+							CompleteTest();
+						});
+					}
+				);
+			}
+		);
 	}
 }
