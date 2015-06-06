@@ -96,7 +96,7 @@ namespace CloudBuilderLibrary {
 		 * Clears all event handlers subscribed, ensuring that a match object can be dismissed without causing further
 		 * actions in the background.
 		 */
-		public void Dismiss() {
+		public void DiscardEventHandlers() {
 			foreach (Action<Match, MatchFinishEvent> e in onMatchFinished.GetInvocationList()) onMatchFinished -= e;
 			foreach (Action<Match, MatchJoinEvent> e in onPlayerJoined.GetInvocationList()) onPlayerJoined -= e;
 			foreach (Action<Match, MatchLeaveEvent> e in onPlayerLeft.GetInvocationList()) onPlayerLeft -= e;

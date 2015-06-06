@@ -64,14 +64,14 @@ namespace CloudBuilderLibrary {
 		 * Clears all event handlers subscribed, ensuring that a match object can be dismissed without causing further
 		 * actions in the background.
 		 */
-		public void Dismiss() {
+		public void DiscardEventHandlers() {
 			foreach (Action<MatchInviteEvent> e in onMatchInvitation.GetInvocationList()) onMatchInvitation -= e;
 			CheckEventLoopNeeded();
 		}
 
 		/**
 		 * Changes the domain affected by the next operations.
-		 * You should typically use it this way: `gamer.Mathes.Domain("private").List(...);`
+		 * You should typically use it this way: `gamer.Matches.Domain("private").List(...);`
 		 * @param domain domain on which to scope the matches. Default to `private` if unmodified.
 		 */
 		public GamerMatches Domain(string domain) {

@@ -221,6 +221,7 @@ namespace CloudBuilderLibrary
 			// Auto choose HTTP method
 			req.Method = request.Method ?? (request.Body != null ? "POST" : "GET");
 			req.UserAgent = request.UserAgent;
+			req.KeepAlive = true;
 			req.ServicePoint.ConnectionLimit = ConcurrentHttpRequestLimit;
 			foreach (var pair in request.Headers) {
 				if (String.Compare(pair.Key, "Content-Type", true) == 0)

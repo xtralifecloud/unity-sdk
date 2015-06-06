@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using CloudBuilderLibrary;
@@ -35,6 +36,8 @@ using UnityEngine;
  * Try to give to your test the same name as the method.
  */
 public class TestBase : MonoBehaviour {
+	private List<string> PendingSignals = new List<string>();
+	private Dictionary<string, Action> RegisteredSlots = new Dictionary<string, Action>();
 
 	protected void Assert(bool condition, string message) {
 		if (!condition) IntegrationTest.Assert(condition, message);
@@ -96,5 +99,37 @@ public class TestBase : MonoBehaviour {
 			Thread.Sleep(millisec);
 			action();
 		})).Start();
+	}
+
+	// Registers a method that is run once when a signal is triggered
+	protected void RunOnSignal(string signalName, Action action) {
+		bool runThisAction = false;
+		lock (this) {
+			if (RegisteredSlots.ContainsKey(signalName)) throw new ArgumentException("Already registered a method for signal " + signalName);
+			// Was previously triggered (race condition)
+			if (PendingSignals.Contains(signalName)) {
+				runThisAction = true;
+				PendingSignals.Remove(signalName);
+			}
+			else {
+				RegisteredSlots[signalName] = action;
+			}
+		}
+		if (runThisAction) action();
+	}
+
+	[MethodImpl(MethodImplOptions.Synchronized)]
+	protected void Signal(string signalName) {
+		Action action = null;
+		lock (this) {
+			if (RegisteredSlots.ContainsKey(signalName)) {
+				action = RegisteredSlots[signalName];
+				RegisteredSlots.Remove(signalName);
+			}
+			else if (!PendingSignals.Contains(signalName)) {
+				PendingSignals.Add(signalName);
+			}
+		}
+		if (action != null) action();
 	}
 }

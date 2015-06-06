@@ -7,6 +7,15 @@ namespace CloudBuilderLibrary
 	public sealed partial class Clan {
 
 		/**
+		 * Allows to manipulate an index. Usage: `Clan.Index("matches").IndexObject(...);`.
+		 * @param indexName name of the index; scopes your searches.
+		 * @param domain the domain to manipulate the index on.
+		 */
+		public ClanIndexing Index(string indexName, string domain = Common.PrivateDomain) {
+			return new ClanIndexing(this, indexName, domain);
+		}
+
+		/**
 		 * Executes a "ping" request to the server. Allows to know whether the server is currently working as expected.
 		 * You should hardly ever need this.
 		 * @param done callback invoked when the request has finished, either successfully or not. The boolean value inside is not important.

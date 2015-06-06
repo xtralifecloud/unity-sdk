@@ -4,20 +4,18 @@ using System.Collections.Generic;
 
 namespace CloudBuilderLibrary
 {
-	public sealed class GamerProfile {
-		/**
-		 * Might contain the following:
-			{
-				"displayname" : "xxx",
-				"email" : "xxx',
-				"lang" : "en"
-			}
-		 */
-		public Bundle Properties;
-
-		internal GamerProfile(Bundle data) {
-			Properties = data;
+	/**
+	 * Might contain the following:
+		{
+			"displayname" : "xxx",
+			"email" : "xxx',
+			"lang" : "en"
 		}
+	 *  Usage: `string name = gamerProfile["displayname"];`.
+	 */
+	public sealed class GamerProfile : PropertiesObject {
+
+		internal GamerProfile(Bundle data) : base(data) {}
 	}
 	
 }

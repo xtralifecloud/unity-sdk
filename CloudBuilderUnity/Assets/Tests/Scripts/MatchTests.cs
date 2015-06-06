@@ -182,7 +182,7 @@ public class MatchTests : TestBase {
 				// P1 will receive the join event
 				createdMatch.Value.OnPlayerJoined += (Match sender, MatchJoinEvent e) => {
 					// P2 has joined; wait that he subscribes to the movePosted event.
-					RunLater(millisec: 500, action: () => {
+					RunOnSignal("p2subscribed", () => {
 						// Ok so now P2 has joined and is ready, we can go forward and post a move
 						createdMatch.Value.PostMove(postedMove => {
 							Assert(postedMove.IsSuccessful, "Failed to post move");
@@ -200,6 +200,7 @@ public class MatchTests : TestBase {
 						loopP2.Stop();
 						CompleteTest();
 					};
+					Signal("p2subscribed");
 				}, createdMatch.Value.MatchId);
 			}, 2);
 		});
@@ -212,8 +213,8 @@ public class MatchTests : TestBase {
 			DomainEventLoop loopP1 = new DomainEventLoop(gamer1).Start();
 			gamer1.Matches.OnMatchInvitation += (MatchInviteEvent e) => {
 				Assert(e.Inviter.GamerId == gamer2.GamerId, "Invitation should come from P2");
-				// Test dismiss functionality (function not needed since we are stopping the loop it is registered to)
-				gamer1.Matches.Dismiss();
+				// Test dismiss functionality (not needed in reality since we are stopping the loop it is registered to)
+				gamer1.Matches.DiscardEventHandlers();
 				loopP1.Stop();
 				CompleteTest();
 			};
