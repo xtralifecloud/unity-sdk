@@ -27,10 +27,10 @@ namespace CloudBuilderLibrary {
 		 */
 		public void List(PagedResultHandler<Score> done, string board, int limit = 30, int offset = 0) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/scores").Path(domain).Path(board).QueryParam("count", limit);
-			if (offset >= 0) url.QueryParam("page", offset / limit + 1);
-			else if (offset == -1) url.QueryParam("page", "me");
-			else throw new ArgumentException("Invalid offset " + offset);
+			if (offset == -1) url.QueryParam("page", "me");
+			else              url.QueryParam("page", offset / limit + 1);
 			Common.RunHandledRequest(Gamer.MakeHttpRequest(url), done, (HttpResponse response) => {
+				// Fetch listed scores
 				List<Score> scores = new List<Score>();
 				Bundle boardData = response.BodyJson[board];
 				int rank = boardData["rankOfFirst"];

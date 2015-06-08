@@ -68,5 +68,4 @@ namespace CloudBuilderLibrary {
 		}
 		internal Action Next, Previous;
 	}
-
 }

@@ -63,6 +63,32 @@ namespace CloudBuilderLibrary {
 
 		// Sorting properties -> [name:asc, ...] -> essayer
 		public void Search(PagedResult<IndexResult> done, string query, List<string> sortingProperties, int limit = 30, int offset = 0) {
+			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName);
+			url.QueryParam("from", offset).QueryParam("max", limit).QueryParam("q", query);
+			// Build sort property
+			Bundle sort = Bundle.CreateArray();
+			foreach (string s in sortingProperties) sort.Add(s);
+			url.QueryParam("sort", sort.ToJson());
+/*			Managers.HttpClient.Run(Clan.MakeUnauthenticatedHttpRequest(url), (HttpResponse response) => {
+				if (Common.HasFailed(response)) {
+					Common.InvokeHandler(done, response);
+					return;
+				}
+				// Fetch listed scores
+				List<IndexResult> results = new List<IndexResult>();
+				foreach (Bundle b in response.BodyJson["hits"].AsArray()) {
+					results.Add(new IndexResult(b));
+				}
+				// Handle pagination
+				IndexPagedResult result = new IndexPagedResult(results, response.BodyJson, offset);
+				if (offset > 0) {
+					result.Previous = () => Search(done, query, sortingProperties, limit, offset - limit);
+				}
+				if (offset + results.Count < result.Total) {
+					result.Next = () => List(done, query, sortingProperties, limit, offset + limit);
+				}
+				Common.InvokeHandler(done, result);
+			});*/
 		}
 
 		#region Private
@@ -76,4 +102,16 @@ namespace CloudBuilderLibrary {
 		private string Domain, IndexName;
 		#endregion
 	}
+
+	public class IndexPagedResult : PagedResult<IndexResult> {
+		/**
+		 * Maximum score in the results.
+		 */
+		public int MaxScore;
+
+		internal IndexPagedResult(List<IndexResult> values, Bundle serverData, int currentOffset) : base(values, serverData, currentOffset, serverData["total"]) {
+			MaxScore = serverData["max_score"];
+		}
+	}
+
 }
