@@ -226,6 +226,53 @@ public class MatchTests : TestBase {
 		});
 	}
 
+	[Test("Creates a variety of matches and tests the various features of the match listing functionality.")]
+	public void ShouldListMatches(Clan clan) {
+		Login2NewUsers(clan, (gamer1, gamer2) => {
+			// Allows to better indent the code
+			new Promise().Then(next => {
+				// 1) Create a match to which only P1 is participating
+				gamer1.Matches.Create(m1 => {
+					Assert(m1.IsSuccessful, "Failed to create match 1");
+					next.Return();
+				}, 2);
+			}).Then(next => {
+				// 2) Create a finished match
+				gamer1.Matches.Create(m2 => {
+					Assert(m2.IsSuccessful, "Failed to create match 2");
+					m2.Value.Finish(finishedM2 => {
+						Assert(finishedM2.IsSuccessful, "Failed to finish match 2");
+						next.Return();
+					});
+				}, 2);
+			}).Then(next => {
+				// 3) Create a match to which we invite P2 (he should see himself)
+				gamer1.Matches.Create(m3 => {
+					Assert(m3.IsSuccessful, "Failed to create match 3");
+					// Invite P2 to match 3
+					m3.Value.InvitePlayer(invitedP2 => {
+						Assert(invitedP2.IsSuccessful, "Failed to invite P2 to match 3");
+						next.Return();
+					}, gamer2.GamerId);
+				}, 2);
+			}).Then(next => {
+				// 4) Create a full match
+				gamer1.Matches.Create(m4 => {
+					Assert(m4.IsSuccessful, "Failed to create match 4");
+					next.Return();
+				}, 1);
+			}).Then(next => {
+				// List all matches; by default, not all matches should be returned (i.e. m1 and m3)
+				gamer1.Matches.List(listedAll => {
+					Assert(listedAll.IsSuccessful, "Failed to list all matches");
+					Assert(listedAll.Value.Count == 2, "Should have 2 results");
+				});
+			})
+			.Finally(CompleteTest)
+			.Return(); // Start the deferred chain
+		});
+	}
+
 	#region Private
 	private string RandomBoardName() {
 		return "board-" + Guid.NewGuid().ToString();

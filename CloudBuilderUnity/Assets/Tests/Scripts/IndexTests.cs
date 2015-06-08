@@ -90,7 +90,7 @@ public class IndexTests : TestBase {
 		.Then(dummy => indexItem("item2", Bundle.CreateObject("item", "silver"), Bundle.CreateObject("key2", "value2")))
 		.Then(dummy => indexItem("item3", Bundle.CreateObject("item", "bronze"), Bundle.CreateObject("key3", "value3")))
 		.Then(dummy => indexItem("item4", Bundle.CreateObject("item", "silver", "qty", 10), Bundle.CreateObject("key4", "value4")))
-		// Then check results
+			// Then check results
 		.Then((dummy, p) => {
 			index.Search(
 				query: "item:gold",
@@ -146,6 +146,34 @@ public class IndexTests : TestBase {
 					}
 				}
 			);
+		});
+	}
+
+	[Test("Tests that the API can be used to search for matches")]
+	public void ShouldBeUsableToSearchForMatches(Clan clan) {
+		Login2Users(clan, (gamer1, gamer2) => {
+			gamer1.Matches.Create(match1 => {
+				Assert(match1.IsSuccessful, "Match 1 creation failed");
+				// Index the match
+				clan.Index("matches").IndexObject(indexResult => {
+					Assert(indexResult.IsSuccessful, "Failed to index match 1");
+					// Create another match
+					gamer1.Matches.Create(match2 => {
+						Assert(match2.IsSuccessful, "Match 2 creation failed");
+						// Index it
+						clan.Index("matches").IndexObject(indexResult2 => {
+							Assert(indexResult2.IsSuccessful, "Failed to index match 2");
+							// Check that we can find match1 by looking for public matches
+							clan.Index("matches").Search(found => {
+								Assert(found.IsSuccessful, "Failed to look for matches");
+								Assert(found.Value.Hits.Count == 1, "Should find one match");
+								Assert(found.Value.Hits[0].ObjectId == match1.Value.MatchId, "Should find one match");
+								CompleteTest();
+							}, "private:true"); // search for match #1
+						}, match2.Value.MatchId, Bundle.CreateObject("public", false), Bundle.Empty); // index match #2
+					}, 2); // create match #2
+				}, match1.Value.MatchId, Bundle.CreateObject("public", true), Bundle.Empty); // index match #1
+			}, 2); // create match #1
 		});
 	}
 }

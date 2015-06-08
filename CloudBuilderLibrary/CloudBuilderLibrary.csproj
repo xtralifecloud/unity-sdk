@@ -67,6 +67,7 @@
     <Compile Include="HighLevel\Model\IndexSearchResult.cs" />
     <Compile Include="HighLevel\Model\LoginNetwork.cs" />
     <Compile Include="HighLevel\Model\MatchEvents.cs" />
+    <Compile Include="HighLevel\Model\MatchListResult.cs" />
     <Compile Include="HighLevel\Model\PostedGameScore.cs" />
     <Compile Include="HighLevel\Model\PropertiesObject.cs" />
     <Compile Include="HighLevel\Model\PushNotification.cs" />

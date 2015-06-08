@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CloudBuilderLibrary {
 
@@ -112,6 +113,42 @@ namespace CloudBuilderLibrary {
 			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Common.InvokeHandler(done, new Match(Gamer, response.BodyJson["match"]), response.BodyJson);
+			});
+		}
+
+		/**
+		 * Can be used to list the active matches for this game. In general, it is not recommended to proceed this way
+		 * if your goal is to display the games that may be joined. The indexing API is better suited to this use case
+		 * (index the match along with properties and look for matches matching the desired properties).
+		 * @param done callback invoked when the operation has finished, either successfully or not. The list of
+		 *     matches filtered according to the following parameters is provided.
+		 * @param participating set to true to only list matches to which this user is participating.
+		 * @param invited set to true to filter by matches you are invited to (only include them).
+		 * @param finished set to true to also include finished matchs (which are filtered out by default).
+		 * @param full set to true to also include games where the maximum number of players has been reached.
+		 * @param limit for pagination, allows to set a greater or smaller page size than the default 30.
+		 * @param offset for pagination, avoid using it explicitly.
+		 */
+		public void List(ResultHandler<PagedList<MatchListResult>> done, bool participating = false, bool invited = false, bool finished = false, bool full = false, int limit = 30, int offset = 0) {
+			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(domain).QueryParam("offset", offset).QueryParam("limit", limit);
+			if (participating) url.QueryParam("participating");
+			if (finished) url.QueryParam("finished");
+			if (invited) url.QueryParam("invited");
+			if (full) url.QueryParam("full");
+			// Request for current results
+			Common.RunHandledRequest(Gamer.MakeHttpRequest(url), done, (HttpResponse response) => {
+				PagedList<MatchListResult> matches = new PagedList<MatchListResult>(offset, response.BodyJson["count"]);
+				foreach (Bundle b in response.BodyJson["matches"].AsArray()) {
+					matches.Add(new MatchListResult(b));
+				}
+				// Handle pagination
+				if (offset > 0) {
+					matches.Previous = () => List(done, participating, invited, finished, full, limit, offset - limit);
+				}
+				if (offset + matches.Count < matches.Total) {
+					matches.Next = () => List(done, participating, invited, finished, full, limit, offset + limit);
+				}
+				Common.InvokeHandler(done, matches);
 			});
 		}
 
