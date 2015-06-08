@@ -64,6 +64,7 @@
     <Compile Include="HighLevel\Model\GamerProfile.cs" />
     <Compile Include="HighLevel\GamerProperties.cs" />
     <Compile Include="HighLevel\Model\IndexResult.cs" />
+    <Compile Include="HighLevel\Model\IndexSearchResult.cs" />
     <Compile Include="HighLevel\Model\LoginNetwork.cs" />
     <Compile Include="HighLevel\Model\MatchEvents.cs" />
     <Compile Include="HighLevel\Model\PostedGameScore.cs" />

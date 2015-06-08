@@ -175,7 +175,7 @@ public class ClanTests : TestBase {
 		);
 	}
 
-	[Test("Checks the send reset link functionality.")]
+	[Test("Checks the send reset link functionality.", "Known to timeout sometimes (server side issue).")]
 	public void ShouldSendAccountResetLink(Clan clan) {
 		// This method is broken because we cannot GET somewhere with a body
 		// We have to fix the server or get rid of this method & test

@@ -61,34 +61,46 @@ namespace CloudBuilderLibrary {
 			});
 		}
 
-		// Sorting properties -> [name:asc, ...] -> essayer
-		public void Search(PagedResult<IndexResult> done, string query, List<string> sortingProperties, int limit = 30, int offset = 0) {
+		/**
+		 * Searches the index.
+		 * 
+		 * You can search documents in the index with this API. It allows you to make complex queries.
+		 * See the Elastic documentation to learn the full syntax. It’s easy and quite powerful.
+		 * http://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html
+		 * 
+		 * @param done callback invoked when the operation has finished, either successfully or not. The
+		 *     attached object contains various information about the results, including a Hits member,
+		 *     which handles the results in a paginated way.
+		 * @param query query string. Example: "item:silver". See Elastic documentation.
+		 * @param sortingProperties name of properties (fields) to sort the results with. Example:
+		 *     new List<string>() { "item:asc" }.
+		 * @param limit the maximum number of results to return per page.
+		 * @param offset number of the first result.
+		 */
+		public void Search(ResultHandler<IndexSearchResult> done, string query, List<string> sortingProperties = null, int limit = 30, int offset = 0) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName);
 			url.QueryParam("from", offset).QueryParam("max", limit).QueryParam("q", query);
 			// Build sort property
 			Bundle sort = Bundle.CreateArray();
-			foreach (string s in sortingProperties) sort.Add(s);
+			if (sortingProperties != null) {
+				foreach (string s in sortingProperties) sort.Add(s);
+			}
 			url.QueryParam("sort", sort.ToJson());
-/*			Managers.HttpClient.Run(Clan.MakeUnauthenticatedHttpRequest(url), (HttpResponse response) => {
-				if (Common.HasFailed(response)) {
-					Common.InvokeHandler(done, response);
-					return;
-				}
+			Common.RunHandledRequest(Clan.MakeUnauthenticatedHttpRequest(url), done, (HttpResponse response) => {
 				// Fetch listed scores
-				List<IndexResult> results = new List<IndexResult>();
+				IndexSearchResult result = new IndexSearchResult(response.BodyJson, offset);
 				foreach (Bundle b in response.BodyJson["hits"].AsArray()) {
-					results.Add(new IndexResult(b));
+					result.Hits.Add(new IndexResult(b));
 				}
 				// Handle pagination
-				IndexPagedResult result = new IndexPagedResult(results, response.BodyJson, offset);
 				if (offset > 0) {
-					result.Previous = () => Search(done, query, sortingProperties, limit, offset - limit);
+					result.Hits.Previous = () => Search(done, query, sortingProperties, limit, offset - limit);
 				}
-				if (offset + results.Count < result.Total) {
-					result.Next = () => List(done, query, sortingProperties, limit, offset + limit);
+				if (offset + result.Hits.Count < result.Hits.Total) {
+					result.Hits.Next = () => Search(done, query, sortingProperties, limit, offset + limit);
 				}
 				Common.InvokeHandler(done, result);
-			});*/
+			});
 		}
 
 		#region Private
@@ -102,16 +114,4 @@ namespace CloudBuilderLibrary {
 		private string Domain, IndexName;
 		#endregion
 	}
-
-	public class IndexPagedResult : PagedResult<IndexResult> {
-		/**
-		 * Maximum score in the results.
-		 */
-		public int MaxScore;
-
-		internal IndexPagedResult(List<IndexResult> values, Bundle serverData, int currentOffset) : base(values, serverData, currentOffset, serverData["total"]) {
-			MaxScore = serverData["max_score"];
-		}
-	}
-
 }

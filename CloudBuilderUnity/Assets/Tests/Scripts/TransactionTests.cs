@@ -86,9 +86,9 @@ public class TransactionTests : TestBase {
 				Assert(txResult.IsSuccessful, "Failed to run transaction");
 				gamer.Value.Transactions.History(histResult => {
 					Assert(histResult.IsSuccessful, "Failed to fetch history");
-					Assert(histResult.Values.Count == 1, "Expected one history entry");
-					Assert(histResult.Values[0].Description == "Transaction run by integration test.", "Wrong description");
-					Assert(histResult.Values[0].TxData["gold"] == 10, "Wrong tx data");
+					Assert(histResult.Value.Count == 1, "Expected one history entry");
+					Assert(histResult.Value[0].Description == "Transaction run by integration test.", "Wrong description");
+					Assert(histResult.Value[0].TxData["gold"] == 10, "Wrong tx data");
 					CompleteTest();
 				});
 			}, Bundle.CreateObject("gold", 10), "Transaction run by integration test.");
@@ -105,27 +105,28 @@ public class TransactionTests : TestBase {
 			ExecuteTransactions(gamer.Value, transactions, () => {
 				// All transactions have been executed. Default to page 1.
 				gamer.Value.Transactions.History(histResult => {
+					PagedList<Transaction> tx = histResult.Value;
 					Assert(histResult.IsSuccessful, "Failed to fetch history");
-					if (histResult.Offset == 0) {
+					if (tx.Offset == 0) {
 						// Even though there are three, only two results should be returned
-						Assert(histResult.Values.Count == 2, "Expected two entries in history");
+						Assert(tx.Count == 2, "Expected two entries in history");
 						// Then fetch the next page
-						Assert(!histResult.HasPrevious, "Should not have previous page");
-						Assert(histResult.HasNext, "Should have next page");
+						Assert(!tx.HasPrevious, "Should not have previous page");
+						Assert(tx.HasNext, "Should have next page");
 						// Coming back from the second page
 						if (alreadyWentBack) {
 							CompleteTest();
 							return;
 						}
-						histResult.FetchNext();
+						tx.FetchNext();
 					}
 					else {
 						// Last result
-						Assert(histResult.Offset == 2, "Expected offset: 2");
-						Assert(histResult.Values.Count == 1, "Expected one value at page 2");
-						Assert(histResult.HasPrevious, "Should have previous page");
-						Assert(!histResult.HasNext, "Should not have next page");
-						histResult.FetchPrevious();
+						Assert(tx.Offset == 2, "Expected offset: 2");
+						Assert(tx.Count == 1, "Expected one value at page 2");
+						Assert(tx.HasPrevious, "Should have previous page");
+						Assert(!tx.HasNext, "Should not have next page");
+						tx.FetchPrevious();
 						alreadyWentBack = true;
 					}
 				}, limit: 2);
@@ -144,8 +145,8 @@ public class TransactionTests : TestBase {
 				// All transactions have been executed. Default to page 1.
 				gamer.Value.Transactions.History(histResult => {
 					Assert(histResult.IsSuccessful, "Failed to fetch history");
-					Assert(histResult.Values.Count == 1, "Expected one value in history");
-					Assert(histResult.Values[0].TxData["gold"] == 2, "Expected tx: {gold: 2}");
+					Assert(histResult.Value.Count == 1, "Expected one value in history");
+					Assert(histResult.Value[0].TxData["gold"] == 2, "Expected tx: {gold: 2}");
 					CompleteTest();
 				}, unit: "silver");
 			})(null);

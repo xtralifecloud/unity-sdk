@@ -25,28 +25,29 @@ namespace CloudBuilderLibrary {
 		 * to auto-select the page where the current logged in user is located, including his score in the result. After
 		 * that, you may use the paged result handler to fetch pages nearby.
 		 */
-		public void List(PagedResultHandler<Score> done, string board, int limit = 30, int offset = 0) {
+		public void List(ResultHandler<PagedList<Score>> done, string board, int limit = 30, int offset = 0) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/scores").Path(domain).Path(board).QueryParam("count", limit);
 			if (offset == -1) url.QueryParam("page", "me");
 			else              url.QueryParam("page", offset / limit + 1);
 			Common.RunHandledRequest(Gamer.MakeHttpRequest(url), done, (HttpResponse response) => {
-				// Fetch listed scores
-				List<Score> scores = new List<Score>();
+				// Pagination computing
 				Bundle boardData = response.BodyJson[board];
+				int currentItems = boardData["scores"].AsArray().Count;
+				int total = Math.Min(boardData["maxpage"] * limit, offset + currentItems);
+				// Fetch listed scores
+				PagedList<Score> scores = new PagedList<Score>(offset, total);
 				int rank = boardData["rankOfFirst"];
 				foreach (Bundle b in boardData["scores"].AsArray()) {
 					scores.Add(new Score(b, rank++));
 				}
 				// Handle pagination
-				int total = Math.Min(boardData["maxpage"] * limit, offset + scores.Count);
-				PagedResult<Score> result = new PagedResult<Score>(scores, response.BodyJson, offset, total);
 				if (offset > 0) {
-					result.Previous = () => List(done, board, limit, offset - limit);
+					scores.Previous = () => List(done, board, limit, offset - limit);
 				}
-				if (offset + scores.Count < result.Total) {
-					result.Next = () => List(done, board, limit, offset + limit);
+				if (offset + scores.Count < scores.Total) {
+					scores.Next = () => List(done, board, limit, offset + limit);
 				}
-				Common.InvokeHandler(done, result);
+				Common.InvokeHandler(done, scores, response.BodyJson);
 			});
 		}
 

@@ -91,12 +91,12 @@ public class ScoreTests : TestBase {
 
 					gamer1.Scores.List(scores => {
 						Assert(scores.IsSuccessful, "Fetch scores failed");
-						Assert(scores.Total == 2, "Should have two scores");
-						Assert(scores.Values[0].Value == 1500, "First score not as expected");
-						Assert(scores.Values[0].Info == "TestGamer2", "First score info not as expected");
-						Assert(scores.Values[0].Rank == 1, "First score should have rank 1");
-						Assert(scores.Values[1].Value == 1000, "2nd score not as expected");
-						Assert(scores.Values[1].GamerInfo.GamerId == gamer1.GamerId, "2nd score not as expected");
+						Assert(scores.Value.Total == 2, "Should have two scores");
+						Assert(scores.Value[0].Value == 1500, "First score not as expected");
+						Assert(scores.Value[0].Info == "TestGamer2", "First score info not as expected");
+						Assert(scores.Value[0].Rank == 1, "First score should have rank 1");
+						Assert(scores.Value[1].Value == 1000, "2nd score not as expected");
+						Assert(scores.Value[1].GamerInfo.GamerId == gamer1.GamerId, "2nd score not as expected");
 						CompleteTest();
 					}, board);
 				}, 1500, board, ScoreOrder.HighToLow, "TestGamer2", false);

@@ -4,18 +4,20 @@ using System.Collections.Generic;
 namespace CloudBuilderLibrary {
 
 	/**
-	 * A subclass of Result that handles pagination. It basically represents a result with a list of entities.
-	 * It provides functionality for easy paginating the results, which works by calling again the handler initially
-	 * passed to the method with the current page, as shown below: @code 
-		clan.Transactions.History((PagedResult<Transaction> result) => {
-			Debug.Log("Showing results starting from " + result.Offset);
-			foreach (var tx in result.Values) { ... }
-			nextButton.Enabled = result.HasNext;
-			nextButton.Click += result.FetchNext();
-		}); @endcode
+	 * Paginated result. Simply a list enriched with functionality allowing to easily paginate the results, which
+	 * works by calling again the handler initially passed to the method with the current page, as shown below: @code 
+		clan.Indexing.Search((Result<IndexSearchResult> result) => {
+			PagedList<IndexResult> list = result.Value.Results;
+			Debug.Log("Showing results starting from " + list.Offset);
+			foreach (var obj in list) { ... }
+			nextButton.Enabled = list.HasNext;
+			nextButton.Click += list.FetchNext();
+		}, …); @endcode
 	 * In that case, the handler will be called again, showing the next results when the "nextButton" is clicked.
+
+	 * This object is always found in a subclass from a #Result, or at the root of a #Result.
 	 */
-	public class PagedResult<T> : Result<List<T>> {
+	public class PagedList<T> : List<T> {
 		/**
 		 * Fetches the next results and calls the same handler again.
 		 */
@@ -48,21 +50,8 @@ namespace CloudBuilderLibrary {
 		 * @return the total number of items (possibly greater than the page size).
 		 */
 		public int Total;
-		/**
-		 * @return the fetched values for the current page, exposed as a list.
-		 */
-		public List<T> Values {
-			get { return Value; }
-		}
 
-		internal PagedResult(HttpResponse response, string failureDescription = null) : base(response, failureDescription) {}
-		internal PagedResult(ErrorCode code, string failureDescription = null) : base(code, failureDescription) { }
-		internal PagedResult(List<T> values, Bundle serverData, int currentOffset) : base(values, serverData) {
-			Offset = currentOffset;
-			Total = serverData["count"];
-		}
-		internal PagedResult(List<T> values, Bundle serverData, int currentOffset, int totalResults)
-			: base(values, serverData) {
+		internal PagedList(int currentOffset, int totalResults) {
 			Offset = currentOffset;
 			Total = totalResults;
 		}

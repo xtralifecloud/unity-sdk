@@ -43,24 +43,23 @@ namespace CloudBuilderLibrary {
 		 * @param limit for pagination, allows to set a greater or smaller page size than the default 30.
 		 * @param offset for pagination, avoid using it explicitly.
 		 */
-		public void History(PagedResultHandler<Transaction> done, string unit = null, int limit = 30, int offset = 0) {
+		public void History(ResultHandler<PagedList<Transaction>> done, string unit = null, int limit = 30, int offset = 0) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/tx").Path(domain).QueryParam("skip", offset).QueryParam("limit", limit);
 			if (unit != null) url.QueryParam("unit", unit);
 			// Request for current results
 			Common.RunHandledRequest(Gamer.MakeHttpRequest(url), done, (HttpResponse response) => {
-				List<Transaction> transactions = new List<Transaction>();
+				PagedList<Transaction> transactions = new PagedList<Transaction>(offset, response.BodyJson["count"]);
 				foreach (Bundle b in response.BodyJson["history"].AsArray()) {
 					transactions.Add(new Transaction(b));
 				}
 				// Handle pagination
-				PagedResult<Transaction> result = new PagedResult<Transaction>(transactions, response.BodyJson, offset);
 				if (offset > 0) {
-					result.Previous = () => History(done, unit, limit, offset - limit);
+					transactions.Previous = () => History(done, unit, limit, offset - limit);
 				}
-				if (offset + transactions.Count < result.Total) {
-					result.Next = () => History(done, unit, limit, offset + limit);
+				if (offset + transactions.Count < transactions.Total) {
+					transactions.Next = () => History(done, unit, limit, offset + limit);
 				}
-				Common.InvokeHandler(done, result);
+				Common.InvokeHandler(done, transactions);
 			});
 		}
 
