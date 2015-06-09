@@ -99,7 +99,7 @@ namespace CloudBuilderLibrary {
 				if (offset + result.Hits.Count < result.Hits.Total) {
 					result.Hits.Next = () => Search(done, query, sortingProperties, limit, offset + limit);
 				}
-				Common.InvokeHandler(done, result);
+				Common.InvokeHandler(done, result, response.BodyJson);
 			});
 		}
 

@@ -34,7 +34,7 @@ namespace CloudBuilderLibrary
 			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/profile");
 			req.BodyJson = data;
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, response.BodyJson["done"]);
+				Common.InvokeHandler(done, response.BodyJson["done"], response.BodyJson);
 			});
 		}
 

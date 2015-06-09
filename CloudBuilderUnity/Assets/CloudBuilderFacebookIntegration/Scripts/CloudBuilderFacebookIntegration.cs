@@ -89,7 +89,7 @@ namespace CloudBuilderLibrary
 				string nextUrl = fbResult["paging"]["next"];
 				// Finished
 				if (data.Count == 0 || nextUrl == null) {
-					Common.InvokeHandler(done, addDataTo);
+					Common.InvokeHandler(done, addDataTo, Bundle.Empty);
 					return;
 				}
 

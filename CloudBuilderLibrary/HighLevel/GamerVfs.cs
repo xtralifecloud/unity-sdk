@@ -92,7 +92,7 @@ namespace CloudBuilderLibrary {
 				binaryRequest.TimeoutMillisec = Gamer.Clan.HttpTimeoutMillis;
 				binaryRequest.UserAgent = Gamer.Clan.UserAgent;
 				Common.RunHandledRequest(binaryRequest, done, binaryResponse => {
-					Common.InvokeHandler(done, true);
+					Common.InvokeHandler(done, true, response.BodyJson);
 				});
 			});
 		}

@@ -7,11 +7,11 @@ namespace CloudBuilderLibrary
 	/**
 	 * Might contain the following:
 		{
-			"displayname" : "xxx",
+			"displayName" : "xxx",
 			"email" : "xxx',
 			"lang" : "en"
 		}
-	 *  Usage: `string name = gamerProfile["displayname"];`.
+	 *  Usage: `string name = gamerProfile["displayName"];`.
 	 */
 	public sealed class GamerProfile : PropertiesObject {
 

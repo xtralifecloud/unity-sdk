@@ -76,22 +76,22 @@ public class IndexTests : TestBase {
 	[Test("Indexes a few objects and tries to query for them in various ways, assessing that the search arguments and pagination work as expected.")]
 	public void ShouldSearchForObjects(Clan clan) {
 		var index = clan.Index("test" + Guid.NewGuid().ToString());
-		// Indexes one item and returns a promise object
-		Func<string, Bundle, Bundle, Promise<int>> indexItem = (objectId, properties, payload) => {
-			Promise<int> p = new Promise<int>();
+		// Indexes one item and returns an async op object
+		Func<string, Bundle, Bundle, AsyncOp> indexItem = (objectId, properties, payload) => {
+			AsyncOp p = new AsyncOp();
 			index.IndexObject(response => {
 				Assert(response.IsSuccessful, "Failed to index item");
-				p.Return(0);
+				p.Return();
 			}, objectId, properties, payload);
 			return p;
 		};
 		// Index a few items
 		indexItem("item1", Bundle.CreateObject("item", "gold"), Bundle.CreateObject("key1", "value1"))
-		.Then(dummy => indexItem("item2", Bundle.CreateObject("item", "silver"), Bundle.CreateObject("key2", "value2")))
-		.Then(dummy => indexItem("item3", Bundle.CreateObject("item", "bronze"), Bundle.CreateObject("key3", "value3")))
-		.Then(dummy => indexItem("item4", Bundle.CreateObject("item", "silver", "qty", 10), Bundle.CreateObject("key4", "value4")))
+		.Then(() => indexItem("item2", Bundle.CreateObject("item", "silver"), Bundle.CreateObject("key2", "value2")))
+		.Then(() => indexItem("item3", Bundle.CreateObject("item", "bronze"), Bundle.CreateObject("key3", "value3")))
+		.Then(() => indexItem("item4", Bundle.CreateObject("item", "silver", "qty", 10), Bundle.CreateObject("key4", "value4")))
 			// Then check results
-		.Then((dummy, p) => {
+		.Then(next => {
 			index.Search(
 				query: "item:gold",
 				done: result => {
@@ -100,11 +100,11 @@ public class IndexTests : TestBase {
 					Assert(result.Value.Hits.Total == 1, "Should have one hit");
 					Assert(result.Value.MaxScore == result.Value.Hits[0].ResultScore, "Max score doesn't match first item score");
 					Assert(result.Value.Hits[0].ObjectId == "item1", "Expected 'item1'");
-					p.Return(0);
+					next.Return();
 				}
 			);
 		})
-		.Then((dummy, p) => {
+		.Then(next => {
 			index.Search(
 				query: "item:silver",
 				done: result => {
@@ -115,11 +115,11 @@ public class IndexTests : TestBase {
 					Assert(result.Value.Hits[1].ObjectId == "item4", "Expected 'item4'");
 					Assert(result.Value.Hits[1].Payload["key4"] == "value4", "Invalid payload of 'item4'");
 					Assert(result.Value.Hits[1].Properties["qty"] == 10, "Invalid qty payload of 'item4'");
-					p.Return(0);
+					next.Return();
 				}
 			);
 		})
-		.Then((dummy, p) => {
+		.Then(next => {
 			index.Search(
 				query: "item:*",
 				sortingProperties: new List<string>() { "item:desc" },
@@ -142,11 +142,12 @@ public class IndexTests : TestBase {
 						Assert(hits.Count == 1, "Yet only one hit for the last page");
 						Assert(!hits.HasNext, "Should not have next page");
 						Assert(hits.HasPrevious, "Should have previous page");
-						CompleteTest();
+						next.Return();
 					}
 				}
 			);
-		});
+		})
+		.Then(() => CompleteTest());
 	}
 
 	[Test("Tests that the API can be used to search for matches")]

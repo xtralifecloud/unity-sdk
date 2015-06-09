@@ -23,7 +23,7 @@ namespace CloudBuilderLibrary
 		public void Ping(ResultHandler<bool> done) {
 			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/ping");
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, true);
+				Common.InvokeHandler(done, true, response.BodyJson);
 			});
 		}
 

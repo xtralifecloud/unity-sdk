@@ -113,4 +113,22 @@ public class GamerTests : TestBase {
 			);
 		});
 	}
+
+	[Test("Fetches and updates profile information about a gamer, testing that the GamerProfile methods work as expected.")]
+	public void ShouldUpdateProfile(Clan clan) {
+		Login(clan, gamer => {
+			gamer.Profile.Get(profile => {
+				Assert(profile.IsSuccessful, "Failed to get profile");
+				Assert(profile.Value["email"] == "clan@localhost.localdomain", "Invalid e-mail address (verify Login method in TestBase)");
+				Assert(profile.Value["lang"] == "en", "Default language should be english");
+				gamer.Profile.Set(setProfile => {
+					Assert(setProfile.IsSuccessful, "Failed to update profile");
+					Assert(setProfile.Value == true, "Update profile expected to return true");
+					Assert(setProfile.ServerData["profile"]["displayName"] == "QA", "Invalid update profile body");
+					CompleteTest();
+				}, Bundle.CreateObject("displayName", "QA", "firstName", "Tester"));
+			});
+		});
+
+	}
 }

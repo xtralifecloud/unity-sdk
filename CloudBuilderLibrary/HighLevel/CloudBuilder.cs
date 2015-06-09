@@ -20,7 +20,7 @@ namespace CloudBuilderLibrary {
 		public static void Setup(ResultHandler<Clan> done, string apiKey, string apiSecret, string environment, bool httpVerbose, int httpTimeout) {
 			lock (SpinLock) {
 				Clan clan = new Clan(apiKey, apiSecret, environment, httpVerbose, httpTimeout);
-				Common.InvokeHandler(done, clan);
+				Common.InvokeHandler(done, clan, Bundle.Empty);
 			}
 		}
 

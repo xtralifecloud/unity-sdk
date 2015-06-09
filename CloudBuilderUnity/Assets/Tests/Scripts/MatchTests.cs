@@ -51,7 +51,7 @@ public class MatchTests : TestBase {
 					Assert(match.Description == matchDesc, "Invalid match description");
 					Assert(match.Moves.Count == 0, "Should not have any move at first");
 					Assert(match.GlobalState.AsDictionary().Count == 0, "Global state should be empty initially");
-					Assert(match.LastEventId == null, "Last event should be null");
+					Assert(match.LastEventId != null, "Last event should not be null");
 					Assert(match.MatchId != null, "Match ID shouldn't be null");
 					Assert(match.MaxPlayers == 2, "Should have two players");
 					Assert(match.Players.Count == 1, "Should contain only one player");
@@ -229,46 +229,101 @@ public class MatchTests : TestBase {
 	[Test("Creates a variety of matches and tests the various features of the match listing functionality.")]
 	public void ShouldListMatches(Clan clan) {
 		Login2NewUsers(clan, (gamer1, gamer2) => {
+			int[] totalMatches = new int[1];
+			Match[] matches = new Match[4];
 			// Allows to better indent the code
-			new Promise().Then(next => {
+			new AsyncOp().Then(next => {
 				// 1) Create a match to which only P1 is participating
 				gamer1.Matches.Create(m1 => {
 					Assert(m1.IsSuccessful, "Failed to create match 1");
+					matches[0] = m1.Value;
 					next.Return();
 				}, 2);
-			}).Then(next => {
+			})
+			.Then(next => {
 				// 2) Create a finished match
 				gamer1.Matches.Create(m2 => {
 					Assert(m2.IsSuccessful, "Failed to create match 2");
 					m2.Value.Finish(finishedM2 => {
 						Assert(finishedM2.IsSuccessful, "Failed to finish match 2");
+						matches[1] = m2.Value;
 						next.Return();
 					});
 				}, 2);
-			}).Then(next => {
-				// 3) Create a match to which we invite P2 (he should see himself)
-				gamer1.Matches.Create(m3 => {
+			})
+			.Then(next => {
+				// 3) Create a match to which we invite P1 (he should see himself)
+				gamer2.Matches.Create(m3 => {
 					Assert(m3.IsSuccessful, "Failed to create match 3");
-					// Invite P2 to match 3
-					m3.Value.InvitePlayer(invitedP2 => {
-						Assert(invitedP2.IsSuccessful, "Failed to invite P2 to match 3");
+					// Invite P1 to match 3
+					m3.Value.InvitePlayer(invitedP1 => {
+						Assert(invitedP1.IsSuccessful, "Failed to invite P1 to match 3");
+						matches[2] = m3.Value;
 						next.Return();
-					}, gamer2.GamerId);
+					}, gamer1.GamerId);
 				}, 2);
-			}).Then(next => {
+			})
+			.Then(next => {
 				// 4) Create a full match
 				gamer1.Matches.Create(m4 => {
 					Assert(m4.IsSuccessful, "Failed to create match 4");
+					matches[3] = m4.Value;
 					next.Return();
 				}, 1);
-			}).Then(next => {
+			})
+			.Then(next => {
 				// List all matches; by default, not all matches should be returned (i.e. m1 and m3)
 				gamer1.Matches.List(listedAll => {
 					Assert(listedAll.IsSuccessful, "Failed to list all matches");
-					Assert(listedAll.Value.Count == 2, "Should have 2 results");
+					Assert(listedAll.Value.Count >= 4, "Should have many results");
+					totalMatches[0] = listedAll.Value.Total;
+					next.Return();
 				});
 			})
-			.Finally(CompleteTest)
+			.Then(next => {
+				// List matches to which P1 is participating (i.e. not m1 as m2 is full, m3 created by P2 and m4 full)
+				gamer1.Matches.List(listedAll => {
+					Assert(listedAll.IsSuccessful, "Failed to list all matches");
+					Assert(listedAll.Value.Count == 1, "Should have 1 match");
+					Assert(listedAll.Value[0].MatchId == matches[0].MatchId, "Should have 1 match");
+					next.Return();
+				}, participating: true);
+			})
+			.Then(next => {
+				// List matches to which P1 is participating (i.e. not m1 as m2 is full, m3 created by P2 and m4 full)
+				gamer1.Matches.List(listedAll => {
+					Assert(listedAll.IsSuccessful, "Failed to list all matches");
+					Assert(listedAll.Value.Count == 1, "Should have 1 match");
+					Assert(listedAll.Value[0].MatchId == matches[0].MatchId, "M1 expected");
+					next.Return();
+				}, participating: true);
+			})
+			.Then(next => {
+				// List matches to which P1 is invited (i.e. m3)
+				gamer1.Matches.List(listedAll => {
+					Assert(listedAll.IsSuccessful, "Failed to list all matches");
+					Assert(listedAll.Value.Count == 1, "Should have 1 match");
+					Assert(listedAll.Value[0].MatchId == matches[2].MatchId, "M3 expected");
+					next.Return();
+				}, invited: true);
+			})
+			.Then(next => {
+				// List all matches, including finished ones (i.e. m2)
+				gamer1.Matches.List(listedAll => {
+					Assert(listedAll.IsSuccessful, "Failed to list all matches");
+					Assert(listedAll.Value.Total > totalMatches[0], "Should list more matches");
+					next.Return();
+				}, finished: true);
+			})
+			.Then(next => {
+				// List full matches (i.e. m4)
+				gamer1.Matches.List(listedAll => {
+					Assert(listedAll.IsSuccessful, "Failed to list all matches");
+					Assert(listedAll.Value.Total > totalMatches[0], "Should list more matches");
+					next.Return();
+				}, full: true);
+			})
+			.Then(() => CompleteTest())
 			.Return(); // Start the deferred chain
 		});
 	}

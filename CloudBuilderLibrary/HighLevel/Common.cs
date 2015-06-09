@@ -33,7 +33,7 @@ namespace CloudBuilderLibrary
 				handler(result);
 			}
 		}
-		public static void InvokeHandler<T>(ResultHandler<T> handler, T value, Bundle serverData = null) {
+		public static void InvokeHandler<T>(ResultHandler<T> handler, T value, Bundle serverData) {
 			if (handler != null) {
 				handler(new Result<T>(value, serverData));
 			}

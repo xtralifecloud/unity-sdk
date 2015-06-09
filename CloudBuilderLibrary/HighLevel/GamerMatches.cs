@@ -130,7 +130,8 @@ namespace CloudBuilderLibrary {
 		 * @param offset for pagination, avoid using it explicitly.
 		 */
 		public void List(ResultHandler<PagedList<MatchListResult>> done, bool participating = false, bool invited = false, bool finished = false, bool full = false, int limit = 30, int offset = 0) {
-			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(domain).QueryParam("offset", offset).QueryParam("limit", limit);
+			UrlBuilder url = new UrlBuilder("/v1/gamer/matches");
+			url.QueryParam("domain", domain).QueryParam("offset", offset).QueryParam("limit", limit);
 			if (participating) url.QueryParam("participating");
 			if (finished) url.QueryParam("finished");
 			if (invited) url.QueryParam("invited");
@@ -148,7 +149,7 @@ namespace CloudBuilderLibrary {
 				if (offset + matches.Count < matches.Total) {
 					matches.Next = () => List(done, participating, invited, finished, full, limit, offset + limit);
 				}
-				Common.InvokeHandler(done, matches);
+				Common.InvokeHandler(done, matches, response.BodyJson);
 			});
 		}
 

@@ -59,7 +59,7 @@ namespace CloudBuilderLibrary {
 				if (offset + transactions.Count < transactions.Total) {
 					transactions.Next = () => History(done, unit, limit, offset + limit);
 				}
-				Common.InvokeHandler(done, transactions);
+				Common.InvokeHandler(done, transactions, response.BodyJson);
 			});
 		}
 
