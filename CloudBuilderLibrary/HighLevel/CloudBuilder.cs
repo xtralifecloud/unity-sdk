@@ -17,9 +17,9 @@ namespace CloudBuilderLibrary {
 		 *	 for debugging, though it does pollute the logs.
 		 * @param httpTimeout sets a custom timeout for all requests in seconds. Defaults to 1 minute.
 		 */
-		public static void Setup(ResultHandler<Clan> done, string apiKey, string apiSecret, string environment, bool httpVerbose, int httpTimeout) {
+		public static void Setup(ResultHandler<Clan> done, string apiKey, string apiSecret, string environment, int loadBalancerCount, bool httpVerbose, int httpTimeout) {
 			lock (SpinLock) {
-				Clan clan = new Clan(apiKey, apiSecret, environment, httpVerbose, httpTimeout);
+				Clan clan = new Clan(apiKey, apiSecret, environment, loadBalancerCount, httpVerbose, httpTimeout);
 				Common.InvokeHandler(done, clan, Bundle.Empty);
 			}
 		}

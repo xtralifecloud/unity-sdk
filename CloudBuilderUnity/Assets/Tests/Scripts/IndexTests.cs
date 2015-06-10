@@ -152,9 +152,11 @@ public class IndexTests : TestBase {
 
 	[Test("Tests that the API can be used to search for matches")]
 	public void ShouldBeUsableToSearchForMatches(Clan clan) {
-		Login2Users(clan, (gamer1, gamer2) => {
+		Login2NewUsers(clan, (gamer1, gamer2) => {
 			gamer1.Matches.Create(match1 => {
 				Assert(match1.IsSuccessful, "Match 1 creation failed");
+				Bundle matchProp = Bundle.CreateObject("public", true, "owner_id", gamer1.GamerId);
+				string queryStr = "public:true AND owner_id:" + gamer1.GamerId;
 				// Index the match
 				clan.Index("matches").IndexObject(indexResult => {
 					Assert(indexResult.IsSuccessful, "Failed to index match 1");
@@ -170,10 +172,10 @@ public class IndexTests : TestBase {
 								Assert(found.Value.Hits.Count == 1, "Should find one match");
 								Assert(found.Value.Hits[0].ObjectId == match1.Value.MatchId, "Should find one match");
 								CompleteTest();
-							}, "private:true"); // search for match #1
+							}, queryStr); // search for match #1
 						}, match2.Value.MatchId, Bundle.CreateObject("public", false), Bundle.Empty); // index match #2
 					}, 2); // create match #2
-				}, match1.Value.MatchId, Bundle.CreateObject("public", true), Bundle.Empty); // index match #1
+				}, match1.Value.MatchId, matchProp, Bundle.Empty); // index match #1
 			}, 2); // create match #1
 		});
 	}

@@ -28,16 +28,24 @@ namespace CloudBuilderLibrary
 			get { return new GamerAccountMethods(this); }
 		}
 
-		public GamerCommunity Community {
-			get { return new GamerCommunity(this); }
+		public GamerAchievements Achievements {
+			get { return new GamerAchievements(this); }
 		}
 
 		/**
-		 * Provides an API to manipulate game data, such as key/value or leaderboards.
-		 * @return an object that allow to manipulate game specific data.
+		 * Provides an API to run batches.
+		 * @return an object that allows to manipulate batches.
 		 */
-		public Game Game {
-			get { return new Game(this); }
+		public GamerBatches Batches {
+			get { return new GamerBatches(this); }
+		}
+
+		/**
+		 * Provides an API to interact with friends on CotC.
+		 * @return an object that allow to manipulate friends.
+		 */
+		public GamerCommunity Community {
+			get { return new GamerCommunity(this); }
 		}
 
 		/**

@@ -27,7 +27,7 @@ namespace CloudBuilderLibrary {
 		 */
 		public void GetAll(ResultHandler<Bundle> done) {
 			UrlBuilder url = new UrlBuilder("/v1/vfs").Path(domain);
-			HttpRequest req = Gamer.MakeHttpRequest(url);
+			HttpRequest req = Clan.MakeUnauthenticatedHttpRequest(url);
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Common.InvokeHandler(done, response.BodyJson, response.BodyJson);
 			});
@@ -42,19 +42,19 @@ namespace CloudBuilderLibrary {
 		 */
 		public void GetKey(ResultHandler<Bundle> done, string key) {
 			UrlBuilder url = new UrlBuilder("/v1/vfs").Path(domain).Path(key);
-			HttpRequest req = Gamer.MakeHttpRequest(url);
+			HttpRequest req = Clan.MakeUnauthenticatedHttpRequest(url);
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Common.InvokeHandler(done, response.BodyJson, response.BodyJson);
 			});
 		}
 
 		#region Private
-		internal GameVfs(Gamer gamer) {
-			Gamer = gamer;
+		internal GameVfs(Clan clan) {
+			Clan = clan;
 		}
 
 		private string domain = Common.PrivateDomain;
-		private Gamer Gamer;
+		private Clan Clan;
 		#endregion
 	}
 }

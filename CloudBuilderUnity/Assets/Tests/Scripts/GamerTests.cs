@@ -129,6 +129,16 @@ public class GamerTests : TestBase {
 				}, Bundle.CreateObject("displayName", "QA", "firstName", "Tester"));
 			});
 		});
+	}
 
+	[Test("Runs a batch on the server and checks the return value.", requisite: "The current game must be set-up with {\"__test\":\"\treturn {value: params.request.value * 2};\",\"__testGamer\":\"    return this.user.profile.read(params.user_id).then(function (result) {\n      return {message: params.request.prefix + result.profile.email};\n    });\"}.")]
+	public void ShouldRunGamerBatch(Clan clan) {
+		Login(clan, gamer => {
+			gamer.Batches.Run(batchResult => {
+				Assert(batchResult.IsSuccessful, "Failed to run batch");
+				Assert(batchResult.Value["message"] == "Hello clan@localhost.localdomain", "Returned value invalid (" + batchResult.Value["message"] + ", check hook on server");
+				CompleteTest();
+			}, "testGamer", Bundle.CreateObject("prefix", "Hello "));
+		});
 	}
 }

@@ -63,7 +63,7 @@ public class TransactionTests : TestBase {
 		});
 	}
 
-	[Test("Runs a transaction that should trigger an achievement.", requisite: "The corresponding achievement ('testAch' with gold reaching 100) must be configured on the server.")]
+	[Test("Runs a transaction that should trigger an achievement.", requisite: "Please import {\"testAch\":{\"type\":\"limit\",\"config\":{\"unit\":\"gold\",\"maxValue\":\"100\"}}} into the current game achievements.")]
 	public void ShouldTriggerAchievement(Clan clan) {
 		clan.LoginAnonymously(gamer => {
 			Assert(gamer.IsSuccessful, "Failed to log in");

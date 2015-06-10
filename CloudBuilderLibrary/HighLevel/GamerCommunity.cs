@@ -42,17 +42,6 @@ namespace CloudBuilderLibrary {
 		}
 
 		/**
-		 * Can be used to retrieve random opponents for a match.
-		 * NOT IMPLEMENTED YET.
-		 * @param done callback invoked when the operation has finished, either successfully or not, with the fetched
-		 *     list of friends.
-		 */
-		public void FindOpponents(ResultHandler<List<GamerInfo>> done) {
-			UrlBuilder url = new UrlBuilder("/v2.6/gamer/matchproperties");
-			// TODO
-		}
-
-		/**
 		 * Method used to retrieve the application's friends of the currently logged in profile.
 		 * @param done callback invoked when the operation has finished, either successfully or not, with the fetched
 		 *     list of friends.
@@ -74,13 +63,14 @@ namespace CloudBuilderLibrary {
 		/**
 		 * When you have data about friends from another social network, you can post them using these function.
 		 * This will automatically add them as a friend on CotC as they get recognized on our servers.
+		 * The friends get associated to the domain of this object.
 		 * @param done callback invoked when the operation has finished, either successfully or not. The attached
 		 *     boolean indicates success if true.
 		 * @param network the network with which these friends are associated
 		 * @param friends a list of data about the friends fetched on the social network.
 		 */
 		public void PostSocialNetworkFriends(ResultHandler<bool> done, LoginNetwork network, List<SocialNetworkFriend> friends) {
-			UrlBuilder url = new UrlBuilder("/v1/gamer/friends").QueryParam("network", network.Describe());
+			UrlBuilder url = new UrlBuilder("/v1/gamer/friends").Path(domain).QueryParam("network", network.Describe());
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			Bundle friendData = Bundle.CreateArray();
 			foreach (SocialNetworkFriend f in friends) {

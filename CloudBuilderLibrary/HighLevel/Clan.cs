@@ -7,6 +7,14 @@ namespace CloudBuilderLibrary
 	public sealed partial class Clan {
 
 		/**
+		 * Provides an API to manipulate game data, such as key/value or leaderboards.
+		 * @return an object that allow to manipulate game specific data.
+		 */
+		public Game Game {
+			get { return new Game(this); }
+		}
+
+		/**
 		 * Allows to manipulate an index. Usage: `Clan.Index("matches").IndexObject(...);`.
 		 * @param indexName name of the index; scopes your searches.
 		 * @param domain the domain to manipulate the index on.
@@ -60,11 +68,11 @@ namespace CloudBuilderLibrary
 		#endregion
 
 		#region Private
-		internal Clan(string apiKey, string apiSecret, string environment, bool httpVerbose, int httpTimeout) {
+		internal Clan(string apiKey, string apiSecret, string environment, int loadBalancerCount, bool httpVerbose, int httpTimeout) {
 			this.ApiKey = apiKey;
 			this.ApiSecret = apiSecret;
 			this.Server = environment;
-			LoadBalancerCount = 2;
+			LoadBalancerCount = loadBalancerCount;
 			Managers.HttpClient.VerboseMode = httpVerbose;
 			HttpTimeoutMillis = httpTimeout * 1000;
 			UserAgent = String.Format(Common.UserAgent, Managers.SystemFunctions.GetOsName(), Common.SdkVersion);

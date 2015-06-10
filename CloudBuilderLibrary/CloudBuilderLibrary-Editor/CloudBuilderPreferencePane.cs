@@ -8,12 +8,24 @@ namespace CloudBuilderLibrary
 {
 	[CustomEditor(typeof(CloudBuilderGameObject))]
 	public class CloudBuilderPreferencePane : Editor {
-		private Dictionary<string, string> PredefinedEnvironments = new Dictionary<string,string>() {
-			{"Sandbox", "https://sandbox-api[id].clanofthecloud.mobi"},
-			{"Production", "https://prod-api[id].clanofthecloud.mobi"},
-			{"Dev Server", "http://195.154.227.44:8000"},
-			{"Local Server", "http://127.0.0.1:3000"},
-			{"Parallels VM", "http://10.211.55.2:2000"},
+		private class EnvironmentInfo {
+			public string Url;
+			public int LbCount;
+			public EnvironmentInfo(string url, int lbCount) {
+				Url = url;
+				LbCount = lbCount;
+			}
+			public override bool Equals(object obj) { return Url == ((EnvironmentInfo)obj).Url; }
+			public override int GetHashCode() { return Url.GetHashCode(); }
+		}
+		private Dictionary<string, EnvironmentInfo> PredefinedEnvironments = new Dictionary<string,EnvironmentInfo>() {
+			{"Sandbox", new EnvironmentInfo("https://sandbox-api[id].clanofthecloud.mobi", 2)},
+			{"Production", new EnvironmentInfo("https://prod-api[id].clanofthecloud.mobi", 16)},
+#if DEBUG
+			{"Dev Server", new EnvironmentInfo("http://195.154.227.44:8000", 0)},
+			{"Local Server", new EnvironmentInfo("http://127.0.0.1:3000", 0)},
+			{"Parallels VM", new EnvironmentInfo("http://10.211.55.2:2000", 0)},
+#endif
 		};
 		private bool HttpGroupEnabled = true;
 
@@ -37,13 +49,14 @@ namespace CloudBuilderLibrary
 
 			s.ApiKey = EditorGUILayout.TextField("API Key", s.ApiKey);
 			s.ApiSecret = EditorGUILayout.PasswordField("API Secret", s.ApiSecret);
-			string[] keys = new string[PredefinedEnvironments.Keys.Count];
+			var keys = new string[PredefinedEnvironments.Keys.Count];
+			var comparison = new EnvironmentInfo(s.Environment, s.LbCount);
 			PredefinedEnvironments.Keys.CopyTo(keys, 0);
-			s.Environment = PredefinedEnvironments[
-				keys[
-					EditorGUILayout.Popup("Environment", IndexInDict(s.Environment, PredefinedEnvironments), keys)
-				]
-			];
+			var env = PredefinedEnvironments[keys[
+					EditorGUILayout.Popup("Environment", IndexInDict(comparison, PredefinedEnvironments), keys)
+				]];
+			s.Environment = env.Url;
+			s.LbCount = env.LbCount;
 
 			EditorGUILayout.GetControlRect(true, 16f, EditorStyles.foldout);
 			HttpGroupEnabled = EditorGUI.Foldout(GUILayoutUtility.GetLastRect(), HttpGroupEnabled, "Network Connection Settings");
@@ -61,10 +74,10 @@ namespace CloudBuilderLibrary
 			EditorUtility.SetDirty(s);
 		}
 
-		private int IndexInDict(string value, Dictionary<string, string> choices, int defaultChoice = 0) {
+		private int IndexInDict<T>(T value, Dictionary<string, T> choices, int defaultChoice = 0) {
 			int index = 0;
-			foreach (string v in choices.Values) {
-				if (value == v) {
+			foreach (T v in choices.Values) {
+				if (v.Equals(value)) {
 					return index;
 				}
 				index++;

@@ -26,8 +26,7 @@ namespace CloudBuilderLibrary
 				return;
 			}
 			if (string.IsNullOrEmpty(s.ApiKey) || string.IsNullOrEmpty(s.ApiSecret)) {
-				Debug.LogError("!!!! You need to set up the credentials of your application in the settings of your CloudBuilder object !!!!");
-				return;
+				throw new ArgumentException("!!!! You need to set up the credentials of your application in the settings of your CloudBuilder object !!!!");
 			}
 
 			CloudBuilder.Setup((Result<Clan> result) => {
@@ -37,7 +36,7 @@ namespace CloudBuilderLibrary
 				foreach (var handler in pendingClanHandlers) {
 					handler(clan);
 				}
-			}, s.ApiKey, s.ApiSecret, s.Environment, s.HttpVerbose, s.HttpTimeout);
+			}, s.ApiKey, s.ApiSecret, s.Environment, s.LbCount, s.HttpVerbose, s.HttpTimeout);
 		}
 
 		void Update() {

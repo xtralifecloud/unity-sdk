@@ -40,7 +40,9 @@ public class TestBase : MonoBehaviour {
 	private Dictionary<string, Action> RegisteredSlots = new Dictionary<string, Action>();
 
 	protected void Assert(bool condition, string message) {
-		if (!condition) IntegrationTest.Assert(condition, message);
+		if (!condition) {
+			throw new Exception("Test interrupted because of failed assertion: " + message);
+		}
 	}
 
 	protected void CompleteTest() {

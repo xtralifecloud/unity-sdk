@@ -25,6 +25,8 @@ namespace CloudBuilderLibrary {
 		[SerializeField]
 		public string Environment;
 		[SerializeField]
+		public int LbCount = 1;
+		[SerializeField]
 		public bool HttpVerbose = true;
 		[SerializeField]
 		public int HttpTimeout = 60;
