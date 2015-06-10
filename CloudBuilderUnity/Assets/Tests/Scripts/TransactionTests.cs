@@ -20,10 +20,7 @@ public class TransactionTests : TestBase {
 
 	[Test("Runs a transaction and checks the balance. Tests both the transaction and the balance calls.")]
 	public void ShouldRunTransaction(Clan clan) {
-		clan.LoginAnonymously(loginResult => {
-			Assert(loginResult.IsSuccessful, "Failed to log in");
-
-			Gamer gamer = loginResult.Value;
+		LoginNewUser(clan, gamer => {
 			Bundle tx = Bundle.CreateObject("gold", 10, "silver", 100);
 			// Set property, then get all and check it
 			gamer.Transactions.Post(
@@ -47,14 +44,13 @@ public class TransactionTests : TestBase {
 
 	[Test("Runs a transaction that resets the balance. Tests the transaction syntax and read balance.")]
 	public void ShouldResetBalance(Clan clan) {
-		clan.LoginAnonymously(gamer => {
-			Assert(gamer.IsSuccessful, "Failed to log in");
+		LoginNewUser(clan, gamer => {
 			// Set property, then get all and check it
-			gamer.Value.Transactions.Post(txResult => {
+			gamer.Transactions.Post(txResult => {
 				Assert(txResult.IsSuccessful, "Error when running transaction");
 				Assert(txResult.Value.Balance["gold"] == 10, "Balance not affected properly");
 
-				gamer.Value.Transactions.Post(txResult2 => {
+				gamer.Transactions.Post(txResult2 => {
 					Assert(txResult2.IsSuccessful, "Failed to post transaction");
 					Assert(txResult2.Value.Balance["gold"] == 0, "Expected gold: 0 balance");
 					CompleteTest();
@@ -65,9 +61,8 @@ public class TransactionTests : TestBase {
 
 	[Test("Runs a transaction that should trigger an achievement.", requisite: "Please import {\"testAch\":{\"type\":\"limit\",\"config\":{\"unit\":\"gold\",\"maxValue\":\"100\"}}} into the current game achievements.")]
 	public void ShouldTriggerAchievement(Clan clan) {
-		clan.LoginAnonymously(gamer => {
-			Assert(gamer.IsSuccessful, "Failed to log in");
-			gamer.Value.Transactions.Post(txResult => {
+		LoginNewUser(clan, gamer => {
+			gamer.Transactions.Post(txResult => {
 				Assert(txResult.IsSuccessful, "Failed transaction");
 				Assert(txResult.Value.TriggeredAchievements.Count == 1, "Expected one achievement triggered");
 				Assert(txResult.Value.TriggeredAchievements["testAch"].Name == "testAch", "Expected testAch to be triggered");
@@ -78,13 +73,29 @@ public class TransactionTests : TestBase {
 		});
 	}
 
+	[Test("Runs a transaction that should trigger an achievement.", requisite: "Please import {\"testAch\":{\"type\":\"limit\",\"config\":{\"unit\":\"gold\",\"maxValue\":\"100\"}}} into the current game achievements.")]
+	public void ShouldAssociateAchievementData(Clan clan) {
+		LoginNewUser(clan, gamer => {
+			gamer.Transactions.Post(txResult => {
+				Assert(txResult.IsSuccessful, "Failed transaction");
+				Assert(txResult.Value.TriggeredAchievements["testAch"].Name == "testAch", "Expected testAch to be triggered");
+				// Associate data
+				gamer.Achievements.AssociateData(assocResult => {
+					Assert(assocResult.IsSuccessful, "Failed to associate data");
+					Assert(assocResult.Value.Name == "testAch", "Wrong achievement name");
+					Assert(assocResult.Value.GamerData["key"] == "value", "Wrong achievement data");
+					CompleteTest();
+				}, "testAch", Bundle.CreateObject("key", "value"));
+			}, Bundle.CreateObject("gold", 100), "Transaction run by integration test.");
+		});
+	}
+
 	[Test("Fetches the transaction history.")]
 	public void ShouldFetchTransactionHistory(Clan clan) {
-		clan.LoginAnonymously(gamer => {
-			Assert(gamer.IsSuccessful, "Failed to log in");
-			gamer.Value.Transactions.Post(txResult => {
+		LoginNewUser(clan, gamer => {
+			gamer.Transactions.Post(txResult => {
 				Assert(txResult.IsSuccessful, "Failed to run transaction");
-				gamer.Value.Transactions.History(histResult => {
+				gamer.Transactions.History(histResult => {
 					Assert(histResult.IsSuccessful, "Failed to fetch history");
 					Assert(histResult.Value.Count == 1, "Expected one history entry");
 					Assert(histResult.Value[0].Description == "Transaction run by integration test.", "Wrong description");
@@ -97,14 +108,15 @@ public class TransactionTests : TestBase {
 
 	[Test("Tests the pagination feature of the transaction history by creating one user and three transactions.")]
 	public void ShouldHavePaginationInTxHistory(Clan clan) {
-		clan.LoginAnonymously(gamer => {
-			Assert(gamer.IsSuccessful, "Failed to log in");
+		LoginNewUser(clan, gamer => {
 			// Run 3 transactions serially
-			Bundle[] transactions = { Bundle.CreateObject("gold", 1), Bundle.CreateObject("gold", 2, "silver", 10), Bundle.CreateObject("gold", 3) };
 			bool alreadyWentBack = false;
-			ExecuteTransactions(gamer.Value, transactions, () => {
+			RunTransaction(gamer, Bundle.CreateObject("gold", 1))
+			.Then(dummy => RunTransaction(gamer, Bundle.CreateObject("gold", 2, "silver", 10)))
+			.Then(dummy => RunTransaction(gamer, Bundle.CreateObject("gold", 3)))
+			.Then(dummy => {
 				// All transactions have been executed. Default to page 1.
-				gamer.Value.Transactions.History(histResult => {
+				gamer.Transactions.History(histResult => {
 					PagedList<Transaction> tx = histResult.Value;
 					Assert(histResult.IsSuccessful, "Failed to fetch history");
 					if (tx.Offset == 0) {
@@ -130,41 +142,50 @@ public class TransactionTests : TestBase {
 						alreadyWentBack = true;
 					}
 				}, limit: 2);
-
-			})(null);
+			});
 		});
 	}
 
 	[Test("Tests the filter by unit feature of the transaction history")]
 	public void ShouldFilterTransactionsByUnit(Clan clan) {
-		clan.LoginAnonymously(gamer => {
-			Assert(gamer.IsSuccessful, "Failed to log in");
+		LoginNewUser(clan, gamer => {
 			// Run 3 transactions serially
-			Bundle[] transactions = { Bundle.CreateObject("gold", 1), Bundle.CreateObject("gold", 2, "silver", 10), Bundle.CreateObject("gold", 3) };
-			ExecuteTransactions(gamer.Value, transactions, () => {
+			RunTransaction(gamer, Bundle.CreateObject("gold", 1))
+			.Then(dummy => RunTransaction(gamer, Bundle.CreateObject("gold", 2, "silver", 10)))
+			.Then(dummy => RunTransaction(gamer, Bundle.CreateObject("gold", 3)))
+			.Then(dummy => {
 				// All transactions have been executed. Default to page 1.
-				gamer.Value.Transactions.History(histResult => {
+				gamer.Transactions.History(histResult => {
 					Assert(histResult.IsSuccessful, "Failed to fetch history");
 					Assert(histResult.Value.Count == 1, "Expected one value in history");
 					Assert(histResult.Value[0].TxData["gold"] == 2, "Expected tx: {gold: 2}");
 					CompleteTest();
 				}, unit: "silver");
-			})(null);
+			});
 		});
 	}
 
-	// Makes a handler that allows to execute several sample transactions and a handler when done
-	private ResultHandler<TransactionResult> ExecuteTransactions(Gamer gamer, Bundle[] transactionList, Action done, int txCounter = 0) {
-		return txResult => {
-			if (txCounter < transactionList.Length) {
-				gamer.Transactions.Post(
-					ExecuteTransactions(gamer, transactionList, done, txCounter + 1),
-					transactionList[txCounter]
-				);
-			}
-			else {
-				done();
-			}
-		};
+	[Test("Lists the state of achievements for the current user, including when a bit of progress was made.", requisite: "Please import {\"testAch\":{\"type\":\"limit\",\"config\":{\"unit\":\"gold\",\"maxValue\":\"100\"}}} into the current game achievements.")]
+	public void ShouldListAchievements(Clan clan) {
+		LoginNewUser(clan, gamer => {
+			gamer.Achievements.List(result => {
+				Assert(result.IsSuccessful, "Failed to retrieve achievements");
+				Assert(result.Value.ContainsKey("testAch"), "'testAch' not found, check that you have configured the required achievements on the server");
+				Assert(result.Value["testAch"].Config["unit"] == "gold", "Expected unit to be gold");
+				Assert(result.Value["testAch"].Config["maxValue"] == 100, "Expected maxValue to be 100");
+				Assert(result.Value["testAch"].Progress == 0, "Expected progress to be 0");
+				CompleteTest();
+			});
+		});
+	}
+
+	// Makes a handler that allows to execute several transactions using AsyncOp
+	private AsyncOp<TransactionResult> RunTransaction(Gamer gamer, Bundle transaction) {
+		AsyncOp<TransactionResult> op = new AsyncOp<TransactionResult>();
+		gamer.Transactions.Post(result => {
+			Assert(result.IsSuccessful, "Failed to post transaction");
+			op.Return(result.Value);
+		}, transaction);
+		return op;
 	}
 }

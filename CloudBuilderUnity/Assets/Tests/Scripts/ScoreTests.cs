@@ -123,44 +123,38 @@ public class ScoreTests : TestBase {
 	[Test("Tests fetching a leaderboard amongst friends.")]
 	public void ShouldListScoreOfFriends(Clan clan) {
 		// Create 2 users
-		clan.LoginAnonymously(gamer1 => {
-			Assert(gamer1.IsSuccessful, "Login P1 failed");
-			clan.LoginAnonymously(gamer2 => {
-				Assert(gamer2.IsSuccessful, "Login P2 failed");
-				// Post 1 score each
-				string board = RandomBoardName();
-				gamer1.Value.Scores.Post(postResult1 => {
-					Assert(postResult1.IsSuccessful, "Post P1 failed");
-					gamer2.Value.Scores.Post(postResult2 => {
-						Assert(postResult2.IsSuccessful, "Post P2 failed");
-						// Ok so now the two friends are not friends, so the scores returned should not include the other
-						gamer1.Value.Scores.ListFriendScores(scores => {
-							Assert(scores.IsSuccessful, "Fetch scores failed");
-							Assert(scores.Value.Count == 1, "Should have one score only");
-							Assert(scores.Value[0].GamerInfo.GamerId == gamer1.Value.GamerId, "Should contain my score");
-							// So let's become friends!
-							gamer2.Value.Community.AddFriend(friendResult => {
-								Assert(friendResult.IsSuccessful, "Become friends failed");
-								// And try again fetching scores
-								gamer1.Value.Scores.ListFriendScores(scoresWhenFriend => {
-									Assert(scoresWhenFriend.IsSuccessful, "Fetch scores failed");
-									Assert(scoresWhenFriend.Value.Count == 2, "Should have two scores only");
-									Assert(scoresWhenFriend.Value[1].Rank == 2, "Second score should have rank 2");
-									CompleteTest();
-								}, board);
-							}, gamer1.Value.GamerId);
-						}, board);
-					}, 1500, board, ScoreOrder.HighToLow, "TestGamer2", false);
-				}, 1000, board, ScoreOrder.HighToLow, "TestGamer1", false);
-			});
+		Login2NewUsers(clan, (gamer1, gamer2) => {
+			// Post 1 score each
+			string board = RandomBoardName();
+			gamer1.Scores.Post(postResult1 => {
+				Assert(postResult1.IsSuccessful, "Post P1 failed");
+				gamer2.Scores.Post(postResult2 => {
+					Assert(postResult2.IsSuccessful, "Post P2 failed");
+					// Ok so now the two friends are not friends, so the scores returned should not include the other
+					gamer1.Scores.ListFriendScores(scores => {
+						Assert(scores.IsSuccessful, "Fetch scores failed");
+						Assert(scores.Value.Count == 1, "Should have one score only");
+						Assert(scores.Value[0].GamerInfo.GamerId == gamer1.GamerId, "Should contain my score");
+						// So let's become friends!
+						gamer2.Community.AddFriend(friendResult => {
+							Assert(friendResult.IsSuccessful, "Become friends failed");
+							// And try again fetching scores
+							gamer1.Scores.ListFriendScores(scoresWhenFriend => {
+								Assert(scoresWhenFriend.IsSuccessful, "Fetch scores failed");
+								Assert(scoresWhenFriend.Value.Count == 2, "Should have two scores only");
+								Assert(scoresWhenFriend.Value[1].Rank == 2, "Second score should have rank 2");
+								CompleteTest();
+							}, board);
+						}, gamer1.GamerId);
+					}, board);
+				}, 1500, board, ScoreOrder.HighToLow, "TestGamer2", false);
+			}, 1000, board, ScoreOrder.HighToLow, "TestGamer1", false);
 		});
 	}
 
 	[Test("Creates two boards, posts scores to it and lists the best scores.")]
 	public void ShouldListUserBestScores(Clan clan) {
-		clan.LoginAnonymously(gamerResult => {
-			Gamer gamer = gamerResult.Value;
-			Assert(gamerResult.IsSuccessful, "Login failed");
+		LoginNewUser(clan, gamer => {
 			string board1 = RandomBoardName(), board2 = RandomBoardName();
 			gamer.Scores.Post(postResult1 => {
 				Assert(postResult1.IsSuccessful, "Post #1 failed");

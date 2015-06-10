@@ -18,12 +18,14 @@ namespace CloudBuilderLibrary {
 		public AchievementType Type;
 		public Bundle Config;
 		public float Progress;
+		public Bundle GamerData;
 
 		public AchievementDefinition(string name, Bundle serverData) {
 			Name = name;
 			Type = Common.ParseEnum<AchievementType>(serverData["type"]);
 			Config = serverData["config"];
 			Progress = serverData["progress"];
+			GamerData = serverData["gamerData"];
 		}
 	}
 

@@ -21,27 +21,22 @@ public class CommunityTests : TestBase {
 	[Test("Uses two anonymous accounts. Tests that a friend can be added properly and then listed back (AddFriend + ListFriends).")]
 	public void ShouldAddFriend(Clan clan) {
 		// Use two test accounts
-		clan.LoginAnonymously(gamer1 => {
-			Assert(gamer1.IsSuccessful, "Failed to login P1");
-			clan.LoginAnonymously(gamer2 => {
-				Assert(gamer2.IsSuccessful, "Failed to login P2");
+		Login2NewUsers(clan, (gamer1, gamer2) => {
+			// Add gamer1 as a friend of gamer2
+			gamer2.Community.AddFriend(
+				gamerId: gamer1.GamerId,
+				done: addResult => {
+					Assert(addResult.IsSuccessful, "Failed to add friend");
 
-				// Add gamer1 as a friend of gamer2
-				gamer2.Value.Community.AddFriend(
-					gamerId: gamer1.Value.GamerId,
-					done: addResult => {
-						Assert(addResult.IsSuccessful, "Failed to add friend");
-
-						// Then list the friends of gamer1, gamer2 should be in it
-						gamer1.Value.Community.ListFriends(gamerInfo => {
-							Assert(gamerInfo.IsSuccessful, "Failed to list friends");
-							Assert(gamerInfo.Value.Count == 1, "Expects one friend");
-							Assert(gamerInfo.Value[0].GamerId == gamer2.Value.GamerId, "Wrong friend ID");
-							CompleteTest();
-						});
-					}
-				);
-			});
+					// Then list the friends of gamer1, gamer2 should be in it
+					gamer1.Community.ListFriends(gamerInfo => {
+						Assert(gamerInfo.IsSuccessful, "Failed to list friends");
+						Assert(gamerInfo.Value.Count == 1, "Expects one friend");
+						Assert(gamerInfo.Value[0].GamerId == gamer2.GamerId, "Wrong friend ID");
+						CompleteTest();
+					});
+				}
+			);
 		});
 	}
 }

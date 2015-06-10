@@ -15,13 +15,21 @@ namespace CloudBuilderLibrary {
 		}
 
 		/**
-		 * High level method that allows easily to post a success. For this to work, you need to have an achievement
-		 * that uses the same unit as the name of the achievement.
-		 * Note: normally, achievements are earned by posting a transaction. See #GamerTransactions.
-		 * @param done callback invoked when the operation has finished, either successfully or not. Corresponds 
+		 * Allows to store arbitrary data for a given achievement and the current player (appears in the
+		 * 'gamerData' node of achievements).
+		 * @param done callback invoked when the operation has finished, either successfully or not. The attached value
+		 *     contains the updated definition of the achievement.
+		 * @param achName name of the achievement to update.
+		 * @param data data to associate with the achievement, merged with the current data (that is, existing keys
+		 *     are not affected)
 		 */
-		public void Earn(ResultHandler<bool> done, string unit, int increment = 1, Bundle gamerData = null, ) {
-
+		public void AssociateData(ResultHandler<AchievementDefinition> done, string achName, Bundle data) {
+			UrlBuilder url = new UrlBuilder("/v1/gamer/achievements").Path(domain).Path(achName).Path("gamerdata");
+			HttpRequest req = Gamer.MakeHttpRequest(url);
+			req.BodyJson = data;
+			Common.RunHandledRequest(req, done, (HttpResponse response) => {
+				Common.InvokeHandler(done, new AchievementDefinition(achName, response.BodyJson["achievement"]), response.BodyJson);
+			});
 		}
 
 		/**

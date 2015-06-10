@@ -80,6 +80,13 @@ public class TestBase : MonoBehaviour {
 		});
 	}
 
+	protected void LoginNewUser(Clan clan, Action<Gamer> done) {
+		clan.LoginAnonymously(result => {
+			if (!result.IsSuccessful) IntegrationTest.Fail("Failed to log in");
+			done(result.Value);
+		});
+	}
+
 	protected void Login2NewUsers(Clan clan, Action<Gamer, Gamer> done) {
 		clan.LoginAnonymously(gamer1 => {
 			if (!gamer1.IsSuccessful) IntegrationTest.Fail("Failed to log in");
