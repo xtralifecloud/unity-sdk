@@ -4,6 +4,9 @@ using CloudBuilderLibrary;
 using System.Reflection;
 using IntegrationTests;
 
+/**
+ * Transactions and achievements tests.
+ */
 public class TransactionTests : TestBase {
 
 	[InstanceMethod(typeof(TransactionTests))]

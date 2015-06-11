@@ -46,6 +46,7 @@
     <Compile Include="HighLevel\CloudBuilder.cs" />
     <Compile Include="HighLevel\CloudBuilderGameObject.cs" />
     <Compile Include="HighLevel\Common.cs" />
+    <Compile Include="HighLevel\GamerGodfather.cs" />
     <Compile Include="HighLevel\GameBatches.cs" />
     <Compile Include="HighLevel\GamerAchievements.cs" />
     <Compile Include="HighLevel\GamerBatches.cs" />

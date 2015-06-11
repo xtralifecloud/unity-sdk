@@ -28,6 +28,10 @@ namespace CloudBuilderLibrary
 			get { return new GamerAccountMethods(this); }
 		}
 
+		/**
+		 * Provides an API to manipulate achievements.
+		 * @return an object that allows to manipulate achievements.
+		 */
 		public GamerAchievements Achievements {
 			get { return new GamerAchievements(this); }
 		}
@@ -54,6 +58,14 @@ namespace CloudBuilderLibrary
 		 */
 		public GamerVfs GamerVfs {
 			get { return new GamerVfs(this); }
+		}
+
+		/**
+		 * Exposes functionality related to the godfathers.
+		 * @return an object that allows to add a godfather, generate a code, etc.
+		 */
+		public GamerGodfather Godfather {
+			get { return new GamerGodfather(this); }
 		}
 
 		/**
