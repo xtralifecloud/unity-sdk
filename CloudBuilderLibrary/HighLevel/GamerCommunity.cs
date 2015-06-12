@@ -83,6 +83,29 @@ namespace CloudBuilderLibrary {
 			});
 		}
 
+		/**
+		 * Use this method to send a message to another user from your game.
+		 * 
+		 * Messages are sent to a specific user, in a specific domain. You can use domains to send messages
+		 * across games (or use private for messages sent to your game only).
+		 * 
+		 * @param done callback invoked when the operation has finished, either successfully or not. The attached
+		 *     boolean indicates success if true.
+		 * @param gamerId ID of the recipient gamer.
+		 * @param eventData JSON object representing the event to be sent. The recipient will receive it as is
+		 *     when subscribed to a #DomainEventLoop (ReceivedEvent property). If the application is not active,
+		 *     the message will be queued and transmitted the next time the domain event loop is started.
+		 * @param notification push notification to send to the recipient player if not currently active.
+		 */
+		public void SendEvent(ResultHandler<bool> done, string gamerId, Bundle eventData, PushNotification notification = null) {
+			UrlBuilder url = new UrlBuilder("/v1/gamer/event").Path(domain).Path(gamerId);
+			HttpRequest req = Gamer.MakeHttpRequest(url);
+			req.BodyJson = eventData;
+			Common.RunHandledRequest(req, done, (HttpResponse response) => {
+				Common.InvokeHandler(done, true, response.BodyJson);
+			});
+		}
+
 		#region Private
 		internal GamerCommunity(Gamer parent) {
 			Gamer = parent;

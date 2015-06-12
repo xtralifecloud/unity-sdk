@@ -7,6 +7,34 @@ namespace CloudBuilderLibrary
 	public sealed partial class Clan {
 
 		/**
+		 * Method used to check or retrieve users from Clan of the Cloud community. The domain is not taken
+		 * in account for this search.
+		 * @param done callback invoked when the operation has finished, either successfully or not, with the fetched
+		 *     list of users. The list is paginated (see #PagedList for more info).
+		 * @param filter may contain a nickname, a displayname or e-mail address.
+		 * @param limit the maximum number of results to return per page.
+		 * @param offset number of the first result.
+		 */
+		public void ListUsers(ResultHandler<PagedList<UserInfo>> done, string filter, int limit = 30, int offset = 0) {
+			UrlBuilder url = new UrlBuilder("/v1/gamer").QueryParam("q", filter).QueryParam("limit", limit).QueryParam("skip", offset);
+			HttpRequest req = MakeUnauthenticatedHttpRequest(url);
+			Common.RunHandledRequest(req, done, (HttpResponse response) => {
+				PagedList<UserInfo> result = new PagedList<UserInfo>(offset, response.BodyJson["count"]);
+				foreach (Bundle u in response.BodyJson["result"].AsArray()) {
+					result.Add(new UserInfo(u));
+				}
+				// Handle pagination
+				if (offset > 0) {
+					result.Previous = () => ListUsers(done, filter, limit, offset - limit);
+				}
+				if (offset + result.Count < result.Total) {
+					result.Next = () => ListUsers(done, filter, limit, offset + limit);
+				}
+				Common.InvokeHandler(done, result, response.BodyJson);
+			});
+		}
+
+		/**
 		 * Logs the current user in anonymously.
 		 * @param done callback invoked when the login has finished, either successfully or not. The resulting Gamer
 		 *     object can then be used for many purposes related to the signed in account.
