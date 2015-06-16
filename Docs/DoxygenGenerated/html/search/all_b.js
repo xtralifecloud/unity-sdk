@@ -1,18 +1,13 @@
 var searchData=
 [
-  ['match',['Match',['../class_cloud_builder_library_1_1_match.html',1,'CloudBuilderLibrary']]],
-  ['matches',['Matches',['../class_cloud_builder_library_1_1_gamer.html#aa7fe329fe113d2abbd7b1aa7e49d7ef6',1,'CloudBuilderLibrary::Gamer']]],
-  ['matchevent',['MatchEvent',['../class_cloud_builder_library_1_1_match_event.html',1,'CloudBuilderLibrary']]],
-  ['matcheventid',['MatchEventId',['../class_cloud_builder_library_1_1_match_event.html#aba771b4fe1da63acdc0e66fc1b64a3c0',1,'CloudBuilderLibrary::MatchEvent']]],
-  ['matchfinishevent',['MatchFinishEvent',['../class_cloud_builder_library_1_1_match_finish_event.html',1,'CloudBuilderLibrary']]],
-  ['matchid',['MatchId',['../class_cloud_builder_library_1_1_match.html#ad6c32f2e3600ab365802e0727e46dc03',1,'CloudBuilderLibrary.Match.MatchId()'],['../class_cloud_builder_library_1_1_match_info.html#ae635eb1e6dbc7ccbab0af12416aaf084',1,'CloudBuilderLibrary.MatchInfo.MatchId()']]],
-  ['matchinfo',['MatchInfo',['../class_cloud_builder_library_1_1_match_info.html',1,'CloudBuilderLibrary']]],
-  ['matchjoinevent',['MatchJoinEvent',['../class_cloud_builder_library_1_1_match_join_event.html',1,'CloudBuilderLibrary']]],
-  ['matchleaveevent',['MatchLeaveEvent',['../class_cloud_builder_library_1_1_match_leave_event.html',1,'CloudBuilderLibrary']]],
-  ['matchmove',['MatchMove',['../class_cloud_builder_library_1_1_match_move.html',1,'CloudBuilderLibrary']]],
-  ['matchmoveevent',['MatchMoveEvent',['../class_cloud_builder_library_1_1_match_move_event.html',1,'CloudBuilderLibrary']]],
-  ['maxplayers',['MaxPlayers',['../class_cloud_builder_library_1_1_match.html#ad7767c3fbc04ad77a2d39bd8fb0b2a1e',1,'CloudBuilderLibrary::Match']]],
-  ['message',['Message',['../class_cloud_builder_library_1_1_push_notification.html#a6b67e106eb19b4d63f1fc8deed4f5247',1,'CloudBuilderLibrary::PushNotification']]],
-  ['movedata',['MoveData',['../class_cloud_builder_library_1_1_match_move.html#a107b616157a0d1953e32cd1e2ae63a23',1,'CloudBuilderLibrary.MatchMove.MoveData()'],['../class_cloud_builder_library_1_1_match_move_event.html#a91592023f190475d63ca05640f7f20ed',1,'CloudBuilderLibrary.MatchMoveEvent.MoveData()']]],
-  ['moves',['Moves',['../class_cloud_builder_library_1_1_match.html#a6eb45edfcf410d1a9f506ca843c4212c',1,'CloudBuilderLibrary::Match']]]
+  ['lasterror',['LastError',['../namespace_cloud_builder_library.html#a6c8201114e552fdf036105edd425586fa49b8f9d972a16a3efaab2442f79bcacb',1,'CloudBuilderLibrary']]],
+  ['lasteventid',['LastEventId',['../class_cloud_builder_library_1_1_match.html#ac925e5403e62b424689c215f5a7218f7',1,'CloudBuilderLibrary::Match']]],
+  ['leave',['Leave',['../class_cloud_builder_library_1_1_match.html#a5274853c467a1e6f1ea6468065fc25dc',1,'CloudBuilderLibrary::Match']]],
+  ['list',['List',['../class_cloud_builder_library_1_1_gamer_achievements.html#a235bac532c37fadb7c3bbb1c54db65fa',1,'CloudBuilderLibrary.GamerAchievements.List()'],['../class_cloud_builder_library_1_1_gamer_matches.html#ac11c8f09bbfe46b25cd19f5292793c67',1,'CloudBuilderLibrary.GamerMatches.List()'],['../class_cloud_builder_library_1_1_gamer_scores.html#ae995a101bc118d5c08a55d6e7cffb27f',1,'CloudBuilderLibrary.GamerScores.List()']]],
+  ['listfriends',['ListFriends',['../class_cloud_builder_library_1_1_gamer_community.html#accefc460678f6e0ad2aeddb25aa259f8',1,'CloudBuilderLibrary::GamerCommunity']]],
+  ['listfriendscores',['ListFriendScores',['../class_cloud_builder_library_1_1_gamer_scores.html#afe32d05a7f43f2c34250f25ed6cb2820',1,'CloudBuilderLibrary::GamerScores']]],
+  ['listuserbestscores',['ListUserBestScores',['../class_cloud_builder_library_1_1_gamer_scores.html#a5c172251445168fb13d55d9273a4cfd3',1,'CloudBuilderLibrary::GamerScores']]],
+  ['listusers',['ListUsers',['../class_cloud_builder_library_1_1_clan.html#ab4ad992d0dcd16ce3e35d274c2590a9c',1,'CloudBuilderLibrary::Clan']]],
+  ['login',['Login',['../class_cloud_builder_library_1_1_clan.html#a785ad554da32fa80e84360eba6c374e4',1,'CloudBuilderLibrary::Clan']]],
+  ['loginanonymously',['LoginAnonymously',['../class_cloud_builder_library_1_1_clan.html#a5b5d8e7d6b169369bd6264e7d0f57c40',1,'CloudBuilderLibrary::Clan']]]
 ];

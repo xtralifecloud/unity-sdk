@@ -1,12 +1,10 @@
 var searchData=
 [
-  ['sendresetpasswordemail',['SendResetPasswordEmail',['../class_cloud_builder_library_1_1_clan.html#a289b15d68fa2caa3454ffac5c5fb182e',1,'CloudBuilderLibrary::Clan']]],
-  ['set',['Set',['../class_cloud_builder_library_1_1_gamer_profile_methods.html#a6889b60ab010282b3b2e8342cc0b0544',1,'CloudBuilderLibrary::GamerProfileMethods']]],
-  ['setall',['SetAll',['../class_cloud_builder_library_1_1_gamer_properties.html#af163f2ed196acc37e6ee81d19e272fa8',1,'CloudBuilderLibrary::GamerProperties']]],
-  ['setkey',['SetKey',['../class_cloud_builder_library_1_1_gamer_properties.html#a21d6a10e9a6c5d990880025f16e9ffea',1,'CloudBuilderLibrary.GamerProperties.SetKey()'],['../class_cloud_builder_library_1_1_gamer_vfs.html#ad7d8fa7f24753a4706f199d4668c849b',1,'CloudBuilderLibrary.GamerVfs.SetKey()']]],
-  ['setkeybinary',['SetKeyBinary',['../class_cloud_builder_library_1_1_gamer_vfs.html#a1f60712c0f751a2e06e07c40495ea579',1,'CloudBuilderLibrary::GamerVfs']]],
-  ['socialnetworkfriend',['SocialNetworkFriend',['../class_cloud_builder_library_1_1_social_network_friend.html#a9432969b1a2cd8ba8021169d55ed460a',1,'CloudBuilderLibrary::SocialNetworkFriend']]],
-  ['start',['Start',['../class_cloud_builder_library_1_1_domain_event_loop.html#a2e11848f6a52e1fb9b1b2fc1c553445f',1,'CloudBuilderLibrary::DomainEventLoop']]],
-  ['stop',['Stop',['../class_cloud_builder_library_1_1_domain_event_loop.html#a2968b3007d2dc59e3de3baae77fc2861',1,'CloudBuilderLibrary::DomainEventLoop']]],
-  ['suspend',['Suspend',['../class_cloud_builder_library_1_1_domain_event_loop.html#a942f573c4adcb78498272ebbff2d8b4c',1,'CloudBuilderLibrary::DomainEventLoop']]]
+  ['removeall',['RemoveAll',['../class_cloud_builder_library_1_1_gamer_properties.html#ab0b8d0e98100b19913a393212c502904',1,'CloudBuilderLibrary::GamerProperties']]],
+  ['removekey',['RemoveKey',['../class_cloud_builder_library_1_1_gamer_properties.html#a3449fb56f8a587a38bf7d4a9be18049f',1,'CloudBuilderLibrary.GamerProperties.RemoveKey()'],['../class_cloud_builder_library_1_1_gamer_vfs.html#a4ea46072bbca323497cedbd667cd7acc',1,'CloudBuilderLibrary.GamerVfs.RemoveKey()']]],
+  ['resulthandler_3c_20t_20_3e',['ResultHandler&lt; T &gt;',['../namespace_cloud_builder_library.html#acf0178a59b82dcfe714dbf300fe808b7',1,'CloudBuilderLibrary']]],
+  ['resume',['Resume',['../class_cloud_builder_library_1_1_domain_event_loop.html#aac53471faaf585c4fbbd45af46a74880',1,'CloudBuilderLibrary::DomainEventLoop']]],
+  ['resumesession',['ResumeSession',['../class_cloud_builder_library_1_1_clan.html#a34f6097e6e5e67e61480ffdaa08b1f7a',1,'CloudBuilderLibrary::Clan']]],
+  ['retryin',['RetryIn',['../class_cloud_builder_library_1_1_http_request_failed_event_args.html#ad9ffa6ecc014b1d0e44774e2ff0c9482',1,'CloudBuilderLibrary::HttpRequestFailedEventArgs']]],
+  ['run',['Run',['../class_cloud_builder_library_1_1_game_batches.html#a6b0dac9df5d6fecd74d4d274c20e6ece',1,'CloudBuilderLibrary.GameBatches.Run()'],['../class_cloud_builder_library_1_1_gamer_batches.html#a0dbc8bea46c2c160da3993a057625c3d',1,'CloudBuilderLibrary.GamerBatches.Run()']]]
 ];

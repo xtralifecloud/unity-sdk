@@ -1,11 +1,6 @@
 var searchData=
 [
-  ['rank',['Rank',['../class_cloud_builder_library_1_1_posted_game_score.html#a64254dac57c5b2c8ffdf211b811e3e4d',1,'CloudBuilderLibrary.PostedGameScore.Rank()'],['../class_cloud_builder_library_1_1_score.html#a2bcfe660361a171d50cd31e42a719800',1,'CloudBuilderLibrary.Score.Rank()']]],
-  ['removeall',['RemoveAll',['../class_cloud_builder_library_1_1_gamer_properties.html#ab0b8d0e98100b19913a393212c502904',1,'CloudBuilderLibrary::GamerProperties']]],
-  ['removekey',['RemoveKey',['../class_cloud_builder_library_1_1_gamer_properties.html#a3449fb56f8a587a38bf7d4a9be18049f',1,'CloudBuilderLibrary.GamerProperties.RemoveKey()'],['../class_cloud_builder_library_1_1_gamer_vfs.html#a4ea46072bbca323497cedbd667cd7acc',1,'CloudBuilderLibrary.GamerVfs.RemoveKey()']]],
-  ['result_3c_20t_20_3e',['Result&lt; T &gt;',['../class_cloud_builder_library_1_1_result_3_01_t_01_4.html',1,'CloudBuilderLibrary']]],
-  ['resulthandler_3c_20t_20_3e',['ResultHandler&lt; T &gt;',['../namespace_cloud_builder_library.html#acf0178a59b82dcfe714dbf300fe808b7',1,'CloudBuilderLibrary']]],
-  ['resume',['Resume',['../class_cloud_builder_library_1_1_domain_event_loop.html#aac53471faaf585c4fbbd45af46a74880',1,'CloudBuilderLibrary::DomainEventLoop']]],
-  ['resumesession',['ResumeSession',['../class_cloud_builder_library_1_1_clan.html#a34f6097e6e5e67e61480ffdaa08b1f7a',1,'CloudBuilderLibrary::Clan']]],
-  ['retryin',['RetryIn',['../class_cloud_builder_library_1_1_http_request_failed_event_args.html#ad9ffa6ecc014b1d0e44774e2ff0c9482',1,'CloudBuilderLibrary::HttpRequestFailedEventArgs']]]
+  ['objectid',['ObjectId',['../class_cloud_builder_library_1_1_index_result.html#a9af80747a15273f3430195f2462472da',1,'CloudBuilderLibrary::IndexResult']]],
+  ['offset',['Offset',['../class_cloud_builder_library_1_1_paged_list_3_01_t_01_4.html#a3303e0e77cd60acaa83959277a485eb4',1,'CloudBuilderLibrary::PagedList&lt; T &gt;']]],
+  ['ok',['Ok',['../namespace_cloud_builder_library.html#a6c8201114e552fdf036105edd425586faa60852f204ed8028c1c58808b746d115',1,'CloudBuilderLibrary']]]
 ];

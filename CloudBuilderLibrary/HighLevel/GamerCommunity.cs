@@ -70,11 +70,11 @@ namespace CloudBuilderLibrary {
 		 * @param friends a list of data about the friends fetched on the social network.
 		 */
 		public void PostSocialNetworkFriends(ResultHandler<bool> done, LoginNetwork network, List<SocialNetworkFriend> friends) {
-			UrlBuilder url = new UrlBuilder("/v1/gamer/friends").Path(domain).QueryParam("network", network.Describe());
+			UrlBuilder url = new UrlBuilder("/v2.6/gamer/friends").Path(domain).QueryParam("network", network.Describe());
 			HttpRequest req = Gamer.MakeHttpRequest(url);
-			Bundle friendData = Bundle.CreateArray();
+			Bundle friendData = Bundle.CreateObject();
 			foreach (SocialNetworkFriend f in friends) {
-				friendData.Add(f.ToBundle());
+				friendData[f.Id] = f.ToBundle();
 			}
 
 			req.BodyJson = friendData;
@@ -82,7 +82,7 @@ namespace CloudBuilderLibrary {
 				Common.InvokeHandler(done, true, response.BodyJson);
 			});
 		}
-
+		
 		/**
 		 * Use this method to send a message to another user from your game.
 		 * 

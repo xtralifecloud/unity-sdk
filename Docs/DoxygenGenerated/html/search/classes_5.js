@@ -1,9 +1,13 @@
 var searchData=
 [
   ['game',['Game',['../class_cloud_builder_library_1_1_game.html',1,'CloudBuilderLibrary']]],
+  ['gamebatches',['GameBatches',['../class_cloud_builder_library_1_1_game_batches.html',1,'CloudBuilderLibrary']]],
   ['gamer',['Gamer',['../class_cloud_builder_library_1_1_gamer.html',1,'CloudBuilderLibrary']]],
   ['gameraccountmethods',['GamerAccountMethods',['../class_cloud_builder_library_1_1_gamer_account_methods.html',1,'CloudBuilderLibrary']]],
+  ['gamerachievements',['GamerAchievements',['../class_cloud_builder_library_1_1_gamer_achievements.html',1,'CloudBuilderLibrary']]],
+  ['gamerbatches',['GamerBatches',['../class_cloud_builder_library_1_1_gamer_batches.html',1,'CloudBuilderLibrary']]],
   ['gamercommunity',['GamerCommunity',['../class_cloud_builder_library_1_1_gamer_community.html',1,'CloudBuilderLibrary']]],
+  ['gamergodfather',['GamerGodfather',['../class_cloud_builder_library_1_1_gamer_godfather.html',1,'CloudBuilderLibrary']]],
   ['gamerinfo',['GamerInfo',['../class_cloud_builder_library_1_1_gamer_info.html',1,'CloudBuilderLibrary']]],
   ['gamermatches',['GamerMatches',['../class_cloud_builder_library_1_1_gamer_matches.html',1,'CloudBuilderLibrary']]],
   ['gamerprofile',['GamerProfile',['../class_cloud_builder_library_1_1_gamer_profile.html',1,'CloudBuilderLibrary']]],

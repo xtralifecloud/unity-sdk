@@ -102,12 +102,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af7dade72d4f5d72db205268e45119b1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaec00001023f2a3ff317b0550a06cebd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cloud_builder_library_1_1_gamer_community.html">GamerCommunity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cloud_builder_library_1_1_gamer_community.html#aaec00001023f2a3ff317b0550a06cebd">Domain</a> (string domain)</td></tr>
 <tr class="separator:aaec00001023f2a3ff317b0550a06cebd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a3b7476d18b99664b338f4899d752fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cloud_builder_library_1_1_gamer_community.html#a5a3b7476d18b99664b338f4899d752fa">FindOpponents</a> (ResultHandler&lt; List&lt; <a class="el" href="class_cloud_builder_library_1_1_gamer_info.html">GamerInfo</a> &gt;&gt; done)</td></tr>
-<tr class="separator:a5a3b7476d18b99664b338f4899d752fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:accefc460678f6e0ad2aeddb25aa259f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cloud_builder_library_1_1_gamer_community.html#accefc460678f6e0ad2aeddb25aa259f8">ListFriends</a> (ResultHandler&lt; List&lt; <a class="el" href="class_cloud_builder_library_1_1_gamer_info.html">GamerInfo</a> &gt;&gt; done, bool filterBlacklisted=false)</td></tr>
 <tr class="separator:accefc460678f6e0ad2aeddb25aa259f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a41e924de9d619094749150ae8bd74b3a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cloud_builder_library_1_1_gamer_community.html#a41e924de9d619094749150ae8bd74b3a">PostSocialNetworkFriends</a> (ResultHandler&lt; bool &gt; done, LoginNetwork network, List&lt; <a class="el" href="class_cloud_builder_library_1_1_social_network_friend.html">SocialNetworkFriend</a> &gt; friends)</td></tr>
 <tr class="separator:a41e924de9d619094749150ae8bd74b3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f964992ff3cb79c0a1dc53c3a35312e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cloud_builder_library_1_1_gamer_community.html#a5f964992ff3cb79c0a1dc53c3a35312e">SendEvent</a> (ResultHandler&lt; bool &gt; done, string gamerId, <a class="el" href="class_cloud_builder_library_1_1_bundle.html">Bundle</a> eventData, <a class="el" href="class_cloud_builder_library_1_1_push_notification.html">PushNotification</a> notification=null)</td></tr>
+<tr class="separator:a5f964992ff3cb79c0a1dc53c3a35312e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="ad3d4ebb83956b186adbeedf6c7603e64"></a>
@@ -219,28 +219,6 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a5a3b7476d18b99664b338f4899d752fa"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CloudBuilderLibrary.GamerCommunity.FindOpponents </td>
-          <td>(</td>
-          <td class="paramtype">ResultHandler&lt; List&lt; <a class="el" href="class_cloud_builder_library_1_1_gamer_info.html">GamerInfo</a> &gt;&gt;&#160;</td>
-          <td class="paramname"><em>done</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Can be used to retrieve random opponents for a match. NOT IMPLEMENTED YET. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">done</td><td>callback invoked when the operation has finished, either successfully or not, with the fetched list of friends. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a class="anchor" id="accefc460678f6e0ad2aeddb25aa259f8"></a>
 <div class="memitem">
 <div class="memproto">
@@ -303,11 +281,60 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>When you have data about friends from another social network, you can post them using these function. This will automatically add them as a friend on CotC as they get recognized on our servers. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>When you have data about friends from another social network, you can post them using these function. This will automatically add them as a friend on CotC as they get recognized on our servers. The friends get associated to the domain of this object. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">done</td><td>callback invoked when the operation has finished, either successfully or not. The attached boolean indicates success if true. </td></tr>
     <tr><td class="paramname">network</td><td>the network with which these friends are associated </td></tr>
     <tr><td class="paramname">friends</td><td>a list of data about the friends fetched on the social network. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a5f964992ff3cb79c0a1dc53c3a35312e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CloudBuilderLibrary.GamerCommunity.SendEvent </td>
+          <td>(</td>
+          <td class="paramtype">ResultHandler&lt; bool &gt;&#160;</td>
+          <td class="paramname"><em>done</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>gamerId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_cloud_builder_library_1_1_bundle.html">Bundle</a>&#160;</td>
+          <td class="paramname"><em>eventData</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_cloud_builder_library_1_1_push_notification.html">PushNotification</a>&#160;</td>
+          <td class="paramname"><em>notification</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Use this method to send a message to another user from your game.</p>
+<p>Messages are sent to a specific user, in a specific domain. You can use domains to send messages across games (or use private for messages sent to your game only).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">done</td><td>callback invoked when the operation has finished, either successfully or not. The attached boolean indicates success if true. </td></tr>
+    <tr><td class="paramname">gamerId</td><td>ID of the recipient gamer. </td></tr>
+    <tr><td class="paramname">eventData</td><td>JSON object representing the event to be sent. The recipient will receive it as is when subscribed to a #DomainEventLoop (ReceivedEvent property). If the application is not active, the message will be queued and transmitted the next time the domain event loop is started. </td></tr>
+    <tr><td class="paramname">notification</td><td>push notification to send to the recipient player if not currently active. </td></tr>
   </table>
   </dd>
 </dl>
@@ -320,7 +347,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 3 2015 16:34:59 for CloudBuilder Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Jun 16 2015 20:56:59 for CloudBuilder Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

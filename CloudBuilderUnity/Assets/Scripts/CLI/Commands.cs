@@ -19,6 +19,7 @@ namespace CLI {
 	 */
 	public partial class Commands : MonoBehaviour {
 		public CloudBuilderGameObject CloudBuilderGameObject;
+		public CloudBuilderFacebookIntegration CloudBuilderFacebookIntegration;
 		public CLI Cli;
 		internal Dictionary<string, Variable> Variables = new Dictionary<string, Variable>();
 
@@ -69,11 +70,14 @@ namespace CLI {
 			Cli.AppendLine(text);
 		}
 
-		private ResultHandler<T> SuccessHandler<T>(ResultHandler<T> subHandler) {
+		private ResultHandler<T> SuccessHandler<T>(Arguments args, ResultHandler<T> subHandler = null) {
 			return result => {
 				Log(">> " + result.ToString());
 				if (result.IsSuccessful) {
-					subHandler(result);
+					if (subHandler != null) subHandler(result);
+				}
+				else {
+					args.Return();
 				}
 			};
 		}

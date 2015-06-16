@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['description',['Description',['../class_cloud_builder_library_1_1_match.html#a348ed32494e8301b01cc2dd053cd3f7a',1,'CloudBuilderLibrary::Match']]],
-  ['domain',['Domain',['../class_cloud_builder_library_1_1_domain_event_loop.html#a8e84df08536acdf9e7bc11c68f644292',1,'CloudBuilderLibrary.DomainEventLoop.Domain()'],['../class_cloud_builder_library_1_1_match.html#a4cf91787d4f959450d89d637bf1e38d5',1,'CloudBuilderLibrary.Match.Domain()']]]
+  ['community',['Community',['../class_cloud_builder_library_1_1_gamer.html#a66de90d5f8a9dd2f9a5c317833f22cb6',1,'CloudBuilderLibrary::Gamer']]],
+  ['creator',['Creator',['../class_cloud_builder_library_1_1_match.html#a77528db50791a0268d7b02d748aa6317',1,'CloudBuilderLibrary.Match.Creator()'],['../class_cloud_builder_library_1_1_match_list_result.html#a0269c905cc29d6c053911df201330dbf',1,'CloudBuilderLibrary.MatchListResult.Creator()']]],
+  ['customproperties',['CustomProperties',['../class_cloud_builder_library_1_1_match.html#ad57021fe6239ed919983bda7f6a2a24c',1,'CloudBuilderLibrary.Match.CustomProperties()'],['../class_cloud_builder_library_1_1_match_list_result.html#aba17eb3e69d55705e9a40d29e836d82d',1,'CloudBuilderLibrary.MatchListResult.CustomProperties()']]]
 ];

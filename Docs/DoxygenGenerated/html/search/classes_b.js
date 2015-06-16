@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['transaction',['Transaction',['../class_cloud_builder_library_1_1_transaction.html',1,'CloudBuilderLibrary']]],
-  ['transactionresult',['TransactionResult',['../class_cloud_builder_library_1_1_transaction_result.html',1,'CloudBuilderLibrary']]]
+  ['score',['Score',['../class_cloud_builder_library_1_1_score.html',1,'CloudBuilderLibrary']]],
+  ['socialnetworkfriend',['SocialNetworkFriend',['../class_cloud_builder_library_1_1_social_network_friend.html',1,'CloudBuilderLibrary']]]
 ];

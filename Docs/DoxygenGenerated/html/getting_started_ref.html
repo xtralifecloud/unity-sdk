@@ -112,17 +112,16 @@ Import package screen</div></div>
 <p>All functions are asynchronous. They use a simple pattern with a delegate as an action to execute when finished, and get passed a <code>Result&lt;Entity&gt;</code> as a parameter. The result indicates success or failure, encloses an entity (whose type depends on the call) and may contain additional information reported by the server.</p>
 <p>A delegate for a given Entity is called <code>ResultHandler&lt;Entity&gt;</code> and is basically simply a function with one argument of type <code>Result&lt;Entity&gt;</code>. The entity is obtained through the <code>Value</code> member of the <code>Result&lt;Entity&gt;</code>.</p>
 <h1>Error handlers</h1>
-<p>In case a network error happens, the request is not retried by default. But there is a <code>HttpRequestFailedHandler</code> member on Clan which can be set to an user defined callback. This callback tells what to do with the error (retry it, cancel it).</p>
-<div class="fragment"><div class="line">clan.HttpRequestFailedHandler = (HttpRequestFailedEventArgs e) =&gt; {</div>
-<div class="line">    <span class="keywordtype">int</span> retriedAlready = 0;</div>
-<div class="line">    <span class="keywordflow">if</span> (e.UserData != null)</div>
-<div class="line">        retriedAlready = (int)e.UserData;</div>
-<div class="line">    retriedAlready += 1;</div>
-<div class="line">    e.UserData = retriedAlready;</div>
-<div class="line">    if (retriedAlready &gt;= 10)</div>
+<p>In case a network error happens, the request is not retried by default. But there is a <code>HttpRequestFailedHandler</code> member on Clan which can be set to an user defined callback. This callback tells what to do with the error (retry it, cancel it). The following code retries any failed request twice, once after 100ms, once after 5s, then aborts it.</p>
+<div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">int</span> RetryTimes = {100 <span class="comment">/* ms */</span>, 5000 <span class="comment">/* ms */</span>};</div>
+<div class="line">clan.HttpRequestFailedHandler = (HttpRequestFailedEventArgs e) =&gt; {</div>
+<div class="line">    <span class="comment">// Store retry count in UserData field (persisted among retries of a given request)</span></div>
+<div class="line">    <span class="keywordtype">int</span> retriedCount = e.UserData != null ? (int)e.UserData : 0;</div>
+<div class="line">    e.UserData = retriedCount + 1;</div>
+<div class="line">    if (retriedAlready &gt;= RetryTimes.Length)</div>
 <div class="line">        e.Abort();</div>
 <div class="line">    <span class="keywordflow">else</span></div>
-<div class="line">        e.RetryIn(milliseconds: 100);</div>
+<div class="line">        e.RetryIn(RetryTimes[retriedAlready]);</div>
 <div class="line">};</div>
 </div><!-- fragment --><p>This should be done at the very startup, after the clan has been received. The handler is chosen when an HTTP request is built, so if you change it while an HTTP request is running, it will have no effect.</p>
 <h1>Bundle</h1>
@@ -130,7 +129,7 @@ Import package screen</div></div>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 3 2015 16:34:59 for CloudBuilder Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Jun 16 2015 20:56:59 for CloudBuilder Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

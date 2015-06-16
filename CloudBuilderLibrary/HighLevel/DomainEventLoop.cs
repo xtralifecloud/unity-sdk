@@ -4,9 +4,21 @@ using System.Threading;
 
 namespace CloudBuilderLibrary {
 
+	/**
+	 * Delegate called when receiving a message on a #DomainEventLoop.
+	 * @param sender domain loop that triggered the event.
+	 * @param e description of the received event.
+	 */
 	public delegate void EventLoopHandler(DomainEventLoop sender, EventLoopArgs e);
 
+	/**
+	 * Arguments of the EventLoopArgs.ReceivedEvent event. You can use `args.Message.ToJson()` to
+	 * obtain more information.
+	 */
 	public class EventLoopArgs {
+		/**
+		 * Message received.
+		 */
 		public Bundle Message {
 			get; private set;
 		}
@@ -47,6 +59,9 @@ namespace CloudBuilderLibrary {
 
 		public Gamer Gamer { get; private set; }
 
+		/**
+		 * This event is raised when an event is received.
+		 */
 		public event EventLoopHandler ReceivedEvent;
 
 		/**

@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['value',['Value',['../class_cloud_builder_library_1_1_score.html#a4363d09789b0fd39923ffc0117aa1cc6',1,'CloudBuilderLibrary::Score']]],
-  ['values',['Values',['../class_cloud_builder_library_1_1_paged_result_3_01_t_01_4.html#a8c23575935de8b0969ea6efbd4a76cb6',1,'CloudBuilderLibrary::PagedResult&lt; T &gt;']]]
+  ['scores',['Scores',['../class_cloud_builder_library_1_1_gamer.html#a2d6c957ca43a7d9275ee7cb11dde3533',1,'CloudBuilderLibrary::Gamer']]],
+  ['seed',['Seed',['../class_cloud_builder_library_1_1_match.html#a61e618f8cd912928df672e618879331b',1,'CloudBuilderLibrary::Match']]],
+  ['shoe',['Shoe',['../class_cloud_builder_library_1_1_match.html#a4a04ad346b1357dbbc8632dc661d5088',1,'CloudBuilderLibrary::Match']]],
+  ['status',['Status',['../class_cloud_builder_library_1_1_match.html#ac31e7587e57e4d44d7cc4dd54b23017c',1,'CloudBuilderLibrary.Match.Status()'],['../class_cloud_builder_library_1_1_match_list_result.html#a6831809035baf65976c96ef4c7e7a5c2',1,'CloudBuilderLibrary.MatchListResult.Status()']]]
 ];

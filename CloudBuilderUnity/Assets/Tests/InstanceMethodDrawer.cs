@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
 using System.Text.RegularExpressions;
@@ -77,3 +78,4 @@ namespace IntegrationTests {
 		}
 	}
 }
+#endif

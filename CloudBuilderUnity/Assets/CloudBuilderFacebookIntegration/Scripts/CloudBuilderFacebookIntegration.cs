@@ -59,6 +59,10 @@ namespace CloudBuilderLibrary
 		public void FetchFriends(ResultHandler<bool> done, Gamer gamer) {
 			EnsureFacebookLoaded(() => {
 				DoFacebookRequestWithPagination((Result<List<SocialNetworkFriend>> result) => {
+					if (!result.IsSuccessful) {
+						Common.InvokeHandler(done, ErrorCode.SocialNetworkError, "Facebook request failed");
+						return;
+					}
 					gamer.Community.PostSocialNetworkFriends(done, LoginNetwork.Facebook, result.Value);
 				}, "/me/friends", Facebook.HttpMethod.GET);
 			});
@@ -75,12 +79,14 @@ namespace CloudBuilderLibrary
 		// Recursive
 		private void DoFacebookRequestWithPagination(ResultHandler<List<SocialNetworkFriend>> done, FBResult result, List<SocialNetworkFriend> addDataTo) {
 			if (result.Error != null) {
+				Debug.LogWarning("Error in facebook request: " + result.Error.ToString());
 				Common.InvokeHandler(done, ErrorCode.SocialNetworkError, "Facebook/ Network #1");
 				return;
 			}
 
 			// Gather the result from the last request
 			try {
+				Debug.Log("FB response: " + result.Text);
 				Bundle fbResult = Bundle.FromJson(result.Text);
 				List<Bundle> data = fbResult["data"].AsArray();
 				foreach (Bundle element in data) {
