@@ -402,7 +402,7 @@ namespace CotcSdk
 	}
 
 	/**
-	 * Never instantiate this class. Use Bundle.Empty instead. Pass that everywhere an explicit configuration is not wanted.
+	 * Never instantiate this class. Use `Bundle.Empty` instead. Pass that everywhere an explicit configuration is not wanted.
 	 */
 	public class EmptyBundle : Bundle
 	{
