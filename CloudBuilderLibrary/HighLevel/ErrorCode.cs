@@ -4,7 +4,7 @@ using System.Text;
 using LitJson;
 using System.Collections;
 
-namespace CloudBuilderLibrary
+namespace CotcSdk
 {
 	public enum ErrorCode {
 		/// No error.

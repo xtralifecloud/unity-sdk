@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CloudBuilderLibrary
+namespace CotcSdk
 {
 	public static class Common {
 		/**

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using CloudBuilderLibrary;
+using CotcSdk;
 
 namespace CLI
 {
@@ -13,13 +13,13 @@ namespace CLI
 
 		[CommandInfo("Logs in anonymously and starts the event loop.")]
 		void loginanonymous(Arguments args) {
-			Clan.LoginAnonymously(SuccessHandler<Gamer>(args, result => DidLogin(result, args)));
+			Cloud.LoginAnonymously(SuccessHandler<Gamer>(args, result => DidLogin(result, args)));
 		}
 
 		[CommandInfo("Logs on using any supported network.", "network, id, secret")]
 		void login(Arguments args) {
 			args.Expecting(3, ArgumentType.String, ArgumentType.String, ArgumentType.String);
-			Clan.Login(
+			Cloud.Login(
 				done: SuccessHandler<Gamer>(args, result => DidLogin(result, args)),
 				network: ParseEnum<LoginNetwork>(args.StringArg(0)),
 				networkId: args.StringArg(1),
@@ -29,7 +29,7 @@ namespace CLI
 		[CommandInfo("Resumes an existing session by gamer ID/secret.", "gamer_id, gamer_secret")]
 		void resumesession(Arguments args) {
 			args.Expecting(2, ArgumentType.String, ArgumentType.String);
-			Clan.ResumeSession(
+			Cloud.ResumeSession(
 				done: SuccessHandler<Gamer>(args, result => DidLogin(result, args)),
 				gamerId: args.StringArg(0),
 				gamerSecret: args.StringArg(1));
@@ -37,12 +37,12 @@ namespace CLI
 
 		[CommandInfo("Logs in with a facebook profile")]
 		void loginfacebook(Arguments args) {
-			CloudBuilderFacebookIntegration.LoginWithFacebook(SuccessHandler<Gamer>(args, result => DidLogin(result, args)), Clan);
+			CotcFacebookIntegration.LoginWithFacebook(SuccessHandler<Gamer>(args, result => DidLogin(result, args)), Cloud);
 		}
 
 		[CommandInfo("Lists facebook friends and sends it to CotC servers")]
 		void fbfriends(Arguments args) {
-			CloudBuilderFacebookIntegration.FetchFriends(
+			CotcFacebookIntegration.FetchFriends(
 				done: SuccessHandler<bool>(args, result => args.Return()),
 				gamer: Gamer);
 		}

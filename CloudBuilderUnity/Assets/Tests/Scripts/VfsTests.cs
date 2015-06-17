@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-using CloudBuilderLibrary;
+using CotcSdk;
 using System.Reflection;
 using IntegrationTests;
 
@@ -12,15 +12,15 @@ public class VfsTests: TestBase {
 	void Start() {
 		// Invoke the method described on the integration test script (TestMethodName)
 		var met = GetType().GetMethod(TestMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-		// Test methods have a Clan param (and we do the setup here)
-		FindObjectOfType<CloudBuilderGameObject>().GetClan(clan => {
-			met.Invoke(this, new object[] { clan });
+		// Test methods have a Cloud param (and we do the setup here)
+		FindObjectOfType<CotcGameObject>().GetCloud(cloud => {
+			met.Invoke(this, new object[] { cloud });
 		});
 	}
 
 	[Test("Tries to query a non existing key.")]
-	public void ShouldNotReadInexistingKey(Clan clan) {
-		clan.LoginAnonymously(gamer => {
+	public void ShouldNotReadInexistingKey(Cloud cloud) {
+		cloud.LoginAnonymously(gamer => {
 			Assert(gamer.IsSuccessful, "Failed to log in");
 			gamer.Value.GamerVfs.GetKey(getRes => {
 				Assert(!getRes.IsSuccessful, "Request marked as succeeded");
@@ -32,8 +32,8 @@ public class VfsTests: TestBase {
 	}
 
 	[Test("Sets a few keys, then reads them.")]
-	public void ShouldWriteKeys(Clan clan) {
-		Login(clan, gamer => {
+	public void ShouldWriteKeys(Cloud cloud) {
+		Login(cloud, gamer => {
 			gamer.GamerVfs.SetKey(setRes => {
 				gamer.GamerVfs.GetKey(getRes => {
 					Assert(getRes.IsSuccessful, "Request failed");
@@ -45,8 +45,8 @@ public class VfsTests: TestBase {
 	}
 
 	[Test("Sets a key, deletes it and then rereads it.")]
-	public void ShouldDeleteKey(Clan clan) {
-		Login(clan, gamer => {
+	public void ShouldDeleteKey(Cloud cloud) {
+		Login(cloud, gamer => {
 			gamer.GamerVfs.SetKey(setRes => {
 				gamer.GamerVfs.RemoveKey(remRes => {
 					gamer.GamerVfs.GetKey(getRes => {
@@ -61,8 +61,8 @@ public class VfsTests: TestBase {
 	}
 
 	[Test("Sets a binary key and rereads it.")]
-	public void ShouldWriteBinaryKey(Clan clan) {
-		Login(clan, gamer => {
+	public void ShouldWriteBinaryKey(Cloud cloud) {
+		Login(cloud, gamer => {
 			byte[] data = { 1, 2, 3, 4 };
 			gamer.GamerVfs.SetKeyBinary(setRes => {
 				gamer.GamerVfs.GetKeyBinary(getRes => {

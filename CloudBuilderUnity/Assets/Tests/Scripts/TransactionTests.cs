@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-using CloudBuilderLibrary;
+using CotcSdk;
 using System.Reflection;
 using IntegrationTests;
 
@@ -15,15 +15,15 @@ public class TransactionTests : TestBase {
 	void Start() {
 		// Invoke the method described on the integration test script (TestMethodName)
 		var met = GetType().GetMethod(TestMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-		// Test methods have a Clan param (and we do the setup here)
-		FindObjectOfType<CloudBuilderGameObject>().GetClan(clan => {
-			met.Invoke(this, new object[] { clan });
+		// Test methods have a Cloud param (and we do the setup here)
+		FindObjectOfType<CotcGameObject>().GetCloud(cloud => {
+			met.Invoke(this, new object[] { cloud });
 		});
 	}
 
 	[Test("Runs a transaction and checks the balance. Tests both the transaction and the balance calls.")]
-	public void ShouldRunTransaction(Clan clan) {
-		LoginNewUser(clan, gamer => {
+	public void ShouldRunTransaction(Cloud cloud) {
+		LoginNewUser(cloud, gamer => {
 			Bundle tx = Bundle.CreateObject("gold", 10, "silver", 100);
 			// Set property, then get all and check it
 			gamer.Transactions.Post(
@@ -46,8 +46,8 @@ public class TransactionTests : TestBase {
 	}
 
 	[Test("Runs a transaction that resets the balance. Tests the transaction syntax and read balance.")]
-	public void ShouldResetBalance(Clan clan) {
-		LoginNewUser(clan, gamer => {
+	public void ShouldResetBalance(Cloud cloud) {
+		LoginNewUser(cloud, gamer => {
 			// Set property, then get all and check it
 			gamer.Transactions.Post(txResult => {
 				Assert(txResult.IsSuccessful, "Error when running transaction");
@@ -63,8 +63,8 @@ public class TransactionTests : TestBase {
 	}
 
 	[Test("Runs a transaction that should trigger an achievement.", requisite: "Please import {\"testAch\":{\"type\":\"limit\",\"config\":{\"unit\":\"gold\",\"maxValue\":\"100\"}}} into the current game achievements.")]
-	public void ShouldTriggerAchievement(Clan clan) {
-		LoginNewUser(clan, gamer => {
+	public void ShouldTriggerAchievement(Cloud cloud) {
+		LoginNewUser(cloud, gamer => {
 			gamer.Transactions.Post(txResult => {
 				Assert(txResult.IsSuccessful, "Failed transaction");
 				Assert(txResult.Value.TriggeredAchievements.Count == 1, "Expected one achievement triggered");
@@ -77,8 +77,8 @@ public class TransactionTests : TestBase {
 	}
 
 	[Test("Runs a transaction that should trigger an achievement.", requisite: "Please import {\"testAch\":{\"type\":\"limit\",\"config\":{\"unit\":\"gold\",\"maxValue\":\"100\"}}} into the current game achievements.")]
-	public void ShouldAssociateAchievementData(Clan clan) {
-		LoginNewUser(clan, gamer => {
+	public void ShouldAssociateAchievementData(Cloud cloud) {
+		LoginNewUser(cloud, gamer => {
 			gamer.Transactions.Post(txResult => {
 				Assert(txResult.IsSuccessful, "Failed transaction");
 				Assert(txResult.Value.TriggeredAchievements["testAch"].Name == "testAch", "Expected testAch to be triggered");
@@ -94,8 +94,8 @@ public class TransactionTests : TestBase {
 	}
 
 	[Test("Fetches the transaction history.")]
-	public void ShouldFetchTransactionHistory(Clan clan) {
-		LoginNewUser(clan, gamer => {
+	public void ShouldFetchTransactionHistory(Cloud cloud) {
+		LoginNewUser(cloud, gamer => {
 			gamer.Transactions.Post(txResult => {
 				Assert(txResult.IsSuccessful, "Failed to run transaction");
 				gamer.Transactions.History(histResult => {
@@ -110,8 +110,8 @@ public class TransactionTests : TestBase {
 	}
 
 	[Test("Tests the pagination feature of the transaction history by creating one user and three transactions.")]
-	public void ShouldHavePaginationInTxHistory(Clan clan) {
-		LoginNewUser(clan, gamer => {
+	public void ShouldHavePaginationInTxHistory(Cloud cloud) {
+		LoginNewUser(cloud, gamer => {
 			// Run 3 transactions serially
 			bool alreadyWentBack = false;
 			RunTransaction(gamer, Bundle.CreateObject("gold", 1))
@@ -150,8 +150,8 @@ public class TransactionTests : TestBase {
 	}
 
 	[Test("Tests the filter by unit feature of the transaction history")]
-	public void ShouldFilterTransactionsByUnit(Clan clan) {
-		LoginNewUser(clan, gamer => {
+	public void ShouldFilterTransactionsByUnit(Cloud cloud) {
+		LoginNewUser(cloud, gamer => {
 			// Run 3 transactions serially
 			RunTransaction(gamer, Bundle.CreateObject("gold", 1))
 			.Then(dummy => RunTransaction(gamer, Bundle.CreateObject("gold", 2, "silver", 10)))
@@ -169,8 +169,8 @@ public class TransactionTests : TestBase {
 	}
 
 	[Test("Lists the state of achievements for the current user, including when a bit of progress was made.", requisite: "Please import {\"testAch\":{\"type\":\"limit\",\"config\":{\"unit\":\"gold\",\"maxValue\":\"100\"}}} into the current game achievements.")]
-	public void ShouldListAchievements(Clan clan) {
-		LoginNewUser(clan, gamer => {
+	public void ShouldListAchievements(Cloud cloud) {
+		LoginNewUser(cloud, gamer => {
 			gamer.Achievements.List(result => {
 				Assert(result.IsSuccessful, "Failed to retrieve achievements");
 				Assert(result.Value.ContainsKey("testAch"), "'testAch' not found, check that you have configured the required achievements on the server");

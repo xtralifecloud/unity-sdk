@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['network',['Network',['../class_cloud_builder_library_1_1_user_info.html#ad6db4d2285661de127cbe96d341e544e',1,'CloudBuilderLibrary::UserInfo']]],
-  ['networkid',['NetworkId',['../class_cloud_builder_library_1_1_user_info.html#a6fd319e205b054cea2b397c9a9a40f47',1,'CloudBuilderLibrary::UserInfo']]]
+  ['network',['Network',['../class_cotc_sdk_1_1_user_info.html#a7f69ca9585ce693590431956a325886c',1,'CotcSdk::UserInfo']]],
+  ['networkid',['NetworkId',['../class_cotc_sdk_1_1_user_info.html#a2404e5bbd3d639db7329f1b654668094',1,'CotcSdk::UserInfo']]]
 ];

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CloudBuilderLibrary {
+namespace CotcSdk {
 
 	/**
 	 * Result of an index query. Represents a single returned object.

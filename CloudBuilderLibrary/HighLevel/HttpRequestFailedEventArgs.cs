@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CloudBuilderLibrary {
+namespace CotcSdk {
 
 	/**
 	 * Delegate for failed HTTP requests. See Clan.HttpRequestFailedHandler.

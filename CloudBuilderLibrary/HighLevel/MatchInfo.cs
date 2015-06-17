@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CloudBuilderLibrary {
+namespace CotcSdk {
 
 	/**
 	 * Represents a basic match with less information associated than a real match.

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['userdata',['UserData',['../class_cloud_builder_library_1_1_http_request_failed_event_args.html#af451c27baac0fb4cf469aa2bbbbd123c',1,'CloudBuilderLibrary::HttpRequestFailedEventArgs']]]
+  ['userdata',['UserData',['../class_cotc_sdk_1_1_http_request_failed_event_args.html#ae6f9621f943935fbffc782237367212c',1,'CotcSdk::HttpRequestFailedEventArgs']]]
 ];

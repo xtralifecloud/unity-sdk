@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CloudBuilderLibrary {
+namespace CotcSdk {
 
 	/**
 	 * Represents a match with which you can interact through high level functionality.
@@ -239,9 +239,9 @@ namespace CloudBuilderLibrary {
 			if (onMatchFinished != null || onPlayerJoined != null || onPlayerLeft != null || onMovePosted != null) {
 				// Register event loop if not already
 				if (RegisteredEventLoop == null) {
-					RegisteredEventLoop = CloudBuilder.GetEventLoopFor(Gamer.GamerId, Domain);
+					RegisteredEventLoop = Cotc.GetEventLoopFor(Gamer.GamerId, Domain);
 					if (RegisteredEventLoop == null) {
-						CloudBuilder.LogWarning("No pop event loop for match " + MatchId + " on domain " + Domain + ", match events/updates will not work");
+						Cotc.LogWarning("No pop event loop for match " + MatchId + " on domain " + Domain + ", match events/updates will not work");
 					}
 					else {
 						RegisteredEventLoop.ReceivedEvent += this.ReceivedLoopEvent;
@@ -286,7 +286,7 @@ namespace CloudBuilderLibrary {
 				case "match.invite":	// Do not notify them since we are already playing the match
 					break;
 				default:
-					CloudBuilder.LogError("Unknown match event type " + e.Message["type"]);
+					Cotc.LogError("Unknown match event type " + e.Message["type"]);
 					break;
 			}
 		}

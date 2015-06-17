@@ -15,24 +15,24 @@ Note: if you want to start from zero, you may simply add a new scene and drag&dr
 
 # Usage
 
-Basic usage is provided by the CloudBuilder prefab object. You just have to put it on your scene and invoke the GetClan method on it to fetch a #CloudBuilderLibrary.Clan object allowing to use most features. For that, you may simply use `FindObjectOfType<CloudBuilderGameObject>()`.
+Basic usage is provided by the CloudBuilder prefab object. You just have to put it on your scene and invoke the GetCloud method on it to fetch a #CloudBuilderLibrary.Cloud object allowing to use most features. For that, you may simply use `FindObjectOfType<CloudBuilderGameObject>()`.
 
 ~~~~{.cs}
-	private Clan Clan;
+	private Cloud Cloud;
 	
 	void Setup() {
-		cb.GetClan(clan => {
-			Clan = clan;
+		cb.GetCloud(cloud => {
+			Cloud = cloud;
 		});
 	}
 ~~~~
 
-This code will fetch a clan object. This operation is asynchronous and may take a bit of time or operate instantly, depending on various conditions. You should do it at startup as shown above and keep it as a member of your class.
+This code will fetch a cloud object. This operation is asynchronous and may take a bit of time or operate instantly, depending on various conditions. You should do it at startup as shown above and keep it as a member of your class.
 
-Another very important object is the #CloudBuilderLibrary.Gamer object. This represents a signed in user, and provides all functionality that requires to be logged in. You will obtain it by logging in through the clan object.
+Another very important object is the #CloudBuilderLibrary.Gamer object. This represents a signed in user, and provides all functionality that requires to be logged in. You will obtain it by logging in through the cloud object.
 
 ~~~~{.cs}
-	Clan.LoginAnonymously((Result<Gamer> result) => {
+	Cloud.LoginAnonymously((Result<Gamer> result) => {
 		if (!result.IsSuccessful)
 			Debug.LogError("Login failed: " + result.ToString());
 		else {
@@ -50,11 +50,11 @@ A delegate for a given Entity is called `ResultHandler<Entity>` and is basically
 
 # Error handlers
 
-In case a network error happens, the request is not retried by default. But there is a `HttpRequestFailedHandler` member on Clan which can be set to an user defined callback. This callback tells what to do with the error (retry it, cancel it). The following code retries any failed request twice, once after 100ms, once after 5s, then aborts it.
+In case a network error happens, the request is not retried by default. But there is a `HttpRequestFailedHandler` member on Cloud which can be set to an user defined callback. This callback tells what to do with the error (retry it, cancel it). The following code retries any failed request twice, once after 100ms, once after 5s, then aborts it.
 
 ~~~~{.cs}
 	const int RetryTimes = {100 /* ms */, 5000 /* ms */};
-	clan.HttpRequestFailedHandler = (HttpRequestFailedEventArgs e) => {
+	cloud.HttpRequestFailedHandler = (HttpRequestFailedEventArgs e) => {
 		// Store retry count in UserData field (persisted among retries of a given request)
 		int retriedCount = e.UserData != null ? (int)e.UserData : 0;
 		e.UserData = retriedCount + 1;
@@ -65,7 +65,7 @@ In case a network error happens, the request is not retried by default. But ther
 	};
 ~~~~
 
-This should be done at the very startup, after the clan has been received. The handler is chosen when an HTTP request is built, so if you change it while an HTTP request is running, it will have no effect.
+This should be done at the very startup, after the cloud has been received. The handler is chosen when an HTTP request is built, so if you change it while an HTTP request is running, it will have no effect.
 
 # Bundle
 

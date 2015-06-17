@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CloudBuilderLibrary {
+namespace CotcSdk {
 
 	/**
 	 * Represents a key/value system, also known as virtual file system.

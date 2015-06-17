@@ -1,12 +1,12 @@
 var searchData=
 [
-  ['game',['Game',['../class_cloud_builder_library_1_1_clan.html#af69ee634dd6258ea987980d34b238571',1,'CloudBuilderLibrary::Clan']]],
-  ['gamer',['Gamer',['../class_cloud_builder_library_1_1_match.html#af2b97a2055733df678a3b1be3463a415',1,'CloudBuilderLibrary::Match']]],
-  ['gamerid',['GamerId',['../class_cloud_builder_library_1_1_gamer.html#a719e2ccadc0fb3650cb8fa7034b8ea18',1,'CloudBuilderLibrary.Gamer.GamerId()'],['../class_cloud_builder_library_1_1_gamer_info.html#a1ad09cb9100fb06ab333afb27decb373',1,'CloudBuilderLibrary.GamerInfo.GamerId()']]],
-  ['gamerinfo',['GamerInfo',['../class_cloud_builder_library_1_1_score.html#ae1e95d4c13ac0e71864d2725083c0bef',1,'CloudBuilderLibrary::Score']]],
-  ['gamersecret',['GamerSecret',['../class_cloud_builder_library_1_1_gamer.html#a71080699b5d3aa52b9505ea90cf4462f',1,'CloudBuilderLibrary::Gamer']]],
-  ['gamervfs',['GamerVfs',['../class_cloud_builder_library_1_1_gamer.html#aa21bea4b2896ad151ec3d782f34c3b47',1,'CloudBuilderLibrary::Gamer']]],
-  ['gamevfs',['GameVfs',['../class_cloud_builder_library_1_1_game.html#a38511dc52b978c63fcf84e4cc2e052e6',1,'CloudBuilderLibrary::Game']]],
-  ['globalstate',['GlobalState',['../class_cloud_builder_library_1_1_match.html#a921f1a93f8758f3249e6675e223d933a',1,'CloudBuilderLibrary::Match']]],
-  ['godfather',['Godfather',['../class_cloud_builder_library_1_1_gamer.html#a16e26135bd44d262c23a23ec4c9211e0',1,'CloudBuilderLibrary::Gamer']]]
+  ['game',['Game',['../class_cotc_sdk_1_1_cloud.html#a97bb9d73aed9f22bfc9796be6573fc8c',1,'CotcSdk::Cloud']]],
+  ['gamer',['Gamer',['../class_cotc_sdk_1_1_match.html#ad5fb1993bb8149548b0e44661d2f0056',1,'CotcSdk::Match']]],
+  ['gamerid',['GamerId',['../class_cotc_sdk_1_1_gamer.html#a99ce6ec2614b905f4a7d30fc9ef0284b',1,'CotcSdk.Gamer.GamerId()'],['../class_cotc_sdk_1_1_gamer_info.html#a5dd52c8b491e651a0b51adae9e60bc4b',1,'CotcSdk.GamerInfo.GamerId()']]],
+  ['gamerinfo',['GamerInfo',['../class_cotc_sdk_1_1_score.html#a2aafc298befdee988b7b49518bdb80cc',1,'CotcSdk::Score']]],
+  ['gamersecret',['GamerSecret',['../class_cotc_sdk_1_1_gamer.html#a39b6107ce7f1eec407838b0a68eb4e43',1,'CotcSdk::Gamer']]],
+  ['gamervfs',['GamerVfs',['../class_cotc_sdk_1_1_gamer.html#a20aed85cfcfceae8636d85f274f32785',1,'CotcSdk::Gamer']]],
+  ['gamevfs',['GameVfs',['../class_cotc_sdk_1_1_game.html#a172224ee60cba61e7fc9f0d51d4bc337',1,'CotcSdk::Game']]],
+  ['globalstate',['GlobalState',['../class_cotc_sdk_1_1_match.html#a1ebfaef159679819912287098b7c5722',1,'CotcSdk::Match']]],
+  ['godfather',['Godfather',['../class_cotc_sdk_1_1_gamer.html#ad89bd7c937628ba1cabcb4ec5a860601',1,'CotcSdk::Gamer']]]
 ];

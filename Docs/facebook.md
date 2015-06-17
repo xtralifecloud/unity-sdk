@@ -32,6 +32,6 @@ From your code, find the object as for CloudBuilder and call methods on it.
 
 ~~~~{.cs}
 	var fb = FindObjectOfType<CloudBuilderFacebookIntegration>();
-	fb.LoginWithFacebook(gamerResult => { ... }, Clan);
+	fb.LoginWithFacebook(gamerResult => { ... }, Cloud);
 ~~~~
 

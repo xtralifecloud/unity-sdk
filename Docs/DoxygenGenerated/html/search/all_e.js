@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['objectid',['ObjectId',['../class_cloud_builder_library_1_1_index_result.html#a9af80747a15273f3430195f2462472da',1,'CloudBuilderLibrary::IndexResult']]],
-  ['offset',['Offset',['../class_cloud_builder_library_1_1_paged_list_3_01_t_01_4.html#a3303e0e77cd60acaa83959277a485eb4',1,'CloudBuilderLibrary::PagedList&lt; T &gt;']]],
-  ['ok',['Ok',['../namespace_cloud_builder_library.html#a6c8201114e552fdf036105edd425586faa60852f204ed8028c1c58808b746d115',1,'CloudBuilderLibrary']]]
+  ['objectid',['ObjectId',['../class_cotc_sdk_1_1_index_result.html#a9691e8066f039b8905d4b0ecda03aa01',1,'CotcSdk::IndexResult']]],
+  ['offset',['Offset',['../class_cotc_sdk_1_1_paged_list_3_01_t_01_4.html#a65f40f4b449097e96457c5ff42a591ed',1,'CotcSdk::PagedList&lt; T &gt;']]],
+  ['ok',['Ok',['../namespace_cotc_sdk.html#a49400c75979dda6834139d30bad775daaa60852f204ed8028c1c58808b746d115',1,'CotcSdk']]]
 ];

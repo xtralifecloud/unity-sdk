@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['description',['Description',['../class_cloud_builder_library_1_1_match.html#a348ed32494e8301b01cc2dd053cd3f7a',1,'CloudBuilderLibrary.Match.Description()'],['../class_cloud_builder_library_1_1_match_list_result.html#ad78a6c00a851f49bea549311f120f38c',1,'CloudBuilderLibrary.MatchListResult.Description()']]],
-  ['domain',['Domain',['../class_cloud_builder_library_1_1_domain_event_loop.html#a8e84df08536acdf9e7bc11c68f644292',1,'CloudBuilderLibrary.DomainEventLoop.Domain()'],['../class_cloud_builder_library_1_1_match.html#a4cf91787d4f959450d89d637bf1e38d5',1,'CloudBuilderLibrary.Match.Domain()']]]
+  ['description',['Description',['../class_cotc_sdk_1_1_match.html#a1261a9318eddf6a9c75c799ef128c05d',1,'CotcSdk.Match.Description()'],['../class_cotc_sdk_1_1_match_list_result.html#a584118b2b47acc2b3709c16382660da5',1,'CotcSdk.MatchListResult.Description()']]],
+  ['domain',['Domain',['../class_cotc_sdk_1_1_domain_event_loop.html#a016eb7763f881b5da6caa404ab47b406',1,'CotcSdk.DomainEventLoop.Domain()'],['../class_cotc_sdk_1_1_match.html#a446e3dd38781b628efcb181214b015a6',1,'CotcSdk.Match.Domain()']]]
 ];

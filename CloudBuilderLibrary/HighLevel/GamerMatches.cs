@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CloudBuilderLibrary {
+namespace CotcSdk {
 
 	/**
 	 * Some methods accept a PushNotification parameter. This parameter can be used to forward a push notification to the
@@ -162,9 +162,9 @@ namespace CloudBuilderLibrary {
 			if (onMatchInvitation != null) {
 				// Register if needed
 				if (RegisteredEventLoop == null) {
-					RegisteredEventLoop = CloudBuilder.GetEventLoopFor(Gamer.GamerId, domain);
+					RegisteredEventLoop = Cotc.GetEventLoopFor(Gamer.GamerId, domain);
 					if (RegisteredEventLoop == null) {
-						CloudBuilder.LogWarning("No pop event loop for domain " + domain + ", match invitations will not work");
+						Cotc.LogWarning("No pop event loop for domain " + domain + ", match invitations will not work");
 					}
 					else {
 						RegisteredEventLoop.ReceivedEvent += this.ReceivedLoopEvent;

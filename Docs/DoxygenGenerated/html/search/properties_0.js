@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['account',['Account',['../class_cloud_builder_library_1_1_gamer.html#a92149db9e9ce1fb420a4422072003647',1,'CloudBuilderLibrary::Gamer']]],
-  ['achievements',['Achievements',['../class_cloud_builder_library_1_1_gamer.html#ac7f4740c096fca00342bae0e90dddbbc',1,'CloudBuilderLibrary::Gamer']]]
+  ['account',['Account',['../class_cotc_sdk_1_1_gamer.html#ac55c27125c1eb857dbdd5fc8b88828e0',1,'CotcSdk::Gamer']]],
+  ['achievements',['Achievements',['../class_cotc_sdk_1_1_gamer.html#a9899f26bc096071bdf58a9c4a2d7fa91',1,'CotcSdk::Gamer']]]
 ];

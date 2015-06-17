@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 using System.Collections;
-using CloudBuilderLibrary;
+using CotcSdk;
 using UnityEngine.UI;
 
 namespace CLI

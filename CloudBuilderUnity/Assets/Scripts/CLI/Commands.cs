@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Text;
-using CloudBuilderLibrary;
+using CotcSdk;
 using UnityEngine;
 
 namespace CLI {
@@ -18,8 +17,8 @@ namespace CLI {
 	 * is case-lowered before being looked up in this class.
 	 */
 	public partial class Commands : MonoBehaviour {
-		public CloudBuilderGameObject CloudBuilderGameObject;
-		public CloudBuilderFacebookIntegration CloudBuilderFacebookIntegration;
+		public CotcGameObject CotcGameObject;
+		public CotcFacebookIntegration CotcFacebookIntegration;
 		public CLI Cli;
 		internal Dictionary<string, Variable> Variables = new Dictionary<string, Variable>();
 
@@ -60,8 +59,8 @@ namespace CLI {
 		}
 
 		void Start() {
-			CloudBuilderGameObject.GetClan(result => {
-				Clan = result;
+			CotcGameObject.GetCloud(result => {
+				Cloud = result;
 				Debug.Log("Setup done");
 			});
 		}
@@ -82,7 +81,7 @@ namespace CLI {
 			};
 		}
 
-		private Clan Clan;
+		private Cloud Cloud;
 		private Gamer Gamer;
 		private DomainEventLoop PrivateEventLoop;
 	}

@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-using CloudBuilderLibrary;
+using CotcSdk;
 using System.Reflection;
 using IntegrationTests;
 using System.Collections.Generic;
@@ -12,24 +12,24 @@ public class IndexTests : TestBase {
 	void Start() {
 		// Invoke the method described on the integration test script (TestMethodName)
 		var met = GetType().GetMethod(TestMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-		// Test methods have a Clan param (and we do the setup here)
-		FindObjectOfType<CloudBuilderGameObject>().GetClan(clan => {
-			met.Invoke(this, new object[] { clan });
+		// Test methods have a Cloud param (and we do the setup here)
+		FindObjectOfType<CotcGameObject>().GetCloud(cloud => {
+			met.Invoke(this, new object[] { cloud });
 		});
 	}
 
 	[Test("Indexes an object and retrieves it.")]
-	public void ShouldIndexObject(Clan clan) {
+	public void ShouldIndexObject(Cloud cloud) {
 		string indexName = "test" + Guid.NewGuid().ToString();
 		string objectId = Guid.NewGuid().ToString();
-		clan.Index(indexName).IndexObject(
+		cloud.Index(indexName).IndexObject(
 			objectId: objectId,
 			properties: Bundle.CreateObject("prop", "value"),
 			payload: Bundle.CreateObject("pkey", "pvalue"),
 			done: result => {
 				Assert(result.IsSuccessful, "Failed to index object");
 				// Then retrieve it
-				clan.Index(indexName).GetObject(
+				cloud.Index(indexName).GetObject(
 					objectId: objectId,
 					done: gotObject => {
 						Assert(gotObject.IsSuccessful, "Failed to retrieve object");
@@ -45,24 +45,24 @@ public class IndexTests : TestBase {
 	}
 
 	[Test("Indexes an object and deletes it. Checks that it cannot be accessed anymore then.")]
-	public void ShouldDeleteObject(Clan clan) {
+	public void ShouldDeleteObject(Cloud cloud) {
 		string indexName = "test" + Guid.NewGuid().ToString();
 		string objectId = Guid.NewGuid().ToString();
 		// Index
-		clan.Index(indexName).IndexObject(
+		cloud.Index(indexName).IndexObject(
 			objectId: objectId,
 			properties: Bundle.CreateObject("prop", "value"),
 			payload: Bundle.CreateObject("pkey", "pvalue"),
 			done: result => {
 				Assert(result.IsSuccessful, "Failed to index object");
 				// Delete
-				clan.Index(indexName).DeleteObject(
+				cloud.Index(indexName).DeleteObject(
 					objectId: objectId,
 					done: deleted => {
 						Assert(deleted.IsSuccessful, "Failed to delete object");
 						Assert(deleted.ServerData["found"] == true, "Expected the item to be found");
 						// Should not find anymore
-						clan.Index(indexName).GetObject(objectId: objectId, done: gotObject => {
+						cloud.Index(indexName).GetObject(objectId: objectId, done: gotObject => {
 							Assert(!gotObject.IsSuccessful, "Should not find object anymore");
 							Assert(gotObject.HttpStatusCode == 404, "Should return 404");
 							CompleteTest();
@@ -74,8 +74,8 @@ public class IndexTests : TestBase {
 	}
 
 	[Test("Indexes a few objects and tries to query for them in various ways, assessing that the search arguments and pagination work as expected.")]
-	public void ShouldSearchForObjects(Clan clan) {
-		var index = clan.Index("test" + Guid.NewGuid().ToString());
+	public void ShouldSearchForObjects(Cloud cloud) {
+		var index = cloud.Index("test" + Guid.NewGuid().ToString());
 		// Indexes one item and returns an async op object
 		Func<string, Bundle, Bundle, AsyncOp> indexItem = (objectId, properties, payload) => {
 			AsyncOp p = new AsyncOp();
@@ -151,23 +151,23 @@ public class IndexTests : TestBase {
 	}
 
 	[Test("Tests that the API can be used to search for matches")]
-	public void ShouldBeUsableToSearchForMatches(Clan clan) {
-		Login2NewUsers(clan, (gamer1, gamer2) => {
+	public void ShouldBeUsableToSearchForMatches(Cloud cloud) {
+		Login2NewUsers(cloud, (gamer1, gamer2) => {
 			gamer1.Matches.Create(match1 => {
 				Assert(match1.IsSuccessful, "Match 1 creation failed");
 				Bundle matchProp = Bundle.CreateObject("public", true, "owner_id", gamer1.GamerId);
 				string queryStr = "public:true AND owner_id:" + gamer1.GamerId;
 				// Index the match
-				clan.Index("matches").IndexObject(indexResult => {
+				cloud.Index("matches").IndexObject(indexResult => {
 					Assert(indexResult.IsSuccessful, "Failed to index match 1");
 					// Create another match
 					gamer1.Matches.Create(match2 => {
 						Assert(match2.IsSuccessful, "Match 2 creation failed");
 						// Index it
-						clan.Index("matches").IndexObject(indexResult2 => {
+						cloud.Index("matches").IndexObject(indexResult2 => {
 							Assert(indexResult2.IsSuccessful, "Failed to index match 2");
 							// Check that we can find match1 by looking for public matches
-							clan.Index("matches").Search(found => {
+							cloud.Index("matches").Search(found => {
 								Assert(found.IsSuccessful, "Failed to look for matches");
 								Assert(found.Value.Hits.Count == 1, "Should find one match");
 								Assert(found.Value.Hits[0].ObjectId == match1.Value.MatchId, "Should find one match");

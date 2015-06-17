@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CloudBuilderLibrary {
+namespace CotcSdk {
 
 	/**
 	 * Represents a score fetched from a leaderboard.

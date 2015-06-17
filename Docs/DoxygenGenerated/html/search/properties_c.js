@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['rank',['Rank',['../class_cloud_builder_library_1_1_posted_game_score.html#a64254dac57c5b2c8ffdf211b811e3e4d',1,'CloudBuilderLibrary.PostedGameScore.Rank()'],['../class_cloud_builder_library_1_1_score.html#a2bcfe660361a171d50cd31e42a719800',1,'CloudBuilderLibrary.Score.Rank()']]],
-  ['resultscore',['ResultScore',['../class_cloud_builder_library_1_1_index_result.html#afcb2e0762d24952837bb2136ad9f9b72',1,'CloudBuilderLibrary::IndexResult']]]
+  ['rank',['Rank',['../class_cotc_sdk_1_1_posted_game_score.html#aab7eeba4e96ee246c96b6c831be0bd41',1,'CotcSdk.PostedGameScore.Rank()'],['../class_cotc_sdk_1_1_score.html#aea120196c73e050c4009be334c79c45b',1,'CotcSdk.Score.Rank()']]],
+  ['resultscore',['ResultScore',['../class_cotc_sdk_1_1_index_result.html#a5fe7444a7625e6e010e6a0525f77d1c9',1,'CotcSdk::IndexResult']]]
 ];

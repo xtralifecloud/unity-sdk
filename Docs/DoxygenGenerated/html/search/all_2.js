@@ -1,17 +1,18 @@
 var searchData=
 [
-  ['changeemailaddress',['ChangeEmailAddress',['../class_cloud_builder_library_1_1_gamer_account_methods.html#a1178546c896f162a94860e5315785ef1',1,'CloudBuilderLibrary::GamerAccountMethods']]],
-  ['changepassword',['ChangePassword',['../class_cloud_builder_library_1_1_gamer_account_methods.html#a695c990d24b6c7eaba09361646da0fe8',1,'CloudBuilderLibrary::GamerAccountMethods']]],
-  ['changerelationshipstatus',['ChangeRelationshipStatus',['../class_cloud_builder_library_1_1_gamer_community.html#af7dade72d4f5d72db205268e45119b1c',1,'CloudBuilderLibrary::GamerCommunity']]],
-  ['clan',['Clan',['../class_cloud_builder_library_1_1_clan.html',1,'CloudBuilderLibrary']]],
-  ['clanindexing',['ClanIndexing',['../class_cloud_builder_library_1_1_clan_indexing.html',1,'CloudBuilderLibrary']]],
-  ['cloudbuildergameobject',['CloudBuilderGameObject',['../class_cloud_builder_library_1_1_cloud_builder_game_object.html',1,'CloudBuilderLibrary']]],
+  ['changeemailaddress',['ChangeEmailAddress',['../class_cotc_sdk_1_1_gamer_account_methods.html#a10c992a9b3a1e335e165434f1a3864f5',1,'CotcSdk::GamerAccountMethods']]],
+  ['changepassword',['ChangePassword',['../class_cotc_sdk_1_1_gamer_account_methods.html#aaab9c3b87ec09962c2edb3ad0464d964',1,'CotcSdk::GamerAccountMethods']]],
+  ['changerelationshipstatus',['ChangeRelationshipStatus',['../class_cotc_sdk_1_1_gamer_community.html#a4d6a8309cb27fac0cdd2d8dfc4392583',1,'CotcSdk::GamerCommunity']]],
+  ['clanindexing',['ClanIndexing',['../class_cotc_sdk_1_1_clan_indexing.html',1,'CotcSdk']]],
+  ['cloud',['Cloud',['../class_cotc_sdk_1_1_cloud.html',1,'CotcSdk']]],
   ['cloudbuilderlibrary',['CloudBuilderLibrary',['../namespace_cloud_builder_library.html',1,'']]],
   ['cloudbuilderpreferencepane',['CloudBuilderPreferencePane',['../class_cloud_builder_library_1_1_cloud_builder_preference_pane.html',1,'CloudBuilderLibrary']]],
-  ['cloudbuildersettings',['CloudBuilderSettings',['../class_cloud_builder_library_1_1_cloud_builder_settings.html',1,'CloudBuilderLibrary']]],
-  ['community',['Community',['../class_cloud_builder_library_1_1_gamer.html#a66de90d5f8a9dd2f9a5c317833f22cb6',1,'CloudBuilderLibrary::Gamer']]],
-  ['convert',['Convert',['../class_cloud_builder_library_1_1_gamer_account_methods.html#a7e66c7305c60812d3f4c7c4436dee119',1,'CloudBuilderLibrary::GamerAccountMethods']]],
-  ['create',['Create',['../class_cloud_builder_library_1_1_gamer_matches.html#a2186b465f61bf8433270479145da441f',1,'CloudBuilderLibrary::GamerMatches']]],
-  ['creator',['Creator',['../class_cloud_builder_library_1_1_match.html#a77528db50791a0268d7b02d748aa6317',1,'CloudBuilderLibrary.Match.Creator()'],['../class_cloud_builder_library_1_1_match_list_result.html#a0269c905cc29d6c053911df201330dbf',1,'CloudBuilderLibrary.MatchListResult.Creator()']]],
-  ['customproperties',['CustomProperties',['../class_cloud_builder_library_1_1_match.html#ad57021fe6239ed919983bda7f6a2a24c',1,'CloudBuilderLibrary.Match.CustomProperties()'],['../class_cloud_builder_library_1_1_match_list_result.html#aba17eb3e69d55705e9a40d29e836d82d',1,'CloudBuilderLibrary.MatchListResult.CustomProperties()']]]
+  ['community',['Community',['../class_cotc_sdk_1_1_gamer.html#ad6bbb5a15fc7f84842575cd8bb84de3b',1,'CotcSdk::Gamer']]],
+  ['convert',['Convert',['../class_cotc_sdk_1_1_gamer_account_methods.html#a2e61e9d509907db2410455b32f84f12a',1,'CotcSdk::GamerAccountMethods']]],
+  ['cotcgameobject',['CotcGameObject',['../class_cotc_sdk_1_1_cotc_game_object.html',1,'CotcSdk']]],
+  ['cotcsdk',['CotcSdk',['../namespace_cotc_sdk.html',1,'']]],
+  ['cotcsettings',['CotcSettings',['../class_cotc_sdk_1_1_cotc_settings.html',1,'CotcSdk']]],
+  ['create',['Create',['../class_cotc_sdk_1_1_gamer_matches.html#a0f63298283dadd89e7a3ee1fd083c01e',1,'CotcSdk::GamerMatches']]],
+  ['creator',['Creator',['../class_cotc_sdk_1_1_match.html#acd70a2000f6a6221476828a9e77caf94',1,'CotcSdk.Match.Creator()'],['../class_cotc_sdk_1_1_match_list_result.html#ac1535fab555787d54489fc05224fc686',1,'CotcSdk.MatchListResult.Creator()']]],
+  ['customproperties',['CustomProperties',['../class_cotc_sdk_1_1_match.html#a2d1836f1b13f00896722a006459cc9a5',1,'CotcSdk.Match.CustomProperties()'],['../class_cotc_sdk_1_1_match_list_result.html#a8106908e4d86e01f4f460a7a80797ee8',1,'CotcSdk.MatchListResult.CustomProperties()']]]
 ];

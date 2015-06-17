@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CloudBuilderLibrary {
+namespace CotcSdk {
 
 	public class ClanIndexing {
 
@@ -104,13 +104,13 @@ namespace CloudBuilderLibrary {
 		}
 
 		#region Private
-		internal ClanIndexing(Clan clan, string indexName, string domain) {
+		internal ClanIndexing(Cloud clan, string indexName, string domain) {
 			Clan = clan;
 			Domain = domain;
 			IndexName = indexName;
 		}
 
-		private Clan Clan;
+		private Cloud Clan;
 		private string Domain, IndexName;
 		#endregion
 	}

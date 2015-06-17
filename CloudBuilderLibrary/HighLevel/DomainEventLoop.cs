@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace CloudBuilderLibrary {
+namespace CotcSdk {
 
 	/**
 	 * Delegate called when receiving a message on a #DomainEventLoop.
@@ -71,7 +71,7 @@ namespace CloudBuilderLibrary {
 			if (AlreadyStarted) return this;
 			AlreadyStarted = true;
 			// Allow for automatic housekeeping
-			CloudBuilder.RunningEventLoops.Add(this);
+			Cotc.RunningEventLoops.Add(this);
 			new Thread(new ThreadStart(this.Run)).Start();
 			return this;
 		}
@@ -120,12 +120,12 @@ namespace CloudBuilderLibrary {
 				if (ReceivedEvent != null) ReceivedEvent(this, new EventLoopArgs(res.BodyJson));
 			}
 			catch (Exception e) {
-				CloudBuilder.LogError("Exception in the event chain: " + e.ToString());
+				Cotc.LogError("Exception in the event chain: " + e.ToString());
 			}
 		}
 
 		private void Run() {
-			Clan clan = Gamer.Clan;
+			Cloud clan = Gamer.Clan;
 			int delay = LoopIterationDuration;
 			int CorrelationId = Random.Next();
 			string messageToAcknowledge = null;
@@ -167,7 +167,7 @@ namespace CloudBuilderLibrary {
 						}
 					}
 					catch (Exception e) {
-						CloudBuilder.LogError("Exception happened in pop event loop: " + e.ToString());
+						Cotc.LogError("Exception happened in pop event loop: " + e.ToString());
 					}
 					SynchronousRequestLock.Set();
 				});
@@ -181,7 +181,7 @@ namespace CloudBuilderLibrary {
 					lastResultPositive = true;
 				}
 			}
-			CloudBuilder.Log("Finished pop event thread " + CorrelationId);
+			Cotc.Log("Finished pop event thread " + CorrelationId);
 		}
 
 		private Random Random;

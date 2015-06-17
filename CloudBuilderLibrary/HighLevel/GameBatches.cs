@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CloudBuilderLibrary {
+namespace CotcSdk {
 	
 	/**
 	 * Allows to run batches authenticated as a game (that is, unauthenticated).
@@ -34,11 +34,11 @@ namespace CloudBuilderLibrary {
 		}
 
 		#region Private
-		internal GameBatches(Clan parent) {
+		internal GameBatches(Cloud parent) {
 			Clan = parent;
 		}
 		private string domain = Common.PrivateDomain;
-		private Clan Clan;
+		private Cloud Clan;
 		#endregion
 	}
 }

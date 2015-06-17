@@ -1,6 +1,6 @@
 using System;
 
-namespace CloudBuilderLibrary
+namespace CotcSdk
 {
 	internal enum LogLevel {
 		Verbose,	// Level for verbose comments internal (internal debugging at CotC)

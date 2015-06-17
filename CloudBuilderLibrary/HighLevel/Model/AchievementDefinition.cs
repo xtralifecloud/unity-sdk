@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CloudBuilderLibrary {
+namespace CotcSdk {
 
 	/**
 	 * Type of achievement. The rules and the "Config" member of an AchievementDefinition depends on this.

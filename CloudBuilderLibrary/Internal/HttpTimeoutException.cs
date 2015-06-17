@@ -1,6 +1,6 @@
 using System;
 
-namespace CloudBuilderLibrary {
+namespace CotcSdk {
 	internal class HttpTimeoutException: Exception {
 	}
 }

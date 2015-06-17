@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['url',['Url',['../class_cloud_builder_library_1_1_http_request_failed_event_args.html#a6a6511c5daaad2e6e6a6b8448750e206',1,'CloudBuilderLibrary::HttpRequestFailedEventArgs']]],
-  ['usecode',['UseCode',['../class_cloud_builder_library_1_1_gamer_godfather.html#a5039e890ddae34dffd6a68fa31adb6d2',1,'CloudBuilderLibrary::GamerGodfather']]],
-  ['userdata',['UserData',['../class_cloud_builder_library_1_1_http_request_failed_event_args.html#af451c27baac0fb4cf469aa2bbbbd123c',1,'CloudBuilderLibrary::HttpRequestFailedEventArgs']]],
-  ['userexists',['UserExists',['../class_cloud_builder_library_1_1_clan.html#a7f4c02387adc24684e21b1e86a68319e',1,'CloudBuilderLibrary::Clan']]],
-  ['userid',['UserId',['../class_cloud_builder_library_1_1_user_info.html#a4eed4b568b45aa33b58fddc83dd94e57',1,'CloudBuilderLibrary::UserInfo']]],
-  ['userinfo',['UserInfo',['../class_cloud_builder_library_1_1_user_info.html',1,'CloudBuilderLibrary']]]
+  ['url',['Url',['../class_cotc_sdk_1_1_http_request_failed_event_args.html#a6f2f5213afcbc5f02c45c1236a1dee99',1,'CotcSdk::HttpRequestFailedEventArgs']]],
+  ['usecode',['UseCode',['../class_cotc_sdk_1_1_gamer_godfather.html#a0e51f5ce14dc9a4ea379d94c4efbd73b',1,'CotcSdk::GamerGodfather']]],
+  ['userdata',['UserData',['../class_cotc_sdk_1_1_http_request_failed_event_args.html#ae6f9621f943935fbffc782237367212c',1,'CotcSdk::HttpRequestFailedEventArgs']]],
+  ['userexists',['UserExists',['../class_cotc_sdk_1_1_cloud.html#a9deb4e9bf4f0a64e3bdcfefa9237c043',1,'CotcSdk::Cloud']]],
+  ['userid',['UserId',['../class_cotc_sdk_1_1_user_info.html#af919f37a9150c5b3be6c09ed4020eeef',1,'CotcSdk::UserInfo']]],
+  ['userinfo',['UserInfo',['../class_cotc_sdk_1_1_user_info.html',1,'CotcSdk']]]
 ];

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace CloudBuilderLibrary {
+namespace CotcSdk {
 
 	internal class UrlBuilder {
 		public UrlBuilder(string path, string server = null) {

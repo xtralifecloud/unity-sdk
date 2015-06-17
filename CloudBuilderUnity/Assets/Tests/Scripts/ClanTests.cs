@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-using CloudBuilderLibrary;
+using CotcSdk;
 using System.Reflection;
 using IntegrationTests;
 
@@ -12,10 +12,10 @@ public class ClanTests : TestBase {
 		// Invoke the method described on the integration test script (TestMethodName)
 		var met = GetType().GetMethod(TestMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 		var parms = met.GetParameters();
-		// Test methods can either have no param, either have one "Clan" param, in which case we do the setup here to simplify
-		if (parms.Length >= 1 && parms[0].ParameterType == typeof(Clan)) {
-			FindObjectOfType<CloudBuilderGameObject>().GetClan(clan => {
-				met.Invoke(this, new object[] { clan });
+		// Test methods can either have no param, either have one "Cloud" param, in which case we do the setup here to simplify
+		if (parms.Length >= 1 && parms[0].ParameterType == typeof(Cloud)) {
+			FindObjectOfType<CotcGameObject>().GetCloud(cloud => {
+				met.Invoke(this, new object[] { cloud });
 			});
 		}
 		else {
@@ -25,15 +25,15 @@ public class ClanTests : TestBase {
 
 	[Test("Tests a simple setup.")]
 	public void ShouldSetupProperly() {
-		var cb = FindObjectOfType<CloudBuilderGameObject>();
-		cb.GetClan(clan => {
-			IntegrationTest.Assert(clan != null);
+		var cb = FindObjectOfType<CotcGameObject>();
+		cb.GetCloud(cloud => {
+			IntegrationTest.Assert(cloud != null);
 		});
 	}
 
 	[Test("Sets up and does a ping")]
-	public void ShouldPing(Clan clan) {
-		clan.Ping(result => {
+	public void ShouldPing(Cloud cloud) {
+		cloud.Ping(result => {
 			if (result.IsSuccessful)
 				IntegrationTest.Pass();
 			else
@@ -42,23 +42,23 @@ public class ClanTests : TestBase {
 	}
 
 	[Test("Logs in anonymously.")]
-	public void ShouldLoginAnonymously(Clan clan) {
-		clan.LoginAnonymously(result => {
+	public void ShouldLoginAnonymously(Cloud cloud) {
+		cloud.LoginAnonymously(result => {
 			IntegrationTest.Assert(result.IsSuccessful && result.Value != null);
 		});
 	}
 
 	[Test("First logs in anonymously, then tries to restore the session with the received credentials.")]
-	public void ShouldRestoreSession(Clan clan) {
-		clan.Login(
+	public void ShouldRestoreSession(Cloud cloud) {
+		cloud.Login(
 			network: LoginNetwork.Email,
-			networkId: "clan@localhost.localdomain",
+			networkId: "cloud@localhost.localdomain",
 			networkSecret: "Password123",
 			done: result => {
 				Assert(result.IsSuccessful, "Failed to login");
 
 				// Resume the session with the credentials just received
-				clan.ResumeSession(
+				cloud.ResumeSession(
 					gamerId: result.Value.GamerId,
 					gamerSecret: result.Value.GamerSecret,
 					done: resumeResult => {
@@ -71,9 +71,9 @@ public class ClanTests : TestBase {
 	}
 
 	[Test("Tests that a non-existing session fails to resume (account not created).")]
-	public void ShouldNotRestoreInexistingSession(Clan clan) {
+	public void ShouldNotRestoreInexistingSession(Cloud cloud) {
 		// Resume the session with the credentials just received
-		clan.ResumeSession(
+		cloud.ResumeSession(
 			gamerId: "15555f06c7b852423cb9074a",
 			gamerSecret: "1f89a1efa49a3cf59d00f8badb03227d1b56840b",
 			done: resumeResult => {
@@ -86,9 +86,9 @@ public class ClanTests : TestBase {
 	}
 
 	[Test("Tests that the prevent registration flag is taken in account correctly.")]
-	public void ShouldPreventRegistration(Clan clan) {
+	public void ShouldPreventRegistration(Cloud cloud) {
 		// Resume the session with the credentials just received
-		clan.Login(
+		cloud.Login(
 			network: LoginNetwork.Email,
 			networkId: "nonexisting@localhost.localdomain",
 			networkSecret: "Password123",
@@ -103,9 +103,9 @@ public class ClanTests : TestBase {
 	}
 
 	[Test("Tests that an anonymous account can be converted to an e-mail account.")]
-	public void ShouldConvertAccount(Clan clan) {
+	public void ShouldConvertAccount(Cloud cloud) {
 		// Create an anonymous account
-		clan.LoginAnonymously(loginResult => {
+		cloud.LoginAnonymously(loginResult => {
 			Assert(loginResult.IsSuccessful, "Anonymous login failed");
 
 			// Then convert it to e-mail
@@ -123,24 +123,24 @@ public class ClanTests : TestBase {
 	}
 
 	[Test("Ensures that an account cannot be converted to a credential that already exists.")]
-	public void ShouldFailToConvertToExistingAccount(Clan clan) {
+	public void ShouldFailToConvertToExistingAccount(Cloud cloud) {
 		// Ensures that a fake account has been created
-		clan.Login(
+		cloud.Login(
 			network: LoginNetwork.Email,
-			networkId: "clan@localhost.localdomain",
+			networkId: "cloud@localhost.localdomain",
 			networkSecret: "Password123",
 			done: result => {
 				Assert(result.IsSuccessful, "Creation of fake account failed");
 
 				// Create an anonymous account
-				clan.LoginAnonymously(loginResult => {
+				cloud.LoginAnonymously(loginResult => {
 					Assert(result.IsSuccessful, "Anonymous login failed");
 						
 					// Then try to convert it to the same e-mail as the fake account created at first
 					var gamer = loginResult.Value;
 					gamer.Account.Convert(
 						network: LoginNetwork.Email,
-						networkId: "clan@localhost.localdomain",
+						networkId: "cloud@localhost.localdomain",
 						networkSecret: "Anotherp4ss",
 						done: conversionResult => {
 							Assert(!conversionResult.IsSuccessful && !conversionResult.Value, "Conversion should fail");
@@ -155,17 +155,17 @@ public class ClanTests : TestBase {
 	}
 
 	[Test("Checks the 'find user' functionality.")]
-	public void ShouldCheckIfUserExists(Clan clan) {
+	public void ShouldCheckIfUserExists(Cloud cloud) {
 		// Ensures that a fake account has been created
-		clan.Login(
+		cloud.Login(
 			network: LoginNetwork.Email,
-			networkId: "clan@localhost.localdomain",
+			networkId: "cloud@localhost.localdomain",
 			networkSecret: "Password123",
 			done: loginResult => {
 				Assert(loginResult.IsSuccessful, "Creation of fake account failed");
-				clan.UserExists(
+				cloud.UserExists(
 					network: LoginNetwork.Email,
-					networkId: "clan@localhost.localdomain",
+					networkId: "cloud@localhost.localdomain",
 					done: checkResult => {
 						Assert(checkResult.IsSuccessful && checkResult.Value, "UserExists failed");
 						CompleteTest();
@@ -176,11 +176,11 @@ public class ClanTests : TestBase {
 	}
 
 	[Test("Checks the send reset link functionality.", "Known to timeout sometimes (server side issue).")]
-	public void ShouldSendAccountResetLink(Clan clan) {
+	public void ShouldSendAccountResetLink(Cloud cloud) {
 		// This method is broken because we cannot GET somewhere with a body
 		// We have to fix the server or get rid of this method & test
-		clan.SendResetPasswordEmail(
-			userEmail: "clan@localhost.localdomain",
+		cloud.SendResetPasswordEmail(
+			userEmail: "cloud@localhost.localdomain",
 			mailSender: "admin@localhost.localdomain",
 			mailTitle: "Reset link",
 			mailBody: "Here is your link: [[SHORTCODE]]",
@@ -191,8 +191,8 @@ public class ClanTests : TestBase {
 	}
 
 	[Test("Changes the password of an e-mail account.")]
-	public void ShouldChangePassword(Clan clan) {
-		clan.Login(
+	public void ShouldChangePassword(Cloud cloud) {
+		cloud.Login(
 			network: LoginNetwork.Email,
 			networkId: RandomEmailAddress(),
 			networkSecret: "Password123",
@@ -208,8 +208,8 @@ public class ClanTests : TestBase {
 	}
 
 	[Test("Changes the e-mail address associated to an e-mail account.")]
-	public void ShouldChangeEmailAddress(Clan clan) {
-		clan.Login(
+	public void ShouldChangeEmailAddress(Cloud cloud) {
+		cloud.Login(
 			network: LoginNetwork.Email,
 			networkId: RandomEmailAddress(),
 			networkSecret: "Password123",
@@ -225,8 +225,8 @@ public class ClanTests : TestBase {
 	}
 
 	[Test("Changes the e-mail address associated to an e-mail account.")]
-	public void ShouldFailToChangeEmailAddressToExistingOne(Clan clan) {
-		clan.Login(
+	public void ShouldFailToChangeEmailAddressToExistingOne(Cloud cloud) {
+		cloud.Login(
 			network: LoginNetwork.Email,
 			networkId: RandomEmailAddress(),
 			networkSecret: "Password123",
@@ -238,7 +238,7 @@ public class ClanTests : TestBase {
 					Assert(pswResult.HttpStatusCode == 400, "400 expected");
 					Assert(pswResult.ServerData["message"] == "UserExists", "UserExists error expected");
 					CompleteTest();
-				}, "clan@localhost.localdomain");
+				}, "cloud@localhost.localdomain");
 			}
 		);
 	}

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 
-namespace CloudBuilderLibrary
+namespace CotcSdk
 {
 	/**
 	 * Platform-specific HTTP client.

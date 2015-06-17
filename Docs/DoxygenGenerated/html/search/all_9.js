@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['join',['Join',['../class_cloud_builder_library_1_1_gamer_matches.html#afde21f40ad1c4d3f60ceddb6d66b4883',1,'CloudBuilderLibrary::GamerMatches']]]
+  ['join',['Join',['../class_cotc_sdk_1_1_gamer_matches.html#a88538ec269cf63ba94d8ada6babc14bd',1,'CotcSdk::GamerMatches']]]
 ];

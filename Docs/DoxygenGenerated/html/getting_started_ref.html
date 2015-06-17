@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.8"/>
-<title>CloudBuilder Unity: Getting started</title>
+<title>CotC SDK Unity: Getting started</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,7 +22,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">CloudBuilder Unity
+   <div id="projectname">CotC SDK Unity
    </div>
   </td>
  </tr>
@@ -63,7 +63,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Events</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -90,17 +90,17 @@ Import package screen</div></div>
 <p> You can deselect SampleScript.cs and SampleScene.unity if you do not need the sample code. After having imported the package, you just need to configure the CloudBuilder settings. For that, open the SampleScene and select the CloudBuilder object. In the inspector, set the appropriate values (API Key and API Secret) as configured in the backoffice.</p>
 <p>Note: if you want to start from zero, you may simply add a new scene and drag&amp;drop the CloudBuilder prefab object from the CloudBuilder/Prefabs folder into your scene. This object needs to be placed on any scene where you want to use CloudBuilder functionality.</p>
 <h1>Usage</h1>
-<p>Basic usage is provided by the CloudBuilder prefab object. You just have to put it on your scene and invoke the GetClan method on it to fetch a <a class="el" href="class_cloud_builder_library_1_1_clan.html">CloudBuilderLibrary.Clan</a> object allowing to use most features. For that, you may simply use <code>FindObjectOfType&lt;CloudBuilderGameObject&gt;()</code>.</p>
-<div class="fragment"><div class="line"><span class="keyword">private</span> Clan Clan;</div>
+<p>Basic usage is provided by the CloudBuilder prefab object. You just have to put it on your scene and invoke the GetCloud method on it to fetch a #CloudBuilderLibrary.Cloud object allowing to use most features. For that, you may simply use <code>FindObjectOfType&lt;CloudBuilderGameObject&gt;()</code>.</p>
+<div class="fragment"><div class="line"><span class="keyword">private</span> Cloud Cloud;</div>
 <div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> Setup() {</div>
-<div class="line">    cb.GetClan(clan =&gt; {</div>
-<div class="line">        Clan = clan;</div>
+<div class="line">    cb.GetCloud(cloud =&gt; {</div>
+<div class="line">        Cloud = cloud;</div>
 <div class="line">    });</div>
 <div class="line">}</div>
-</div><!-- fragment --><p>This code will fetch a clan object. This operation is asynchronous and may take a bit of time or operate instantly, depending on various conditions. You should do it at startup as shown above and keep it as a member of your class.</p>
-<p>Another very important object is the <a class="el" href="class_cloud_builder_library_1_1_gamer.html">CloudBuilderLibrary.Gamer</a> object. This represents a signed in user, and provides all functionality that requires to be logged in. You will obtain it by logging in through the clan object.</p>
-<div class="fragment"><div class="line">Clan.LoginAnonymously((Result&lt;Gamer&gt; result) =&gt; {</div>
+</div><!-- fragment --><p>This code will fetch a cloud object. This operation is asynchronous and may take a bit of time or operate instantly, depending on various conditions. You should do it at startup as shown above and keep it as a member of your class.</p>
+<p>Another very important object is the #CloudBuilderLibrary.Gamer object. This represents a signed in user, and provides all functionality that requires to be logged in. You will obtain it by logging in through the cloud object.</p>
+<div class="fragment"><div class="line">Cloud.LoginAnonymously((Result&lt;Gamer&gt; result) =&gt; {</div>
 <div class="line">    <span class="keywordflow">if</span> (!result.IsSuccessful)</div>
 <div class="line">        Debug.LogError(<span class="stringliteral">&quot;Login failed: &quot;</span> + result.ToString());</div>
 <div class="line">    <span class="keywordflow">else</span> {</div>
@@ -112,9 +112,9 @@ Import package screen</div></div>
 <p>All functions are asynchronous. They use a simple pattern with a delegate as an action to execute when finished, and get passed a <code>Result&lt;Entity&gt;</code> as a parameter. The result indicates success or failure, encloses an entity (whose type depends on the call) and may contain additional information reported by the server.</p>
 <p>A delegate for a given Entity is called <code>ResultHandler&lt;Entity&gt;</code> and is basically simply a function with one argument of type <code>Result&lt;Entity&gt;</code>. The entity is obtained through the <code>Value</code> member of the <code>Result&lt;Entity&gt;</code>.</p>
 <h1>Error handlers</h1>
-<p>In case a network error happens, the request is not retried by default. But there is a <code>HttpRequestFailedHandler</code> member on Clan which can be set to an user defined callback. This callback tells what to do with the error (retry it, cancel it). The following code retries any failed request twice, once after 100ms, once after 5s, then aborts it.</p>
+<p>In case a network error happens, the request is not retried by default. But there is a <code>HttpRequestFailedHandler</code> member on Cloud which can be set to an user defined callback. This callback tells what to do with the error (retry it, cancel it). The following code retries any failed request twice, once after 100ms, once after 5s, then aborts it.</p>
 <div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">int</span> RetryTimes = {100 <span class="comment">/* ms */</span>, 5000 <span class="comment">/* ms */</span>};</div>
-<div class="line">clan.HttpRequestFailedHandler = (HttpRequestFailedEventArgs e) =&gt; {</div>
+<div class="line">cloud.HttpRequestFailedHandler = (HttpRequestFailedEventArgs e) =&gt; {</div>
 <div class="line">    <span class="comment">// Store retry count in UserData field (persisted among retries of a given request)</span></div>
 <div class="line">    <span class="keywordtype">int</span> retriedCount = e.UserData != null ? (int)e.UserData : 0;</div>
 <div class="line">    e.UserData = retriedCount + 1;</div>
@@ -123,13 +123,13 @@ Import package screen</div></div>
 <div class="line">    <span class="keywordflow">else</span></div>
 <div class="line">        e.RetryIn(RetryTimes[retriedAlready]);</div>
 <div class="line">};</div>
-</div><!-- fragment --><p>This should be done at the very startup, after the clan has been received. The handler is chosen when an HTTP request is built, so if you change it while an HTTP request is running, it will have no effect.</p>
+</div><!-- fragment --><p>This should be done at the very startup, after the cloud has been received. The handler is chosen when an HTTP request is built, so if you change it while an HTTP request is running, it will have no effect.</p>
 <h1>Bundle</h1>
-<p>Some function calls use bundles. They act as a generic, typed dictionary. Read more at <a class="el" href="class_cloud_builder_library_1_1_bundle.html">CloudBuilderLibrary.Bundle</a> . </p>
+<p>Some function calls use bundles. They act as a generic, typed dictionary. Read more at #CloudBuilderLibrary.Bundle . </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jun 16 2015 20:56:59 for CloudBuilder Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jun 17 2015 10:59:46 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

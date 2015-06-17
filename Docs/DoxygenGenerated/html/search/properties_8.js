@@ -1,8 +1,9 @@
 var searchData=
 [
-  ['matches',['Matches',['../class_cloud_builder_library_1_1_gamer.html#aa7fe329fe113d2abbd7b1aa7e49d7ef6',1,'CloudBuilderLibrary::Gamer']]],
-  ['matcheventid',['MatchEventId',['../class_cloud_builder_library_1_1_match_event.html#aba771b4fe1da63acdc0e66fc1b64a3c0',1,'CloudBuilderLibrary::MatchEvent']]],
-  ['matchid',['MatchId',['../class_cloud_builder_library_1_1_match.html#ad6c32f2e3600ab365802e0727e46dc03',1,'CloudBuilderLibrary.Match.MatchId()'],['../class_cloud_builder_library_1_1_match_info.html#ae635eb1e6dbc7ccbab0af12416aaf084',1,'CloudBuilderLibrary.MatchInfo.MatchId()'],['../class_cloud_builder_library_1_1_match_list_result.html#ad3c3cb29056c23b30eb239489ad8e5a4',1,'CloudBuilderLibrary.MatchListResult.MatchId()']]],
-  ['maxplayers',['MaxPlayers',['../class_cloud_builder_library_1_1_match.html#ad7767c3fbc04ad77a2d39bd8fb0b2a1e',1,'CloudBuilderLibrary.Match.MaxPlayers()'],['../class_cloud_builder_library_1_1_match_list_result.html#aa6e0eb62ddfb8de31abb33cfd8a06927',1,'CloudBuilderLibrary.MatchListResult.MaxPlayers()']]],
-  ['moves',['Moves',['../class_cloud_builder_library_1_1_match.html#a6eb45edfcf410d1a9f506ca843c4212c',1,'CloudBuilderLibrary::Match']]]
+  ['matches',['Matches',['../class_cotc_sdk_1_1_gamer.html#aa4c37b4cb648cf7340e6f9fcf9aec8cb',1,'CotcSdk::Gamer']]],
+  ['matcheventid',['MatchEventId',['../class_cotc_sdk_1_1_match_event.html#a907cba454ca01ffe49fbcbdda7b6a4ba',1,'CotcSdk::MatchEvent']]],
+  ['matchid',['MatchId',['../class_cotc_sdk_1_1_match.html#aab83c537a016cf6ba46e15d31f13ad35',1,'CotcSdk.Match.MatchId()'],['../class_cotc_sdk_1_1_match_info.html#a161d56ae0cca1d57e10331ecf343ead8',1,'CotcSdk.MatchInfo.MatchId()'],['../class_cotc_sdk_1_1_match_list_result.html#a872d1326adc1b6ffa5caca36abbfb13f',1,'CotcSdk.MatchListResult.MatchId()']]],
+  ['maxplayers',['MaxPlayers',['../class_cotc_sdk_1_1_match.html#a2ec2b0df3b9b755fce93ae6df9f0b671',1,'CotcSdk.Match.MaxPlayers()'],['../class_cotc_sdk_1_1_match_list_result.html#a9f0fbeb65075bb45652b2f968b6d3cdd',1,'CotcSdk.MatchListResult.MaxPlayers()']]],
+  ['message',['Message',['../class_cotc_sdk_1_1_event_loop_args.html#ac67fb58ca0258047f7156ee82e9525f9',1,'CotcSdk::EventLoopArgs']]],
+  ['moves',['Moves',['../class_cotc_sdk_1_1_match.html#a2e61ca28b2abcaa7f3ff997c4e103c12',1,'CotcSdk::Match']]]
 ];

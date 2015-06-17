@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Collections.Generic;
 
-namespace CloudBuilderLibrary
+namespace CotcSdk
 {
 	internal class UnityHttpClient : IHttpClient {
 		#region IHttpClient implementation
@@ -19,7 +19,7 @@ namespace CloudBuilderLibrary
 					return;
 				}
 			}
-			CloudBuilder.LogError("Unable to abort " + request.ToString() + ", probably not running anymore");
+			Cotc.LogError("Unable to abort " + request.ToString() + ", probably not running anymore");
 		}
 
 		void IHttpClient.Run(HttpRequest request, Action<HttpResponse> callback) {
@@ -88,7 +88,7 @@ namespace CloudBuilderLibrary
 			lock (this) {
 				// Dismiss additional requests
 				if (Terminated) {
-					CloudBuilder.LogError("Attempted to run a request after having terminated");
+					Cotc.LogError("Attempted to run a request after having terminated");
 					return;
 				}
 				// Need to enqueue process?
@@ -125,7 +125,7 @@ namespace CloudBuilderLibrary
 						state.OriginalRequest.FailedHandler(eventArgs);
 						if (eventArgs.RetryDelay < 0) throw new InvalidOperationException("HTTP request failed handler called but didn't tell what to do next.");
 						if (eventArgs.RetryDelay > 0) {
-							CloudBuilder.LogWarning("[" + state.RequestId + "] Request failed, retrying in " + eventArgs.RetryDelay + "ms.");
+							Cotc.LogWarning("[" + state.RequestId + "] Request failed, retrying in " + eventArgs.RetryDelay + "ms.");
 							Thread.Sleep(eventArgs.RetryDelay);
 							ChooseLoadBalancer(state.OriginalRequest);
 							ProcessRequest(state.OriginalRequest, eventArgs.UserData);
@@ -133,15 +133,15 @@ namespace CloudBuilderLibrary
 						}
 					}
 					catch (Exception e) {
-						CloudBuilder.LogError("Error in failure handler: " + e.ToString());
+						Cotc.LogError("Error in failure handler: " + e.ToString());
 					}
 				}
 				// Maximum failure count reached, will simply process the next request
-				CloudBuilder.LogWarning("[" + state.RequestId + "] Request failed.");
+				Cotc.LogWarning("[" + state.RequestId + "] Request failed.");
 			}
 			// Final result for this request
 			if (state.OriginalRequest.Callback != null) {
-				CloudBuilder.RunOnMainThread(() => state.OriginalRequest.Callback(response));
+				Cotc.RunOnMainThread(() => state.OriginalRequest.Callback(response));
 			}
 			// Was independent?
 			if (state.OriginalRequest.DoNotEnqueue) return;
@@ -172,7 +172,7 @@ namespace CloudBuilderLibrary
 				state.Request.BeginGetResponse(new AsyncCallback(RespCallback), state);
 			}
 			catch (WebException e) {
-				CloudBuilder.Log("Failed to send data: " + e.Message + ", status=" + e.Status);
+				Cotc.Log("Failed to send data: " + e.Message + ", status=" + e.Status);
 				if (e.Status != WebExceptionStatus.RequestCanceled) {
 					FinishWithRequest(state, new HttpResponse(e));
 				}
@@ -193,7 +193,7 @@ namespace CloudBuilderLibrary
 			if (state.OriginalRequest.HasBody) {
 				sb.AppendLine("Body: " + state.OriginalRequest.BodyString);
 			}
-			CloudBuilder.Log(sb.ToString());
+			Cotc.Log(sb.ToString());
 		}
 
 		/** Prints information about the response for debugging purposes. */
@@ -210,7 +210,7 @@ namespace CloudBuilderLibrary
 			if (response.HasBody) {
 				sb.AppendLine("Body: " + response.BodyString);
 			}
-			CloudBuilder.Log(sb.ToString());
+			Cotc.Log(sb.ToString());
 		}
 
 		/** Processes a single request asynchronously. Will continue to FinishWithRequest in some way. */
@@ -267,7 +267,7 @@ namespace CloudBuilderLibrary
 			}
 			catch (WebException e) {
 				if (e.Response == null) {
-					CloudBuilder.Log("Error: " + e.Message);
+					Cotc.Log("Error: " + e.Message);
 					FinishWithRequest(state, new HttpResponse(e));
 					return;
 				}
@@ -279,7 +279,7 @@ namespace CloudBuilderLibrary
 				return;
 			}
 			catch (Exception e) {
-				CloudBuilder.Log("Error: " + e.Message);
+				Cotc.Log("Error: " + e.Message);
 				FinishWithRequest(state, new HttpResponse(e));
 			}
 			if (state.Response != null) { state.Response.Close(); }
@@ -316,7 +316,7 @@ namespace CloudBuilderLibrary
 				}
 			}
 			catch (Exception e) {
-				CloudBuilder.LogWarning("Failed to read response: " + e.ToString());
+				Cotc.LogWarning("Failed to read response: " + e.ToString());
 				FinishWithRequest(state, new HttpResponse(e));
 			}
 			AllDone.Set();
@@ -330,7 +330,7 @@ namespace CloudBuilderLibrary
 					requestState.Request.Abort();
 				}
 				HttpResponse response = new HttpResponse(new HttpTimeoutException());
-				CloudBuilder.LogWarning("Request timed out");
+				Cotc.LogWarning("Request timed out");
 				requestState.self.FinishWithRequest(requestState, response);
 			}
 		}

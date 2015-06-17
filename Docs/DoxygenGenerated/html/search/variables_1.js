@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['httprequestfailedhandler',['HttpRequestFailedHandler',['../class_cloud_builder_library_1_1_clan.html#a6f1b928f50a758f8db97b33bd0288598',1,'CloudBuilderLibrary::Clan']]]
+  ['httprequestfailedhandler',['HttpRequestFailedHandler',['../class_cotc_sdk_1_1_cloud.html#ab4be4ab0b74b9892e3823d39f068a305',1,'CotcSdk::Cloud']]]
 ];

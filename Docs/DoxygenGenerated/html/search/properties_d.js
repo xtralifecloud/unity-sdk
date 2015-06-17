@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['scores',['Scores',['../class_cloud_builder_library_1_1_gamer.html#a2d6c957ca43a7d9275ee7cb11dde3533',1,'CloudBuilderLibrary::Gamer']]],
-  ['seed',['Seed',['../class_cloud_builder_library_1_1_match.html#a61e618f8cd912928df672e618879331b',1,'CloudBuilderLibrary::Match']]],
-  ['shoe',['Shoe',['../class_cloud_builder_library_1_1_match.html#a4a04ad346b1357dbbc8632dc661d5088',1,'CloudBuilderLibrary::Match']]],
-  ['status',['Status',['../class_cloud_builder_library_1_1_match.html#ac31e7587e57e4d44d7cc4dd54b23017c',1,'CloudBuilderLibrary.Match.Status()'],['../class_cloud_builder_library_1_1_match_list_result.html#a6831809035baf65976c96ef4c7e7a5c2',1,'CloudBuilderLibrary.MatchListResult.Status()']]]
+  ['scores',['Scores',['../class_cotc_sdk_1_1_gamer.html#a0f98b7b4e2243246c9dc273bacd71e1f',1,'CotcSdk::Gamer']]],
+  ['seed',['Seed',['../class_cotc_sdk_1_1_match.html#a43ed2d30d244b1be949ee6b67cebed15',1,'CotcSdk::Match']]],
+  ['shoe',['Shoe',['../class_cotc_sdk_1_1_match.html#a700fa7959b4f0549165c0d7becf4d412',1,'CotcSdk::Match']]],
+  ['status',['Status',['../class_cotc_sdk_1_1_match.html#ab27633f5855ebb551ce28e67d5875a22',1,'CotcSdk.Match.Status()'],['../class_cotc_sdk_1_1_match_list_result.html#a473224a25cfd25e1dc7e93c0af747d16',1,'CotcSdk.MatchListResult.Status()']]]
 ];

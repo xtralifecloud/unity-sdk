@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['indexname',['IndexName',['../class_cloud_builder_library_1_1_index_result.html#a794b4622be150f379320d0e454ee9fe4',1,'CloudBuilderLibrary::IndexResult']]],
-  ['info',['Info',['../class_cloud_builder_library_1_1_score.html#affb8596eb896d9dca895f75c13390a6e',1,'CloudBuilderLibrary::Score']]],
-  ['iscreator',['IsCreator',['../class_cloud_builder_library_1_1_match.html#ad887bd6ecf7eff60e54783f99eb67c5f',1,'CloudBuilderLibrary::Match']]]
+  ['indexname',['IndexName',['../class_cotc_sdk_1_1_index_result.html#a0d7fd6a710392a75c01bb3637610734a',1,'CotcSdk::IndexResult']]],
+  ['info',['Info',['../class_cotc_sdk_1_1_score.html#aa70f4f797f25e2f2b182d84920bc5036',1,'CotcSdk::Score']]],
+  ['iscreator',['IsCreator',['../class_cotc_sdk_1_1_match.html#a64dc4641f18f8bd13f81588985b92715',1,'CotcSdk::Match']]]
 ];

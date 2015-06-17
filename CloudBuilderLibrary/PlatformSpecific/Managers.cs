@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace CloudBuilderLibrary
+namespace CotcSdk
 {
 	internal static class Managers
 	{

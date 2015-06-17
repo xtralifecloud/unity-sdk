@@ -2,23 +2,23 @@
 
 using UnityEngine;
 using System.Collections;
-using CloudBuilderLibrary;
+using CotcSdk;
 
 public class SampleScript : MonoBehaviour {
-	// The clan allows to make generic operations (non user related)
-	private Clan Clan;
+	// The cloud allows to make generic operations (non user related)
+	private Cloud Cloud;
 	// The gamer is the base to perform most operations. A gamer object is obtained after successfully signing in.
 	private Gamer Gamer;
 
 	// Use this for initialization
 	void Start() {
-		var cb = FindObjectOfType<CloudBuilderGameObject>();
+		var cb = FindObjectOfType<CotcGameObject>();
 		if (cb == null) {
-			Debug.LogError("Please put a CloudBuilder prefab in your scene!");
+			Debug.LogError("Please put a Clan of the Cloud prefab in your scene!");
 			return;
 		}
-		cb.GetClan(clan => {
-			Clan = clan;
+		cb.GetCloud(cloud => {
+			Cloud = cloud;
 			Debug.Log("Setup done");
 		});
 	}
@@ -28,18 +28,18 @@ public class SampleScript : MonoBehaviour {
 
 	// Signs in with an anonymous account
 	public void DoLogin() {
-		Clan.LoginAnonymously(this.DidLogin);
+		Cloud.LoginAnonymously(this.DidLogin);
 	}
 
 	// Signs in with facebook
 	public void DoLoginWithFacebook() {
 #if USE_FACEBOOK
-		var fb = FindObjectOfType<CloudBuilderFacebookIntegration>();
+		var fb = FindObjectOfType<CotcFacebookIntegration>();
 		if (fb == null) {
-			Debug.LogError("Please put the CloudBuilderFacebookIntegration prefab in your scene!");
+			Debug.LogError("Please put the CotcFacebookIntegration prefab in your scene!");
 			return;
 		}
-		fb.LoginWithFacebook(this.DidLogin, Clan);
+		fb.LoginWithFacebook(this.DidLogin, Cloud);
 #else
 		Debug.LogError("Facebook not included (uncomment #define USE_FACEBOOK).");
 #endif

@@ -4,10 +4,10 @@ using System.Text;
 using LitJson;
 using System.Collections;
 
-namespace CloudBuilderLibrary
+namespace CotcSdk
 {
 	/**
-	 * The bundle is a main concept of the CloudBuilder SDK. It is basically the equivalent of a JSON object, behaving
+	 * The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object, behaving
 	 * like a C# dictionary, but with inferred typing and more safety.
 	 *
 	 * You need bundles in many calls, either to decode generic data received by the server (when such data can be

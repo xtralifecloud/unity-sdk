@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-using CloudBuilderLibrary;
+using CotcSdk;
 using System.Reflection;
 using IntegrationTests;
 
@@ -12,16 +12,16 @@ public class CommunityTests : TestBase {
 	void Start() {
 		// Invoke the method described on the integration test script (TestMethodName)
 		var met = GetType().GetMethod(TestMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-		// Test methods have a Clan param (and we do the setup here)
-		FindObjectOfType<CloudBuilderGameObject>().GetClan(clan => {
-			met.Invoke(this, new object[] { clan });
+		// Test methods have a Cloud param (and we do the setup here)
+		FindObjectOfType<CotcGameObject>().GetCloud(cloud => {
+			met.Invoke(this, new object[] { cloud });
 		});
 	}
 
 	[Test("Uses two anonymous accounts. Tests that a friend can be added properly and then listed back (AddFriend + ListFriends).")]
-	public void ShouldAddFriend(Clan clan) {
+	public void ShouldAddFriend(Cloud cloud) {
 		// Use two test accounts
-		Login2NewUsers(clan, (gamer1, gamer2) => {
+		Login2NewUsers(cloud, (gamer1, gamer2) => {
 			// Add gamer1 as a friend of gamer2
 			gamer2.Community.AddFriend(
 				gamerId: gamer1.GamerId,
@@ -41,8 +41,8 @@ public class CommunityTests : TestBase {
 	}
 
 	[Test("Creates 2 users, and sends a message from one to the other and verifies that all happens as expected.")]
-	public void ShouldSendEvent(Clan clan) {
-		Login2NewUsers(clan, (gamer1, gamer2) => {
+	public void ShouldSendEvent(Cloud cloud) {
+		Login2NewUsers(cloud, (gamer1, gamer2) => {
 			// Wait event for P1
 			AsyncOp finishedSendEvent = new AsyncOp();
 			DomainEventLoop loop = new DomainEventLoop(gamer1).Start();
@@ -68,15 +68,15 @@ public class CommunityTests : TestBase {
 	}
 
 	[Test("Creates two users and tries to list them in a paginated fashion.")]
-	public void ShouldListUsers(Clan clan) {
+	public void ShouldListUsers(Cloud cloud) {
 		Gamer[] gamers = new Gamer[2];
 		new AsyncOp().Then(next => {
 			// Create first user
-			clan.Login(result1 => {
+			cloud.Login(result1 => {
 				Assert(result1.IsSuccessful, "Failed to login #1");
 				gamers[0] = result1.Value;
 				// Second user
-				clan.Login(result2 => {
+				cloud.Login(result2 => {
 					Assert(result2.IsSuccessful, "Failed to login #2");
 					gamers[1] = result2.Value;
 					next.Return();
@@ -85,7 +85,7 @@ public class CommunityTests : TestBase {
 		})
 		.Then(next => {
 			// Query for a specific user by e-mail
-			clan.ListUsers(result => {
+			cloud.ListUsers(result => {
 				Assert(result.IsSuccessful, "Failed to list users with filter");
 				Assert(result.Value.Count == 1, "Expected one result only");
 				Assert(result.Value[0].UserId == gamers[1].GamerId, "Expected to return user 2");
@@ -97,7 +97,7 @@ public class CommunityTests : TestBase {
 		})
 		.Then(next => {
 			// Query for all users in a paginated way
-			clan.ListUsers(result => {
+			cloud.ListUsers(result => {
 				Assert(result.IsSuccessful, "Failed to list users with filter");
 				Assert(result.Value.Count == 1, "Expected one result per page");
 				Assert(result.Value.Total >= 2, "Expected at least two results total");

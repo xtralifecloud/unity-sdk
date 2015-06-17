@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CloudBuilderLibrary {
+namespace CotcSdk {
 	
 	/**
 	 * Allows to run batches authenticated as a user.

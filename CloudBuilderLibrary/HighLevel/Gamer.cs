@@ -3,7 +3,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace CloudBuilderLibrary
+namespace CotcSdk
 {
 	public sealed partial class Gamer {
 
@@ -114,7 +114,7 @@ namespace CloudBuilderLibrary
 		 * Only instantiated internally.
 		 * @param gamerData Gamer data as returned by our API calls (loginanonymous, etc.).
 		 */
-		internal Gamer(Clan parent, Bundle gamerData) {
+		internal Gamer(Cloud parent, Bundle gamerData) {
 			Clan = parent;
 			Network = Common.ParseEnum<LoginNetwork>(gamerData["network"]);
 			NetworkId = gamerData["networkid"];
@@ -134,7 +134,7 @@ namespace CloudBuilderLibrary
 			return result;
 		}
 
-		internal Clan Clan;
+		internal Cloud Clan;
 		private GamerMatches MatchesInstance;
 		#endregion
 	}

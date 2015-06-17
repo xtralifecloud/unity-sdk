@@ -1,6 +1,6 @@
 using System;
 
-namespace CloudBuilderLibrary {
+namespace CotcSdk {
 	public enum LoginNetwork {
 		Anonymous,
 		Email,

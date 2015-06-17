@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-using CloudBuilderLibrary;
+using CotcSdk;
 using System.Reflection;
 using IntegrationTests;
 using System.Threading;
@@ -15,15 +15,15 @@ public class MatchTests : TestBase {
 	void Start() {
 		// Invoke the method described on the integration test script (TestMethodName)
 		var met = GetType().GetMethod(TestMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-		// Test methods have a Clan param (and we do the setup here)
-		FindObjectOfType<CloudBuilderGameObject>().GetClan(clan => {
-			met.Invoke(this, new object[] { clan });
+		// Test methods have a Cloud param (and we do the setup here)
+		FindObjectOfType<CotcGameObject>().GetCloud(cloud => {
+			met.Invoke(this, new object[] { cloud });
 		});
 	}
 
 	[Test("Creates a match with the minimum number of arguments and checks that it is created properly (might highlight problems with the usage of the Bundle class).")]
-	public void ShouldCreateMatchWithMinimumArgs(Clan clan) {
-		Login(clan, gamer => {
+	public void ShouldCreateMatchWithMinimumArgs(Cloud cloud) {
+		Login(cloud, gamer => {
 			gamer.Matches.Create(
 				maxPlayers: 2,
 				done: (Result<Match> result) => {
@@ -35,9 +35,9 @@ public class MatchTests : TestBase {
 	}
 
 	[Test("Creates a match, and verifies that the match object seems to be configured appropriately.")]
-	public void ShouldCreateMatch(Clan clan) {
+	public void ShouldCreateMatch(Cloud cloud) {
 		string matchDesc = "Test match";
-		Login(clan, gamer => {
+		Login(cloud, gamer => {
 			gamer.Matches.Create(
 				description: matchDesc,
 				maxPlayers: 2,
@@ -66,8 +66,8 @@ public class MatchTests : TestBase {
 	}
 
 	[Test("Creates a match, and fetches it then, verifying that the match can be continued properly.")]
-	public void ShouldContinueMatch(Clan clan) {
-		Login(clan, gamer => {
+	public void ShouldContinueMatch(Cloud cloud) {
+		Login(cloud, gamer => {
 			gamer.Matches.Create(createResult => {
 				Assert(createResult.IsSuccessful, "Creating match failed");
 				string matchId = createResult.Value.MatchId;
@@ -82,8 +82,8 @@ public class MatchTests : TestBase {
 	}
 
 	[Test("Creates a match as one user, and joins with another. Also tries to join again with the same user and expects an error.")]
-	public void ShouldJoinMatch(Clan clan) {
-		Login2Users(clan, (Gamer creator, Gamer joiner) => {
+	public void ShouldJoinMatch(Cloud cloud) {
+		Login2Users(cloud, (Gamer creator, Gamer joiner) => {
 			creator.Matches.Create(createdMatch => {
 				Assert(createdMatch.IsSuccessful, "Match creation failed");
 				// Creator should not be able to join again
@@ -104,8 +104,8 @@ public class MatchTests : TestBase {
 	}
 
 	[Test("Creates a match and attempts to delete it, and expects it to fail.")]
-	public void ShouldFailToDeleteMatch(Clan clan) {
-		Login(clan, gamer => {
+	public void ShouldFailToDeleteMatch(Cloud cloud) {
+		Login(cloud, gamer => {
 			gamer.Matches.Create(createResult => {
 				Assert(createResult.IsSuccessful, "Failed to create match");
 				gamer.Matches.Delete(deleteResult => {
@@ -118,8 +118,8 @@ public class MatchTests : TestBase {
 	}
 
 	[Test("Big test that creates a match and simulates playing it with two players. Tries a bit of everything in the API.")]
-	public void ShouldPlayMatch(Clan clan) {
-		Login2Users(clan, (Gamer gamer1, Gamer gamer2) => {
+	public void ShouldPlayMatch(Cloud cloud) {
+		Login2Users(cloud, (Gamer gamer1, Gamer gamer2) => {
 			// Create a match
 			gamer1.Matches.Create(matchCreated => {
 				var matchP1 = matchCreated.Value;
@@ -173,8 +173,8 @@ public class MatchTests : TestBase {
 	}
 
 	[Test("Creates a match and plays it as two users. Checks that events are broadcasted appropriately.")]
-	public void ShouldReceiveEvents(Clan clan) {
-		Login2NewUsers(clan, (Gamer gamer1, Gamer gamer2) => {
+	public void ShouldReceiveEvents(Cloud cloud) {
+		Login2NewUsers(cloud, (Gamer gamer1, Gamer gamer2) => {
 			DomainEventLoop loopP1 = new DomainEventLoop(gamer1).Start();
 			DomainEventLoop loopP2 = new DomainEventLoop(gamer2).Start();
 			gamer1.Matches.Create(createdMatch => {
@@ -207,8 +207,8 @@ public class MatchTests : TestBase {
 	}
 
 	[Test("Tests the reception of an invitation between two players")]
-	public void ShouldReceiveInvitation(Clan clan) {
-		Login2NewUsers(clan, (Gamer gamer1, Gamer gamer2) => {
+	public void ShouldReceiveInvitation(Cloud cloud) {
+		Login2NewUsers(cloud, (Gamer gamer1, Gamer gamer2) => {
 			// P1 will be invited
 			DomainEventLoop loopP1 = new DomainEventLoop(gamer1).Start();
 			gamer1.Matches.OnMatchInvitation += (MatchInviteEvent e) => {
@@ -227,8 +227,8 @@ public class MatchTests : TestBase {
 	}
 
 	[Test("Creates a variety of matches and tests the various features of the match listing functionality.")]
-	public void ShouldListMatches(Clan clan) {
-		Login2NewUsers(clan, (gamer1, gamer2) => {
+	public void ShouldListMatches(Cloud cloud) {
+		Login2NewUsers(cloud, (gamer1, gamer2) => {
 			int[] totalMatches = new int[1];
 			Match[] matches = new Match[4];
 			// Allows to better indent the code

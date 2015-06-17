@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-using CloudBuilderLibrary;
+using CotcSdk;
 using System.Reflection;
 using IntegrationTests;
 
@@ -12,15 +12,15 @@ public class GamerTests : TestBase {
 	void Start() {
 		// Invoke the method described on the integration test script (TestMethodName)
 		var met = GetType().GetMethod(TestMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-		// Test methods have a Clan param (and we do the setup here)
-		FindObjectOfType<CloudBuilderGameObject>().GetClan(clan => {
-			met.Invoke(this, new object[] { clan });
+		// Test methods have a Cloud param (and we do the setup here)
+		FindObjectOfType<CotcGameObject>().GetCloud(cloud => {
+			met.Invoke(this, new object[] { cloud });
 		});
 	}
 
 	[Test("Sets a property and checks that it worked properly (tests read all & write single).")]
-	public void ShouldSetProperty(Clan clan) {
-		Login(clan, gamer => {
+	public void ShouldSetProperty(Cloud cloud) {
+		Login(cloud, gamer => {
 			// Set property, then get all and check it
 			gamer.Properties.SetKey(
 				key: "testkey",
@@ -40,8 +40,8 @@ public class GamerTests : TestBase {
 	}
 
 	[Test("Sets properties and checks them (tests read all & write all).")]
-	public void ShouldSetMultipleProperties(Clan clan) {
-		Login(clan, gamer => {
+	public void ShouldSetMultipleProperties(Cloud cloud) {
+		Login(cloud, gamer => {
 			Bundle props = Bundle.CreateObject();
 			props["hello"] = "world";
 			props["array"] = Bundle.CreateArray(1, 2, 3);
@@ -65,8 +65,8 @@ public class GamerTests : TestBase {
 	}
 
 	[Test("Tests removal of a single property (tests remove single & read single).")]
-	public void ShouldRemoveProperty(Clan clan) {
-		Login(clan, gamer => {
+	public void ShouldRemoveProperty(Cloud cloud) {
+		Login(cloud, gamer => {
 			Bundle props = Bundle.CreateObject();
 			props["hello"] = "world";
 			props["prop2"] = 123;
@@ -91,8 +91,8 @@ public class GamerTests : TestBase {
 	}
 
 	[Test("Tests removal of all properties.")]
-	public void ShouldRemoveAllProperties(Clan clan) {
-		Login(clan, gamer => {
+	public void ShouldRemoveAllProperties(Cloud cloud) {
+		Login(cloud, gamer => {
 			Bundle props = Bundle.CreateObject();
 			props["hello"] = "world";
 			props["prop2"] = 123;
@@ -115,11 +115,11 @@ public class GamerTests : TestBase {
 	}
 
 	[Test("Fetches and updates profile information about a gamer, testing that the GamerProfile methods work as expected.")]
-	public void ShouldUpdateProfile(Clan clan) {
-		Login(clan, gamer => {
+	public void ShouldUpdateProfile(Cloud cloud) {
+		Login(cloud, gamer => {
 			gamer.Profile.Get(profile => {
 				Assert(profile.IsSuccessful, "Failed to get profile");
-				Assert(profile.Value["email"] == "clan@localhost.localdomain", "Invalid e-mail address (verify Login method in TestBase)");
+				Assert(profile.Value["email"] == "cloud@localhost.localdomain", "Invalid e-mail address (verify Login method in TestBase)");
 				Assert(profile.Value["lang"] == "en", "Default language should be english");
 				gamer.Profile.Set(setProfile => {
 					Assert(setProfile.IsSuccessful, "Failed to update profile");
@@ -132,11 +132,11 @@ public class GamerTests : TestBase {
 	}
 
 	[Test("Runs a batch on the server and checks the return value.", requisite: "The current game must be set-up with {\"__test\":\"\treturn {value: params.request.value * 2};\",\"__testGamer\":\"    return this.user.profile.read(params.user_id).then(function (result) {\n      return {message: params.request.prefix + result.profile.email};\n    });\"}.")]
-	public void ShouldRunGamerBatch(Clan clan) {
-		Login(clan, gamer => {
+	public void ShouldRunGamerBatch(Cloud cloud) {
+		Login(cloud, gamer => {
 			gamer.Batches.Run(batchResult => {
 				Assert(batchResult.IsSuccessful, "Failed to run batch");
-				Assert(batchResult.Value["message"] == "Hello clan@localhost.localdomain", "Returned value invalid (" + batchResult.Value["message"] + ", check hook on server");
+				Assert(batchResult.Value["message"] == "Hello cloud@localhost.localdomain", "Returned value invalid (" + batchResult.Value["message"] + ", check hook on server");
 				CompleteTest();
 			}, "testGamer", Bundle.CreateObject("prefix", "Hello "));
 		});

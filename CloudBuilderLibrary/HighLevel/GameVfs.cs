@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CloudBuilderLibrary {
+namespace CotcSdk {
 
 	/**
 	 * Represents a key/value system, also known as virtual file system, to be used for game properties.
@@ -49,12 +49,12 @@ namespace CloudBuilderLibrary {
 		}
 
 		#region Private
-		internal GameVfs(Clan clan) {
+		internal GameVfs(Cloud clan) {
 			Clan = clan;
 		}
 
 		private string domain = Common.PrivateDomain;
-		private Clan Clan;
+		private Cloud Clan;
 		#endregion
 	}
 }

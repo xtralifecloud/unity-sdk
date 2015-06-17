@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CloudBuilderLibrary {
+namespace CotcSdk {
 
 	public class Game {
 
@@ -22,10 +22,10 @@ namespace CloudBuilderLibrary {
 		}
 
 		#region Private
-		internal Game(Clan clan) {
+		internal Game(Cloud clan) {
 			Clan = clan;
 		}
-		private Clan Clan;
+		private Cloud Clan;
 		#endregion
 	}
 
