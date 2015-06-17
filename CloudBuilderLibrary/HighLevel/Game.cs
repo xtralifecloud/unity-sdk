@@ -10,7 +10,7 @@ namespace CotcSdk {
 		 * @return an object that allows to manipulate batches.
 		 */
 		public GameBatches Batches {
-			get { return new GameBatches(Clan); }
+			get { return new GameBatches(Cloud); }
 		}
 
 		/**
@@ -18,14 +18,14 @@ namespace CotcSdk {
 		 * @return an object allowing to manipulate key/values for this user/game/domain.
 		 */
 		public GameVfs GameVfs {
-			get { return new GameVfs(Clan); }
+			get { return new GameVfs(Cloud); }
 		}
 
 		#region Private
-		internal Game(Cloud clan) {
-			Clan = clan;
+		internal Game(Cloud cloud) {
+			Cloud = cloud;
 		}
-		private Cloud Clan;
+		private Cloud Cloud;
 		#endregion
 	}
 

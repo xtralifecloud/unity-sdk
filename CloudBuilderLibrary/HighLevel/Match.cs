@@ -241,7 +241,7 @@ namespace CotcSdk {
 				if (RegisteredEventLoop == null) {
 					RegisteredEventLoop = Cotc.GetEventLoopFor(Gamer.GamerId, Domain);
 					if (RegisteredEventLoop == null) {
-						Cotc.LogWarning("No pop event loop for match " + MatchId + " on domain " + Domain + ", match events/updates will not work");
+						Common.LogWarning("No pop event loop for match " + MatchId + " on domain " + Domain + ", match events/updates will not work");
 					}
 					else {
 						RegisteredEventLoop.ReceivedEvent += this.ReceivedLoopEvent;
@@ -286,7 +286,7 @@ namespace CotcSdk {
 				case "match.invite":	// Do not notify them since we are already playing the match
 					break;
 				default:
-					Cotc.LogError("Unknown match event type " + e.Message["type"]);
+					Common.LogError("Unknown match event type " + e.Message["type"]);
 					break;
 			}
 		}

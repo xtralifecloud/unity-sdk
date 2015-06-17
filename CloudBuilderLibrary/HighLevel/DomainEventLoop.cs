@@ -34,7 +34,7 @@ namespace CotcSdk {
 	 */
 	public sealed class DomainEventLoop {
 		/**
-		 * You need valid credentials in order to instantiate this class. Use Clan.Login* methods for that purpose.
+		 * You need valid credentials in order to instantiate this class. Use Cloud.Login* methods for that purpose.
 		 * Once the object is created, you need to start the thread, please look at the other methods available.
 		 * @param gamer the gamer object received from a login or similar function.
 		 * @param domain the domain on which to listen for events. Note that you may create multiple event loops,
@@ -120,12 +120,12 @@ namespace CotcSdk {
 				if (ReceivedEvent != null) ReceivedEvent(this, new EventLoopArgs(res.BodyJson));
 			}
 			catch (Exception e) {
-				Cotc.LogError("Exception in the event chain: " + e.ToString());
+				Common.LogError("Exception in the event chain: " + e.ToString());
 			}
 		}
 
 		private void Run() {
-			Cloud clan = Gamer.Clan;
+			Cloud cloud = Gamer.Cloud;
 			int delay = LoopIterationDuration;
 			int CorrelationId = Random.Next();
 			string messageToAcknowledge = null;
@@ -167,7 +167,7 @@ namespace CotcSdk {
 						}
 					}
 					catch (Exception e) {
-						Cotc.LogError("Exception happened in pop event loop: " + e.ToString());
+						Common.LogError("Exception happened in pop event loop: " + e.ToString());
 					}
 					SynchronousRequestLock.Set();
 				});
@@ -181,7 +181,7 @@ namespace CotcSdk {
 					lastResultPositive = true;
 				}
 			}
-			Cotc.Log("Finished pop event thread " + CorrelationId);
+			Common.Log("Finished pop event thread " + CorrelationId);
 		}
 
 		private Random Random;

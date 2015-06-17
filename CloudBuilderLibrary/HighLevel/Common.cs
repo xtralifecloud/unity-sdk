@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace CotcSdk
 {
@@ -39,6 +40,33 @@ namespace CotcSdk
 			}
 		}
 
+		internal static void Log(string text) {
+			Managers.Logger.Log(LogLevel.Verbose, text);
+		}
+
+		internal static void LogWarning(string text) {
+			Managers.Logger.Log(LogLevel.Warning, text);
+		}
+		
+		internal static void LogError(string text) {
+			Managers.Logger.Log(LogLevel.Error, text);
+		}
+		
+		internal static void TEMP(string text) {
+			// All references to this should be removed at some point
+			Managers.Logger.Log(LogLevel.Warning, "TEMP: " + text);
+		}
+		
+		internal static void StartLogTime(string description = null) {
+			InitialTicks = DateTime.UtcNow.Ticks;
+			LogTime(description);
+		}
+
+		internal static void LogTime(string description = null) {
+			TimeSpan span = new TimeSpan(DateTime.UtcNow.Ticks - InitialTicks);
+			Managers.Logger.Log(LogLevel.Verbose, "[" + span.TotalMilliseconds + "/" + Thread.CurrentThread.ManagedThreadId + "] " + description);
+		}
+
 		internal static T ParseEnum<T>(string value) {
 			if (value != null) return (T)Enum.Parse(typeof(T), value, true);
 			else return default(T);
@@ -73,6 +101,9 @@ namespace CotcSdk
 		public const string SdkVersion = "2.11";
 		public const string PrivateDomain = "private";
 		public const string UserAgent = "cloudbuilder-unity-{0}-{1}";	// os, sdkversion
+		
+		// Other variables
+		private static long InitialTicks;
 	}
 
 	/**

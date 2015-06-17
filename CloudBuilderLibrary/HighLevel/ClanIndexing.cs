@@ -12,7 +12,7 @@ namespace CotcSdk {
 		 */
 		public void DeleteObject(ResultHandler<bool> done, string objectId) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName).Path(objectId);
-			HttpRequest req = Clan.MakeUnauthenticatedHttpRequest(url);
+			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			req.Method = "DELETE";
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Common.InvokeHandler(done, true, response.BodyJson);
@@ -26,7 +26,7 @@ namespace CotcSdk {
 		 */
 		public void GetObject(ResultHandler<IndexResult> done, string objectId) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName).Path(objectId);
-			HttpRequest req = Clan.MakeUnauthenticatedHttpRequest(url);
+			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Common.InvokeHandler(done, new IndexResult(response.BodyJson), response.BodyJson);
 			});
@@ -50,7 +50,7 @@ namespace CotcSdk {
 		 */
 		public void IndexObject(ResultHandler<bool> done, string objectId, Bundle properties, Bundle payload) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName);
-			HttpRequest req = Clan.MakeUnauthenticatedHttpRequest(url);
+			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject(
 				"id", objectId,
 				"properties", properties,
@@ -86,7 +86,7 @@ namespace CotcSdk {
 				foreach (string s in sortingProperties) sort.Add(s);
 			}
 			url.QueryParam("sort", sort.ToJson());
-			Common.RunHandledRequest(Clan.MakeUnauthenticatedHttpRequest(url), done, (HttpResponse response) => {
+			Common.RunHandledRequest(Cloud.MakeUnauthenticatedHttpRequest(url), done, (HttpResponse response) => {
 				// Fetch listed scores
 				IndexSearchResult result = new IndexSearchResult(response.BodyJson, offset);
 				foreach (Bundle b in response.BodyJson["hits"].AsArray()) {
@@ -104,13 +104,13 @@ namespace CotcSdk {
 		}
 
 		#region Private
-		internal ClanIndexing(Cloud clan, string indexName, string domain) {
-			Clan = clan;
+		internal ClanIndexing(Cloud cloud, string indexName, string domain) {
+			Cloud = cloud;
 			Domain = domain;
 			IndexName = indexName;
 		}
 
-		private Cloud Clan;
+		private Cloud Cloud;
 		private string Domain, IndexName;
 		#endregion
 	}

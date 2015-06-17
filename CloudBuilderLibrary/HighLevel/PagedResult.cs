@@ -6,7 +6,7 @@ namespace CotcSdk {
 	/**
 	 * Paginated result. Simply a list enriched with functionality allowing to easily paginate the results, which
 	 * works by calling again the handler initially passed to the method with the current page, as shown below: @code 
-		clan.Indexing.Search((Result<IndexSearchResult> result) => {
+		cloud.Indexing.Search((Result<IndexSearchResult> result) => {
 			PagedList<IndexResult> list = result.Value.Results;
 			Debug.Log("Showing results starting from " + list.Offset);
 			foreach (var obj in list) { ... }

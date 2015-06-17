@@ -19,7 +19,7 @@ namespace CotcSdk
 					return;
 				}
 			}
-			Cotc.LogError("Unable to abort " + request.ToString() + ", probably not running anymore");
+			Common.LogError("Unable to abort " + request.ToString() + ", probably not running anymore");
 		}
 
 		void IHttpClient.Run(HttpRequest request, Action<HttpResponse> callback) {
@@ -88,7 +88,7 @@ namespace CotcSdk
 			lock (this) {
 				// Dismiss additional requests
 				if (Terminated) {
-					Cotc.LogError("Attempted to run a request after having terminated");
+					Common.LogError("Attempted to run a request after having terminated");
 					return;
 				}
 				// Need to enqueue process?
@@ -125,7 +125,7 @@ namespace CotcSdk
 						state.OriginalRequest.FailedHandler(eventArgs);
 						if (eventArgs.RetryDelay < 0) throw new InvalidOperationException("HTTP request failed handler called but didn't tell what to do next.");
 						if (eventArgs.RetryDelay > 0) {
-							Cotc.LogWarning("[" + state.RequestId + "] Request failed, retrying in " + eventArgs.RetryDelay + "ms.");
+							Common.LogWarning("[" + state.RequestId + "] Request failed, retrying in " + eventArgs.RetryDelay + "ms.");
 							Thread.Sleep(eventArgs.RetryDelay);
 							ChooseLoadBalancer(state.OriginalRequest);
 							ProcessRequest(state.OriginalRequest, eventArgs.UserData);
@@ -133,11 +133,11 @@ namespace CotcSdk
 						}
 					}
 					catch (Exception e) {
-						Cotc.LogError("Error in failure handler: " + e.ToString());
+						Common.LogError("Error in failure handler: " + e.ToString());
 					}
 				}
 				// Maximum failure count reached, will simply process the next request
-				Cotc.LogWarning("[" + state.RequestId + "] Request failed.");
+				Common.LogWarning("[" + state.RequestId + "] Request failed.");
 			}
 			// Final result for this request
 			if (state.OriginalRequest.Callback != null) {
@@ -172,7 +172,7 @@ namespace CotcSdk
 				state.Request.BeginGetResponse(new AsyncCallback(RespCallback), state);
 			}
 			catch (WebException e) {
-				Cotc.Log("Failed to send data: " + e.Message + ", status=" + e.Status);
+				Common.Log("Failed to send data: " + e.Message + ", status=" + e.Status);
 				if (e.Status != WebExceptionStatus.RequestCanceled) {
 					FinishWithRequest(state, new HttpResponse(e));
 				}
@@ -193,7 +193,7 @@ namespace CotcSdk
 			if (state.OriginalRequest.HasBody) {
 				sb.AppendLine("Body: " + state.OriginalRequest.BodyString);
 			}
-			Cotc.Log(sb.ToString());
+			Common.Log(sb.ToString());
 		}
 
 		/** Prints information about the response for debugging purposes. */
@@ -210,7 +210,7 @@ namespace CotcSdk
 			if (response.HasBody) {
 				sb.AppendLine("Body: " + response.BodyString);
 			}
-			Cotc.Log(sb.ToString());
+			Common.Log(sb.ToString());
 		}
 
 		/** Processes a single request asynchronously. Will continue to FinishWithRequest in some way. */
@@ -267,7 +267,7 @@ namespace CotcSdk
 			}
 			catch (WebException e) {
 				if (e.Response == null) {
-					Cotc.Log("Error: " + e.Message);
+					Common.Log("Error: " + e.Message);
 					FinishWithRequest(state, new HttpResponse(e));
 					return;
 				}
@@ -279,7 +279,7 @@ namespace CotcSdk
 				return;
 			}
 			catch (Exception e) {
-				Cotc.Log("Error: " + e.Message);
+				Common.Log("Error: " + e.Message);
 				FinishWithRequest(state, new HttpResponse(e));
 			}
 			if (state.Response != null) { state.Response.Close(); }
@@ -316,7 +316,7 @@ namespace CotcSdk
 				}
 			}
 			catch (Exception e) {
-				Cotc.LogWarning("Failed to read response: " + e.ToString());
+				Common.LogWarning("Failed to read response: " + e.ToString());
 				FinishWithRequest(state, new HttpResponse(e));
 			}
 			AllDone.Set();
@@ -330,7 +330,7 @@ namespace CotcSdk
 					requestState.Request.Abort();
 				}
 				HttpResponse response = new HttpResponse(new HttpTimeoutException());
-				Cotc.LogWarning("Request timed out");
+				Common.LogWarning("Request timed out");
 				requestState.self.FinishWithRequest(requestState, response);
 			}
 		}

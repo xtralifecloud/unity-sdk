@@ -26,7 +26,7 @@ namespace CotcSdk {
 		 */
 		public void Run(ResultHandler<Bundle> done, string batchName, Bundle batchParams = null) {
 			UrlBuilder url = new UrlBuilder("/v1/batch").Path(domain).Path(batchName);
-			HttpRequest req = Clan.MakeUnauthenticatedHttpRequest(url);
+			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			req.BodyJson = batchParams ?? Bundle.Empty;
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Common.InvokeHandler(done, response.BodyJson, response.BodyJson);
@@ -35,10 +35,10 @@ namespace CotcSdk {
 
 		#region Private
 		internal GameBatches(Cloud parent) {
-			Clan = parent;
+			Cloud = parent;
 		}
 		private string domain = Common.PrivateDomain;
-		private Cloud Clan;
+		private Cloud Cloud;
 		#endregion
 	}
 }

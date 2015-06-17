@@ -6,15 +6,15 @@ namespace CotcSdk
 {
 	public class CotcGameObject : MonoBehaviour {
 
-		private static Cloud clan = null;
-		private List<Action<Cloud>> pendingClanHandlers = new List<Action<Cloud>>();
+		private static Cloud cloud = null;
+		private List<Action<Cloud>> pendingCloudHandlers = new List<Action<Cloud>>();
 
 		public void GetCloud(Action<Cloud> done) {
-			if (clan == null) {
-				pendingClanHandlers.Add(done);
+			if (cloud == null) {
+				pendingCloudHandlers.Add(done);
 			}
 			else {
-				done(clan);
+				done(cloud);
 			}
 		}
 
@@ -22,7 +22,7 @@ namespace CotcSdk
 			CotcSettings s = CotcSettings.Instance;
 
 			// No need to initialize it once more
-			if (clan != null) {
+			if (cloud != null) {
 				return;
 			}
 			if (string.IsNullOrEmpty(s.ApiKey) || string.IsNullOrEmpty(s.ApiSecret)) {
@@ -30,11 +30,11 @@ namespace CotcSdk
 			}
 
 			Cotc.Setup((Result<Cloud> result) => {
-				clan = result.Value;
-				Cotc.Log("CotC inited");
+				cloud = result.Value;
+				Common.Log("CotC inited");
 				// Notify pending handlers
-				foreach (var handler in pendingClanHandlers) {
-					handler(clan);
+				foreach (var handler in pendingCloudHandlers) {
+					handler(cloud);
 				}
 			}, s.ApiKey, s.ApiSecret, s.Environment, s.LbCount, s.HttpVerbose, s.HttpTimeout);
 		}
@@ -44,7 +44,7 @@ namespace CotcSdk
 		}
 
 		void OnApplicationFocus(bool focused) {
-			Cotc.Log(focused ? "CotC resumed" : "CotC suspended");
+			Common.Log(focused ? "CotC resumed" : "CotC suspended");
 			Cotc.OnApplicationFocus(focused);
 		}
 

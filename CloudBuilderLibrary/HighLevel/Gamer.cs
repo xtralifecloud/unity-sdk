@@ -115,7 +115,7 @@ namespace CotcSdk
 		 * @param gamerData Gamer data as returned by our API calls (loginanonymous, etc.).
 		 */
 		internal Gamer(Cloud parent, Bundle gamerData) {
-			Clan = parent;
+			Cloud = parent;
 			Network = Common.ParseEnum<LoginNetwork>(gamerData["network"]);
 			NetworkId = gamerData["networkid"];
 			GamerId = gamerData["gamer_id"];
@@ -128,13 +128,13 @@ namespace CotcSdk
 		}
 
 		internal HttpRequest MakeHttpRequest(string path) {
-			HttpRequest result = Clan.MakeUnauthenticatedHttpRequest(path);
+			HttpRequest result = Cloud.MakeUnauthenticatedHttpRequest(path);
 			string authInfo = GamerId + ":" + GamerSecret;
 			result.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
 			return result;
 		}
 
-		internal Cloud Clan;
+		internal Cloud Cloud;
 		private GamerMatches MatchesInstance;
 		#endregion
 	}

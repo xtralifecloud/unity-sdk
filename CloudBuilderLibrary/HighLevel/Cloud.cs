@@ -15,7 +15,7 @@ namespace CotcSdk
 		}
 
 		/**
-		 * Allows to manipulate an index. Usage: `Clan.Index("matches").IndexObject(...);`.
+		 * Allows to manipulate an index. Usage: `Cloud.Index("matches").IndexObject(...);`.
 		 * @param indexName name of the index; scopes your searches.
 		 * @param domain the domain to manipulate the index on.
 		 */

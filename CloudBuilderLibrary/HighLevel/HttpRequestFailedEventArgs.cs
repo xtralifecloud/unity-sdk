@@ -3,12 +3,12 @@
 namespace CotcSdk {
 
 	/**
-	 * Delegate for failed HTTP requests. See Clan.HttpRequestFailedHandler.
+	 * Delegate for failed HTTP requests. See Cloud.HttpRequestFailedHandler.
 	 */
 	public delegate void HttpRequestFailedHandler(HttpRequestFailedEventArgs e);
 
 	/**
-	 * This class is passed to the HttpRequestFailed handler as set on the Clan.
+	 * This class is passed to the HttpRequestFailed handler as set on the Cloud.
 	 * You need to do something with it, either call Abort or RetryIn else the http service will
 	 * throw an exception.
 	 */

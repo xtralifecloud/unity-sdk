@@ -27,7 +27,7 @@ namespace CotcSdk {
 		 */
 		public void GetAll(ResultHandler<Bundle> done) {
 			UrlBuilder url = new UrlBuilder("/v1/vfs").Path(domain);
-			HttpRequest req = Clan.MakeUnauthenticatedHttpRequest(url);
+			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Common.InvokeHandler(done, response.BodyJson, response.BodyJson);
 			});
@@ -42,19 +42,19 @@ namespace CotcSdk {
 		 */
 		public void GetKey(ResultHandler<Bundle> done, string key) {
 			UrlBuilder url = new UrlBuilder("/v1/vfs").Path(domain).Path(key);
-			HttpRequest req = Clan.MakeUnauthenticatedHttpRequest(url);
+			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
 				Common.InvokeHandler(done, response.BodyJson, response.BodyJson);
 			});
 		}
 
 		#region Private
-		internal GameVfs(Cloud clan) {
-			Clan = clan;
+		internal GameVfs(Cloud cloud) {
+			Cloud = cloud;
 		}
 
 		private string domain = Common.PrivateDomain;
-		private Cloud Clan;
+		private Cloud Cloud;
 		#endregion
 	}
 }

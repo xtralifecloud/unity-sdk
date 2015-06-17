@@ -87,10 +87,10 @@ namespace CotcSdk {
 				HttpRequest binaryRequest = new HttpRequest();
 				binaryRequest.Url = response.BodyJson["putURL"];
 				binaryRequest.Body = binaryData;
-				binaryRequest.FailedHandler = Gamer.Clan.HttpRequestFailedHandler;
+				binaryRequest.FailedHandler = Gamer.Cloud.HttpRequestFailedHandler;
 				binaryRequest.Method = "PUT";
-				binaryRequest.TimeoutMillisec = Gamer.Clan.HttpTimeoutMillis;
-				binaryRequest.UserAgent = Gamer.Clan.UserAgent;
+				binaryRequest.TimeoutMillisec = Gamer.Cloud.HttpTimeoutMillis;
+				binaryRequest.UserAgent = Gamer.Cloud.UserAgent;
 				Common.RunHandledRequest(binaryRequest, done, binaryResponse => {
 					Common.InvokeHandler(done, true, response.BodyJson);
 				});

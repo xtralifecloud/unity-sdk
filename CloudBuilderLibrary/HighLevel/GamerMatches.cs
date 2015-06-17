@@ -164,7 +164,7 @@ namespace CotcSdk {
 				if (RegisteredEventLoop == null) {
 					RegisteredEventLoop = Cotc.GetEventLoopFor(Gamer.GamerId, domain);
 					if (RegisteredEventLoop == null) {
-						Cotc.LogWarning("No pop event loop for domain " + domain + ", match invitations will not work");
+						Common.LogWarning("No pop event loop for domain " + domain + ", match invitations will not work");
 					}
 					else {
 						RegisteredEventLoop.ReceivedEvent += this.ReceivedLoopEvent;

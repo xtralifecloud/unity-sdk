@@ -53,7 +53,7 @@ namespace CotcSdk
 		 * logged on through a facebook account. Or, should you later want to convert this account to simply use an
 		 * e-mail address, this is the method that you will want to call.
 		 * In order to convert the account successfully, the provided network credentials need to be acceptable,
-		 * just as when calling Clan.Login.
+		 * just as when calling Cloud.Login.
 		 * @param done callback invoked when the operation has completed, either successfully or not. The boolean inside
 		 *     is not important.
 		 * @param network the target network to connect with later on.
