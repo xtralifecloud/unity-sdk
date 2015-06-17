@@ -103,7 +103,17 @@ Inheritance diagram for CotcSdk.PagedList&lt; T &gt;:</div>
   <map id="CotcSdk.PagedList&lt; T &gt;_map" name="CotcSdk.PagedList&lt; T &gt;_map">
 </map>
  </div></div>
-<table class="memberdecls">
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Paginated result. Simply a list enriched with functionality allowing to easily paginate the results, which works by calling again the handler initially passed to the method with the current page, as shown below:</p><div class="fragment"><div class="line">cloud.Indexing.Search((Result&lt;IndexSearchResult&gt; result) =&gt; {</div>
+<div class="line">   PagedList&lt;IndexResult&gt; list = result.Value.Results;</div>
+<div class="line">   Debug.Log(<span class="stringliteral">&quot;Showing results starting from &quot;</span> + list.Offset);</div>
+<div class="line">   <span class="keywordflow">foreach</span> (var obj <span class="keywordflow">in</span> list) { ... }</div>
+<div class="line">   nextButton.Enabled = list.HasNext;</div>
+<div class="line">   nextButton.Click += list.FetchNext();</div>
+<div class="line">}, …); </div>
+</div><!-- fragment --><p> In that case, the handler will be called again, showing the next results when the "nextButton" is clicked.</p>
+<p>This object is always found in a subclass from a #Result, or at the root of a #Result. </p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab52f14b37077689da6e7f15bec500617"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_paged_list_3_01_t_01_4.html#ab52f14b37077689da6e7f15bec500617">FetchNext</a> ()</td></tr>
@@ -125,17 +135,7 @@ Properties</h2></td></tr>
 <tr class="memitem:afed2e3a1d9c4a2e5e1e5f05e587a670f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_paged_list_3_01_t_01_4.html#afed2e3a1d9c4a2e5e1e5f05e587a670f">HasNext</a><code> [get]</code></td></tr>
 <tr class="separator:afed2e3a1d9c4a2e5e1e5f05e587a670f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Paginated result. Simply a list enriched with functionality allowing to easily paginate the results, which works by calling again the handler initially passed to the method with the current page, as shown below:</p><div class="fragment"><div class="line">cloud.Indexing.Search((Result&lt;IndexSearchResult&gt; result) =&gt; {</div>
-<div class="line">   PagedList&lt;IndexResult&gt; list = result.Value.Results;</div>
-<div class="line">   Debug.Log(<span class="stringliteral">&quot;Showing results starting from &quot;</span> + list.Offset);</div>
-<div class="line">   <span class="keywordflow">foreach</span> (var obj <span class="keywordflow">in</span> list) { ... }</div>
-<div class="line">   nextButton.Enabled = list.HasNext;</div>
-<div class="line">   nextButton.Click += list.FetchNext();</div>
-<div class="line">}, …); </div>
-</div><!-- fragment --><p> In that case, the handler will be called again, showing the next results when the "nextButton" is clicked.</p>
-<p>This object is always found in a subclass from a #Result, or at the root of a #Result. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="ab52f14b37077689da6e7f15bec500617"></a>
 <div class="memitem">
 <div class="memproto">
@@ -244,7 +244,7 @@ Properties</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 17 2015 16:27:52 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jun 17 2015 16:43:32 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

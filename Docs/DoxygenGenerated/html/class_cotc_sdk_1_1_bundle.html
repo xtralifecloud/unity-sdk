@@ -107,7 +107,53 @@ Inheritance diagram for CotcSdk.Bundle:</div>
 <area href="class_cotc_sdk_1_1_empty_bundle.html" alt="CotcSdk.EmptyBundle" shape="rect" coords="0,56,136,80"/>
 </map>
  </div></div>
-<table class="memberdecls">
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object, behaving like a C# dictionary, but with inferred typing and more safety.</p>
+<p>You need bundles in many calls, either to decode generic data received by the server (when such data can be enriched by hooks typically) or to pass generic user parameters, such as when creating a match.</p>
+<p>Bundles are instantiated through their factory methods: Bundle.CreateObject or Bundle.CreateArray. The type of the resulting object can be inspected via the Type member. While objects and arrays are containers for further objects, a bundle is a simple node in the graph and may as such contain a value, such as a string.</p>
+<p>Sub-objects are fetched using the index operator (brackets), either with a numeric argument for arrays or a string argument for dictionaries. Conversions are performed automatically based. Let's consider the following example:</p>
+<div class="fragment"><div class="line">Bundle b = Bundle.CreateObject();</div>
+<div class="line">b[<span class="stringliteral">&quot;hello&quot;</span>] = <span class="stringliteral">&quot;world&quot;</span>;</div>
+</div><!-- fragment --><p>The bundle object, considered as dictionary will have its key "hello" set with a new <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> node of type string (implicitly created from the string). So later on, you might fetch this value as well:</p>
+<div class="fragment"><div class="line"><span class="keywordtype">string</span> value = b[<span class="stringliteral">&quot;hello&quot;</span>];</div>
+</div><!-- fragment --><p>What happens here is that the bundle under the key "hello" is fetched, and then implicitly converted to a string.</p>
+<p><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> provides a safe way to browse a predefined graph, as when a key doesn't exist it returns the <code>Bundle.Empty</code> (no null value). This special bundle allows to fetch sub-objects but they will always translate to <code>Bundle.Empty</code> as well. If the values are to be converted to a primitive type, the result will be the default value for this type (null for a string, 0 for an int, etc.). As such, you may do this:</p>
+<div class="fragment"><div class="line"><span class="keywordtype">int</span> value = bundle[<span class="stringliteral">&quot;nonexisting&quot;</span>][<span class="stringliteral">&quot;key&quot;</span>];</div>
+</div><!-- fragment --><p>Since the "nonexisting" key is not found on bundle, <code>Bundle.Empty</code> is returned. Further fetching "key" will return an empty bundle as well. Which will be converted implicitly to an integer as 0. <code>Bundle.Empty</code> is a constant value that always refers to an empty bundle, and attempting to modify it will result in an exception.</p>
+<div class="fragment"><div class="line">Bundle b = Bundle.Empty;</div>
+<div class="line">b[<span class="stringliteral">&quot;value&quot;</span>] = <span class="stringliteral">&quot;something&quot;</span>; <span class="comment">// Exception</span></div>
+</div><!-- fragment --><p>The bundle hierarchy doesn't accept null or <code>Bundle.Empty</code> values (it just rejects them). You should avoid manipulating null Bundles and use <code>Bundle.Empty</code> wherever possible, however you may assign a null bundle to a key, which will have no effect. This can be useful for optional arguments. For instance, the following snippet will not affect the bundle.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">string</span> value = null; <span class="comment">// converts to Empty.Bundle and rejects assignment</span></div>
+<div class="line">bundle[<span class="stringliteral">&quot;key&quot;</span>] = value;</div>
+</div><!-- fragment --><p>Note that <code>Bundle.Empty</code> is not strictly identical to an empty bundle object. <code>Bundle.Empty</code> is never considered as a value and is discarded upon assignment. For instance:</p>
+<div class="fragment"><div class="line">Bundle a = Bundle.CreateObject();</div>
+<div class="line">Bundle b = Bundle.CreateObject();</div>
+<div class="line">a[<span class="stringliteral">&quot;key&quot;</span>] = Bundle.Empty;</div>
+<div class="line">b[<span class="stringliteral">&quot;key&quot;</span>] = Bundle.CreateObject();</div>
+<div class="line">Log(a.ToJson()); <span class="comment">// {}</span></div>
+<div class="line">Log(b.ToJson()); <span class="comment">// {&quot;key&quot;: {}}</span></div>
+</div><!-- fragment --><p>If you need a special value for keys that do not match the expected type or are not found in the hierarchy, you may as well use the .As* methods. For instance, the previous snippet could be written as follows to have a default value of one:</p>
+<div class="fragment"><div class="line"><span class="keywordtype">int</span> value = bundle[<span class="stringliteral">&quot;nonexisting&quot;</span>][<span class="stringliteral">&quot;key&quot;</span>].AsInt(1);</div>
+</div><!-- fragment --><p>It is also possible to inspect the Type property of the <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> in order to ensure that the value was provided as expected.</p>
+<p>A bundle may be pre-filled at creation by passing arguments to Bundle.CreateObject and Bundle.CreateArray. For instance:</p>
+<div class="fragment"><div class="line">Bundle b = Bundle.CreateObject(<span class="stringliteral">&quot;key1&quot;</span>, <span class="stringliteral">&quot;value1&quot;</span>, <span class="stringliteral">&quot;key2&quot;</span>, <span class="stringliteral">&quot;value2&quot;</span>);</div>
+</div><!-- fragment --><p>Is equivalent to writing:</p>
+<div class="fragment"><div class="line">Bundle b = Bundle.CreateObject();</div>
+<div class="line">b[<span class="stringliteral">&quot;key1&quot;</span>] = <span class="stringliteral">&quot;value1&quot;</span>;</div>
+<div class="line">b[<span class="stringliteral">&quot;key2&quot;</span>] = <span class="stringliteral">&quot;value2&quot;</span>;</div>
+</div><!-- fragment --><p>A bundle can quickly be transformed from/to JSON using ToJson and Bundle.FromJson methods. One can also check for the presence of keys and remove them with the .Has respectively .Remove methods.</p>
+<p>Iterating a JSON object is made using the explicit .As* methods. For instance, here how you iterate over an array bundle (no harm will happen if the key doesn't exist or is not an array, since an empty array is returned):</p>
+<div class="fragment"><div class="line">Bundle b;</div>
+<div class="line"><span class="keywordflow">foreach</span> (Bundle value <span class="keywordflow">in</span> b) { ... }</div>
+</div><!-- fragment --><p>For an object, use AsDictionary().</p>
+<div class="fragment"><div class="line">Bundle b;</div>
+<div class="line"><span class="keywordflow">foreach</span> (KeyValuePair&lt;string, Bundle&gt; pair <span class="keywordflow">in</span> b[<span class="stringliteral">&quot;key&quot;</span>].AsDictionary()) { ... }</div>
+</div><!-- fragment --><p>This loop is safe as well even if the bundle doesn't contain a "key" entry or the "key" entry is not an object.</p>
+<p>Null bundles should be avoided! Use <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>. Empty everytime you need a "void", non mutable bundle value. Converting from a null bundle will result in an exception.</p>
+<div class="fragment"><div class="line">Bundle b = null;</div>
+<div class="line"><span class="keywordtype">string</span> value = b; <span class="comment">// Null pointer exception!</span></div>
+</div><!-- fragment --><p>That's all what there is to know about bundles. In general they should make any code interacting with generic objects simple and safe. </p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:aa84cd987b11b11dd145477190f56f803"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa84cd987b11b11dd145477190f56f803"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>DataType</b> { <br />
@@ -282,59 +328,13 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsEmpty</b><code> [ge
 DataType&#160;</td><td class="memItemRight" valign="bottom"><b>Type</b><code> [get]</code></td></tr>
 <tr class="separator:a1023b7f49b31c5578c36b622b0dc6c0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object, behaving like a C# dictionary, but with inferred typing and more safety.</p>
-<p>You need bundles in many calls, either to decode generic data received by the server (when such data can be enriched by hooks typically) or to pass generic user parameters, such as when creating a match.</p>
-<p>Bundles are instantiated through their factory methods: Bundle.CreateObject or Bundle.CreateArray. The type of the resulting object can be inspected via the Type member. While objects and arrays are containers for further objects, a bundle is a simple node in the graph and may as such contain a value, such as a string.</p>
-<p>Sub-objects are fetched using the index operator (brackets), either with a numeric argument for arrays or a string argument for dictionaries. Conversions are performed automatically based. Let's consider the following example:</p>
-<div class="fragment"><div class="line">Bundle b = Bundle.CreateObject();</div>
-<div class="line">b[<span class="stringliteral">&quot;hello&quot;</span>] = <span class="stringliteral">&quot;world&quot;</span>;</div>
-</div><!-- fragment --><p>The bundle object, considered as dictionary will have its key "hello" set with a new <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> node of type string (implicitly created from the string). So later on, you might fetch this value as well:</p>
-<div class="fragment"><div class="line"><span class="keywordtype">string</span> value = b[<span class="stringliteral">&quot;hello&quot;</span>];</div>
-</div><!-- fragment --><p>What happens here is that the bundle under the key "hello" is fetched, and then implicitly converted to a string.</p>
-<p><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> provides a safe way to browse a predefined graph, as when a key doesn't exist it returns the <code>Bundle.Empty</code> (no null value). This special bundle allows to fetch sub-objects but they will always translate to <code>Bundle.Empty</code> as well. If the values are to be converted to a primitive type, the result will be the default value for this type (null for a string, 0 for an int, etc.). As such, you may do this:</p>
-<div class="fragment"><div class="line"><span class="keywordtype">int</span> value = bundle[<span class="stringliteral">&quot;nonexisting&quot;</span>][<span class="stringliteral">&quot;key&quot;</span>];</div>
-</div><!-- fragment --><p>Since the "nonexisting" key is not found on bundle, <code>Bundle.Empty</code> is returned. Further fetching "key" will return an empty bundle as well. Which will be converted implicitly to an integer as 0. <code>Bundle.Empty</code> is a constant value that always refers to an empty bundle, and attempting to modify it will result in an exception.</p>
-<div class="fragment"><div class="line">Bundle b = Bundle.Empty;</div>
-<div class="line">b[<span class="stringliteral">&quot;value&quot;</span>] = <span class="stringliteral">&quot;something&quot;</span>; <span class="comment">// Exception</span></div>
-</div><!-- fragment --><p>The bundle hierarchy doesn't accept null or <code>Bundle.Empty</code> values (it just rejects them). You should avoid manipulating null Bundles and use <code>Bundle.Empty</code> wherever possible, however you may assign a null bundle to a key, which will have no effect. This can be useful for optional arguments. For instance, the following snippet will not affect the bundle.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">string</span> value = null; <span class="comment">// converts to Empty.Bundle and rejects assignment</span></div>
-<div class="line">bundle[<span class="stringliteral">&quot;key&quot;</span>] = value;</div>
-</div><!-- fragment --><p>Note that <code>Bundle.Empty</code> is not strictly identical to an empty bundle object. <code>Bundle.Empty</code> is never considered as a value and is discarded upon assignment. For instance:</p>
-<div class="fragment"><div class="line">Bundle a = Bundle.CreateObject();</div>
-<div class="line">Bundle b = Bundle.CreateObject();</div>
-<div class="line">a[<span class="stringliteral">&quot;key&quot;</span>] = Bundle.Empty;</div>
-<div class="line">b[<span class="stringliteral">&quot;key&quot;</span>] = Bundle.CreateObject();</div>
-<div class="line">Log(a.ToJson()); <span class="comment">// {}</span></div>
-<div class="line">Log(b.ToJson()); <span class="comment">// {&quot;key&quot;: {}}</span></div>
-</div><!-- fragment --><p>If you need a special value for keys that do not match the expected type or are not found in the hierarchy, you may as well use the .As* methods. For instance, the previous snippet could be written as follows to have a default value of one:</p>
-<div class="fragment"><div class="line"><span class="keywordtype">int</span> value = bundle[<span class="stringliteral">&quot;nonexisting&quot;</span>][<span class="stringliteral">&quot;key&quot;</span>].AsInt(1);</div>
-</div><!-- fragment --><p>It is also possible to inspect the Type property of the <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> in order to ensure that the value was provided as expected.</p>
-<p>A bundle may be pre-filled at creation by passing arguments to Bundle.CreateObject and Bundle.CreateArray. For instance:</p>
-<div class="fragment"><div class="line">Bundle b = Bundle.CreateObject(<span class="stringliteral">&quot;key1&quot;</span>, <span class="stringliteral">&quot;value1&quot;</span>, <span class="stringliteral">&quot;key2&quot;</span>, <span class="stringliteral">&quot;value2&quot;</span>);</div>
-</div><!-- fragment --><p>Is equivalent to writing:</p>
-<div class="fragment"><div class="line">Bundle b = Bundle.CreateObject();</div>
-<div class="line">b[<span class="stringliteral">&quot;key1&quot;</span>] = <span class="stringliteral">&quot;value1&quot;</span>;</div>
-<div class="line">b[<span class="stringliteral">&quot;key2&quot;</span>] = <span class="stringliteral">&quot;value2&quot;</span>;</div>
-</div><!-- fragment --><p>A bundle can quickly be transformed from/to JSON using ToJson and Bundle.FromJson methods. One can also check for the presence of keys and remove them with the .Has respectively .Remove methods.</p>
-<p>Iterating a JSON object is made using the explicit .As* methods. For instance, here how you iterate over an array bundle (no harm will happen if the key doesn't exist or is not an array, since an empty array is returned):</p>
-<div class="fragment"><div class="line">Bundle b;</div>
-<div class="line"><span class="keywordflow">foreach</span> (Bundle value <span class="keywordflow">in</span> b) { ... }</div>
-</div><!-- fragment --><p>For an object, use AsDictionary().</p>
-<div class="fragment"><div class="line">Bundle b;</div>
-<div class="line"><span class="keywordflow">foreach</span> (KeyValuePair&lt;string, Bundle&gt; pair <span class="keywordflow">in</span> b[<span class="stringliteral">&quot;key&quot;</span>].AsDictionary()) { ... }</div>
-</div><!-- fragment --><p>This loop is safe as well even if the bundle doesn't contain a "key" entry or the "key" entry is not an object.</p>
-<p>Null bundles should be avoided! Use <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>. Empty everytime you need a "void", non mutable bundle value. Converting from a null bundle will result in an exception.</p>
-<div class="fragment"><div class="line">Bundle b = null;</div>
-<div class="line"><span class="keywordtype">string</span> value = b; <span class="comment">// Null pointer exception!</span></div>
-</div><!-- fragment --><p>That's all what there is to know about bundles. In general they should make any code interacting with generic objects simple and safe. </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>CloudBuilderLibrary/Internal/Bundle.cs</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 17 2015 16:27:52 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jun 17 2015 16:43:32 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>
