@@ -18,9 +18,14 @@ namespace CotcSdk {
 		 * (name, first name), pass them here. You should pass at least one of these.
 		 */
 		public string FirstName, LastName, Name;
+		/**
+		 * Additional info that might have been enriched by the CotC servers.
+		 * You should never guess or create this info by yourself.
+		 */
+		public GamerInfo ClanInfo { get; private set; }
 
 		/**
-		 * Default constructor for convenience.
+		 * User constructor.
 		 */
 		public SocialNetworkFriend(string id, string firstName, string lastName, string name) {
 			Id = id;
@@ -28,7 +33,22 @@ namespace CotcSdk {
 			LastName = lastName;
 			Name = name;
 		}
+
+		/** Default constructor for convenience. */
 		public SocialNetworkFriend() { }
+
+		/**
+		 * Build from existing JSON data.
+		 */
+		internal SocialNetworkFriend(Bundle serverData) {
+			Id = serverData["id"];
+			Name = serverData["name"];
+			FirstName = serverData["first_name"];
+			LastName = serverData["last_name"];
+			if (serverData.Has("clan")) {
+				ClanInfo = new GamerInfo(serverData["clan"]);
+			}
+		}
 
 		internal Bundle ToBundle() {
 			Bundle result = Bundle.CreateObject();
@@ -36,8 +56,8 @@ namespace CotcSdk {
 			result["name"] = Name;
 			result["first_name"] = FirstName;
 			result["last_name"] = LastName;
+			if (ClanInfo != null) result["clan"] = ClanInfo.AsBundle();
 			return result;
 		}
 	}
-
 }

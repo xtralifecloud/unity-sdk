@@ -234,8 +234,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15ae70917693f8041ae13e42cb67844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CotcGameObject: {fileID: 0}
-  CotcFacebookIntegration: {fileID: 0}
+  CotcGameObject: {fileID: 1516437599}
+  CotcFacebookIntegration: {fileID: 936038101}
   Cli: {fileID: 1269551222}
 --- !u!4 &974912906
 Transform:
@@ -592,7 +592,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1516437598}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1223422522, guid: 838baa83698aebe4b8ad74987cdd44d9, type: 3}
+  m_Script: {fileID: 1223422522, guid: f200f8f99a742d54b881698c7217d8b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1516437600

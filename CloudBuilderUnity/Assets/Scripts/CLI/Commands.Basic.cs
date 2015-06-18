@@ -43,7 +43,7 @@ namespace CLI
 		[CommandInfo("Lists facebook friends and sends it to CotC servers")]
 		void fbfriends(Arguments args) {
 			CotcFacebookIntegration.FetchFriends(
-				done: SuccessHandler<bool>(args, result => args.Return()),
+				done: SuccessHandler<SocialNetworkFriendResponse>(args, result => args.Return(result.ServerData)),
 				gamer: Gamer);
 		}
 

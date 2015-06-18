@@ -31,6 +31,15 @@ namespace CotcSdk {
 		public Bundle this[string key] {
 			get { return Props[key]; }
 		}
+
+		/**
+		 * Gets the underlying Bundle. Dangerous, only use internally, when you want to put the contents
+		 * of a properties object into an existing bundle.
+		 */
+		internal Bundle AsBundle() {
+			return Props;
+		}
+
 		/**
 		 * Allows to browse all keys (might include some that are already exposed as typed properties in the object).
 		 * @return the list of keys.
@@ -53,6 +62,14 @@ namespace CotcSdk {
 		 * @return a JSON string representing the object.
 		 */
 		public override string ToString() {
+			return Props.ToJson();
+		}
+
+		/**
+		 * Builds a JSON representation of this object, same as ToString actually.
+		 * @return a JSON string representing the object.
+		 */
+		public string ToJson() {
 			return Props.ToJson();
 		}
 	}

@@ -52,10 +52,11 @@ namespace CotcSdk
 		 * Fetches the list of friends on facebook and sends them to CotC so that they automatically become friend with you.
 		 * Note that this can only fetch the friends who are actually playing the game, so the list may be empty especially
 		 * when in development.
-		 * @param done callback invoked when the request has finished. The boolean value returned indicates success if true.
+		 * @param done callback invoked when the request has finished. The value is as returned by
+		 *     #GamerCommunity.PostSocialNetworkFriends.
 		 * @param gamer gamer object used to link the data to the account.
 		 */
-		public void FetchFriends(ResultHandler<bool> done, Gamer gamer) {
+		public void FetchFriends(ResultHandler<SocialNetworkFriendResponse> done, Gamer gamer) {
 			EnsureFacebookLoaded(() => {
 				DoFacebookRequestWithPagination((Result<List<SocialNetworkFriend>> result) => {
 					if (!result.IsSuccessful) {

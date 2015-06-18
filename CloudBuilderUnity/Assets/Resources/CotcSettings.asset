@@ -8,12 +8,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 659520464, guid: 838baa83698aebe4b8ad74987cdd44d9, type: 3}
+  m_Script: {fileID: 659520464, guid: f200f8f99a742d54b881698c7217d8b2, type: 3}
   m_Name: CotcSettings
   m_EditorClassIdentifier: 
   ApiKey: testgame-key
   ApiSecret: testgame-secret
-  Environment: http://10.211.55.2:2000
-  LbCount: 0
+  Environment: https://sandbox-api[id].clanofthecloud.mobi
+  LbCount: 2
   HttpVerbose: 1
   HttpTimeout: 60

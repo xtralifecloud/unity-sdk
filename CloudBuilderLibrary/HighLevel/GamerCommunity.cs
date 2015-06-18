@@ -65,11 +65,12 @@ namespace CotcSdk {
 		 * This will automatically add them as a friend on CotC as they get recognized on our servers.
 		 * The friends get associated to the domain of this object.
 		 * @param done callback invoked when the operation has finished, either successfully or not. The attached
-		 *     boolean indicates success if true.
+		 *     value is the same list as passed, enriched with potential information about the gamer (member
+		 *     #SocialNetworkFriend.ClanInfo) for gamers who are already registered on CotC servers.
 		 * @param network the network with which these friends are associated
 		 * @param friends a list of data about the friends fetched on the social network.
 		 */
-		public void PostSocialNetworkFriends(ResultHandler<bool> done, LoginNetwork network, List<SocialNetworkFriend> friends) {
+		public void PostSocialNetworkFriends(ResultHandler<SocialNetworkFriendResponse> done, LoginNetwork network, List<SocialNetworkFriend> friends) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/friends").Path(domain).QueryParam("network", network.Describe());
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			Bundle friendData = Bundle.CreateObject();
@@ -79,7 +80,7 @@ namespace CotcSdk {
 
 			req.BodyJson = friendData;
 			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, true, response.BodyJson);
+				Common.InvokeHandler(done, new SocialNetworkFriendResponse(response.BodyJson), response.BodyJson);
 			});
 		}
 		

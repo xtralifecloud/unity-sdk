@@ -67,9 +67,14 @@ namespace CotcSdk
 			Managers.Logger.Log(LogLevel.Verbose, "[" + span.TotalMilliseconds + "/" + Thread.CurrentThread.ManagedThreadId + "] " + description);
 		}
 
-		internal static T ParseEnum<T>(string value) {
-			if (value != null) return (T)Enum.Parse(typeof(T), value, true);
-			else return default(T);
+		internal static T ParseEnum<T>(string value, T defaultValue = default(T)) {
+			try {
+				return (T)Enum.Parse(typeof(T), value, true);
+			}
+			catch (Exception) {
+				Common.Log("Failed to parse enum " + value);
+			}
+			return defaultValue;
 		}
 
 		internal static DateTime ParseHttpDate(string httpDate) {
