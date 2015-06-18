@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using CotcSdk;
 using System.Collections.Generic;
 using System;
 

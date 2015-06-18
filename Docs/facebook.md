@@ -10,7 +10,7 @@ Facebook {#facebook_ref}
 
 # Setup a Facebook App {#toc1}
 
-To be able to log in CloudBuilder with the user's facebook account, you need to create a [Facebook App](http://developers.facebook.com/)
+To be able to log in Clan of the Cloud with the user's facebook account, you need to create a [Facebook App](http://developers.facebook.com/)
 
 On Facebook Developer website, check the following settings :
 
@@ -24,14 +24,14 @@ Configure your AppID through the Facebook Settings menu in Unity. Do not forget 
 
 # Using the Facebook integration plugin {#toc3}
 
-Import the CloudBuilder Facebook Integration package into your project.
+Import the Unity SDK Facebook Integration package into your project.
 
-Put the CloudBuilderFacebookIntegration object on your scene, from the `CloudBuilderFacebookIntegration/Prefabs` folder.
+Put the CotcFacebookIntegration object on your scene, from the `CotcFacebookIntegration/Prefabs` folder.
 
-From your code, find the object as for CloudBuilder and call methods on it.
+From your code, find the object as for the Clan of the Cloud SDK and call methods on it.
 
 ~~~~{.cs}
-	var fb = FindObjectOfType<CloudBuilderFacebookIntegration>();
+	var fb = FindObjectOfType<CotcFacebookIntegration>();
 	fb.LoginWithFacebook(gamerResult => { ... }, Cloud);
 ~~~~
 
