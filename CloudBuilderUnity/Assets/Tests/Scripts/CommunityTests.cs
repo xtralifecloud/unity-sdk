@@ -72,20 +72,23 @@ public class CommunityTests : TestBase {
 		Gamer[] gamers = new Gamer[2];
 		new AsyncOp().Then(next => {
 			// Create first user
-			cloud.Login(result1 => {
+			cloud.Login(LoginNetwork.Email, "user2@localhost.localdomain", "123")
+			.Then(result1 => {
 				Assert(result1.IsSuccessful, "Failed to login #1");
 				gamers[0] = result1.Value;
 				// Second user
-				cloud.Login(result2 => {
+				cloud.Login(LoginNetwork.Email, "user1@localhost.localdomain", "123")
+				.Then(result2 => {
 					Assert(result2.IsSuccessful, "Failed to login #2");
 					gamers[1] = result2.Value;
 					next.Return();
-				}, LoginNetwork.Email, "user2@localhost.localdomain", "123");
-			}, LoginNetwork.Email, "user1@localhost.localdomain", "123");
+				});
+			});
 		})
 		.Then(next => {
 			// Query for a specific user by e-mail
-			cloud.ListUsers(result => {
+			cloud.ListUsers("user2@localhost.localdomain")
+			.Then(result => {
 				Assert(result.IsSuccessful, "Failed to list users with filter");
 				Assert(result.Value.Count == 1, "Expected one result only");
 				Assert(result.Value[0].UserId == gamers[1].GamerId, "Expected to return user 2");
@@ -93,11 +96,12 @@ public class CommunityTests : TestBase {
 				Assert(result.Value[0].NetworkId == "user2@localhost.localdomain", "Invalid network ID");
 				Assert(result.Value[0]["profile"]["displayName"] == "user2", "Invalid profile display name");
 				next.Return();
-			}, "user2@localhost.localdomain");
+			});
 		})
 		.Then(next => {
 			// Query for all users in a paginated way
-			cloud.ListUsers(result => {
+			cloud.ListUsers("@", 1)
+			.Then(result => {
 				Assert(result.IsSuccessful, "Failed to list users with filter");
 				Assert(result.Value.Count == 1, "Expected one result per page");
 				Assert(result.Value.Total >= 2, "Expected at least two results total");
@@ -110,7 +114,7 @@ public class CommunityTests : TestBase {
 					Assert(result.Value.HasPrevious, "Should have previous page");
 					next.Return();
 				}
-			}, "@", 1);
+			});
 		})
 		.Then(() => CompleteTest()).Return();
 	}

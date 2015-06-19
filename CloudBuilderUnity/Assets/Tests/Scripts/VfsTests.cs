@@ -20,7 +20,7 @@ public class VfsTests: TestBase {
 
 	[Test("Tries to query a non existing key.")]
 	public void ShouldNotReadInexistingKey(Cloud cloud) {
-		cloud.LoginAnonymously(gamer => {
+		cloud.LoginAnonymously().Then(gamer => {
 			Assert(gamer.IsSuccessful, "Failed to log in");
 			gamer.Value.GamerVfs.GetKey(getRes => {
 				Assert(!getRes.IsSuccessful, "Request marked as succeeded");

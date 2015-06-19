@@ -70,7 +70,8 @@ namespace CotcSdk {
 		 * @param network the network with which these friends are associated
 		 * @param friends a list of data about the friends fetched on the social network.
 		 */
-		public void PostSocialNetworkFriends(ResultHandler<SocialNetworkFriendResponse> done, LoginNetwork network, List<SocialNetworkFriend> friends) {
+		public ResultTask<SocialNetworkFriendResponse> PostSocialNetworkFriends(LoginNetwork network, List<SocialNetworkFriend> friends) {
+			var task = new ResultTask<SocialNetworkFriendResponse>();
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/friends").Path(domain).QueryParam("network", network.Describe());
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			Bundle friendData = Bundle.CreateObject();
@@ -79,8 +80,8 @@ namespace CotcSdk {
 			}
 
 			req.BodyJson = friendData;
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, new SocialNetworkFriendResponse(response.BodyJson), response.BodyJson);
+			return Common.RunHandledRequest(req, task, (HttpResponse response) => {
+				task.PostResult(new SocialNetworkFriendResponse(response.BodyJson), response.BodyJson);
 			});
 		}
 		

@@ -28,10 +28,11 @@ namespace CotcSdk
 		 * You should hardly ever need this.
 		 * @param done callback invoked when the request has finished, either successfully or not. The boolean value inside is not important.
 		 */
-		public void Ping(ResultHandler<bool> done) {
+		public ResultTask<bool> Ping() {
+			var task = new ResultTask<bool>();
 			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/ping");
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, true, response.BodyJson);
+			return Common.RunHandledRequest(req, task, (HttpResponse response) => {
+				task.PostResult(true, response.BodyJson);
 			});
 		}
 

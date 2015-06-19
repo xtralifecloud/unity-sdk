@@ -13,38 +13,38 @@ namespace CLI
 
 		[CommandInfo("Logs in anonymously and starts the event loop.")]
 		void loginanonymous(Arguments args) {
-			Cloud.LoginAnonymously(SuccessHandler<Gamer>(args, result => DidLogin(result, args)));
+			Cloud.LoginAnonymously().Then(OnSuccess<Gamer>(args, result => DidLogin(result, args)));
 		}
 
 		[CommandInfo("Logs on using any supported network.", "network, id, secret")]
 		void login(Arguments args) {
 			args.Expecting(3, ArgumentType.String, ArgumentType.String, ArgumentType.String);
 			Cloud.Login(
-				done: SuccessHandler<Gamer>(args, result => DidLogin(result, args)),
 				network: ParseEnum<LoginNetwork>(args.StringArg(0)),
 				networkId: args.StringArg(1),
-				networkSecret: args.StringArg(2));
+				networkSecret: args.StringArg(2))
+			.Then(OnSuccess<Gamer>(args, result => DidLogin(result, args)));
 		}
 
 		[CommandInfo("Resumes an existing session by gamer ID/secret.", "gamer_id, gamer_secret")]
 		void resumesession(Arguments args) {
 			args.Expecting(2, ArgumentType.String, ArgumentType.String);
 			Cloud.ResumeSession(
-				done: SuccessHandler<Gamer>(args, result => DidLogin(result, args)),
 				gamerId: args.StringArg(0),
-				gamerSecret: args.StringArg(1));
+				gamerSecret: args.StringArg(1))
+			.Then(OnSuccess<Gamer>(args, result => DidLogin(result, args)));
 		}
 
 		[CommandInfo("Logs in with a facebook profile")]
 		void loginfacebook(Arguments args) {
-			CotcFacebookIntegration.LoginWithFacebook(SuccessHandler<Gamer>(args, result => DidLogin(result, args)), Cloud);
+			CotcFacebookIntegration.LoginWithFacebook(Cloud)
+				.Then(OnSuccess<Gamer>(args, result => DidLogin(result, args)));
 		}
 
 		[CommandInfo("Lists facebook friends and sends it to CotC servers")]
 		void fbfriends(Arguments args) {
-			CotcFacebookIntegration.FetchFriends(
-				done: SuccessHandler<SocialNetworkFriendResponse>(args, result => args.Return(result.ServerData)),
-				gamer: Gamer);
+			CotcFacebookIntegration.FetchFriends(Gamer)
+				.Then(OnSuccess<SocialNetworkFriendResponse>(args, result => args.Return(result.ServerData)));
 		}
 
 		[CommandInfo("Lists friends")]

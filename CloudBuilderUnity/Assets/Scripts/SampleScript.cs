@@ -47,7 +47,7 @@ public class SampleScript : MonoBehaviour {
 	
 	// Signs in with an anonymous account
 	public void DoLogin() {
-		Cloud.LoginAnonymously(this.DidLogin);
+		Cloud.LoginAnonymously().ForwardTo(this.DidLogin);
 	}
 
 	// Signs in with facebook
@@ -58,7 +58,7 @@ public class SampleScript : MonoBehaviour {
 			Debug.LogError("Please put the CotcFacebookIntegration prefab in your scene!");
 			return;
 		}
-		fb.LoginWithFacebook(this.DidLogin, Cloud);
+		fb.LoginWithFacebook(Cloud).ForwardTo(this.DidLogin);
 #else
 		Debug.LogError("Facebook not included (uncomment #define USE_FACEBOOK).");
 #endif
@@ -69,8 +69,8 @@ public class SampleScript : MonoBehaviour {
 		Cloud.Login(
 			network: LoginNetwork.Email,
 			networkId: EmailInput.text,
-			networkSecret: DefaultPassword,
-			done: this.DidLogin);
+			networkSecret: DefaultPassword)
+		.ForwardTo(this.DidLogin);
 	}
 
 	// Converts the account to e-mail
@@ -91,17 +91,16 @@ public class SampleScript : MonoBehaviour {
 	// Fetches a friend with the given e-mail address
 	public void DoFetchFriend() {
 		string address = EmailInput.text;
-		Cloud.ListUsers(
-			filter: address,
-			done: result => {
-				if (!result.IsSuccessful || result.Value.Total != 1)
-					Debug.LogWarning("Failed to find account with e-mail " + address + ": " + result.ToString());
-				else {
-					FriendId = result.Value[0].UserId;
-					Debug.Log(string.Format("Found friend {0} ({1} on {2})",
-						FriendId, result.Value[0].NetworkId, result.Value[0].Network));
-				}
-			});
+		Cloud.ListUsers(filter: address)
+		.Then(result => {
+			if (!result.IsSuccessful || result.Value.Total != 1)
+				Debug.LogWarning("Failed to find account with e-mail " + address + ": " + result.ToString());
+			else {
+				FriendId = result.Value[0].UserId;
+				Debug.Log(string.Format("Found friend {0} ({1} on {2})",
+					FriendId, result.Value[0].NetworkId, result.Value[0].Network));
+			}
+		});
 	}
 
 	// Sends a message to the current friend
@@ -128,7 +127,7 @@ public class SampleScript : MonoBehaviour {
 			return;
 		}
 		// List facebook friends
-		fb.FetchFriends(result => {
+		fb.FetchFriends(Gamer).Then(result => {
 			if (!result.IsSuccessful) {
 				Debug.LogError("Failed to fetch facebook friends: " + result.ToString());
 				return;
@@ -145,7 +144,7 @@ public class SampleScript : MonoBehaviour {
 						});
 				}
 			}
-		}, Gamer);
+		});
 #else
 		Debug.LogError("Facebook not included (uncomment #define USE_FACEBOOK).");
 #endif

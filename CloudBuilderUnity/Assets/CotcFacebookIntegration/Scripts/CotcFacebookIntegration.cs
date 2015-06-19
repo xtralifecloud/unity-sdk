@@ -25,27 +25,30 @@ namespace CotcSdk
 		/**
 		 * Logs in to CotC through facebook. This will bring an user interface allowing to sign in
 		 * to facebook.
-		 * @param done callback invoked when the login has finished, either successfully or not. The resulting Gamer
-		 *     object can then be used for many purposes related to the signed in account.
+		 * @return task returning when the login has finished. The resulting Gamer object can then
+		 *     be used for many purposes related to the signed in account.
 		 * @param cloud needed to perform various tasks. Ensure that the SDK is initialized properly and fetch a
 		 *     cloud object.
 		 */
-		public void LoginWithFacebook(ResultHandler<Gamer> done, Cloud cloud) {
+		public ResultTask<Gamer> LoginWithFacebook(Cloud cloud) {
+			var task = new ResultTask<Gamer>();
 			EnsureFacebookLoaded(() => {
 				FB.Login("public_profile,email,user_friends", (FBResult result) => {
 					if (result.Error != null) {
-						Common.InvokeHandler(done, ErrorCode.SocialNetworkError, "Facebook/ " + result.Error);
+						task.PostResult(ErrorCode.SocialNetworkError, "Facebook/ " + result.Error);
 					}
 					else if (!FB.IsLoggedIn) {
-						Common.InvokeHandler(done, ErrorCode.LoginCanceled);
+						task.PostResult(ErrorCode.LoginCanceled);
 					}
 					else {
 						string userId = FB.UserId, token = FB.AccessToken;
 						Debug.Log("Logged in through facebook");
-						cloud.Login(done, LoginNetwork.Facebook, userId, token);
+						cloud.Login(LoginNetwork.Facebook, userId, token)
+							.ForwardTo(task);
 					}
 				});
 			});
+			return task;
 		}
 
 		/**
@@ -56,16 +59,19 @@ namespace CotcSdk
 		 *     #GamerCommunity.PostSocialNetworkFriends.
 		 * @param gamer gamer object used to link the data to the account.
 		 */
-		public void FetchFriends(ResultHandler<SocialNetworkFriendResponse> done, Gamer gamer) {
+		public ResultTask<SocialNetworkFriendResponse> FetchFriends(Gamer gamer) {
+			var task = new ResultTask<SocialNetworkFriendResponse>();
 			EnsureFacebookLoaded(() => {
 				DoFacebookRequestWithPagination((Result<List<SocialNetworkFriend>> result) => {
 					if (!result.IsSuccessful) {
-						Common.InvokeHandler(done, ErrorCode.SocialNetworkError, "Facebook request failed");
+						task.PostResult(ErrorCode.SocialNetworkError, "Facebook request failed");
 						return;
 					}
-					gamer.Community.PostSocialNetworkFriends(done, LoginNetwork.Facebook, result.Value);
+					gamer.Community.PostSocialNetworkFriends(LoginNetwork.Facebook, result.Value)
+						.ForwardTo(task);
 				}, "/me/friends", Facebook.HttpMethod.GET);
 			});
+			return task;
 		}
 
 		#region Private

@@ -46,6 +46,7 @@
     <Compile Include="HighLevel\Cotc.cs" />
     <Compile Include="HighLevel\CotcGameObject.cs" />
     <Compile Include="HighLevel\Common.cs" />
+    <Compile Include="HighLevel\CotcTask.cs" />
     <Compile Include="HighLevel\GamerGodfather.cs" />
     <Compile Include="HighLevel\GameBatches.cs" />
     <Compile Include="HighLevel\GamerAchievements.cs" />

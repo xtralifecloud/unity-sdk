@@ -69,6 +69,18 @@ namespace CLI {
 			Cli.AppendLine(text);
 		}
 
+		private Action<Result<T>> OnSuccess<T>(Arguments args, Action<Result<T>> subHandler = null) {
+			return result => {
+				Log(">> " + result.ToString());
+				if (result.IsSuccessful) {
+					if (subHandler != null) subHandler(result);
+				}
+				else {
+					args.Return();
+				}
+			};
+		}
+
 		private ResultHandler<T> SuccessHandler<T>(Arguments args, ResultHandler<T> subHandler = null) {
 			return result => {
 				Log(">> " + result.ToString());

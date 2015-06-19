@@ -98,6 +98,17 @@ namespace CotcSdk
 			});
 		}
 
+		internal static ResultTask<T> RunHandledRequest<T>(HttpRequest req, ResultTask<T> task, Action<HttpResponse> onSuccess) {
+			Managers.HttpClient.Run(req, (HttpResponse response) => {
+				if (HasFailed(response)) {
+					task.PostResult(response);
+					return;
+				}
+				if (onSuccess != null) onSuccess(response);
+			});
+			return task;
+		}
+
 		internal static string ToHttpDateString(this DateTime d) {
 			return d.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
 		}
