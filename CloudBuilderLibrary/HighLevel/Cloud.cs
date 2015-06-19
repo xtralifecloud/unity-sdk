@@ -26,7 +26,7 @@ namespace CotcSdk
 		/**
 		 * Executes a "ping" request to the server. Allows to know whether the server is currently working as expected.
 		 * You should hardly ever need this.
-		 * @param done callback invoked when the request has finished, either successfully or not. The boolean value inside is not important.
+		 * @param done callback invoked when the request has finished, either successfully or not.
 		 */
 		public ResultTask<bool> Ping() {
 			var task = new ResultTask<bool>();

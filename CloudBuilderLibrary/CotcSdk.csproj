@@ -85,6 +85,7 @@
     <Compile Include="HighLevel\PagedResult.cs" />
     <Compile Include="HighLevel\Result.cs" />
     <Compile Include="HighLevel\GamerVfs.cs" />
+    <Compile Include="HighLevel\ResultTask.cs" />
     <Compile Include="Internal\Bundle.cs" />
     <Compile Include="Internal\CotcSettings.cs" />
     <Compile Include="Internal\HttpRequest.cs" />

@@ -12,10 +12,10 @@ namespace CotcSdk
 		 *     indicates success.
 		 * @param newEmailAddress the new e-mail address to be used for signing in.
 		 */
-		public void ChangeEmailAddress(ResultHandler<bool> done, string newEmailAddress) {
+		public ResultTask<bool> ChangeEmailAddress(ResultHandler<bool> done, string newEmailAddress) {
+			var task = new ResultTask<bool>();
 			if (Gamer.Network != LoginNetwork.Email) {
-				Common.InvokeHandler(done, ErrorCode.BadParameters, "Unavailable for " + Gamer.Network.Describe() + " accounts");
-				return;
+				return task.PostResult(ErrorCode.BadParameters, "Unavailable for " + Gamer.Network.Describe() + " accounts");
 			}
 
 			Bundle config = Bundle.CreateObject();
@@ -23,8 +23,8 @@ namespace CotcSdk
 
 			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/email");
 			req.BodyJson = config;
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, response.BodyJson["done"], response.BodyJson);
+			return Common.RunHandledRequest(req, task, (HttpResponse response) => {
+				task.PostResult(response.BodyJson["done"], response.BodyJson);
 			});
 		}
 
@@ -34,16 +34,17 @@ namespace CotcSdk
 		 *     indicates success.
 		 * @param newPassword the new password to be used for signing in.
 		 */
-		public void ChangePassword(ResultHandler<bool> done, string newPassword) {
+		public ResultTask<bool> ChangePassword(string newPassword) {
+			var task = new ResultTask<bool>();
 			if (Gamer.Network != LoginNetwork.Email) {
-				Common.InvokeHandler(done, ErrorCode.BadParameters, "Unavailable for " + Gamer.Network.Describe() + " accounts");
-				return;
+				task.PostResult(ErrorCode.BadParameters, "Unavailable for " + Gamer.Network.Describe() + " accounts");
+				return task;
 			}
 
 			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/password");
 			req.BodyJson = Bundle.CreateObject("password", newPassword);
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, response.BodyJson["done"], response.BodyJson);
+			return Common.RunHandledRequest(req, task, (HttpResponse response) => {
+				task.PostResult(response.BodyJson["done"], response.BodyJson);
 			});
 		}
 
@@ -62,7 +63,8 @@ namespace CotcSdk
 		 * @param networkSecret the secret for the network. For e-mail accounts, this would be the passord. For
 		 *     facebook or other SNS accounts, this would be the user token.
 		 */
-		public void Convert(ResultHandler<bool> done, LoginNetwork network, string networkId, string networkSecret) {
+		public ResultTask<bool> Convert(LoginNetwork network, string networkId, string networkSecret) {
+			var task = new ResultTask<bool>();
 			Bundle config = Bundle.CreateObject();
 			config["network"] = network.Describe();
 			config["id"] = networkId;
@@ -70,8 +72,8 @@ namespace CotcSdk
 
 			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/convert");
 			req.BodyJson = config;
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, response.BodyJson["done"], response.BodyJson);
+			return Common.RunHandledRequest(req, task, (HttpResponse response) => {
+				task.PostResult(response.BodyJson["done"], response.BodyJson);
 			});
 		}
 
