@@ -24,19 +24,6 @@ namespace CotcSdk
 		}
 
 		/**
-		 * Executes a "ping" request to the server. Allows to know whether the server is currently working as expected.
-		 * You should hardly ever need this.
-		 * @param done callback invoked when the request has finished, either successfully or not.
-		 */
-		public ResultTask<bool> Ping() {
-			var task = new ResultTask<bool>();
-			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/ping");
-			return Common.RunRequest(req, task, (HttpResponse response) => {
-				task.PostResult(true, response.BodyJson);
-			});
-		}
-
-		/**
 		 * This handler, when set, is called synchronously whenever an HTTP request fails with a recoverable
 		 * error.
 		 * Some errors won't call this handler and will fail directly, such as when providing invalid
