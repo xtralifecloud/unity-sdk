@@ -29,14 +29,15 @@ namespace CotcSdk
 				throw new ArgumentException("!!!! You need to set up the credentials of your application in the settings of your Cotc object !!!!");
 			}
 
-			Cotc.Setup((Result<Cloud> result) => {
+			Cotc.Setup(s.ApiKey, s.ApiSecret, s.Environment, s.LbCount, s.HttpVerbose, s.HttpTimeout)
+			.Then(result => {
 				cloud = result.Value;
 				Common.Log("CotC inited");
 				// Notify pending handlers
 				foreach (var handler in pendingCloudHandlers) {
 					handler(cloud);
 				}
-			}, s.ApiKey, s.ApiSecret, s.Environment, s.LbCount, s.HttpVerbose, s.HttpTimeout);
+			});
 		}
 
 		void Update() {

@@ -27,10 +27,11 @@ namespace CotcSdk {
 		 *     an easy way to make a random generator that is safe, unbiased (since made on the server) and can be verified
 		 *     by all players once the game is finished. This bundle needs to be an array (use Bundle.CreateArray).
 		 */
-		public void Create(ResultHandler<Match> done, int maxPlayers, string description = null, Bundle customProperties = null, Bundle shoe = null) {
+		public ResultTask<Match> Create(int maxPlayers, string description = null, Bundle customProperties = null, Bundle shoe = null) {
+			var task = new ResultTask<Match>();
 			if (shoe != null && shoe.Type != Bundle.DataType.Array) {
-				Common.InvokeHandler(done, ErrorCode.BadParameters, "The shoe must be an array");
-				return;
+				task.PostResult(ErrorCode.BadParameters, "The shoe must be an array");
+				return task;
 			}
 
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").QueryParam("domain", domain);
@@ -41,8 +42,8 @@ namespace CotcSdk {
 			config["customProperties"] = customProperties;
 			config["shoe"] = shoe;
 			req.BodyJson = config;
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, new Match(Gamer, response.BodyJson["match"]), response.BodyJson);
+			return Common.RunRequest(req, task, (HttpResponse response) => {
+				task.PostResult(new Match(Gamer, response.BodyJson["match"]), response.BodyJson);
 			});
 		}
 
@@ -52,12 +53,12 @@ namespace CotcSdk {
 		 *     indicates success when true.
 		 * @param matchId ID of the match to delete.
 		 */
-		public void Delete(ResultHandler<bool> done, string matchId) {
+		public ResultTask<bool> Delete(string matchId) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(matchId);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, response.BodyJson["done"], response.BodyJson);
+			return Common.RunInTask<bool>(req, (response, task) => {
+				task.PostResult(response.BodyJson["done"], response.BodyJson);
 			});
 		}
 
@@ -90,11 +91,11 @@ namespace CotcSdk {
 		 *     object allows to operate with the match.
 		 * @param matchId the ID of an existing match to resume. It can be fetched from the Match object (MatchId).
 		 */
-		public void Fetch(ResultHandler<Match> done, string matchId) {
+		public ResultTask<Match> Fetch(string matchId) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(matchId);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, new Match(Gamer, response.BodyJson["match"]), response.BodyJson);
+			return Common.RunInTask<Match>(req, (response, task) => {
+				task.PostResult(new Match(Gamer, response.BodyJson["match"]), response.BodyJson);
 			});
 		}
 
@@ -107,12 +108,12 @@ namespace CotcSdk {
 		 * @param matchId the ID of an existing match to join. It can be fetched from the Match object (MatchId).
 		 * @param notification optional push notification to be sent to inactive players (see class definition).
 		 */
-		public void Join(ResultHandler<Match> done, string matchId, PushNotification notification = null) {
+		public ResultTask<Match> Join(string matchId, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(matchId).Path("join");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, new Match(Gamer, response.BodyJson["match"]), response.BodyJson);
+			return Common.RunInTask<Match>(req, (response, task) => {
+				task.PostResult(new Match(Gamer, response.BodyJson["match"]), response.BodyJson);
 			});
 		}
 
@@ -129,7 +130,7 @@ namespace CotcSdk {
 		 * @param limit for pagination, allows to set a greater or smaller page size than the default 30.
 		 * @param offset for pagination, avoid using it explicitly.
 		 */
-		public void List(ResultHandler<PagedList<MatchListResult>> done, bool participating = false, bool invited = false, bool finished = false, bool full = false, int limit = 30, int offset = 0) {
+		public ResultTask<PagedList<MatchListResult>> List(bool participating = false, bool invited = false, bool finished = false, bool full = false, int limit = 30, int offset = 0) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches");
 			url.QueryParam("domain", domain).QueryParam("offset", offset).QueryParam("limit", limit);
 			if (participating) url.QueryParam("participating");
@@ -137,19 +138,19 @@ namespace CotcSdk {
 			if (invited) url.QueryParam("invited");
 			if (full) url.QueryParam("full");
 			// Request for current results
-			Common.RunHandledRequest(Gamer.MakeHttpRequest(url), done, (HttpResponse response) => {
+			return Common.RunInTask<PagedList<MatchListResult>>(Gamer.MakeHttpRequest(url), (response, task) => {
 				PagedList<MatchListResult> matches = new PagedList<MatchListResult>(offset, response.BodyJson["count"]);
 				foreach (Bundle b in response.BodyJson["matches"].AsArray()) {
 					matches.Add(new MatchListResult(b));
 				}
 				// Handle pagination
 				if (offset > 0) {
-					matches.Previous = () => List(done, participating, invited, finished, full, limit, offset - limit);
+					matches.Previous = () => List(participating, invited, finished, full, limit, offset - limit);
 				}
 				if (offset + matches.Count < matches.Total) {
-					matches.Next = () => List(done, participating, invited, finished, full, limit, offset + limit);
+					matches.Next = () => List(participating, invited, finished, full, limit, offset + limit);
 				}
-				Common.InvokeHandler(done, matches, response.BodyJson);
+				task.PostResult(matches, response.BodyJson);
 			});
 		}
 

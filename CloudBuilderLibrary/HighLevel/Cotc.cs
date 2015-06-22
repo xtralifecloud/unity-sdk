@@ -15,10 +15,11 @@ namespace CotcSdk {
 		 *	 for debugging, though it does pollute the logs.
 		 * @param httpTimeout sets a custom timeout for all requests in seconds. Defaults to 1 minute.
 		 */
-		public static void Setup(ResultHandler<Cloud> done, string apiKey, string apiSecret, string environment, int loadBalancerCount, bool httpVerbose, int httpTimeout) {
+		public static ResultTask<Cloud> Setup(string apiKey, string apiSecret, string environment, int loadBalancerCount, bool httpVerbose, int httpTimeout) {
+			var task = new ResultTask<Cloud>();
 			lock (SpinLock) {
 				Cloud cloud = new Cloud(apiKey, apiSecret, environment, loadBalancerCount, httpVerbose, httpTimeout);
-				Common.InvokeHandler(done, cloud, Bundle.Empty);
+				return task.PostResult(cloud, Bundle.Empty);
 			}
 		}
 

@@ -11,11 +11,11 @@ namespace CotcSdk
 		 * method SetProfile.
 		 * @param done callback invoked when the login has finished, either successfully or not.
 		 */
-		public void Get(ResultHandler<GamerProfile> done) {
+		public ResultTask<GamerProfile> Get() {
 			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/profile");
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
+			return Common.RunInTask<GamerProfile>(req, (response, task) => {
 				GamerProfile profile = new GamerProfile(response.BodyJson);
-				Common.InvokeHandler(done, profile, response.BodyJson);
+				task.PostResult(profile, response.BodyJson);
 			});
 		}
 
@@ -30,11 +30,11 @@ namespace CotcSdk
 		 * @param data is a Bundle holding the data to save for this user. The object can hold the
 		 *     whole profile or just a subset of the keys.
 		 */
-		public void Set(ResultHandler<bool> done, Bundle data) {
+		public ResultTask<bool> Set(Bundle data) {
 			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/profile");
 			req.BodyJson = data;
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, response.BodyJson["done"], response.BodyJson);
+			return Common.RunInTask<bool>(req, (response, task) => {
+				task.PostResult(response.BodyJson["done"], response.BodyJson);
 			});
 		}
 

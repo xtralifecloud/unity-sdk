@@ -23,11 +23,11 @@ namespace CotcSdk {
 		 *     In case the call fails, the bundle is not attached, the call is marked as failed with a 404 status.
 		 * @param key the name of the key to be fetched.
 		 */
-		public void GetKey(ResultHandler<Bundle> done, string key) {
+		public ResultTask<Bundle> GetKey(string key) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, response.BodyJson["properties"], response.BodyJson);
+			return Common.RunInTask<Bundle>(req, (response, task) => {
+				task.PostResult(response.BodyJson["properties"], response.BodyJson);
 			});
 		}
 
@@ -38,11 +38,11 @@ namespace CotcSdk {
 		 *     expect it to be a string, you may simply do `string value = result.Value["key"];`. Bundle handles automatic
 		 *     conversions as well, so if you passed an integer, you may as well fetch it as a string and vice versa.
 		 */
-		public void GetAll(ResultHandler<Bundle> done) {
+		public ResultTask<Bundle> GetAll() {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, response.BodyJson["properties"], response.BodyJson);
+			return Common.RunInTask<Bundle>(req, (response, task) => {
+				task.PostResult(response.BodyJson["properties"], response.BodyJson);
 			});
 		}
 
@@ -54,12 +54,12 @@ namespace CotcSdk {
 		 * @param value the value to set. As usual with bundles, casting is implicitly done, so you may as well
 		 *     call this method passing an integer or string as value for instance.
 		 */
-		public void SetKey(ResultHandler<int> done, string key, Bundle value) {
+		public ResultTask<int> SetKey(string key, Bundle value) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("value", value);
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, response.BodyJson["done"], response.BodyJson);
+			return Common.RunInTask<int>(req, (response, task) => {
+				task.PostResult(response.BodyJson["done"], response.BodyJson);
 			});
 		}
 
@@ -69,12 +69,12 @@ namespace CotcSdk {
 		 *     indicates the number of set keys.
 		 * @param properties a bundle of key/value properties to set. An example is `Bundle.CreateObject("key", "value")`.
 		 */
-		public void SetAll(ResultHandler<int> done, Bundle properties) {
+		public ResultTask<int> SetAll(Bundle properties) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = properties;
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, response.BodyJson["done"], response.BodyJson);
+			return Common.RunInTask<int>(req, (response, task) => {
+				task.PostResult(response.BodyJson["done"], response.BodyJson);
 			});
 		}
 
@@ -84,12 +84,12 @@ namespace CotcSdk {
 		 *     value indicates success.
 		 * @param key the name of the key to remove.
 		 */
-		public void RemoveKey(ResultHandler<bool> done, string key) {
+		public ResultTask<bool> RemoveKey(string key) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, response.BodyJson["done"], response.BodyJson);
+			return Common.RunInTask<bool>(req, (response, task) => {
+				task.PostResult(response.BodyJson["done"], response.BodyJson);
 			});
 		}
 
@@ -98,12 +98,12 @@ namespace CotcSdk {
 		 * @param done callback invoked when the operation has finished, either successfully or not. The enclosed boolean
 		 *     value indicates success.
 		 */
-		public void RemoveAll(ResultHandler<bool> done) {
+		public ResultTask<bool> RemoveAll() {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, response.BodyJson["done"], response.BodyJson);
+			return Common.RunInTask<bool>(req, (response, task) => {
+				task.PostResult(response.BodyJson["done"], response.BodyJson);
 			});
 		}
 

@@ -24,12 +24,12 @@ namespace CotcSdk {
 		 * @param batchName name of the batch to run, as configured on the server.
 		 * @param batchParams parameters to be passed to the batch.
 		 */
-		public void Run(ResultHandler<Bundle> done, string batchName, Bundle batchParams = null) {
+		public ResultTask<Bundle> Run(string batchName, Bundle batchParams = null) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/batch").Path(domain).Path(batchName);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = batchParams ?? Bundle.Empty;
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, response.BodyJson, response.BodyJson);
+			return Common.RunInTask<Bundle>(req, (response, task) => {
+				task.PostResult(response.BodyJson, response.BodyJson);
 			});
 		}
 

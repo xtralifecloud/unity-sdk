@@ -17,29 +17,6 @@ namespace CotcSdk
 			return response.HasFailed || response.StatusCode < 200 || response.StatusCode >= 300;
 		}
 
-		public static void InvokeHandler<T>(ResultHandler<T> handler, Result<T> result) {
-			if (handler != null) {
-				handler(result);
-			}
-		}
-		public static void InvokeHandler<T>(ResultHandler<T> handler, ErrorCode code, string reason = null) {
-			if (handler != null) {
-				handler(new Result<T>(code, reason));
-			}
-		}
-		internal static void InvokeHandler<T>(ResultHandler<T> handler, HttpResponse response, string reason = null) {
-			if (handler != null) {
-				Result<T> result = new Result<T>(response);
-				result.ErrorInformation = reason;
-				handler(result);
-			}
-		}
-		public static void InvokeHandler<T>(ResultHandler<T> handler, T value, Bundle serverData) {
-			if (handler != null) {
-				handler(new Result<T>(value, serverData));
-			}
-		}
-
 		internal static void Log(string text) {
 			Managers.Logger.Log(LogLevel.Verbose, text);
 		}
@@ -85,20 +62,11 @@ namespace CotcSdk
 		 * Wrapper around our standard work on Managers.HttpClient.Run. Automatically notifies the passed handler
 		 * of a failure.
 		 * @param req request to perform.
-		 * @param handler handler to call in case of failure.
-		 * @param onSuccess callback called in case of success only (handler untouched in that case).
+		 * @param task task that is resolved in case of failure, else the onSuccess callback is called and you'll
+		 *     have to resolve it from inside.
+		 * @param onSuccess callback called in case of success only.
 		 */
-		internal static void RunHandledRequest<T>(HttpRequest req, ResultHandler<T> handler, Action<HttpResponse> onSuccess) {
-			Managers.HttpClient.Run(req, (HttpResponse response) => {
-				if (HasFailed(response)) {
-					InvokeHandler(handler, response);
-					return;
-				}
-				if (onSuccess != null) onSuccess(response);
-			});
-		}
-
-		internal static ResultTask<T> RunHandledRequest<T>(HttpRequest req, ResultTask<T> task, Action<HttpResponse> onSuccess) {
+		internal static ResultTask<T> RunRequest<T>(HttpRequest req, ResultTask<T> task, Action<HttpResponse> onSuccess) {
 			Managers.HttpClient.Run(req, (HttpResponse response) => {
 				if (HasFailed(response)) {
 					task.PostResult(response);
@@ -108,13 +76,23 @@ namespace CotcSdk
 			});
 			return task;
 		}
-		internal static ResultTask RunHandledRequest(HttpRequest req, ResultTask task, Action<HttpResponse> onSuccess) {
+		/**
+		 * Wrapper around our standard work on Managers.HttpClient.Run. Automatically notifies the passed handler
+		 * of a failure.
+		 * @param req request to perform.
+		 * @return a task that is resolved in case of failure (the onSuccess callback is not called) or to be resolved
+		 *     from the onSuccess block in case of success.
+		 * @param onSuccess callback called in case of success only, with the response and a new task that needs to
+		 *     be resolved from there.
+		 */
+		internal static ResultTask<T> RunInTask<T>(HttpRequest req, Action<HttpResponse, ResultTask<T>> onSuccess) {
+			var task = new ResultTask<T>();
 			Managers.HttpClient.Run(req, (HttpResponse response) => {
 				if (HasFailed(response)) {
 					task.PostResult(response);
 					return;
 				}
-				if (onSuccess != null) onSuccess(response);
+				if (onSuccess != null) onSuccess(response, task);
 			});
 			return task;
 		}
@@ -131,12 +109,6 @@ namespace CotcSdk
 		// Other variables
 		private static long InitialTicks;
 	}
-
-	/**
-	 * Standard delegates for most of the API calls. Returns an object wrapped into a Result object, which contains information about the error.
-	 * To obtain the wrapped object, fetch the Value member of the result.
-	 */
-	public delegate void ResultHandler<T>(Result<T> obj);
 	
 	/**
 	 * Holds a cached single-time-instantiated member.

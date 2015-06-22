@@ -31,7 +31,7 @@ namespace CotcSdk
 		public ResultTask<bool> Ping() {
 			var task = new ResultTask<bool>();
 			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/ping");
-			return Common.RunHandledRequest(req, task, (HttpResponse response) => {
+			return Common.RunRequest(req, task, (HttpResponse response) => {
 				task.PostResult(true, response.BodyJson);
 			});
 		}

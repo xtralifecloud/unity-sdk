@@ -16,10 +16,9 @@ namespace CotcSdk
 		 * @param offset number of the first result.
 		 */
 		public ResultTask<PagedList<UserInfo>> ListUsers(string filter, int limit = 30, int offset = 0) {
-			var task = new ResultTask<PagedList<UserInfo>>();
 			UrlBuilder url = new UrlBuilder("/v1/gamer").QueryParam("q", filter).QueryParam("limit", limit).QueryParam("skip", offset);
 			HttpRequest req = MakeUnauthenticatedHttpRequest(url);
-			return Common.RunHandledRequest(req, task, (HttpResponse response) => {
+			return Common.RunInTask<PagedList<UserInfo>>(req, (response, task) => {
 				PagedList<UserInfo> result = new PagedList<UserInfo>(offset, response.BodyJson["count"]);
 				foreach (Bundle u in response.BodyJson["result"].AsArray()) {
 					result.Add(new UserInfo(u));
@@ -41,13 +40,12 @@ namespace CotcSdk
 		 *     be used for many purposes related to the signed in account.
 		 */
 		public ResultTask<Gamer> LoginAnonymously() {
-			var task = new ResultTask<Gamer>();
 			Bundle config = Bundle.CreateObject();
 			config["device"] = Managers.SystemFunctions.CollectDeviceInformation();
 			
 			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/login/anonymous");
 			req.BodyJson = config;
-			return Common.RunHandledRequest(req, task, (HttpResponse response) => {
+			return Common.RunInTask<Gamer>(req, (response, task) => {
 				Gamer gamer = new Gamer(this, response.BodyJson);
 				task.PostResult(gamer, response.BodyJson);
 			});
@@ -65,7 +63,6 @@ namespace CotcSdk
 		 *     facebook or other SNS accounts, this would be the user token.
 		 */
 		public ResultTask<Gamer> Login(LoginNetwork network, string networkId, string networkSecret, bool preventRegistration = false) {
-			var task = new ResultTask<Gamer>();
 			Bundle config = Bundle.CreateObject();
 			config["network"] = network.Describe();
 			config["id"] = networkId;
@@ -79,7 +76,7 @@ namespace CotcSdk
 
 			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/login");
 			req.BodyJson = config;
-			return Common.RunHandledRequest(req, task, (HttpResponse response) => {
+			return Common.RunInTask<Gamer>(req, (response, task) => {
 				Gamer gamer = new Gamer(this, response.BodyJson);
 				task.PostResult(gamer, response.BodyJson);
 			});
@@ -117,7 +114,7 @@ namespace CotcSdk
 			config["body"] = mailBody;
 			req.BodyJson = config;
 
-			return Common.RunHandledRequest(req, task, (HttpResponse response) => {
+			return Common.RunRequest(req, task, (HttpResponse response) => {
 				task.PostResult(response.BodyJson["done"], response.BodyJson);
 			});
 		}
@@ -133,7 +130,7 @@ namespace CotcSdk
 			UrlBuilder url = new UrlBuilder("/v1/users")
 				.Path(network.Describe()).Path(networkId);
 			HttpRequest req = MakeUnauthenticatedHttpRequest(url);
-			return Common.RunHandledRequest(req, task, (HttpResponse response) => {
+			return Common.RunRequest(req, task, (HttpResponse response) => {
 				task.PostResult(true, response.BodyJson);
 			});
 		}

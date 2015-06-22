@@ -12,7 +12,7 @@ namespace CotcSdk
 		 *     indicates success.
 		 * @param newEmailAddress the new e-mail address to be used for signing in.
 		 */
-		public ResultTask<bool> ChangeEmailAddress(ResultHandler<bool> done, string newEmailAddress) {
+		public ResultTask<bool> ChangeEmailAddress(string newEmailAddress) {
 			var task = new ResultTask<bool>();
 			if (Gamer.Network != LoginNetwork.Email) {
 				return task.PostResult(ErrorCode.BadParameters, "Unavailable for " + Gamer.Network.Describe() + " accounts");
@@ -23,7 +23,7 @@ namespace CotcSdk
 
 			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/email");
 			req.BodyJson = config;
-			return Common.RunHandledRequest(req, task, (HttpResponse response) => {
+			return Common.RunRequest(req, task, (HttpResponse response) => {
 				task.PostResult(response.BodyJson["done"], response.BodyJson);
 			});
 		}
@@ -43,7 +43,7 @@ namespace CotcSdk
 
 			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/password");
 			req.BodyJson = Bundle.CreateObject("password", newPassword);
-			return Common.RunHandledRequest(req, task, (HttpResponse response) => {
+			return Common.RunRequest(req, task, (HttpResponse response) => {
 				task.PostResult(response.BodyJson["done"], response.BodyJson);
 			});
 		}
@@ -72,7 +72,7 @@ namespace CotcSdk
 
 			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/convert");
 			req.BodyJson = config;
-			return Common.RunHandledRequest(req, task, (HttpResponse response) => {
+			return Common.RunRequest(req, task, (HttpResponse response) => {
 				task.PostResult(response.BodyJson["done"], response.BodyJson);
 			});
 		}

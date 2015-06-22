@@ -17,12 +17,12 @@ namespace CotcSdk {
 		 * @param done callback invoked when the operation has finished, either successfully or not. The attached boolean
 		 *     indicates success when true.
 		 */
-		public void DismissInvitation(ResultHandler<bool> done) {
+		public ResultTask<bool> DismissInvitation() {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("invitation");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, true, response.BodyJson);
+			return Common.RunInTask<bool>(req, (response, task) => {
+				task.PostResult(true, response.BodyJson);
 			});
 		}
 

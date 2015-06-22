@@ -25,11 +25,11 @@ namespace CotcSdk {
 		 *     If the property doesn't exist, the call is marked as failed with a 404 status.
 		 * @param key the name of the key to be fetched.
 		 */
-		public void GetKey(ResultHandler<Bundle> done, string key) {
+		public ResultTask<Bundle> GetKey(string key) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, response.BodyJson["value"], response.BodyJson);
+			return Common.RunInTask<Bundle>(req, (response, task) => {
+				task.PostResult(response.BodyJson["value"], response.BodyJson);
 			});
 		}
 
@@ -40,15 +40,15 @@ namespace CotcSdk {
 		 *     or this call will fail with a network error.
 		 * @param key the name of the key to be fetched.
 		 */
-		public void GetKeyBinary(ResultHandler<byte[]> done, string key) {
+		public ResultTask<byte[]> GetKeyBinary(string key) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key).QueryParam("binary");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
+			return Common.RunInTask<byte[]>(req, (response, task) => {
 				// We must then download the received URL
 				string downloadUrl = response.BodyString.Trim('"');
 				HttpRequest binaryRequest = Gamer.MakeHttpRequest(downloadUrl);
-				Common.RunHandledRequest(binaryRequest, done, binaryResponse => {
-					Common.InvokeHandler(done, response.Body, response.BodyJson);
+				Common.RunRequest(binaryRequest, task, binaryResponse => {
+					task.PostResult(response.Body, response.BodyJson);
 				});
 			});
 		}
@@ -61,13 +61,13 @@ namespace CotcSdk {
 		 * @param value the value to set. As usual with bundles, casting is implicitly done, so you may as well
 		 *     call this method passing an integer or string as value for instance.
 		 */
-		public void SetKey(ResultHandler<bool> done, string key, Bundle value) {
+		public ResultTask<bool> SetKey(string key, Bundle value) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("value", value);
 			req.Method = "PUT";
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, response.BodyJson["done"], response.BodyJson);
+			return Common.RunInTask<bool>(req, (response, task) => {
+				task.PostResult(response.BodyJson["done"], response.BodyJson);
 			});
 		}
 
@@ -78,11 +78,11 @@ namespace CotcSdk {
 		 * @param key the name of the key to set the value for.
 		 * @param binaryData the value to set as binary data.
 		 */
-		public void SetKeyBinary(ResultHandler<bool> done, string key, byte[] binaryData) {
+		public ResultTask<bool> SetKeyBinary(string key, byte[] binaryData) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key).QueryParam("binary");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "PUT";
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
+			return Common.RunInTask<bool>(req, (response, task) => {
 				// Now we have an URL to upload the data to
 				HttpRequest binaryRequest = new HttpRequest();
 				binaryRequest.Url = response.BodyJson["putURL"];
@@ -91,8 +91,8 @@ namespace CotcSdk {
 				binaryRequest.Method = "PUT";
 				binaryRequest.TimeoutMillisec = Gamer.Cloud.HttpTimeoutMillis;
 				binaryRequest.UserAgent = Gamer.Cloud.UserAgent;
-				Common.RunHandledRequest(binaryRequest, done, binaryResponse => {
-					Common.InvokeHandler(done, true, response.BodyJson);
+				Common.RunRequest(binaryRequest, task, binaryResponse => {
+					task.PostResult(true, response.BodyJson);
 				});
 			});
 		}
@@ -103,12 +103,12 @@ namespace CotcSdk {
 		 *     value indicates success.
 		 * @param key the name of the key to remove.
 		 */
-		public void RemoveKey(ResultHandler<bool> done, string key) {
+		public ResultTask<bool> RemoveKey(string key) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, response.BodyJson["done"], response.BodyJson);
+			return Common.RunInTask<bool>(req, (response, task) => {
+				task.PostResult(response.BodyJson["done"], response.BodyJson);
 			});
 		}
 

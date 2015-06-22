@@ -23,12 +23,12 @@ namespace CotcSdk {
 		 * @param data data to associate with the achievement, merged with the current data (that is, existing keys
 		 *     are not affected)
 		 */
-		public void AssociateData(ResultHandler<AchievementDefinition> done, string achName, Bundle data) {
+		public ResultTask<AchievementDefinition> AssociateData(string achName, Bundle data) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/achievements").Path(domain).Path(achName).Path("gamerdata");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = data;
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, new AchievementDefinition(achName, response.BodyJson["achievement"]), response.BodyJson);
+			return Common.RunInTask<AchievementDefinition>(req, (response, task) => {
+				task.PostResult(new AchievementDefinition(achName, response.BodyJson["achievement"]), response.BodyJson);
 			});
 		}
 
@@ -37,15 +37,15 @@ namespace CotcSdk {
 		 * @param done callback invoked when the operation has finished, either successfully or not. The attached value
 		 *     is the list of achievements with their current state.
 		 */
-		public void List(ResultHandler<Dictionary<string, AchievementDefinition>> done) {
+		public ResultTask<Dictionary<string, AchievementDefinition>> List() {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/achievements").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
+			return Common.RunInTask<Dictionary<string, AchievementDefinition>>(req, (response, task) => {
 				Dictionary<string, AchievementDefinition> result = new Dictionary<string,AchievementDefinition>();
 				foreach (var pair in response.BodyJson["achievements"].AsDictionary()) {
 					result[pair.Key] = new AchievementDefinition(pair.Key, pair.Value);
 				}
-				Common.InvokeHandler(done, result, response.BodyJson);
+				task.PostResult(result, response.BodyJson);
 			});
 		}
 

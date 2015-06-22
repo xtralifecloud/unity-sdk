@@ -11,8 +11,8 @@ namespace CotcSdk {
 		 * @param gamerId ID of the gamer to add as a friend (fetched using ListFriends for instance).
 		 * @param notification optional OS notification to be sent to indicate the player that the status has changed.
 		 */
-		public void AddFriend(ResultHandler<bool> done, string gamerId, PushNotification notification = null) {
-			ChangeRelationshipStatus(done, gamerId, FriendRelationshipStatus.Add, notification);
+		public ResultTask<bool> AddFriend(string gamerId, PushNotification notification = null) {
+			return ChangeRelationshipStatus(gamerId, FriendRelationshipStatus.Add, notification);
 		}
 
 		/**
@@ -22,12 +22,12 @@ namespace CotcSdk {
 		 * @param state the new state to set.
 		 * @param notification optional OS notification to be sent to indicate the player that the status has changed.
 		 */
-		public void ChangeRelationshipStatus(ResultHandler<bool> done, string gamerId, FriendRelationshipStatus state, PushNotification notification = null) {
+		public ResultTask<bool> ChangeRelationshipStatus(string gamerId, FriendRelationshipStatus state, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/friends").Path(domain).Path(gamerId).QueryParam("status", state.ToString().ToLower());
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, response.BodyJson["done"], response.BodyJson);
+			return Common.RunInTask<bool>(req, (response, task) => {
+				task.PostResult(response.BodyJson["done"], response.BodyJson);
 			});
 		}
 
@@ -47,16 +47,16 @@ namespace CotcSdk {
 		 *     list of friends.
 		 * @param filterBlacklisted when set to true, restricts to blacklisted friends.
 		 */
-		public void ListFriends(ResultHandler<List<GamerInfo>> done, bool filterBlacklisted = false) {
+		public ResultTask<List<GamerInfo>> ListFriends(bool filterBlacklisted = false) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/friends").Path(domain);
 			if (filterBlacklisted) url.QueryParam("status", "blacklist");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
+			return Common.RunInTask<List<GamerInfo>>(req, (response, task) => {
 				List<GamerInfo> result = new List<GamerInfo>();
 				foreach (Bundle f in response.BodyJson["friends"].AsArray()) {
 					result.Add(new GamerInfo(f));
 				}
-				Common.InvokeHandler(done, result, response.BodyJson);
+				task.PostResult(result, response.BodyJson);
 			});
 		}
 
@@ -80,7 +80,7 @@ namespace CotcSdk {
 			}
 
 			req.BodyJson = friendData;
-			return Common.RunHandledRequest(req, task, (HttpResponse response) => {
+			return Common.RunRequest(req, task, (HttpResponse response) => {
 				task.PostResult(new SocialNetworkFriendResponse(response.BodyJson), response.BodyJson);
 			});
 		}
@@ -99,12 +99,12 @@ namespace CotcSdk {
 		 *     the message will be queued and transmitted the next time the domain event loop is started.
 		 * @param notification push notification to send to the recipient player if not currently active.
 		 */
-		public void SendEvent(ResultHandler<bool> done, string gamerId, Bundle eventData, PushNotification notification = null) {
+		public ResultTask<bool> SendEvent(string gamerId, Bundle eventData, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/event").Path(domain).Path(gamerId);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = eventData;
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, true, response.BodyJson);
+			return Common.RunInTask<bool>(req, (response, task) => {
+				task.PostResult(true, response.BodyJson);
 			});
 		}
 

@@ -25,12 +25,12 @@ namespace CotcSdk {
 		 * @param done callback invoked when the operation has finished, either successfully or not. The attached
 		 *     string is the generated code.
 		 */
-		public void GenerateCode(ResultHandler<string> done) {
+		public ResultTask<string> GenerateCode() {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/godfather").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "PUT";
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, response.BodyJson["godfathercode"], response.BodyJson);
+			return Common.RunInTask<string>(req, (response, task) => {
+				task.PostResult(response.BodyJson["godfathercode"], response.BodyJson);
 			});
 		}
 
@@ -38,15 +38,15 @@ namespace CotcSdk {
 		 * This method can be used to retrieve the gamer who have added you as a godfather.
 		 * @param done callback invoked when the operation has finished, either successfully or not.
 		 */
-		public void GetGodchildren(ResultHandler<List<GamerInfo>> done) {
+		public ResultTask<List<GamerInfo>> GetGodchildren() {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/godchildren").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
+			return Common.RunInTask<List<GamerInfo>>(req, (response, task) => {
 				List<GamerInfo> result = new List<GamerInfo>();
 				foreach (Bundle b in response.BodyJson["godchildren"].AsArray()) {
 					result.Add(new GamerInfo(b));
 				}
-				Common.InvokeHandler(done, result, response.BodyJson);
+				task.PostResult(result, response.BodyJson);
 			});
 		}
 
@@ -54,11 +54,11 @@ namespace CotcSdk {
 		 * This method can be used to retrieve the godfather of the gamer.
 		 * @param done callback invoked when the operation has finished, either successfully or not.
 		 */
-		public void GetGodfather(ResultHandler<GamerInfo> done) {
+		public ResultTask<GamerInfo> GetGodfather() {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/godfather").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, new GamerInfo(response.BodyJson["godfather"]), response.BodyJson);
+			return Common.RunInTask<GamerInfo>(req, (response, task) => {
+				task.PostResult(new GamerInfo(response.BodyJson["godfather"]), response.BodyJson);
 			});
 		}
 
@@ -76,7 +76,7 @@ namespace CotcSdk {
 		 *     The godfather will reveive an event of type 'godchildren' containing the id of the godchildren
 		 *     and the balance/achievements field if rewarded.
 		 */
-		public void UseCode(ResultHandler<bool> done, string code, Bundle rewardTx = null, PushNotification notification = null) {
+		public ResultTask<bool> UseCode(string code, Bundle rewardTx = null, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/godfather").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			Bundle config = Bundle.CreateObject();
@@ -84,8 +84,8 @@ namespace CotcSdk {
 			config["osn"] = notification != null ? notification.Data : null;
 			config["reward"] = rewardTx;
 			req.BodyJson = config;
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, response.BodyJson["done"], response.BodyJson);
+			return Common.RunInTask<bool>(req, (response, task) => {
+				task.PostResult(response.BodyJson["done"], response.BodyJson);
 			});
 		}
 

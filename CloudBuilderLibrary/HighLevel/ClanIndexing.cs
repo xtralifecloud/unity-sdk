@@ -10,12 +10,13 @@ namespace CotcSdk {
 		 * @param done callback invoked when the operation has finished, either successfully or not.
 		 * @param objectId ID of the object to delete, as passed when indexing.
 		 */
-		public void DeleteObject(ResultHandler<bool> done, string objectId) {
+		public ResultTask<bool> DeleteObject(string objectId) {
+			var task = new ResultTask<bool>();
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName).Path(objectId);
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			req.Method = "DELETE";
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, true, response.BodyJson);
+			return Common.RunRequest(req, task, (HttpResponse response) => {
+				task.PostResult(true, response.BodyJson);
 			});
 		}
 
@@ -24,11 +25,11 @@ namespace CotcSdk {
 		 * @param done callback invoked when the operation has finished, either successfully or not.
 		 * @param objectId ID of the object to look for, as passed when indexing.
 		 */
-		public void GetObject(ResultHandler<IndexResult> done, string objectId) {
+		public ResultTask<IndexResult> GetObject(string objectId) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName).Path(objectId);
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, new IndexResult(response.BodyJson), response.BodyJson);
+			return Common.RunInTask<IndexResult>(req, (response, task) => {
+				task.PostResult(new IndexResult(response.BodyJson), response.BodyJson);
 			});
 		}
 
@@ -48,7 +49,7 @@ namespace CotcSdk {
 		 *     as the properties, however those are not indexed (cannot be looked for in a search request). Its
 		 *     content is returned in searches (#IndexResult.Payload property).
 		 */
-		public void IndexObject(ResultHandler<bool> done, string objectId, Bundle properties, Bundle payload) {
+		public ResultTask<bool> IndexObject(string objectId, Bundle properties, Bundle payload) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName);
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject(
@@ -56,8 +57,8 @@ namespace CotcSdk {
 				"properties", properties,
 				"payload", payload
 			);
-			Common.RunHandledRequest(req, done, (HttpResponse response) => {
-				Common.InvokeHandler(done, true, response.BodyJson);
+			return Common.RunInTask<bool>(req, (response, task) => {
+				task.PostResult(true, response.BodyJson);
 			});
 		}
 
@@ -77,7 +78,7 @@ namespace CotcSdk {
 		 * @param limit the maximum number of results to return per page.
 		 * @param offset number of the first result.
 		 */
-		public void Search(ResultHandler<IndexSearchResult> done, string query, List<string> sortingProperties = null, int limit = 30, int offset = 0) {
+		public ResultTask<IndexSearchResult> Search(string query, List<string> sortingProperties = null, int limit = 30, int offset = 0) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName);
 			url.QueryParam("from", offset).QueryParam("max", limit).QueryParam("q", query);
 			// Build sort property
@@ -86,7 +87,7 @@ namespace CotcSdk {
 				foreach (string s in sortingProperties) sort.Add(s);
 			}
 			url.QueryParam("sort", sort.ToJson());
-			Common.RunHandledRequest(Cloud.MakeUnauthenticatedHttpRequest(url), done, (HttpResponse response) => {
+			return Common.RunInTask<IndexSearchResult>(Cloud.MakeUnauthenticatedHttpRequest(url), (response, task) => {
 				// Fetch listed scores
 				IndexSearchResult result = new IndexSearchResult(response.BodyJson, offset);
 				foreach (Bundle b in response.BodyJson["hits"].AsArray()) {
@@ -94,12 +95,12 @@ namespace CotcSdk {
 				}
 				// Handle pagination
 				if (offset > 0) {
-					result.Hits.Previous = () => Search(done, query, sortingProperties, limit, offset - limit);
+					result.Hits.Previous = () => Search(query, sortingProperties, limit, offset - limit);
 				}
 				if (offset + result.Hits.Count < result.Hits.Total) {
-					result.Hits.Next = () => Search(done, query, sortingProperties, limit, offset + limit);
+					result.Hits.Next = () => Search(query, sortingProperties, limit, offset + limit);
 				}
-				Common.InvokeHandler(done, result, response.BodyJson);
+				task.PostResult(result, response.BodyJson);
 			});
 		}
 

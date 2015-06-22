@@ -3,6 +3,19 @@ using System;
 namespace CotcSdk {
 	// TODO comment
 	public class ResultTask<T> : CotcTask<Result<T>> {
+		public ResultTask<T> OnFailure(Func<Result<T>, ResultTask<T>> action) {
+			return (ResultTask<T>)Then(result => {
+				if (!result.IsSuccessful) return action(result);
+				return null;
+			});
+		}
+		public ResultTask<T> OnSuccess(Func<Result<T>, ResultTask<T>> action) {
+			return (ResultTask<T>)Then(result => {
+				if (result.IsSuccessful) return action(result);
+				return null;
+			});
+		}
+
 		public ResultTask<T> PostResult(ErrorCode code, string reason = null) {
 			PostResult(new Result<T>(code, reason));
 			return this;
@@ -17,23 +30,8 @@ namespace CotcSdk {
 			PostResult(new Result<T>(value, serverData));
 			return this;
 		}
-	}
-
-	// TODO comment
-	public class ResultTask : CotcTask<Result<bool>> {
-		public ResultTask PostResult(ErrorCode code, string reason = null) {
-			PostResult(new Result<bool>(code, reason));
-			return this;
-		}
-		internal ResultTask PostResult(HttpResponse response, string reason = null) {
-			Result<bool> result = new Result<bool>(response);
-			result.ErrorInformation = reason;
-			PostResult(result);
-			return this;
-		}
-		public ResultTask PostResult(Bundle serverData) {
-			PostResult(new Result<bool>(true, serverData));
-			return this;
+		public new ResultTask<T> PostResult(Result<T> result) {
+			return (ResultTask<T>) base.PostResult(result);
 		}
 	}
 }
