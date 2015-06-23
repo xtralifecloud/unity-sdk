@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace CotcSdk
 {
-	public sealed partial class Gamer {
+	public sealed partial class Gamer: PropertiesObject {
 
 		public List<string> Domains { get; private set; }
 		/**
@@ -114,7 +114,7 @@ namespace CotcSdk
 		 * Only instantiated internally.
 		 * @param gamerData Gamer data as returned by our API calls (loginanonymous, etc.).
 		 */
-		internal Gamer(Cloud parent, Bundle gamerData) {
+		internal Gamer(Cloud parent, Bundle gamerData) : base(gamerData) {
 			Cloud = parent;
 			Network = Common.ParseEnum<LoginNetwork>(gamerData["network"]);
 			NetworkId = gamerData["networkid"];

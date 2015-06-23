@@ -28,8 +28,11 @@ public class SampleScript : MonoBehaviour {
 			return;
 		}
 		// Initiate getting the main Cloud object
-		cb.GetCloud(cloud => {
+		cb.GetCloud().Done(cloud => {
 			Cloud = cloud;
+			Promise.UnhandledException += (object sender, ExceptionEventArgs e) => {
+				Debug.LogError("Unhandled exception: " + e.Exception.ToString());
+			};
 			// Retry failed HTTP requests once
 			Cloud.HttpRequestFailedHandler = (HttpRequestFailedEventArgs e) => {
 				if (e.UserData == null) {
@@ -44,26 +47,42 @@ public class SampleScript : MonoBehaviour {
 		// Use a default text in the e-mail address
 		EmailInput.text = DefaultEmailAddress;
 	}
+
+	public void DoListUsers() {
+		Cloud.Index("testpromise").IndexObject("p1", Bundle.CreateObject("hello", "world"), Bundle.CreateObject("itsme", "mario"))
+			.Then(done => Cloud.Index("testpromise").IndexObject("p2", Bundle.CreateObject("hello", "world"), Bundle.CreateObject("itsme", "mario")))
+			.Then(done => Cloud.Index("testpromise").IndexObject("p3", Bundle.CreateObject("hello", "world"), Bundle.CreateObject("itsme", "mario")))
+			.Then(done => {
+				Debug.Log("Indexed 3 objects");
+				Cloud.Index("testpromise").Search("hello:world", null, 2, 0)
+					.Then(result => { GotUsers(result.Hits); });
+			});
+	}
+
+	private void GotUsers(PagedList<IndexResult> hits) {
+		Debug.Log("Showing " + hits.Count + " of " + hits.Total + ", with first being " + hits[0].ToJson());
+		if (hits.HasNext) {
+			hits.FetchNext().Then(nextHits => {
+				GotUsers(nextHits);
+			});
+		}
+	}
 	
 	// Signs in with an anonymous account
 	public void DoLogin() {
-		Cloud.LoginAnonymously().ForwardTo(this.DidLogin);
+		Cloud.LoginAnonymously().Done(this.DidLogin);
 	}
 
 	// Invoked when any sign in operation has completed
-	private void DidLogin(Result<Gamer> gamer) {
-/*		if (!gamer.IsSuccessful) {
-			Debug.LogError("Login failed: " + gamer.ToString());
-			return;
-		}
+	private void DidLogin(Gamer newGamer) {
 		if (Gamer != null) {
 			Debug.LogWarning("Current gamer " + Gamer.GamerId + " has been dismissed");
 			Loop.Stop();
 		}
-		Gamer = gamer.Value;
+		Gamer = newGamer;
 		Loop = new DomainEventLoop(Gamer).Start();
 		Loop.ReceivedEvent += Loop_ReceivedEvent;
-		Debug.Log("Signed in successfully (ID = " + Gamer.GamerId + ")");*/
+		Debug.Log("Signed in successfully (ID = " + Gamer.GamerId + ")");
 	}
 
 	private void Loop_ReceivedEvent(DomainEventLoop sender, EventLoopArgs e) {

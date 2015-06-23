@@ -69,7 +69,7 @@ namespace CotcSdk
 		internal static ResultTask<T> RunRequest<T>(HttpRequest req, ResultTask<T> task, Action<HttpResponse> onSuccess) {
 			Managers.HttpClient.Run(req, (HttpResponse response) => {
 				if (HasFailed(response)) {
-					task.PostResult(response);
+					task.PostResult(response, "Request failed");
 					return;
 				}
 				if (onSuccess != null) onSuccess(response);
@@ -89,7 +89,7 @@ namespace CotcSdk
 			var task = new ResultTask<T>();
 			Managers.HttpClient.Run(req, (HttpResponse response) => {
 				if (HasFailed(response)) {
-					task.PostResult(response);
+					task.PostResult(response, "Request failed");
 					return;
 				}
 				if (onSuccess != null) onSuccess(response, task);

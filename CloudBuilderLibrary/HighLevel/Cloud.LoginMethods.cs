@@ -7,6 +7,34 @@ namespace CotcSdk
 	public sealed partial class Cloud {
 
 		/**
+		 * Method used to check or retrieve users from Clan of the Cloud community. The domain is not taken
+		 * in account for this search.
+		 * @return task returning the fetched list of users. The list is paginated (see #PagedList for more
+		 *     info).
+		 * @param filter may contain a nickname, a displayname or e-mail address.
+		 * @param limit the maximum number of results to return per page.
+		 * @param offset number of the first result.
+		 */
+		public ResultTask<PagedList<UserInfo>> ListUsers(string filter, int limit = 30, int offset = 0) {
+			UrlBuilder url = new UrlBuilder("/v1/gamer").QueryParam("q", filter).QueryParam("limit", limit).QueryParam("skip", offset);
+			HttpRequest req = MakeUnauthenticatedHttpRequest(url);
+			return Common.RunInTask<PagedList<UserInfo>>(req, (response, task) => {
+				PagedList<UserInfo> result = new PagedList<UserInfo>(offset, response.BodyJson["count"]);
+				foreach (Bundle u in response.BodyJson["result"].AsArray()) {
+					result.Add(new UserInfo(u));
+				}
+				// Handle pagination
+				if (offset > 0) {
+					result.Previous = () => ListUsers(filter, limit, offset - limit);
+				}
+				if (offset + result.Count < result.Total) {
+					result.Next = () => ListUsers(filter, limit, offset + limit);
+				}
+				task.PostResult(result, response.BodyJson);
+			});
+		}
+
+		/**
 		 * Logs the current user in anonymously.
 		 * @return task returning when the login has finished. The resulting Gamer object can then
 		 *     be used for many purposes related to the signed in account.

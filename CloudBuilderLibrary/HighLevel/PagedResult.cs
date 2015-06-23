@@ -3,32 +3,18 @@ using System.Collections.Generic;
 
 namespace CotcSdk {
 
-	/**
-	 * Paginated result. Simply a list enriched with functionality allowing to easily paginate the results, which
-	 * works by calling again the handler initially passed to the method with the current page, as shown below: @code 
-		cloud.Indexing.Search((Result<IndexSearchResult> result) => {
-			PagedList<IndexResult> list = result.Value.Results;
-			Debug.Log("Showing results starting from " + list.Offset);
-			foreach (var obj in list) { ... }
-			nextButton.Enabled = list.HasNext;
-			nextButton.Click += list.FetchNext();
-		}, …); @endcode
-	 * In that case, the handler will be called again, showing the next results when the "nextButton" is clicked.
-
-	 * This object is always found in a subclass from a #Result, or at the root of a #Result.
-	 */
-	public class PagedList<T> : List<T> {
+	public class PagedList<DataType> : List<DataType> {
 		/**
 		 * Fetches the next results and calls the same handler again.
 		 */
-		public void FetchNext() {
-			Next();
+		public Promise<PagedList<DataType>> FetchNext() {
+			return Next();
 		}
 		/**
 		 * Fetches the previous results and calls the same handler again.
 		 */
-		public void FetchPrevious() {
-			Previous();
+		public Promise<PagedList<DataType>> FetchPrevious() {
+			return Previous();
 		}
 		/**
 		 * @return whether there is a previous page. Call FetchPrevious to go back to it.
@@ -55,6 +41,6 @@ namespace CotcSdk {
 			Offset = currentOffset;
 			Total = totalResults;
 		}
-		internal Action Next, Previous;
+		internal Func<Promise<PagedList<DataType>>> Next, Previous;
 	}
 }

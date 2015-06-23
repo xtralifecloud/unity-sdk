@@ -1,37 +1,22 @@
 using System;
 
 namespace CotcSdk {
-	// TODO comment
-	public class ResultTask<T> : CotcTask<Result<T>> {
-		public ResultTask<T> OnFailure(Func<Result<T>, ResultTask<T>> action) {
-			return (ResultTask<T>)Then(result => {
-				if (!result.IsSuccessful) return action(result);
-				return null;
-			});
-		}
-		public ResultTask<T> OnSuccess(Func<Result<T>, ResultTask<T>> action) {
-			return (ResultTask<T>)Then(result => {
-				if (result.IsSuccessful) return action(result);
-				return null;
-			});
-		}
+	// TODO remove
+	public class ResultTask<T> : Promise<T> {
 
-		public ResultTask<T> PostResult(ErrorCode code, string reason = null) {
-			PostResult(new Result<T>(code, reason));
+		public ResultTask<T> PostResult(ErrorCode code, string reason) {
+			Reject(new CotcException(code, reason));
 			return this;
 		}
-		internal ResultTask<T> PostResult(HttpResponse response, string reason = null) {
-			Result<T> result = new Result<T>(response);
+		internal ResultTask<T> PostResult(HttpResponse response, string reason) {
+			CotcException result = new CotcException(response);
 			result.ErrorInformation = reason;
-			PostResult(result);
+			Reject(result);
 			return this;
 		}
-		public ResultTask<T> PostResult(T value, Bundle serverData) {
-			PostResult(new Result<T>(value, serverData));
+		internal ResultTask<T> PostResult(T value, Bundle serverData, HttpResponse response = null) {
+			Resolve(value);
 			return this;
-		}
-		public new ResultTask<T> PostResult(Result<T> result) {
-			return (ResultTask<T>) base.PostResult(result);
 		}
 	}
 }
