@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CotcSdk;
 using UnityEngine;
 
 public class TestUtilities : MonoBehaviour {

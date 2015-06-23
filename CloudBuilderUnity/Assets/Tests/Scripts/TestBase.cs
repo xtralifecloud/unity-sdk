@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using CotcSdk;
@@ -14,9 +15,7 @@ using UnityEngine;
 
 		// Test boostrap code (run for each test)
 		void Start() {
-			FindObjectOfType<CotcGameObject>().GetCloud(cloud => {
-				GetType().GetMethod(TestMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Invoke(this, new object[] { cloud });
-			});
+			RunTestMethod(TestMethodName);
 		}
 		
 		[Test("Does something.")]
@@ -119,6 +118,25 @@ public class TestBase : MonoBehaviour {
 			}
 		}
 		if (runThisAction) action();
+	}
+
+	protected void RunTestMethod(string testMethodName) {
+		// Fail test on unhandled exception
+		Promise.UnhandledException += (sender, e) => {
+			IntegrationTest.Fail("Unhandled exception in test: " + e.Exception);
+		};
+		// Invoke the method described on the integration test script (TestMethodName)
+		var met = GetType().GetMethod(testMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+		var parms = met.GetParameters();
+		// Test methods can either have no param, either have one "Cloud" param, in which case we do the setup here to simplify
+		if (parms.Length >= 1 && parms[0].ParameterType == typeof(Cloud)) {
+			FindObjectOfType<CotcGameObject>().GetCloud().Done(cloud => {
+				met.Invoke(this, new object[] { cloud });
+			});
+		}
+		else {
+			met.Invoke(this, null);
+		}
 	}
 
 	[MethodImpl(MethodImplOptions.Synchronized)]
