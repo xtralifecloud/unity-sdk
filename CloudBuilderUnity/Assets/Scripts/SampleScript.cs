@@ -28,8 +28,11 @@ public class SampleScript : MonoBehaviour {
 			return;
 		}
 		// Initiate getting the main Cloud object
-		cb.GetCloud(cloud => {
+		cb.GetCloud().Done(cloud => {
 			Cloud = cloud;
+			Promise.UnhandledException += (object sender, ExceptionEventArgs e) => {
+				Debug.LogError("Unhandled exception: " + e.Exception.ToString());
+			};
 			// Retry failed HTTP requests once
 			Cloud.HttpRequestFailedHandler = (HttpRequestFailedEventArgs e) => {
 				if (e.UserData == null) {
@@ -47,7 +50,7 @@ public class SampleScript : MonoBehaviour {
 	
 	// Signs in with an anonymous account
 	public void DoLogin() {
-		Cloud.LoginAnonymously().ForwardTo(this.DidLogin);
+		Cloud.LoginAnonymously().Done(this.DidLogin);
 	}
 
 	// Signs in with facebook
@@ -58,7 +61,7 @@ public class SampleScript : MonoBehaviour {
 			Debug.LogError("Please put the CotcFacebookIntegration prefab in your scene!");
 			return;
 		}
-		fb.LoginWithFacebook(Cloud).ForwardTo(this.DidLogin);
+		fb.LoginWithFacebook(Cloud).Done(this.DidLogin);
 #else
 		Debug.LogError("Facebook not included (uncomment #define USE_FACEBOOK).");
 #endif
@@ -70,7 +73,7 @@ public class SampleScript : MonoBehaviour {
 			network: LoginNetwork.Email,
 			networkId: EmailInput.text,
 			networkSecret: DefaultPassword)
-		.ForwardTo(this.DidLogin);
+		.Done(this.DidLogin);
 	}
 
 	// Converts the account to e-mail
@@ -79,26 +82,23 @@ public class SampleScript : MonoBehaviour {
 		Gamer.Account.Convert(
 			network: LoginNetwork.Email,
 			networkId: EmailInput.text,
-			networkSecret: DefaultPassword,
-			done: result => {
-				if (result.IsSuccessful)
-					Debug.Log("Successfully converted account");
-				else
-					Debug.LogWarning("Failed to convert account: " + result.ToString());
-			});
+			networkSecret: DefaultPassword)
+		.Then(dummy => {
+			Debug.Log("Successfully converted account");
+		});
 	}
 
 	// Fetches a friend with the given e-mail address
 	public void DoFetchFriend() {
 		string address = EmailInput.text;
 		Cloud.ListUsers(filter: address)
-		.Then(result => {
-			if (!result.IsSuccessful || result.Value.Total != 1)
-				Debug.LogWarning("Failed to find account with e-mail " + address + ": " + result.ToString());
+		.Then(friends => {
+			if (friends.Total != 1) {
+				Debug.LogWarning("Failed to find account with e-mail " + address + ": " + friends.ToString());
+			}
 			else {
-				FriendId = result.Value[0].UserId;
-				Debug.Log(string.Format("Found friend {0} ({1} on {2})",
-					FriendId, result.Value[0].NetworkId, result.Value[0].Network));
+				FriendId = friends[0].UserId;
+				Debug.Log(string.Format("Found friend {0} ({1} on {2})", FriendId, friends[0].NetworkId, friends[0].Network));
 			}
 		});
 	}
@@ -110,13 +110,8 @@ public class SampleScript : MonoBehaviour {
 		Gamer.Community.SendEvent(
 			gamerId: FriendId,
 			eventData: Bundle.CreateObject("hello", "world"),
-			notification: new PushNotification().Message("en", "Please open the app"),
-			done: result => {
-				if (!result.IsSuccessful)
-					Debug.LogWarning("Failed to send event: " + result.ToString());
-				else
-					Debug.Log("Sent event to gamer " + FriendId);
-			});
+			notification: new PushNotification().Message("en", "Please open the app"))
+		.Done(dummy => Debug.Log("Sent event to gamer " + FriendId));
 	}
 
 	public void DoAddFacebookFriends() {
@@ -128,20 +123,15 @@ public class SampleScript : MonoBehaviour {
 		}
 		// List facebook friends
 		fb.FetchFriends(Gamer).Then(result => {
-			if (!result.IsSuccessful) {
-				Debug.LogError("Failed to fetch facebook friends: " + result.ToString());
-				return;
-			}
-			foreach (SocialNetworkFriend f in result.Value.ByNetwork[LoginNetwork.Facebook]) {
+			foreach (SocialNetworkFriend f in result.ByNetwork[LoginNetwork.Facebook]) {
 				// Those who have a CotC account, add them as friend
 				if (f.ClanInfo != null) {
-					Gamer.Community.AddFriend(
-						gamerId: f.ClanInfo.GamerId,
-						done: addFriendResult => {
-							if (!addFriendResult.IsSuccessful) {
-								Debug.LogError("Failed to add friend " + f.ClanInfo.GamerId);
-							}
-						});
+					Gamer.Community.AddFriend(f.ClanInfo.GamerId)
+					.Then(addFriendResult => {
+						if (!addFriendResult) {
+							Debug.LogError("Failed to add friend " + f.ClanInfo.GamerId);
+						}
+					});
 				}
 			}
 		});
@@ -154,25 +144,19 @@ public class SampleScript : MonoBehaviour {
 	public void DoPostTransaction() {
 		if (!RequireGamer()) return;
 
-		Gamer.Transactions.Post(
-			transaction: Bundle.CreateObject("gold", 50),
-			done: (Result<TransactionResult> result) => {
-				Debug.Log("TX result: " + result.ToString());
-			}
-		);
+		Gamer.Transactions.Post(Bundle.CreateObject("gold", 50))
+		.Done(result => {
+			Debug.Log("TX result: " + result.ToString());
+		});
 	}
 
 	// Invoked when any sign in operation has completed
-	private void DidLogin(Result<Gamer> gamer) {
-		if (!gamer.IsSuccessful) {
-			Debug.LogError("Login failed: " + gamer.ToString());
-			return;
-		}
+	private void DidLogin(Gamer newGamer) {
 		if (Gamer != null) {
 			Debug.LogWarning("Current gamer " + Gamer.GamerId + " has been dismissed");
 			Loop.Stop();
 		}
-		Gamer = gamer.Value;
+		Gamer = newGamer;
 		Loop = new DomainEventLoop(Gamer).Start();
 		Loop.ReceivedEvent += Loop_ReceivedEvent;
 		Debug.Log("Signed in successfully (ID = " + Gamer.GamerId + ")");

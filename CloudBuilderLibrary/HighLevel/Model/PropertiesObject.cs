@@ -36,7 +36,7 @@ namespace CotcSdk {
 		 * Gets the underlying Bundle. Dangerous, only use internally, when you want to put the contents
 		 * of a properties object into an existing bundle.
 		 */
-		internal Bundle AsBundle() {
+		public Bundle AsBundle() {
 			return Props;
 		}
 

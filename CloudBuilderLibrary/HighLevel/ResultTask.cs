@@ -1,37 +1,31 @@
 using System;
 
 namespace CotcSdk {
-	// TODO comment
-	public class ResultTask<T> : CotcTask<Result<T>> {
-		public ResultTask<T> OnFailure(Func<Result<T>, ResultTask<T>> action) {
-			return (ResultTask<T>)Then(result => {
-				if (!result.IsSuccessful) return action(result);
-				return null;
-			});
-		}
-		public ResultTask<T> OnSuccess(Func<Result<T>, ResultTask<T>> action) {
-			return (ResultTask<T>)Then(result => {
-				if (result.IsSuccessful) return action(result);
-				return null;
-			});
+	// TODO remove
+	public class ResultTask<T> : Promise<T> {
+		public ResultTask<T> ForwardTo(ResultTask<T> otherTask) {
+			return (ResultTask<T>)
+				Then(result => otherTask.Resolve(result))
+				.Catch(ex => otherTask.Reject(ex));
 		}
 
-		public ResultTask<T> PostResult(ErrorCode code, string reason = null) {
-			PostResult(new Result<T>(code, reason));
-			return this;
-		}
-		internal ResultTask<T> PostResult(HttpResponse response, string reason = null) {
-			Result<T> result = new Result<T>(response);
-			result.ErrorInformation = reason;
-			PostResult(result);
+		public ResultTask<T> PostResult(ErrorCode code, string reason) {
+			Reject(new CotcException(code, reason));
 			return this;
 		}
 		public ResultTask<T> PostResult(T value, Bundle serverData) {
-			PostResult(new Result<T>(value, serverData));
+			Resolve(value);
 			return this;
 		}
-		public new ResultTask<T> PostResult(Result<T> result) {
-			return (ResultTask<T>) base.PostResult(result);
+		internal ResultTask<T> PostResult(HttpResponse response, string reason) {
+			CotcException result = new CotcException(response);
+			result.ErrorInformation = reason;
+			Reject(result);
+			return this;
+		}
+		internal ResultTask<T> PostResult(T value, Bundle serverData, HttpResponse response) {
+			Resolve(value);
+			return this;
 		}
 	}
 }

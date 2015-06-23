@@ -38,7 +38,7 @@ namespace CotcSdk
 						task.PostResult(ErrorCode.SocialNetworkError, "Facebook/ " + result.Error);
 					}
 					else if (!FB.IsLoggedIn) {
-						task.PostResult(ErrorCode.LoginCanceled);
+						task.PostResult(ErrorCode.LoginCanceled, "Login canceled");
 					}
 					else {
 						string userId = FB.UserId, token = FB.AccessToken;
@@ -62,31 +62,33 @@ namespace CotcSdk
 		public ResultTask<SocialNetworkFriendResponse> FetchFriends(Gamer gamer) {
 			var task = new ResultTask<SocialNetworkFriendResponse>();
 			EnsureFacebookLoaded(() => {
-				DoFacebookRequestWithPagination((Result<List<SocialNetworkFriend>> result) => {
-					if (!result.IsSuccessful) {
-						task.PostResult(ErrorCode.SocialNetworkError, "Facebook request failed");
-						return;
-					}
-					gamer.Community.PostSocialNetworkFriends(LoginNetwork.Facebook, result.Value)
+				DoFacebookRequestWithPagination("/me/friends", Facebook.HttpMethod.GET)
+				.Then(result => {
+					gamer.Community.PostSocialNetworkFriends(LoginNetwork.Facebook, result)
 						.ForwardTo(task);
-				}, "/me/friends", Facebook.HttpMethod.GET);
+				})
+				.Catch(ex => {
+					task.PostResult(ErrorCode.SocialNetworkError, "Facebook request failed");
+				});
 			});
 			return task;
 		}
 
 		#region Private
 		// Starting point
-		private void DoFacebookRequestWithPagination(ResultHandler<List<SocialNetworkFriend>> done, string query, Facebook.HttpMethod method) {
+		private ResultTask<List<SocialNetworkFriend>> DoFacebookRequestWithPagination(string query, Facebook.HttpMethod method) {
+			var task = new ResultTask<List<SocialNetworkFriend>>();
 			FB.API(query, method, (FBResult result) => {
-				DoFacebookRequestWithPagination(done, result, new List<SocialNetworkFriend>());
+				DoFacebookRequestWithPagination(task, result, new List<SocialNetworkFriend>());
 			});
+			return task;
 		}
 
 		// Recursive
-		private void DoFacebookRequestWithPagination(ResultHandler<List<SocialNetworkFriend>> done, FBResult result, List<SocialNetworkFriend> addDataTo) {
+		private void DoFacebookRequestWithPagination(ResultTask<List<SocialNetworkFriend>> task, FBResult result, List<SocialNetworkFriend> addDataTo) {
 			if (result.Error != null) {
 				Debug.LogWarning("Error in facebook request: " + result.Error.ToString());
-				Common.InvokeHandler(done, ErrorCode.SocialNetworkError, "Facebook/ Network #1");
+				task.PostResult(ErrorCode.SocialNetworkError, "Facebook/ Network #1");
 				return;
 			}
 
@@ -101,17 +103,17 @@ namespace CotcSdk
 				string nextUrl = fbResult["paging"]["next"];
 				// Finished
 				if (data.Count == 0 || nextUrl == null) {
-					Common.InvokeHandler(done, addDataTo, Bundle.Empty);
+					task.PostResult(addDataTo, Bundle.Empty);
 					return;
 				}
 
 				FB.API(nextUrl.Replace("https://graph.facebook.com", ""), Facebook.HttpMethod.GET, (FBResult res) => {
-					DoFacebookRequestWithPagination(done, res, addDataTo);
+					DoFacebookRequestWithPagination(task, res, addDataTo);
 				});
 			}
 			catch (Exception e) {
 				Debug.LogError("Error decoding FB data: " + e.ToString());
-				Common.InvokeHandler(done, ErrorCode.SocialNetworkError, "Decoding facebook data: " + e.Message);
+				task.PostResult(ErrorCode.SocialNetworkError, "Decoding facebook data: " + e.Message);
 				return;
 			}
 		}

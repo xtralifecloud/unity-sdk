@@ -59,42 +59,30 @@ namespace CLI {
 		}
 
 		void Start() {
-			CotcGameObject.GetCloud(result => {
+			CotcGameObject.GetCloud().Done(result => {
 				Cloud = result;
 				Debug.Log("Setup done");
 			});
 		}
 
-		private void Log(string text) {
+		internal void Log(string text) {
 			Cli.AppendLine(text);
-		}
-
-		private Action<Result<T>> OnSuccess<T>(Arguments args, Action<Result<T>> subHandler = null) {
-			return result => {
-				Log(">> " + result.ToString());
-				if (result.IsSuccessful) {
-					if (subHandler != null) subHandler(result);
-				}
-				else {
-					args.Return();
-				}
-			};
-		}
-
-		private ResultHandler<T> SuccessHandler<T>(Arguments args, ResultHandler<T> subHandler = null) {
-			return result => {
-				Log(">> " + result.ToString());
-				if (result.IsSuccessful) {
-					if (subHandler != null) subHandler(result);
-				}
-				else {
-					args.Return();
-				}
-			};
 		}
 
 		private Cloud Cloud;
 		private Gamer Gamer;
 		private DomainEventLoop PrivateEventLoop;
+	}
+
+	internal static class ResultTaskExtensions {
+		public static ResultTask<T> WrapForSuccess<T>(this ResultTask<T> task, Commands commands, Arguments args, Action<T> subHandler) {
+			return (ResultTask<T>)task.Then(result => {
+				commands.Log(">> " + result.ToString());
+				if (subHandler != null) subHandler(result);
+			})
+			.Catch(ex => {
+				args.Return();
+			});
+		}
 	}
 }

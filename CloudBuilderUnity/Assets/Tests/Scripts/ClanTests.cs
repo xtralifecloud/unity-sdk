@@ -14,7 +14,7 @@ public class ClanTests : TestBase {
 		var parms = met.GetParameters();
 		// Test methods can either have no param, either have one "Cloud" param, in which case we do the setup here to simplify
 		if (parms.Length >= 1 && parms[0].ParameterType == typeof(Cloud)) {
-			FindObjectOfType<CotcGameObject>().GetCloud(cloud => {
+			FindObjectOfType<CotcGameObject>().GetCloud().Done(cloud => {
 				met.Invoke(this, new object[] { cloud });
 			});
 		}
@@ -26,25 +26,22 @@ public class ClanTests : TestBase {
 	[Test("Tests a simple setup.")]
 	public void ShouldSetupProperly() {
 		var cb = FindObjectOfType<CotcGameObject>();
-		cb.GetCloud(cloud => {
+		cb.GetCloud().Done(cloud => {
 			IntegrationTest.Assert(cloud != null);
 		});
 	}
 
 	[Test("Sets up and does a ping")]
 	public void ShouldPing(Cloud cloud) {
-		cloud.Ping().Then(result => {
-			if (result.IsSuccessful)
-				IntegrationTest.Pass();
-			else
-				IntegrationTest.Fail("Ping failed, check that the environment is running");
-		});
+		cloud.Ping()
+			.Then(result => IntegrationTest.Pass())
+			.Catch(ex => IntegrationTest.Fail("Ping failed, check that the environment is running"));
 	}
 
 	[Test("Logs in anonymously.")]
 	public void ShouldLoginAnonymously(Cloud cloud) {
 		cloud.LoginAnonymously().Then(result => {
-			IntegrationTest.Assert(result.IsSuccessful && result.Value != null);
+			IntegrationTest.Assert(result != null);
 		});
 	}
 
@@ -54,17 +51,15 @@ public class ClanTests : TestBase {
 			network: LoginNetwork.Email,
 			networkId: "cloud@localhost.localdomain",
 			networkSecret: "Password123")
-		.Then(result => {
-			Assert(result.IsSuccessful, "Failed to login");
-
+		.Then(gamer => {
 			// Resume the session with the credentials just received
-			cloud.ResumeSession(
-				gamerId: result.Value.GamerId,
-				gamerSecret: result.Value.GamerSecret)
-			.Then(resumeResult => {
-				Assert(resumeResult.IsSuccessful && resumeResult.Value != null, "Resume failed");
-				CompleteTest();
-			});
+			return cloud.ResumeSession(
+				gamerId: gamer.GamerId,
+				gamerSecret: gamer.GamerSecret);
+		})
+		.Then(resumeResult => {
+			Assert(resumeResult != null, "Resume failed");
+			CompleteTest();
 		});
 	}
 
@@ -74,12 +69,13 @@ public class ClanTests : TestBase {
 		cloud.ResumeSession(
 			gamerId: "15555f06c7b852423cb9074a",
 			gamerSecret: "1f89a1efa49a3cf59d00f8badb03227d1b56840b")
-		.Then(resumeResult => {
-			Assert(!resumeResult.IsSuccessful, "Resume should fail");
+		.Catch(ex => {
+			CotcException resumeResult = (CotcException)ex;
 			Assert(resumeResult.HttpStatusCode == 401, "401 status code expected");
 			Assert(resumeResult.ServerData["name"] == "LoginError", "LoginError expected");
 			CompleteTest();
-		});
+		})
+		.Done(dummy => IntegrationTest.Fail("Resume should fail"));
 	}
 
 	[Test("Tests that the prevent registration flag is taken in account correctly.")]
@@ -90,31 +86,28 @@ public class ClanTests : TestBase {
 			networkId: "nonexisting@localhost.localdomain",
 			networkSecret: "Password123",
 			preventRegistration: true)
-		.Then(resumeResult => {
-			Assert(!resumeResult.IsSuccessful, "Resume should fail");
+		.Catch(ex => {
+			CotcException resumeResult = (CotcException)ex;
 			Assert(resumeResult.HttpStatusCode == 400, "400 expected");
 			Assert(resumeResult.ServerData["name"] == "PreventRegistration", "PreventRegistration error expected");
 			CompleteTest();
-		});
+		})
+		.Done(dummy => IntegrationTest.Fail("Resume should fail"));
 	}
 
 	[Test("Tests that an anonymous account can be converted to an e-mail account.")]
 	public void ShouldConvertAccount(Cloud cloud) {
 		// Create an anonymous account
-		cloud.LoginAnonymously().Then(loginResult => {
-			Assert(loginResult.IsSuccessful, "Anonymous login failed");
-
+		cloud.LoginAnonymously().Then(gamer => {
 			// Then convert it to e-mail
-			var gamer = loginResult.Value;
 			gamer.Account.Convert(
 				network: LoginNetwork.Email,
 				networkId: RandomEmailAddress(),
-				networkSecret: "Password123",
-				done: conversionResult => {
-					Assert(conversionResult.IsSuccessful && conversionResult.Value, "Convert account failed");
-					CompleteTest();
-				}
-			);
+				networkSecret: "Password123")
+			.Then(conversionResult => {
+				Assert(conversionResult, "Convert account failed");
+				CompleteTest();
+			});
 		});
 	}
 
@@ -126,25 +119,20 @@ public class ClanTests : TestBase {
 			networkId: "cloud@localhost.localdomain",
 			networkSecret: "Password123")
 		.Then(result => {
-			Assert(result.IsSuccessful, "Creation of fake account failed");
-
 			// Create an anonymous account
-			cloud.LoginAnonymously().Then(loginResult => {
-				Assert(result.IsSuccessful, "Anonymous login failed");
-						
+			cloud.LoginAnonymously().Then(gamer => {
 				// Then try to convert it to the same e-mail as the fake account created at first
-				var gamer = loginResult.Value;
 				gamer.Account.Convert(
 					network: LoginNetwork.Email,
 					networkId: "cloud@localhost.localdomain",
-					networkSecret: "Anotherp4ss",
-					done: conversionResult => {
-						Assert(!conversionResult.IsSuccessful && !conversionResult.Value, "Conversion should fail");
-						Assert(conversionResult.HttpStatusCode == 400, "400 expected");
-						Assert(conversionResult.ServerData["message"] == "UserExists", "UserExists error expected");
-						CompleteTest();
-					}
-				);
+					networkSecret: "Anotherp4ss")
+				.Catch(ex => {
+					CotcException conversionResult = (CotcException)ex;
+					Assert(conversionResult.HttpStatusCode == 400, "400 expected");
+					Assert(conversionResult.ServerData["message"] == "UserExists", "UserExists error expected");
+					CompleteTest();
+				})
+				.Done(dummy => IntegrationTest.Fail("Conversion should fail"));
 			});
 		});
 	}
@@ -157,15 +145,13 @@ public class ClanTests : TestBase {
 			networkId: "cloud@localhost.localdomain",
 			networkSecret: "Password123")
 		.Then(loginResult => {
-			Assert(loginResult.IsSuccessful, "Creation of fake account failed");
 			cloud.UserExists(
 				network: LoginNetwork.Email,
-				networkId: "cloud@localhost.localdomain",
-				done: checkResult => {
-					Assert(checkResult.IsSuccessful && checkResult.Value, "UserExists failed");
-					CompleteTest();
-				}
-			);
+				networkId: "cloud@localhost.localdomain")
+			.Then(checkResult => {
+				Assert(checkResult, "UserExists failed");
+				CompleteTest();
+			});
 		});
 	}
 
@@ -177,11 +163,11 @@ public class ClanTests : TestBase {
 			userEmail: "cloud@localhost.localdomain",
 			mailSender: "admin@localhost.localdomain",
 			mailTitle: "Reset link",
-			mailBody: "Here is your link: [[SHORTCODE]]",
-			done: result => {
-				IntegrationTest.Assert(result.IsSuccessful && result.Value);
-			}
-		);
+			mailBody: "Here is your link: [[SHORTCODE]]")
+		.Then(result => {
+			Assert(result, "Should succeed to send reset password mail");
+			CompleteTest();
+		});
 	}
 
 	[Test("Changes the password of an e-mail account.")]
@@ -190,13 +176,12 @@ public class ClanTests : TestBase {
 			network: LoginNetwork.Email,
 			networkId: RandomEmailAddress(),
 			networkSecret: "Password123")
-		.Then(result => {
-			Assert(result.IsSuccessful, "Creation of fake account failed");
-			var gamer = result.Value;
-			gamer.Account.ChangePassword(pswResult => {
-				Assert(pswResult.IsSuccessful && pswResult.Value, "Change password failed");
+		.Then(gamer => {
+			gamer.Account.ChangePassword("Password124")
+			.Then(pswResult => {
+				Assert(pswResult, "Change password failed");
 				CompleteTest();
-			}, "Password124");
+			});
 		});
 	}
 
@@ -206,13 +191,12 @@ public class ClanTests : TestBase {
 			network: LoginNetwork.Email,
 			networkId: RandomEmailAddress(),
 			networkSecret: "Password123")
-		.Then(result => {
-			Assert(result.IsSuccessful, "Creation of fake account failed");
-			var gamer = result.Value;
-			gamer.Account.ChangeEmailAddress(pswResult => {
-				Assert(pswResult.IsSuccessful && pswResult.Value, "Change email failed");
+		.Then(gamer => {
+			gamer.Account.ChangeEmailAddress(RandomEmailAddress())
+			.Then(pswResult => {
+				Assert(pswResult, "Change email failed");
 				CompleteTest();
-			}, RandomEmailAddress());
+			});
 		});
 	}
 
@@ -222,15 +206,15 @@ public class ClanTests : TestBase {
 			network: LoginNetwork.Email,
 			networkId: RandomEmailAddress(),
 			networkSecret: "Password123")
-		.Then(result => {
-			Assert(result.IsSuccessful, "Creation of fake account failed");
-			var gamer = result.Value;
-			gamer.Account.ChangeEmailAddress(pswResult => {
-				Assert(!pswResult.IsSuccessful && !pswResult.Value, "Email change should fail");
+		.Then(gamer => {
+			gamer.Account.ChangeEmailAddress("clan@localhost.localdomain")
+			.Catch(ex => {
+				CotcException pswResult = (CotcException)ex;
 				Assert(pswResult.HttpStatusCode == 400, "400 expected");
 				Assert(pswResult.ServerData["message"] == "UserExists", "UserExists error expected");
 				CompleteTest();
-			}, "cloud@localhost.localdomain");
+			})
+			.Done(result => IntegrationTest.Fail("Email change should fail"));
 		});
 	}
 }

@@ -56,10 +56,10 @@ public class TestBase : MonoBehaviour {
 			network: LoginNetwork.Email,
 			networkId: "cloud@localhost.localdomain",
 			networkSecret: "Password123")
-		.Then(result => {
-			if (!result.IsSuccessful) IntegrationTest.Fail("Failed to log in");
-			done(result.Value);
-		});
+		.Then(gamer => {
+			done(gamer);
+		})
+		.Catch(ex => IntegrationTest.Fail("Failed to log in"));
 	}
 
 	protected void Login2Users(Cloud cloud, Action<Gamer, Gamer> done) {
@@ -69,29 +69,27 @@ public class TestBase : MonoBehaviour {
 				network: LoginNetwork.Email,
 				networkId: "clan2@localhost.localdomain",
 				networkSecret: "Password123")
-			.Then(result => {
-				if (!result.IsSuccessful) IntegrationTest.Fail("Failed to log in");
-				done(gamer1, result.Value);
-			});
+			.Then(gamer2 => {
+				done(gamer1, gamer2);
+			})
+			.Catch(ex => IntegrationTest.Fail("Failed to log in"));
 		});
 	}
 
 	protected void LoginNewUser(Cloud cloud, Action<Gamer> done) {
-		cloud.LoginAnonymously().Then(result => {
-			if (!result.IsSuccessful) IntegrationTest.Fail("Failed to log in");
-			done(result.Value);
-		});
+		cloud.LoginAnonymously()
+		.Then(gamer => { done(gamer); })
+		.Catch(ex => IntegrationTest.Fail("Failed to log in"));
 	}
 
 	protected void Login2NewUsers(Cloud cloud, Action<Gamer, Gamer> done) {
 		cloud.LoginAnonymously().Then(gamer1 => {
-			if (!gamer1.IsSuccessful) IntegrationTest.Fail("Failed to log in");
 			// Second user
-			cloud.LoginAnonymously().Then(gamer2 => {
-				if (!gamer2.IsSuccessful) IntegrationTest.Fail("Failed to log in");
-				done(gamer1.Value, gamer2.Value);
+			return cloud.LoginAnonymously().Then(gamer2 => {
+				done(gamer1, gamer2);
 			});
-		});
+		})
+		.Catch(ex => IntegrationTest.Fail("Failed to log in"));
 	}
 
 	protected string RandomEmailAddress() {

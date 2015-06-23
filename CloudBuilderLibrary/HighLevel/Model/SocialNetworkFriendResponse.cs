@@ -4,10 +4,10 @@ using System.Text;
 
 namespace CotcSdk {
 	
-	public class SocialNetworkFriendResponse {
+	public class SocialNetworkFriendResponse: PropertiesObject {
 		public Dictionary<LoginNetwork, List<SocialNetworkFriend>> ByNetwork;
 
-		internal SocialNetworkFriendResponse(Bundle serverData) {
+		internal SocialNetworkFriendResponse(Bundle serverData) : base(serverData) {
 			ByNetwork = new Dictionary<LoginNetwork, List<SocialNetworkFriend>>();
 			// Parse the response, per network
 			foreach (var pair in serverData.AsDictionary()) {

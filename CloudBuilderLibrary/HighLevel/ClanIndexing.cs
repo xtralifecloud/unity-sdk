@@ -11,11 +11,10 @@ namespace CotcSdk {
 		 * @param objectId ID of the object to delete, as passed when indexing.
 		 */
 		public ResultTask<bool> DeleteObject(string objectId) {
-			var task = new ResultTask<bool>();
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName).Path(objectId);
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			req.Method = "DELETE";
-			return Common.RunRequest(req, task, (HttpResponse response) => {
+			return Common.RunInTask<bool>(req, (response, task) => {
 				task.PostResult(true, response.BodyJson);
 			});
 		}
@@ -95,10 +94,22 @@ namespace CotcSdk {
 				}
 				// Handle pagination
 				if (offset > 0) {
-					result.Hits.Previous = () => Search(query, sortingProperties, limit, offset - limit);
+					result.Hits.Previous = () => {
+						var promise = new Promise<PagedList<IndexResult>>();
+						Search(query, sortingProperties, limit, offset - limit)
+							.Then(r => promise.Resolve(r.Hits))
+							.Catch(e => promise.Reject(e));
+						return promise;
+					};
 				}
 				if (offset + result.Hits.Count < result.Hits.Total) {
-					result.Hits.Next = () => Search(query, sortingProperties, limit, offset + limit);
+					result.Hits.Next = () => {
+						var promise = new Promise<PagedList<IndexResult>>();
+						Search(query, sortingProperties, limit, offset + limit)
+							.Then(r => promise.Resolve(r.Hits))
+							.Catch(e => promise.Reject(e));
+						return promise;
+					};
 				}
 				task.PostResult(result, response.BodyJson);
 			});
