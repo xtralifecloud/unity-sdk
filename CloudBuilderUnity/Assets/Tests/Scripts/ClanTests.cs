@@ -15,11 +15,23 @@ public class ClanTests : TestBase {
 		// Test methods can either have no param, either have one "Cloud" param, in which case we do the setup here to simplify
 		if (parms.Length >= 1 && parms[0].ParameterType == typeof(Cloud)) {
 			FindObjectOfType<CotcGameObject>().GetCloud().Done(cloud => {
-				met.Invoke(this, new object[] { cloud });
+				HandleReturnValue(met, met.Invoke(this, new object[] { cloud }));
 			});
 		}
 		else {
 			met.Invoke(this, null);
+		}
+	}
+
+	private void HandleReturnValue(MethodInfo info, object retVal) {
+		if (info.ReturnType.IsGenericType && typeof(IPromise<>).IsAssignableFrom(info.ReturnType.GetGenericTypeDefinition())) {
+			var types = info.ReturnType.GetGenericTypeDefinition().GetGenericArguments();
+			((IPromise<object>)retVal).Catch(ex => {
+				IntegrationTest.Fail("Test failed: " + ex.ToString());
+			})
+			.Done(result => {
+				IntegrationTest.Pass();
+			});
 		}
 	}
 
@@ -32,10 +44,8 @@ public class ClanTests : TestBase {
 	}
 
 	[Test("Sets up and does a ping")]
-	public void ShouldPing(Cloud cloud) {
-		cloud.Ping()
-			.Then(result => IntegrationTest.Pass())
-			.Catch(ex => IntegrationTest.Fail("Ping failed, check that the environment is running"));
+	public IPromise<bool> ShouldPing(Cloud cloud) {
+		return cloud.Ping();
 	}
 
 	[Test("Logs in anonymously.")]
