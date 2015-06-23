@@ -15,15 +15,15 @@ public class ClanTests : TestBase {
 	[Test("Tests a simple setup.")]
 	public void ShouldSetupProperly() {
 		var cb = FindObjectOfType<CotcGameObject>();
-		cb.GetCloud().ExpectSuccess(cloud => {
+		cb.GetCloud().Then(cloud => {
 			Assert(cloud != null, "Failed to fetch a cloud object");
-			CompleteTest();
-		});
+		})
+		.CompleteTestIfSuccessful();
 	}
 
 	[Test("Sets up and does a ping")]
 	public void ShouldPing(Cloud cloud) {
-		cloud.Ping().CompleteTestPromise();
+		cloud.Ping().CompleteTestIfSuccessful();
 	}
 
 	[Test("Logs in anonymously.")]
@@ -86,7 +86,8 @@ public class ClanTests : TestBase {
 	[Test("Tests that an anonymous account can be converted to an e-mail account.")]
 	public void ShouldConvertAccount(Cloud cloud) {
 		// Create an anonymous account
-		cloud.LoginAnonymously().ExpectSuccess(gamer => {
+		cloud.LoginAnonymously()
+		.ExpectSuccess(gamer => {
 			// Then convert it to e-mail
 			gamer.Account.Convert(
 				network: LoginNetwork.Email,
@@ -108,7 +109,8 @@ public class ClanTests : TestBase {
 			networkSecret: "Password123")
 		.ExpectSuccess(dummyGamer => {
 			// Create an anonymous account
-			cloud.LoginAnonymously().Then(gamer => {
+			cloud.LoginAnonymously()
+			.ExpectSuccess(gamer => {
 				// Then try to convert it to the same e-mail as the fake account created at first
 				gamer.Account.Convert(
 					network: LoginNetwork.Email,
@@ -118,6 +120,7 @@ public class ClanTests : TestBase {
 					CotcException conversionResult = (CotcException)ex;
 					Assert(conversionResult.HttpStatusCode == 400, "400 expected");
 					Assert(conversionResult.ServerData["message"] == "UserExists", "UserExists error expected");
+					CompleteTest();
 				});
 			});
 		});

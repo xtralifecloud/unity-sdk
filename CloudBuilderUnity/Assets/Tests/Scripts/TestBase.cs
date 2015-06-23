@@ -127,6 +127,10 @@ public class TestBase : MonoBehaviour {
 		};
 		// Invoke the method described on the integration test script (TestMethodName)
 		var met = GetType().GetMethod(testMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+		if (met == null) {
+			IntegrationTest.Fail("Method name not configured for this test!");
+			return;
+		}
 		var parms = met.GetParameters();
 		// Test methods can either have no param, either have one "Cloud" param, in which case we do the setup here to simplify
 		if (parms.Length >= 1 && parms[0].ParameterType == typeof(Cloud)) {

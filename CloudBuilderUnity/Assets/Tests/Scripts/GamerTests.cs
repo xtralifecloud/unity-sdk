@@ -10,12 +10,7 @@ public class GamerTests : TestBase {
 	public string TestMethodName;
 
 	void Start() {
-		// Invoke the method described on the integration test script (TestMethodName)
-		var met = GetType().GetMethod(TestMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-		// Test methods have a Cloud param (and we do the setup here)
-		FindObjectOfType<CotcGameObject>().GetCloud(cloud => {
-			met.Invoke(this, new object[] { cloud });
-		});
+		RunTestMethod(TestMethodName);
 	}
 
 	[Test("Sets a property and checks that it worked properly (tests read all & write single).")]
@@ -24,18 +19,16 @@ public class GamerTests : TestBase {
 			// Set property, then get all and check it
 			gamer.Properties.SetKey(
 				key: "testkey",
-				value: "value",
-				done: setResult => {
-					Assert(setResult.IsSuccessful, "Error when setting property");
-					Assert(setResult.Value == 1, "Expected done = 1");
+				value: "value")
+			.ExpectSuccess(setResult => {
+				Assert(setResult == 1, "Expected done = 1");
 
-					gamer.Properties.GetAll(getResult => {
-						Assert(getResult.IsSuccessful, "Failed to fetch properties");
-						Assert(getResult.Value.Has("testkey"), "Previously set key is missing");
-						CompleteTest();
-					});
-				}
-			);
+				gamer.Properties.GetAll()
+				.ExpectSuccess(getResult => {
+					Assert(getResult.Has("testkey"), "Previously set key is missing");
+					CompleteTest();
+				});
+			});
 		});
 	}
 
@@ -45,22 +38,20 @@ public class GamerTests : TestBase {
 			Bundle props = Bundle.CreateObject();
 			props["hello"] = "world";
 			props["array"] = Bundle.CreateArray(1, 2, 3);
-			// Set property, then get all and check it
-			gamer.Properties.SetAll(
-				properties: props,
-				done: setResult => {
-					if (!setResult.IsSuccessful) IntegrationTest.Fail("Error when setting property");
-					if (setResult.Value != 1) IntegrationTest.Fail("Expected done = 1");
 
-					gamer.Properties.GetAll(getResult => {
-						Assert(getResult.IsSuccessful, "Get all keys failed");
-						Assert(getResult.Value["hello"] == "world", "Should contain hello: world key");
-						Assert(getResult.Value["array"].AsArray().Count == 3, "Should have a 3-item array");
-						Assert(getResult.Value["array"].AsArray()[1] == 2, "Item 2 of array invalid");
-						CompleteTest();
-					});
-				}
-			);
+			// Set property, then get all and check it
+			gamer.Properties.SetAll(props)
+			.ExpectSuccess(setResult => {
+				Assert(setResult == 1, "Expected done = 1");
+
+				gamer.Properties.GetAll()
+				.ExpectSuccess(getResult => {
+					Assert(getResult["hello"] == "world", "Should contain hello: world key");
+					Assert(getResult["array"].AsArray().Count == 3, "Should have a 3-item array");
+					Assert(getResult["array"].AsArray()[1] == 2, "Item 2 of array invalid");
+					CompleteTest();
+				});
+			});
 		});
 	}
 
@@ -71,22 +62,18 @@ public class GamerTests : TestBase {
 			props["hello"] = "world";
 			props["prop2"] = 123;
 			// Set properties, remove one, then get it and check
-			gamer.Properties.SetAll(
-				properties: props,
-				done: setResult => {
-					Assert(setResult.IsSuccessful, "Error when setting property");
-
-					gamer.Properties.RemoveKey(removeResult => {
-						if (!removeResult.IsSuccessful) IntegrationTest.Fail("Error when removing property");
-
-						gamer.Properties.GetKey(getResult => {
-							Assert(getResult.IsSuccessful, "Failed to fetch key");
-							Assert(getResult.Value.IsEmpty, "The key should be empty");
-							CompleteTest();
-						}, "hello");
-					}, "hello");
-				}
-			);
+			gamer.Properties.SetAll(props)
+			.ExpectSuccess(setResult => {
+				gamer.Properties.RemoveKey("hello")
+				.ExpectSuccess(removeResult => {
+					// Should not find anymore
+					gamer.Properties.GetKey("hello")
+					.ExpectSuccess(getResult => {
+						Assert(getResult.IsEmpty, "The key should be empty");
+						CompleteTest();
+					});
+				});
+			});
 		});
 	}
 
@@ -97,36 +84,35 @@ public class GamerTests : TestBase {
 			props["hello"] = "world";
 			props["prop2"] = 123;
 			// Set properties, remove them, then get all and check it
-			gamer.Properties.SetAll(
-				properties: props,
-				done: setResult => {
-					Assert(setResult.IsSuccessful, "Error when setting property");
-					gamer.Properties.RemoveAll(removeResult => {
-						Assert(removeResult.IsSuccessful, "Error when removing properties");
-						gamer.Properties.GetAll(getResult => {
-							Assert(getResult.IsSuccessful, "Failed to get all properties");
-							Assert(getResult.Value.IsEmpty, "Expected no properties");
-							CompleteTest();
-						});
+			gamer.Properties.SetAll(props)
+			.ExpectSuccess(setResult => {
+
+				gamer.Properties.RemoveAll()
+				.ExpectSuccess(removeResult => {
+					
+					gamer.Properties.GetAll()
+					.ExpectSuccess(getResult => {
+						Assert(getResult.IsEmpty, "Expected no properties");
+						CompleteTest();
 					});
-				}
-			);
+				});
+			});
 		});
 	}
 
 	[Test("Fetches and updates profile information about a gamer, testing that the GamerProfile methods work as expected.")]
 	public void ShouldUpdateProfile(Cloud cloud) {
 		Login(cloud, gamer => {
-			gamer.Profile.Get(profile => {
-				Assert(profile.IsSuccessful, "Failed to get profile");
-				Assert(profile.Value["email"] == "cloud@localhost.localdomain", "Invalid e-mail address (verify Login method in TestBase)");
-				Assert(profile.Value["lang"] == "en", "Default language should be english");
-				gamer.Profile.Set(setProfile => {
-					Assert(setProfile.IsSuccessful, "Failed to update profile");
-					Assert(setProfile.Value == true, "Update profile expected to return true");
-					Assert(setProfile.ServerData["profile"]["displayName"] == "QA", "Invalid update profile body");
+			gamer.Profile.Get()
+			.ExpectSuccess(profile => {
+				Assert(profile["email"] == "cloud@localhost.localdomain", "Invalid e-mail address (verify Login method in TestBase)");
+				Assert(profile["lang"] == "en", "Default language should be english");
+
+				gamer.Profile.Set(Bundle.CreateObject("displayName", "QA", "firstName", "Tester"))
+				.ExpectSuccess(setProfile => {
+					Assert(setProfile == true, "Update profile expected to return true");
 					CompleteTest();
-				}, Bundle.CreateObject("displayName", "QA", "firstName", "Tester"));
+				});
 			});
 		});
 	}
@@ -134,11 +120,11 @@ public class GamerTests : TestBase {
 	[Test("Runs a batch on the server and checks the return value.", requisite: "The current game must be set-up with {\"__test\":\"\treturn {value: params.request.value * 2};\",\"__testGamer\":\"    return this.user.profile.read(params.user_id).then(function (result) {\n      return {message: params.request.prefix + result.profile.email};\n    });\"}.")]
 	public void ShouldRunGamerBatch(Cloud cloud) {
 		Login(cloud, gamer => {
-			gamer.Batches.Run(batchResult => {
-				Assert(batchResult.IsSuccessful, "Failed to run batch");
-				Assert(batchResult.Value["message"] == "Hello cloud@localhost.localdomain", "Returned value invalid (" + batchResult.Value["message"] + ", check hook on server");
+			gamer.Batches.Run("testGamer", Bundle.CreateObject("prefix", "Hello "))
+			.ExpectSuccess(batchResult => {
+				Assert(batchResult["message"] == "Hello cloud@localhost.localdomain", "Returned value invalid (" + batchResult["message"] + ", check hook on server");
 				CompleteTest();
-			}, "testGamer", Bundle.CreateObject("prefix", "Hello "));
+			});
 		});
 	}
 }
