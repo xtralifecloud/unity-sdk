@@ -13,24 +13,14 @@ public class MatchTests : TestBase {
 	public string TestMethodName;
 
 	void Start() {
-		// Invoke the method described on the integration test script (TestMethodName)
-		var met = GetType().GetMethod(TestMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-		// Test methods have a Cloud param (and we do the setup here)
-		FindObjectOfType<CotcGameObject>().GetCloud(cloud => {
-			met.Invoke(this, new object[] { cloud });
-		});
+		RunTestMethod(TestMethodName);
 	}
 
 	[Test("Creates a match with the minimum number of arguments and checks that it is created properly (might highlight problems with the usage of the Bundle class).")]
 	public void ShouldCreateMatchWithMinimumArgs(Cloud cloud) {
 		Login(cloud, gamer => {
-			gamer.Matches.Create(
-				maxPlayers: 2,
-				done: (Result<Match> result) => {
-					Assert(result.IsSuccessful, "Creating match failed");
-					CompleteTest();
-				}
-			);
+			gamer.Matches.Create(maxPlayers: 2)
+			.CompleteTestIfSuccessful();
 		});
 	}
 
@@ -42,78 +32,79 @@ public class MatchTests : TestBase {
 				description: matchDesc,
 				maxPlayers: 2,
 				customProperties: Bundle.CreateObject("test", "value"),
-				shoe: Bundle.CreateArray(1, 2, 3),
-				done: (Result<Match> result) => {
-					Match match = result.Value;
-					Assert(result.IsSuccessful, "Creating match failed");
-					Assert(match.Creator.GamerId == gamer.GamerId, "Match creator not set properly");
-					Assert(match.CustomProperties["test"] == "value", "Missing custom property");
-					Assert(match.Description == matchDesc, "Invalid match description");
-					Assert(match.Moves.Count == 0, "Should not have any move at first");
-					Assert(match.GlobalState.AsDictionary().Count == 0, "Global state should be empty initially");
-					Assert(match.LastEventId != null, "Last event should not be null");
-					Assert(match.MatchId != null, "Match ID shouldn't be null");
-					Assert(match.MaxPlayers == 2, "Should have two players");
-					Assert(match.Players.Count == 1, "Should contain only one player");
-					Assert(match.Players[0].GamerId == gamer.GamerId, "Should contain me as player");
-					Assert(match.Seed != 0, "A 31-bit seed should be provided");
-					Assert(match.Shoe.AsArray().Count == 0, "The shoe shouldn't be available until the match is finished");
-					Assert(match.Status == MatchStatus.Running, "The match status is invalid");
-					CompleteTest();
-				}
-			);
+				shoe: Bundle.CreateArray(1, 2, 3))
+			.ExpectSuccess(match => {
+				Assert(match.Creator.GamerId == gamer.GamerId, "Match creator not set properly");
+				Assert(match.CustomProperties["test"] == "value", "Missing custom property");
+				Assert(match.Description == matchDesc, "Invalid match description");
+				Assert(match.Moves.Count == 0, "Should not have any move at first");
+				Assert(match.GlobalState.AsDictionary().Count == 0, "Global state should be empty initially");
+				Assert(match.LastEventId != null, "Last event should not be null");
+				Assert(match.MatchId != null, "Match ID shouldn't be null");
+				Assert(match.MaxPlayers == 2, "Should have two players");
+				Assert(match.Players.Count == 1, "Should contain only one player");
+				Assert(match.Players[0].GamerId == gamer.GamerId, "Should contain me as player");
+				Assert(match.Seed != 0, "A 31-bit seed should be provided");
+				Assert(match.Shoe.AsArray().Count == 0, "The shoe shouldn't be available until the match is finished");
+				Assert(match.Status == MatchStatus.Running, "The match status is invalid");
+				CompleteTest();
+			});
 		});
 	}
 
 	[Test("Creates a match, and fetches it then, verifying that the match can be continued properly.")]
 	public void ShouldContinueMatch(Cloud cloud) {
 		Login(cloud, gamer => {
-			gamer.Matches.Create(createResult => {
-				Assert(createResult.IsSuccessful, "Creating match failed");
-				string matchId = createResult.Value.MatchId;
-				gamer.Matches.Fetch(fetchResult => {
-					Assert(fetchResult.IsSuccessful, "Fetching match failed");
-					Assert(fetchResult.Value.MatchId == createResult.Value.MatchId, "The fetched match doesn't correspond to the created one");
-					Assert(fetchResult.Value.Players[0].GamerId == gamer.GamerId, "Should contain me as player");
+			gamer.Matches.Create(2)
+			.ExpectSuccess(createdMatch => {
+				string matchId = createdMatch.MatchId;
+				gamer.Matches.Fetch(matchId)
+				.ExpectSuccess(fetchedMatch => {
+					Assert(fetchedMatch.MatchId == createdMatch.MatchId, "The fetched match doesn't correspond to the created one");
+					Assert(fetchedMatch.Players[0].GamerId == gamer.GamerId, "Should contain me as player");
 					CompleteTest();
-				}, matchId);
-			}, 2);
+				});
+			});
 		});
 	}
 
 	[Test("Creates a match as one user, and joins with another. Also tries to join again with the same user and expects an error.")]
 	public void ShouldJoinMatch(Cloud cloud) {
 		Login2Users(cloud, (Gamer creator, Gamer joiner) => {
-			creator.Matches.Create(createdMatch => {
-				Assert(createdMatch.IsSuccessful, "Match creation failed");
+			creator.Matches.Create(2)
+			.ExpectSuccess(createdMatch => {
+
 				// Creator should not be able to join again
-				creator.Matches.Join(triedJoin => {
-					Assert(!triedJoin.IsSuccessful, "Should not succeed to join match already part of");
+				creator.Matches.Join(createdMatch.MatchId)
+				.ExpectFailure(triedJoin => {
+	
 					// But the second player should
-					joiner.Matches.Join(joined => {
+					joiner.Matches.Join(createdMatch.MatchId)
+					.ExpectSuccess(joined => {
 						// Check that the match looks usable
-						Assert(joined.IsSuccessful, "Failed to join match");
-						Assert(joined.Value.MatchId == createdMatch.Value.MatchId, "The fetched match doesn't correspond to the created one");
-						Assert(joined.Value.Players[0].GamerId == creator.GamerId, "Should contain creator as player 1");
-						Assert(joined.Value.Players[1].GamerId == joiner.GamerId, "Should contain joiner as player 2");
+						Assert(joined.MatchId == createdMatch.MatchId, "The fetched match doesn't correspond to the created one");
+						Assert(joined.Players[0].GamerId == creator.GamerId, "Should contain creator as player 1");
+						Assert(joined.Players[1].GamerId == joiner.GamerId, "Should contain joiner as player 2");
 						CompleteTest();
-					}, createdMatch.Value.MatchId);
-				}, createdMatch.Value.MatchId);
-			}, 2);
+					});
+				});
+			});
 		});
 	}
 
 	[Test("Creates a match and attempts to delete it, and expects it to fail.")]
 	public void ShouldFailToDeleteMatch(Cloud cloud) {
 		Login(cloud, gamer => {
-			gamer.Matches.Create(createResult => {
-				Assert(createResult.IsSuccessful, "Failed to create match");
-				gamer.Matches.Delete(deleteResult => {
-					Assert(!deleteResult.IsSuccessful, "Failed to delete match");
+
+			gamer.Matches.Create(2)
+			.ExpectSuccess(createResult => {
+	
+				gamer.Matches.Delete(createResult.MatchId)
+				.ExpectFailure(deleteResult => {
 					Assert(deleteResult.ServerData["name"] == "MatchNotFinished", "Should not be able to delete match");
 					CompleteTest();
-				}, createResult.Value.MatchId);
-			}, 2);
+				});
+			});
 		});
 	}
 

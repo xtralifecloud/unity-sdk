@@ -20,15 +20,14 @@ public class TransactionTests : TestBase {
 	public void ShouldRunTransaction(Cloud cloud) {
 		LoginNewUser(cloud, gamer => {
 			Bundle tx = Bundle.CreateObject("gold", 10, "silver", 100);
-			// Set property, then get all and check it
 			gamer.Transactions.Post(
 				transaction: tx,
 				description: "Transaction run by integration test.")
 			.ExpectSuccess(txResult => {
 				Assert(txResult.Balance["gold"] == 10, "Gold is not set properly");
 				Assert(txResult.Balance["silver"] == 100, "Silver is not set properly");
+				return gamer.Transactions.Balance();
 			})
-			.ExpectSuccess(dummy => gamer.Transactions.Balance())
 			.ExpectSuccess(balance => {
 				Assert(balance["gold"] == 10, "Expected gold: 10 in balance");
 				Assert(balance["silver"] == 100, "Expected silver: 100 in balance");
@@ -123,7 +122,7 @@ public class TransactionTests : TestBase {
 				return tx.FetchPrevious();
 			})
 			.ExpectSuccess(tx => {
-				Assert(tx.Count == 0, "Expected two entries in history");
+				Assert(tx.Count == 2, "Expected two entries in history");
 				Assert(!tx.HasPrevious, "Should not have previous page");
 				Assert(tx.HasNext, "Should have next page");
 				CompleteTest();
@@ -160,15 +159,5 @@ public class TransactionTests : TestBase {
 				CompleteTest();
 			});
 		});
-	}
-
-	// Makes a handler that allows to execute several transactions using AsyncOp
-	private AsyncOp<TransactionResult> RunTransaction(Gamer gamer, Bundle transaction) {
-		AsyncOp<TransactionResult> op = new AsyncOp<TransactionResult>();
-		gamer.Transactions.Post(transaction)
-		.ExpectSuccess(result => {
-			op.Return(result);
-		});
-		return op;
 	}
 }
