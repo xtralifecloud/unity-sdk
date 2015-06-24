@@ -1,5 +1,4 @@
-﻿using RSG.Utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -272,9 +271,6 @@ namespace CotcSdk
         /// </summary>
         private void InvokeHandler<T>(Action<T> callback, IRejectable rejectable, T value)
         {
-            Argument.NotNull(() => callback);
-            Argument.NotNull(() => rejectable);            
-
             try
             {
                 callback(value);
@@ -299,11 +295,11 @@ namespace CotcSdk
         /// </summary>
         private void InvokeRejectHandlers(Exception ex)
         {
-            Argument.NotNull(() => ex);
-
             if (rejectHandlers != null)
             {
-                rejectHandlers.Each(handler => InvokeHandler(handler.callback, handler.rejectable, ex));
+				foreach (var handler in rejectHandlers) {
+					InvokeHandler(handler.callback, handler.rejectable, ex);
+				}
             }
 
             ClearHandlers();
@@ -316,7 +312,9 @@ namespace CotcSdk
         {
             if (resolveHandlers != null)
             {
-                resolveHandlers.Each(handler => InvokeHandler(handler.callback, handler.rejectable, value));
+				foreach (var handler in resolveHandlers) {
+					InvokeHandler(handler.callback, handler.rejectable, value);
+				}
             }
 
             ClearHandlers();
@@ -327,8 +325,6 @@ namespace CotcSdk
         /// </summary>
         public void Reject(Exception ex)
         {
-            Argument.NotNull(() => ex);
-
             if (CurState != PromiseState.Pending)
             {
                 throw new ApplicationException("Attempt to reject a promise that is already in state: " + CurState + ", a promise can only be rejected when it is still in state: " + PromiseState.Pending);
@@ -373,9 +369,6 @@ namespace CotcSdk
         /// </summary>
         public void Done(Action<PromisedT> onResolved, Action<Exception> onRejected)
         {
-            Argument.NotNull(() => onResolved);
-            Argument.NotNull(() => onRejected);
-
             var resultPromise = new Promise<PromisedT>();
             resultPromise.WithName(Name);
 
@@ -389,8 +382,6 @@ namespace CotcSdk
         /// </summary>
         public void Done(Action<PromisedT> onResolved)
         {
-            Argument.NotNull(() => onResolved);
-
             var resultPromise = new Promise<PromisedT>();
             resultPromise.WithName(Name);
 
@@ -428,8 +419,6 @@ namespace CotcSdk
         /// </summary>
         public IPromise<PromisedT> Catch(Action<Exception> onRejected)
         {
-            Argument.NotNull(() => onRejected);
-
             var resultPromise = new Promise<PromisedT>();
             resultPromise.WithName(Name);
 
@@ -482,8 +471,6 @@ namespace CotcSdk
         {
             // This version of the function must supply an onResolved.
             // Otherwise there is now way to get the converted value to pass to the resulting promise.
-            Argument.NotNull(() => onResolved); 
-
             var resultPromise = new Promise<ConvertedT>();
             resultPromise.WithName(Name);
 
@@ -592,8 +579,6 @@ namespace CotcSdk
         /// </summary>
         public IPromise<ConvertedT> Transform<ConvertedT>(Func<PromisedT, ConvertedT> transform)
         {
-            Argument.NotNull(() => transform);
-
             var resultPromise = new Promise<ConvertedT>();
             resultPromise.WithName(Name);
 
@@ -672,16 +657,16 @@ namespace CotcSdk
             var promisesArray = promises.ToArray();
             if (promisesArray.Length == 0)
             {
-                return Promise<IEnumerable<PromisedT>>.Resolved(LinqExts.Empty<PromisedT>());
+                return Promise<IEnumerable<PromisedT>>.Resolved(new PromisedT[0]);
             }
 
             var remainingCount = promisesArray.Length;
             var results = new PromisedT[remainingCount];
             var resultPromise = new Promise<IEnumerable<PromisedT>>();
+			int index = 0;
             resultPromise.WithName("All");
 
-            promisesArray.Each((promise, index) =>
-            {
+			foreach (var promise in promisesArray) {
                 promise
                     .Catch(ex =>
                     {
@@ -703,7 +688,8 @@ namespace CotcSdk
                         }
                     })
                     .Done();
-            });
+				index++;
+            }
 
             return resultPromise;
         }
@@ -751,9 +737,10 @@ namespace CotcSdk
             }
 
             var resultPromise = new Promise<PromisedT>();
+			int index = 0;
             resultPromise.WithName("Race");
 
-            promisesArray.Each((promise, index) =>
+			foreach (var promise in promisesArray)
             {
                 promise
                     .Catch(ex =>
@@ -772,7 +759,8 @@ namespace CotcSdk
                         }
                     })
                     .Done();
-            });
+				index++;
+            }
 
             return resultPromise;
         }
@@ -792,8 +780,6 @@ namespace CotcSdk
         /// </summary>
         public static IPromise<PromisedT> Rejected(Exception ex)
         {
-            Argument.NotNull(() => ex);
-
             var promise = new Promise<PromisedT>();
             promise.Reject(ex);
             return promise;
