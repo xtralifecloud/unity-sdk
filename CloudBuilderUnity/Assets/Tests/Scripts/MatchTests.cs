@@ -216,91 +216,67 @@ public class MatchTests : TestBase {
 		Login2NewUsers(cloud, (gamer1, gamer2) => {
 			int[] totalMatches = new int[1];
 			Match[] matches = new Match[4];
-			// Allows to better indent the code
-			new AsyncOp().Then(next => {
-				// 1) Create a match to which only P1 is participating
-				gamer1.Matches.Create(2)
-				.ExpectSuccess(m1 => {
-					matches[0] = m1;
-					next.Return();
-				});
-			})
-			.Then(next => {
+			// 1) Create a match to which only P1 is participating
+			gamer1.Matches.Create(2)
+			.ExpectSuccess(m1 => {
+				matches[0] = m1;
 				// 2) Create a finished match
-				gamer1.Matches.Create(2)
-				.ExpectSuccess(m2 => {
-					m2.Finish()
-					.ExpectSuccess(finishedM2 => {
-						matches[1] = m2;
-						next.Return();
-					});
-				});
+				return gamer1.Matches.Create(2);
 			})
-			.Then(next => {
+			.ExpectSuccess(m2 => {
+				matches[1] = m2;
+				return m2.Finish();
+			})
+			.ExpectSuccess(finishedM2 => {
 				// 3) Create a match to which we invite P1 (he should see himself)
-				gamer2.Matches.Create(2)
-				.ExpectSuccess(m3 => {
-					// Invite P1 to match 3
-					m3.InvitePlayer(gamer1.GamerId)
-					.ExpectSuccess(invitedP1 => {
-						matches[2] = m3;
-						next.Return();
-					});
-				});
+				return gamer2.Matches.Create(2);
 			})
-			.Then(next => {
+			.ExpectSuccess(m3 => {
+				matches[2] = m3;
+				// Invite P1 to match 3
+				return m3.InvitePlayer(gamer1.GamerId);
+			})
+			.ExpectSuccess(invitedP1 => {
 				// 4) Create a full match
-				gamer1.Matches.Create(1)
-				.ExpectSuccess(m4 => {
-					matches[3] = m4;
-					next.Return();
-				});
+				return gamer1.Matches.Create(1);
 			})
-			.Then(next => {
+			.ExpectSuccess(m4 => {
+				matches[3] = m4;
+
 				// List all matches; by default, not all matches should be returned (i.e. m1 and m3)
-				gamer1.Matches.List()
-				.ExpectSuccess(list => {
-					Assert(list.Count >= 4, "Should have many results");
-					totalMatches[0] = list.Total;
-					next.Return();
-				});
+				return gamer1.Matches.List();
 			})
-			.Then(next => {
+			.ExpectSuccess(list => {
+				Assert(list.Count >= 4, "Should have many results");
+				totalMatches[0] = list.Total;
+
 				// List matches to which P1 is participating (i.e. not m1 as m2 is full, m3 created by P2 and m4 full)
-				gamer1.Matches.List(participating: true)
-				.ExpectSuccess(list => {
-					Assert(list.Count == 1, "Should have 1 match");
-					Assert(list[0].MatchId == matches[0].MatchId, "M1 expected");
-					next.Return();
-				});
+				return gamer1.Matches.List(participating: true);
 			})
-			.Then(next => {
+			.ExpectSuccess(list => {
+				Assert(list.Count == 1, "Should have 1 match");
+				Assert(list[0].MatchId == matches[0].MatchId, "M1 expected");
+				
 				// List matches to which P1 is invited (i.e. m3)
-				gamer1.Matches.List(invited: true)
-				.ExpectSuccess(list => {
-					Assert(list.Count == 1, "Should have 1 match");
-					Assert(list[0].MatchId == matches[2].MatchId, "M3 expected");
-					next.Return();
-				});
+				return gamer1.Matches.List(invited: true);
 			})
-			.Then(next => {
+			.ExpectSuccess(list => {
+				Assert(list.Count == 1, "Should have 1 match");
+				Assert(list[0].MatchId == matches[2].MatchId, "M3 expected");
+				
 				// List all matches, including finished ones (i.e. m2)
-				gamer1.Matches.List(finished: true)
-				.ExpectSuccess(list => {
-					Assert(list.Total > totalMatches[0], "Should list more matches");
-					next.Return();
-				});
+				return gamer1.Matches.List(finished: true);
 			})
-			.Then(next => {
+			.ExpectSuccess(list => {
+				Assert(list.Total > totalMatches[0], "Should list more matches");
+
 				// List full matches (i.e. m4)
-				gamer1.Matches.List(full: true)
-				.ExpectSuccess(list => {
-					Assert(list.Total > totalMatches[0], "Should list more matches");
-					next.Return();
-				});
+				return gamer1.Matches.List(full: true);
 			})
-			.Then(() => CompleteTest())
-			.Return(); // Start the deferred chain
+			.ExpectSuccess(list => {
+				Assert(list.Total > totalMatches[0], "Should list more matches");
+				CompleteTest();
+			});
 		});
 	}
 

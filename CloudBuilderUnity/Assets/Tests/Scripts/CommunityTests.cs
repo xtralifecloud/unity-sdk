@@ -58,46 +58,42 @@ public class CommunityTests : TestBase {
 	[Test("Creates two users and tries to list them in a paginated fashion.")]
 	public void ShouldListUsers(Cloud cloud) {
 		Gamer[] gamers = new Gamer[2];
-		new AsyncOp().Then(next => {
-			// Create first user
-			cloud.Login(LoginNetwork.Email, "user1@localhost.localdomain", "123")
-			.ExpectSuccess(result1 => {
-				gamers[0] = result1;
-				// Second user
-				cloud.Login(LoginNetwork.Email, "user2@localhost.localdomain", "123")
-				.ExpectSuccess(result2 => {
-					gamers[1] = result2;
-					next.Return();
-				});
-			});
+		// Create first user
+		cloud.Login(LoginNetwork.Email, "user1@localhost.localdomain", "123")
+		.ExpectSuccess(result1 => {
+			gamers[0] = result1;
+
+			// Second user
+			return cloud.Login(LoginNetwork.Email, "user2@localhost.localdomain", "123");
 		})
-		.Then(next => {
+		.ExpectSuccess(result2 => {
+			gamers[1] = result2;
+
 			// Query for a specific user by e-mail
-			cloud.ListUsers("user2@localhost.localdomain")
-			.ExpectSuccess(result => {
-				Assert(result.Count == 1, "Expected one result only");
-				Assert(result[0].UserId == gamers[1].GamerId, "Expected to return user 2");
-				Assert(result[0].Network == LoginNetwork.Email, "Network is e-mail");
-				Assert(result[0].NetworkId == "user2@localhost.localdomain", "Invalid network ID");
-				Assert(result[0]["profile"]["displayName"] == "user2", "Invalid profile display name");
-				next.Return();
-			});
+			return cloud.ListUsers("user2@localhost.localdomain");
 		})
-		.Then(next => {
+		.ExpectSuccess(result => {
+			Assert(result.Count == 1, "Expected one result only");
+			Assert(result[0].UserId == gamers[1].GamerId, "Expected to return user 2");
+			Assert(result[0].Network == LoginNetwork.Email, "Network is e-mail");
+			Assert(result[0].NetworkId == "user2@localhost.localdomain", "Invalid network ID");
+			Assert(result[0]["profile"]["displayName"] == "user2", "Invalid profile display name");
+
 			// Query for all users in a paginated way
-			cloud.ListUsers("@", 1)
-			.ExpectSuccess(result => {
-				Assert(result.Count == 1, "Expected one result per page");
-				Assert(result.Total >= 2, "Expected at least two results total");
-				Assert(result.HasNext, "Should have next page");
-				Assert(!result.HasPrevious, "Should not have previous page");
-				result.FetchNext()
-				.ExpectSuccess(nextPage => {
-					Assert(nextPage.HasPrevious, "Should have previous page");
-					next.Return();
-				});
-			});
+			return cloud.ListUsers("@", 1);
 		})
-		.Then(() => CompleteTest()).Return();
+		.ExpectSuccess(result => {
+			Assert(result.Count == 1, "Expected one result per page");
+			Assert(result.Total >= 2, "Expected at least two results total");
+			Assert(result.HasNext, "Should have next page");
+			Assert(!result.HasPrevious, "Should not have previous page");
+
+			// Next page
+			return result.FetchNext();
+		})
+		.ExpectSuccess(nextPage => {
+			Assert(nextPage.HasPrevious, "Should have previous page");
+			CompleteTest();
+		});
 	}
 }
