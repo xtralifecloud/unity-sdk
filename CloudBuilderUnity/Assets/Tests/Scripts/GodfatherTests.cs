@@ -54,8 +54,7 @@ public class GodfatherTests : TestBase {
 
 				// Should fail to godfather himself
 				gamer.Godfather.UseCode(genCode)
-				.ExpectFailure(ex => {
-					CotcException usedCode = (CotcException)ex;
+				.ExpectFailure(usedCode => {
 					Assert(usedCode.HttpStatusCode == 400, "Expected HTTP 400");
 					Assert(usedCode.ServerData["name"] == "cantBeSelfGodchild", "Expected cantBeSelfGodchild");
 					CompleteTest();

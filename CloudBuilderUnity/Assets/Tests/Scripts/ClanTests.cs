@@ -59,8 +59,7 @@ public class ClanTests : TestBase {
 		cloud.ResumeSession(
 			gamerId: "15555f06c7b852423cb9074a",
 			gamerSecret: "1f89a1efa49a3cf59d00f8badb03227d1b56840b")
-		.ExpectFailure(ex => {
-			CotcException resumeResult = (CotcException)ex;
+		.ExpectFailure(resumeResult => {
 			Assert(resumeResult.HttpStatusCode == 401, "401 status code expected");
 			Assert(resumeResult.ServerData["name"] == "LoginError", "LoginError expected");
 			CompleteTest();
@@ -75,8 +74,7 @@ public class ClanTests : TestBase {
 			networkId: "nonexisting@localhost.localdomain",
 			networkSecret: "Password123",
 			preventRegistration: true)
-		.ExpectFailure(ex => {
-			CotcException resumeResult = (CotcException)ex;
+		.ExpectFailure(resumeResult => {
 			Assert(resumeResult.HttpStatusCode == 400, "400 expected");
 			Assert(resumeResult.ServerData["name"] == "PreventRegistration", "PreventRegistration error expected");
 			CompleteTest();
@@ -116,8 +114,7 @@ public class ClanTests : TestBase {
 					network: LoginNetwork.Email,
 					networkId: "cloud@localhost.localdomain",
 					networkSecret: "Anotherp4ss")
-				.ExpectFailure(ex => {
-					CotcException conversionResult = (CotcException)ex;
+				.ExpectFailure(conversionResult => {
 					Assert(conversionResult.HttpStatusCode == 400, "400 expected");
 					Assert(conversionResult.ServerData["message"] == "UserExists", "UserExists error expected");
 					CompleteTest();
@@ -197,8 +194,7 @@ public class ClanTests : TestBase {
 			networkSecret: "Password123")
 		.ExpectSuccess(gamer => {
 			gamer.Account.ChangeEmailAddress("clan@localhost.localdomain")
-			.ExpectFailure(ex => {
-				CotcException pswResult = (CotcException)ex;
+			.ExpectFailure(pswResult => {
 				Assert(pswResult.HttpStatusCode == 400, "400 expected");
 				Assert(pswResult.ServerData["message"] == "UserExists", "UserExists error expected");
 				CompleteTest();

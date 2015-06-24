@@ -10,12 +10,7 @@ public class IndexTests : TestBase {
 	public string TestMethodName;
 
 	void Start() {
-		// Invoke the method described on the integration test script (TestMethodName)
-		var met = GetType().GetMethod(TestMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-		// Test methods have a Cloud param (and we do the setup here)
-		FindObjectOfType<CotcGameObject>().GetCloud(cloud => {
-			met.Invoke(this, new object[] { cloud });
-		});
+		RunTestMethod(TestMethodName);
 	}
 
 	[Test("Indexes an object and retrieves it.")]
@@ -25,23 +20,18 @@ public class IndexTests : TestBase {
 		cloud.Index(indexName).IndexObject(
 			objectId: objectId,
 			properties: Bundle.CreateObject("prop", "value"),
-			payload: Bundle.CreateObject("pkey", "pvalue"),
-			done: result => {
-				Assert(result.IsSuccessful, "Failed to index object");
-				// Then retrieve it
-				cloud.Index(indexName).GetObject(
-					objectId: objectId,
-					done: gotObject => {
-						Assert(gotObject.IsSuccessful, "Failed to retrieve object");
-						Assert(gotObject.Value.IndexName == indexName, "Wrong index name");
-						Assert(gotObject.Value.ObjectId == objectId, "Wrong object ID");
-						Assert(gotObject.Value.Payload["pkey"] == "pvalue", "Wrong payload");
-						Assert(gotObject.Value.Properties["prop"] == "value", "Wrong properties content");
-						CompleteTest();
-					}
-				);
-			}
-		);
+			payload: Bundle.CreateObject("pkey", "pvalue"))
+		.ExpectSuccess(result => {
+			// Then retrieve it
+			cloud.Index(indexName).GetObject(objectId)
+			.ExpectSuccess(gotObject => {
+				Assert(gotObject.IndexName == indexName, "Wrong index name");
+				Assert(gotObject.ObjectId == objectId, "Wrong object ID");
+				Assert(gotObject.Payload["pkey"] == "pvalue", "Wrong payload");
+				Assert(gotObject.Properties["prop"] == "value", "Wrong properties content");
+				CompleteTest();
+			});
+		});
 	}
 
 	[Test("Indexes an object and deletes it. Checks that it cannot be accessed anymore then.")]
@@ -52,131 +42,109 @@ public class IndexTests : TestBase {
 		cloud.Index(indexName).IndexObject(
 			objectId: objectId,
 			properties: Bundle.CreateObject("prop", "value"),
-			payload: Bundle.CreateObject("pkey", "pvalue"),
-			done: result => {
-				Assert(result.IsSuccessful, "Failed to index object");
-				// Delete
-				cloud.Index(indexName).DeleteObject(
-					objectId: objectId,
-					done: deleted => {
-						Assert(deleted.IsSuccessful, "Failed to delete object");
-						Assert(deleted.ServerData["found"] == true, "Expected the item to be found");
-						// Should not find anymore
-						cloud.Index(indexName).GetObject(objectId: objectId, done: gotObject => {
-							Assert(!gotObject.IsSuccessful, "Should not find object anymore");
-							Assert(gotObject.HttpStatusCode == 404, "Should return 404");
-							CompleteTest();
-						});
-					}
-				);
-			}
-		);
+			payload: Bundle.CreateObject("pkey", "pvalue"))
+		.ExpectSuccess(result => {
+			// Delete
+			cloud.Index(indexName).DeleteObject(objectId)
+			.ExpectSuccess(deleted => {
+				// TODO
+//				Assert(deleted["found"] == true, "Expected the item to be found");
+				// Should not find anymore
+				cloud.Index(indexName).GetObject(objectId)
+				.ExpectFailure(gotObject => {
+					Assert(gotObject.HttpStatusCode == 404, "Should return 404");
+					CompleteTest();
+				});
+			});
+		});
 	}
 
 	[Test("Indexes a few objects and tries to query for them in various ways, assessing that the search arguments and pagination work as expected.")]
 	public void ShouldSearchForObjects(Cloud cloud) {
 		var index = cloud.Index("test" + Guid.NewGuid().ToString());
-		// Indexes one item and returns an async op object
-		Func<string, Bundle, Bundle, AsyncOp> indexItem = (objectId, properties, payload) => {
-			AsyncOp p = new AsyncOp();
-			index.IndexObject(response => {
-				Assert(response.IsSuccessful, "Failed to index item");
-				p.Return();
-			}, objectId, properties, payload);
-			return p;
-		};
 		// Index a few items
-		indexItem("item1", Bundle.CreateObject("item", "gold"), Bundle.CreateObject("key1", "value1"))
-		.Then(() => indexItem("item2", Bundle.CreateObject("item", "silver"), Bundle.CreateObject("key2", "value2")))
-		.Then(() => indexItem("item3", Bundle.CreateObject("item", "bronze"), Bundle.CreateObject("key3", "value3")))
-		.Then(() => indexItem("item4", Bundle.CreateObject("item", "silver", "qty", 10), Bundle.CreateObject("key4", "value4")))
+		index.IndexObject("item1", Bundle.CreateObject("item", "gold"), Bundle.CreateObject("key1", "value1"))
+		.ExpectSuccess(dummy => index.IndexObject("item2", Bundle.CreateObject("item", "silver"), Bundle.CreateObject("key2", "value2")))
+		.ExpectSuccess(dummy => index.IndexObject("item3", Bundle.CreateObject("item", "bronze"), Bundle.CreateObject("key3", "value3")))
+		.ExpectSuccess(dummy => index.IndexObject("item4", Bundle.CreateObject("item", "silver", "qty", 10), Bundle.CreateObject("key4", "value4")))
 			// Then check results
-		.Then(next => {
-			index.Search(
-				query: "item:gold",
-				done: result => {
-					// Should only return one item
-					Assert(result.IsSuccessful, "Should have searched for properties");
-					Assert(result.Value.Hits.Total == 1, "Should have one hit");
-					Assert(result.Value.MaxScore == result.Value.Hits[0].ResultScore, "Max score doesn't match first item score");
-					Assert(result.Value.Hits[0].ObjectId == "item1", "Expected 'item1'");
-					next.Return();
-				}
-			);
+		.ExpectSuccess(dummy => {
+			return index.Search("item:gold")
+			.ExpectSuccess(result => {
+				// Should only return one item
+				Assert(result.Hits.Total == 1, "Should have one hit");
+				Assert(result.MaxScore == result.Hits[0].ResultScore, "Max score doesn't match first item score");
+				Assert(result.Hits[0].ObjectId == "item1", "Expected 'item1'");
+			});
 		})
-		.Then(next => {
-			index.Search(
-				query: "item:silver",
-				done: result => {
-					// Should only return one item
-					Assert(result.IsSuccessful, "Should have searched for properties #2");
-					Assert(result.Value.Hits.Total == 2, "Should have two hits");
-					Assert(result.Value.Hits[0].ObjectId == "item2", "Expected 'item2'");
-					Assert(result.Value.Hits[1].ObjectId == "item4", "Expected 'item4'");
-					Assert(result.Value.Hits[1].Payload["key4"] == "value4", "Invalid payload of 'item4'");
-					Assert(result.Value.Hits[1].Properties["qty"] == 10, "Invalid qty payload of 'item4'");
-					next.Return();
-				}
-			);
+		.ExpectSuccess(dummy => {
+			return index.Search("item:silver")
+			.ExpectSuccess(result => {
+				// Should only return one item
+				Assert(result.Hits.Total == 2, "Should have two hits");
+				Assert(result.Hits[0].ObjectId == "item2", "Expected 'item2'");
+				Assert(result.Hits[1].ObjectId == "item4", "Expected 'item4'");
+				Assert(result.Hits[1].Payload["key4"] == "value4", "Invalid payload of 'item4'");
+				Assert(result.Hits[1].Properties["qty"] == 10, "Invalid qty payload of 'item4'");
+			});
 		})
-		.Then(next => {
-			index.Search(
+		.ExpectSuccess(dummy => {
+			return index.Search(
 				query: "item:*",
 				sortingProperties: new List<string>() { "item:desc" },
 				limit: 3,
-				offset: 0,
-				done: result => {
-					var hits = result.Value.Hits;
-					// Should return all results
-					Assert(result.IsSuccessful, "Should have searched for properties #3");
-					Assert(hits.Total == 4, "Should have all four hits");
-					// First time
-					if (hits.Offset == 0) {
-						Assert(hits.Count == 3, "Yet only three hits at once");
-						Assert(hits[2].Properties["item"] == "gold", "If sorting occurred correctly, third item should be gold");
-						Assert(hits.HasNext, "Should have next page");
-						Assert(!hits.HasPrevious, "Should not have previous page");
-						hits.FetchNext();
-					}
-					else {
-						Assert(hits.Count == 1, "Yet only one hit for the last page");
-						Assert(!hits.HasNext, "Should not have next page");
-						Assert(hits.HasPrevious, "Should have previous page");
-						next.Return();
-					}
-				}
-			);
-		})
-		.Then(() => CompleteTest());
+				offset: 0)
+			.ExpectSuccess(result => {
+				var hits = result.Hits;
+				// Should return all results
+				Assert(hits.Total == 4, "Should have all four hits");
+				// First time
+				Assert(hits.Count == 3, "Yet only three hits at once");
+				Assert(hits[2].Properties["item"] == "gold", "If sorting occurred correctly, third item should be gold");
+				Assert(hits.HasNext, "Should have next page");
+				Assert(!hits.HasPrevious, "Should not have previous page");
+				hits.FetchNext()
+				.ExpectSuccess(nextHits => {
+					Assert(nextHits.Count == 1, "Yet only one hit for the last page");
+					Assert(!nextHits.HasNext, "Should not have next page");
+					Assert(nextHits.HasPrevious, "Should have previous page");
+					CompleteTest();
+				});
+			});
+		});
 	}
 
 	[Test("Tests that the API can be used to search for matches")]
 	public void ShouldBeUsableToSearchForMatches(Cloud cloud) {
 		Login2NewUsers(cloud, (gamer1, gamer2) => {
-			gamer1.Matches.Create(match1 => {
-				Assert(match1.IsSuccessful, "Match 1 creation failed");
+
+			gamer1.Matches.Create(maxPlayers: 2)
+			.ExpectSuccess(match1 => {
 				Bundle matchProp = Bundle.CreateObject("public", true, "owner_id", gamer1.GamerId);
 				string queryStr = "public:true AND owner_id:" + gamer1.GamerId;
 				// Index the match
-				cloud.Index("matches").IndexObject(indexResult => {
-					Assert(indexResult.IsSuccessful, "Failed to index match 1");
+				cloud.Index("matches").IndexObject(match1.MatchId, matchProp, Bundle.Empty)
+				.ExpectSuccess(indexResult => {
+
 					// Create another match
-					gamer1.Matches.Create(match2 => {
-						Assert(match2.IsSuccessful, "Match 2 creation failed");
+					gamer1.Matches.Create(maxPlayers: 2)
+					.ExpectSuccess(match2 => {
+
 						// Index it
-						cloud.Index("matches").IndexObject(indexResult2 => {
-							Assert(indexResult2.IsSuccessful, "Failed to index match 2");
+						cloud.Index("matches").IndexObject(match2.MatchId, Bundle.CreateObject("public", false), Bundle.Empty)
+						.ExpectSuccess(indexResult2 => {
+
 							// Check that we can find match1 by looking for public matches
-							cloud.Index("matches").Search(found => {
-								Assert(found.IsSuccessful, "Failed to look for matches");
-								Assert(found.Value.Hits.Count == 1, "Should find one match");
-								Assert(found.Value.Hits[0].ObjectId == match1.Value.MatchId, "Should find one match");
+							cloud.Index("matches").Search(queryStr)
+							.ExpectSuccess(found => {
+								Assert(found.Hits.Count == 1, "Should find one match");
+								Assert(found.Hits[0].ObjectId == match1.MatchId, "Should find one match");
 								CompleteTest();
-							}, queryStr); // search for match #1
-						}, match2.Value.MatchId, Bundle.CreateObject("public", false), Bundle.Empty); // index match #2
-					}, 2); // create match #2
-				}, match1.Value.MatchId, matchProp, Bundle.Empty); // index match #1
-			}, 2); // create match #1
+							});
+						});
+					});
+				});
+			});
 		});
 	}
 }
