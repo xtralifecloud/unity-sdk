@@ -112,7 +112,7 @@ namespace CotcSdk {
 		 * @param count the number of items to draw from the shoe.
 		 * @param notification a notification that can be sent to all players currently playing the match (except you).
 		 */
-		public ResultTask<Bundle> DrawFromShoe(int count = 1, PushNotification notification = null) {
+		public IPromise<Bundle> DrawFromShoe(int count = 1, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("shoe").Path("draw");
 			url.QueryParam("count", count).QueryParam("lastEventId", LastEventId);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
@@ -130,7 +130,7 @@ namespace CotcSdk {
 		 * @param deleteToo if true, deletes the match if it finishes successfully or is already finished.
 		 * @param notification a notification that can be sent to all players currently playing the match (except you).
 		 */
-		public ResultTask<bool> Finish(bool deleteToo = false, PushNotification notification = null) {
+		public IPromise<bool> Finish(bool deleteToo = false, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("finish");
 			url.QueryParam("lastEventId", LastEventId);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
@@ -158,7 +158,7 @@ namespace CotcSdk {
 		 *     match (GamerInfo.GamerId).
 		 * @param notification a push notification that can be sent to the invitee.
 		 */
-		public ResultTask<bool> InvitePlayer(string playerId, PushNotification notification = null) {
+		public IPromise<bool> InvitePlayer(string playerId, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("invite").Path(playerId);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
@@ -174,7 +174,7 @@ namespace CotcSdk {
 		 *     indicates success when true.
 		 * @param notification a push notification that can be sent to all players except you.
 		 */
-		public ResultTask<bool> Leave(PushNotification notification = null) {
+		public IPromise<bool> Leave(PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("leave");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
@@ -195,7 +195,7 @@ namespace CotcSdk {
 		 *     now on. Passing a non null value clears the pending events in the match.
 		 * @param notification a push notification that can be sent to all players except you.
 		 */
-		public ResultTask<bool> PostMove(Bundle moveData, Bundle updatedGameState = null, PushNotification notification = null) {
+		public IPromise<bool> PostMove(Bundle moveData, Bundle updatedGameState = null, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("move").QueryParam("lastEventId", LastEventId);
 			Bundle config = Bundle.CreateObject();
 			config["move"] = moveData;

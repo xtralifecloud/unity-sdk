@@ -11,7 +11,7 @@ namespace CotcSdk {
 		 * @param gamerId ID of the gamer to add as a friend (fetched using ListFriends for instance).
 		 * @param notification optional OS notification to be sent to indicate the player that the status has changed.
 		 */
-		public ResultTask<bool> AddFriend(string gamerId, PushNotification notification = null) {
+		public IPromise<bool> AddFriend(string gamerId, PushNotification notification = null) {
 			return ChangeRelationshipStatus(gamerId, FriendRelationshipStatus.Add, notification);
 		}
 
@@ -22,7 +22,7 @@ namespace CotcSdk {
 		 * @param state the new state to set.
 		 * @param notification optional OS notification to be sent to indicate the player that the status has changed.
 		 */
-		public ResultTask<bool> ChangeRelationshipStatus(string gamerId, FriendRelationshipStatus state, PushNotification notification = null) {
+		public IPromise<bool> ChangeRelationshipStatus(string gamerId, FriendRelationshipStatus state, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/friends").Path(domain).Path(gamerId).QueryParam("status", state.ToString().ToLower());
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
@@ -47,7 +47,7 @@ namespace CotcSdk {
 		 *     list of friends.
 		 * @param filterBlacklisted when set to true, restricts to blacklisted friends.
 		 */
-		public ResultTask<List<GamerInfo>> ListFriends(bool filterBlacklisted = false) {
+		public IPromise<List<GamerInfo>> ListFriends(bool filterBlacklisted = false) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/friends").Path(domain);
 			if (filterBlacklisted) url.QueryParam("status", "blacklist");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
@@ -70,8 +70,8 @@ namespace CotcSdk {
 		 * @param network the network with which these friends are associated
 		 * @param friends a list of data about the friends fetched on the social network.
 		 */
-		public ResultTask<SocialNetworkFriendResponse> PostSocialNetworkFriends(LoginNetwork network, List<SocialNetworkFriend> friends) {
-			var task = new ResultTask<SocialNetworkFriendResponse>();
+		public IPromise<SocialNetworkFriendResponse> PostSocialNetworkFriends(LoginNetwork network, List<SocialNetworkFriend> friends) {
+			var task = new Promise<SocialNetworkFriendResponse>();
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/friends").Path(domain).QueryParam("network", network.Describe());
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			Bundle friendData = Bundle.CreateObject();
@@ -99,7 +99,7 @@ namespace CotcSdk {
 		 *     the message will be queued and transmitted the next time the domain event loop is started.
 		 * @param notification push notification to send to the recipient player if not currently active.
 		 */
-		public ResultTask<bool> SendEvent(string gamerId, Bundle eventData, PushNotification notification = null) {
+		public IPromise<bool> SendEvent(string gamerId, Bundle eventData, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/event").Path(domain).Path(gamerId);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = eventData;

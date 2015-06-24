@@ -1,31 +1,30 @@
 using System;
 
 namespace CotcSdk {
-	// TODO remove
-	public class ResultTask<T> : Promise<T> {
-		public ResultTask<T> ForwardTo(ResultTask<T> otherTask) {
-			return (ResultTask<T>)
-				Then(result => otherTask.Resolve(result))
+
+	public static class PromiseExtensions {
+		public static IPromise<T> ForwardTo<T>(this IPromise<T> promise, Promise<T> otherTask) {
+			return promise.Then(result => otherTask.Resolve(result))
 				.Catch(ex => otherTask.Reject(ex));
 		}
 
-		public ResultTask<T> PostResult(ErrorCode code, string reason) {
-			Reject(new CotcException(code, reason));
-			return this;
+		public static IPromise<T> PostResult<T>(this Promise<T> promise, ErrorCode code, string reason) {
+			promise.Reject(new CotcException(code, reason));
+			return promise;
 		}
-		public ResultTask<T> PostResult(T value, Bundle serverData) {
-			Resolve(value);
-			return this;
+		public static IPromise<T> PostResult<T>(this Promise<T> promise, T value, Bundle serverData) {
+			promise.Resolve(value);
+			return promise;
 		}
-		internal ResultTask<T> PostResult(HttpResponse response, string reason) {
+		internal static IPromise<T> PostResult<T>(this Promise<T> promise, HttpResponse response, string reason) {
 			CotcException result = new CotcException(response);
 			result.ErrorInformation = reason;
-			Reject(result);
-			return this;
+			promise.Reject(result);
+			return promise;
 		}
-		internal ResultTask<T> PostResult(T value, Bundle serverData, HttpResponse response) {
-			Resolve(value);
-			return this;
+		internal static IPromise<T> PostResult<T>(this Promise<T> promise, T value, Bundle serverData, HttpResponse response) {
+			promise.Resolve(value);
+			return promise;
 		}
 	}
 }

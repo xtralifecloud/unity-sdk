@@ -11,7 +11,7 @@ namespace CotcSdk
 		 * method SetProfile.
 		 * @param done callback invoked when the login has finished, either successfully or not.
 		 */
-		public ResultTask<GamerProfile> Get() {
+		public IPromise<GamerProfile> Get() {
 			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/profile");
 			return Common.RunInTask<GamerProfile>(req, (response, task) => {
 				GamerProfile profile = new GamerProfile(response.BodyJson);
@@ -30,7 +30,7 @@ namespace CotcSdk
 		 * @param data is a Bundle holding the data to save for this user. The object can hold the
 		 *     whole profile or just a subset of the keys.
 		 */
-		public ResultTask<bool> Set(Bundle data) {
+		public IPromise<bool> Set(Bundle data) {
 			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/profile");
 			req.BodyJson = data;
 			return Common.RunInTask<bool>(req, (response, task) => {

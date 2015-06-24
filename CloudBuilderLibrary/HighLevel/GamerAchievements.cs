@@ -23,7 +23,7 @@ namespace CotcSdk {
 		 * @param data data to associate with the achievement, merged with the current data (that is, existing keys
 		 *     are not affected)
 		 */
-		public ResultTask<AchievementDefinition> AssociateData(string achName, Bundle data) {
+		public IPromise<AchievementDefinition> AssociateData(string achName, Bundle data) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/achievements").Path(domain).Path(achName).Path("gamerdata");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = data;
@@ -37,7 +37,7 @@ namespace CotcSdk {
 		 * @param done callback invoked when the operation has finished, either successfully or not. The attached value
 		 *     is the list of achievements with their current state.
 		 */
-		public ResultTask<Dictionary<string, AchievementDefinition>> List() {
+		public IPromise<Dictionary<string, AchievementDefinition>> List() {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/achievements").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			return Common.RunInTask<Dictionary<string, AchievementDefinition>>(req, (response, task) => {

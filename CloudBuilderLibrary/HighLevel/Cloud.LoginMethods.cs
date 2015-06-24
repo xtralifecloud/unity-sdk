@@ -15,7 +15,7 @@ namespace CotcSdk
 		 * @param limit the maximum number of results to return per page.
 		 * @param offset number of the first result.
 		 */
-		public ResultTask<PagedList<UserInfo>> ListUsers(string filter, int limit = 30, int offset = 0) {
+		public IPromise<PagedList<UserInfo>> ListUsers(string filter, int limit = 30, int offset = 0) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer").QueryParam("q", filter).QueryParam("limit", limit).QueryParam("skip", offset);
 			HttpRequest req = MakeUnauthenticatedHttpRequest(url);
 			return Common.RunInTask<PagedList<UserInfo>>(req, (response, task) => {
@@ -39,7 +39,7 @@ namespace CotcSdk
 		 * @return task returning when the login has finished. The resulting Gamer object can then
 		 *     be used for many purposes related to the signed in account.
 		 */
-		public ResultTask<Gamer> LoginAnonymously() {
+		public IPromise<Gamer> LoginAnonymously() {
 			Bundle config = Bundle.CreateObject();
 			config["device"] = Managers.SystemFunctions.CollectDeviceInformation();
 			
@@ -62,7 +62,7 @@ namespace CotcSdk
 		 * @param networkSecret the secret for the network. For e-mail accounts, this would be the passord. For
 		 *     facebook or other SNS accounts, this would be the user token.
 		 */
-		public ResultTask<Gamer> Login(LoginNetwork network, string networkId, string networkSecret, bool preventRegistration = false) {
+		public IPromise<Gamer> Login(LoginNetwork network, string networkId, string networkSecret, bool preventRegistration = false) {
 			Bundle config = Bundle.CreateObject();
 			config["network"] = network.Describe();
 			config["id"] = networkId;
@@ -90,7 +90,7 @@ namespace CotcSdk
 		 * @param gamerId credentials of the previous session (Gamer.GamerId).
 		 * @param gamerSecret credentials of the previous session (Gamer.GamerSecret).
 		 */
-		public ResultTask<Gamer> ResumeSession(string gamerId, string gamerSecret) {
+		public IPromise<Gamer> ResumeSession(string gamerId, string gamerSecret) {
 			return Login(LoginNetwork.Anonymous, gamerId, gamerSecret);
 		}
 
@@ -104,8 +104,8 @@ namespace CotcSdk
 		 * @param mailBody the body of the mail. You should include the string [[SHORTCODE]], which will
 		 *     be replaced by the generated short code.
 		 */
-		public ResultTask<bool> SendResetPasswordEmail(string userEmail, string mailSender, string mailTitle, string mailBody) {
-			var task = new ResultTask<bool>();
+		public IPromise<bool> SendResetPasswordEmail(string userEmail, string mailSender, string mailTitle, string mailBody) {
+			var task = new Promise<bool>();
 			UrlBuilder url = new UrlBuilder("/v1/login").Path(userEmail);
 			HttpRequest req = MakeUnauthenticatedHttpRequest(url);
 			Bundle config = Bundle.CreateObject();
@@ -125,8 +125,8 @@ namespace CotcSdk
 		 *     The boolean value inside indicates whether the user exists.
 		 * @param networkId the ID of the user on the network, like the e-mail address.
 		 */
-		public ResultTask<bool> UserExists(LoginNetwork network, string networkId) {
-			var task = new ResultTask<bool>();
+		public IPromise<bool> UserExists(LoginNetwork network, string networkId) {
+			var task = new Promise<bool>();
 			UrlBuilder url = new UrlBuilder("/v1/users")
 				.Path(network.Describe()).Path(networkId);
 			HttpRequest req = MakeUnauthenticatedHttpRequest(url);

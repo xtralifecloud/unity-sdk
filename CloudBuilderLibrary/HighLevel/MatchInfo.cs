@@ -17,7 +17,7 @@ namespace CotcSdk {
 		 * @param done callback invoked when the operation has finished, either successfully or not. The attached boolean
 		 *     indicates success when true.
 		 */
-		public ResultTask<bool> DismissInvitation() {
+		public IPromise<bool> DismissInvitation() {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("invitation");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";

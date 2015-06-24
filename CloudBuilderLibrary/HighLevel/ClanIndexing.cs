@@ -10,7 +10,7 @@ namespace CotcSdk {
 		 * @param done callback invoked when the operation has finished, either successfully or not.
 		 * @param objectId ID of the object to delete, as passed when indexing.
 		 */
-		public ResultTask<bool> DeleteObject(string objectId) {
+		public IPromise<bool> DeleteObject(string objectId) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName).Path(objectId);
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			req.Method = "DELETE";
@@ -24,7 +24,7 @@ namespace CotcSdk {
 		 * @param done callback invoked when the operation has finished, either successfully or not.
 		 * @param objectId ID of the object to look for, as passed when indexing.
 		 */
-		public ResultTask<IndexResult> GetObject(string objectId) {
+		public IPromise<IndexResult> GetObject(string objectId) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName).Path(objectId);
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			return Common.RunInTask<IndexResult>(req, (response, task) => {
@@ -48,7 +48,7 @@ namespace CotcSdk {
 		 *     as the properties, however those are not indexed (cannot be looked for in a search request). Its
 		 *     content is returned in searches (#IndexResult.Payload property).
 		 */
-		public ResultTask<bool> IndexObject(string objectId, Bundle properties, Bundle payload) {
+		public IPromise<bool> IndexObject(string objectId, Bundle properties, Bundle payload) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName);
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject(
@@ -77,7 +77,7 @@ namespace CotcSdk {
 		 * @param limit the maximum number of results to return per page.
 		 * @param offset number of the first result.
 		 */
-		public ResultTask<IndexSearchResult> Search(string query, List<string> sortingProperties = null, int limit = 30, int offset = 0) {
+		public IPromise<IndexSearchResult> Search(string query, List<string> sortingProperties = null, int limit = 30, int offset = 0) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName);
 			url.QueryParam("from", offset).QueryParam("max", limit).QueryParam("q", query);
 			// Build sort property

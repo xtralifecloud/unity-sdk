@@ -30,8 +30,8 @@ namespace CotcSdk
 		 * @param cloud needed to perform various tasks. Ensure that the SDK is initialized properly and fetch a
 		 *     cloud object.
 		 */
-		public ResultTask<Gamer> LoginWithFacebook(Cloud cloud) {
-			var task = new ResultTask<Gamer>();
+		public IPromise<Gamer> LoginWithFacebook(Cloud cloud) {
+			var task = new Promise<Gamer>();
 			EnsureFacebookLoaded(() => {
 				FB.Login("public_profile,email,user_friends", (FBResult result) => {
 					if (result.Error != null) {
@@ -59,8 +59,8 @@ namespace CotcSdk
 		 *     #GamerCommunity.PostSocialNetworkFriends.
 		 * @param gamer gamer object used to link the data to the account.
 		 */
-		public ResultTask<SocialNetworkFriendResponse> FetchFriends(Gamer gamer) {
-			var task = new ResultTask<SocialNetworkFriendResponse>();
+		public IPromise<SocialNetworkFriendResponse> FetchFriends(Gamer gamer) {
+			var task = new Promise<SocialNetworkFriendResponse>();
 			EnsureFacebookLoaded(() => {
 				DoFacebookRequestWithPagination("/me/friends", Facebook.HttpMethod.GET)
 				.Then(result => {
@@ -76,8 +76,8 @@ namespace CotcSdk
 
 		#region Private
 		// Starting point
-		private ResultTask<List<SocialNetworkFriend>> DoFacebookRequestWithPagination(string query, Facebook.HttpMethod method) {
-			var task = new ResultTask<List<SocialNetworkFriend>>();
+		private IPromise<List<SocialNetworkFriend>> DoFacebookRequestWithPagination(string query, Facebook.HttpMethod method) {
+			var task = new Promise<List<SocialNetworkFriend>>();
 			FB.API(query, method, (FBResult result) => {
 				DoFacebookRequestWithPagination(task, result, new List<SocialNetworkFriend>());
 			});
@@ -85,7 +85,7 @@ namespace CotcSdk
 		}
 
 		// Recursive
-		private void DoFacebookRequestWithPagination(ResultTask<List<SocialNetworkFriend>> task, FBResult result, List<SocialNetworkFriend> addDataTo) {
+		private void DoFacebookRequestWithPagination(Promise<List<SocialNetworkFriend>> task, FBResult result, List<SocialNetworkFriend> addDataTo) {
 			if (result.Error != null) {
 				Debug.LogWarning("Error in facebook request: " + result.Error.ToString());
 				task.PostResult(ErrorCode.SocialNetworkError, "Facebook/ Network #1");

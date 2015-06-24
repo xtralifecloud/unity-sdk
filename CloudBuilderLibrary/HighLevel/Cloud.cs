@@ -28,8 +28,8 @@ namespace CotcSdk
 		 * You should hardly ever need this.
 		 * @param done callback invoked when the request has finished, either successfully or not.
 		 */
-		public ResultTask<bool> Ping() {
-			var task = new ResultTask<bool>();
+		public IPromise<bool> Ping() {
+			var task = new Promise<bool>();
 			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/ping");
 			return Common.RunRequest(req, task, (HttpResponse response) => {
 				task.PostResult(true, response.BodyJson);

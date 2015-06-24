@@ -25,7 +25,7 @@ namespace CotcSdk {
 		 * to auto-select the page where the current logged in user is located, including his score in the result. After
 		 * that, you may use the paged result handler to fetch pages nearby.
 		 */
-		public ResultTask<PagedList<Score>> List(string board, int limit = 30, int offset = 0) {
+		public IPromise<PagedList<Score>> List(string board, int limit = 30, int offset = 0) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/scores").Path(domain).Path(board).QueryParam("count", limit);
 			if (offset == -1) url.QueryParam("page", "me");
 			else              url.QueryParam("page", offset / limit + 1);
@@ -57,7 +57,7 @@ namespace CotcSdk {
 		 *     describes a list of scores, without pagination functionality.
 		 * @param board the name of the board to fetch scores from.
 		 */
-		public ResultTask<List<Score>> ListFriendScores(string board) {
+		public IPromise<List<Score>> ListFriendScores(string board) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/scores").Path(domain).Path(board).QueryParam("type", "friendscore");
 			return Common.RunInTask<List<Score>>(Gamer.MakeHttpRequest(url), (response, task) => {
 				List<Score> scores = new List<Score>();
@@ -74,7 +74,7 @@ namespace CotcSdk {
 		 *     contains information about the best scores of the user, indexed by board name.
 		 *     IMPORTANT: in the results, the gamer information is not provided. GamerInfo is always null.
 		 */
-		public ResultTask<Dictionary<string, Score>> ListUserBestScores() {
+		public IPromise<Dictionary<string, Score>> ListUserBestScores() {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/bestscores").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			return Common.RunInTask<Dictionary<string, Score>>(req, (response, task) => {
@@ -96,7 +96,7 @@ namespace CotcSdk {
 		 * @param board the name of the board to check the ranking against. Should match the board where a score has
 		 * already been posted.
 		 */
-		public ResultTask<int> GetRank(long score, string board) {
+		public IPromise<int> GetRank(long score, string board) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/scores").Path(domain).Path(board);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("score", score);
@@ -120,7 +120,7 @@ namespace CotcSdk {
 		 * @param forceSave when set to true, the score is saved even if its value is less than the past best score
 		 *     for this player.
 		 */
-		public ResultTask<PostedGameScore> Post(long score, string board, ScoreOrder order, string scoreInfo = null, bool forceSave = false) {
+		public IPromise<PostedGameScore> Post(long score, string board, ScoreOrder order, string scoreInfo = null, bool forceSave = false) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/scores").Path(domain).Path(board);
 			switch (order) {
 				case ScoreOrder.HighToLow: url.QueryParam("order", "hightolow"); break;

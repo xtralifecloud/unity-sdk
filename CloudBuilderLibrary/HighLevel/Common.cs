@@ -43,7 +43,7 @@ namespace CotcSdk
 			TimeSpan span = new TimeSpan(DateTime.UtcNow.Ticks - InitialTicks);
 			Managers.Logger.Log(LogLevel.Verbose, "[" + span.TotalMilliseconds + "/" + Thread.CurrentThread.ManagedThreadId + "] " + description);
 		}
-
+		
 		internal static T ParseEnum<T>(string value, T defaultValue = default(T)) {
 			try {
 				return (T)Enum.Parse(typeof(T), value, true);
@@ -66,7 +66,7 @@ namespace CotcSdk
 		 *     have to resolve it from inside.
 		 * @param onSuccess callback called in case of success only.
 		 */
-		internal static ResultTask<T> RunRequest<T>(HttpRequest req, ResultTask<T> task, Action<HttpResponse> onSuccess) {
+		internal static IPromise<T> RunRequest<T>(HttpRequest req, Promise<T> task, Action<HttpResponse> onSuccess) {
 			Managers.HttpClient.Run(req, (HttpResponse response) => {
 				if (HasFailed(response)) {
 					task.PostResult(response, "Request failed");
@@ -85,8 +85,8 @@ namespace CotcSdk
 		 * @param onSuccess callback called in case of success only, with the response and a new task that needs to
 		 *     be resolved from there.
 		 */
-		internal static ResultTask<T> RunInTask<T>(HttpRequest req, Action<HttpResponse, ResultTask<T>> onSuccess) {
-			var task = new ResultTask<T>();
+		internal static IPromise<T> RunInTask<T>(HttpRequest req, Action<HttpResponse, Promise<T>> onSuccess) {
+			var task = new Promise<T>();
 			Managers.HttpClient.Run(req, (HttpResponse response) => {
 				if (HasFailed(response)) {
 					task.PostResult(response, "Request failed");

@@ -25,7 +25,7 @@ namespace CotcSdk {
 		 * @param done callback invoked when the operation has finished, either successfully or not. The attached
 		 *     string is the generated code.
 		 */
-		public ResultTask<string> GenerateCode() {
+		public IPromise<string> GenerateCode() {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/godfather").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "PUT";
@@ -38,7 +38,7 @@ namespace CotcSdk {
 		 * This method can be used to retrieve the gamer who have added you as a godfather.
 		 * @param done callback invoked when the operation has finished, either successfully or not.
 		 */
-		public ResultTask<List<GamerInfo>> GetGodchildren() {
+		public IPromise<List<GamerInfo>> GetGodchildren() {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/godchildren").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			return Common.RunInTask<List<GamerInfo>>(req, (response, task) => {
@@ -54,7 +54,7 @@ namespace CotcSdk {
 		 * This method can be used to retrieve the godfather of the gamer.
 		 * @param done callback invoked when the operation has finished, either successfully or not.
 		 */
-		public ResultTask<GamerInfo> GetGodfather() {
+		public IPromise<GamerInfo> GetGodfather() {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/godfather").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			return Common.RunInTask<GamerInfo>(req, (response, task) => {
@@ -76,7 +76,7 @@ namespace CotcSdk {
 		 *     The godfather will reveive an event of type 'godchildren' containing the id of the godchildren
 		 *     and the balance/achievements field if rewarded.
 		 */
-		public ResultTask<bool> UseCode(string code, Bundle rewardTx = null, PushNotification notification = null) {
+		public IPromise<bool> UseCode(string code, Bundle rewardTx = null, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/godfather").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			Bundle config = Bundle.CreateObject();

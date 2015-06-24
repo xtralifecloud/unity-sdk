@@ -25,7 +25,7 @@ namespace CotcSdk {
 		 *     If the property doesn't exist, the call is marked as failed with a 404 status.
 		 * @param key the name of the key to be fetched.
 		 */
-		public ResultTask<Bundle> GetKey(string key) {
+		public IPromise<Bundle> GetKey(string key) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			return Common.RunInTask<Bundle>(req, (response, task) => {
@@ -40,7 +40,7 @@ namespace CotcSdk {
 		 *     or this call will fail with a network error.
 		 * @param key the name of the key to be fetched.
 		 */
-		public ResultTask<byte[]> GetKeyBinary(string key) {
+		public IPromise<byte[]> GetKeyBinary(string key) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key).QueryParam("binary");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			return Common.RunInTask<byte[]>(req, (response, task) => {
@@ -61,7 +61,7 @@ namespace CotcSdk {
 		 * @param value the value to set. As usual with bundles, casting is implicitly done, so you may as well
 		 *     call this method passing an integer or string as value for instance.
 		 */
-		public ResultTask<bool> SetKey(string key, Bundle value) {
+		public IPromise<bool> SetKey(string key, Bundle value) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("value", value);
@@ -78,7 +78,7 @@ namespace CotcSdk {
 		 * @param key the name of the key to set the value for.
 		 * @param binaryData the value to set as binary data.
 		 */
-		public ResultTask<bool> SetKeyBinary(string key, byte[] binaryData) {
+		public IPromise<bool> SetKeyBinary(string key, byte[] binaryData) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key).QueryParam("binary");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "PUT";
@@ -103,7 +103,7 @@ namespace CotcSdk {
 		 *     value indicates success.
 		 * @param key the name of the key to remove.
 		 */
-		public ResultTask<bool> RemoveKey(string key) {
+		public IPromise<bool> RemoveKey(string key) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";

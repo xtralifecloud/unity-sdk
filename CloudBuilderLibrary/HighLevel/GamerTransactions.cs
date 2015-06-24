@@ -16,7 +16,7 @@ namespace CotcSdk {
 		 * @param done callback invoked when the operation has finished, either successfully or not. The attached bundle
 		 *     contains the balance. You can query the individual items by doing result.Value["gold"] for instance.
 		 */
-		public ResultTask<Bundle> Balance() {
+		public IPromise<Bundle> Balance() {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/tx").Path(domain).Path("balance");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			return Common.RunInTask<Bundle>(req, (response, task) => {
@@ -43,7 +43,7 @@ namespace CotcSdk {
 		 * @param limit for pagination, allows to set a greater or smaller page size than the default 30.
 		 * @param offset for pagination, avoid using it explicitly.
 		 */
-		public ResultTask<PagedList<Transaction>> History(string unit = null, int limit = 30, int offset = 0) {
+		public IPromise<PagedList<Transaction>> History(string unit = null, int limit = 30, int offset = 0) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/tx").Path(domain).QueryParam("skip", offset).QueryParam("limit", limit);
 			if (unit != null) url.QueryParam("unit", unit);
 			// Request for current results
@@ -72,7 +72,7 @@ namespace CotcSdk {
 		 *     to zero.
 		 * @param description description of the transaction. Will appear in the back office.
 		 */
-		public ResultTask<TransactionResult> Post(Bundle transaction, string description = null) {
+		public IPromise<TransactionResult> Post(Bundle transaction, string description = null) {
 			UrlBuilder url = new UrlBuilder("/v2.2/gamer/tx").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("transaction", transaction, "description", description);

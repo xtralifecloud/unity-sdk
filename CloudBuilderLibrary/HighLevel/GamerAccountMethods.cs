@@ -12,8 +12,8 @@ namespace CotcSdk
 		 *     indicates success.
 		 * @param newEmailAddress the new e-mail address to be used for signing in.
 		 */
-		public ResultTask<bool> ChangeEmailAddress(string newEmailAddress) {
-			var task = new ResultTask<bool>();
+		public IPromise<bool> ChangeEmailAddress(string newEmailAddress) {
+			var task = new Promise<bool>();
 			if (Gamer.Network != LoginNetwork.Email) {
 				return task.PostResult(ErrorCode.BadParameters, "Unavailable for " + Gamer.Network.Describe() + " accounts");
 			}
@@ -34,8 +34,8 @@ namespace CotcSdk
 		 *     indicates success.
 		 * @param newPassword the new password to be used for signing in.
 		 */
-		public ResultTask<bool> ChangePassword(string newPassword) {
-			var task = new ResultTask<bool>();
+		public IPromise<bool> ChangePassword(string newPassword) {
+			var task = new Promise<bool>();
 			if (Gamer.Network != LoginNetwork.Email) {
 				task.PostResult(ErrorCode.BadParameters, "Unavailable for " + Gamer.Network.Describe() + " accounts");
 				return task;
@@ -63,8 +63,8 @@ namespace CotcSdk
 		 * @param networkSecret the secret for the network. For e-mail accounts, this would be the passord. For
 		 *     facebook or other SNS accounts, this would be the user token.
 		 */
-		public ResultTask<bool> Convert(LoginNetwork network, string networkId, string networkSecret) {
-			var task = new ResultTask<bool>();
+		public IPromise<bool> Convert(LoginNetwork network, string networkId, string networkSecret) {
+			var task = new Promise<bool>();
 			Bundle config = Bundle.CreateObject();
 			config["network"] = network.Describe();
 			config["id"] = networkId;
