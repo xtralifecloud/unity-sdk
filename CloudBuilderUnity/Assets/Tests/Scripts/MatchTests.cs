@@ -1,11 +1,6 @@
 using System;
-using UnityEngine;
 using CotcSdk;
-using System.Reflection;
 using IntegrationTests;
-using System.Threading;
-using System.Collections.Generic;
-using System.Net;
 
 public class MatchTests : TestBase {
 
@@ -111,48 +106,54 @@ public class MatchTests : TestBase {
 	[Test("Big test that creates a match and simulates playing it with two players. Tries a bit of everything in the API.")]
 	public void ShouldPlayMatch(Cloud cloud) {
 		Login2Users(cloud, (Gamer gamer1, Gamer gamer2) => {
+			Match[] matches = new Match[2];
 			// Create a match
-			gamer1.Matches.Create(maxPlayers: 2).ExpectSuccess(matchP1 => {
+			gamer1.Matches.Create(maxPlayers: 2)
+			.ExpectSuccess(matchP1 => {
+				matches[0] = matchP1;
 				// Join with P2
-				gamer2.Matches.Join(matchP1.MatchId).ExpectSuccess(matchP2 => {
-					
-					// Post a move
-					matchP2.PostMove(Bundle.CreateObject("x", 1))
-					.ExpectSuccess(movePosted => {
-						Assert(matchP2.Moves.Count == 1, "Should have a move event");
-						Assert(matchP2.LastEventId != null, "Last event ID shouldn't be null");
-						Assert(matchP2.Players.Count == 2, "Should contain two players");
-						
-						// Post another move with global state
-						matchP2.PostMove(Bundle.CreateObject("x", 2), Bundle.CreateObject("key", "value"))
-						.ExpectSuccess(matchPostedGlobalState => {
-							Assert(matchP2.Moves.Count == 1, "Posting a global state should clear events");
-							Assert(matchP2.GlobalState["key"] == "value", "The global state should have been updated");
+				return gamer2.Matches.Join(matchP1.MatchId);
+			})
+			.ExpectSuccess(matchP2 => {
+				matches[1] = matchP2;
+				// Post a move
+				return matchP2.PostMove(Bundle.CreateObject("x", 1));
+			})
+			.ExpectSuccess(movePosted => {
+				Assert(matches[1].Moves.Count == 1, "Should have a move event");
+				Assert(matches[1].LastEventId != null, "Last event ID shouldn't be null");
+				Assert(matches[1].Players.Count == 2, "Should contain two players");
 
-							// Now make P2 leave
-							matchP2.Leave().ExpectSuccess(leftMatch => {
-								// Then update P1's match, and check that it reflects changes made by P2.
-								// Normally these changes should be fetched automatically via events, but we don't handle them in this test.
-								gamer1.Matches.Fetch(matchP1.MatchId)
-								.ExpectSuccess(matchRefreshed => {
-									matchP1 = matchRefreshed;
-									Assert(matchP1.Moves.Count == 1, "Should have a move event (after refresh)");
-									Assert(matchP1.LastEventId == matchP2.LastEventId, "Last event ID should match");
-									Assert(matchP1.Players.Count == 1, "Should only contain one player after P2 has left");
+				// Post another move with global state
+				return matches[1].PostMove(Bundle.CreateObject("x", 2), Bundle.CreateObject("key", "value"));
+			})
+			.ExpectSuccess(matchPostedGlobalState => {
+				Assert(matches[1].Moves.Count == 1, "Posting a global state should clear events");
+				Assert(matches[1].GlobalState["key"] == "value", "The global state should have been updated");
 
-									// Then finish the match & delete for good
-									matchP1.Finish(true).ExpectSuccess(matchFinished => {
-										// The match should have been deleted
-										gamer1.Matches.Fetch(matchP1.MatchId)
-										.ExpectFailure(deletedMatch => {
-											Assert(deletedMatch.ServerData["name"] == "BadMatchID", "Expected bad match ID");
-											CompleteTest();
-										});
-									});
-								});
-							});
-						});
-					});
+				// Now make P2 leave
+				return matches[1].Leave();
+			})
+			.ExpectSuccess(leftMatch => {
+				// Then update P1's match, and check that it reflects changes made by P2.
+				// Normally these changes should be fetched automatically via events, but we don't handle them in this test.
+				return gamer1.Matches.Fetch(matches[0].MatchId);
+			})
+			.ExpectSuccess(matchRefreshed => {
+				matches[0] = matchRefreshed;
+				Assert(matches[0].Moves.Count == 1, "Should have a move event (after refresh)");
+				Assert(matches[0].LastEventId == matches[1].LastEventId, "Last event ID should match");
+				Assert(matches[0].Players.Count == 1, "Should only contain one player after P2 has left");
+
+				// Then finish the match & delete for good
+				return matches[0].Finish(true);
+			})
+			.ExpectSuccess(matchFinished => {
+				// The match should have been deleted
+				gamer1.Matches.Fetch(matches[0].MatchId)
+				.ExpectFailure(deletedMatch => {
+					Assert(deletedMatch.ServerData["name"] == "BadMatchID", "Expected bad match ID");
+					CompleteTest();
 				});
 			});
 		});

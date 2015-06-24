@@ -235,7 +235,7 @@ namespace CotcSdk
                 Reject(ex);
             }
         }
-
+		
         /// <summary>
         /// Add a rejection handler for this promise.
         /// </summary>

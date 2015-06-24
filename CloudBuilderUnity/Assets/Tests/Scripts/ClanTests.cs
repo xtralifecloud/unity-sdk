@@ -41,16 +41,14 @@ public class ClanTests : TestBase {
 			network: LoginNetwork.Email,
 			networkId: "cloud@localhost.localdomain",
 			networkSecret: "Password123")
-		.ExpectSuccess(gamer => {
-			// Resume the session with the credentials just received
-			cloud.ResumeSession(
-				gamerId: gamer.GamerId,
-				gamerSecret: gamer.GamerSecret)
-			.ExpectSuccess(resumeResult => {
-				Assert(resumeResult != null, "Resume failed");
-				CompleteTest();
-			});
-		});
+		// Resume the session with the credentials just received
+		.Then(gamer => cloud.ResumeSession(
+			gamerId: gamer.GamerId,
+			gamerSecret: gamer.GamerSecret))
+		.Then(resumeResult => {
+			Assert(resumeResult != null, "Resume failed");
+		})
+		.CompleteTestIfSuccessful();
 	}
 
 	[Test("Tests that a non-existing session fails to resume (account not created).")]
@@ -85,17 +83,15 @@ public class ClanTests : TestBase {
 	public void ShouldConvertAccount(Cloud cloud) {
 		// Create an anonymous account
 		cloud.LoginAnonymously()
-		.ExpectSuccess(gamer => {
-			// Then convert it to e-mail
-			gamer.Account.Convert(
-				network: LoginNetwork.Email,
-				networkId: RandomEmailAddress(),
-				networkSecret: "Password123")
-			.ExpectSuccess(conversionResult => {
-				Assert(conversionResult, "Convert account failed");
-				CompleteTest();
-			});
-		});
+		// Then convert it to e-mail
+		.Then(gamer => gamer.Account.Convert(
+			network: LoginNetwork.Email,
+			networkId: RandomEmailAddress(),
+			networkSecret: "Password123"))
+		.Then(conversionResult => {
+			Assert(conversionResult, "Convert account failed");
+		})
+		.CompleteTestIfSuccessful();
 	}
 
 	[Test("Ensures that an account cannot be converted to a credential that already exists.")]
@@ -130,15 +126,13 @@ public class ClanTests : TestBase {
 			network: LoginNetwork.Email,
 			networkId: "cloud@localhost.localdomain",
 			networkSecret: "Password123")
-		.ExpectSuccess(loginResult => {
-			cloud.UserExists(
-				network: LoginNetwork.Email,
-				networkId: "cloud@localhost.localdomain")
-			.ExpectSuccess(checkResult => {
-				Assert(checkResult, "UserExists failed");
-				CompleteTest();
-			});
-		});
+		.Then(loginResult => cloud.UserExists(
+			network: LoginNetwork.Email,
+			networkId: "cloud@localhost.localdomain"))
+		.Then(checkResult => {
+			Assert(checkResult, "UserExists failed");
+		})
+		.CompleteTestIfSuccessful();
 	}
 
 	[Test("Checks the send reset link functionality.", "Known to timeout sometimes (server side issue).")]
@@ -150,10 +144,10 @@ public class ClanTests : TestBase {
 			mailSender: "admin@localhost.localdomain",
 			mailTitle: "Reset link",
 			mailBody: "Here is your link: [[SHORTCODE]]")
-		.ExpectSuccess(result => {
+		.Then(result => {
 			Assert(result, "Should succeed to send reset password mail");
-			CompleteTest();
-		});
+		})
+		.CompleteTestIfSuccessful();
 	}
 
 	[Test("Changes the password of an e-mail account.")]
@@ -162,13 +156,12 @@ public class ClanTests : TestBase {
 			network: LoginNetwork.Email,
 			networkId: RandomEmailAddress(),
 			networkSecret: "Password123")
-		.ExpectSuccess(gamer => {
-			gamer.Account.ChangePassword("Password124")
-			.ExpectSuccess(pswResult => {
-				Assert(pswResult, "Change password failed");
-				CompleteTest();
-			});
-		});
+		.Then(gamer => gamer.Account.ChangePassword("Password124"))
+		.Then(pswResult => {
+			Assert(pswResult, "Change password failed");
+			CompleteTest();
+		})
+		.CompleteTestIfSuccessful();
 	}
 
 	[Test("Changes the e-mail address associated to an e-mail account.")]
@@ -177,13 +170,12 @@ public class ClanTests : TestBase {
 			network: LoginNetwork.Email,
 			networkId: RandomEmailAddress(),
 			networkSecret: "Password123")
-		.ExpectSuccess(gamer => {
-			gamer.Account.ChangeEmailAddress(RandomEmailAddress())
-			.ExpectSuccess(pswResult => {
-				Assert(pswResult, "Change email failed");
-				CompleteTest();
-			});
-		});
+		.Then(gamer => gamer.Account.ChangeEmailAddress(RandomEmailAddress()))
+		.Then(pswResult => {
+			Assert(pswResult, "Change email failed");
+			CompleteTest();
+		})
+		.CompleteTestIfSuccessful();
 	}
 
 	[Test("Changes the e-mail address associated to an e-mail account.")]
