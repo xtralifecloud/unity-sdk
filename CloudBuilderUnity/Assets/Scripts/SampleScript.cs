@@ -1,6 +1,4 @@
-﻿#define USE_FACEBOOK
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using CotcSdk;
 using UnityEngine.UI;
@@ -22,17 +20,19 @@ public class SampleScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
+		// Link with the CotC Game Object
 		var cb = FindObjectOfType<CotcGameObject>();
 		if (cb == null) {
 			Debug.LogError("Please put a Clan of the Cloud prefab in your scene!");
 			return;
 		}
+		// Log unhandled exceptions (.Done block without .Catch -- not called if there is any .Then)
+		Promise.UnhandledException += (object sender, ExceptionEventArgs e) => {
+			Debug.LogError("Unhandled exception: " + e.Exception.ToString());
+		};
 		// Initiate getting the main Cloud object
 		cb.GetCloud().Done(cloud => {
 			Cloud = cloud;
-			Promise.UnhandledException += (object sender, ExceptionEventArgs e) => {
-				Debug.LogError("Unhandled exception: " + e.Exception.ToString());
-			};
 			// Retry failed HTTP requests once
 			Cloud.HttpRequestFailedHandler = (HttpRequestFailedEventArgs e) => {
 				if (e.UserData == null) {
@@ -50,25 +50,23 @@ public class SampleScript : MonoBehaviour {
 	
 	// Signs in with an anonymous account
 	public void DoLogin() {
-		Cloud.LoginAnonymously().Done(this.DidLogin);
-	}
-
-	// Signs in with facebook
-	public void DoLoginWithFacebook() {
-#if USE_FACEBOOK
-		var fb = FindObjectOfType<CotcFacebookIntegration>();
-		if (fb == null) {
-			Debug.LogError("Please put the CotcFacebookIntegration prefab in your scene!");
-			return;
-		}
-		fb.LoginWithFacebook(Cloud).Done(this.DidLogin);
-#else
-		Debug.LogError("Facebook not included (uncomment #define USE_FACEBOOK).");
-#endif
+		// Call the API method which returns an IPromise<Gamer> (promising a Gamer result).
+		// It may fail, in which case the .Then or .Done handlers are not called, so you
+		// should provide a .Catch handler.
+		Cloud.LoginAnonymously()
+			.Then(gamer => DidLogin(gamer))
+			.Catch(ex => {
+				// The exception should always be CotcException
+				CotcException error = (CotcException)ex;
+				Debug.LogError("Failed to login: " + error.ErrorCode + " (" + error.HttpStatusCode + ")");
+			});
 	}
 
 	// Log in by e-mail
 	public void DoLoginEmail() {
+		// You may also not provide a .Catch handler and use .Done instead of .Then. In that
+		// case the Promise.UnhandledException handler will be called instead of the .Done
+		// block if the call fails.
 		Cloud.Login(
 			network: LoginNetwork.Email,
 			networkId: EmailInput.text,
@@ -83,7 +81,7 @@ public class SampleScript : MonoBehaviour {
 			network: LoginNetwork.Email,
 			networkId: EmailInput.text,
 			networkSecret: DefaultPassword)
-		.Then(dummy => {
+		.Done(dummy => {
 			Debug.Log("Successfully converted account");
 		});
 	}
@@ -92,7 +90,7 @@ public class SampleScript : MonoBehaviour {
 	public void DoFetchFriend() {
 		string address = EmailInput.text;
 		Cloud.ListUsers(filter: address)
-		.Then(friends => {
+		.Done(friends => {
 			if (friends.Total != 1) {
 				Debug.LogWarning("Failed to find account with e-mail " + address + ": " + friends.ToString());
 			}
@@ -112,32 +110,6 @@ public class SampleScript : MonoBehaviour {
 			eventData: Bundle.CreateObject("hello", "world"),
 			notification: new PushNotification().Message("en", "Please open the app"))
 		.Done(dummy => Debug.Log("Sent event to gamer " + FriendId));
-	}
-
-	public void DoAddFacebookFriends() {
-#if USE_FACEBOOK
-		var fb = FindObjectOfType<CotcFacebookIntegration>();
-		if (fb == null) {
-			Debug.LogError("Please put the CotcFacebookIntegration prefab in your scene!");
-			return;
-		}
-		// List facebook friends
-		fb.FetchFriends(Gamer).Then(result => {
-			foreach (SocialNetworkFriend f in result.ByNetwork[LoginNetwork.Facebook]) {
-				// Those who have a CotC account, add them as friend
-				if (f.ClanInfo != null) {
-					Gamer.Community.AddFriend(f.ClanInfo.GamerId)
-					.Then(addFriendResult => {
-						if (!addFriendResult) {
-							Debug.LogError("Failed to add friend " + f.ClanInfo.GamerId);
-						}
-					});
-				}
-			}
-		});
-#else
-		Debug.LogError("Facebook not included (uncomment #define USE_FACEBOOK).");
-#endif
 	}
 
 	// Posts a sample transaction
@@ -167,9 +139,9 @@ public class SampleScript : MonoBehaviour {
 	}
 
 	private bool RequireGamer() {
-		if (FriendId == null)
+		if (Gamer == null)
 			Debug.LogError("You need to fetch a friend first. Fill the e-mail address field and click Fetch Friend.");
-		return FriendId != null;
+		return Gamer != null;
 	}
 
 	private bool RequireFriend() {

@@ -32,6 +32,6 @@ From your code, find the object as for the Clan of the Cloud SDK and call method
 
 ~~~~{.cs}
 	var fb = FindObjectOfType<CotcFacebookIntegration>();
-	fb.LoginWithFacebook(gamerResult => { ... }, Cloud);
+	fb.LoginWithFacebook(Cloud).Done(gamerResult => { ... });
 ~~~~
 
