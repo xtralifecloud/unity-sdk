@@ -99,20 +99,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0f63298283dadd89e7a3ee1fd083c01e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_matches.html#a0f63298283dadd89e7a3ee1fd083c01e">Create</a> (ResultHandler&lt; <a class="el" href="class_cotc_sdk_1_1_match.html">Match</a> &gt; done, int maxPlayers, string description=null, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> customProperties=null, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> shoe=null)</td></tr>
-<tr class="separator:a0f63298283dadd89e7a3ee1fd083c01e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab096fc6b1c9b96eb3bff837246316ca0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_matches.html#ab096fc6b1c9b96eb3bff837246316ca0">Delete</a> (ResultHandler&lt; bool &gt; done, string matchId)</td></tr>
-<tr class="separator:ab096fc6b1c9b96eb3bff837246316ca0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37c5f286c4f5a76303dae1eea31de353"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_match.html">Match</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_matches.html#a37c5f286c4f5a76303dae1eea31de353">Create</a> (int maxPlayers, string description=null, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> customProperties=null, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> shoe=null)</td></tr>
+<tr class="separator:a37c5f286c4f5a76303dae1eea31de353"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad541f5576effa1bf3825dad04fe95e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_matches.html#aad541f5576effa1bf3825dad04fe95e0">Delete</a> (string matchId)</td></tr>
+<tr class="separator:aad541f5576effa1bf3825dad04fe95e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa90d48d85763dffb238327c35f5bf1cb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_matches.html#aa90d48d85763dffb238327c35f5bf1cb">DiscardEventHandlers</a> ()</td></tr>
 <tr class="separator:aa90d48d85763dffb238327c35f5bf1cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a459390c5467df56730fb361cbe4ee797"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_gamer_matches.html">GamerMatches</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_matches.html#a459390c5467df56730fb361cbe4ee797">Domain</a> (string domain)</td></tr>
 <tr class="separator:a459390c5467df56730fb361cbe4ee797"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38fb6348bee794bf793616eef3b3e375"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_matches.html#a38fb6348bee794bf793616eef3b3e375">Fetch</a> (ResultHandler&lt; <a class="el" href="class_cotc_sdk_1_1_match.html">Match</a> &gt; done, string matchId)</td></tr>
-<tr class="separator:a38fb6348bee794bf793616eef3b3e375"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88538ec269cf63ba94d8ada6babc14bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_matches.html#a88538ec269cf63ba94d8ada6babc14bd">Join</a> (ResultHandler&lt; <a class="el" href="class_cotc_sdk_1_1_match.html">Match</a> &gt; done, string matchId, <a class="el" href="class_cotc_sdk_1_1_push_notification.html">PushNotification</a> notification=null)</td></tr>
-<tr class="separator:a88538ec269cf63ba94d8ada6babc14bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a011c5dfbd5fc94bd051bed1918447d47"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_matches.html#a011c5dfbd5fc94bd051bed1918447d47">List</a> (ResultHandler&lt; PagedList&lt; <a class="el" href="class_cotc_sdk_1_1_match_list_result.html">MatchListResult</a> &gt;&gt; done, bool participating=false, bool invited=false, bool finished=false, bool full=false, int limit=30, int offset=0)</td></tr>
-<tr class="separator:a011c5dfbd5fc94bd051bed1918447d47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a580ab6f12d82dfb3c5ce3b5b4cb74ff4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_match.html">Match</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_matches.html#a580ab6f12d82dfb3c5ce3b5b4cb74ff4">Fetch</a> (string matchId)</td></tr>
+<tr class="separator:a580ab6f12d82dfb3c5ce3b5b4cb74ff4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a092dc56f8c29f31a22428fc5bfde9f6f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_match.html">Match</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_matches.html#a092dc56f8c29f31a22428fc5bfde9f6f">Join</a> (string matchId, <a class="el" href="class_cotc_sdk_1_1_push_notification.html">PushNotification</a> notification=null)</td></tr>
+<tr class="separator:a092dc56f8c29f31a22428fc5bfde9f6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55262a07126a96e4016f77a02116151a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; PagedList<br class="typebreak" />
+&lt; <a class="el" href="class_cotc_sdk_1_1_match_list_result.html">MatchListResult</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_matches.html#a55262a07126a96e4016f77a02116151a">List</a> (bool participating=false, bool invited=false, bool finished=false, bool full=false, int limit=30, int offset=0)</td></tr>
+<tr class="separator:a55262a07126a96e4016f77a02116151a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
@@ -121,19 +122,13 @@ Action&lt; <a class="el" href="class_cotc_sdk_1_1_match_invite_event.html">Match
 <tr class="separator:a094c303d7d0e906749d723ec0cd82e7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a0f63298283dadd89e7a3ee1fd083c01e"></a>
+<a class="anchor" id="a37c5f286c4f5a76303dae1eea31de353"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void CotcSdk.GamerMatches.Create </td>
+          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_match.html">Match</a>&gt; CotcSdk.GamerMatches.Create </td>
           <td>(</td>
-          <td class="paramtype">ResultHandler&lt; <a class="el" href="class_cotc_sdk_1_1_match.html">Match</a> &gt;&#160;</td>
-          <td class="paramname"><em>done</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>maxPlayers</em>, </td>
         </tr>
@@ -175,26 +170,16 @@ Action&lt; <a class="el" href="class_cotc_sdk_1_1_match_invite_event.html">Match
 
 </div>
 </div>
-<a class="anchor" id="ab096fc6b1c9b96eb3bff837246316ca0"></a>
+<a class="anchor" id="aad541f5576effa1bf3825dad04fe95e0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void CotcSdk.GamerMatches.Delete </td>
+          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;bool&gt; CotcSdk.GamerMatches.Delete </td>
           <td>(</td>
-          <td class="paramtype">ResultHandler&lt; bool &gt;&#160;</td>
-          <td class="paramname"><em>done</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>matchId</em>&#160;</td>
-        </tr>
-        <tr>
+          <td class="paramname"><em>matchId</em></td><td>)</td>
           <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -246,26 +231,16 @@ Action&lt; <a class="el" href="class_cotc_sdk_1_1_match_invite_event.html">Match
 
 </div>
 </div>
-<a class="anchor" id="a38fb6348bee794bf793616eef3b3e375"></a>
+<a class="anchor" id="a580ab6f12d82dfb3c5ce3b5b4cb74ff4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void CotcSdk.GamerMatches.Fetch </td>
+          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_match.html">Match</a>&gt; CotcSdk.GamerMatches.Fetch </td>
           <td>(</td>
-          <td class="paramtype">ResultHandler&lt; <a class="el" href="class_cotc_sdk_1_1_match.html">Match</a> &gt;&#160;</td>
-          <td class="paramname"><em>done</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>matchId</em>&#160;</td>
-        </tr>
-        <tr>
+          <td class="paramname"><em>matchId</em></td><td>)</td>
           <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -279,19 +254,13 @@ Action&lt; <a class="el" href="class_cotc_sdk_1_1_match_invite_event.html">Match
 
 </div>
 </div>
-<a class="anchor" id="a88538ec269cf63ba94d8ada6babc14bd"></a>
+<a class="anchor" id="a092dc56f8c29f31a22428fc5bfde9f6f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void CotcSdk.GamerMatches.Join </td>
+          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_match.html">Match</a>&gt; CotcSdk.GamerMatches.Join </td>
           <td>(</td>
-          <td class="paramtype">ResultHandler&lt; <a class="el" href="class_cotc_sdk_1_1_match.html">Match</a> &gt;&#160;</td>
-          <td class="paramname"><em>done</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>matchId</em>, </td>
         </tr>
@@ -319,19 +288,13 @@ Action&lt; <a class="el" href="class_cotc_sdk_1_1_match_invite_event.html">Match
 
 </div>
 </div>
-<a class="anchor" id="a011c5dfbd5fc94bd051bed1918447d47"></a>
+<a class="anchor" id="a55262a07126a96e4016f77a02116151a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void CotcSdk.GamerMatches.List </td>
+          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;PagedList&lt;<a class="el" href="class_cotc_sdk_1_1_match_list_result.html">MatchListResult</a>&gt; &gt; CotcSdk.GamerMatches.List </td>
           <td>(</td>
-          <td class="paramtype">ResultHandler&lt; PagedList&lt; <a class="el" href="class_cotc_sdk_1_1_match_list_result.html">MatchListResult</a> &gt;&gt;&#160;</td>
-          <td class="paramname"><em>done</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>participating</em> = <code>false</code>, </td>
         </tr>
@@ -393,7 +356,7 @@ Action&lt; <a class="el" href="class_cotc_sdk_1_1_match_invite_event.html">Match
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 17 2015 16:43:32 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jun 25 2015 14:45:42 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

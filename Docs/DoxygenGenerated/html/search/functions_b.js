@@ -1,11 +1,11 @@
 var searchData=
 [
-  ['leave',['Leave',['../class_cotc_sdk_1_1_match.html#a8a40a48f9ca48dab60838a404123bcdc',1,'CotcSdk::Match']]],
-  ['list',['List',['../class_cotc_sdk_1_1_gamer_achievements.html#ae2a9eb19b66f7a61cea940762aae7192',1,'CotcSdk.GamerAchievements.List()'],['../class_cotc_sdk_1_1_gamer_matches.html#a011c5dfbd5fc94bd051bed1918447d47',1,'CotcSdk.GamerMatches.List()'],['../class_cotc_sdk_1_1_gamer_scores.html#a7943938f659a7424476d13c36e432b17',1,'CotcSdk.GamerScores.List()']]],
-  ['listfriends',['ListFriends',['../class_cotc_sdk_1_1_gamer_community.html#a2321e5e83a515140ea959c2df638771e',1,'CotcSdk::GamerCommunity']]],
-  ['listfriendscores',['ListFriendScores',['../class_cotc_sdk_1_1_gamer_scores.html#a7ef0fe78ed16bb625784f23d0c8d9a95',1,'CotcSdk::GamerScores']]],
-  ['listuserbestscores',['ListUserBestScores',['../class_cotc_sdk_1_1_gamer_scores.html#a277c108b73f5c5842ebb0951edcde9bb',1,'CotcSdk::GamerScores']]],
-  ['listusers',['ListUsers',['../class_cotc_sdk_1_1_cloud.html#ade37c3af4ecd1cafe1910fe1f8b27960',1,'CotcSdk::Cloud']]],
-  ['login',['Login',['../class_cotc_sdk_1_1_cloud.html#a1c0f28d94f74c0b4a0f0946280930832',1,'CotcSdk::Cloud']]],
-  ['loginanonymously',['LoginAnonymously',['../class_cotc_sdk_1_1_cloud.html#a8bca19f319e87bf0a3389f6dbaa7c52c',1,'CotcSdk::Cloud']]]
+  ['leave',['Leave',['../class_cotc_sdk_1_1_match.html#a3e5e45c134e20b015a7b0417e2ceeb68',1,'CotcSdk::Match']]],
+  ['list',['List',['../class_cotc_sdk_1_1_gamer_achievements.html#a003c9c5bbaad6034c9a28ecc26e95a56',1,'CotcSdk.GamerAchievements.List()'],['../class_cotc_sdk_1_1_gamer_matches.html#a55262a07126a96e4016f77a02116151a',1,'CotcSdk.GamerMatches.List()'],['../class_cotc_sdk_1_1_gamer_scores.html#afa89039b8ff6f073b7b72dc296305b5d',1,'CotcSdk.GamerScores.List()']]],
+  ['listfriends',['ListFriends',['../class_cotc_sdk_1_1_gamer_community.html#a1c0cf747ca69f08893fcc13756adade2',1,'CotcSdk::GamerCommunity']]],
+  ['listfriendscores',['ListFriendScores',['../class_cotc_sdk_1_1_gamer_scores.html#aa3df47ad36971dea104b5122e1693c08',1,'CotcSdk::GamerScores']]],
+  ['listuserbestscores',['ListUserBestScores',['../class_cotc_sdk_1_1_gamer_scores.html#a6cc68465f87daac955c93326f64f75c4',1,'CotcSdk::GamerScores']]],
+  ['listusers',['ListUsers',['../class_cotc_sdk_1_1_cloud.html#a8c22e712212037333f698918b0f7bf23',1,'CotcSdk::Cloud']]],
+  ['login',['Login',['../class_cotc_sdk_1_1_cloud.html#a1f3f0e4e6f078bbafc409f46e602cec4',1,'CotcSdk::Cloud']]],
+  ['loginanonymously',['LoginAnonymously',['../class_cotc_sdk_1_1_cloud.html#ad44854139e09d3948bc872ce99668e0b',1,'CotcSdk::Cloud']]]
 ];

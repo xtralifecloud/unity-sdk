@@ -86,7 +86,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </ol>
 <h1><a class="anchor" id="toc1"></a>
 Setup a Facebook App</h1>
-<p>To be able to log in CloudBuilder with the user's facebook account, you need to create a <a href="http://developers.facebook.com/">Facebook App</a></p>
+<p>To be able to log in Clan of the Cloud with the user's facebook account, you need to create a <a href="http://developers.facebook.com/">Facebook App</a></p>
 <p>On Facebook Developer website, check the following settings :</p>
 <div class="image">
 <img src="FacebookDevelopers.png" alt="FacebookDevelopers.png"/>
@@ -98,15 +98,15 @@ Download the Facebook SDK for Unity</h1>
 <p>Configure your AppID through the Facebook Settings menu in Unity. Do not forget this step as facebook will throw an error upon usage otherwise.</p>
 <h1><a class="anchor" id="toc3"></a>
 Using the Facebook integration plugin</h1>
-<p>Import the CloudBuilder Facebook Integration package into your project.</p>
-<p>Put the CloudBuilderFacebookIntegration object on your scene, from the <code>CloudBuilderFacebookIntegration/Prefabs</code> folder.</p>
-<p>From your code, find the object as for CloudBuilder and call methods on it.</p>
-<div class="fragment"><div class="line">var fb = FindObjectOfType&lt;CloudBuilderFacebookIntegration&gt;();</div>
-<div class="line">fb.LoginWithFacebook(gamerResult =&gt; { ... }, Cloud);</div>
+<p>Import the Unity SDK Facebook Integration package into your project.</p>
+<p>Put the CotcFacebookIntegration object on your scene, from the <code>CotcFacebookIntegration/Prefabs</code> folder.</p>
+<p>From your code, find the object as for the Clan of the Cloud SDK and call methods on it.</p>
+<div class="fragment"><div class="line">var fb = FindObjectOfType&lt;CotcFacebookIntegration&gt;();</div>
+<div class="line">fb.LoginWithFacebook(Cloud).Done(gamerResult =&gt; { ... });</div>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 17 2015 16:43:32 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jun 25 2015 14:45:42 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

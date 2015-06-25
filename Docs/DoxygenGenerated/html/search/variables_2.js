@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['id',['Id',['../class_cotc_sdk_1_1_social_network_friend.html#a840b2b9d756ab57271ecf22a94cd3411',1,'CotcSdk::SocialNetworkFriend']]],
-  ['inviter',['Inviter',['../class_cotc_sdk_1_1_match_invite_event.html#ab795bd379d09bbc61fbbe512b9000b60',1,'CotcSdk::MatchInviteEvent']]]
+  ['finished',['Finished',['../class_cotc_sdk_1_1_match_finish_event.html#a4e1fbaa6d64021d4121893cdcab7fa42',1,'CotcSdk::MatchFinishEvent']]],
+  ['firstname',['FirstName',['../class_cotc_sdk_1_1_social_network_friend.html#a6ae51fa3e5284c27a4298e2c8d194c5c',1,'CotcSdk::SocialNetworkFriend']]]
 ];

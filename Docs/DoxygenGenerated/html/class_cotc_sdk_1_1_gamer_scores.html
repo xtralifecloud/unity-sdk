@@ -98,16 +98,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aa1dab75cf0580e9cd0056c5c9e581fce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_gamer_scores.html">GamerScores</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_scores.html#aa1dab75cf0580e9cd0056c5c9e581fce">Domain</a> (string domain)</td></tr>
 <tr class="separator:aa1dab75cf0580e9cd0056c5c9e581fce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7943938f659a7424476d13c36e432b17"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_scores.html#a7943938f659a7424476d13c36e432b17">List</a> (ResultHandler&lt; PagedList&lt; <a class="el" href="class_cotc_sdk_1_1_score.html">Score</a> &gt;&gt; done, string board, int limit=30, int offset=0)</td></tr>
-<tr class="separator:a7943938f659a7424476d13c36e432b17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ef0fe78ed16bb625784f23d0c8d9a95"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_scores.html#a7ef0fe78ed16bb625784f23d0c8d9a95">ListFriendScores</a> (ResultHandler&lt; <a class="el" href="class_cotc_sdk_1_1_gamer_scores.html#a7943938f659a7424476d13c36e432b17">List</a>&lt; <a class="el" href="class_cotc_sdk_1_1_score.html">Score</a> &gt;&gt; done, string board)</td></tr>
-<tr class="separator:a7ef0fe78ed16bb625784f23d0c8d9a95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a277c108b73f5c5842ebb0951edcde9bb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_scores.html#a277c108b73f5c5842ebb0951edcde9bb">ListUserBestScores</a> (ResultHandler&lt; Dictionary&lt; string, <a class="el" href="class_cotc_sdk_1_1_score.html">Score</a> &gt;&gt; done)</td></tr>
-<tr class="separator:a277c108b73f5c5842ebb0951edcde9bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48ffd2209d88dd083dff3a497d404ca7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_scores.html#a48ffd2209d88dd083dff3a497d404ca7">GetRank</a> (ResultHandler&lt; int &gt; done, long score, string board)</td></tr>
-<tr class="separator:a48ffd2209d88dd083dff3a497d404ca7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9c27ccb8067836a84bda4adba2d5ad71"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_scores.html#a9c27ccb8067836a84bda4adba2d5ad71">Post</a> (ResultHandler&lt; <a class="el" href="class_cotc_sdk_1_1_posted_game_score.html">PostedGameScore</a> &gt; done, long score, string board, <a class="el" href="namespace_cotc_sdk.html#a0b33fb730620778c7b2ebfb967cf33ab">ScoreOrder</a> order, string scoreInfo=null, bool forceSave=false)</td></tr>
-<tr class="separator:a9c27ccb8067836a84bda4adba2d5ad71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa89039b8ff6f073b7b72dc296305b5d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; PagedList&lt; <a class="el" href="class_cotc_sdk_1_1_score.html">Score</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_scores.html#afa89039b8ff6f073b7b72dc296305b5d">List</a> (string board, int limit=30, int offset=0)</td></tr>
+<tr class="separator:afa89039b8ff6f073b7b72dc296305b5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3df47ad36971dea104b5122e1693c08"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_gamer_scores.html#afa89039b8ff6f073b7b72dc296305b5d">List</a>&lt; <a class="el" href="class_cotc_sdk_1_1_score.html">Score</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_scores.html#aa3df47ad36971dea104b5122e1693c08">ListFriendScores</a> (string board)</td></tr>
+<tr class="separator:aa3df47ad36971dea104b5122e1693c08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6cc68465f87daac955c93326f64f75c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; Dictionary&lt; string, <br class="typebreak" />
+<a class="el" href="class_cotc_sdk_1_1_score.html">Score</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_scores.html#a6cc68465f87daac955c93326f64f75c4">ListUserBestScores</a> ()</td></tr>
+<tr class="separator:a6cc68465f87daac955c93326f64f75c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88973a3001326e645cc2b86f7e1bf3f9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_scores.html#a88973a3001326e645cc2b86f7e1bf3f9">GetRank</a> (long score, string board)</td></tr>
+<tr class="separator:a88973a3001326e645cc2b86f7e1bf3f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59b3a1ae1bd5042c20e69cd49ea5fa0a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_posted_game_score.html">PostedGameScore</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_scores.html#a59b3a1ae1bd5042c20e69cd49ea5fa0a">Post</a> (long score, string board, <a class="el" href="namespace_cotc_sdk.html#a0b33fb730620778c7b2ebfb967cf33ab">ScoreOrder</a> order, string scoreInfo=null, bool forceSave=false)</td></tr>
+<tr class="separator:a59b3a1ae1bd5042c20e69cd49ea5fa0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="aa1dab75cf0580e9cd0056c5c9e581fce"></a>
@@ -132,19 +133,13 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a48ffd2209d88dd083dff3a497d404ca7"></a>
+<a class="anchor" id="a88973a3001326e645cc2b86f7e1bf3f9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void CotcSdk.GamerScores.GetRank </td>
+          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;int&gt; CotcSdk.GamerScores.GetRank </td>
           <td>(</td>
-          <td class="paramtype">ResultHandler&lt; int &gt;&#160;</td>
-          <td class="paramname"><em>done</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">long&#160;</td>
           <td class="paramname"><em>score</em>, </td>
         </tr>
@@ -172,19 +167,13 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a7943938f659a7424476d13c36e432b17"></a>
+<a class="anchor" id="afa89039b8ff6f073b7b72dc296305b5d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void CotcSdk.GamerScores.List </td>
+          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;PagedList&lt;<a class="el" href="class_cotc_sdk_1_1_score.html">Score</a>&gt; &gt; CotcSdk.GamerScores.List </td>
           <td>(</td>
-          <td class="paramtype">ResultHandler&lt; PagedList&lt; <a class="el" href="class_cotc_sdk_1_1_score.html">Score</a> &gt;&gt;&#160;</td>
-          <td class="paramname"><em>done</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>board</em>, </td>
         </tr>
@@ -219,26 +208,16 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a7ef0fe78ed16bb625784f23d0c8d9a95"></a>
+<a class="anchor" id="aa3df47ad36971dea104b5122e1693c08"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void CotcSdk.GamerScores.ListFriendScores </td>
+          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_gamer_scores.html#afa89039b8ff6f073b7b72dc296305b5d">List</a>&lt;<a class="el" href="class_cotc_sdk_1_1_score.html">Score</a>&gt; &gt; CotcSdk.GamerScores.ListFriendScores </td>
           <td>(</td>
-          <td class="paramtype">ResultHandler&lt; <a class="el" href="class_cotc_sdk_1_1_gamer_scores.html#a7943938f659a7424476d13c36e432b17">List</a>&lt; <a class="el" href="class_cotc_sdk_1_1_score.html">Score</a> &gt;&gt;&#160;</td>
-          <td class="paramname"><em>done</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>board</em>&#160;</td>
-        </tr>
-        <tr>
+          <td class="paramname"><em>board</em></td><td>)</td>
           <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -252,15 +231,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a277c108b73f5c5842ebb0951edcde9bb"></a>
+<a class="anchor" id="a6cc68465f87daac955c93326f64f75c4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void CotcSdk.GamerScores.ListUserBestScores </td>
+          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;Dictionary&lt;string, <a class="el" href="class_cotc_sdk_1_1_score.html">Score</a>&gt; &gt; CotcSdk.GamerScores.ListUserBestScores </td>
           <td>(</td>
-          <td class="paramtype">ResultHandler&lt; Dictionary&lt; string, <a class="el" href="class_cotc_sdk_1_1_score.html">Score</a> &gt;&gt;&#160;</td>
-          <td class="paramname"><em>done</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -274,19 +252,13 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a9c27ccb8067836a84bda4adba2d5ad71"></a>
+<a class="anchor" id="a59b3a1ae1bd5042c20e69cd49ea5fa0a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void CotcSdk.GamerScores.Post </td>
+          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_posted_game_score.html">PostedGameScore</a>&gt; CotcSdk.GamerScores.Post </td>
           <td>(</td>
-          <td class="paramtype">ResultHandler&lt; <a class="el" href="class_cotc_sdk_1_1_posted_game_score.html">PostedGameScore</a> &gt;&#160;</td>
-          <td class="paramname"><em>done</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">long&#160;</td>
           <td class="paramname"><em>score</em>, </td>
         </tr>
@@ -341,7 +313,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 17 2015 16:43:32 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jun 25 2015 14:45:42 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

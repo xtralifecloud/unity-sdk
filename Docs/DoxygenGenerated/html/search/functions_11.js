@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['usecode',['UseCode',['../class_cotc_sdk_1_1_gamer_godfather.html#a0e51f5ce14dc9a4ea379d94c4efbd73b',1,'CotcSdk::GamerGodfather']]],
-  ['userexists',['UserExists',['../class_cotc_sdk_1_1_cloud.html#a9deb4e9bf4f0a64e3bdcfefa9237c043',1,'CotcSdk::Cloud']]]
+  ['usecode',['UseCode',['../class_cotc_sdk_1_1_gamer_godfather.html#a3438dca85d99f702a165057e3459fc27',1,'CotcSdk::GamerGodfather']]],
+  ['userexists',['UserExists',['../class_cotc_sdk_1_1_cloud.html#a1f0be958907127a60c80262f9185cd8e',1,'CotcSdk::Cloud']]]
 ];

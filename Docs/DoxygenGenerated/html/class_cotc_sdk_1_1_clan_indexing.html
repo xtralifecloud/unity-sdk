@@ -96,36 +96,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5363ee172153e04f746d28e21a6ee17c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_clan_indexing.html#a5363ee172153e04f746d28e21a6ee17c">DeleteObject</a> (ResultHandler&lt; bool &gt; done, string objectId)</td></tr>
-<tr class="separator:a5363ee172153e04f746d28e21a6ee17c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5d4e6a5b3558acf384194baa25253d4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_clan_indexing.html#ab5d4e6a5b3558acf384194baa25253d4">GetObject</a> (ResultHandler&lt; <a class="el" href="class_cotc_sdk_1_1_index_result.html">IndexResult</a> &gt; done, string objectId)</td></tr>
-<tr class="separator:ab5d4e6a5b3558acf384194baa25253d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76e87fe15c9bbd3cae5768b0c5345c98"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_clan_indexing.html#a76e87fe15c9bbd3cae5768b0c5345c98">IndexObject</a> (ResultHandler&lt; bool &gt; done, string objectId, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> properties, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> payload)</td></tr>
-<tr class="separator:a76e87fe15c9bbd3cae5768b0c5345c98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a561679a6b4735f558d4a5410df0103b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_clan_indexing.html#a561679a6b4735f558d4a5410df0103b6">Search</a> (ResultHandler&lt; <a class="el" href="class_cotc_sdk_1_1_index_search_result.html">IndexSearchResult</a> &gt; done, string query, List&lt; string &gt; sortingProperties=null, int limit=30, int offset=0)</td></tr>
-<tr class="separator:a561679a6b4735f558d4a5410df0103b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39c41f9231195cab26810f1c15206c53"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_clan_indexing.html#a39c41f9231195cab26810f1c15206c53">DeleteObject</a> (string objectId)</td></tr>
+<tr class="separator:a39c41f9231195cab26810f1c15206c53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98007654c731533fe0e4ec5f27b809b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_index_result.html">IndexResult</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_clan_indexing.html#a98007654c731533fe0e4ec5f27b809b0">GetObject</a> (string objectId)</td></tr>
+<tr class="separator:a98007654c731533fe0e4ec5f27b809b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef89239c3803ede0441feb95dfbcd7c6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_clan_indexing.html#aef89239c3803ede0441feb95dfbcd7c6">IndexObject</a> (string objectId, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> properties, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> payload)</td></tr>
+<tr class="separator:aef89239c3803ede0441feb95dfbcd7c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae05fcfd1e6a9be3bcd5f47be6dbc6b78"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_index_search_result.html">IndexSearchResult</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_clan_indexing.html#ae05fcfd1e6a9be3bcd5f47be6dbc6b78">Search</a> (string query, List&lt; string &gt; sortingProperties=null, int limit=30, int offset=0)</td></tr>
+<tr class="separator:ae05fcfd1e6a9be3bcd5f47be6dbc6b78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a5363ee172153e04f746d28e21a6ee17c"></a>
+<a class="anchor" id="a39c41f9231195cab26810f1c15206c53"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void CotcSdk.ClanIndexing.DeleteObject </td>
+          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;bool&gt; CotcSdk.ClanIndexing.DeleteObject </td>
           <td>(</td>
-          <td class="paramtype">ResultHandler&lt; bool &gt;&#160;</td>
-          <td class="paramname"><em>done</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>objectId</em>&#160;</td>
-        </tr>
-        <tr>
+          <td class="paramname"><em>objectId</em></td><td>)</td>
           <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -139,26 +129,16 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab5d4e6a5b3558acf384194baa25253d4"></a>
+<a class="anchor" id="a98007654c731533fe0e4ec5f27b809b0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void CotcSdk.ClanIndexing.GetObject </td>
+          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_index_result.html">IndexResult</a>&gt; CotcSdk.ClanIndexing.GetObject </td>
           <td>(</td>
-          <td class="paramtype">ResultHandler&lt; <a class="el" href="class_cotc_sdk_1_1_index_result.html">IndexResult</a> &gt;&#160;</td>
-          <td class="paramname"><em>done</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>objectId</em>&#160;</td>
-        </tr>
-        <tr>
+          <td class="paramname"><em>objectId</em></td><td>)</td>
           <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -172,19 +152,13 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a76e87fe15c9bbd3cae5768b0c5345c98"></a>
+<a class="anchor" id="aef89239c3803ede0441feb95dfbcd7c6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void CotcSdk.ClanIndexing.IndexObject </td>
+          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;bool&gt; CotcSdk.ClanIndexing.IndexObject </td>
           <td>(</td>
-          <td class="paramtype">ResultHandler&lt; bool &gt;&#160;</td>
-          <td class="paramname"><em>done</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>objectId</em>, </td>
         </tr>
@@ -219,19 +193,13 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a561679a6b4735f558d4a5410df0103b6"></a>
+<a class="anchor" id="ae05fcfd1e6a9be3bcd5f47be6dbc6b78"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void CotcSdk.ClanIndexing.Search </td>
+          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_index_search_result.html">IndexSearchResult</a>&gt; CotcSdk.ClanIndexing.Search </td>
           <td>(</td>
-          <td class="paramtype">ResultHandler&lt; <a class="el" href="class_cotc_sdk_1_1_index_search_result.html">IndexSearchResult</a> &gt;&#160;</td>
-          <td class="paramname"><em>done</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>query</em>, </td>
         </tr>
@@ -281,7 +249,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 17 2015 16:43:32 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jun 25 2015 14:45:42 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>
