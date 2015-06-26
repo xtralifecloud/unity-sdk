@@ -127,7 +127,6 @@ namespace CotcSdk {
 		private void Run() {
 			Cloud cloud = Gamer.Cloud;
 			int delay = LoopIterationDuration;
-			int CorrelationId = Random.Next();
 			string messageToAcknowledge = null;
 			bool lastResultPositive = true;
 
@@ -140,7 +139,7 @@ namespace CotcSdk {
 				}
 
 				UrlBuilder url = new UrlBuilder("/v1/gamer/event");
-				url.Path(Domain).QueryParam("timeout", delay).QueryParam("correlationId", CorrelationId);
+				url.Path(Domain).QueryParam("timeout", delay);
 				if (messageToAcknowledge != null) {
 					url.QueryParam("ack", messageToAcknowledge);
 				}
@@ -181,7 +180,7 @@ namespace CotcSdk {
 					lastResultPositive = true;
 				}
 			}
-			Common.Log("Finished pop event thread " + CorrelationId);
+			Common.Log("Finished pop event thread " + Thread.CurrentThread.ManagedThreadId);
 		}
 
 		private Random Random;
