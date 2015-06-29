@@ -68,6 +68,7 @@ namespace CotcSdk {
 		 * Starts the thread. Call this upon initialization.
 		 */
 		public DomainEventLoop Start() {
+			if (Stopped) throw new InvalidOperationException("Never restart a loop that was stopped");
 			if (AlreadyStarted) return this;
 			AlreadyStarted = true;
 			// Allow for automatic housekeeping
@@ -88,6 +89,7 @@ namespace CotcSdk {
 				Managers.HttpClient.Abort(CurrentRequest);
 				CurrentRequest = null;
 			}
+			Cotc.RunningEventLoops.Remove(this);
 			return this;
 		}
 

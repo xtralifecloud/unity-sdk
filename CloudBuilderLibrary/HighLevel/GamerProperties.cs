@@ -80,30 +80,28 @@ namespace CotcSdk {
 
 		/**
 		 * Removes a single key from the user properties.
-		 * @param done callback invoked when the operation has finished, either successfully or not. The enclosed boolean
-		 *     value indicates success.
+		 * @param done callback invoked when the operation has finished, either successfully or not.
 		 * @param key the name of the key to remove.
 		 */
-		public IPromise<bool> RemoveKey(string key) {
+		public IPromise<Done> RemoveKey(string key) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";
-			return Common.RunInTask<bool>(req, (response, task) => {
-				task.PostResult(response.BodyJson["done"], response.BodyJson);
+			return Common.RunInTask<Done>(req, (response, task) => {
+				task.PostResult(new Done(response.BodyJson), response.BodyJson);
 			});
 		}
 
 		/**
 		 * Remove all properties for the user.
-		 * @param done callback invoked when the operation has finished, either successfully or not. The enclosed boolean
-		 *     value indicates success.
+		 * @param done callback invoked when the operation has finished, either successfully or not.
 		 */
-		public IPromise<bool> RemoveAll() {
+		public IPromise<Done> RemoveAll() {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";
-			return Common.RunInTask<bool>(req, (response, task) => {
-				task.PostResult(response.BodyJson["done"], response.BodyJson);
+			return Common.RunInTask<Done>(req, (response, task) => {
+				task.PostResult(new Done(response.BodyJson), response.BodyJson);
 			});
 		}
 

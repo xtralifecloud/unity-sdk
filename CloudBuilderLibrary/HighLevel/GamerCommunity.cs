@@ -3,32 +3,51 @@ using System.Collections.Generic;
 
 namespace CotcSdk {
 
+	/**
+	 * API methods related to the friends and so on of one gamer.
+	 * 
+	 * You may also want to subscribe to related events (see #OnFriendStatusChange).
+	 */
 	public class GamerCommunity {
+
+		public event Action<FriendStatusChangeEvent> OnFriendStatusChange {
+			add { onFriendStatusChange += value; CheckEventLoopNeeded(); }
+			remove { onFriendStatusChange -= value; CheckEventLoopNeeded(); }
+		}
 
 		/**
 		 * Easy way to add a friend knowing his gamer ID inside the CotC community.
-		 * @param done callback invoked when the operation has finished, either successfully or not. The boolean value indicates success.
+		 * @param done callback invoked when the operation has finished, either successfully or not.
 		 * @param gamerId ID of the gamer to add as a friend (fetched using ListFriends for instance).
 		 * @param notification optional OS notification to be sent to indicate the player that the status has changed.
 		 */
-		public IPromise<bool> AddFriend(string gamerId, PushNotification notification = null) {
+		public IPromise<Done> AddFriend(string gamerId, PushNotification notification = null) {
 			return ChangeRelationshipStatus(gamerId, FriendRelationshipStatus.Add, notification);
 		}
 
 		/**
 		 * Allows to change the relation of a friendship inside the application.
-		 * @param done callback invoked when the operation has finished, either successfully or not. The boolean value indicates success.
+		 * @param done callback invoked when the operation has finished, either successfully or not.
 		 * @param gamerId ID of the gamer to change the relationship (fetched using ListFriends for instance).
 		 * @param state the new state to set.
 		 * @param notification optional OS notification to be sent to indicate the player that the status has changed.
 		 */
-		public IPromise<bool> ChangeRelationshipStatus(string gamerId, FriendRelationshipStatus state, PushNotification notification = null) {
+		public IPromise<Done> ChangeRelationshipStatus(string gamerId, FriendRelationshipStatus state, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/friends").Path(domain).Path(gamerId).QueryParam("status", state.ToString().ToLower());
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
-			return Common.RunInTask<bool>(req, (response, task) => {
-				task.PostResult(response.BodyJson["done"], response.BodyJson);
+			return Common.RunInTask<Done>(req, (response, task) => {
+				task.PostResult(new Done(response.BodyJson), response.BodyJson);
 			});
+		}
+
+		/**
+		 * Clears all event handlers subscribed, ensuring that a match object can be dismissed without causing further
+		 * actions in the background.
+		 */
+		public void DiscardEventHandlers() {
+			foreach (Action<FriendStatusChangeEvent> e in onFriendStatusChange.GetInvocationList()) onFriendStatusChange -= e;
+			CheckEventLoopNeeded();
 		}
 
 		/**
@@ -91,20 +110,19 @@ namespace CotcSdk {
 		 * Messages are sent to a specific user, in a specific domain. You can use domains to send messages
 		 * across games (or use private for messages sent to your game only).
 		 * 
-		 * @param done callback invoked when the operation has finished, either successfully or not. The attached
-		 *     boolean indicates success if true.
+		 * @param done callback invoked when the operation has finished, either successfully or not.
 		 * @param gamerId ID of the recipient gamer.
 		 * @param eventData JSON object representing the event to be sent. The recipient will receive it as is
 		 *     when subscribed to a #DomainEventLoop (ReceivedEvent property). If the application is not active,
 		 *     the message will be queued and transmitted the next time the domain event loop is started.
 		 * @param notification push notification to send to the recipient player if not currently active.
 		 */
-		public IPromise<bool> SendEvent(string gamerId, Bundle eventData, PushNotification notification = null) {
+		public IPromise<Done> SendEvent(string gamerId, Bundle eventData, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/event").Path(domain).Path(gamerId);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = eventData;
-			return Common.RunInTask<bool>(req, (response, task) => {
-				task.PostResult(true, response.BodyJson);
+			return Common.RunInTask<Done>(req, (response, task) => {
+				task.PostResult(new Done(true, response.BodyJson), response.BodyJson);
 			});
 		}
 
@@ -112,8 +130,39 @@ namespace CotcSdk {
 		internal GamerCommunity(Gamer parent) {
 			Gamer = parent;
 		}
+
+		private void CheckEventLoopNeeded() {
+			if (onFriendStatusChange != null) {
+				// Register if needed
+				if (RegisteredEventLoop == null) {
+					RegisteredEventLoop = Cotc.GetEventLoopFor(Gamer.GamerId, domain);
+					if (RegisteredEventLoop == null) {
+						Common.LogWarning("No pop event loop for domain " + domain + ", community events will not work");
+					}
+					else {
+						RegisteredEventLoop.ReceivedEvent += this.ReceivedLoopEvent;
+					}
+				}
+			}
+			else if (RegisteredEventLoop != null) {
+				// Unregister from event loop
+				RegisteredEventLoop.ReceivedEvent -= this.ReceivedLoopEvent;
+				RegisteredEventLoop = null;
+			}
+		}
+
+		private void ReceivedLoopEvent(DomainEventLoop sender, EventLoopArgs e) {
+			string type = e.Message["type"];
+			if (type.StartsWith("friend.") && onFriendStatusChange != null) {
+				string status = type.Substring(7 /* friend. */);
+				onFriendStatusChange(new FriendStatusChangeEvent(status, e.Message));
+			}
+		}
+
 		private string domain = Common.PrivateDomain;
 		private Gamer Gamer;
+		private event Action<FriendStatusChangeEvent> onFriendStatusChange;
+		private DomainEventLoop RegisteredEventLoop;
 		#endregion
 	}
 
@@ -121,5 +170,24 @@ namespace CotcSdk {
 		Add,
 		Blacklist,
 		Forget
+	}
+
+	/**
+	 * Event triggered when someone adds this gamer as a friend or changes his friendship status.
+	 */
+	public class FriendStatusChangeEvent {
+		/**
+		 * Gamer ID of the friend affected.
+		 */
+		public string FriendId;
+		/**
+		 * New relationship status.
+		 */
+		public FriendRelationshipStatus NewStatus;
+
+		internal FriendStatusChangeEvent(string status, Bundle serverData) {
+			FriendId = serverData["event"]["friend"];
+			NewStatus = Common.ParseEnum<FriendRelationshipStatus>(status);
+		}
 	}
 }

@@ -13,9 +13,18 @@ public class GodfatherTests : TestBase {
 		RunTestMethod(TestMethodName);
 	}
 
-	[Test("Creates two gamers, with one who generates a godfather code and associates it to the other gamer. Then tests all godfather functionality.")]
+	[Test("Creates two gamers, with one who generates a godfather code and associates it to the other gamer. Also checks for events. Then tests all godfather functionality.")]
 	public void ShouldAssociateGodfather(Cloud cloud) {
 		Login2NewUsers(cloud, (gamer1, gamer2) => {
+			// Expects godchild event
+			Promise restOfTheTestCompleted = new Promise();
+			gamer1.StartEventLoop();
+			gamer1.Godfather.OnGotGodchild += (GotGodchildEvent e) => {
+				Assert(e.Gamer.GamerId == gamer2.GamerId, "Should come from player2");
+				Assert(e.Reward == Bundle.Empty, "No reward should be associated");
+				restOfTheTestCompleted.Done(this.CompleteTest);
+			};
+
 			// P1 generates a code and associates P2 with it
 			gamer1.Godfather.GenerateCode()
 			// Use code
@@ -28,7 +37,7 @@ public class GodfatherTests : TestBase {
 			.ExpectSuccess(result => {
 				Assert(result.Count == 1, "Should have only one godchildren");
 				Assert(result[0].GamerId == gamer2.GamerId, "P2 should be godchildren");
-				CompleteTest();
+				restOfTheTestCompleted.Resolve();
 			});
 		});
 	}

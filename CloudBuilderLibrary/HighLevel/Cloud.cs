@@ -4,6 +4,17 @@ using System.Collections.Generic;
 
 namespace CotcSdk
 {
+	/**
+	 * Root class of the SDK. It is stateless and allows to perform basic operations with the SDK, such as
+	 * `Ping`.
+	 * 
+	 * The #Cloud object may typically be used to log in, which would return a #Gamer object, another very
+	 * important object from the SDK.
+	 * 
+	 * Other objects such as a #CloudIndexing object can also be obtained synchronously in order to perform
+	 * categorized operations. These objects may not be stateless though, so please refer to their
+	 * respective documentation.
+	 */
 	public sealed partial class Cloud {
 
 		/**
@@ -19,8 +30,8 @@ namespace CotcSdk
 		 * @param indexName name of the index; scopes your searches.
 		 * @param domain the domain to manipulate the index on.
 		 */
-		public ClanIndexing Index(string indexName, string domain = Common.PrivateDomain) {
-			return new ClanIndexing(this, indexName, domain);
+		public CloudIndexing Index(string indexName, string domain = Common.PrivateDomain) {
+			return new CloudIndexing(this, indexName, domain);
 		}
 
 		/**
@@ -28,11 +39,10 @@ namespace CotcSdk
 		 * You should hardly ever need this.
 		 * @param done callback invoked when the request has finished, either successfully or not.
 		 */
-		public IPromise<bool> Ping() {
-			var task = new Promise<bool>();
+		public IPromise<Done> Ping() {
 			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/ping");
-			return Common.RunRequest(req, task, (HttpResponse response) => {
-				task.PostResult(true, response.BodyJson);
+			return Common.RunInTask<Done>(req, (response, task) => {
+				task.PostResult(new Done(true, response.BodyJson), response.BodyJson);
 			});
 		}
 

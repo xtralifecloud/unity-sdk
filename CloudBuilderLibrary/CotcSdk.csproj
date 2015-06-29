@@ -42,7 +42,7 @@
   <ItemGroup>
     <Compile Include="HighLevel\Cloud.cs" />
     <Compile Include="HighLevel\Cloud.LoginMethods.cs" />
-    <Compile Include="HighLevel\ClanIndexing.cs" />
+    <Compile Include="HighLevel\CloudIndexing.cs" />
     <Compile Include="HighLevel\Cotc.cs" />
     <Compile Include="HighLevel\CotcGameObject.cs" />
     <Compile Include="HighLevel\Common.cs" />
@@ -64,6 +64,7 @@
     <Compile Include="HighLevel\Match.cs" />
     <Compile Include="HighLevel\MatchInfo.cs" />
     <Compile Include="HighLevel\Model\AchievementDefinition.cs" />
+    <Compile Include="HighLevel\Model\Done.cs" />
     <Compile Include="HighLevel\Model\SocialNetworkFriendResponse.cs" />
     <Compile Include="HighLevel\Model\UserInfo.cs" />
     <Compile Include="HighLevel\Model\GamerInfo.cs" />

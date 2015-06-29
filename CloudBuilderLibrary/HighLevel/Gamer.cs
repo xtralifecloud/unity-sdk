@@ -5,6 +5,13 @@ using System.ComponentModel;
 
 namespace CotcSdk
 {
+	/**
+	 * Important object from the SDK, allowing to perform many operations that depend on a currently logged in user.
+	 * 
+	 * This object is almost stateless. You may drop it without worrying about background processes that may still
+	 * run. User related events are handled by a corresponding instance of #DomainEventLoop, which should be started
+	 * as soon as the user is logged in.
+	 */
 	public sealed partial class Gamer: PropertiesObject {
 
 		public List<string> Domains { get; private set; }
@@ -107,6 +114,24 @@ namespace CotcSdk
 		 */
 		public GamerTransactions Transactions {
 			get { return new GamerTransactions(this); }
+		}
+
+		/**
+		 * Starts a #DomainEventLoop in order to catch events related to this logged in gamer.
+		 * 
+		 * The loop will be running forever unless an error happens with this gamer (meaning that the
+		 * gamer is not valid anymore, which can happen if he's not logged in). When stopping
+		 * or pausing the application, you should call the corresponding methods on the loop to stop
+		 * or pause it. The system will pause the loop automatically upon application pause and resume
+		 * it as needed, which is done through the CotcGameObject as placed on your scene.
+		 * 
+		 * @param domain domain to listen on. The `private` domain is used to receive system notifications
+		 *     as well as messages sent by other players. Unless cross-game functionality is used, you
+		 *     should start one loop on the private domain as soon as the gamer is signed in.
+		 * @return a domain event loop that is in started state.
+		 */
+		public DomainEventLoop StartEventLoop(string domain = Common.PrivateDomain) {
+			return new DomainEventLoop(this, domain).Start();
 		}
 
 		#region Internal

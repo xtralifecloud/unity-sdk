@@ -104,8 +104,7 @@ namespace CotcSdk
 		 * @param mailBody the body of the mail. You should include the string [[SHORTCODE]], which will
 		 *     be replaced by the generated short code.
 		 */
-		public IPromise<bool> SendResetPasswordEmail(string userEmail, string mailSender, string mailTitle, string mailBody) {
-			var task = new Promise<bool>();
+		public IPromise<Done> SendResetPasswordEmail(string userEmail, string mailSender, string mailTitle, string mailBody) {
 			UrlBuilder url = new UrlBuilder("/v1/login").Path(userEmail);
 			HttpRequest req = MakeUnauthenticatedHttpRequest(url);
 			Bundle config = Bundle.CreateObject();
@@ -114,24 +113,22 @@ namespace CotcSdk
 			config["body"] = mailBody;
 			req.BodyJson = config;
 
-			return Common.RunRequest(req, task, (HttpResponse response) => {
-				task.PostResult(response.BodyJson["done"], response.BodyJson);
+			return Common.RunInTask<Done>(req, (response, task) => {
+				task.PostResult(new Done(response.BodyJson), response.BodyJson);
 			});
 		}
 
 		/**
 		 * Checks that an user exists on a given network.
 		 * @param done callback invoked when the request has finished, either successfully or not.
-		 *     The boolean value inside indicates whether the user exists.
 		 * @param networkId the ID of the user on the network, like the e-mail address.
 		 */
-		public IPromise<bool> UserExists(LoginNetwork network, string networkId) {
-			var task = new Promise<bool>();
+		public IPromise<Done> UserExists(LoginNetwork network, string networkId) {
 			UrlBuilder url = new UrlBuilder("/v1/users")
 				.Path(network.Describe()).Path(networkId);
 			HttpRequest req = MakeUnauthenticatedHttpRequest(url);
-			return Common.RunRequest(req, task, (HttpResponse response) => {
-				task.PostResult(true, response.BodyJson);
+			return Common.RunInTask<Done>(req, (response, task) => {
+				task.PostResult(new Done(true, response.BodyJson), response.BodyJson);
 			});
 		}
 	}

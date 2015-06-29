@@ -103,18 +103,18 @@ public class ClanTests : TestBase {
 			networkSecret: "Password123")
 		.ExpectSuccess(dummyGamer => {
 			// Create an anonymous account
-			cloud.LoginAnonymously()
-			.ExpectSuccess(gamer => {
-				// Then try to convert it to the same e-mail as the fake account created at first
-				gamer.Account.Convert(
-					network: LoginNetwork.Email,
-					networkId: "cloud@localhost.localdomain",
-					networkSecret: "Anotherp4ss")
-				.ExpectFailure(conversionResult => {
-					Assert(conversionResult.HttpStatusCode == 400, "400 expected");
-					Assert(conversionResult.ServerData["message"] == "UserExists", "UserExists error expected");
-					CompleteTest();
-				});
+			return cloud.LoginAnonymously();
+		})
+		.ExpectSuccess(gamer => {
+			// Then try to convert it to the same e-mail as the fake account created at first
+			gamer.Account.Convert(
+				network: LoginNetwork.Email,
+				networkId: "cloud@localhost.localdomain",
+				networkSecret: "Anotherp4ss")
+			.ExpectFailure(conversionResult => {
+				Assert(conversionResult.HttpStatusCode == 400, "400 expected");
+				Assert(conversionResult.ServerData["message"] == "UserExists", "UserExists error expected");
+				CompleteTest();
 			});
 		});
 	}
@@ -159,7 +159,6 @@ public class ClanTests : TestBase {
 		.Then(gamer => gamer.Account.ChangePassword("Password124"))
 		.Then(pswResult => {
 			Assert(pswResult, "Change password failed");
-			CompleteTest();
 		})
 		.CompleteTestIfSuccessful();
 	}
@@ -173,7 +172,6 @@ public class ClanTests : TestBase {
 		.Then(gamer => gamer.Account.ChangeEmailAddress(RandomEmailAddress()))
 		.Then(pswResult => {
 			Assert(pswResult, "Change email failed");
-			CompleteTest();
 		})
 		.CompleteTestIfSuccessful();
 	}

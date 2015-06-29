@@ -14,15 +14,14 @@ namespace CotcSdk {
 
 		/**
 		 * Dismisses a pending invitation for the current user and the match. Fails if the user has not been invited.
-		 * @param done callback invoked when the operation has finished, either successfully or not. The attached boolean
-		 *     indicates success when true.
+		 * @param done callback invoked when the operation has finished, either successfully or not.
 		 */
-		public IPromise<bool> DismissInvitation() {
+		public IPromise<Done> DismissInvitation() {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("invitation");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";
-			return Common.RunInTask<bool>(req, (response, task) => {
-				task.PostResult(true, response.BodyJson);
+			return Common.RunInTask<Done>(req, (response, task) => {
+				task.PostResult(new Done(true, response.BodyJson), response.BodyJson);
 			});
 		}
 

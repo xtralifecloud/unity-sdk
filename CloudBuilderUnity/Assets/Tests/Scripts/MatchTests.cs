@@ -162,8 +162,8 @@ public class MatchTests : TestBase {
 	[Test("Creates a match and plays it as two users. Checks that events are broadcasted appropriately.")]
 	public void ShouldReceiveEvents(Cloud cloud) {
 		Login2NewUsers(cloud, (Gamer gamer1, Gamer gamer2) => {
-			DomainEventLoop loopP1 = new DomainEventLoop(gamer1).Start();
-			DomainEventLoop loopP2 = new DomainEventLoop(gamer2).Start();
+			DomainEventLoop loopP1 = gamer1.StartEventLoop();
+			DomainEventLoop loopP2 = gamer2.StartEventLoop();
 			gamer1.Matches.Create(maxPlayers: 2)
 			.ExpectSuccess(createdMatch => {
 				// P1 will receive the join event
@@ -195,7 +195,7 @@ public class MatchTests : TestBase {
 	public void ShouldReceiveInvitation(Cloud cloud) {
 		Login2NewUsers(cloud, (Gamer gamer1, Gamer gamer2) => {
 			// P1 will be invited
-			DomainEventLoop loopP1 = new DomainEventLoop(gamer1).Start();
+			DomainEventLoop loopP1 = gamer1.StartEventLoop();
 			gamer1.Matches.OnMatchInvitation += (MatchInviteEvent e) => {
 				Assert(e.Inviter.GamerId == gamer2.GamerId, "Invitation should come from P2");
 				// Test dismiss functionality (not needed in reality since we are stopping the loop it is registered to)

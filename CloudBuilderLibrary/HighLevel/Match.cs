@@ -125,17 +125,16 @@ namespace CotcSdk {
 
 		/**
 		 * Termintates the match. You need to be the creator of the match to perform this operation.
-		 * @param done callback invoked when the operation has finished, either successfully or not. The attached boolean
-		 *     indicates success when true.
+		 * @param done callback invoked when the operation has finished, either successfully or not.
 		 * @param deleteToo if true, deletes the match if it finishes successfully or is already finished.
 		 * @param notification a notification that can be sent to all players currently playing the match (except you).
 		 */
-		public IPromise<bool> Finish(bool deleteToo = false, PushNotification notification = null) {
+		public IPromise<Done> Finish(bool deleteToo = false, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("finish");
 			url.QueryParam("lastEventId", LastEventId);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
-			return Common.RunInTask<bool>(req, (response, task) => {
+			return Common.RunInTask<Done>(req, (response, task) => {
 				UpdateWithServerData(response.BodyJson["match"]);
 				// Affect match
 				Status = MatchStatus.Finished;
@@ -144,7 +143,7 @@ namespace CotcSdk {
 					Gamer.Matches.Delete(MatchId).ForwardTo(task);
 				}
 				else {
-					task.PostResult(true, response.BodyJson);
+					task.PostResult(new Done(true, response.BodyJson), response.BodyJson);
 				}
 			});
 		}
@@ -152,42 +151,39 @@ namespace CotcSdk {
 		/**
 		 * Allows to invite a player to join a match. You need to be part of the match to send an invitation.
 		 * This can be used to invite an opponent to a match that is not shown publicly.
-		 * @param done callback invoked when the operation has finished, either successfully or not. The attached boolean
-		 *     indicates success when true.
+		 * @param done callback invoked when the operation has finished, either successfully or not.
 		 * @param playerId ID of the player to invite to the match. Player IDs can be found in the properties of the
 		 *     match (GamerInfo.GamerId).
 		 * @param notification a push notification that can be sent to the invitee.
 		 */
-		public IPromise<bool> InvitePlayer(string playerId, PushNotification notification = null) {
+		public IPromise<Done> InvitePlayer(string playerId, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("invite").Path(playerId);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
-			return Common.RunInTask<bool>(req, (response, task) => {
+			return Common.RunInTask<Done>(req, (response, task) => {
 				UpdateWithServerData(response.BodyJson["match"]);
-				task.PostResult(true, response.BodyJson);
+				task.PostResult(new Done(true, response.BodyJson), response.BodyJson);
 			});
 		}
 
 		/**
 		 * Leaves the match.
-		 * @param done callback invoked when the operation has finished, either successfully or not. The attached boolean
-		 *     indicates success when true.
+		 * @param done callback invoked when the operation has finished, either successfully or not.
 		 * @param notification a push notification that can be sent to all players except you.
 		 */
-		public IPromise<bool> Leave(PushNotification notification = null) {
+		public IPromise<Done> Leave(PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("leave");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
-			return Common.RunInTask<bool>(req, (response, task) => {
+			return Common.RunInTask<Done>(req, (response, task) => {
 				UpdateWithServerData(response.BodyJson["match"]);
-				task.PostResult(true, response.BodyJson);
+				task.PostResult(new Done(true, response.BodyJson), response.BodyJson);
 			});
 		}
 
 		/**
 		 * Posts a move to other players.
-		 * @param done callback invoked when the operation has finished, either successfully or not. The attached boolean
-		 *     indicates success when true.
+		 * @param done callback invoked when the operation has finished, either successfully or not.
 		 * @param moveData a freeform object indicating the move data to be posted and transfered to other players. This
 		 *     move data will be kept in the events, and new players should be able to use it to reproduce the local game
 		 *     state.
@@ -195,7 +191,7 @@ namespace CotcSdk {
 		 *     now on. Passing a non null value clears the pending events in the match.
 		 * @param notification a push notification that can be sent to all players except you.
 		 */
-		public IPromise<bool> PostMove(Bundle moveData, Bundle updatedGameState = null, PushNotification notification = null) {
+		public IPromise<Done> PostMove(Bundle moveData, Bundle updatedGameState = null, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("move").QueryParam("lastEventId", LastEventId);
 			Bundle config = Bundle.CreateObject();
 			config["move"] = moveData;
@@ -204,7 +200,7 @@ namespace CotcSdk {
 
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = config;
-			return Common.RunInTask<bool>(req, (response, task) => {
+			return Common.RunInTask<Done>(req, (response, task) => {
 				UpdateWithServerData(response.BodyJson["match"]);
 				// Record event
 				if (updatedGameState != null) {
@@ -212,7 +208,7 @@ namespace CotcSdk {
 					GlobalState = updatedGameState;
 				}
 				Moves.Add(new MatchMove(Gamer.GamerId, moveData));
-				task.PostResult(true, response.BodyJson);
+				task.PostResult(new Done(true, response.BodyJson), response.BodyJson);
 			});
 		}
 

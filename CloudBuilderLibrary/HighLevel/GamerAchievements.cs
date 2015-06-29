@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CotcSdk {
+namespace CotcSdk
+{
+	/**
+	 * API functions related to the achievements.
+	 */
 	public class GamerAchievements {
 
 		/**

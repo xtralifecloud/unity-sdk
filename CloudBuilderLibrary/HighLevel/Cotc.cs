@@ -43,8 +43,11 @@ namespace CotcSdk {
 		 * Works synchronously so might take a bit of time.
 		 */
 		public static void OnApplicationQuit() {
-			// Stop all running loops (in case the developer forgot to do it)
-			foreach (DomainEventLoop loop in RunningEventLoops) {
+			// Stop all running loops (in case the developer forgot to do it).
+			// The loops will remove themselves from the list so make a copy.
+			var copy = new List<DomainEventLoop>();
+			copy.AddRange(RunningEventLoops);
+			foreach (DomainEventLoop loop in copy) {
 				loop.Stop();
 			}
 			Managers.HttpClient.Terminate();

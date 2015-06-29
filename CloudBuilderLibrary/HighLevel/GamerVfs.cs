@@ -55,34 +55,32 @@ namespace CotcSdk {
 
 		/**
 		 * Sets the value of a key in the key/value system.
-		 * @param done callback invoked when the operation has finished, either successfully or not. The enclosed value
-		 *     indicates success.
+		 * @param done callback invoked when the operation has finished, either successfully or not.
 		 * @param key the name of the key to set the value for.
 		 * @param value the value to set. As usual with bundles, casting is implicitly done, so you may as well
 		 *     call this method passing an integer or string as value for instance.
 		 */
-		public IPromise<bool> SetKey(string key, Bundle value) {
+		public IPromise<Done> SetKey(string key, Bundle value) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("value", value);
 			req.Method = "PUT";
-			return Common.RunInTask<bool>(req, (response, task) => {
-				task.PostResult(response.BodyJson["done"], response.BodyJson);
+			return Common.RunInTask<Done>(req, (response, task) => {
+				task.PostResult(new Done(response.BodyJson), response.BodyJson);
 			});
 		}
 
 		/**
 		 * Sets the value of a key in the key/value system as binary data.
-		 * @param done callback invoked when the operation has finished, either successfully or not. The enclosed value
-		 *     indicates success.
+		 * @param done callback invoked when the operation has finished, either successfully or not.
 		 * @param key the name of the key to set the value for.
 		 * @param binaryData the value to set as binary data.
 		 */
-		public IPromise<bool> SetKeyBinary(string key, byte[] binaryData) {
+		public IPromise<Done> SetKeyBinary(string key, byte[] binaryData) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key).QueryParam("binary");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "PUT";
-			return Common.RunInTask<bool>(req, (response, task) => {
+			return Common.RunInTask<Done>(req, (response, task) => {
 				// Now we have an URL to upload the data to
 				HttpRequest binaryRequest = new HttpRequest();
 				binaryRequest.Url = response.BodyJson["putURL"];
@@ -92,23 +90,22 @@ namespace CotcSdk {
 				binaryRequest.TimeoutMillisec = Gamer.Cloud.HttpTimeoutMillis;
 				binaryRequest.UserAgent = Gamer.Cloud.UserAgent;
 				Common.RunRequest(binaryRequest, task, binaryResponse => {
-					task.PostResult(true, response.BodyJson);
+					task.PostResult(new Done(true), response.BodyJson);
 				});
 			});
 		}
 
 		/**
 		 * Removes a single key from the key/value system.
-		 * @param done callback invoked when the operation has finished, either successfully or not. The enclosed boolean
-		 *     value indicates success.
+		 * @param done callback invoked when the operation has finished, either successfully or not.
 		 * @param key the name of the key to remove.
 		 */
-		public IPromise<bool> RemoveKey(string key) {
+		public IPromise<Done> RemoveKey(string key) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";
-			return Common.RunInTask<bool>(req, (response, task) => {
-				task.PostResult(response.BodyJson["done"], response.BodyJson);
+			return Common.RunInTask<Done>(req, (response, task) => {
+				task.PostResult(new Done(response.BodyJson), response.BodyJson);
 			});
 		}
 

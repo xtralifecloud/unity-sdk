@@ -3,19 +3,19 @@ using System.Collections.Generic;
 
 namespace CotcSdk {
 
-	public class ClanIndexing {
+	public class CloudIndexing {
 
 		/**
 		 * Deletes an indexed entry. If you just want to update an entry, simply use IndexObject.
 		 * @param done callback invoked when the operation has finished, either successfully or not.
 		 * @param objectId ID of the object to delete, as passed when indexing.
 		 */
-		public IPromise<bool> DeleteObject(string objectId) {
+		public IPromise<Done> DeleteObject(string objectId) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName).Path(objectId);
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			req.Method = "DELETE";
-			return Common.RunInTask<bool>(req, (response, task) => {
-				task.PostResult(true, response.BodyJson);
+			return Common.RunInTask<Done>(req, (response, task) => {
+				task.PostResult(new Done(true, response.BodyJson), response.BodyJson);
 			});
 		}
 
@@ -37,8 +37,7 @@ namespace CotcSdk {
 		 * Use this API to add or update an object in an index. You can have as many indexes as you need: one
 		 * for gamer properties, one for matches, one for finished matches, etc. It only depends on what you
 		 * want to search for.
-		 * @param done callback invoked when the operation has finished, either successfully or not. The attached
-		 *     boolean value indicates success.
+		 * @param done callback invoked when the operation has finished, either successfully or not.
 		 * @param objectId the ID of the object to be indexed. It can be anything; this ID only needs to uniquely
 		 *     identify your document. Therefore, using the match ID to index a match is recommended for instance.
 		 * @param properties a freeform object, whose attributes will be indexed and searchable. These properties
@@ -48,7 +47,7 @@ namespace CotcSdk {
 		 *     as the properties, however those are not indexed (cannot be looked for in a search request). Its
 		 *     content is returned in searches (#IndexResult.Payload property).
 		 */
-		public IPromise<bool> IndexObject(string objectId, Bundle properties, Bundle payload) {
+		public IPromise<Done> IndexObject(string objectId, Bundle properties, Bundle payload) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName);
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject(
@@ -56,8 +55,8 @@ namespace CotcSdk {
 				"properties", properties,
 				"payload", payload
 			);
-			return Common.RunInTask<bool>(req, (response, task) => {
-				task.PostResult(true, response.BodyJson);
+			return Common.RunInTask<Done>(req, (response, task) => {
+				task.PostResult(new Done(true, response.BodyJson), response.BodyJson);
 			});
 		}
 
@@ -78,15 +77,48 @@ namespace CotcSdk {
 		 * @param offset number of the first result.
 		 */
 		public IPromise<IndexSearchResult> Search(string query, List<string> sortingProperties = null, int limit = 30, int offset = 0) {
-			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName);
-			url.QueryParam("from", offset).QueryParam("max", limit).QueryParam("q", query);
+			return Search(query, null, sortingProperties, limit, offset);
+		}
+
+		/**
+		 * Alternative search function (see #Search for more information) that takes a bundle as a search criteria.
+		 * 
+		 * It allows using the full Elastic search capabilities with full query DSL search. The query bundle represents
+		 * the JSON document as documented here:
+		 * https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
+		 * 
+		 * @param done callback invoked when the operation has finished, either successfully or not. The
+		 *     attached object contains various information about the results, including a Hits member,
+		 *     which handles the results in a paginated way.
+		 * @param limit the maximum number of results to return per page.
+		 * @param offset number of the first result.
+		 */
+		public IPromise<IndexSearchResult> SearchExtended(Bundle query, int limit = 30, int offset = 0) {
+			return Search(null, query, null, limit, offset);
+		}
+
+
+		#region Private
+		internal CloudIndexing(Cloud cloud, string indexName, string domain) {
+			Cloud = cloud;
+			Domain = domain;
+			IndexName = indexName;
+		}
+
+		private IPromise<IndexSearchResult> Search(string query, Bundle jsonData, List<string> sortingProperties, int limit, int offset) {
+			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName).Path("search");
+			if (query != null) url.QueryParam("q", query);
+			url.QueryParam("from", offset).QueryParam("max", limit);
 			// Build sort property
-			Bundle sort = Bundle.CreateArray();
 			if (sortingProperties != null) {
+				Bundle sort = Bundle.CreateArray();
 				foreach (string s in sortingProperties) sort.Add(s);
+				url.QueryParam("sort", sort.ToJson());
 			}
-			url.QueryParam("sort", sort.ToJson());
-			return Common.RunInTask<IndexSearchResult>(Cloud.MakeUnauthenticatedHttpRequest(url), (response, task) => {
+			var request = Cloud.MakeUnauthenticatedHttpRequest(url);
+			request.Method = "POST";
+			if (jsonData != null) request.BodyJson = jsonData;
+			return Common.RunInTask<IndexSearchResult>(request, (response, task) => {
 				// Fetch listed scores
 				IndexSearchResult result = new IndexSearchResult(response.BodyJson, offset);
 				foreach (Bundle b in response.BodyJson["hits"].AsArray()) {
@@ -96,7 +128,7 @@ namespace CotcSdk {
 				if (offset > 0) {
 					result.Hits.Previous = () => {
 						var promise = new Promise<PagedList<IndexResult>>();
-						Search(query, sortingProperties, limit, offset - limit)
+						Search(query, jsonData, sortingProperties, limit, offset - limit)
 							.Then(r => promise.Resolve(r.Hits))
 							.Catch(e => promise.Reject(e));
 						return promise;
@@ -105,7 +137,7 @@ namespace CotcSdk {
 				if (offset + result.Hits.Count < result.Hits.Total) {
 					result.Hits.Next = () => {
 						var promise = new Promise<PagedList<IndexResult>>();
-						Search(query, sortingProperties, limit, offset + limit)
+						Search(query, jsonData, sortingProperties, limit, offset + limit)
 							.Then(r => promise.Resolve(r.Hits))
 							.Catch(e => promise.Reject(e));
 						return promise;
@@ -113,13 +145,6 @@ namespace CotcSdk {
 				}
 				task.PostResult(result, response.BodyJson);
 			});
-		}
-
-		#region Private
-		internal ClanIndexing(Cloud cloud, string indexName, string domain) {
-			Cloud = cloud;
-			Domain = domain;
-			IndexName = indexName;
 		}
 
 		private Cloud Cloud;

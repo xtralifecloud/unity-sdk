@@ -6,14 +6,14 @@ namespace CotcSdk {
 	/**
 	 * Basis for a match event. An event is actually always one of the subclasses (Match*Event).
 	 */
-	public abstract class MatchEvent {
+	public abstract class MatchEvent: PropertiesObject {
 		/**
 		 * The unique ID of the event. Might match the last event ID of an existing match.
 		 */
 		public string MatchEventId { get; private set; }
 		public MatchInfo Match { get; private set; }
 
-		protected MatchEvent(Gamer gamer, Bundle serverData) {
+		protected MatchEvent(Gamer gamer, Bundle serverData) : base(serverData) {
 			MatchEventId = serverData["event"]["_id"];
 			Match = new MatchInfo(gamer, serverData["event"]["match_id"]);
 		}

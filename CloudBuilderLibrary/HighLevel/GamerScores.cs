@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace CotcSdk {
 
+	/**
+	 * Scoring and leaderboard related functions.
+	 */
 	public class GamerScores {
 
 		/**

@@ -129,7 +129,7 @@ public class SampleScript : MonoBehaviour {
 			Loop.Stop();
 		}
 		Gamer = newGamer;
-		Loop = new DomainEventLoop(Gamer).Start();
+		Loop = Gamer.StartEventLoop();
 		Loop.ReceivedEvent += Loop_ReceivedEvent;
 		Debug.Log("Signed in successfully (ID = " + Gamer.GamerId + ")");
 	}

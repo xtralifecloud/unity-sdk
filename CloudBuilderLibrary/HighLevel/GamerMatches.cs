@@ -49,16 +49,15 @@ namespace CotcSdk {
 
 		/**
 		 * Deletes a match. Only works if you are the one who created it and it is already finished.
-		 * @param done callback invoked when the operation has finished, either successfully or not. The attached boolean
-		 *     indicates success when true.
+		 * @param done callback invoked when the operation has finished, either successfully or not.
 		 * @param matchId ID of the match to delete.
 		 */
-		public IPromise<bool> Delete(string matchId) {
+		public IPromise<Done> Delete(string matchId) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(matchId);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";
-			return Common.RunInTask<bool>(req, (response, task) => {
-				task.PostResult(response.BodyJson["done"], response.BodyJson);
+			return Common.RunInTask<Done>(req, (response, task) => {
+				task.PostResult(new Done(response.BodyJson), response.BodyJson);
 			});
 		}
 
