@@ -101,8 +101,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a37c5f286c4f5a76303dae1eea31de353"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_match.html">Match</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_matches.html#a37c5f286c4f5a76303dae1eea31de353">Create</a> (int maxPlayers, string description=null, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> customProperties=null, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> shoe=null)</td></tr>
 <tr class="separator:a37c5f286c4f5a76303dae1eea31de353"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad541f5576effa1bf3825dad04fe95e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_matches.html#aad541f5576effa1bf3825dad04fe95e0">Delete</a> (string matchId)</td></tr>
-<tr class="separator:aad541f5576effa1bf3825dad04fe95e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e4016dc0a27a4615b94f6552cff9813"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_matches.html#a6e4016dc0a27a4615b94f6552cff9813">Delete</a> (string matchId)</td></tr>
+<tr class="separator:a6e4016dc0a27a4615b94f6552cff9813"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa90d48d85763dffb238327c35f5bf1cb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_matches.html#aa90d48d85763dffb238327c35f5bf1cb">DiscardEventHandlers</a> ()</td></tr>
 <tr class="separator:aa90d48d85763dffb238327c35f5bf1cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a459390c5467df56730fb361cbe4ee797"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_gamer_matches.html">GamerMatches</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_matches.html#a459390c5467df56730fb361cbe4ee797">Domain</a> (string domain)</td></tr>
@@ -170,12 +170,12 @@ Action&lt; <a class="el" href="class_cotc_sdk_1_1_match_invite_event.html">Match
 
 </div>
 </div>
-<a class="anchor" id="aad541f5576effa1bf3825dad04fe95e0"></a>
+<a class="anchor" id="a6e4016dc0a27a4615b94f6552cff9813"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;bool&gt; CotcSdk.GamerMatches.Delete </td>
+          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_done.html">Done</a>&gt; CotcSdk.GamerMatches.Delete </td>
           <td>(</td>
           <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>matchId</em></td><td>)</td>
@@ -185,7 +185,7 @@ Action&lt; <a class="el" href="class_cotc_sdk_1_1_match_invite_event.html">Match
 </div><div class="memdoc">
 <p>Deletes a match. Only works if you are the one who created it and it is already finished. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">done</td><td>callback invoked when the operation has finished, either successfully or not. The attached boolean indicates success when true. </td></tr>
+    <tr><td class="paramname">done</td><td>callback invoked when the operation has finished, either successfully or not. </td></tr>
     <tr><td class="paramname">matchId</td><td>ID of the match to delete. </td></tr>
   </table>
   </dd>
@@ -356,7 +356,7 @@ Action&lt; <a class="el" href="class_cotc_sdk_1_1_match_invite_event.html">Match
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jun 25 2015 14:45:42 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Jun 30 2015 15:50:41 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

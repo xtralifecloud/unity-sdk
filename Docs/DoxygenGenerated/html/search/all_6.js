@@ -3,7 +3,7 @@ var searchData=
   ['game',['Game',['../class_cotc_sdk_1_1_game.html',1,'CotcSdk']]],
   ['game',['Game',['../class_cotc_sdk_1_1_cloud.html#a97bb9d73aed9f22bfc9796be6573fc8c',1,'CotcSdk::Cloud']]],
   ['gamebatches',['GameBatches',['../class_cotc_sdk_1_1_game_batches.html',1,'CotcSdk']]],
-  ['gamer',['Gamer',['../class_cotc_sdk_1_1_match.html#ad5fb1993bb8149548b0e44661d2f0056',1,'CotcSdk::Match']]],
+  ['gamer',['Gamer',['../class_cotc_sdk_1_1_got_godchild_event.html#a6d91bfdd1733b363090b79628dc5231d',1,'CotcSdk.GotGodchildEvent.Gamer()'],['../class_cotc_sdk_1_1_match.html#ad5fb1993bb8149548b0e44661d2f0056',1,'CotcSdk.Match.Gamer()']]],
   ['gamer',['Gamer',['../class_cotc_sdk_1_1_gamer.html',1,'CotcSdk']]],
   ['gameraccountmethods',['GamerAccountMethods',['../class_cotc_sdk_1_1_gamer_account_methods.html',1,'CotcSdk']]],
   ['gamerachievements',['GamerAchievements',['../class_cotc_sdk_1_1_gamer_achievements.html',1,'CotcSdk']]],
@@ -32,10 +32,11 @@ var searchData=
   ['getgodfather',['GetGodfather',['../class_cotc_sdk_1_1_gamer_godfather.html#ac94213b818db84af94087c35e79a58b1',1,'CotcSdk::GamerGodfather']]],
   ['getkey',['GetKey',['../class_cotc_sdk_1_1_gamer_properties.html#a4ea8a132f020e1477a695db004e3ea1e',1,'CotcSdk.GamerProperties.GetKey()'],['../class_cotc_sdk_1_1_gamer_vfs.html#ae0e87077298fd3146df639aea1f9b82f',1,'CotcSdk.GamerVfs.GetKey()'],['../class_cotc_sdk_1_1_game_vfs.html#a5e492772f1d8a45da35aaa451b9ab66c',1,'CotcSdk.GameVfs.GetKey()']]],
   ['getkeybinary',['GetKeyBinary',['../class_cotc_sdk_1_1_gamer_vfs.html#a587fb15e88700bd3f58edd059b2fcb95',1,'CotcSdk::GamerVfs']]],
-  ['getobject',['GetObject',['../class_cotc_sdk_1_1_clan_indexing.html#a98007654c731533fe0e4ec5f27b809b0',1,'CotcSdk::ClanIndexing']]],
+  ['getobject',['GetObject',['../class_cotc_sdk_1_1_cloud_indexing.html#a1e22c3fa021218a141ed01ef07ce0ed2',1,'CotcSdk::CloudIndexing']]],
   ['getpendingpromises',['GetPendingPromises',['../class_cotc_sdk_1_1_promise.html#a3842a3b8c396a0262ce64ea51fe9a86c',1,'CotcSdk::Promise']]],
   ['getrank',['GetRank',['../class_cotc_sdk_1_1_gamer_scores.html#a88973a3001326e645cc2b86f7e1bf3f9',1,'CotcSdk::GamerScores']]],
   ['getting_20started',['Getting started',['../getting_started_ref.html',1,'']]],
   ['globalstate',['GlobalState',['../class_cotc_sdk_1_1_match.html#a1ebfaef159679819912287098b7c5722',1,'CotcSdk::Match']]],
-  ['godfather',['Godfather',['../class_cotc_sdk_1_1_gamer.html#ad89bd7c937628ba1cabcb4ec5a860601',1,'CotcSdk::Gamer']]]
+  ['godfather',['Godfather',['../class_cotc_sdk_1_1_gamer.html#ad89bd7c937628ba1cabcb4ec5a860601',1,'CotcSdk::Gamer']]],
+  ['gotgodchildevent',['GotGodchildEvent',['../class_cotc_sdk_1_1_got_godchild_event.html',1,'CotcSdk']]]
 ];

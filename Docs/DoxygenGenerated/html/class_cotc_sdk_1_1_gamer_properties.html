@@ -108,10 +108,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af3bb24a46a1d481d30e0fd1de9220c44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c4e09da86ef78e9316c0b9271b5448e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_properties.html#a1c4e09da86ef78e9316c0b9271b5448e">SetAll</a> (<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> properties)</td></tr>
 <tr class="separator:a1c4e09da86ef78e9316c0b9271b5448e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0d661143830191061f315f7263894d3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_properties.html#aa0d661143830191061f315f7263894d3">RemoveKey</a> (string key)</td></tr>
-<tr class="separator:aa0d661143830191061f315f7263894d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a955111670d7e43a7ef143f4ca0a619dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_properties.html#a955111670d7e43a7ef143f4ca0a619dc">RemoveAll</a> ()</td></tr>
-<tr class="separator:a955111670d7e43a7ef143f4ca0a619dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a5f029ed157b5fd8a99ec9246e43bc3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_properties.html#a8a5f029ed157b5fd8a99ec9246e43bc3">RemoveKey</a> (string key)</td></tr>
+<tr class="separator:a8a5f029ed157b5fd8a99ec9246e43bc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6a0c0427a5fa829beda9c23235fb790"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_properties.html#aa6a0c0427a5fa829beda9c23235fb790">RemoveAll</a> ()</td></tr>
+<tr class="separator:aa6a0c0427a5fa829beda9c23235fb790"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a984417e2fa41471dcc32b7dc0a0836cc"></a>
@@ -180,12 +180,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a955111670d7e43a7ef143f4ca0a619dc"></a>
+<a class="anchor" id="aa6a0c0427a5fa829beda9c23235fb790"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;bool&gt; CotcSdk.GamerProperties.RemoveAll </td>
+          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_done.html">Done</a>&gt; CotcSdk.GamerProperties.RemoveAll </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -194,19 +194,19 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Remove all properties for the user. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">done</td><td>callback invoked when the operation has finished, either successfully or not. The enclosed boolean value indicates success. </td></tr>
+    <tr><td class="paramname">done</td><td>callback invoked when the operation has finished, either successfully or not. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="aa0d661143830191061f315f7263894d3"></a>
+<a class="anchor" id="a8a5f029ed157b5fd8a99ec9246e43bc3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;bool&gt; CotcSdk.GamerProperties.RemoveKey </td>
+          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_done.html">Done</a>&gt; CotcSdk.GamerProperties.RemoveKey </td>
           <td>(</td>
           <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>key</em></td><td>)</td>
@@ -216,7 +216,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Removes a single key from the user properties. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">done</td><td>callback invoked when the operation has finished, either successfully or not. The enclosed boolean value indicates success. </td></tr>
+    <tr><td class="paramname">done</td><td>callback invoked when the operation has finished, either successfully or not. </td></tr>
     <tr><td class="paramname">key</td><td>the name of the key to remove. </td></tr>
   </table>
   </dd>
@@ -287,7 +287,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jun 25 2015 14:45:42 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Jun 30 2015 15:50:41 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['transaction',['Transaction',['../class_cotc_sdk_1_1_transaction.html',1,'CotcSdk']]],
-  ['transactionresult',['TransactionResult',['../class_cotc_sdk_1_1_transaction_result.html',1,'CotcSdk']]]
+  ['score',['Score',['../class_cotc_sdk_1_1_score.html',1,'CotcSdk']]],
+  ['socialnetworkfriend',['SocialNetworkFriend',['../class_cotc_sdk_1_1_social_network_friend.html',1,'CotcSdk']]],
+  ['socialnetworkfriendresponse',['SocialNetworkFriendResponse',['../class_cotc_sdk_1_1_social_network_friend_response.html',1,'CotcSdk']]]
 ];

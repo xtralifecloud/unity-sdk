@@ -7,8 +7,8 @@ var searchData=
   ['rejectable',['rejectable',['../struct_cotc_sdk_1_1_promise_3_01_promised_t_01_4_1_1_handler_3_01_t_01_4.html#ae302cdbfca457d77c6491d36fc311e28',1,'CotcSdk.Promise&lt; PromisedT &gt;.Handler&lt; T &gt;.rejectable()'],['../struct_cotc_sdk_1_1_promise_1_1_reject_handler.html#a1948949cabbeb9bfaea97fff17b2b8a7',1,'CotcSdk.Promise.RejectHandler.rejectable()'],['../struct_cotc_sdk_1_1_promise_1_1_resolve_handler.html#a995800110f8e5733cd7e4e43ebbc3f8b',1,'CotcSdk.Promise.ResolveHandler.rejectable()']]],
   ['rejected',['Rejected',['../class_cotc_sdk_1_1_promise_3_01_promised_t_01_4.html#af6b74732de9164206981c4bb26100436',1,'CotcSdk.Promise&lt; PromisedT &gt;.Rejected()'],['../class_cotc_sdk_1_1_promise.html#a8924a14d5f93c94e287a1736df95d8e2',1,'CotcSdk.Promise.Rejected()']]],
   ['rejecthandler',['RejectHandler',['../struct_cotc_sdk_1_1_promise_1_1_reject_handler.html',1,'CotcSdk::Promise']]],
-  ['removeall',['RemoveAll',['../class_cotc_sdk_1_1_gamer_properties.html#a955111670d7e43a7ef143f4ca0a619dc',1,'CotcSdk::GamerProperties']]],
-  ['removekey',['RemoveKey',['../class_cotc_sdk_1_1_gamer_properties.html#aa0d661143830191061f315f7263894d3',1,'CotcSdk.GamerProperties.RemoveKey()'],['../class_cotc_sdk_1_1_gamer_vfs.html#aecffc34cdd2680dce651674c85d6d268',1,'CotcSdk.GamerVfs.RemoveKey()']]],
+  ['removeall',['RemoveAll',['../class_cotc_sdk_1_1_gamer_properties.html#aa6a0c0427a5fa829beda9c23235fb790',1,'CotcSdk::GamerProperties']]],
+  ['removekey',['RemoveKey',['../class_cotc_sdk_1_1_gamer_properties.html#a8a5f029ed157b5fd8a99ec9246e43bc3',1,'CotcSdk.GamerProperties.RemoveKey()'],['../class_cotc_sdk_1_1_gamer_vfs.html#a1f7a22602ee00912a58965967ca9ca26',1,'CotcSdk.GamerVfs.RemoveKey()']]],
   ['resolve',['Resolve',['../interface_cotc_sdk_1_1_i_pending_promise_3_01_promised_t_01_4.html#a837c5debcf45f062e538ae1fce3b09dd',1,'CotcSdk.IPendingPromise&lt; PromisedT &gt;.Resolve()'],['../class_cotc_sdk_1_1_promise_3_01_promised_t_01_4.html#a125c4059c2d36c2cb410886f3c8bc713',1,'CotcSdk.Promise&lt; PromisedT &gt;.Resolve()'],['../interface_cotc_sdk_1_1_i_pending_promise.html#af32a00ee6c167f9475bce14e327aef48',1,'CotcSdk.IPendingPromise.Resolve()'],['../class_cotc_sdk_1_1_promise.html#a877b1988afbdefa9c6e43e8a10779c11',1,'CotcSdk.Promise.Resolve()']]],
   ['resolved',['Resolved',['../class_cotc_sdk_1_1_promise_3_01_promised_t_01_4.html#a55d59a12c669c948fbe3aa5bc641bc6c',1,'CotcSdk.Promise&lt; PromisedT &gt;.Resolved()'],['../class_cotc_sdk_1_1_promise.html#a779633e01032b6b69cfeb424329889ae',1,'CotcSdk.Promise.Resolved()']]],
   ['resolvehandler',['ResolveHandler',['../struct_cotc_sdk_1_1_promise_1_1_resolve_handler.html',1,'CotcSdk::Promise']]],
@@ -16,5 +16,6 @@ var searchData=
   ['resume',['Resume',['../class_cotc_sdk_1_1_domain_event_loop.html#ad5c6e23f5d98b5b0bd15524cb6d4b387',1,'CotcSdk::DomainEventLoop']]],
   ['resumesession',['ResumeSession',['../class_cotc_sdk_1_1_cloud.html#a0845d78b0198753730b32f419c408edb',1,'CotcSdk::Cloud']]],
   ['retryin',['RetryIn',['../class_cotc_sdk_1_1_http_request_failed_event_args.html#ac03110965bc9b6b45902bf3952e02d56',1,'CotcSdk::HttpRequestFailedEventArgs']]],
+  ['reward',['Reward',['../class_cotc_sdk_1_1_got_godchild_event.html#a3b95673dbc2214272355de57f8c0e194',1,'CotcSdk::GotGodchildEvent']]],
   ['run',['Run',['../class_cotc_sdk_1_1_game_batches.html#a92255ddf0dae87fac87864db8df62d8a',1,'CotcSdk.GameBatches.Run()'],['../class_cotc_sdk_1_1_gamer_batches.html#ae764a01efad61d86ae7cd1561ec0390d',1,'CotcSdk.GamerBatches.Run()']]]
 ];

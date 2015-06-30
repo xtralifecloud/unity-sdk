@@ -1,10 +1,14 @@
 var searchData=
 [
-  ['pagedlist_3c_20datatype_20_3e',['PagedList&lt; DataType &gt;',['../class_cotc_sdk_1_1_paged_list_3_01_data_type_01_4.html',1,'CotcSdk']]],
-  ['postedgamescore',['PostedGameScore',['../class_cotc_sdk_1_1_posted_game_score.html',1,'CotcSdk']]],
-  ['preferencepane',['PreferencePane',['../class_cotc_sdk_1_1_preference_pane.html',1,'CotcSdk']]],
-  ['promise',['Promise',['../class_cotc_sdk_1_1_promise.html',1,'CotcSdk']]],
-  ['promise_3c_20promisedt_20_3e',['Promise&lt; PromisedT &gt;',['../class_cotc_sdk_1_1_promise_3_01_promised_t_01_4.html',1,'CotcSdk']]],
-  ['propertiesobject',['PropertiesObject',['../class_cotc_sdk_1_1_properties_object.html',1,'CotcSdk']]],
-  ['pushnotification',['PushNotification',['../class_cotc_sdk_1_1_push_notification.html',1,'CotcSdk']]]
+  ['match',['Match',['../class_cotc_sdk_1_1_match.html',1,'CotcSdk']]],
+  ['matchevent',['MatchEvent',['../class_cotc_sdk_1_1_match_event.html',1,'CotcSdk']]],
+  ['matchfinishevent',['MatchFinishEvent',['../class_cotc_sdk_1_1_match_finish_event.html',1,'CotcSdk']]],
+  ['matchinfo',['MatchInfo',['../class_cotc_sdk_1_1_match_info.html',1,'CotcSdk']]],
+  ['matchinviteevent',['MatchInviteEvent',['../class_cotc_sdk_1_1_match_invite_event.html',1,'CotcSdk']]],
+  ['matchjoinevent',['MatchJoinEvent',['../class_cotc_sdk_1_1_match_join_event.html',1,'CotcSdk']]],
+  ['matchleaveevent',['MatchLeaveEvent',['../class_cotc_sdk_1_1_match_leave_event.html',1,'CotcSdk']]],
+  ['matchlistresult',['MatchListResult',['../class_cotc_sdk_1_1_match_list_result.html',1,'CotcSdk']]],
+  ['matchmove',['MatchMove',['../class_cotc_sdk_1_1_match_move.html',1,'CotcSdk']]],
+  ['matchmoveevent',['MatchMoveEvent',['../class_cotc_sdk_1_1_match_move_event.html',1,'CotcSdk']]],
+  ['matchshoedrawnevent',['MatchShoeDrawnEvent',['../class_cotc_sdk_1_1_match_shoe_drawn_event.html',1,'CotcSdk']]]
 ];

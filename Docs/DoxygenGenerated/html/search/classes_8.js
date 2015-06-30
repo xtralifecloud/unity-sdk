@@ -1,13 +1,11 @@
 var searchData=
 [
-  ['match',['Match',['../class_cotc_sdk_1_1_match.html',1,'CotcSdk']]],
-  ['matchevent',['MatchEvent',['../class_cotc_sdk_1_1_match_event.html',1,'CotcSdk']]],
-  ['matchfinishevent',['MatchFinishEvent',['../class_cotc_sdk_1_1_match_finish_event.html',1,'CotcSdk']]],
-  ['matchinfo',['MatchInfo',['../class_cotc_sdk_1_1_match_info.html',1,'CotcSdk']]],
-  ['matchinviteevent',['MatchInviteEvent',['../class_cotc_sdk_1_1_match_invite_event.html',1,'CotcSdk']]],
-  ['matchjoinevent',['MatchJoinEvent',['../class_cotc_sdk_1_1_match_join_event.html',1,'CotcSdk']]],
-  ['matchleaveevent',['MatchLeaveEvent',['../class_cotc_sdk_1_1_match_leave_event.html',1,'CotcSdk']]],
-  ['matchlistresult',['MatchListResult',['../class_cotc_sdk_1_1_match_list_result.html',1,'CotcSdk']]],
-  ['matchmove',['MatchMove',['../class_cotc_sdk_1_1_match_move.html',1,'CotcSdk']]],
-  ['matchmoveevent',['MatchMoveEvent',['../class_cotc_sdk_1_1_match_move_event.html',1,'CotcSdk']]]
+  ['indexresult',['IndexResult',['../class_cotc_sdk_1_1_index_result.html',1,'CotcSdk']]],
+  ['indexsearchresult',['IndexSearchResult',['../class_cotc_sdk_1_1_index_search_result.html',1,'CotcSdk']]],
+  ['ipendingpromise',['IPendingPromise',['../interface_cotc_sdk_1_1_i_pending_promise.html',1,'CotcSdk']]],
+  ['ipendingpromise_3c_20promisedt_20_3e',['IPendingPromise&lt; PromisedT &gt;',['../interface_cotc_sdk_1_1_i_pending_promise_3_01_promised_t_01_4.html',1,'CotcSdk']]],
+  ['ipromise',['IPromise',['../interface_cotc_sdk_1_1_i_promise.html',1,'CotcSdk']]],
+  ['ipromise_3c_20promisedt_20_3e',['IPromise&lt; PromisedT &gt;',['../interface_cotc_sdk_1_1_i_promise_3_01_promised_t_01_4.html',1,'CotcSdk']]],
+  ['ipromiseinfo',['IPromiseInfo',['../interface_cotc_sdk_1_1_i_promise_info.html',1,'CotcSdk']]],
+  ['irejectable',['IRejectable',['../interface_cotc_sdk_1_1_i_rejectable.html',1,'CotcSdk']]]
 ];

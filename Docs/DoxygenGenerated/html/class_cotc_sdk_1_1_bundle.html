@@ -117,15 +117,15 @@ Inheritance diagram for CotcSdk.Bundle:</div>
 </div><!-- fragment --><p>The bundle object, considered as dictionary will have its key "hello" set with a new <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> node of type string (implicitly created from the string). So later on, you might fetch this value as well:</p>
 <div class="fragment"><div class="line"><span class="keywordtype">string</span> value = b[<span class="stringliteral">&quot;hello&quot;</span>];</div>
 </div><!-- fragment --><p>What happens here is that the bundle under the key "hello" is fetched, and then implicitly converted to a string.</p>
-<p><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> provides a safe way to browse a predefined graph, as when a key doesn't exist it returns the <code>Bundle.Empty</code> (no null value). This special bundle allows to fetch sub-objects but they will always translate to <code>Bundle.Empty</code> as well. If the values are to be converted to a primitive type, the result will be the default value for this type (null for a string, 0 for an int, etc.). As such, you may do this:</p>
+<p><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> provides a safe way to browse a predefined graph, as when a key doesn't exist it returns the <a class="el" href="class_cotc_sdk_1_1_bundle.html#a9e1489ca059f1ebfc7cfa140dbb78011">Bundle.Empty</a> (no null value). This special bundle allows to fetch sub-objects but they will always translate to <a class="el" href="class_cotc_sdk_1_1_bundle.html#a9e1489ca059f1ebfc7cfa140dbb78011">Bundle.Empty</a> as well. If the values are to be converted to a primitive type, the result will be the default value for this type (null for a string, 0 for an int, etc.). As such, you may do this:</p>
 <div class="fragment"><div class="line"><span class="keywordtype">int</span> value = bundle[<span class="stringliteral">&quot;nonexisting&quot;</span>][<span class="stringliteral">&quot;key&quot;</span>];</div>
-</div><!-- fragment --><p>Since the "nonexisting" key is not found on bundle, <code>Bundle.Empty</code> is returned. Further fetching "key" will return an empty bundle as well. Which will be converted implicitly to an integer as 0. <code>Bundle.Empty</code> is a constant value that always refers to an empty bundle, and attempting to modify it will result in an exception.</p>
+</div><!-- fragment --><p>Since the "nonexisting" key is not found on bundle, <a class="el" href="class_cotc_sdk_1_1_bundle.html#a9e1489ca059f1ebfc7cfa140dbb78011">Bundle.Empty</a> is returned. Further fetching "key" will return an empty bundle as well. Which will be converted implicitly to an integer as 0. <a class="el" href="class_cotc_sdk_1_1_bundle.html#a9e1489ca059f1ebfc7cfa140dbb78011">Bundle.Empty</a> is a constant value that always refers to an empty bundle, and attempting to modify it will result in an exception.</p>
 <div class="fragment"><div class="line">Bundle b = Bundle.Empty;</div>
 <div class="line">b[<span class="stringliteral">&quot;value&quot;</span>] = <span class="stringliteral">&quot;something&quot;</span>; <span class="comment">// Exception</span></div>
-</div><!-- fragment --><p>The bundle hierarchy doesn't accept null or <code>Bundle.Empty</code> values (it just rejects them). You should avoid manipulating null Bundles and use <code>Bundle.Empty</code> wherever possible, however you may assign a null bundle to a key, which will have no effect. This can be useful for optional arguments. For instance, the following snippet will not affect the bundle.</p>
+</div><!-- fragment --><p>The bundle hierarchy doesn't accept null or <a class="el" href="class_cotc_sdk_1_1_bundle.html#a9e1489ca059f1ebfc7cfa140dbb78011">Bundle.Empty</a> values (it just rejects them). You should avoid manipulating null Bundles and use <a class="el" href="class_cotc_sdk_1_1_bundle.html#a9e1489ca059f1ebfc7cfa140dbb78011">Bundle.Empty</a> wherever possible, however you may assign a null bundle to a key, which will have no effect. This can be useful for optional arguments. For instance, the following snippet will not affect the bundle.</p>
 <div class="fragment"><div class="line"><span class="keywordtype">string</span> value = null; <span class="comment">// converts to Empty.Bundle and rejects assignment</span></div>
 <div class="line">bundle[<span class="stringliteral">&quot;key&quot;</span>] = value;</div>
-</div><!-- fragment --><p>Note that <code>Bundle.Empty</code> is not strictly identical to an empty bundle object. <code>Bundle.Empty</code> is never considered as a value and is discarded upon assignment. For instance:</p>
+</div><!-- fragment --><p>Note that <a class="el" href="class_cotc_sdk_1_1_bundle.html#a9e1489ca059f1ebfc7cfa140dbb78011">Bundle.Empty</a> is not strictly identical to an empty bundle object. <a class="el" href="class_cotc_sdk_1_1_bundle.html#a9e1489ca059f1ebfc7cfa140dbb78011">Bundle.Empty</a> is never considered as a value and is discarded upon assignment. For instance:</p>
 <div class="fragment"><div class="line">Bundle a = Bundle.CreateObject();</div>
 <div class="line">Bundle b = Bundle.CreateObject();</div>
 <div class="line">a[<span class="stringliteral">&quot;key&quot;</span>] = Bundle.Empty;</div>
@@ -149,7 +149,7 @@ Inheritance diagram for CotcSdk.Bundle:</div>
 <div class="fragment"><div class="line">Bundle b;</div>
 <div class="line"><span class="keywordflow">foreach</span> (KeyValuePair&lt;string, Bundle&gt; pair <span class="keywordflow">in</span> b[<span class="stringliteral">&quot;key&quot;</span>].AsDictionary()) { ... }</div>
 </div><!-- fragment --><p>This loop is safe as well even if the bundle doesn't contain a "key" entry or the "key" entry is not an object.</p>
-<p>Null bundles should be avoided! Use <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>. Empty everytime you need a "void", non mutable bundle value. Converting from a null bundle will result in an exception.</p>
+<p>Null bundles should be avoided! Use <a class="el" href="class_cotc_sdk_1_1_bundle.html#a9e1489ca059f1ebfc7cfa140dbb78011">Bundle.Empty</a> every time you need a "void", non mutable bundle value. Converting from a null bundle will result in an exception.</p>
 <div class="fragment"><div class="line">Bundle b = null;</div>
 <div class="line"><span class="keywordtype">string</span> value = b; <span class="comment">// Null pointer exception!</span></div>
 </div><!-- fragment --><p>That's all what there is to know about bundles. In general they should make any code interacting with generic objects simple and safe. </p>
@@ -303,8 +303,7 @@ static <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:a9e1489ca059f1ebfc7cfa140dbb78011"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9e1489ca059f1ebfc7cfa140dbb78011"></a>
-static readonly <a class="el" href="class_cotc_sdk_1_1_empty_bundle.html">EmptyBundle</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Empty</b> = new <a class="el" href="class_cotc_sdk_1_1_empty_bundle.html">EmptyBundle</a>()</td></tr>
+<tr class="memitem:a9e1489ca059f1ebfc7cfa140dbb78011"><td class="memItemLeft" align="right" valign="top">static readonly <a class="el" href="class_cotc_sdk_1_1_empty_bundle.html">EmptyBundle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a9e1489ca059f1ebfc7cfa140dbb78011">Empty</a> = new <a class="el" href="class_cotc_sdk_1_1_empty_bundle.html">EmptyBundle</a>()</td></tr>
 <tr class="separator:a9e1489ca059f1ebfc7cfa140dbb78011"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
@@ -328,13 +327,35 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsEmpty</b><code> [ge
 DataType&#160;</td><td class="memItemRight" valign="bottom"><b>Type</b><code> [get]</code></td></tr>
 <tr class="separator:a1023b7f49b31c5578c36b622b0dc6c0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a9e1489ca059f1ebfc7cfa140dbb78011"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">readonly <a class="el" href="class_cotc_sdk_1_1_empty_bundle.html">EmptyBundle</a> CotcSdk.Bundle.Empty = new <a class="el" href="class_cotc_sdk_1_1_empty_bundle.html">EmptyBundle</a>()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Empty (null-like) <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>. See class documentation for more information. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>CloudBuilderLibrary/Internal/Bundle.cs</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jun 25 2015 14:45:42 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Jun 30 2015 15:50:41 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

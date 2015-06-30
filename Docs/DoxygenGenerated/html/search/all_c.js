@@ -13,6 +13,7 @@ var searchData=
   ['matchlistresult',['MatchListResult',['../class_cotc_sdk_1_1_match_list_result.html',1,'CotcSdk']]],
   ['matchmove',['MatchMove',['../class_cotc_sdk_1_1_match_move.html',1,'CotcSdk']]],
   ['matchmoveevent',['MatchMoveEvent',['../class_cotc_sdk_1_1_match_move_event.html',1,'CotcSdk']]],
+  ['matchshoedrawnevent',['MatchShoeDrawnEvent',['../class_cotc_sdk_1_1_match_shoe_drawn_event.html',1,'CotcSdk']]],
   ['maxplayers',['MaxPlayers',['../class_cotc_sdk_1_1_match.html#a2ec2b0df3b9b755fce93ae6df9f0b671',1,'CotcSdk.Match.MaxPlayers()'],['../class_cotc_sdk_1_1_match_list_result.html#a9f0fbeb65075bb45652b2f968b6d3cdd',1,'CotcSdk.MatchListResult.MaxPlayers()']]],
   ['maxscore',['MaxScore',['../class_cotc_sdk_1_1_index_search_result.html#a3256a78c43735132149fe28dad507c2f',1,'CotcSdk::IndexSearchResult']]],
   ['message',['Message',['../class_cotc_sdk_1_1_event_loop_args.html#ac67fb58ca0258047f7156ee82e9525f9',1,'CotcSdk.EventLoopArgs.Message()'],['../class_cotc_sdk_1_1_push_notification.html#a76dc7a15520dfdc25aa7a9164542475a',1,'CotcSdk.PushNotification.Message()']]],

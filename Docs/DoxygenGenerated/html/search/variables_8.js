@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['rejectable',['rejectable',['../struct_cotc_sdk_1_1_promise_3_01_promised_t_01_4_1_1_handler_3_01_t_01_4.html#ae302cdbfca457d77c6491d36fc311e28',1,'CotcSdk.Promise&lt; PromisedT &gt;.Handler&lt; T &gt;.rejectable()'],['../struct_cotc_sdk_1_1_promise_1_1_reject_handler.html#a1948949cabbeb9bfaea97fff17b2b8a7',1,'CotcSdk.Promise.RejectHandler.rejectable()'],['../struct_cotc_sdk_1_1_promise_1_1_resolve_handler.html#a995800110f8e5733cd7e4e43ebbc3f8b',1,'CotcSdk.Promise.ResolveHandler.rejectable()']]]
+  ['offset',['Offset',['../class_cotc_sdk_1_1_paged_list_3_01_data_type_01_4.html#a30b89c860089629f1a13cd74f9317ccc',1,'CotcSdk::PagedList&lt; DataType &gt;']]]
 ];

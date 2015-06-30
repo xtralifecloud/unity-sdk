@@ -93,23 +93,25 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">CotcSdk.GamerAccountMethods Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>API functions acting on an user account (convert, etc.). </p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a8784a857e5092dc6e135b8e2db39188f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_account_methods.html#a8784a857e5092dc6e135b8e2db39188f">ChangeEmailAddress</a> (string newEmailAddress)</td></tr>
-<tr class="separator:a8784a857e5092dc6e135b8e2db39188f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20eb73168f74a26fa3c301694f37b873"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_account_methods.html#a20eb73168f74a26fa3c301694f37b873">ChangePassword</a> (string newPassword)</td></tr>
-<tr class="separator:a20eb73168f74a26fa3c301694f37b873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b32d62b67848c7f9df2139832466227"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_account_methods.html#a6b32d62b67848c7f9df2139832466227">Convert</a> (LoginNetwork network, string networkId, string networkSecret)</td></tr>
-<tr class="separator:a6b32d62b67848c7f9df2139832466227"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a137e2076d1f6198215a314b186ac5c90"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_account_methods.html#a137e2076d1f6198215a314b186ac5c90">ChangeEmailAddress</a> (string newEmailAddress)</td></tr>
+<tr class="separator:a137e2076d1f6198215a314b186ac5c90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a818059d62c873319a027c17e6fcd9393"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_account_methods.html#a818059d62c873319a027c17e6fcd9393">ChangePassword</a> (string newPassword)</td></tr>
+<tr class="separator:a818059d62c873319a027c17e6fcd9393"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a5ff4291c48c6c9fe21caac3a4f3f2e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_account_methods.html#a2a5ff4291c48c6c9fe21caac3a4f3f2e">Convert</a> (LoginNetwork network, string networkId, string networkSecret)</td></tr>
+<tr class="separator:a2a5ff4291c48c6c9fe21caac3a4f3f2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a8784a857e5092dc6e135b8e2db39188f"></a>
+<a class="anchor" id="a137e2076d1f6198215a314b186ac5c90"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;bool&gt; CotcSdk.GamerAccountMethods.ChangeEmailAddress </td>
+          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_done.html">Done</a>&gt; CotcSdk.GamerAccountMethods.ChangeEmailAddress </td>
           <td>(</td>
           <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>newEmailAddress</em></td><td>)</td>
@@ -119,7 +121,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Changes the e-mail address of the current user. Works for e-mail type accounts. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">done</td><td>callback invoked when the operation has completed, either successfully or not. The boolean inside indicates success. </td></tr>
+    <tr><td class="paramname">done</td><td>callback invoked when the operation has completed, either successfully or not. </td></tr>
     <tr><td class="paramname">newEmailAddress</td><td>the new e-mail address to be used for signing in. </td></tr>
   </table>
   </dd>
@@ -127,12 +129,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a20eb73168f74a26fa3c301694f37b873"></a>
+<a class="anchor" id="a818059d62c873319a027c17e6fcd9393"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;bool&gt; CotcSdk.GamerAccountMethods.ChangePassword </td>
+          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_done.html">Done</a>&gt; CotcSdk.GamerAccountMethods.ChangePassword </td>
           <td>(</td>
           <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>newPassword</em></td><td>)</td>
@@ -142,7 +144,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Changes the password of the current user. Works for e-mail type accounts. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">done</td><td>callback invoked when the operation has completed, either successfully or not. The boolean inside indicates success. </td></tr>
+    <tr><td class="paramname">done</td><td>callback invoked when the operation has completed, either successfully or not. </td></tr>
     <tr><td class="paramname">newPassword</td><td>the new password to be used for signing in. </td></tr>
   </table>
   </dd>
@@ -150,12 +152,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a6b32d62b67848c7f9df2139832466227"></a>
+<a class="anchor" id="a2a5ff4291c48c6c9fe21caac3a4f3f2e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;bool&gt; CotcSdk.GamerAccountMethods.Convert </td>
+          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_done.html">Done</a>&gt; CotcSdk.GamerAccountMethods.Convert </td>
           <td>(</td>
           <td class="paramtype">LoginNetwork&#160;</td>
           <td class="paramname"><em>network</em>, </td>
@@ -181,7 +183,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Converts the account to sign in through another network. For instance, you might have created an anonymous account, that you later want to convert to an account logged on through a facebook account. Or, should you later want to convert this account to simply use an e-mail address, this is the method that you will want to call. In order to convert the account successfully, the provided network credentials need to be acceptable, just as when calling <a class="el" href="class_cotc_sdk_1_1_cloud.html#a1f3f0e4e6f078bbafc409f46e602cec4">Cloud.Login</a>. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">done</td><td>callback invoked when the operation has completed, either successfully or not. The boolean inside is not important. </td></tr>
+    <tr><td class="paramname">done</td><td>callback invoked when the operation has completed, either successfully or not. </td></tr>
     <tr><td class="paramname">network</td><td>the target network to connect with later on. </td></tr>
     <tr><td class="paramname">networkId</td><td>the ID on the network. For example, with the facebook network, this would be the User ID. On e-mail accounts e-mail then, this would be the e-mail address. </td></tr>
     <tr><td class="paramname">networkSecret</td><td>the secret for the network. For e-mail accounts, this would be the passord. For facebook or other SNS accounts, this would be the user token. </td></tr>
@@ -197,7 +199,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jun 25 2015 14:45:42 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Jun 30 2015 15:50:41 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

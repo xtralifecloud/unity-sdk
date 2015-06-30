@@ -95,13 +95,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">CotcSdk.Cloud Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Root class of the SDK. It is stateless and allows to perform basic operations with the SDK, such as <code>Ping</code>.</p>
+<p>The #Cloud object may typically be used to log in, which would return a #Gamer object, another very important object from the SDK.</p>
+<p>Other objects such as a #CloudIndexing object can also be obtained synchronously in order to perform categorized operations. These objects may not be stateless though, so please refer to their respective documentation. </p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac2bad59391c60108c7da5c3160e004d3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_clan_indexing.html">ClanIndexing</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_cloud.html#ac2bad59391c60108c7da5c3160e004d3">Index</a> (string indexName, string domain=Common.PrivateDomain)</td></tr>
-<tr class="separator:ac2bad59391c60108c7da5c3160e004d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:accc5f3d543ea7380840d9a54ff49027e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_cloud.html#accc5f3d543ea7380840d9a54ff49027e">Ping</a> ()</td></tr>
-<tr class="separator:accc5f3d543ea7380840d9a54ff49027e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b6ebff8093c0e782bba2f7f85adb33f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_cloud_indexing.html">CloudIndexing</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_cloud.html#a8b6ebff8093c0e782bba2f7f85adb33f">Index</a> (string indexName, string domain=Common.PrivateDomain)</td></tr>
+<tr class="separator:a8b6ebff8093c0e782bba2f7f85adb33f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0be05c73d60b58f0113c1cd50abdf945"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_cloud.html#a0be05c73d60b58f0113c1cd50abdf945">Ping</a> ()</td></tr>
+<tr class="separator:a0be05c73d60b58f0113c1cd50abdf945"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8c22e712212037333f698918b0f7bf23"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; PagedList&lt; <a class="el" href="class_cotc_sdk_1_1_user_info.html">UserInfo</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_cloud.html#a8c22e712212037333f698918b0f7bf23">ListUsers</a> (string filter, int limit=30, int offset=0)</td></tr>
 <tr class="separator:a8c22e712212037333f698918b0f7bf23"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad44854139e09d3948bc872ce99668e0b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_gamer.html">Gamer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_cloud.html#ad44854139e09d3948bc872ce99668e0b">LoginAnonymously</a> ()</td></tr>
@@ -110,10 +114,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1f3f0e4e6f078bbafc409f46e602cec4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0845d78b0198753730b32f419c408edb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_gamer.html">Gamer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_cloud.html#a0845d78b0198753730b32f419c408edb">ResumeSession</a> (string gamerId, string gamerSecret)</td></tr>
 <tr class="separator:a0845d78b0198753730b32f419c408edb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5506b16a2ebe2e34763af5e529872129"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_cloud.html#a5506b16a2ebe2e34763af5e529872129">SendResetPasswordEmail</a> (string userEmail, string mailSender, string mailTitle, string mailBody)</td></tr>
-<tr class="separator:a5506b16a2ebe2e34763af5e529872129"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f0be958907127a60c80262f9185cd8e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_cloud.html#a1f0be958907127a60c80262f9185cd8e">UserExists</a> (LoginNetwork network, string networkId)</td></tr>
-<tr class="separator:a1f0be958907127a60c80262f9185cd8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae50ce6e296d85a460f7bf06a15226822"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_cloud.html#ae50ce6e296d85a460f7bf06a15226822">SendResetPasswordEmail</a> (string userEmail, string mailSender, string mailTitle, string mailBody)</td></tr>
+<tr class="separator:ae50ce6e296d85a460f7bf06a15226822"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40a147a7b26354a0c56c57cd2bc41a65"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_cloud.html#a40a147a7b26354a0c56c57cd2bc41a65">UserExists</a> (LoginNetwork network, string networkId)</td></tr>
+<tr class="separator:a40a147a7b26354a0c56c57cd2bc41a65"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -126,12 +130,12 @@ Properties</h2></td></tr>
 <tr class="separator:a97bb9d73aed9f22bfc9796be6573fc8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="ac2bad59391c60108c7da5c3160e004d3"></a>
+<a class="anchor" id="a8b6ebff8093c0e782bba2f7f85adb33f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_clan_indexing.html">ClanIndexing</a> CotcSdk.Cloud.Index </td>
+          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_cloud_indexing.html">CloudIndexing</a> CotcSdk.Cloud.Index </td>
           <td>(</td>
           <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>indexName</em>, </td>
@@ -149,7 +153,7 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Allows to manipulate an index. Usage: <code><a class="el" href="class_cotc_sdk_1_1_cloud.html#ac2bad59391c60108c7da5c3160e004d3">Cloud.Index</a>("matches").IndexObject(...);</code>. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Allows to manipulate an index. Usage: <code><a class="el" href="class_cotc_sdk_1_1_cloud.html#a8b6ebff8093c0e782bba2f7f85adb33f">Cloud.Index</a>("matches").IndexObject(...);</code>. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">indexName</td><td>name of the index; scopes your searches. </td></tr>
     <tr><td class="paramname">domain</td><td>the domain to manipulate the index on. </td></tr>
@@ -263,12 +267,12 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="accc5f3d543ea7380840d9a54ff49027e"></a>
+<a class="anchor" id="a0be05c73d60b58f0113c1cd50abdf945"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;bool&gt; CotcSdk.Cloud.Ping </td>
+          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_done.html">Done</a>&gt; CotcSdk.Cloud.Ping </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -318,12 +322,12 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a5506b16a2ebe2e34763af5e529872129"></a>
+<a class="anchor" id="ae50ce6e296d85a460f7bf06a15226822"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;bool&gt; CotcSdk.Cloud.SendResetPasswordEmail </td>
+          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_done.html">Done</a>&gt; CotcSdk.Cloud.SendResetPasswordEmail </td>
           <td>(</td>
           <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>userEmail</em>, </td>
@@ -366,12 +370,12 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1f0be958907127a60c80262f9185cd8e"></a>
+<a class="anchor" id="a40a147a7b26354a0c56c57cd2bc41a65"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;bool&gt; CotcSdk.Cloud.UserExists </td>
+          <td class="memname"><a class="el" href="interface_cotc_sdk_1_1_i_promise.html">IPromise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_done.html">Done</a>&gt; CotcSdk.Cloud.UserExists </td>
           <td>(</td>
           <td class="paramtype">LoginNetwork&#160;</td>
           <td class="paramname"><em>network</em>, </td>
@@ -391,7 +395,7 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 <p>Checks that an user exists on a given network. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">done</td><td>callback invoked when the request has finished, either successfully or not. The boolean value inside indicates whether the user exists. </td></tr>
+    <tr><td class="paramname">done</td><td>callback invoked when the request has finished, either successfully or not. </td></tr>
     <tr><td class="paramname">networkId</td><td>the ID of the user on the network, like the e-mail address. </td></tr>
   </table>
   </dd>
@@ -442,7 +446,7 @@ Properties</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jun 25 2015 14:45:42 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Jun 30 2015 15:50:41 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>
