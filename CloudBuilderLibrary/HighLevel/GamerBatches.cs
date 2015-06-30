@@ -11,6 +11,7 @@ namespace CotcSdk {
 		 * Changes the domain affected by the next operations.
 		 * You should typically use it this way: `gamer.Batches.Domain("private").Run(...);`
 		 * @param domain domain on which to scope the next operations.
+		 * @return this object for operation chaining.
 		 */
 		public GamerBatches Domain(string domain) {
 			this.domain = domain;

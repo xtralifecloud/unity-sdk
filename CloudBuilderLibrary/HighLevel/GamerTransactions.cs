@@ -28,6 +28,7 @@ namespace CotcSdk {
 		 * Changes the domain affected by the next operations.
 		 * You should typically use it this way: `gamer.Transactions.Domain("private").Post(...);`
 		 * @param domain domain on which to scope the transactions. Default to `private` if unmodified.
+		 * @return this object for operation chaining.
 		 */
 		public GamerTransactions Domain(string domain) {
 			this.domain = domain;

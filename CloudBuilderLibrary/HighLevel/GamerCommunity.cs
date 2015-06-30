@@ -54,6 +54,7 @@ namespace CotcSdk {
 		 * Changes the domain affected by the next operations.
 		 * You should typically use it this way: `gamer.Community.Domain("private").ListFriends(...);`
 		 * @param domain domain on which to scope the next operations.
+		 * @return this object for operation chaining.
 		 */
 		public GamerCommunity Domain(string domain) {
 			this.domain = domain;

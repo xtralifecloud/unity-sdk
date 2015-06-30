@@ -11,9 +11,11 @@ namespace CotcSdk {
 		 * Sets the domain affected by this object.
 		 * You should typically use it this way: `gamer.Properties.Domain("private").Post(...);`
 		 * @param domain optional domain on which to scope the properties. Default to `private` if unmodified.
+		 * @return this object for operation chaining.
 		 */
-		public void Domain(string domain) {
+		public GamerProperties Domain(string domain) {
 			this.domain = domain;
+			return this;
 		}
 
 		/**

@@ -74,6 +74,7 @@ namespace CotcSdk {
 		 * Changes the domain affected by the next operations.
 		 * You should typically use it this way: `gamer.Matches.Domain("private").List(...);`
 		 * @param domain domain on which to scope the matches. Default to `private` if unmodified.
+		 * @return this object for operation chaining.
 		 */
 		public GamerMatches Domain(string domain) {
 			this.domain = domain;

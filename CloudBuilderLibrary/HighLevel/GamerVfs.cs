@@ -13,9 +13,11 @@ namespace CotcSdk {
 		 * Sets the domain affected by this object.
 		 * You should typically use it this way: `gamer.GamerVfs.Domain("private").SetKey(...);`
 		 * @param domain domain on which to scope the VFS. Defaults to `private` if not specified.
+		 * @return this object for operation chaining.
 		 */
-		public void Domain(string domain) {
+		public GamerVfs Domain(string domain) {
 			this.domain = domain;
+			return this;
 		}
 
 		/**

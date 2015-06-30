@@ -12,6 +12,7 @@ namespace CotcSdk
 		 * Changes the domain affected by the next operations.
 		 * You should typically use it this way: `gamer.Achievements.Domain("private").List(...);`
 		 * @param domain domain on which to scope the next operations.
+		 * @return this object for operation chaining.
 		 */
 		public GamerAchievements Domain(string domain) {
 			this.domain = domain;
