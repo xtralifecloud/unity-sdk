@@ -194,19 +194,21 @@ public class MatchTests : TestBase {
 	[Test("Tests the reception of an invitation between two players")]
 	public void ShouldReceiveInvitation(Cloud cloud) {
 		Login2NewUsers(cloud, (Gamer gamer1, Gamer gamer2) => {
-			// P1 will be invited
-			DomainEventLoop loopP1 = gamer1.StartEventLoop();
-			gamer1.Matches.OnMatchInvitation += (MatchInviteEvent e) => {
-				Assert(e.Inviter.GamerId == gamer2.GamerId, "Invitation should come from P2");
-				// Test dismiss functionality (not needed in reality since we are stopping the loop it is registered to)
-				gamer1.Matches.DiscardEventHandlers();
-				loopP1.Stop();
-				CompleteTest();
-			};
 			// P2 will create a match and invite P1
 			gamer2.Matches.Create(maxPlayers: 2)
-			.ExpectSuccess(createResult => {
-				createResult.InvitePlayer(gamer1.GamerId).ExpectSuccess();
+			.ExpectSuccess(createMatch => {
+				// P1 will be invited
+				DomainEventLoop loopP1 = gamer1.StartEventLoop();
+				gamer1.Matches.OnMatchInvitation += (MatchInviteEvent e) => {
+					Assert(e.Inviter.GamerId == gamer2.GamerId, "Invitation should come from P2");
+					Assert(e.Match.MatchId == createMatch.MatchId, "Should indicate the match ID");
+					// Test dismiss functionality (not needed in reality since we are stopping the loop it is registered to)
+					gamer1.Matches.DiscardEventHandlers();
+					loopP1.Stop();
+					CompleteTest();
+				};
+				// Invite P1
+				createMatch.InvitePlayer(gamer1.GamerId).ExpectSuccess();
 			});
 		});
 	}
@@ -276,6 +278,35 @@ public class MatchTests : TestBase {
 			.ExpectSuccess(list => {
 				Assert(list.Total > totalMatches[0], "Should list more matches");
 				CompleteTest();
+			});
+		});
+	}
+
+	[Test("Tests race conditions between players.")]
+	public void ShouldHandleRaceConditions(Cloud cloud) {
+		Login2NewUsers(cloud, (gamer1, gamer2) => {
+			Match[] matches = new Match[2];
+			// Create a match, and make P2 join it but start no event loop
+			gamer1.Matches.Create(maxPlayers: 2)
+			.ExpectSuccess(m => {
+				matches[0] = m;
+				return gamer2.Matches.Join(m.MatchId);
+			})
+			.ExpectSuccess(m => {
+				matches[1] = m;
+				// Then make P2 play into the match created by P1
+				return m.PostMove(Bundle.CreateObject("x", 2));
+			})
+			.ExpectSuccess(dummy => {
+				// P1 will now be desynchronized, try to post a move, which should fail
+				matches[0].PostMove(Bundle.CreateObject("x", 3))
+				.ExpectFailure(ex => {
+					Assert(ex.ServerData["name"] == "InvalidLastEventId", "Move should be refused");
+					// Try again after refreshing the match
+					gamer1.Matches.Fetch(matches[0].MatchId)
+					.ExpectSuccess(m => m.PostMove(Bundle.CreateObject("x", 3)))
+					.CompleteTestIfSuccessful();
+				});
 			});
 		});
 	}

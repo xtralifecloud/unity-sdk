@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ApiKey: testgame-key
   ApiSecret: testgame-secret
-  Environment: http://195.154.227.44:8000
+  Environment: http://10.211.55.2:2000
   LbCount: 0
   HttpVerbose: 1
   HttpTimeout: 60

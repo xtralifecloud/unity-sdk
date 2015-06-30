@@ -89,6 +89,21 @@ namespace CotcSdk {
 	}
 
 	/**
+	 * Event of type match.shoedraw.
+	 * Broadcasted when a player draws items from the shoe. The player himself does not receive the event.
+	 */
+	public class MatchShoeDrawnEvent : MatchEvent {
+		/**
+		 * Number of items that were drawn.
+		 */
+		public int Count;
+
+		internal MatchShoeDrawnEvent(Gamer gamer, Bundle serverData) : base(gamer, serverData) {
+			Count = serverData["event"]["count"];
+		}
+	}
+
+	/**
 	 * Event of type match.invite.
 	 * Received by another player when someone invites him to the match.
 	 */

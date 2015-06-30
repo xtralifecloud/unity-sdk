@@ -36,16 +36,16 @@ namespace CotcSdk
 	 * What happens here is that the bundle under the key "hello" is fetched, and then implicitly converted to a string.
 	 * 
 	 * Bundle provides a safe way to browse a predefined graph, as when a key doesn't exist it returns the
-	 * `Bundle.Empty` (no null value). This special bundle allows to fetch sub-objects but they will always translate to
-	 * `Bundle.Empty` as well. If the values are to be converted to a primitive type, the result will be the default
+	 * Bundle.Empty (no null value). This special bundle allows to fetch sub-objects but they will always translate to
+	 * Bundle.Empty as well. If the values are to be converted to a primitive type, the result will be the default
 	 * value for this type (null for a string, 0 for an int, etc.). As such, you may do this:
 	 * 
 	 * ~~~~{.cs}
 	 * int value = bundle["nonexisting"]["key"];
 	 * ~~~~
 	 * 
-	 * Since the "nonexisting" key is not found on bundle, `Bundle.Empty` is returned. Further fetching "key" will return
-	 * an empty bundle as well. Which will be converted implicitly to an integer as 0. `Bundle.Empty` is a constant value
+	 * Since the "nonexisting" key is not found on bundle, Bundle.Empty is returned. Further fetching "key" will return
+	 * an empty bundle as well. Which will be converted implicitly to an integer as 0. Bundle.Empty is a constant value
 	 * that always refers to an empty bundle, and attempting to modify it will result in an exception.
 	 * 
 	 * ~~~~{.cs}
@@ -53,8 +53,8 @@ namespace CotcSdk
 	 * b["value"] = "something"; // Exception
 	 * ~~~~
 	 * 
-	 * The bundle hierarchy doesn't accept null or `Bundle.Empty` values (it just rejects them). You should avoid
-	 * manipulating null Bundles and use `Bundle.Empty` wherever possible, however you may assign a null bundle to a key,
+	 * The bundle hierarchy doesn't accept null or Bundle.Empty values (it just rejects them). You should avoid
+	 * manipulating null Bundles and use Bundle.Empty wherever possible, however you may assign a null bundle to a key,
 	 * which will have no effect.
 	 * This can be useful for optional arguments. For instance, the following snippet will not affect the bundle.
 	 * 
@@ -63,7 +63,7 @@ namespace CotcSdk
 	 * bundle["key"] = value;
 	 * ~~~~
 	 * 
-	 * Note that `Bundle.Empty` is not strictly identical to an empty bundle object. `Bundle.Empty` is never considered
+	 * Note that Bundle.Empty is not strictly identical to an empty bundle object. Bundle.Empty is never considered
 	 * as a value and is discarded upon assignment. For instance:
 	 * 
 	 * ~~~~{.cs}
@@ -121,7 +121,7 @@ namespace CotcSdk
 	 * 
 	 * This loop is safe as well even if the bundle doesn't contain a "key" entry or the "key" entry is not an object.
 	 * 
-	 * Null bundles should be avoided! Use Bundle. Empty everytime you need a "void", non mutable bundle value.
+	 * Null bundles should be avoided! Use Bundle.Empty every time you need a "void", non mutable bundle value.
 	 * Converting from a null bundle will result in an exception.
 	 * 
 	 * ~~~~{.cs}
@@ -136,7 +136,6 @@ namespace CotcSdk
 		public enum DataType {
 			None, Boolean, Integer, Double, String, Array, Object
 		}
-		public static readonly EmptyBundle Empty = new EmptyBundle();
 		private DataType type;
 		private double doubleValue;
 		private long longValue;
@@ -174,6 +173,11 @@ namespace CotcSdk
 			foreach (Bundle b in values) result.Add(b);
 			return result;
 		}
+
+		/**
+		 * Empty (null-like) Bundle. See class documentation for more information.
+		 */
+		public static readonly EmptyBundle Empty = new EmptyBundle();
 
 		// Construction (internal)
 		protected Bundle(DataType dataType) {
@@ -402,7 +406,7 @@ namespace CotcSdk
 	}
 
 	/**
-	 * Never instantiate this class. Use `Bundle.Empty` instead. Pass that everywhere an explicit configuration is not wanted.
+	 * Never instantiate this class. Use Bundle.Empty instead. Pass that everywhere an explicit configuration is not wanted.
 	 */
 	public class EmptyBundle : Bundle
 	{

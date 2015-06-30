@@ -15,19 +15,24 @@ Note: if you want to start from zero, you may simply add a new scene and drag&dr
 
 # Usage
 
-Basic usage is provided by the Clan of the Cloud SDK prefab object. You just have to put it on your scene and invoke the GetCloud method on it to fetch a #CotcSdk.Cloud object allowing to use most features. For that, you may simply use `FindObjectOfType<CotcGameObject>()`.
+Basic usage is provided by the Clan of the Cloud SDK prefab object. You just have to put it on your scene and invoke the GetCloud method on it to fetch a #CotcSdk.Cloud object allowing to use most features. For that, you may simply use [FindObjectOfType<CotcGameObject>](http://docs.unity3d.com/ScriptReference/Object.FindObjectOfType.html).
 
 ~~~~{.cs}
+using CotcSdk;
+
+class MyGameObject: MonoBehaviour {
 	private Cloud Cloud;
 	
-	void Setup() {
+	void Startup() {
+		var cb = FindObjectOfType<CotcGameObject>();
 		cb.GetCloud().Done(cloud => {
 			Cloud = cloud;
 		});
 	}
+}
 ~~~~
 
-This code will fetch a cloud object. This operation is asynchronous and may take a bit of time or operate instantly, depending on various conditions. You should do it at startup as shown above and keep it as a member of your class.
+This code will fetch a cloud object. This operation is asynchronous but will usually take only a very small amount of time, since it only waits for the CotcGameObject to be initialized. You should do it at startup as shown above and keep it as a member of your class.
 
 Another very important object is the #CotcSdk.Gamer object. This represents a signed in user, and provides all functionality that requires to be logged in. You will obtain it by logging in through the cloud object.
 
@@ -43,7 +48,7 @@ Another very important object is the #CotcSdk.Gamer object. This represents a si
 
 # Promises
 
-All functions are asynchronous. Due to the current lack of async/await functionality in Unity, we introduced an asynchronous programming pattern borrowed from Javascript, called promises. You can get more info by [https://promisesaplus.com/](clicking here).
+All functions are asynchronous. Due to the current lack of async/await functionality in Unity, we introduced an asynchronous programming pattern borrowed from Javascript, called promises. You can get more info by [clicking here](https://promisesaplus.com/).
 
 Getting used to promises can take a bit of time, but in a nutshell, you may simply use them as an optional callback as shown below.
 
@@ -62,7 +67,7 @@ Getting used to promises can take a bit of time, but in a nutshell, you may simp
 		.Catch(ex => { ... });
 ~~~~
 
-The basic principle means that any method of the API will return an `IPromise<Type>` object, which promises to give a result of that type in the future. The `IPromise<>` object provides a few methods which will help:
+The basic principle means that any method of the API will return an @ref CotcSdk.IPromise<PromisedT> "IPromise<Type> object", which promises to give a result of that type in the future. The `IPromise` object provides a few methods which will help:
 
 - Do something when the promise resolves (i.e. a result is given as promised),
 - Do something when the promise is rejected (i.e. the result can not be provided as promised).
@@ -82,14 +87,14 @@ Let's take an example:
 		...
 	});
 	// The Done (or Then) handlers won't get called in case the promise is rejected
-	// (network error…), so we can (and should) provide a Catch block to handle exceptions.
+	// (network error...), so we can (and should) provide a Catch block to handle exceptions.
 	// They will come up asynchronously as well, so the principle is exactly the same.
 	gamerPromise = gamerPromise.Catch((Exception ex) => {
 		...
 	});
 ~~~~
 
-Note that the Then and Catch block return a new promise that can itself be linked to another Then/Catch block. However you should provide a Catch block only after all Then blocks or just before a Done block. The Done method returns no promise, and just tells that it is the last thing that you will do with the result. If you provide a Then block, you may then:
+Note that the @ref CotcSdk.IPromise<PromisedT>.Then "Then" and @ref CotcSdk.IPromise<PromisedT>.Catch "Catch" block return a new promise that can itself be linked to another Then/Catch block. However you should provide a Catch block only after all Then blocks or just before a Done block. The @ref CotcSdk.IPromise<PromisedT>.Done "Done" method returns no promise, and just tells that it is the last thing that you will do with the result. If you provide a Then block, you may then:
 
 - Provide other Then blocks, which will receive the same result (if the lambda provided in the Then block returns an empty result).
 - Handle the result returned by the next promise (in case the lambda provided in the previous Then block returned another Promise).
@@ -109,6 +114,8 @@ Let's show an example:
 		Debug.LogError("Login failed: " + ex.ToString());
 	});
 ~~~~
+
+Providing a Done block at the end is not mandatory. Doing so will just ensure that the @ref CotcSdk.Promise.UnhandledException "Unhandled exception handler" is called in case you do not provide a Catch block. That is why we prefer the use of Done over Then in our examples: it will prevent errors from being eaten up silently. However we recommend that you always provide a Catch block to handle the exceptional behaviour.
 
 But then there is better, let us say that we want to log in the user and then get his profile. We can return another promise from the Then block and provide a Catch block that will be invoked if either of the calls failed.
 

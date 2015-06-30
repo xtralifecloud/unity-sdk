@@ -4,6 +4,7 @@ using CotcSdk;
 using System.Reflection;
 using IntegrationTests;
 using System.Collections.Generic;
+using System.Threading;
 
 public class IndexTests : TestBase {
 	[InstanceMethod(typeof(IndexTests))]
@@ -15,6 +16,24 @@ public class IndexTests : TestBase {
 
 	[Test("Indexes an object and retrieves it.")]
 	public void ShouldIndexObject(Cloud cloud) {
+/*		LoginNewUser(cloud, gamer => {
+			gamer.Matches.Create(maxPlayers: 100, customProperties: Bundle.CreateObject("public", "true"))
+			.Then(match => {
+				cloud.Index("matches").Search("public: true")
+				.Then(result => {
+					Assert(result.Hits.Count == 1, "Should have one match");
+					return match.Finish();
+				})
+				.Then(dummy => {
+					Thread.Sleep(1000);
+					return cloud.Index("matches").Search("public: true");
+				})
+				.Then(result => {
+					Assert(result.Hits.Count == 0, "Should have no more indexed match");
+				})
+				.CompleteTestIfSuccessful();
+			});
+		});*/
 		string indexName = "test" + Guid.NewGuid().ToString();
 		string objectId = Guid.NewGuid().ToString();
 		cloud.Index(indexName).IndexObject(

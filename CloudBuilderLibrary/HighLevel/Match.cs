@@ -8,7 +8,7 @@ namespace CotcSdk {
 	 * A match object is returned when you create a match, join it and so on.
 	 * You should subscribe to ReceivedEvent right after you got this object.
 	 */
-	public class Match {
+	public class Match : PropertiesObject {
 		/**
 		 * Describes the creator of the match.
 		 */
@@ -73,6 +73,10 @@ namespace CotcSdk {
 			add { onMovePosted += value; CheckEventLoopNeeded(); }
 			remove { onMovePosted -= value; CheckEventLoopNeeded(); }
 		}
+		public event Action<Match, MatchShoeDrawnEvent> OnShoeDrawn {
+			add { onShoeDrawn += value; CheckEventLoopNeeded(); }
+			remove { onShoeDrawn -= value; CheckEventLoopNeeded(); }
+		}
 		/**
 		 * IDs of players participating to the match, including the creator (which is reported alone there at creation).
 		 */
@@ -101,6 +105,7 @@ namespace CotcSdk {
 			foreach (Action<Match, MatchJoinEvent> e in onPlayerJoined.GetInvocationList()) onPlayerJoined -= e;
 			foreach (Action<Match, MatchLeaveEvent> e in onPlayerLeft.GetInvocationList()) onPlayerLeft -= e;
 			foreach (Action<Match, MatchMoveEvent> e in onMovePosted.GetInvocationList()) onMovePosted -= e;
+			foreach (Action<Match, MatchShoeDrawnEvent> e in onShoeDrawn.GetInvocationList()) onShoeDrawn -= e;
 			CheckEventLoopNeeded();
 		}
 
@@ -112,14 +117,14 @@ namespace CotcSdk {
 		 * @param count the number of items to draw from the shoe.
 		 * @param notification a notification that can be sent to all players currently playing the match (except you).
 		 */
-		public IPromise<Bundle> DrawFromShoe(int count = 1, PushNotification notification = null) {
+		public IPromise<DrawnItemsResult> DrawFromShoe(int count = 1, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("shoe").Path("draw");
 			url.QueryParam("count", count).QueryParam("lastEventId", LastEventId);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
-			return Common.RunInTask<Bundle>(req, (response, task) => {
+			return Common.RunInTask<DrawnItemsResult>(req, (response, task) => {
 				UpdateWithServerData(response.BodyJson["match"]);
-				task.PostResult(response.BodyJson["drawnItems"], response.BodyJson);
+				task.PostResult(new DrawnItemsResult(response.BodyJson), response.BodyJson);
 			});
 		}
 
@@ -182,6 +187,16 @@ namespace CotcSdk {
 		}
 
 		/**
+		 * Protects the match against concurrent modification. Please look at the tutorial for more information on this
+		 * subject. Basically, you should use it to protect your game state from race conditions.
+		 */
+		public void Lock(Action block) {
+			lock (this) {
+				block();
+			}
+		}
+
+		/**
 		 * Posts a move to other players.
 		 * @param done callback invoked when the operation has finished, either successfully or not.
 		 * @param moveData a freeform object indicating the move data to be posted and transfered to other players. This
@@ -218,9 +233,10 @@ namespace CotcSdk {
 		private event Action<Match, MatchJoinEvent> onPlayerJoined;
 		private event Action<Match, MatchLeaveEvent> onPlayerLeft;
 		private event Action<Match, MatchMoveEvent> onMovePosted;
+		private event Action<Match, MatchShoeDrawnEvent> onShoeDrawn;
 		private DomainEventLoop RegisteredEventLoop;
 
-		internal Match(Gamer gamer, Bundle serverData) {
+		internal Match(Gamer gamer, Bundle serverData) : base(serverData) {
 			Gamer = gamer;
 			CustomProperties = Bundle.Empty;
 			Moves = new List<MatchMove>();
@@ -232,7 +248,7 @@ namespace CotcSdk {
 
 		private void CheckEventLoopNeeded() {
 			// One event registered?
-			if (onMatchFinished != null || onPlayerJoined != null || onPlayerLeft != null || onMovePosted != null) {
+			if (onMatchFinished != null || onPlayerJoined != null || onPlayerLeft != null || onMovePosted != null || onShoeDrawn != null) {
 				// Register event loop if not already
 				if (RegisteredEventLoop == null) {
 					RegisteredEventLoop = Cotc.GetEventLoopFor(Gamer.GamerId, Domain);
@@ -254,69 +270,76 @@ namespace CotcSdk {
 		private void ReceivedLoopEvent(DomainEventLoop sender, EventLoopArgs e) {
 			// Ignore events not for us
 			if (!e.Message["type"].AsString().StartsWith("match.")) return;
-			// Update last event ID
-			if (e.Message["event"].Has("_id")) {
-				LastEventId = e.Message["event"]["_id"];
-			}
+			Lock(() => {
+				// Update last event ID
+				if (e.Message["event"].Has("_id")) {
+					LastEventId = e.Message["event"]["_id"];
+				}
 
-			switch (e.Message["type"].AsString()) {
-				case "match.join":
-					var joinEvent = new MatchJoinEvent(Gamer, e.Message);
-					Players.AddRange(joinEvent.PlayersJoined);
-					if (onPlayerJoined != null) onPlayerJoined(this, joinEvent);
-					break;
-				case "match.leave":
-					var leaveEvent = new MatchLeaveEvent(Gamer, e.Message);
-					foreach (var p in leaveEvent.PlayersLeft) Players.Remove(p);
-					if (onPlayerLeft != null) onPlayerLeft(this, leaveEvent);
-					break;
-				case "match.finish":
-					Status = MatchStatus.Finished;
-					if (onMatchFinished != null) onMatchFinished(this, new MatchFinishEvent(Gamer, e.Message));
-					break;
-				case "match.move":
-					var moveEvent = new MatchMoveEvent(Gamer, e.Message);
-					Moves.Add(new MatchMove(moveEvent.PlayerId, moveEvent.MoveData));
-					if (onMovePosted != null) onMovePosted(this, moveEvent);
-					break;
-				case "match.invite":	// Do not notify them since we are already playing the match
-					break;
-				default:
-					Common.LogError("Unknown match event type " + e.Message["type"]);
-					break;
-			}
+				switch (e.Message["type"].AsString()) {
+					case "match.join":
+						var joinEvent = new MatchJoinEvent(Gamer, e.Message);
+						Players.AddRange(joinEvent.PlayersJoined);
+						if (onPlayerJoined != null) onPlayerJoined(this, joinEvent);
+						break;
+					case "match.leave":
+						var leaveEvent = new MatchLeaveEvent(Gamer, e.Message);
+						foreach (var p in leaveEvent.PlayersLeft) Players.Remove(p);
+						if (onPlayerLeft != null) onPlayerLeft(this, leaveEvent);
+						break;
+					case "match.finish":
+						Status = MatchStatus.Finished;
+						if (onMatchFinished != null) onMatchFinished(this, new MatchFinishEvent(Gamer, e.Message));
+						break;
+					case "match.move":
+						var moveEvent = new MatchMoveEvent(Gamer, e.Message);
+						Moves.Add(new MatchMove(moveEvent.PlayerId, moveEvent.MoveData));
+						if (onMovePosted != null) onMovePosted(this, moveEvent);
+						break;
+					case "match.shoedraw":
+						if (onShoeDrawn != null) onShoeDrawn(this, new MatchShoeDrawnEvent(Gamer, e.Message));
+						break;
+					case "match.invite":	// Do not notify them since we are already playing the match
+						break;
+					default:
+						Common.LogError("Unknown match event type " + e.Message["type"]);
+						break;
+				}
+			});
 		}
 
 		private void UpdateWithServerData(Bundle serverData) {
-			if (serverData.Has("creator")) Creator = new GamerInfo(serverData["creator"]);
-			if (serverData.Has("customProperties")) CustomProperties = serverData["customProperties"];
-			if (serverData.Has("domain")) Domain = serverData["domain"];
-			if (serverData.Has("description")) Description = serverData["description"];
-			if (serverData.Has("globalState")) GlobalState = serverData["globalState"];
-			MatchId = serverData["_id"];
-			if (serverData.Has("maxPlayers")) MaxPlayers = serverData["maxPlayers"];
-			if (serverData.Has("seed")) Seed = serverData["seed"];
-			Status = Common.ParseEnum<MatchStatus>(serverData["status"]);
-			if (serverData.Has("shoe")) Shoe = serverData["shoe"];
-			// Process pending events
-			if (serverData.Has("events")) {
-				Moves.Clear();
-				foreach (var b in serverData["events"].AsArray()) {
-					if (b["type"] == "match.move") {
-						Moves.Add(new MatchMove(serverData["event"]["player_id"], serverData["event"]["move"]));
+			Lock(() => {
+				if (serverData.Has("creator")) Creator = new GamerInfo(serverData["creator"]);
+				if (serverData.Has("customProperties")) CustomProperties = serverData["customProperties"];
+				if (serverData.Has("domain")) Domain = serverData["domain"];
+				if (serverData.Has("description")) Description = serverData["description"];
+				if (serverData.Has("globalState")) GlobalState = serverData["globalState"];
+				MatchId = serverData["_id"];
+				if (serverData.Has("maxPlayers")) MaxPlayers = serverData["maxPlayers"];
+				if (serverData.Has("seed")) Seed = serverData["seed"];
+				Status = Common.ParseEnum<MatchStatus>(serverData["status"]);
+				if (serverData.Has("shoe")) Shoe = serverData["shoe"];
+				// Process pending events
+				if (serverData.Has("events")) {
+					Moves.Clear();
+					foreach (var b in serverData["events"].AsArray()) {
+						if (b["type"] == "match.move") {
+							Moves.Add(new MatchMove(serverData["event"]["player_id"], serverData["event"]["move"]));
+						}
 					}
 				}
-			}
-			// Players
-			if (serverData.Has("players")) {
-				Players.Clear();
-				foreach (var b in serverData["players"].AsArray()) {
-					Players.Add(new GamerInfo(b));
+				// Players
+				if (serverData.Has("players")) {
+					Players.Clear();
+					foreach (var b in serverData["players"].AsArray()) {
+						Players.Add(new GamerInfo(b));
+					}
 				}
-			}
-			// Last event ID (null if 0; =first time)
-			string lastEvent = serverData["lastEventId"];
-			if (lastEvent != "0") LastEventId = lastEvent;
+				// Last event ID (null if 0; =first time)
+				string lastEvent = serverData["lastEventId"];
+				if (lastEvent != "0") LastEventId = lastEvent;
+			});
 		}
 		#endregion
 	}
@@ -341,5 +364,15 @@ namespace CotcSdk {
 			PlayerId = playerId;
 		}
 	}
-	
+
+	/**
+	 * Response resulting from a #Match.DrawFromShoe call.
+	 */
+	public class DrawnItemsResult : PropertiesObject {
+		public List<Bundle> Items;
+
+		public DrawnItemsResult(Bundle serverData) : base(serverData) {
+			Items = serverData["drawnItems"].AsArray();
+		}
+	}
 }

@@ -18,6 +18,7 @@ namespace CotcSdk {
 		public AchievementType Type;
 		public Bundle Config;
 		public float Progress;
+		public Bundle GameData;
 		public Bundle GamerData;
 
 		public AchievementDefinition(string name, Bundle serverData) {
@@ -25,6 +26,7 @@ namespace CotcSdk {
 			Type = Common.ParseEnum<AchievementType>(serverData["type"]);
 			Config = serverData["config"];
 			Progress = serverData["progress"];
+			GameData = serverData["gameData"];
 			GamerData = serverData["gamerData"];
 		}
 	}
