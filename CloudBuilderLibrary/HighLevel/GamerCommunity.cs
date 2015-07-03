@@ -17,7 +17,7 @@ namespace CotcSdk {
 
 		/**
 		 * Easy way to add a friend knowing his gamer ID inside the CotC community.
-		 * @param done callback invoked when the operation has finished, either successfully or not.
+		 * @return promise resolved when the operation has completed.
 		 * @param gamerId ID of the gamer to add as a friend (fetched using ListFriends for instance).
 		 * @param notification optional OS notification to be sent to indicate the player that the status has changed.
 		 */
@@ -27,7 +27,7 @@ namespace CotcSdk {
 
 		/**
 		 * Allows to change the relation of a friendship inside the application.
-		 * @param done callback invoked when the operation has finished, either successfully or not.
+		 * @return promise resolved when the operation has completed.
 		 * @param gamerId ID of the gamer to change the relationship (fetched using ListFriends for instance).
 		 * @param state the new state to set.
 		 * @param notification optional OS notification to be sent to indicate the player that the status has changed.
@@ -63,8 +63,7 @@ namespace CotcSdk {
 
 		/**
 		 * Method used to retrieve the application's friends of the currently logged in profile.
-		 * @param done callback invoked when the operation has finished, either successfully or not, with the fetched
-		 *     list of friends.
+		 * @return promise resolved when the operation has completed, with the fetched list of friends.
 		 * @param filterBlacklisted when set to true, restricts to blacklisted friends.
 		 */
 		public IPromise<List<GamerInfo>> ListFriends(bool filterBlacklisted = false) {
@@ -84,9 +83,9 @@ namespace CotcSdk {
 		 * When you have data about friends from another social network, you can post them using these function.
 		 * This will automatically add them as a friend on CotC as they get recognized on our servers.
 		 * The friends get associated to the domain of this object.
-		 * @param done callback invoked when the operation has finished, either successfully or not. The attached
-		 *     value is the same list as passed, enriched with potential information about the gamer (member
-		 *     #SocialNetworkFriend.ClanInfo) for gamers who are already registered on CotC servers.
+		 * @return promise resolved when the operation has completed. The attached value is the same list as passed,
+		 *     enriched with potential information about the gamer (member #SocialNetworkFriend.ClanInfo) for
+		 *     gamers who are already registered on CotC servers.
 		 * @param network the network with which these friends are associated
 		 * @param friends a list of data about the friends fetched on the social network.
 		 */
@@ -104,14 +103,14 @@ namespace CotcSdk {
 				task.PostResult(new SocialNetworkFriendResponse(response.BodyJson), response.BodyJson);
 			});
 		}
-		
+
 		/**
 		 * Use this method to send a message to another user from your game.
 		 * 
 		 * Messages are sent to a specific user, in a specific domain. You can use domains to send messages
 		 * across games (or use private for messages sent to your game only).
 		 * 
-		 * @param done callback invoked when the operation has finished, either successfully or not.
+		 * @return promise resolved when the operation has completed.
 		 * @param gamerId ID of the recipient gamer.
 		 * @param eventData JSON object representing the event to be sent. The recipient will receive it as is
 		 *     when subscribed to a #DomainEventLoop (ReceivedEvent property). If the application is not active,

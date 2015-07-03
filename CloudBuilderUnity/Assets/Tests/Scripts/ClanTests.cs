@@ -131,8 +131,11 @@ public class ClanTests : TestBase {
 			networkId: "cloud@localhost.localdomain"))
 		.Then(checkResult => {
 			Assert(checkResult, "UserExists failed");
-		})
-		.CompleteTestIfSuccessful();
+			cloud.UserExists(LoginNetwork.Email, "inexisting@localhost.localdomain")
+			.ExpectFailure(dummy => {
+				CompleteTest();
+			});
+		});
 	}
 
 	[Test("Checks the send reset link functionality.", "Known to timeout sometimes (server side issue).")]

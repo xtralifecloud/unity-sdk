@@ -11,7 +11,7 @@ namespace CotcSdk
 
 		/**
 		 * Changes the e-mail address of the current user. Works for e-mail type accounts.
-		 * @param done callback invoked when the operation has completed, either successfully or not.
+		 * @return promise resolved when the operation has completed.
 		 * @param newEmailAddress the new e-mail address to be used for signing in.
 		 */
 		public IPromise<Done> ChangeEmailAddress(string newEmailAddress) {
@@ -32,7 +32,7 @@ namespace CotcSdk
 
 		/**
 		 * Changes the password of the current user. Works for e-mail type accounts.
-		 * @param done callback invoked when the operation has completed, either successfully or not.
+		 * @return promise resolved when the operation has completed.
 		 * @param newPassword the new password to be used for signing in.
 		 */
 		public IPromise<Done> ChangePassword(string newPassword) {
@@ -56,7 +56,7 @@ namespace CotcSdk
 		 * e-mail address, this is the method that you will want to call.
 		 * In order to convert the account successfully, the provided network credentials need to be acceptable,
 		 * just as when calling Cloud.Login.
-		 * @param done callback invoked when the operation has completed, either successfully or not.
+		 * @return promise resolved when the operation has completed.
 		 * @param network the target network to connect with later on.
 		 * @param networkId the ID on the network. For example, with the facebook network, this would be the User ID.
 		 *     On e-mail accounts e-mail then, this would be the e-mail address.

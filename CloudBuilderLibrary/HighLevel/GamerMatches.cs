@@ -17,8 +17,8 @@ namespace CotcSdk {
 		/**
 		 * Creates a match, available for join by other players. If you would like to make your match private, please read
 		 * the general documentation about matches.
-		 * @param done callback invoked when the operation has finished, either successfully or not. The attached Match
-		 *     object allows to operate with the match.
+		 * @return promise resolved when the operation has completed. The attached Match object allows to operate with the
+		 *     match.
 		 * @param maxPlayers the maximum number of players who may be in the game at a time.
 		 * @param description string describing the match (available for other who want to join).
 		 * @param customProperties freeform object containing the properties of the match, which may be used by other players
@@ -49,7 +49,7 @@ namespace CotcSdk {
 
 		/**
 		 * Deletes a match. Only works if you are the one who created it and it is already finished.
-		 * @param done callback invoked when the operation has finished, either successfully or not.
+		 * @return promise resolved when the operation has completed.
 		 * @param matchId ID of the match to delete.
 		 */
 		public IPromise<Done> Delete(string matchId) {
@@ -87,8 +87,8 @@ namespace CotcSdk {
 		 * match object), or to continue an existing match (by keeping the match object which corresponds to the one
 		 * that was returned by the Create method).
 		 * This call is not scoped by domain (it uses the Match ID directly).
-		 * @param done callback invoked when the operation has finished, either successfully or not. The attached Match
-		 *     object allows to operate with the match.
+		 * @return promise resolved when the operation has completed. The attached Match object allows to operate with
+		 *     the match.
 		 * @param matchId the ID of an existing match to resume. It can be fetched from the Match object (MatchId).
 		 */
 		public IPromise<Match> Fetch(string matchId) {
@@ -102,9 +102,9 @@ namespace CotcSdk {
 		/**
 		 * Asks to join the match with a given ID. Do not use this if you are already part of the match.
 		 * This call is not scoped by domain (it uses the Match ID directly).
-		 * @param done callback invoked when the operation has finished, either successfully or not. In case of success,
-		 *     you get the exact same match object that would be returned by a call to Create or Fetch. It can be used
-		 *     to interact with the match as the user who just joined.
+		 * @return promise resolved when the operation has completed. In case of success, you get the exact same
+		 *     match object that would be returned by a call to Create or Fetch. It can be used to interact with
+		 *     the match as the user who just joined.
 		 * @param matchId the ID of an existing match to join. It can be fetched from the Match object (MatchId).
 		 * @param notification optional push notification to be sent to inactive players (see class definition).
 		 */
@@ -121,8 +121,8 @@ namespace CotcSdk {
 		 * Can be used to list the active matches for this game. In general, it is not recommended to proceed this way
 		 * if your goal is to display the games that may be joined. The indexing API is better suited to this use case
 		 * (index the match along with properties and look for matches matching the desired properties).
-		 * @param done callback invoked when the operation has finished, either successfully or not. The list of
-		 *     matches filtered according to the following parameters is provided.
+		 * @return promise resolved when the operation has completed. The list of matches filtered according to the
+		 *     following parameters is provided.
 		 * @param participating set to true to only list matches to which this user is participating.
 		 * @param invited set to true to filter by matches you are invited to (only include them).
 		 * @param finished set to true to also include finished matchs (which are filtered out by default).
