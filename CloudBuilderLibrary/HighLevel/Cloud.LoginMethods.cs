@@ -48,6 +48,7 @@ namespace CotcSdk
 			return Common.RunInTask<Gamer>(req, (response, task) => {
 				Gamer gamer = new Gamer(this, response.BodyJson);
 				task.PostResult(gamer, response.BodyJson);
+				Cotc.NotifyLoggedIn(this, gamer);
 			});
 		}
 
@@ -79,6 +80,7 @@ namespace CotcSdk
 			return Common.RunInTask<Gamer>(req, (response, task) => {
 				Gamer gamer = new Gamer(this, response.BodyJson);
 				task.PostResult(gamer, response.BodyJson);
+				Cotc.NotifyLoggedIn(this, gamer);
 			});
 		}
 

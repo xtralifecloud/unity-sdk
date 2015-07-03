@@ -114,6 +114,9 @@
   <ItemGroup>
     <Compile Include="HighLevel\GamerAccountMethods.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="HighLevel\Cotc.Events.cs" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir -p $(SolutionDir)..\CloudBuilderUnity\Assets\Plugins

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 
 namespace CotcSdk {
-	public static class Cotc {
+	public static partial class Cotc {
 
 		/**
 		 * Call this at the very beginning to start using the library.
