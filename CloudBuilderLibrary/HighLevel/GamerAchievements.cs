@@ -12,6 +12,7 @@ namespace CotcSdk
 		 * Changes the domain affected by the next operations.
 		 * You should typically use it this way: `gamer.Achievements.Domain("private").List(...);`
 		 * @param domain domain on which to scope the next operations.
+		 * @return this object for operation chaining.
 		 */
 		public GamerAchievements Domain(string domain) {
 			this.domain = domain;
@@ -21,8 +22,8 @@ namespace CotcSdk
 		/**
 		 * Allows to store arbitrary data for a given achievement and the current player (appears in the
 		 * 'gamerData' node of achievements).
-		 * @param done callback invoked when the operation has finished, either successfully or not. The attached value
-		 *     contains the updated definition of the achievement.
+		 * @return promise resolved when the operation has completed. The attached value contains the updated definition
+		 *     of the achievement.
 		 * @param achName name of the achievement to update.
 		 * @param data data to associate with the achievement, merged with the current data (that is, existing keys
 		 *     are not affected)
@@ -38,8 +39,8 @@ namespace CotcSdk
 
 		/**
 		 * Fetches information about the status of the achievements configured for this game.
-		 * @param done callback invoked when the operation has finished, either successfully or not. The attached value
-		 *     is the list of achievements with their current state.
+		 * @return promise resolved when the operation has completed. The attached value is the list of achievements
+		 *     with their current state.
 		 */
 		public IPromise<Dictionary<string, AchievementDefinition>> List() {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/achievements").Path(domain);

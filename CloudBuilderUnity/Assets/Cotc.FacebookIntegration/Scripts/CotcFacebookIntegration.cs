@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-namespace CotcSdk
+namespace CotcSdk.FacebookIntegration
 {
 	[Serializable]
 	public class CotcFacebookIntegration : MonoBehaviour {

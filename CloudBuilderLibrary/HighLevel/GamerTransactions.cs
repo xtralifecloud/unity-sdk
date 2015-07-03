@@ -13,8 +13,8 @@ namespace CotcSdk {
 		/**
 		 * Retrieves the balance of the user. That is, the amount of "items" remaining after the various executed
 		 * transactions.
-		 * @param done callback invoked when the operation has finished, either successfully or not. The attached bundle
-		 *     contains the balance. You can query the individual items by doing result.Value["gold"] for instance.
+		 * @return promise resolved when the operation has completed. The attached bundle contains the balance.
+		 *     You can query the individual items by doing `result.Value["gold"]` for instance.
 		 */
 		public IPromise<Bundle> Balance() {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/tx").Path(domain).Path("balance");
@@ -28,6 +28,7 @@ namespace CotcSdk {
 		 * Changes the domain affected by the next operations.
 		 * You should typically use it this way: `gamer.Transactions.Domain("private").Post(...);`
 		 * @param domain domain on which to scope the transactions. Default to `private` if unmodified.
+		 * @return this object for operation chaining.
 		 */
 		public GamerTransactions Domain(string domain) {
 			this.domain = domain;
@@ -37,8 +38,8 @@ namespace CotcSdk {
 		/**
 		 * Fetches the history of transactions run for this user. The current balance (resulting values) needs to be queried
 		 * via a different call (Balance).
-		 * @param done callback invoked when the operation has finished, either successfully or not. The result is paginated,
-		 * for more information see #PagedResultHandler.
+		 * @return promise resolved when the operation has completed. The result is paginated, for more information see
+		 *     #PagedResultHandler.
 		 * @param unit if specified, retrieves only the transactions matching a given unit (e.g. "gold").
 		 * @param limit for pagination, allows to set a greater or smaller page size than the default 30.
 		 * @param offset for pagination, avoid using it explicitly.
@@ -65,8 +66,8 @@ namespace CotcSdk {
 
 		/**
 		 * Executes a transaction on the behalf of the user.
-		 * @param done callback invoked when the operation has finished, either successfully or not. The attached result
-		 *     contains the new balance and the possibly triggered achievements.
+		 * @return promise resolved when the operation has completed. The attached result contains the new balance
+		 *     and the possibly triggered achievements.
 		 * @param transaction transaction to run. Consists of keys and associated integer values. A negative value
 		 *     indicates that the associated balance should be decremented. The special value "-auto" resets the value
 		 *     to zero.

@@ -7,7 +7,7 @@ namespace CotcSdk {
 
 		/**
 		 * Deletes an indexed entry. If you just want to update an entry, simply use IndexObject.
-		 * @param done callback invoked when the operation has finished, either successfully or not.
+		 * @return promise resolved when the request has finished.
 		 * @param objectId ID of the object to delete, as passed when indexing.
 		 */
 		public IPromise<Done> DeleteObject(string objectId) {
@@ -21,7 +21,7 @@ namespace CotcSdk {
 
 		/**
 		 * Fetches a previously indexed object.
-		 * @param done callback invoked when the operation has finished, either successfully or not.
+		 * @return promise resolved when the request has finished.
 		 * @param objectId ID of the object to look for, as passed when indexing.
 		 */
 		public IPromise<IndexResult> GetObject(string objectId) {
@@ -37,7 +37,7 @@ namespace CotcSdk {
 		 * Use this API to add or update an object in an index. You can have as many indexes as you need: one
 		 * for gamer properties, one for matches, one for finished matches, etc. It only depends on what you
 		 * want to search for.
-		 * @param done callback invoked when the operation has finished, either successfully or not.
+		 * @return promise resolved when the request has finished.
 		 * @param objectId the ID of the object to be indexed. It can be anything; this ID only needs to uniquely
 		 *     identify your document. Therefore, using the match ID to index a match is recommended for instance.
 		 * @param properties a freeform object, whose attributes will be indexed and searchable. These properties
@@ -67,9 +67,9 @@ namespace CotcSdk {
 		 * See the Elastic documentation to learn the full syntax. It’s easy and quite powerful.
 		 * http://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html
 		 * 
-		 * @param done callback invoked when the operation has finished, either successfully or not. The
-		 *     attached object contains various information about the results, including a Hits member,
-		 *     which handles the results in a paginated way.
+		 * @return promise resolved when the operation has finished. The attached object contains various
+		 *     information about the results, including a Hits member, which handles the results in a
+		 *     paginated way.
 		 * @param query query string. Example: "item:silver". See Elastic documentation.
 		 * @param sortingProperties name of properties (fields) to sort the results with. Example:
 		 *     new List<string>() { "item:asc" }.
@@ -87,9 +87,9 @@ namespace CotcSdk {
 		 * the JSON document as documented here:
 		 * https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
 		 * 
-		 * @param done callback invoked when the operation has finished, either successfully or not. The
-		 *     attached object contains various information about the results, including a Hits member,
-		 *     which handles the results in a paginated way.
+		 * @return promise resolved when the operation has finished. The attached object contains various
+		 *     information about the results, including a Hits member, which handles the results in a
+		 *     paginated way.
 		 * @param limit the maximum number of results to return per page.
 		 * @param offset number of the first result.
 		 */

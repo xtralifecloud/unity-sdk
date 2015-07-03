@@ -13,16 +13,18 @@ namespace CotcSdk {
 		 * Sets the domain affected by this object.
 		 * You should typically use it this way: `gamer.GamerVfs.Domain("private").SetKey(...);`
 		 * @param domain domain on which to scope the VFS. Defaults to `private` if not specified.
+		 * @return this object, so you can chain operations
 		 */
-		public void Domain(string domain) {
+		public GameVfs Domain(string domain) {
 			this.domain = domain;
+			return this;
 		}
 
 		/**
 		 * Retrieves all keys from the key/value system for the current domain.
-		 * @param done callback invoked when the operation has finished, either successfully or not. The attached bundle
-		 *     contains the keys along with their values. If you would like to fetch the value of a given key and you
-		 *     expect it to be a string, you may simply do `string value = result.Value["key"];`.
+		 * @return promise resolved when the operation has completed. The attached bundle contains the keys
+		 *     along with their values. If you would like to fetch the value of a given key and you expect
+		 *     it to be a string, you may simply do `string value = result.Value["key"];`.
 		 * @param key the name of the key to be fetched.
 		 */
 		public IPromise<Bundle> GetAll() {
@@ -35,8 +37,8 @@ namespace CotcSdk {
 
 		/**
 		 * Retrieves an individual key from the key/value system.
-		 * @param done callback invoked when the operation has finished, either successfully or not. The attached bundle
-		 *     contains the fetched property. As usual with bundles, it can be casted to the proper type you are expecting.
+		 * @return promise resolved when the operation has completed. The attached bundle contains the fetched property.
+		 *     As usual with bundles, it can be casted to the proper type you are expecting.
 		 *     If the property doesn't exist, the call is marked as failed with a 404 status.
 		 * @param key the name of the key to be fetched.
 		 */

@@ -11,6 +11,7 @@ namespace CotcSdk {
 		 * Changes the domain affected by the next operations.
 		 * You should typically use it this way: `gamer.Batches.Domain("private").Run(...);`
 		 * @param domain domain on which to scope the next operations.
+		 * @return this object for operation chaining.
 		 */
 		public GameBatches Domain(string domain) {
 			this.domain = domain;
@@ -19,8 +20,7 @@ namespace CotcSdk {
 
 		/**
 		 * Runs a batch on the server, unauthenticated (game-scoped).
-		 * @param done callback invoked when the operation has finished, either successfully or not. The attached bundle
-		 *     is the JSON data returned by the match.
+		 * @return promise resolved when the request has finished. The attached bundle is the JSON data returned by the match.
 		 * @param batchName name of the batch to run, as configured on the server.
 		 * @param batchParams parameters to be passed to the batch.
 		 */

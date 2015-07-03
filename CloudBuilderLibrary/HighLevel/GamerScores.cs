@@ -12,6 +12,7 @@ namespace CotcSdk {
 		 * Changes the domain affected by the next operations.
 		 * You should typically use it this way: `game.Scores.Domain("private").Post(...);`
 		 * @param domain domain on which to scope the next operations.
+		 * @return this object for operation chaining.
 		 */
 		public GamerScores Domain(string domain) {
 			this.domain = domain;
@@ -20,8 +21,8 @@ namespace CotcSdk {
 
 		/**
 		 * Fetch the score list for a given board.
-		 * @param done callback invoked when the operation has finished, either successfully or not. The attached value
-		 *     describes a list of scores, and provides pagination functionality.
+		 * @return promise resolved when the operation has completed. The attached value describes a list of scores, and
+		 *     provides pagination functionality.
 		 * @param board the name of the board to fetch scores from.
 		 * @param limit the maximum number of results to return per page.
 		 * @param offset number of the first result. Needs to be a multiple of `limit`. The special value of -1 can be used
@@ -56,8 +57,8 @@ namespace CotcSdk {
 
 		/**
 		 * Fetch the score list for a given board, restricting to the scores made by the friends of the current user.
-		 * @param done callback invoked when the operation has finished, either successfully or not. The attached value
-		 *     describes a list of scores, without pagination functionality.
+		 * @return promise resolved when the operation has completed. The attached value describes a list of scores,
+		 *     without pagination functionality.
 		 * @param board the name of the board to fetch scores from.
 		 */
 		public IPromise<List<Score>> ListFriendScores(string board) {
@@ -73,9 +74,9 @@ namespace CotcSdk {
 
 		/**
 		 * Retrieves the best scores of this gamer, on all board he has posted one score to.
-		 * @param done callback invoked when the operation has finished, either successfully or not. The attached value
-		 *     contains information about the best scores of the user, indexed by board name.
-		 *     IMPORTANT: in the results, the gamer information is not provided. GamerInfo is always null.
+		 * @return promise resolved when the operation has completed. The attached value contains information about
+		 *     the best scores of the user, indexed by board name.
+		 *     *IMPORTANT*: in the results, the gamer information is not provided. GamerInfo is always null.
 		 */
 		public IPromise<Dictionary<string, Score>> ListUserBestScores() {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/bestscores").Path(domain);
@@ -93,8 +94,8 @@ namespace CotcSdk {
 
 		/**
 		 * Retrieves the rank that a given score would have on the leaderboard, without actually registering the score.
-		 * @param done callback invoked when the operation has finished, either successfully or not. The attached value
-		 *     contains the rank that the score would have (position in the board).
+		 * @return promise resolved when the operation has completed. The attached value contains the rank that the
+		 *     score would have (position in the board).
 		 * @param score the score (numeric value) to check for ranking.
 		 * @param board the name of the board to check the ranking against. Should match the board where a score has
 		 * already been posted.
@@ -111,8 +112,8 @@ namespace CotcSdk {
 
 		/**
 		 * Post a score.
-		 * @param done callback invoked when the operation has finished, either successfully or not.
-		 *     The attached value contains the new rank of the player as well as whether the score was saved.
+		 * @return promise resolved when the operation has completed. The attached value contains the new rank of the
+		 *     player as well as whether the score was saved.
 		 * @param score the score (numeric value) to record.
 		 * @param board the name of the board to post the score to. You may have as many boards as you like for your
 		 *     game, and scores are scoped between them.

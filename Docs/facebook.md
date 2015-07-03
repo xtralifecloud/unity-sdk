@@ -26,7 +26,7 @@ Configure your AppID through the Facebook Settings menu in Unity. Do not forget 
 
 Import the Unity SDK Facebook Integration package into your project.
 
-Put the CotcFacebookIntegration object on your scene, from the `CotcFacebookIntegration/Prefabs` folder.
+Put the CotcFacebookIntegration object on your scene, from the `Cotc.FacebookIntegration/Prefabs` folder.
 
 From your code, find the object as for the Clan of the Cloud SDK and call methods on it.
 

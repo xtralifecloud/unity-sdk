@@ -11,7 +11,7 @@ namespace CotcSdk
 		 * in account for this search.
 		 * @return task returning the fetched list of users. The list is paginated (see #PagedList for more
 		 *     info).
-		 * @param filter may contain a nickname, a displayname or e-mail address.
+		 * @param filter may contain a nickname, a display name or e-mail address.
 		 * @param limit the maximum number of results to return per page.
 		 * @param offset number of the first result.
 		 */
@@ -48,6 +48,7 @@ namespace CotcSdk
 			return Common.RunInTask<Gamer>(req, (response, task) => {
 				Gamer gamer = new Gamer(this, response.BodyJson);
 				task.PostResult(gamer, response.BodyJson);
+				Cotc.NotifyLoggedIn(this, gamer);
 			});
 		}
 
@@ -79,6 +80,7 @@ namespace CotcSdk
 			return Common.RunInTask<Gamer>(req, (response, task) => {
 				Gamer gamer = new Gamer(this, response.BodyJson);
 				task.PostResult(gamer, response.BodyJson);
+				Cotc.NotifyLoggedIn(this, gamer);
 			});
 		}
 
@@ -97,7 +99,7 @@ namespace CotcSdk
 		/**
 		 * Can be used to send an e-mail to a user registered by 'email' network in order to help him
 		 * recover his/her password.
-		 * @param done callback invoked when the operation has finished, either successfully or not.
+		 * @return promise resolved when the request has finished.
 		 * @param userEmail the user as identified by his e-mail address.
 		 * @param mailSender the sender e-mail address as it will appear on the e-mail.
 		 * @param mailTitle the title of the e-mail.
@@ -120,7 +122,8 @@ namespace CotcSdk
 
 		/**
 		 * Checks that an user exists on a given network.
-		 * @param done callback invoked when the request has finished, either successfully or not.
+		 * @return promise resolved when the user is found. If the user does not exist, it fails with
+		 *     an HTTP status code of 400.
 		 * @param networkId the ID of the user on the network, like the e-mail address.
 		 */
 		public IPromise<Done> UserExists(LoginNetwork network, string networkId) {
