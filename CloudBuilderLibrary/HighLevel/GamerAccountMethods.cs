@@ -76,6 +76,34 @@ namespace CotcSdk
 			});
 		}
 
+		/**
+		 * Meant to be called for push notifications.
+		 * @param os operating system (should be determined by the native implementation: "ios", "android", "macos", …).
+		 * @param token push notification token (device specific).
+		 */
+		public IPromise<Done> RegisterDevice(string os, string token) {
+			UrlBuilder url = new UrlBuilder("/v1/gamer/device").QueryParam("os", os).QueryParam("token", token);
+			HttpRequest req = Gamer.MakeHttpRequest(url);
+			req.Method = "POST";
+			return Common.RunInTask<Done>(req, (response, task) => {
+				task.PostResult(new Done(response.BodyJson), response.BodyJson);
+			});
+		}
+
+		/**
+		 * Unregisters a previously registered device (see #RegisterDevice).
+		 * @param os operating system (should be determined by the native implementation: "ios", "android", "macos", …).
+		 * @param token push notification token (device specific).
+		 */
+		public IPromise<Done> UnregisterDevice(string os, string token) {
+			UrlBuilder url = new UrlBuilder("/v1/gamer/device").QueryParam("os", os).QueryParam("token", token);
+			HttpRequest req = Gamer.MakeHttpRequest(url);
+			req.Method = "DELETE";
+			return Common.RunInTask<Done>(req, (response, task) => {
+				task.PostResult(new Done(response.BodyJson), response.BodyJson);
+			});
+		}
+
 		#region Private
 		internal GamerAccountMethods(Gamer parent) {
 			Gamer = parent;
