@@ -139,7 +139,7 @@ namespace CotcSdk
 
 		private string domain = Common.PrivateDomain;
 		private Gamer Gamer;
-		private event Action<GotGodchildEvent> onGotGodchild;
+		private Action<GotGodchildEvent> onGotGodchild;
 		private DomainEventLoop RegisteredEventLoop;
 		#endregion
 	}

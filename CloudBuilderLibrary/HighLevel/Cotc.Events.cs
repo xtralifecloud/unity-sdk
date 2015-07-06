@@ -15,10 +15,14 @@ namespace CotcSdk
 			}
 		}
 
-		public static event EventHandler<LoggedInEventArgs> LoggedIn;
+		private static EventHandler<LoggedInEventArgs> loggedIn;
+		public static event EventHandler<LoggedInEventArgs> LoggedIn {
+			add { loggedIn += value; }
+			remove { loggedIn -= value; }
+		}
 
 		public static void NotifyLoggedIn(object sender, Gamer gamer) {
-			if (LoggedIn != null) LoggedIn(sender, new LoggedInEventArgs(gamer));
+			if (loggedIn != null) loggedIn(sender, new LoggedInEventArgs(gamer));
 		}
 	}
 }

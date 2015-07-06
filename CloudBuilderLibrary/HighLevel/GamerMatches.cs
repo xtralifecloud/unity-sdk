@@ -187,7 +187,7 @@ namespace CotcSdk {
 
 		private string domain = Common.PrivateDomain;
 		private Gamer Gamer;
-		private event Action<MatchInviteEvent> onMatchInvitation;
+		private Action<MatchInviteEvent> onMatchInvitation;
 		private DomainEventLoop RegisteredEventLoop;
 		#endregion
 	}

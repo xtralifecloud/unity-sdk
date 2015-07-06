@@ -166,9 +166,13 @@ namespace CotcSdk
 
         /// <summary>
         /// Event raised for unhandled errors.
-        /// For this to work you have to complete your promises with a call to Done().
-        /// </summary>
-        public static event EventHandler<ExceptionEventArgs> UnhandledException;
+		/// For this to work you have to complete your promises with a call to Done().
+		/// </summary>
+		public static event EventHandler<ExceptionEventArgs> UnhandledException {
+			add { unhandledException += value; }
+			remove { unhandledException -= value; }
+		}
+		private static EventHandler<ExceptionEventArgs> unhandledException;
 
         /// <summary>
         /// Id for the next promise that is created.
@@ -863,9 +867,9 @@ namespace CotcSdk
         /// </summary>
         internal static void PropagateUnhandledException(object sender, Exception ex)
         {
-            if (UnhandledException != null)
+            if (unhandledException != null)
             {
-                UnhandledException(sender, new ExceptionEventArgs(ex));
+                unhandledException(sender, new ExceptionEventArgs(ex));
             }
         }
     }

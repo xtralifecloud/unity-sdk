@@ -161,7 +161,7 @@ namespace CotcSdk {
 
 		private string domain = Common.PrivateDomain;
 		private Gamer Gamer;
-		private event Action<FriendStatusChangeEvent> onFriendStatusChange;
+		private Action<FriendStatusChangeEvent> onFriendStatusChange;
 		private DomainEventLoop RegisteredEventLoop;
 		#endregion
 	}

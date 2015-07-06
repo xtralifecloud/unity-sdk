@@ -228,11 +228,11 @@ namespace CotcSdk {
 
 		#region Private
 		// Modify the CheckEventLoopNeeded method when adding an event!
-		private event Action<Match, MatchFinishEvent> onMatchFinished;
-		private event Action<Match, MatchJoinEvent> onPlayerJoined;
-		private event Action<Match, MatchLeaveEvent> onPlayerLeft;
-		private event Action<Match, MatchMoveEvent> onMovePosted;
-		private event Action<Match, MatchShoeDrawnEvent> onShoeDrawn;
+		private Action<Match, MatchFinishEvent> onMatchFinished;
+		private Action<Match, MatchJoinEvent> onPlayerJoined;
+		private Action<Match, MatchLeaveEvent> onPlayerLeft;
+		private Action<Match, MatchMoveEvent> onMovePosted;
+		private Action<Match, MatchShoeDrawnEvent> onShoeDrawn;
 		private DomainEventLoop RegisteredEventLoop;
 
 		internal Match(Gamer gamer, Bundle serverData) : base(serverData) {
