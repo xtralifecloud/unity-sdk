@@ -33,6 +33,10 @@ using UnityEngine;
  * Try to give to your test the same name as the method.
  */
 public class TestBase : MonoBehaviour {
+	// Set to true if you plan to instantiate tests using AddComponent (bypasses the classic integration test mechanisms)
+	internal static bool DoNotRunMethodsAutomatically = false;
+	// Called whenever a test finishes with a boolean value indicating success
+	internal static event Action<bool> OnTestCompleted;
 	private List<string> PendingSignals = new List<string>();
 	private Dictionary<string, Action> RegisteredSlots = new Dictionary<string, Action>();
 
@@ -42,8 +46,19 @@ public class TestBase : MonoBehaviour {
 		}
 	}
 
-	protected void CompleteTest() {
-		IntegrationTest.Pass();
+	public static void CompleteTest() {
+		if (!DoNotRunMethodsAutomatically) IntegrationTest.Pass();
+		if (OnTestCompleted != null) OnTestCompleted(true);
+	}
+
+	public static void FailTest(string reason) {
+		if (!DoNotRunMethodsAutomatically) {
+			IntegrationTest.Fail(reason);
+		}
+		else {
+			Debug.LogError("Test failed: " + reason);
+		}
+		if (OnTestCompleted != null) OnTestCompleted(false);
 	}
 
 	protected string GetAllTestScopedId(string prefix) {
@@ -58,7 +73,7 @@ public class TestBase : MonoBehaviour {
 		.Then(gamer => {
 			done(gamer);
 		})
-		.Catch(ex => IntegrationTest.Fail("Failed to log in"));
+		.Catch(ex => FailTest("Failed to log in"));
 	}
 
 	protected void Login2Users(Cloud cloud, Action<Gamer, Gamer> done) {
@@ -71,14 +86,14 @@ public class TestBase : MonoBehaviour {
 			.Then(gamer2 => {
 				done(gamer1, gamer2);
 			})
-			.Catch(ex => IntegrationTest.Fail("Failed to log in"));
+			.Catch(ex => TestBase.FailTest("Failed to log in"));
 		});
 	}
 
 	protected void LoginNewUser(Cloud cloud, Action<Gamer> done) {
 		cloud.LoginAnonymously()
 		.Then(gamer => { done(gamer); })
-		.Catch(ex => IntegrationTest.Fail("Failed to log in"));
+		.Catch(ex => TestBase.FailTest("Failed to log in"));
 	}
 
 	protected void Login2NewUsers(Cloud cloud, Action<Gamer, Gamer> done) {
@@ -88,7 +103,7 @@ public class TestBase : MonoBehaviour {
 				done(gamer1, gamer2);
 			});
 		})
-		.Catch(ex => IntegrationTest.Fail("Failed to log in"));
+		.Catch(ex => TestBase.FailTest("Failed to log in"));
 	}
 
 	protected string RandomEmailAddress() {
@@ -120,15 +135,16 @@ public class TestBase : MonoBehaviour {
 		if (runThisAction) action();
 	}
 
-	protected void RunTestMethod(string testMethodName) {
+	internal void RunTestMethod(string testMethodName, bool runAnyway = false) {
 		// Fail test on unhandled exception
 		Promise.UnhandledException += (sender, e) => {
-			IntegrationTest.Fail("Unhandled exception in test: " + e.Exception);
+			TestBase.FailTest("Unhandled exception in test: " + e.Exception);
 		};
+		if (DoNotRunMethodsAutomatically && !runAnyway) return;
 		// Invoke the method described on the integration test script (TestMethodName)
 		var met = GetType().GetMethod(testMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 		if (met == null) {
-			IntegrationTest.Fail("Method name not configured for this test!");
+			TestBase.FailTest("Method name not configured for this test!");
 			return;
 		}
 		var parms = met.GetParameters();
