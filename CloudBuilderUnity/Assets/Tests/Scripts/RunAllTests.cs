@@ -24,9 +24,9 @@ public class RunAllTests : MonoBehaviour {
 	private Promise<bool> NextTestPromise;
 	private int CurrentTestClassNo = 0, PassedTests = 0, FailedTests = 0;
 	private ManualResetEvent TestDone = new ManualResetEvent(false);
-	private const int TestTimeoutMillisec = 3000;
+	private const int TestTimeoutMillisec = 30000;
 
-#if UNITY_IPHONE
+#if UNITY_IPHONE || UNITY_ANDROID
 	// Use this for initialization
 	void Start() {
 		// Prepare to run integration tests in detached mode (uses static classes so a little bit dirty)
@@ -58,7 +58,9 @@ public class RunAllTests : MonoBehaviour {
 		if (successful) PassedTests += 1;
 		else FailedTests += 1;
 		TestDone.Set();
-		NextTestPromise.Resolve(successful);
+		var p = NextTestPromise;
+		NextTestPromise = null;
+		if (p != null) p.Resolve(successful);
 	}
 
 	private void ProcessNextTestClass() {
@@ -75,7 +77,6 @@ public class RunAllTests : MonoBehaviour {
 		// And run test methods
 		foreach (var pair in methods) {
 			string methodName = pair.Key;
-			Debug.Log ("Calling THEN");
 			allTestPromise = allTestPromise.Then(success => {
 				Debug.Log("Running method " + t.Name + "::" + methodName);
 				// Will be resolved in OnTestCompleted
@@ -88,7 +89,7 @@ public class RunAllTests : MonoBehaviour {
 					test.RunTestMethod(methodName, true);
 				}
 				catch (Exception ex) {
-					TestBase.FailTest ("Exception when starting test: " + ex.ToString());
+					TestBase.FailTest ("Exception inside test: " + ex.ToString());
 				}
 				return NextTestPromise;
 			});

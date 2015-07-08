@@ -26,7 +26,7 @@ namespace CotcSdk
 			{"Dev Server", new EnvironmentInfo("http://195.154.227.44:8000", 0)},
 			{"Local Server", new EnvironmentInfo("http://127.0.0.1:3000", 0)},
 			{"Parallels VM", new EnvironmentInfo("http://10.211.55.2:2000", 0)},
-			{"Docomo LTE", new EnvironmentInfo("http://172.20.10.3:2000", 0)},
+			{"Docomo LTE", new EnvironmentInfo("http://172.20.10.5:2000", 0)},
 #endif
 		};
 		private bool HttpGroupEnabled = true;
