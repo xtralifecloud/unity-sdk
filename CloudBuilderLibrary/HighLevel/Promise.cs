@@ -145,7 +145,7 @@ namespace CotcSdk
 	/// <summary>
 	/// Represents a handler invoked when the promise is resolved or rejected.
 	/// </summary>
-	public struct Handler<T>
+	public struct PromiseHandler<T>
 	{
 		/// <summary>
 		/// Callback fn.
@@ -177,12 +177,12 @@ namespace CotcSdk
         /// <summary>
         /// Error handler.
         /// </summary>
-        private List<Handler<Exception>> rejectHandlers;
+        private List<PromiseHandler<Exception>> rejectHandlers;
 
         /// <summary>
         /// Completed handlers that accept a value.
         /// </summary>
-        private List<Handler<PromisedT>> resolveHandlers;
+        private List<PromiseHandler<PromisedT>> resolveHandlers;
 
         /// <summary>
         /// ID of the promise, useful for debugging.
@@ -243,10 +243,10 @@ namespace CotcSdk
         {
             if (rejectHandlers == null)
             {
-                rejectHandlers = new List<Handler<Exception>>();
+                rejectHandlers = new List<PromiseHandler<Exception>>();
             }
 
-            rejectHandlers.Add(new Handler<Exception>() { callback = onRejected, rejectable = rejectable }); ;
+            rejectHandlers.Add(new PromiseHandler<Exception>() { callback = onRejected, rejectable = rejectable }); ;
         }
 
         /// <summary>
@@ -256,10 +256,10 @@ namespace CotcSdk
         {
             if (resolveHandlers == null)
             {
-                resolveHandlers = new List<Handler<PromisedT>>();
+                resolveHandlers = new List<PromiseHandler<PromisedT>>();
             }
 
-            resolveHandlers.Add(new Handler<PromisedT>() 
+            resolveHandlers.Add(new PromiseHandler<PromisedT>() 
             { 
                 callback = onResolved,
                 rejectable = rejectable 

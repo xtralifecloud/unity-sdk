@@ -5,38 +5,6 @@ using System.Collections.Generic;
 namespace CotcSdk {
 	public static partial class Cotc {
 
-#if UNITY_IPHONE
-		// AOT compiler hints
-		static Cotc() {
-			new List<Handler<AchievementDefinition>>();
-			new List<Handler<Bundle>>();
-			new List<Handler<byte[]>>();
-			new List<Handler<Cloud>>();
-			new List<Handler<Dictionary<string, AchievementDefinition>>>();
-			new List<Handler<Dictionary<string, Score>>>();
-			new List<Handler<Done>>();
-			new List<Handler<DrawnItemsResult>>();
-			new List<Handler<Exception>>();
-			new List<Handler<Gamer>>();
-			new List<Handler<GamerInfo>>();
-			new List<Handler<GamerProfile>>();
-			new List<Handler<IndexResult>>();
-			new List<Handler<IndexSearchResult>>();
-			new List<Handler<int>>();
-			new List<Handler<List<GamerInfo>>>();
-			new List<Handler<List<Score>>>();
-			new List<Handler<Match>>();
-			new List<Handler<PagedList<MatchListResult>>>();
-			new List<Handler<PagedList<Score>>>();
-			new List<Handler<PagedList<Transaction>>>();
-			new List<Handler<PagedList<UserInfo>>>();
-			new List<Handler<PostedGameScore>>();
-			new List<Handler<SocialNetworkFriendResponse>>();
-			new List<Handler<string>>();
-			new List<Handler<TransactionResult>>();
-		}
-#endif
-
 		/**
 		 * Call this at the very beginning to start using the library.
 		 * @return promise resolved when the process has finished, with the Cloud to be used for your operations (most
