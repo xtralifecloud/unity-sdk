@@ -5,13 +5,13 @@ using System.Text;
 
 namespace CotcSdk
 {
-    /// <summary>
+	/// <summary>
     /// Implements a C# promise.
     /// https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise
     /// </summary>
     public interface IPromise<PromisedT>
     {
-        /// <summary>
+		/// <summary>
         /// Set the name of the promise, useful for debugging.
         /// </summary>
         IPromise<PromisedT> WithName(string name);
@@ -142,6 +142,22 @@ namespace CotcSdk
         Resolved    // The promise has been resolved.
     };
 
+	/// <summary>
+	/// Represents a handler invoked when the promise is resolved or rejected.
+	/// </summary>
+	public struct Handler<T>
+	{
+		/// <summary>
+		/// Callback fn.
+		/// </summary>
+		public Action<T> callback;
+		
+		/// <summary>
+		/// The promise that is rejected when there is an error while invoking the handler.
+		/// </summary>
+		public IRejectable rejectable;
+	}
+
     /// <summary>
     /// Implements a C# promise.
     /// https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise
@@ -157,22 +173,6 @@ namespace CotcSdk
         /// The value when the promises is resolved.
         /// </summary>
         private PromisedT resolveValue;
-
-        /// <summary>
-        /// Represents a handler invoked when the promise is resolved or rejected.
-        /// </summary>
-        public struct Handler<T>
-        {
-            /// <summary>
-            /// Callback fn.
-            /// </summary>
-            public Action<T> callback;
-
-            /// <summary>
-            /// The promise that is rejected when there is an error while invoking the handler.
-            /// </summary>
-            public IRejectable rejectable;
-        }
 
         /// <summary>
         /// Error handler.
