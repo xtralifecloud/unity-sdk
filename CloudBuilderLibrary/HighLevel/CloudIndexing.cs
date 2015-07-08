@@ -10,7 +10,7 @@ namespace CotcSdk {
 		 * @return promise resolved when the request has finished.
 		 * @param objectId ID of the object to delete, as passed when indexing.
 		 */
-		public IPromise<Done> DeleteObject(string objectId) {
+		public Promise<Done> DeleteObject(string objectId) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName).Path(objectId);
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			req.Method = "DELETE";
@@ -24,7 +24,7 @@ namespace CotcSdk {
 		 * @return promise resolved when the request has finished.
 		 * @param objectId ID of the object to look for, as passed when indexing.
 		 */
-		public IPromise<IndexResult> GetObject(string objectId) {
+		public Promise<IndexResult> GetObject(string objectId) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName).Path(objectId);
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			return Common.RunInTask<IndexResult>(req, (response, task) => {
@@ -47,7 +47,7 @@ namespace CotcSdk {
 		 *     as the properties, however those are not indexed (cannot be looked for in a search request). Its
 		 *     content is returned in searches (#IndexResult.Payload property).
 		 */
-		public IPromise<Done> IndexObject(string objectId, Bundle properties, Bundle payload) {
+		public Promise<Done> IndexObject(string objectId, Bundle properties, Bundle payload) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName);
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject(
@@ -76,7 +76,7 @@ namespace CotcSdk {
 		 * @param limit the maximum number of results to return per page.
 		 * @param offset number of the first result.
 		 */
-		public IPromise<IndexSearchResult> Search(string query, List<string> sortingProperties = null, int limit = 30, int offset = 0) {
+		public Promise<IndexSearchResult> Search(string query, List<string> sortingProperties = null, int limit = 30, int offset = 0) {
 			return Search(query, null, sortingProperties, limit, offset);
 		}
 
@@ -93,7 +93,7 @@ namespace CotcSdk {
 		 * @param limit the maximum number of results to return per page.
 		 * @param offset number of the first result.
 		 */
-		public IPromise<IndexSearchResult> SearchExtended(Bundle query, int limit = 30, int offset = 0) {
+		public Promise<IndexSearchResult> SearchExtended(Bundle query, int limit = 30, int offset = 0) {
 			return Search(null, query, null, limit, offset);
 		}
 
@@ -105,7 +105,7 @@ namespace CotcSdk {
 			IndexName = indexName;
 		}
 
-		private IPromise<IndexSearchResult> Search(string query, Bundle jsonData, List<string> sortingProperties, int limit, int offset) {
+		private Promise<IndexSearchResult> Search(string query, Bundle jsonData, List<string> sortingProperties, int limit, int offset) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName).Path("search");
 			if (query != null) url.QueryParam("q", query);
 			url.QueryParam("from", offset).QueryParam("max", limit);

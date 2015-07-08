@@ -26,7 +26,7 @@ public class RunAllTests : MonoBehaviour {
 	private ManualResetEvent TestDone = new ManualResetEvent(false);
 	private const int TestTimeoutMillisec = 30000;
 
-#if UNITY_IPHONE
+#if UNITY_IPHONE || true
 	// Use this for initialization
 	void Start() {
 		// Prepare to run integration tests in detached mode (uses static classes so a little bit dirty)
@@ -71,7 +71,7 @@ public class RunAllTests : MonoBehaviour {
 		TestBase test = (TestBase)gameObject.AddComponent(t.Name);
 		var methods = ListTestMethods(t);
 		Promise<bool> initialPromise = new Promise<bool>();
-		IPromise<bool> allTestPromise = initialPromise;
+		Promise<bool> allTestPromise = initialPromise;
 		// And run test methods
 		foreach (var pair in methods) {
 			string methodName = pair.Key;

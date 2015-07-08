@@ -7,12 +7,12 @@ public static class TestPromiseExtensions {
 	 * Call this on a promise to close a test. If you do not do it, you will need to call CompleteTest() on
 	 * your current test class.
 	 */
-	public static void CompleteTestIfSuccessful<T>(this IPromise<T> p) {
+	public static void CompleteTestIfSuccessful<T>(this Promise<T> p) {
 		p.Catch(ex => TestBase.FailTest("Test failed: " + ex.ToString()))
 		.Done(result => TestBase.CompleteTest());
 	}
 
-	public static IPromise<T> ExpectSuccess<T>(this IPromise<T> p, Action<T> action = null) {
+	public static Promise<T> ExpectSuccess<T>(this Promise<T> p, Action<T> action = null) {
 		return p.Catch(ex => TestBase.FailTest("Test failed: " + ex.ToString()))
 		.Then((T result) => {
 			try {
@@ -24,20 +24,22 @@ public static class TestPromiseExtensions {
 		});
 	}
 
-	public static IPromise<U> ExpectSuccess<T, U>(this IPromise<T> p, Func<T, IPromise<U>> action) {
+	public static Promise<U> ExpectSuccess<T, U>(this Promise<T> p, Func<T, Promise<U>> action) {
 		return p.Catch(ex => TestBase.FailTest("Test failed: " + ex.ToString()))
 		.Then<U>((T result) => {
 			try {
 				return action(result);
 			}
 			catch (Exception ex) {
+				Promise<U> rejected = new Promise<U>();
+				rejected.Reject(ex);
 				TestBase.FailTest("Test failed because of error in ExpectSuccess body: " + ex.ToString());
-				return Promise<U>.Rejected(ex);
+				return rejected;
 			}
 		});
 	}
 
-	public static IPromise<T> ExpectFailure<T>(this IPromise<T> p, Action<CotcException> action = null) {
+	public static Promise<T> ExpectFailure<T>(this Promise<T> p, Action<CotcException> action = null) {
 		return p.Then(value => TestBase.FailTest("Test failed: value should not be returned"))
 		.Catch(ex => {
 			if (action != null) {

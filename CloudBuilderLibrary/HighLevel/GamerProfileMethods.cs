@@ -14,7 +14,7 @@ namespace CotcSdk
 		 * method SetProfile.
 		 * @return promise resolved when the operation has completed.
 		 */
-		public IPromise<GamerProfile> Get() {
+		public Promise<GamerProfile> Get() {
 			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/profile");
 			return Common.RunInTask<GamerProfile>(req, (response, task) => {
 				GamerProfile profile = new GamerProfile(response.BodyJson);
@@ -32,7 +32,7 @@ namespace CotcSdk
 		 * @param data is a Bundle holding the data to save for this user. The object can hold the
 		 *     whole profile or just a subset of the keys.
 		 */
-		public IPromise<Done> Set(Bundle data) {
+		public Promise<Done> Set(Bundle data) {
 			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/profile");
 			req.BodyJson = data;
 			return Common.RunInTask<Done>(req, (response, task) => {

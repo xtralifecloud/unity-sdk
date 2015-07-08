@@ -86,7 +86,6 @@
     <Compile Include="HighLevel\CotcException.cs" />
     <Compile Include="HighLevel\GamerVfs.cs" />
     <Compile Include="HighLevel\Promise.cs" />
-    <Compile Include="HighLevel\Promise_NonGeneric.cs" />
     <Compile Include="HighLevel\ResultTask.cs" />
     <Compile Include="Internal\Bundle.cs" />
     <Compile Include="Internal\CotcSettings.cs" />

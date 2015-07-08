@@ -25,7 +25,7 @@ namespace CotcSdk {
 		 *     In case the call fails, the bundle is not attached, the call is marked as failed with a 404 status.
 		 * @param key the name of the key to be fetched.
 		 */
-		public IPromise<Bundle> GetKey(string key) {
+		public Promise<Bundle> GetKey(string key) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			return Common.RunInTask<Bundle>(req, (response, task) => {
@@ -40,7 +40,7 @@ namespace CotcSdk {
 		 *     do `string value = result.Value["key"];`. Bundle handles automatic conversions as well, so if you passed an
 		 *     integer, you may as well fetch it as a string and vice versa.
 		 */
-		public IPromise<Bundle> GetAll() {
+		public Promise<Bundle> GetAll() {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			return Common.RunInTask<Bundle>(req, (response, task) => {
@@ -55,7 +55,7 @@ namespace CotcSdk {
 		 * @param value the value to set. As usual with bundles, casting is implicitly done, so you may as well
 		 *     call this method passing an integer or string as value for instance.
 		 */
-		public IPromise<Done> SetKey(string key, Bundle value) {
+		public Promise<Done> SetKey(string key, Bundle value) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("value", value);
@@ -69,7 +69,7 @@ namespace CotcSdk {
 		 * @return promise resolved when the operation has completed. The enclosed value indicates success.
 		 * @param properties a bundle of key/value properties to set. An example is `Bundle.CreateObject("key", "value")`.
 		 */
-		public IPromise<Done> SetAll(Bundle properties) {
+		public Promise<Done> SetAll(Bundle properties) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = properties;
@@ -83,7 +83,7 @@ namespace CotcSdk {
 		 * @return promise resolved when the operation has completed.
 		 * @param key the name of the key to remove.
 		 */
-		public IPromise<Done> RemoveKey(string key) {
+		public Promise<Done> RemoveKey(string key) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";
@@ -96,7 +96,7 @@ namespace CotcSdk {
 		 * Remove all properties for the user.
 		 * @return promise resolved when the operation has completed.
 		 */
-		public IPromise<Done> RemoveAll() {
+		public Promise<Done> RemoveAll() {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";

@@ -18,12 +18,12 @@ public class CommunityTests : TestBase {
 		// Use two test accounts
 		Login2NewUsers(cloud, (gamer1, gamer2) => {
 			// Expects friend status change event
-			Promise restOfTheTestCompleted = new Promise();
+			Promise<bool> restOfTheTestCompleted = new Promise<bool>();
 			gamer1.StartEventLoop();
 			gamer1.Community.OnFriendStatusChange += (FriendStatusChangeEvent e) => {
 				Assert(e.FriendId == gamer2.GamerId, "Should come from P2");
 				Assert(e.NewStatus == FriendRelationshipStatus.Add, "Should have added me");
-				restOfTheTestCompleted.Done(CompleteTest);
+				restOfTheTestCompleted.Done(dummy => CompleteTest());
 			};
 
 			// Add gamer1 as a friend of gamer2
@@ -35,7 +35,7 @@ public class CommunityTests : TestBase {
 			.ExpectSuccess(friends => {
 				Assert(friends.Count == 1, "Expects one friend");
 				Assert(friends[0].GamerId == gamer2.GamerId, "Wrong friend ID");
-				restOfTheTestCompleted.Resolve();
+				restOfTheTestCompleted.Resolve(true);
 			});
 		});
 	}
@@ -44,14 +44,14 @@ public class CommunityTests : TestBase {
 	public void ShouldSendEvent(Cloud cloud) {
 		Login2NewUsers(cloud, (gamer1, gamer2) => {
 			// Wait event for P1
-			Promise finishedSendEvent = new Promise();
+			Promise<bool> finishedSendEvent = new Promise<bool>();
 			DomainEventLoop loop = gamer1.StartEventLoop();
 			loop.ReceivedEvent += (sender, e) => {
 				Assert(sender == loop, "Event should come from the loop");
 				Assert(e.Message["hello"] == "world", "Message invalid");
 				loop.Stop();
 				// Wait the results of SendEvent as well
-				finishedSendEvent.Done(CompleteTest);
+				finishedSendEvent.Done(dummy => CompleteTest());
 			};
 			// Send event as P2
 			gamer2.Community.SendEvent(
@@ -59,7 +59,7 @@ public class CommunityTests : TestBase {
 				eventData: Bundle.CreateObject("hello", "world"))
 			.ExpectSuccess(result => {
 				Assert(result, "Expected true result");
-				finishedSendEvent.Resolve();
+				finishedSendEvent.Resolve(true);
 			});
 		});
 	}

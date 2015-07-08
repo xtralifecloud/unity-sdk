@@ -7,13 +7,13 @@ namespace CotcSdk {
 		/**
 		 * Fetches the next results and calls the same handler again.
 		 */
-		public IPromise<PagedList<DataType>> FetchNext() {
+		public Promise<PagedList<DataType>> FetchNext() {
 			return Next();
 		}
 		/**
 		 * Fetches the previous results and calls the same handler again.
 		 */
-		public IPromise<PagedList<DataType>> FetchPrevious() {
+		public Promise<PagedList<DataType>> FetchPrevious() {
 			return Previous();
 		}
 		/**
@@ -46,6 +46,6 @@ namespace CotcSdk {
 			Offset = currentOffset;
 			Total = totalResults;
 		}
-		internal Func<IPromise<PagedList<DataType>>> Next, Previous;
+		internal Func<Promise<PagedList<DataType>>> Next, Previous;
 	}
 }

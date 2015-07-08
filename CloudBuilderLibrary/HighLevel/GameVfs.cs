@@ -27,7 +27,7 @@ namespace CotcSdk {
 		 *     it to be a string, you may simply do `string value = result.Value["key"];`.
 		 * @param key the name of the key to be fetched.
 		 */
-		public IPromise<Bundle> GetAll() {
+		public Promise<Bundle> GetAll() {
 			UrlBuilder url = new UrlBuilder("/v1/vfs").Path(domain);
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			return Common.RunInTask<Bundle>(req, (response, task) => {
@@ -42,7 +42,7 @@ namespace CotcSdk {
 		 *     If the property doesn't exist, the call is marked as failed with a 404 status.
 		 * @param key the name of the key to be fetched.
 		 */
-		public IPromise<Bundle> GetKey(string key) {
+		public Promise<Bundle> GetKey(string key) {
 			UrlBuilder url = new UrlBuilder("/v1/vfs").Path(domain).Path(key);
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			return Common.RunInTask<Bundle>(req, (response, task) => {

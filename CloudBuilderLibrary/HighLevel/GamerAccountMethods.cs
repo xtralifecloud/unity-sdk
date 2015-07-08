@@ -14,7 +14,7 @@ namespace CotcSdk
 		 * @return promise resolved when the operation has completed.
 		 * @param newEmailAddress the new e-mail address to be used for signing in.
 		 */
-		public IPromise<Done> ChangeEmailAddress(string newEmailAddress) {
+		public Promise<Done> ChangeEmailAddress(string newEmailAddress) {
 			var task = new Promise<Done>();
 			if (Gamer.Network != LoginNetwork.Email) {
 				return task.PostResult(ErrorCode.BadParameters, "Unavailable for " + Gamer.Network.Describe() + " accounts");
@@ -35,7 +35,7 @@ namespace CotcSdk
 		 * @return promise resolved when the operation has completed.
 		 * @param newPassword the new password to be used for signing in.
 		 */
-		public IPromise<Done> ChangePassword(string newPassword) {
+		public Promise<Done> ChangePassword(string newPassword) {
 			var task = new Promise<Done>();
 			if (Gamer.Network != LoginNetwork.Email) {
 				task.PostResult(ErrorCode.BadParameters, "Unavailable for " + Gamer.Network.Describe() + " accounts");
@@ -63,7 +63,7 @@ namespace CotcSdk
 		 * @param networkSecret the secret for the network. For e-mail accounts, this would be the passord. For
 		 *     facebook or other SNS accounts, this would be the user token.
 		 */
-		public IPromise<Done> Convert(LoginNetwork network, string networkId, string networkSecret) {
+		public Promise<Done> Convert(LoginNetwork network, string networkId, string networkSecret) {
 			Bundle config = Bundle.CreateObject();
 			config["network"] = network.Describe();
 			config["id"] = networkId;
@@ -81,7 +81,7 @@ namespace CotcSdk
 		 * @param os operating system (should be determined by the native implementation: "ios", "android", "macos", …).
 		 * @param token push notification token (device specific).
 		 */
-		public IPromise<Done> RegisterDevice(string os, string token) {
+		public Promise<Done> RegisterDevice(string os, string token) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/device").QueryParam("os", os).QueryParam("token", token);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "POST";
@@ -95,7 +95,7 @@ namespace CotcSdk
 		 * @param os operating system (should be determined by the native implementation: "ios", "android", "macos", …).
 		 * @param token push notification token (device specific).
 		 */
-		public IPromise<Done> UnregisterDevice(string os, string token) {
+		public Promise<Done> UnregisterDevice(string os, string token) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/device").QueryParam("os", os).QueryParam("token", token);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";

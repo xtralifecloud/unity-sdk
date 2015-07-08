@@ -30,7 +30,7 @@ namespace CotcSdk.FacebookIntegration
 		 * @param cloud needed to perform various tasks. Ensure that the SDK is initialized properly and fetch a
 		 *     cloud object.
 		 */
-		public IPromise<Gamer> LoginWithFacebook(Cloud cloud) {
+		public Promise<Gamer> LoginWithFacebook(Cloud cloud) {
 			var task = new Promise<Gamer>();
 			EnsureFacebookLoaded(() => {
 				FB.Login("public_profile,email,user_friends", (FBResult result) => {
@@ -59,7 +59,7 @@ namespace CotcSdk.FacebookIntegration
 		 *     #GamerCommunity.PostSocialNetworkFriends.
 		 * @param gamer gamer object used to link the data to the account.
 		 */
-		public IPromise<SocialNetworkFriendResponse> FetchFriends(Gamer gamer) {
+		public Promise<SocialNetworkFriendResponse> FetchFriends(Gamer gamer) {
 			var task = new Promise<SocialNetworkFriendResponse>();
 			EnsureFacebookLoaded(() => {
 				DoFacebookRequestWithPagination("/me/friends", Facebook.HttpMethod.GET)
@@ -76,7 +76,7 @@ namespace CotcSdk.FacebookIntegration
 
 		#region Private
 		// Starting point
-		private IPromise<List<SocialNetworkFriend>> DoFacebookRequestWithPagination(string query, Facebook.HttpMethod method) {
+		private Promise<List<SocialNetworkFriend>> DoFacebookRequestWithPagination(string query, Facebook.HttpMethod method) {
 			var task = new Promise<List<SocialNetworkFriend>>();
 			FB.API(query, method, (FBResult result) => {
 				DoFacebookRequestWithPagination(task, result, new List<SocialNetworkFriend>());

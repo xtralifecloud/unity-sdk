@@ -25,7 +25,7 @@ namespace CotcSdk {
 		 * @param batchName name of the batch to run, as configured on the server.
 		 * @param batchParams parameters to be passed to the batch.
 		 */
-		public IPromise<Bundle> Run(string batchName, Bundle batchParams = null) {
+		public Promise<Bundle> Run(string batchName, Bundle batchParams = null) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/batch").Path(domain).Path(batchName);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = batchParams ?? Bundle.Empty;

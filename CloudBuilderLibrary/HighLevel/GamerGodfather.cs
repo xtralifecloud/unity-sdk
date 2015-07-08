@@ -42,7 +42,7 @@ namespace CotcSdk
 		 * 
 		 * @return promise resolved when the operation has completed. The attached string is the generated code.
 		 */
-		public IPromise<string> GenerateCode() {
+		public Promise<string> GenerateCode() {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/godfather").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "PUT";
@@ -55,7 +55,7 @@ namespace CotcSdk
 		 * This method can be used to retrieve the gamer who have added you as a godfather.
 		 * @return promise resolved when the operation has completed.
 		 */
-		public IPromise<List<GamerInfo>> GetGodchildren() {
+		public Promise<List<GamerInfo>> GetGodchildren() {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/godchildren").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			return Common.RunInTask<List<GamerInfo>>(req, (response, task) => {
@@ -71,7 +71,7 @@ namespace CotcSdk
 		 * This method can be used to retrieve the godfather of the gamer.
 		 * @return promise resolved when the operation has completed.
 		 */
-		public IPromise<GamerInfo> GetGodfather() {
+		public Promise<GamerInfo> GetGodfather() {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/godfather").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			return Common.RunInTask<GamerInfo>(req, (response, task) => {
@@ -92,7 +92,7 @@ namespace CotcSdk
 		 *     The godfather will reveive an event of type 'godchildren' containing the id of the godchildren
 		 *     and the balance/achievements field if rewarded.
 		 */
-		public IPromise<Done> UseCode(string code, Bundle rewardTx = null, PushNotification notification = null) {
+		public Promise<Done> UseCode(string code, Bundle rewardTx = null, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/godfather").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			Bundle config = Bundle.CreateObject();

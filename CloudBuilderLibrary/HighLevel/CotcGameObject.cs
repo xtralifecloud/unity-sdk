@@ -8,7 +8,7 @@ namespace CotcSdk
 
 		private Promise<Cloud> whenStarted = new Promise<Cloud>();
 
-		public IPromise<Cloud> GetCloud() {
+		public Promise<Cloud> GetCloud() {
 			return whenStarted;
 		}
 

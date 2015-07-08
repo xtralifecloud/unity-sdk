@@ -27,7 +27,7 @@ namespace CotcSdk {
 		 *     an easy way to make a random generator that is safe, unbiased (since made on the server) and can be verified
 		 *     by all players once the game is finished. This bundle needs to be an array (use Bundle.CreateArray).
 		 */
-		public IPromise<Match> Create(int maxPlayers, string description = null, Bundle customProperties = null, Bundle shoe = null) {
+		public Promise<Match> Create(int maxPlayers, string description = null, Bundle customProperties = null, Bundle shoe = null) {
 			var task = new Promise<Match>();
 			if (shoe != null && shoe.Type != Bundle.DataType.Array) {
 				task.PostResult(ErrorCode.BadParameters, "The shoe must be an array");
@@ -52,7 +52,7 @@ namespace CotcSdk {
 		 * @return promise resolved when the operation has completed.
 		 * @param matchId ID of the match to delete.
 		 */
-		public IPromise<Done> Delete(string matchId) {
+		public Promise<Done> Delete(string matchId) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(matchId);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";
@@ -91,7 +91,7 @@ namespace CotcSdk {
 		 *     the match.
 		 * @param matchId the ID of an existing match to resume. It can be fetched from the Match object (MatchId).
 		 */
-		public IPromise<Match> Fetch(string matchId) {
+		public Promise<Match> Fetch(string matchId) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(matchId);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			return Common.RunInTask<Match>(req, (response, task) => {
@@ -108,7 +108,7 @@ namespace CotcSdk {
 		 * @param matchId the ID of an existing match to join. It can be fetched from the Match object (MatchId).
 		 * @param notification optional push notification to be sent to inactive players (see class definition).
 		 */
-		public IPromise<Match> Join(string matchId, PushNotification notification = null) {
+		public Promise<Match> Join(string matchId, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(matchId).Path("join");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
@@ -130,7 +130,7 @@ namespace CotcSdk {
 		 * @param limit for pagination, allows to set a greater or smaller page size than the default 30.
 		 * @param offset for pagination, avoid using it explicitly.
 		 */
-		public IPromise<PagedList<MatchListResult>> List(bool participating = false, bool invited = false, bool finished = false, bool full = false, int limit = 30, int offset = 0) {
+		public Promise<PagedList<MatchListResult>> List(bool participating = false, bool invited = false, bool finished = false, bool full = false, int limit = 30, int offset = 0) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches");
 			url.QueryParam("domain", domain).QueryParam("offset", offset).QueryParam("limit", limit);
 			if (participating) url.QueryParam("participating");

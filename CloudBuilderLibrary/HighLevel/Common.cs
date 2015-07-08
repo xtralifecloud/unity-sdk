@@ -66,7 +66,7 @@ namespace CotcSdk
 		 *     have to resolve it from inside.
 		 * @param onSuccess callback called in case of success only.
 		 */
-		internal static IPromise<T> RunRequest<T>(HttpRequest req, Promise<T> task, Action<HttpResponse> onSuccess) {
+		internal static Promise<T> RunRequest<T>(HttpRequest req, Promise<T> task, Action<HttpResponse> onSuccess) {
 			Managers.HttpClient.Run(req, (HttpResponse response) => {
 				if (HasFailed(response)) {
 					task.PostResult(response, "Request failed");
@@ -85,7 +85,7 @@ namespace CotcSdk
 		 * @param onSuccess callback called in case of success only, with the response and a new task that needs to
 		 *     be resolved from there.
 		 */
-		internal static IPromise<T> RunInTask<T>(HttpRequest req, Action<HttpResponse, Promise<T>> onSuccess) {
+		internal static Promise<T> RunInTask<T>(HttpRequest req, Action<HttpResponse, Promise<T>> onSuccess) {
 			var task = new Promise<T>();
 			Managers.HttpClient.Run(req, (HttpResponse response) => {
 				if (HasFailed(response)) {
