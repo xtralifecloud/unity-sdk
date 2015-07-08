@@ -4,8 +4,8 @@ using System;
 using System.Reflection;
 using IntegrationTests;
 using System.Collections.Generic;
-using CotcSdk;
 using System.Threading;
+using CotcSdk;
 
 public class RunAllTests : MonoBehaviour {
 
@@ -24,9 +24,9 @@ public class RunAllTests : MonoBehaviour {
 	private Promise<bool> NextTestPromise;
 	private int CurrentTestClassNo = 0, PassedTests = 0, FailedTests = 0;
 	private ManualResetEvent TestDone = new ManualResetEvent(false);
-	private const int TestTimeoutMillisec = 30000;
+	private const int TestTimeoutMillisec = 3000;
 
-#if UNITY_IPHONE || true
+#if UNITY_IPHONE
 	// Use this for initialization
 	void Start() {
 		// Prepare to run integration tests in detached mode (uses static classes so a little bit dirty)
@@ -57,8 +57,8 @@ public class RunAllTests : MonoBehaviour {
 	private void OnTestCompleted(bool successful) {
 		if (successful) PassedTests += 1;
 		else FailedTests += 1;
-		NextTestPromise.Resolve(successful);
 		TestDone.Set();
+		NextTestPromise.Resolve(successful);
 	}
 
 	private void ProcessNextTestClass() {
@@ -68,13 +68,14 @@ public class RunAllTests : MonoBehaviour {
 		}
 
 		Type t = TestTypes[CurrentTestClassNo++];
-		TestBase test = (TestBase)gameObject.AddComponent(t.Name);
+		TestBase test = (TestBase)gameObject.AddComponent(t);
 		var methods = ListTestMethods(t);
 		Promise<bool> initialPromise = new Promise<bool>();
 		Promise<bool> allTestPromise = initialPromise;
 		// And run test methods
 		foreach (var pair in methods) {
 			string methodName = pair.Key;
+			Debug.Log ("Calling THEN");
 			allTestPromise = allTestPromise.Then(success => {
 				Debug.Log("Running method " + t.Name + "::" + methodName);
 				// Will be resolved in OnTestCompleted
@@ -83,7 +84,12 @@ public class RunAllTests : MonoBehaviour {
 				TestDone.Reset();
 				ThreadPool.RegisterWaitForSingleObject(TestDone, new WaitOrTimerCallback(TestTimedOut), null, TestTimeoutMillisec, true); 
 				// Run the actual method
-				test.RunTestMethod(methodName, true);
+				try {
+					test.RunTestMethod(methodName, true);
+				}
+				catch (Exception ex) {
+					TestBase.FailTest ("Exception when starting test: " + ex.ToString());
+				}
 				return NextTestPromise;
 			});
 		}

@@ -19,7 +19,7 @@ namespace CotcSdk
 			public override int GetHashCode() { return Url.GetHashCode(); }
 		}
 		private Dictionary<string, EnvironmentInfo> PredefinedEnvironments = new Dictionary<string,EnvironmentInfo>() {
-			{"Custom…", new EnvironmentInfo("", 0)},
+			{"Custom...", new EnvironmentInfo("", 0)},
 			{"Sandbox", new EnvironmentInfo("https://sandbox-api[id].clanofthecloud.mobi", 2)},
 			{"Production", new EnvironmentInfo("https://prod-api[id].clanofthecloud.mobi", 16)},
 #if DEBUG
