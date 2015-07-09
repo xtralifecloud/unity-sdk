@@ -17,12 +17,12 @@ public class GodfatherTests : TestBase {
 	public void ShouldAssociateGodfather(Cloud cloud) {
 		Login2NewUsers(cloud, (gamer1, gamer2) => {
 			// Expects godchild event
-			Promise<bool> restOfTheTestCompleted = new Promise<bool>();
+			Promise restOfTheTestCompleted = new Promise();
 			gamer1.StartEventLoop();
 			gamer1.Godfather.OnGotGodchild += (GotGodchildEvent e) => {
 				Assert(e.Gamer.GamerId == gamer2.GamerId, "Should come from player2");
 				Assert((object)e.Reward == (object)Bundle.Empty, "No reward should be associated");
-				restOfTheTestCompleted.Done(dummy => CompleteTest());
+				restOfTheTestCompleted.Done(CompleteTest);
 			};
 
 			// P1 generates a code and associates P2 with it
@@ -37,7 +37,7 @@ public class GodfatherTests : TestBase {
 			.ExpectSuccess(result => {
 				Assert(result.Count == 1, "Should have only one godchildren");
 				Assert(result[0].GamerId == gamer2.GamerId, "P2 should be godchildren");
-				restOfTheTestCompleted.Resolve(true);
+				restOfTheTestCompleted.Resolve();
 			});
 		});
 	}

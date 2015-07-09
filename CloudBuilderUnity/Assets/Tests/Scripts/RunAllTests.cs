@@ -21,7 +21,7 @@ public class RunAllTests : MonoBehaviour {
 		typeof(TransactionTests),
 		typeof(VfsTests),
 	};
-	private Promise<bool> NextTestPromise;
+	private Promise NextTestPromise;
 	private int CurrentTestClassNo = 0, PassedTests = 0, FailedTests = 0;
 	private ManualResetEvent TestDone = new ManualResetEvent(false);
 	private const int TestTimeoutMillisec = 30000;
@@ -60,7 +60,7 @@ public class RunAllTests : MonoBehaviour {
 		TestDone.Set();
 		var p = NextTestPromise;
 		NextTestPromise = null;
-		if (p != null) p.Resolve(successful);
+		if (p != null) p.Resolve();
 	}
 
 	private void ProcessNextTestClass() {
@@ -72,15 +72,14 @@ public class RunAllTests : MonoBehaviour {
 		Type t = TestTypes[CurrentTestClassNo++];
 		TestBase test = (TestBase)gameObject.AddComponent(t);
 		var methods = ListTestMethods(t);
-		Promise<bool> initialPromise = new Promise<bool>();
-		Promise<bool> allTestPromise = initialPromise;
+		Promise initialPromise = new Promise(), allTestPromise = initialPromise;
 		// And run test methods
 		foreach (var pair in methods) {
 			string methodName = pair.Key;
-			allTestPromise = allTestPromise.Then(success => {
+			allTestPromise = allTestPromise.Then(() => {
 				Debug.Log("Running method " + t.Name + "::" + methodName);
 				// Will be resolved in OnTestCompleted
-				NextTestPromise = new Promise<bool>();
+				NextTestPromise = new Promise();
 				// Handle possible timeout
 				TestDone.Reset();
 				ThreadPool.RegisterWaitForSingleObject(TestDone, new WaitOrTimerCallback(TestTimedOut), null, TestTimeoutMillisec, true); 
@@ -95,8 +94,8 @@ public class RunAllTests : MonoBehaviour {
 			});
 		}
 		// Start the deferred chain
-		initialPromise.Resolve(false);
-		allTestPromise.Then(success => {
+		initialPromise.Resolve();
+		allTestPromise.Then(() => {
 			ProcessNextTestClass();
 		});
 		return;

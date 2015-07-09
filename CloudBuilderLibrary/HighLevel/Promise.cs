@@ -5,28 +5,11 @@ using System.Text;
 
 namespace CotcSdk
 {
-	public class ExceptionEventArgs : EventArgs {
-		internal ExceptionEventArgs(Exception Exception) {
-			this.Exception = Exception;
-		}
-
-		public Exception Exception {
-			get;
-			private set;
-		}
-	}
-
-	internal enum PromiseState {
-		Pending,
-		Fulfilled,
-		Rejected
-	}
-
 	internal class PromiseHandler<T> {
 		public Action<T> Callback;
 		public Action<Exception> OnFailure;
 	}
-	
+
 	public class Promise<PromisedT> {
 		private ArrayList ResolvedHandlers = new ArrayList(), RejectedHandlers = new ArrayList();
 		private PromisedT ResolvedValue;
@@ -59,6 +42,26 @@ namespace CotcSdk
 		public void Done() {
 			var resultPromise = new Promise<PromisedT>();
 			ActionHandlers(value => { }, ex => Promise.PropagateUnhandledException(this, ex), ex => resultPromise.Reject(ex));
+		}
+
+		public void Reject(Exception ex) {
+			if (State != PromiseState.Pending) throw new InvalidOperationException("Illegal promise state transition");
+			RejectedValue = ex;
+			State = PromiseState.Rejected;
+			foreach (PromiseHandler<Exception> handler in RejectedHandlers) {
+				InvokeHandler(handler.Callback, handler.OnFailure, ex);
+			}
+			RejectedHandlers.Clear();
+		}
+
+		public void Resolve(PromisedT value) {
+			if (State != PromiseState.Pending) throw new InvalidOperationException("Illegal promise state transition");
+			ResolvedValue = value;
+			State = PromiseState.Fulfilled;
+			foreach (PromiseHandler<PromisedT> handler in ResolvedHandlers) {
+				InvokeHandler(handler.Callback, handler.OnFailure, value);
+			}
+			ResolvedHandlers.Clear();
 		}
 
 		public Promise<ConvertedT> Then<ConvertedT>(Func<PromisedT, Promise<ConvertedT>> onResolved) {
@@ -111,16 +114,6 @@ namespace CotcSdk
 			return resultPromise;
 		}
 
-		public void Resolve(PromisedT value) {
-			if (State != PromiseState.Pending) throw new InvalidOperationException("Illegal promise state transition");
-			ResolvedValue = value;
-			State = PromiseState.Fulfilled;
-			foreach (PromiseHandler<PromisedT> handler in ResolvedHandlers) {
-				InvokeHandler(handler.Callback, handler.OnFailure, value);
-			}
-			ResolvedHandlers.Clear();
-		}
-
 		private void ActionHandlers(Action<PromisedT> onResolved, Action<Exception> onRejected, Action<Exception> onRejectResolved) {
 			if (State == PromiseState.Pending) {
 				if (onResolved != null) {
@@ -150,35 +143,6 @@ namespace CotcSdk
 			}
 			catch (Exception ex) {
 				onFailure(ex);
-			}
-		}
-
-		public void Reject(Exception ex) {
-			if (State != PromiseState.Pending) throw new InvalidOperationException("Illegal promise state transition");
-			RejectedValue = ex;
-			State = PromiseState.Rejected;
-			foreach (PromiseHandler<Exception> handler in RejectedHandlers) {
-				InvokeHandler(handler.Callback, handler.OnFailure, ex);
-			}
-			RejectedHandlers.Clear();
-		}
-	}
-
-	public class Promise {
-		private static EventHandler<ExceptionEventArgs> unhandledException;
-
-		/// <summary>
-		/// Event raised for unhandled errors.
-		/// For this to work you have to complete your promises with a call to Done().
-		/// </summary>
-		public static event EventHandler<ExceptionEventArgs> UnhandledException {
-			add { unhandledException += value; }
-			remove { unhandledException -= value; }
-		}
-
-		internal static void PropagateUnhandledException(object sender, Exception ex) {
-			if (unhandledException != null) {
-				unhandledException(sender, new ExceptionEventArgs(ex));
 			}
 		}
 	}
