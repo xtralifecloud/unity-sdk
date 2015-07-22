@@ -6,7 +6,19 @@ namespace CotcSdk.PushNotifications {
 
 	public class CotcPushNotificationsGameObject : MonoBehaviour {
 
+#if UNITY_ANDROID
+		private AndroidJavaClass JavaClass;
+#endif
+
 		void Start() {
+#if UNITY_ANDROID
+			JavaClass = new AndroidJavaClass("com.clanofthecloud.cotcpushnotifications.Controller");
+			if (JavaClass == null) {
+				Debug.LogError("Java class failed to load; check that the JAR is included properly in Assets/Plugins/Android");
+				return;
+			}
+			JavaClass.CallStatic("startup");
+#endif
 			Cotc.LoggedIn += Cotc_DidLogin;
 		}
 
@@ -15,15 +27,12 @@ namespace CotcSdk.PushNotifications {
 		}
 
 		void Update() {
-#if UNITY_IPHONE
+			var token = GetToken();
 			// Achieved the registration
-			var token = UnityEngine.iOS.NotificationServices.deviceToken;
-			if (token != null) {
-				Debug.Log("Token to be sent");
+			if (token != null && ShouldSendToken) {
 				FinishedRegistering(token);
-				AlreadySentToken = true;
+				ShouldSendToken = false;
 			}
-#endif
 		}
 
 		private void Cotc_DidLogin(object sender, Cotc.LoggedInEventArgs e) {
@@ -32,17 +41,35 @@ namespace CotcSdk.PushNotifications {
 				UnityEngine.iOS.NotificationType.Alert | 
 			    UnityEngine.iOS.NotificationType.Badge | 
 			    UnityEngine.iOS.NotificationType.Sound);
-#else
-			NativeFunctions.Cotc_PushNotifications_RegisterDevice(doneJson => {
-				Debug.LogWarning("Done: " + doneJson);
-			});
+#elif UNITY_ANDROID
+			JavaClass.CallStatic("registerForNotifications");
+#endif
+			ShouldSendToken = true;
+			RegisteredGamer = e.Gamer;
+		}
+
+		private string GetToken() {
+#if UNITY_IPHONE
+			var token = UnityEngine.iOS.NotificationServices.deviceToken;
+			if (token != null) {
+				return System.BitConverter.ToString(token).Replace("-", "").ToLower();
+			}
+			else {
+				return null;
+			}
+#elif UNITY_ANDROID
+			return JavaClass.CallStatic<string>("getToken");
 #endif
 		}
 
-		private void FinishedRegistering(byte[] token) {
-
+		private void FinishedRegistering(string token) {
+			RegisteredGamer.Account.RegisterDevice("android", token)
+				.Catch(ex => {
+					Debug.LogError("Failed to register Android device for push notifications");
+				});
 		}
 
-		private bool AlreadySentToken = false;
+		private bool ShouldSendToken = false;
+		private Gamer RegisteredGamer;
 	}
 }

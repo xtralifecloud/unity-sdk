@@ -8,12 +8,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 659520464, guid: d5938e2b8f58f1a48b378a7f599c6793, type: 3}
+  m_Script: {fileID: 659520464, guid: a4bb178865f594be68312d0ccba2eb51, type: 3}
   m_Name: CotcSettings
   m_EditorClassIdentifier: 
   ApiKey: testgame-key
   ApiSecret: testgame-secret
-  Environment: http://195.154.227.44:8000
+  Environment: http://10.211.55.2:2000
   LbCount: 0
   HttpVerbose: 1
   HttpTimeout: 60
