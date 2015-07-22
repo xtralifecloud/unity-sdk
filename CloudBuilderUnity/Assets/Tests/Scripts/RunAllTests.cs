@@ -10,7 +10,7 @@ using CotcSdk;
 public class RunAllTests : MonoBehaviour {
 
 	private static readonly Type[] TestTypes = {
-		typeof(ClanTests),
+		typeof(CloudTests),
 		typeof(CommunityTests),
 		typeof(GamerTests),
 		typeof(GameTests),

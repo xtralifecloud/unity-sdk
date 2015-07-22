@@ -4,8 +4,8 @@ using CotcSdk;
 using System.Reflection;
 using IntegrationTests;
 
-public class ClanTests : TestBase {
-	[InstanceMethod(typeof(ClanTests))]
+public class CloudTests : TestBase {
+	[InstanceMethod(typeof(CloudTests))]
 	public string TestMethodName;
 
 	void Start() {
@@ -193,5 +193,13 @@ public class ClanTests : TestBase {
 				CompleteTest();
 			});
 		});
+	}
+
+	[Test("Tests the DidLogin notification")]
+	public void ShouldSendLoggedInNotification(Cloud cloud) {
+		Cotc.LoggedIn += (sender, e) => {
+			CompleteTest();
+		};
+		Login(cloud, gamer => {});
 	}
 }
