@@ -62,7 +62,11 @@ namespace CotcSdk {
 		/**
 		 * This event is raised when an event is received.
 		 */
-		public event EventLoopHandler ReceivedEvent;
+		public event EventLoopHandler ReceivedEvent {
+			add { receivedEvent += value; }
+			remove { receivedEvent -= value; }
+		}
+		private EventLoopHandler receivedEvent;
 
 		/**
 		 * Starts the thread. Call this upon initialization.
@@ -119,7 +123,7 @@ namespace CotcSdk {
 		#region Private
 		private void ProcessEvent(HttpResponse res) {
 			try {
-				if (ReceivedEvent != null) ReceivedEvent(this, new EventLoopArgs(res.BodyJson));
+				if (receivedEvent != null) receivedEvent(this, new EventLoopArgs(res.BodyJson));
 			}
 			catch (Exception e) {
 				Common.LogError("Exception in the event chain: " + e.ToString());

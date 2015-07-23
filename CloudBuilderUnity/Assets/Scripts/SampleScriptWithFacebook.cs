@@ -2,6 +2,7 @@
 using System.Collections;
 using CotcSdk;
 using UnityEngine.UI;
+using CotcSdk.FacebookIntegration;
 
 public class SampleScriptWithFacebook : MonoBehaviour {
 	// The cloud allows to make generic operations (non user related)

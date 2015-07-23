@@ -24,7 +24,7 @@ RenderSettings:
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
-  m_SpotCookie: {fileID: 0}
+  m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
   m_ObjectHideFlags: 0
 --- !u!127 &3
 LevelGameManager:
@@ -38,7 +38,7 @@ LightmapSettings:
   m_BakedColorSpace: 0
   m_UseDualLightmapsInForward: 0
   m_LightmapEditorSettings:
-    m_Resolution: 50
+    m_Resolution: 1
     m_LastUsedResolution: 0
     m_TextureWidth: 1024
     m_TextureHeight: 1024
@@ -53,10 +53,10 @@ LightmapSettings:
     m_FinalGatherGradientThreshold: 0
     m_FinalGatherInterpolationPoints: 15
     m_AOAmount: 0
-    m_AOMaxDistance: .100000001
+    m_AOMaxDistance: 1
     m_AOContrast: 1
     m_LODSurfaceMappingDistance: 1
-    m_Padding: 0
+    m_Padding: 2
     m_TextureCompression: 0
     m_LockAtlas: 0
 --- !u!196 &5
@@ -91,7 +91,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1308260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,7 +214,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &23484846
 Transform:
   m_ObjectHideFlags: 0
@@ -230,7 +230,7 @@ Transform:
   - {fileID: 752472440}
   - {fileID: 1208659100}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
 --- !u!114 &23484847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -434,7 +434,7 @@ Transform:
   - {fileID: 2040714731}
   - {fileID: 623264842}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
 --- !u!1 &70436111
 GameObject:
   m_ObjectHideFlags: 0
@@ -801,7 +801,7 @@ Transform:
   - {fileID: 563065188}
   - {fileID: 218297353}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
 --- !u!1 &218297352
 GameObject:
   m_ObjectHideFlags: 0
@@ -917,7 +917,7 @@ Transform:
   - {fileID: 40263140}
   - {fileID: 1522183306}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
 --- !u!1 &353463893
 GameObject:
   m_ObjectHideFlags: 0
@@ -1589,7 +1589,46 @@ Transform:
   - {fileID: 1026194060}
   - {fileID: 1108289127}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
+--- !u!1 &615565720
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 615565721}
+  - 114: {fileID: 615565722}
+  m_Layer: 0
+  m_Name: RunAllTests (for Mobile devices)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &615565721
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 615565720}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+--- !u!114 &615565722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 615565720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987a63abaf7801c429ab278dc0bca1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &623264841
 GameObject:
   m_ObjectHideFlags: 0
@@ -1683,7 +1722,7 @@ Transform:
   - {fileID: 1705078590}
   - {fileID: 353463894}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
 --- !u!114 &700499706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2055,7 +2094,7 @@ Transform:
   - {fileID: 739156563}
   - {fileID: 1847089768}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!114 &800820457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2102,7 +2141,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 816199343}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1223422522, guid: d5938e2b8f58f1a48b378a7f599c6793, type: 3}
+  m_Script: {fileID: 1223422522, guid: a4bb178865f594be68312d0ccba2eb51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &816199345
@@ -2706,7 +2745,7 @@ Transform:
   - {fileID: 1943687335}
   - {fileID: 53517474}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
 --- !u!1 &1208659099
 GameObject:
   m_ObjectHideFlags: 0
@@ -3276,7 +3315,7 @@ Transform:
   - {fileID: 959226756}
   - {fileID: 18790314}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
 --- !u!1 &1490304705
 GameObject:
   m_ObjectHideFlags: 0
@@ -3699,7 +3738,7 @@ Transform:
   - {fileID: 393099418}
   - {fileID: 466521382}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
 --- !u!1 &1696029316
 GameObject:
   m_ObjectHideFlags: 0

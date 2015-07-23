@@ -37,9 +37,9 @@ namespace CotcSdk
 		/**
 		 * Executes a "ping" request to the server. Allows to know whether the server is currently working as expected.
 		 * You should hardly ever need this.
-		 * @param done callback invoked when the request has finished, either successfully or not.
+		 * @return promise resolved when the request has finished.
 		 */
-		public IPromise<Done> Ping() {
+		public Promise<Done> Ping() {
 			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/ping");
 			return Common.RunInTask<Done>(req, (response, task) => {
 				task.PostResult(new Done(true, response.BodyJson), response.BodyJson);

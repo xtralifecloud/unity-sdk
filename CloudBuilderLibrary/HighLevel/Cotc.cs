@@ -3,11 +3,12 @@ using System;
 using System.Collections.Generic;
 
 namespace CotcSdk {
-	public static class Cotc {
+	public static partial class Cotc {
 
 		/**
 		 * Call this at the very beginning to start using the library.
-		 * @param done called when the process has finished with the Cloud to be used for your operations (most likely synchronously).
+		 * @return promise resolved when the process has finished, with the Cloud to be used for your operations (most
+		 *     likely synchronously).
 		 * @param apiKey the community key.
 		 * @param apiSecret The community secret (credentials when registering to CotC).
 		 * @param environment the URL of the server. Should use one of the predefined constants.
@@ -15,7 +16,7 @@ namespace CotcSdk {
 		 *	 for debugging, though it does pollute the logs.
 		 * @param httpTimeout sets a custom timeout for all requests in seconds. Defaults to 1 minute.
 		 */
-		public static IPromise<Cloud> Setup(string apiKey, string apiSecret, string environment, int loadBalancerCount, bool httpVerbose, int httpTimeout) {
+		public static Promise<Cloud> Setup(string apiKey, string apiSecret, string environment, int loadBalancerCount, bool httpVerbose, int httpTimeout) {
 			var task = new Promise<Cloud>();
 			lock (SpinLock) {
 				Cloud cloud = new Cloud(apiKey, apiSecret, environment, loadBalancerCount, httpVerbose, httpTimeout);

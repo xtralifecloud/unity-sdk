@@ -21,8 +21,8 @@ public class GodfatherTests : TestBase {
 			gamer1.StartEventLoop();
 			gamer1.Godfather.OnGotGodchild += (GotGodchildEvent e) => {
 				Assert(e.Gamer.GamerId == gamer2.GamerId, "Should come from player2");
-				Assert(e.Reward == Bundle.Empty, "No reward should be associated");
-				restOfTheTestCompleted.Done(this.CompleteTest);
+				Assert((object)e.Reward == (object)Bundle.Empty, "No reward should be associated");
+				restOfTheTestCompleted.Done(CompleteTest);
 			};
 
 			// P1 generates a code and associates P2 with it

@@ -19,6 +19,7 @@ namespace CotcSdk
 			public override int GetHashCode() { return Url.GetHashCode(); }
 		}
 		private Dictionary<string, EnvironmentInfo> PredefinedEnvironments = new Dictionary<string,EnvironmentInfo>() {
+			{"Custom...", new EnvironmentInfo("", 0)},
 			{"Sandbox", new EnvironmentInfo("https://sandbox-api[id].clanofthecloud.mobi", 2)},
 			{"Production", new EnvironmentInfo("https://prod-api[id].clanofthecloud.mobi", 16)},
 #if DEBUG
@@ -49,14 +50,30 @@ namespace CotcSdk
 
 			s.ApiKey = EditorGUILayout.TextField("API Key", s.ApiKey);
 			s.ApiSecret = EditorGUILayout.TextField("API Secret", s.ApiSecret);
+
+			// Provide default sandbox environment
+			if (string.IsNullOrEmpty(s.Environment)) {
+				s.Environment = PredefinedEnvironments["Sandbox"].Url;
+				s.LbCount = PredefinedEnvironments["Sandbox"].LbCount;
+			}
+
 			var keys = new string[PredefinedEnvironments.Keys.Count];
 			var comparison = new EnvironmentInfo(s.Environment, s.LbCount);
 			PredefinedEnvironments.Keys.CopyTo(keys, 0);
-			var env = PredefinedEnvironments[keys[
-					EditorGUILayout.Popup("Environment", IndexInDict(comparison, PredefinedEnvironments), keys)
-				]];
-			s.Environment = env.Url;
-			s.LbCount = env.LbCount;
+			int currentIndex = IndexInDict(comparison, PredefinedEnvironments);
+			int newIndex = EditorGUILayout.Popup("Environment", currentIndex, keys);
+			// Custom env
+			if (newIndex == 0) {
+				if (currentIndex != 0) s.Environment = "http://";
+				s.Environment = EditorGUILayout.TextField("Env. URL", s.Environment);
+				s.LbCount = 0;
+			}
+			else {
+				// Predefined env.
+				var env = PredefinedEnvironments[keys[newIndex]];
+				s.Environment = env.Url;
+				s.LbCount = env.LbCount;
+			}
 
 			EditorGUILayout.GetControlRect(true, 16f, EditorStyles.foldout);
 			HttpGroupEnabled = EditorGUI.Foldout(GUILayoutUtility.GetLastRect(), HttpGroupEnabled, "Network Connection Settings");

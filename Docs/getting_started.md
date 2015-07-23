@@ -61,13 +61,13 @@ Getting used to promises can take a bit of time, but in a nutshell, you may simp
 	);
 	
 	// Promise based API (CotC)
-	IPromise<Gamer> LoginAnonymously();
+	Promise<Gamer> LoginAnonymously();
 	LoginAnonymously()
 		.Then(result => { ... })
 		.Catch(ex => { ... });
 ~~~~
 
-The basic principle means that any method of the API will return an @ref CotcSdk.IPromise<PromisedT> "IPromise<Type> object", which promises to give a result of that type in the future. The `IPromise` object provides a few methods which will help:
+The basic principle means that any method of the API will return an @ref CotcSdk.Promise<PromisedT> "Promise<Type> object", which promises to give a result of that type in the future. The `Promise` object provides a few methods which will help:
 
 - Do something when the promise resolves (i.e. a result is given as promised),
 - Do something when the promise is rejected (i.e. the result can not be provided as promised).
@@ -76,10 +76,10 @@ Let's take an example:
 
 ~~~~{.cs}
 	// Example method:
-	IPromise<Gamer> LoginAnonymously();
+	Promise<Gamer> LoginAnonymously();
 	
 	// Do the API call. Will launch the login process.
-	IPromise<Gamer> gamerPromise = LoginAnonymously();
+	Promise<Gamer> gamerPromise = LoginAnonymously();
 	// Here, the promise may already have been resolved (login done), though unknown to us.
 	// We just tell that we have something to do when the promise gets resolved.
 	// The handler will either be invoked immediately or once logged in.
@@ -94,7 +94,7 @@ Let's take an example:
 	});
 ~~~~
 
-Note that the @ref CotcSdk.IPromise<PromisedT>.Then "Then" and @ref CotcSdk.IPromise<PromisedT>.Catch "Catch" block return a new promise that can itself be linked to another Then/Catch block. However you should provide a Catch block only after all Then blocks or just before a Done block. The @ref CotcSdk.IPromise<PromisedT>.Done "Done" method returns no promise, and just tells that it is the last thing that you will do with the result. If you provide a Then block, you may then:
+Note that the @ref CotcSdk.Promise<PromisedT>.Then "Then" and @ref CotcSdk.Promise<PromisedT>.Catch "Catch" block return a new promise that can itself be linked to another Then/Catch block. However you should provide a Catch block only after all Then blocks or just before a Done block. The @ref CotcSdk.Promise<PromisedT>.Done "Done" method returns no promise, and just tells that it is the last thing that you will do with the result. If you provide a Then block, you may then:
 
 - Provide other Then blocks, which will receive the same result (if the lambda provided in the Then block returns an empty result).
 - Handle the result returned by the next promise (in case the lambda provided in the previous Then block returned another Promise).

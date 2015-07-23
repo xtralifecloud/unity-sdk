@@ -7,10 +7,10 @@ namespace CotcSdk {
 
 		/**
 		 * Deletes an indexed entry. If you just want to update an entry, simply use IndexObject.
-		 * @param done callback invoked when the operation has finished, either successfully or not.
+		 * @return promise resolved when the request has finished.
 		 * @param objectId ID of the object to delete, as passed when indexing.
 		 */
-		public IPromise<Done> DeleteObject(string objectId) {
+		public Promise<Done> DeleteObject(string objectId) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName).Path(objectId);
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			req.Method = "DELETE";
@@ -21,10 +21,10 @@ namespace CotcSdk {
 
 		/**
 		 * Fetches a previously indexed object.
-		 * @param done callback invoked when the operation has finished, either successfully or not.
+		 * @return promise resolved when the request has finished.
 		 * @param objectId ID of the object to look for, as passed when indexing.
 		 */
-		public IPromise<IndexResult> GetObject(string objectId) {
+		public Promise<IndexResult> GetObject(string objectId) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName).Path(objectId);
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			return Common.RunInTask<IndexResult>(req, (response, task) => {
@@ -37,7 +37,7 @@ namespace CotcSdk {
 		 * Use this API to add or update an object in an index. You can have as many indexes as you need: one
 		 * for gamer properties, one for matches, one for finished matches, etc. It only depends on what you
 		 * want to search for.
-		 * @param done callback invoked when the operation has finished, either successfully or not.
+		 * @return promise resolved when the request has finished.
 		 * @param objectId the ID of the object to be indexed. It can be anything; this ID only needs to uniquely
 		 *     identify your document. Therefore, using the match ID to index a match is recommended for instance.
 		 * @param properties a freeform object, whose attributes will be indexed and searchable. These properties
@@ -47,7 +47,7 @@ namespace CotcSdk {
 		 *     as the properties, however those are not indexed (cannot be looked for in a search request). Its
 		 *     content is returned in searches (#IndexResult.Payload property).
 		 */
-		public IPromise<Done> IndexObject(string objectId, Bundle properties, Bundle payload) {
+		public Promise<Done> IndexObject(string objectId, Bundle properties, Bundle payload) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName);
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject(
@@ -67,16 +67,16 @@ namespace CotcSdk {
 		 * See the Elastic documentation to learn the full syntax. It’s easy and quite powerful.
 		 * http://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html
 		 * 
-		 * @param done callback invoked when the operation has finished, either successfully or not. The
-		 *     attached object contains various information about the results, including a Hits member,
-		 *     which handles the results in a paginated way.
+		 * @return promise resolved when the operation has finished. The attached object contains various
+		 *     information about the results, including a Hits member, which handles the results in a
+		 *     paginated way.
 		 * @param query query string. Example: "item:silver". See Elastic documentation.
 		 * @param sortingProperties name of properties (fields) to sort the results with. Example:
 		 *     new List<string>() { "item:asc" }.
 		 * @param limit the maximum number of results to return per page.
 		 * @param offset number of the first result.
 		 */
-		public IPromise<IndexSearchResult> Search(string query, List<string> sortingProperties = null, int limit = 30, int offset = 0) {
+		public Promise<IndexSearchResult> Search(string query, List<string> sortingProperties = null, int limit = 30, int offset = 0) {
 			return Search(query, null, sortingProperties, limit, offset);
 		}
 
@@ -87,13 +87,13 @@ namespace CotcSdk {
 		 * the JSON document as documented here:
 		 * https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
 		 * 
-		 * @param done callback invoked when the operation has finished, either successfully or not. The
-		 *     attached object contains various information about the results, including a Hits member,
-		 *     which handles the results in a paginated way.
+		 * @return promise resolved when the operation has finished. The attached object contains various
+		 *     information about the results, including a Hits member, which handles the results in a
+		 *     paginated way.
 		 * @param limit the maximum number of results to return per page.
 		 * @param offset number of the first result.
 		 */
-		public IPromise<IndexSearchResult> SearchExtended(Bundle query, int limit = 30, int offset = 0) {
+		public Promise<IndexSearchResult> SearchExtended(Bundle query, int limit = 30, int offset = 0) {
 			return Search(null, query, null, limit, offset);
 		}
 
@@ -105,7 +105,7 @@ namespace CotcSdk {
 			IndexName = indexName;
 		}
 
-		private IPromise<IndexSearchResult> Search(string query, Bundle jsonData, List<string> sortingProperties, int limit, int offset) {
+		private Promise<IndexSearchResult> Search(string query, Bundle jsonData, List<string> sortingProperties, int limit, int offset) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName).Path("search");
 			if (query != null) url.QueryParam("q", query);
 			url.QueryParam("from", offset).QueryParam("max", limit);

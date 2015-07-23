@@ -21,7 +21,7 @@ public class GamerTests : TestBase {
 				key: "testkey",
 				value: "value")
 			.ExpectSuccess(setResult => {
-				Assert(setResult == 1, "Expected done = 1");
+				Assert(setResult["done"] == 1, "Expected done = 1");
 
 				gamer.Properties.GetAll()
 				.ExpectSuccess(getResult => {
@@ -42,7 +42,7 @@ public class GamerTests : TestBase {
 			// Set property, then get all and check it
 			gamer.Properties.SetAll(props)
 			.ExpectSuccess(setResult => {
-				Assert(setResult == 1, "Expected done = 1");
+				Assert(setResult["done"] == 1, "Expected done = 1");
 
 				gamer.Properties.GetAll()
 				.ExpectSuccess(getResult => {

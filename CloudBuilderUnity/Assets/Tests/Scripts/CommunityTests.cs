@@ -23,7 +23,7 @@ public class CommunityTests : TestBase {
 			gamer1.Community.OnFriendStatusChange += (FriendStatusChangeEvent e) => {
 				Assert(e.FriendId == gamer2.GamerId, "Should come from P2");
 				Assert(e.NewStatus == FriendRelationshipStatus.Add, "Should have added me");
-				restOfTheTestCompleted.Done(this.CompleteTest);
+				restOfTheTestCompleted.Done(CompleteTest);
 			};
 
 			// Add gamer1 as a friend of gamer2
@@ -51,7 +51,7 @@ public class CommunityTests : TestBase {
 				Assert(e.Message["hello"] == "world", "Message invalid");
 				loop.Stop();
 				// Wait the results of SendEvent as well
-				finishedSendEvent.Done(this.CompleteTest);
+				finishedSendEvent.Done(CompleteTest);
 			};
 			// Send event as P2
 			gamer2.Community.SendEvent(

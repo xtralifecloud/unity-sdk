@@ -26,7 +26,7 @@ Configure your AppID through the Facebook Settings menu in Unity. Do not forget 
 
 Import the Unity SDK Facebook Integration package into your project.
 
-Put the CotcFacebookIntegration object on your scene, from the `CotcFacebookIntegration/Prefabs` folder.
+Put the CotcFacebookIntegration object on your scene, from the `Cotc.FacebookIntegration/Prefabs` folder.
 
 From your code, find the object as for the Clan of the Cloud SDK and call methods on it.
 
@@ -35,3 +35,6 @@ From your code, find the object as for the Clan of the Cloud SDK and call method
 	fb.LoginWithFacebook(Cloud).Done(gamerResult => { ... });
 ~~~~
 
+# Troubleshooting {#toc4}
+
+When compiling for iOS, you may have to tweak some settings if the resulting project fails to compile with an error related to an `autorelease` call or something like `no known class method for selector 'publishInstall:withHandler:'`. Open your project properties (select your project at the root of the project tree), go to the *Build Phases* tab, and under *Compile Sources*, double click on FbUnityInterface.mm and type in `-fno-objc-arc` to disable ARC for facebook. This step may not be required anymore at the time you are reading this though, so just try without it first.

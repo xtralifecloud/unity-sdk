@@ -50,7 +50,7 @@ public class SampleScript : MonoBehaviour {
 	
 	// Signs in with an anonymous account
 	public void DoLogin() {
-		// Call the API method which returns an IPromise<Gamer> (promising a Gamer result).
+		// Call the API method which returns an Promise<Gamer> (promising a Gamer result).
 		// It may fail, in which case the .Then or .Done handlers are not called, so you
 		// should provide a .Catch handler.
 		Cloud.LoginAnonymously()

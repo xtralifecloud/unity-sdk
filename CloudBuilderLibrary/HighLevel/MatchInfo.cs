@@ -14,9 +14,9 @@ namespace CotcSdk {
 
 		/**
 		 * Dismisses a pending invitation for the current user and the match. Fails if the user has not been invited.
-		 * @param done callback invoked when the operation has finished, either successfully or not.
+		 * @return promise resolved when the operation has completed.
 		 */
-		public IPromise<Done> DismissInvitation() {
+		public Promise<Done> DismissInvitation() {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("invitation");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";

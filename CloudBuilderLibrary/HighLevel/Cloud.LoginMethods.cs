@@ -11,11 +11,11 @@ namespace CotcSdk
 		 * in account for this search.
 		 * @return task returning the fetched list of users. The list is paginated (see #PagedList for more
 		 *     info).
-		 * @param filter may contain a nickname, a displayname or e-mail address.
+		 * @param filter may contain a nickname, a display name or e-mail address.
 		 * @param limit the maximum number of results to return per page.
 		 * @param offset number of the first result.
 		 */
-		public IPromise<PagedList<UserInfo>> ListUsers(string filter, int limit = 30, int offset = 0) {
+		public Promise<PagedList<UserInfo>> ListUsers(string filter, int limit = 30, int offset = 0) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer").QueryParam("q", filter).QueryParam("limit", limit).QueryParam("skip", offset);
 			HttpRequest req = MakeUnauthenticatedHttpRequest(url);
 			return Common.RunInTask<PagedList<UserInfo>>(req, (response, task) => {
@@ -39,7 +39,7 @@ namespace CotcSdk
 		 * @return task returning when the login has finished. The resulting Gamer object can then
 		 *     be used for many purposes related to the signed in account.
 		 */
-		public IPromise<Gamer> LoginAnonymously() {
+		public Promise<Gamer> LoginAnonymously() {
 			Bundle config = Bundle.CreateObject();
 			config["device"] = Managers.SystemFunctions.CollectDeviceInformation();
 			
@@ -48,6 +48,7 @@ namespace CotcSdk
 			return Common.RunInTask<Gamer>(req, (response, task) => {
 				Gamer gamer = new Gamer(this, response.BodyJson);
 				task.PostResult(gamer, response.BodyJson);
+				Cotc.NotifyLoggedIn(this, gamer);
 			});
 		}
 
@@ -62,7 +63,7 @@ namespace CotcSdk
 		 * @param networkSecret the secret for the network. For e-mail accounts, this would be the passord. For
 		 *     facebook or other SNS accounts, this would be the user token.
 		 */
-		public IPromise<Gamer> Login(LoginNetwork network, string networkId, string networkSecret, bool preventRegistration = false) {
+		public Promise<Gamer> Login(LoginNetwork network, string networkId, string networkSecret, bool preventRegistration = false) {
 			Bundle config = Bundle.CreateObject();
 			config["network"] = network.Describe();
 			config["id"] = networkId;
@@ -79,6 +80,7 @@ namespace CotcSdk
 			return Common.RunInTask<Gamer>(req, (response, task) => {
 				Gamer gamer = new Gamer(this, response.BodyJson);
 				task.PostResult(gamer, response.BodyJson);
+				Cotc.NotifyLoggedIn(this, gamer);
 			});
 		}
 
@@ -90,21 +92,21 @@ namespace CotcSdk
 		 * @param gamerId credentials of the previous session (Gamer.GamerId).
 		 * @param gamerSecret credentials of the previous session (Gamer.GamerSecret).
 		 */
-		public IPromise<Gamer> ResumeSession(string gamerId, string gamerSecret) {
+		public Promise<Gamer> ResumeSession(string gamerId, string gamerSecret) {
 			return Login(LoginNetwork.Anonymous, gamerId, gamerSecret);
 		}
 
 		/**
 		 * Can be used to send an e-mail to a user registered by 'email' network in order to help him
 		 * recover his/her password.
-		 * @param done callback invoked when the operation has finished, either successfully or not.
+		 * @return promise resolved when the request has finished.
 		 * @param userEmail the user as identified by his e-mail address.
 		 * @param mailSender the sender e-mail address as it will appear on the e-mail.
 		 * @param mailTitle the title of the e-mail.
 		 * @param mailBody the body of the mail. You should include the string [[SHORTCODE]], which will
 		 *     be replaced by the generated short code.
 		 */
-		public IPromise<Done> SendResetPasswordEmail(string userEmail, string mailSender, string mailTitle, string mailBody) {
+		public Promise<Done> SendResetPasswordEmail(string userEmail, string mailSender, string mailTitle, string mailBody) {
 			UrlBuilder url = new UrlBuilder("/v1/login").Path(userEmail);
 			HttpRequest req = MakeUnauthenticatedHttpRequest(url);
 			Bundle config = Bundle.CreateObject();
@@ -120,10 +122,11 @@ namespace CotcSdk
 
 		/**
 		 * Checks that an user exists on a given network.
-		 * @param done callback invoked when the request has finished, either successfully or not.
+		 * @return promise resolved when the user is found. If the user does not exist, it fails with
+		 *     an HTTP status code of 400.
 		 * @param networkId the ID of the user on the network, like the e-mail address.
 		 */
-		public IPromise<Done> UserExists(LoginNetwork network, string networkId) {
+		public Promise<Done> UserExists(LoginNetwork network, string networkId) {
 			UrlBuilder url = new UrlBuilder("/v1/users")
 				.Path(network.Describe()).Path(networkId);
 			HttpRequest req = MakeUnauthenticatedHttpRequest(url);

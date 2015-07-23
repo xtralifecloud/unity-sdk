@@ -17,8 +17,8 @@ namespace CotcSdk {
 		/**
 		 * Creates a match, available for join by other players. If you would like to make your match private, please read
 		 * the general documentation about matches.
-		 * @param done callback invoked when the operation has finished, either successfully or not. The attached Match
-		 *     object allows to operate with the match.
+		 * @return promise resolved when the operation has completed. The attached Match object allows to operate with the
+		 *     match.
 		 * @param maxPlayers the maximum number of players who may be in the game at a time.
 		 * @param description string describing the match (available for other who want to join).
 		 * @param customProperties freeform object containing the properties of the match, which may be used by other players
@@ -27,7 +27,7 @@ namespace CotcSdk {
 		 *     an easy way to make a random generator that is safe, unbiased (since made on the server) and can be verified
 		 *     by all players once the game is finished. This bundle needs to be an array (use Bundle.CreateArray).
 		 */
-		public IPromise<Match> Create(int maxPlayers, string description = null, Bundle customProperties = null, Bundle shoe = null) {
+		public Promise<Match> Create(int maxPlayers, string description = null, Bundle customProperties = null, Bundle shoe = null) {
 			var task = new Promise<Match>();
 			if (shoe != null && shoe.Type != Bundle.DataType.Array) {
 				task.PostResult(ErrorCode.BadParameters, "The shoe must be an array");
@@ -49,10 +49,10 @@ namespace CotcSdk {
 
 		/**
 		 * Deletes a match. Only works if you are the one who created it and it is already finished.
-		 * @param done callback invoked when the operation has finished, either successfully or not.
+		 * @return promise resolved when the operation has completed.
 		 * @param matchId ID of the match to delete.
 		 */
-		public IPromise<Done> Delete(string matchId) {
+		public Promise<Done> Delete(string matchId) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(matchId);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";
@@ -74,6 +74,7 @@ namespace CotcSdk {
 		 * Changes the domain affected by the next operations.
 		 * You should typically use it this way: `gamer.Matches.Domain("private").List(...);`
 		 * @param domain domain on which to scope the matches. Default to `private` if unmodified.
+		 * @return this object for operation chaining.
 		 */
 		public GamerMatches Domain(string domain) {
 			this.domain = domain;
@@ -86,11 +87,11 @@ namespace CotcSdk {
 		 * match object), or to continue an existing match (by keeping the match object which corresponds to the one
 		 * that was returned by the Create method).
 		 * This call is not scoped by domain (it uses the Match ID directly).
-		 * @param done callback invoked when the operation has finished, either successfully or not. The attached Match
-		 *     object allows to operate with the match.
+		 * @return promise resolved when the operation has completed. The attached Match object allows to operate with
+		 *     the match.
 		 * @param matchId the ID of an existing match to resume. It can be fetched from the Match object (MatchId).
 		 */
-		public IPromise<Match> Fetch(string matchId) {
+		public Promise<Match> Fetch(string matchId) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(matchId);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			return Common.RunInTask<Match>(req, (response, task) => {
@@ -101,13 +102,13 @@ namespace CotcSdk {
 		/**
 		 * Asks to join the match with a given ID. Do not use this if you are already part of the match.
 		 * This call is not scoped by domain (it uses the Match ID directly).
-		 * @param done callback invoked when the operation has finished, either successfully or not. In case of success,
-		 *     you get the exact same match object that would be returned by a call to Create or Fetch. It can be used
-		 *     to interact with the match as the user who just joined.
+		 * @return promise resolved when the operation has completed. In case of success, you get the exact same
+		 *     match object that would be returned by a call to Create or Fetch. It can be used to interact with
+		 *     the match as the user who just joined.
 		 * @param matchId the ID of an existing match to join. It can be fetched from the Match object (MatchId).
 		 * @param notification optional push notification to be sent to inactive players (see class definition).
 		 */
-		public IPromise<Match> Join(string matchId, PushNotification notification = null) {
+		public Promise<Match> Join(string matchId, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(matchId).Path("join");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
@@ -120,8 +121,8 @@ namespace CotcSdk {
 		 * Can be used to list the active matches for this game. In general, it is not recommended to proceed this way
 		 * if your goal is to display the games that may be joined. The indexing API is better suited to this use case
 		 * (index the match along with properties and look for matches matching the desired properties).
-		 * @param done callback invoked when the operation has finished, either successfully or not. The list of
-		 *     matches filtered according to the following parameters is provided.
+		 * @return promise resolved when the operation has completed. The list of matches filtered according to the
+		 *     following parameters is provided.
 		 * @param participating set to true to only list matches to which this user is participating.
 		 * @param invited set to true to filter by matches you are invited to (only include them).
 		 * @param finished set to true to also include finished matchs (which are filtered out by default).
@@ -129,7 +130,7 @@ namespace CotcSdk {
 		 * @param limit for pagination, allows to set a greater or smaller page size than the default 30.
 		 * @param offset for pagination, avoid using it explicitly.
 		 */
-		public IPromise<PagedList<MatchListResult>> List(bool participating = false, bool invited = false, bool finished = false, bool full = false, int limit = 30, int offset = 0) {
+		public Promise<PagedList<MatchListResult>> List(bool participating = false, bool invited = false, bool finished = false, bool full = false, int limit = 30, int offset = 0) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches");
 			url.QueryParam("domain", domain).QueryParam("offset", offset).QueryParam("limit", limit);
 			if (participating) url.QueryParam("participating");
@@ -186,7 +187,7 @@ namespace CotcSdk {
 
 		private string domain = Common.PrivateDomain;
 		private Gamer Gamer;
-		private event Action<MatchInviteEvent> onMatchInvitation;
+		private Action<MatchInviteEvent> onMatchInvitation;
 		private DomainEventLoop RegisteredEventLoop;
 		#endregion
 	}
