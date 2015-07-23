@@ -38,7 +38,7 @@ dependencies {
 
 //task to delete the old jar
 task deleteOldJar(type: Delete) {
-	delete '../../../CloudBuilderUnity/Assets/Plugins/Android/CotcPushNotifications.aar'
+	delete '../../../CloudBuilderUnity/Assets/Plugins/Android/Cotc.PushNotifications.aar'
 }
 
 //task to export contents as jar
@@ -47,7 +47,7 @@ task exportJar(type: Copy) {
 	into('../../../CloudBuilderUnity/Assets/Plugins/Android/')
 	include('cotcpushnotifications-release.aar')
 	// Rename the jar
-	rename('cotcpushnotifications-release.aar', 'CotcPushNotifications.aar')
+	rename('cotcpushnotifications-release.aar', 'Cotc.PushNotifications.aar')
 }
 
 tasks.withType(Copy) {
