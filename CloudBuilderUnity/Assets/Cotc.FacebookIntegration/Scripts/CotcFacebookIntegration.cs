@@ -11,7 +11,7 @@ namespace CotcSdk.FacebookIntegration
 		// Use this for initialization
 		void Start() {
 			FB.Init(() => {
-				Debug.Log("FB initialized properly.");
+				Common.Log("FB initialized properly.");
 				lock (DoWhenFbLoaded) {
 					foreach (Action a in DoWhenFbLoaded) {
 						a();
@@ -42,7 +42,7 @@ namespace CotcSdk.FacebookIntegration
 					}
 					else {
 						string userId = FB.UserId, token = FB.AccessToken;
-						Debug.Log("Logged in through facebook");
+						Common.Log("Logged in through facebook");
 						cloud.Login(LoginNetwork.Facebook, userId, token)
 							.ForwardTo(task);
 					}
@@ -87,14 +87,14 @@ namespace CotcSdk.FacebookIntegration
 		// Recursive
 		private void DoFacebookRequestWithPagination(Promise<List<SocialNetworkFriend>> task, FBResult result, List<SocialNetworkFriend> addDataTo) {
 			if (result.Error != null) {
-				Debug.LogWarning("Error in facebook request: " + result.Error.ToString());
+				Common.LogWarning("Error in facebook request: " + result.Error.ToString());
 				task.PostResult(ErrorCode.SocialNetworkError, "Facebook/ Network #1");
 				return;
 			}
 
 			// Gather the result from the last request
 			try {
-				Debug.Log("FB response: " + result.Text);
+				Common.Log("FB response: " + result.Text);
 				Bundle fbResult = Bundle.FromJson(result.Text);
 				List<Bundle> data = fbResult["data"].AsArray();
 				foreach (Bundle element in data) {
@@ -112,7 +112,7 @@ namespace CotcSdk.FacebookIntegration
 				});
 			}
 			catch (Exception e) {
-				Debug.LogError("Error decoding FB data: " + e.ToString());
+				Common.LogError("Error decoding FB data: " + e.ToString());
 				task.PostResult(ErrorCode.SocialNetworkError, "Decoding facebook data: " + e.Message);
 				return;
 			}

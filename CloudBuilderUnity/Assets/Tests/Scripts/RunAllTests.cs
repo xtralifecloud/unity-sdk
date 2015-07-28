@@ -25,6 +25,8 @@ public class RunAllTests : MonoBehaviour {
 	private int CurrentTestClassNo = 0, PassedTests = 0, FailedTests = 0;
 	private ManualResetEvent TestDone = new ManualResetEvent(false);
 	private const int TestTimeoutMillisec = 30000;
+	// Only run these tests (e.g. {"ShouldAddFriend", ...})
+	private static readonly string[] FilterByTestName = {};
 
 #if UNITY_IPHONE || UNITY_ANDROID
 	// Use this for initialization
@@ -38,9 +40,21 @@ public class RunAllTests : MonoBehaviour {
 	}
 #else
 	void Start() {
-		Debug.LogWarning("Not running tests (RunAllTests) on this platform");
+		Common.LogWarning("Not running tests (RunAllTests) on this platform");
 	}
 #endif
+
+	private bool IsFilteredOut(string testMethodName) {
+		if (FilterByTestName.Length == 0) {
+			return false;
+		}
+		foreach (string s in FilterByTestName) {
+			if (s == testMethodName) {
+				return false;
+			}
+		}
+		return true;
+	}
 	
 	private Dictionary<string, MethodInfo> ListTestMethods(Type type) {
 		var allMethods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
@@ -48,7 +62,10 @@ public class RunAllTests : MonoBehaviour {
 		foreach (var method in allMethods) {
 			var attrs = method.GetCustomAttributes(typeof(Test), false);
 			if (attrs == null || attrs.Length == 0) continue;
-			matching[method.Name] = method;
+			// Method matches, just check if it's not filtered out
+			if (!IsFilteredOut(method.Name)) {
+				matching[method.Name] = method;
+			}
 		}
 		return matching;
 	}
@@ -65,7 +82,7 @@ public class RunAllTests : MonoBehaviour {
 
 	private void ProcessNextTestClass() {
 		if (CurrentTestClassNo >= TestTypes.Length) {
-			Debug.Log("Tests completed. Passed: " + PassedTests + ", failed: " + FailedTests);
+			Common.Log("Tests completed. Passed: " + PassedTests + ", failed: " + FailedTests);
 			return;
 		}
 
@@ -77,7 +94,7 @@ public class RunAllTests : MonoBehaviour {
 		foreach (var pair in methods) {
 			string methodName = pair.Key;
 			allTestPromise = allTestPromise.Then(() => {
-				Debug.Log("Running method " + t.Name + "::" + methodName);
+				Common.Log("Running method " + t.Name + "::" + methodName);
 				// Will be resolved in OnTestCompleted
 				NextTestPromise = new Promise();
 				// Handle possible timeout
@@ -104,7 +121,7 @@ public class RunAllTests : MonoBehaviour {
 	// Called upon timeout.
 	private void TestTimedOut(object state, bool timedOut) {
 		if (timedOut) {
-			Debug.LogError("Test timed out!");
+			Common.LogError("Test timed out!");
 			OnTestCompleted(false);
 		}
 	}

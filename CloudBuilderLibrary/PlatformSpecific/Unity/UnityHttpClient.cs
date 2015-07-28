@@ -266,7 +266,9 @@ namespace CotcSdk
 			}
 			catch (WebException e) {
 				if (e.Response == null) {
-					Common.Log("Error: " + e.Message);
+					if (e.Status != WebExceptionStatus.RequestCanceled) {
+						Common.Log("Error: " + e.Message);
+					}
 					FinishWithRequest(state, new HttpResponse(e));
 					return;
 				}

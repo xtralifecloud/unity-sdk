@@ -56,7 +56,7 @@ public class TestBase : MonoBehaviour {
 			IntegrationTest.Fail(reason);
 		}
 		else {
-			Debug.LogError("Test failed: " + reason);
+			Common.LogError("Test failed: " + reason);
 		}
 		if (OnTestCompleted != null) OnTestCompleted(false);
 	}

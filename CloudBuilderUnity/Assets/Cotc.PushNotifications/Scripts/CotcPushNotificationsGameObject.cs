@@ -14,7 +14,7 @@ namespace CotcSdk.PushNotifications {
 #if UNITY_ANDROID
 			JavaClass = new AndroidJavaClass("com.clanofthecloud.cotcpushnotifications.Controller");
 			if (JavaClass == null) {
-				Debug.LogError("Java class failed to load; check that the JAR is included properly in Assets/Plugins/Android");
+				Common.LogError("Java class failed to load; check that the JAR is included properly in Assets/Plugins/Android");
 				return;
 			}
 			JavaClass.CallStatic("startup");
@@ -65,7 +65,7 @@ namespace CotcSdk.PushNotifications {
 		private void FinishedRegistering(string token) {
 			RegisteredGamer.Account.RegisterDevice("android", token)
 				.Catch(ex => {
-					Debug.LogError("Failed to register Android device for push notifications");
+					Common.LogError("Failed to register Android device for push notifications");
 				});
 		}
 
