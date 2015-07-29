@@ -63,7 +63,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Events</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -83,6 +83,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li><a href="#toc1">Facebook Developer</a></li>
 <li><a href="#toc2">Facebook SDK for Unity</a></li>
 <li><a href="#toc3">Using it</a></li>
+<li><a href="#toc4">Troubleshooting</a></li>
 </ol>
 <h1><a class="anchor" id="toc1"></a>
 Setup a Facebook App</h1>
@@ -99,14 +100,18 @@ Download the Facebook SDK for Unity</h1>
 <h1><a class="anchor" id="toc3"></a>
 Using the Facebook integration plugin</h1>
 <p>Import the Unity SDK Facebook Integration package into your project.</p>
-<p>Put the CotcFacebookIntegration object on your scene, from the <code>CotcFacebookIntegration/Prefabs</code> folder.</p>
+<p>Put the CotcFacebookIntegration object on your scene, from the <code>Cotc.FacebookIntegration/Prefabs</code> folder.</p>
 <p>From your code, find the object as for the Clan of the Cloud SDK and call methods on it.</p>
 <div class="fragment"><div class="line">var fb = FindObjectOfType&lt;CotcFacebookIntegration&gt;();</div>
 <div class="line">fb.LoginWithFacebook(Cloud).Done(gamerResult =&gt; { ... });</div>
-</div><!-- fragment --> </div></div><!-- contents -->
+</div><!-- fragment --><h1><a class="anchor" id="toc4"></a>
+Troubleshooting</h1>
+<p>When compiling for iOS, you may have to tweak some settings if the resulting project fails to compile with an error related to an <code>autorelease</code> call or something like <code>no known class method for selector 'publishInstall:withHandler:'</code> or <code>Error: ARC forbids explicit message send of 'autorelease'</code>. Open your project properties (select your project at the root of the project tree), go to the <em>Build Phases</em> tab, and under <em>Compile Sources</em>, double click on FbUnityInterface.mm and type in <code>-fno-objc-arc</code> to disable ARC for facebook. This step may not be required anymore at the time you are reading this though, so just try without it first.</p>
+<p>When compiling for Android, you may get an error saying <code>java.lang.IllegalArgumentException: already added: Landroid/support/v4/accessibilityservice/AccessibilityServiceInfoCompat;</code>. This is caused by a conflict between the CotC SDK and the facebook plugins, which use a different build system although they reference the same library. In this case, you need to remove the <code>Assets/Plugins/Android/facebook/libs/android-support-v4.jar</code> and associated meta files. </p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jun 30 2015 16:16:52 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jul 29 2015 21:22:40 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

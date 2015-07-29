@@ -71,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Events</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -89,7 +89,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#properties">Properties</a> &#124;
-<a href="#events">Events</a> &#124;
 <a href="class_cotc_sdk_1_1_domain_event_loop-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">CotcSdk.DomainEventLoop Class Reference</div>  </div>
@@ -118,9 +117,6 @@ Properties</h2></td></tr>
 <tr class="memitem:a2381ba33ea74f4601397da4e24be402e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2381ba33ea74f4601397da4e24be402e"></a>
 <a class="el" href="class_cotc_sdk_1_1_gamer.html">Gamer</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Gamer</b><code> [get]</code></td></tr>
 <tr class="separator:a2381ba33ea74f4601397da4e24be402e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="events"></a>
-Events</h2></td></tr>
 <tr class="memitem:af7a75c1c843136c1a92b20afc98e5170"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_cotc_sdk.html#a84cf1d0e3235ee0696f4b9c684be025d">EventLoopHandler</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html#af7a75c1c843136c1a92b20afc98e5170">ReceivedEvent</a></td></tr>
 <tr class="separator:af7a75c1c843136c1a92b20afc98e5170"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -154,7 +150,7 @@ Events</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>You need valid credentials in order to instantiate this class. Use <a class="el" href="class_cotc_sdk_1_1_cloud.html#a1f3f0e4e6f078bbafc409f46e602cec4">Cloud.Login</a>* methods for that purpose. Once the object is created, you need to start the thread, please look at the other methods available. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>You need valid credentials in order to instantiate this class. Use <a class="el" href="class_cotc_sdk_1_1_cloud.html#a3109ee9f5a019b2ac4a4848bc81d797d">Cloud.Login</a>* methods for that purpose. Once the object is created, you need to start the thread, please look at the other methods available. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">gamer</td><td>the gamer object received from a login or similar function. </td></tr>
     <tr><td class="paramname">domain</td><td>the domain on which to listen for events. Note that you may create multiple event loops, especially if you are using multiple domains. The default domain, that you should use unless you are explicitly using multiple domains, is the private domain. </td></tr>
@@ -252,15 +248,22 @@ Events</h2></td></tr>
 
 </div>
 </div>
-<h2 class="groupheader">Event Documentation</h2>
 <a class="anchor" id="af7a75c1c843136c1a92b20afc98e5170"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="namespace_cotc_sdk.html#a84cf1d0e3235ee0696f4b9c684be025d">EventLoopHandler</a> CotcSdk.DomainEventLoop.ReceivedEvent</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">add</span><span class="mlabel">remove</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>This event is raised when an event is received. </p>
 
@@ -272,7 +275,7 @@ Events</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jun 30 2015 16:16:52 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jul 29 2015 21:22:40 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

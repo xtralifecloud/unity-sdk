@@ -1,14 +1,13 @@
 var searchData=
 [
-  ['generatecode',['GenerateCode',['../class_cotc_sdk_1_1_gamer_godfather.html#ae7b80123f3e1de9992d291933619401d',1,'CotcSdk::GamerGodfather']]],
-  ['get',['Get',['../class_cotc_sdk_1_1_gamer_profile_methods.html#af61bcd82e8ed3ddb19fbf838885617b8',1,'CotcSdk::GamerProfileMethods']]],
-  ['getall',['GetAll',['../class_cotc_sdk_1_1_gamer_properties.html#a66c51c7d2097469bd478e85e7734566a',1,'CotcSdk.GamerProperties.GetAll()'],['../class_cotc_sdk_1_1_game_vfs.html#aa88a2c9982294bb20f6c7adf0639967c',1,'CotcSdk.GameVfs.GetAll()']]],
+  ['generatecode',['GenerateCode',['../class_cotc_sdk_1_1_gamer_godfather.html#a61cd879778c7534560b4c189387486bd',1,'CotcSdk::GamerGodfather']]],
+  ['get',['Get',['../class_cotc_sdk_1_1_gamer_profile_methods.html#a668537c88c449c6db54c2bf64482613b',1,'CotcSdk::GamerProfileMethods']]],
+  ['getall',['GetAll',['../class_cotc_sdk_1_1_gamer_properties.html#a9a44015385f9856c0132ace3ece863d6',1,'CotcSdk.GamerProperties.GetAll()'],['../class_cotc_sdk_1_1_game_vfs.html#aebbedd75e34a7a2d635e88bee4c93437',1,'CotcSdk.GameVfs.GetAll()']]],
   ['getenumerator',['GetEnumerator',['../class_cotc_sdk_1_1_properties_object.html#a16242913dd8dc6aae516f97fc6cbff9d',1,'CotcSdk::PropertiesObject']]],
-  ['getgodchildren',['GetGodchildren',['../class_cotc_sdk_1_1_gamer_godfather.html#ab1dddc0dcef13fa54aaeb684781dcf47',1,'CotcSdk::GamerGodfather']]],
-  ['getgodfather',['GetGodfather',['../class_cotc_sdk_1_1_gamer_godfather.html#ac94213b818db84af94087c35e79a58b1',1,'CotcSdk::GamerGodfather']]],
-  ['getkey',['GetKey',['../class_cotc_sdk_1_1_gamer_properties.html#a4ea8a132f020e1477a695db004e3ea1e',1,'CotcSdk.GamerProperties.GetKey()'],['../class_cotc_sdk_1_1_gamer_vfs.html#ae0e87077298fd3146df639aea1f9b82f',1,'CotcSdk.GamerVfs.GetKey()'],['../class_cotc_sdk_1_1_game_vfs.html#a5e492772f1d8a45da35aaa451b9ab66c',1,'CotcSdk.GameVfs.GetKey()']]],
-  ['getkeybinary',['GetKeyBinary',['../class_cotc_sdk_1_1_gamer_vfs.html#a587fb15e88700bd3f58edd059b2fcb95',1,'CotcSdk::GamerVfs']]],
-  ['getobject',['GetObject',['../class_cotc_sdk_1_1_cloud_indexing.html#a1e22c3fa021218a141ed01ef07ce0ed2',1,'CotcSdk::CloudIndexing']]],
-  ['getpendingpromises',['GetPendingPromises',['../class_cotc_sdk_1_1_promise.html#a3842a3b8c396a0262ce64ea51fe9a86c',1,'CotcSdk::Promise']]],
-  ['getrank',['GetRank',['../class_cotc_sdk_1_1_gamer_scores.html#a88973a3001326e645cc2b86f7e1bf3f9',1,'CotcSdk::GamerScores']]]
+  ['getgodchildren',['GetGodchildren',['../class_cotc_sdk_1_1_gamer_godfather.html#a51b4d58cc9d6ad09c2f8e2c7f52f2b2a',1,'CotcSdk::GamerGodfather']]],
+  ['getgodfather',['GetGodfather',['../class_cotc_sdk_1_1_gamer_godfather.html#ac1380b3337b4dfae6342e81a00b0e9b0',1,'CotcSdk::GamerGodfather']]],
+  ['getkey',['GetKey',['../class_cotc_sdk_1_1_gamer_properties.html#aa8310f3c74d9f12b1b8b1e1938592401',1,'CotcSdk.GamerProperties.GetKey()'],['../class_cotc_sdk_1_1_gamer_vfs.html#a42b7a3bd2c055da1e74a3bd7b3c5a720',1,'CotcSdk.GamerVfs.GetKey()'],['../class_cotc_sdk_1_1_game_vfs.html#acde95be1a609d4f57450c230d8314b1f',1,'CotcSdk.GameVfs.GetKey()']]],
+  ['getkeybinary',['GetKeyBinary',['../class_cotc_sdk_1_1_gamer_vfs.html#a56a848101b3f0aea9720bf97572b2783',1,'CotcSdk::GamerVfs']]],
+  ['getobject',['GetObject',['../class_cotc_sdk_1_1_cloud_indexing.html#a4b73ee97beba7880cd595902a459dde0',1,'CotcSdk::CloudIndexing']]],
+  ['getrank',['GetRank',['../class_cotc_sdk_1_1_gamer_scores.html#a7d19893377c095acdc953bc1f945617d',1,'CotcSdk::GamerScores']]]
 ];

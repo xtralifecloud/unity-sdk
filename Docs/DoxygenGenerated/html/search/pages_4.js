@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['working_20with_20achievements',['Working with achievements',['../achievements.html',1,'']]],
-  ['welcome',['Welcome',['../index.html',1,'']]],
-  ['working_20with_20matches',['Working with matches',['../matches.html',1,'']]]
+  ['the_20indexing_20api',['The indexing API',['../indexing.html',1,'']]]
 ];

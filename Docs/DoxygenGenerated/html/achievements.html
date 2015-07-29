@@ -63,7 +63,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Events</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -82,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>This page is aimed at being a little tutorial on how to work with achievements from the SDK (client). For the next steps, we will suppose that you already know how to create achievements from the backoffice. For a complete list of useful functions in the SDK, take a look at <a class="el" href="class_cotc_sdk_1_1_gamer_achievements.html">CotcSdk.GamerAchievements</a>.</p>
 <h2>Querying the progress of the gamer </h2>
 <p>Fetching the state of achievements is a function that require the customer to be logged in. In general, the status of achievements represents an association between a gamer and a game.</p>
-<p>The call that we are going to use is <a class="el" href="class_cotc_sdk_1_1_gamer_achievements.html#a003c9c5bbaad6034c9a28ecc26e95a56">CotcSdk.GamerAchievements.List</a>. An example is shown below, we'll create UI buttons with information about each achievement. The GUI toolkit is virtual, and you may want to implement additional features such as pagination.</p>
+<p>The call that we are going to use is <a class="el" href="class_cotc_sdk_1_1_gamer_achievements.html#a3068ff18569430ec9528443c81084e26">CotcSdk.GamerAchievements.List</a>. An example is shown below, we'll create UI buttons with information about each achievement. The GUI toolkit is virtual, and you may want to implement additional features such as pagination.</p>
 <div class="fragment"><div class="line">gamer.Achievements.List()</div>
 <div class="line">.Done(achievements =&gt; {</div>
 <div class="line">    <span class="keywordflow">foreach</span> (var pair <span class="keywordflow">in</span> achievements) {</div>
@@ -129,7 +129,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --><h2>Domains </h2>
 <p>By default, achievements use the key/value storage associated with the private domain (that is, reserved for this game). You may create achievement on different domains, in which case they refer to units posted in the corresponding domain.</p>
 <h2>Associating user data with an achievement </h2>
-<p>Arbitrary data can be associated for an user and an achievement by using the <a class="el" href="class_cotc_sdk_1_1_gamer_achievements.html#a6ef27a10428476e9a5f9d2e9ed5d0a4b">CotcSdk.GamerAchievements.AssociateData</a> API call. For instance, this could be used to store any useful detail on how the gamer was realized. The following example describes yet another use case: we want to unhide an achievement that has been marked as hidden by default and not listed in the section above.</p>
+<p>Arbitrary data can be associated for an user and an achievement by using the <a class="el" href="class_cotc_sdk_1_1_gamer_achievements.html#a3b88ee3dae586c54203cc28173818746">CotcSdk.GamerAchievements.AssociateData</a> API call. For instance, this could be used to store any useful detail on how the gamer was realized. The following example describes yet another use case: we want to unhide an achievement that has been marked as hidden by default and not listed in the section above.</p>
 <div class="fragment"><div class="line">gamer.Transactions.Post(Bundle.CreateObject(<span class="stringliteral">&quot;supersonic&quot;</span>, +1))</div>
 <div class="line">.Then(txResult =&gt; {</div>
 <div class="line">    <span class="comment">// Achievement triggered =&gt; associate data</span></div>
@@ -142,7 +142,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jun 30 2015 23:16:50 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jul 29 2015 21:22:40 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

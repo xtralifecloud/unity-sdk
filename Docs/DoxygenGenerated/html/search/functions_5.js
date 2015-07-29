@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['fetch',['Fetch',['../class_cotc_sdk_1_1_gamer_matches.html#a580ab6f12d82dfb3c5ce3b5b4cb74ff4',1,'CotcSdk::GamerMatches']]],
-  ['fetchnext',['FetchNext',['../class_cotc_sdk_1_1_paged_list_3_01_data_type_01_4.html#aa114e9d3cdaf0c1e5dbd93c34eb4eebb',1,'CotcSdk::PagedList&lt; DataType &gt;']]],
-  ['fetchprevious',['FetchPrevious',['../class_cotc_sdk_1_1_paged_list_3_01_data_type_01_4.html#aec235cab6dcf0182e4702bb66fb3ddab',1,'CotcSdk::PagedList&lt; DataType &gt;']]],
-  ['finish',['Finish',['../class_cotc_sdk_1_1_match.html#addfd2427918c78f1a1335fe2b8534cb0',1,'CotcSdk::Match']]]
+  ['fetch',['Fetch',['../class_cotc_sdk_1_1_gamer_matches.html#a89afde906b959dbeef05e12b828cad7e',1,'CotcSdk::GamerMatches']]],
+  ['fetchnext',['FetchNext',['../class_cotc_sdk_1_1_paged_list_3_01_data_type_01_4.html#a4bc37829cff49b2d79be0cab339d14fe',1,'CotcSdk::PagedList&lt; DataType &gt;']]],
+  ['fetchprevious',['FetchPrevious',['../class_cotc_sdk_1_1_paged_list_3_01_data_type_01_4.html#a3eeffc6ac986bfaa25c73b669f993fce',1,'CotcSdk::PagedList&lt; DataType &gt;']]],
+  ['finish',['Finish',['../class_cotc_sdk_1_1_match.html#aa7bb24b19c0f12fb9e961419ccf215dd',1,'CotcSdk::Match']]]
 ];

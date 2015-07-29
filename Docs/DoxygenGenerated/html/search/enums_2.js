@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['promisestate',['PromiseState',['../namespace_cotc_sdk.html#a6161cd594260c38f17a66ef1801af9fb',1,'CotcSdk']]]
+  ['scoreorder',['ScoreOrder',['../namespace_cotc_sdk.html#a0b33fb730620778c7b2ebfb967cf33ab',1,'CotcSdk']]]
 ];

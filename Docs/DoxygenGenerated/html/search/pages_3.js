@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['the_20indexing_20api',['The indexing API',['../indexing.html',1,'']]]
+  ['push_20notification',['Push Notification',['../push_ref.html',1,'']]]
 ];
