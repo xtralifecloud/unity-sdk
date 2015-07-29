@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 
 namespace CotcSdk
@@ -17,29 +16,29 @@ namespace CotcSdk
 			return response.HasFailed || response.StatusCode < 200 || response.StatusCode >= 300;
 		}
 
-		internal static void Log(string text) {
-			Managers.Logger.Log(LogLevel.Verbose, text);
+		public static void Log(string text) {
+			Log(LogLevel.Verbose, text);
 		}
 
-		internal static void LogWarning(string text) {
-			Managers.Logger.Log(LogLevel.Warning, text);
+		public static void LogWarning(string text) {
+			Log(LogLevel.Warning, text);
 		}
-		
-		internal static void LogError(string text) {
-			Managers.Logger.Log(LogLevel.Error, text);
+
+		public static void LogError(string text) {
+			Log(LogLevel.Error, text);
 		}
-		
-		internal static void TEMP(string text) {
+
+		public static void TEMP(string text) {
 			// All references to this should be removed at some point
-			Managers.Logger.Log(LogLevel.Warning, "TEMP: " + text);
+			Log(LogLevel.Warning, "TEMP: " + text);
 		}
-		
-		internal static void StartLogTime(string description = null) {
+
+		public static void StartLogTime(string description = null) {
 			InitialTicks = DateTime.UtcNow.Ticks;
 			LogTime(description);
 		}
 
-		internal static void LogTime(string description = null) {
+		public static void LogTime(string description = null) {
 			TimeSpan span = new TimeSpan(DateTime.UtcNow.Ticks - InitialTicks);
 			Managers.Logger.Log(LogLevel.Verbose, "[" + span.TotalMilliseconds + "/" + Thread.CurrentThread.ManagedThreadId + "] " + description);
 		}
@@ -101,10 +100,20 @@ namespace CotcSdk
 			return d.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
 		}
 
+		private static void Log(LogLevel level, string text) {
+			if (LoggedLine != null) {
+				LoggedLine(typeof(Common), new LogEventArgs(level, text));
+			}
+			else {
+				Managers.Logger.Log(level, text);
+			}
+		}
+
 		// TODO Replace by a soft value (changed upon branching?)
-		public const string SdkVersion = "2.11";
+		public const string SdkVersion = "0.01";
 		public const string PrivateDomain = "private";
 		public const string UserAgent = "cloudbuilder-unity-{0}-{1}";	// os, sdkversion
+		public static event EventHandler<LogEventArgs> LoggedLine;
 		
 		// Other variables
 		private static long InitialTicks;
@@ -121,4 +130,16 @@ namespace CotcSdk
 		private T Instance;
 	}
 
+	/**
+	 * Information about a log entry.
+	 */
+	public class LogEventArgs : EventArgs {
+		public LogLevel Level;
+		public string Text;
+
+		internal LogEventArgs(LogLevel level, string text) {
+			this.Level = level;
+			this.Text = text;
+		}
+	}
 }

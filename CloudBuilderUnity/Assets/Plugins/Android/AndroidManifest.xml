@@ -5,7 +5,6 @@
   <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
   <uses-permission android:name="android.permission.WAKE_LOCK" />
   <!-- [END GCM] -->
-
   <application android:theme="@android:style/Theme.NoTitleBar" android:icon="@drawable/app_icon" android:label="@string/app_name" android:debuggable="true">
     <activity android:name="com.unity3d.player.UnityPlayerActivity" android:label="@string/app_name">
       <intent-filter>
@@ -23,40 +22,27 @@
     <activity android:name="com.facebook.unity.FBUnityDeepLinkingActivity" android:exported="true">
     </activity>
     <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="\ 296632777192084" />
-
     <!-- [START GCM] -->
     <meta-data android:name="cotc.GcmSenderId" android:value="906962523878" />
     <meta-data android:name="cotc.GcmNotificationIcon" android:resource="@drawable/ic_stat_ic_notification" />
     <meta-data android:name="cotc.GcmNotificationTitle" android:value="Cotc sample" />
-
-    <receiver
-        android:name="com.google.android.gms.gcm.GcmReceiver"
-        android:exported="true"
-        android:permission="com.google.android.c2dm.permission.SEND" >
-        <intent-filter>
-            <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            <category android:name="com.clanofthecloud.sampleunityproject" />
-        </intent-filter>
+    <receiver android:name="com.google.android.gms.gcm.GcmReceiver" android:exported="true" android:permission="com.google.android.c2dm.permission.SEND">
+      <intent-filter>
+        <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+        <category android:name="com.clanofthecloud.sampleunityproject" />
+      </intent-filter>
     </receiver>
-
-    <service
-        android:name="com.clanofthecloud.cotcpushnotifications.MyGcmListenerService"
-        android:exported="false" >
-        <intent-filter>
-            <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-        </intent-filter>
+    <service android:name="com.clanofthecloud.cotcpushnotifications.MyGcmListenerService" android:exported="false">
+      <intent-filter>
+        <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+      </intent-filter>
     </service>
-
-    <service
-        android:name="com.clanofthecloud.cotcpushnotifications.MyInstanceIDListenerService"
-        android:exported="false">
-        <intent-filter>
-            <action android:name="com.google.android.gms.iid.InstanceID"/>
-        </intent-filter>
+    <service android:name="com.clanofthecloud.cotcpushnotifications.MyInstanceIDListenerService" android:exported="false">
+      <intent-filter>
+        <action android:name="com.google.android.gms.iid.InstanceID" />
+      </intent-filter>
     </service>
-    <service
-        android:name="com.clanofthecloud.cotcpushnotifications.RegistrationIntentService"
-        android:exported="false">
+    <service android:name="com.clanofthecloud.cotcpushnotifications.RegistrationIntentService" android:exported="false">
     </service>
     <!-- [END GCM] -->
   </application>

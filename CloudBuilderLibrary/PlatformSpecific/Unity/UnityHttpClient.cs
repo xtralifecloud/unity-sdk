@@ -1,11 +1,10 @@
 using System;
-using UnityEngine;
-using System.Collections;
-using System.Net;
+using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Text;
 using System.Threading;
-using System.Collections.Generic;
+using UnityEngine;
 
 namespace CotcSdk
 {
@@ -267,7 +266,9 @@ namespace CotcSdk
 			}
 			catch (WebException e) {
 				if (e.Response == null) {
-					Common.Log("Error: " + e.Message);
+					if (e.Status != WebExceptionStatus.RequestCanceled) {
+						Common.Log("Error: " + e.Message);
+					}
 					FinishWithRequest(state, new HttpResponse(e));
 					return;
 				}

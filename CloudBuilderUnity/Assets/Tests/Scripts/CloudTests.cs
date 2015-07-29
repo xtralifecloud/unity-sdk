@@ -197,9 +197,14 @@ public class CloudTests : TestBase {
 
 	[Test("Tests the DidLogin notification")]
 	public void ShouldSendLoggedInNotification(Cloud cloud) {
-		Cotc.LoggedIn += (sender, e) => {
-			CompleteTest();
-		};
+		Cotc.LoggedIn += GotLoggedInNotification;
 		Login(cloud, gamer => {});
 	}
+
+	#region Private
+	private void GotLoggedInNotification(object sender, Cotc.LoggedInEventArgs e) {
+		CompleteTest();
+		Cotc.LoggedIn -= GotLoggedInNotification;
+	}
+	#endregion
 }

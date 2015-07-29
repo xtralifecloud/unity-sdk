@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace CotcSdk {
 
 	public class MatchListResult {
