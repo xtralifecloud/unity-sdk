@@ -105,21 +105,4 @@ public class CommunityTests : TestBase {
 			CompleteTest();
 		});
 	}
-
-	[Test("Test")]
-	public void Test3() {
-		RunLater(4000, () => {
-			Debug.Log("LA3");
-			CompleteTest();
-		});
-	}
-
-	[Test("Test")]
-	public void Test4() {
-		Debug.Log("LA");
-		RunLater(2000, () => {
-			Debug.Log("LA2");
-			CompleteTest();
-		});
-	}
 }

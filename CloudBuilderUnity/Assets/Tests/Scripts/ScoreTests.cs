@@ -3,6 +3,7 @@ using UnityEngine;
 using CotcSdk;
 using System.Reflection;
 using IntegrationTests;
+using System.Threading;
 
 public class ScoreTests : TestBase {
 
@@ -106,6 +107,8 @@ public class ScoreTests : TestBase {
 			string board = RandomBoardName();
 			gamer1.Scores.Post(1000, board, ScoreOrder.HighToLow, "TestGamer1", false)
 			.ExpectSuccess(dummy => gamer2.Scores.Post(1500, board, ScoreOrder.HighToLow, "TestGamer2", false))
+			// We need to wait a bit else the results may be misleading
+			.ExpectSuccess(dummy => Wait<object>(1000))
 			// Ok so now the two friends are not friends, so the scores returned should not include the other
 			.ExpectSuccess(dummy => gamer1.Scores.ListFriendScores(board))
 			.ExpectSuccess(scores => {
@@ -115,6 +118,7 @@ public class ScoreTests : TestBase {
 				return gamer2.Community.AddFriend(gamer1.GamerId);
 			})
 			// And try again fetching scores
+			.ExpectSuccess(dummy => Wait<object>(1000))
 			.ExpectSuccess(friendResult => gamer1.Scores.ListFriendScores(board))
 			.ExpectSuccess(scoresWhenFriend => {
 				Assert(scoresWhenFriend.Count == 2, "Should have two scores only");

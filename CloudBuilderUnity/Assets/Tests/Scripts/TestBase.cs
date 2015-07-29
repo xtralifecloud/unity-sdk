@@ -61,11 +61,6 @@ public class TestBase : MonoBehaviour {
 		if (OnTestCompleted != null) OnTestCompleted(false);
 	}
 
-	// For use by an external test runner
-	internal void RunTestMethodStandalone(string testMethodName) {
-		Run(testMethodName);
-	}
-
 	// For use in test classes themselves (Start method)
 	protected void RunTestMethod(string testMethodName) {
 		// Fail test on unhandled exception
@@ -73,7 +68,26 @@ public class TestBase : MonoBehaviour {
 			TestBase.FailTest("Unhandled exception in test: " + e.Exception);
 		};
 		if (DoNotRunMethodsAutomatically) return;
-		Run(testMethodName);
+		RunTestMethodStandalone(testMethodName);
+	}
+
+	// For use by an external test runner
+	internal void RunTestMethodStandalone(string testMethodName) {
+		var met = GetType().GetMethod(testMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+		if (met == null) {
+			TestBase.FailTest("Method name not configured for this test!");
+			return;
+		}
+		var parms = met.GetParameters();
+		// Test methods can either have no param, either have one "Cloud" param, in which case we do the setup here to simplify
+		if (parms.Length >= 1 && parms[0].ParameterType == typeof(Cloud)) {
+			FindObjectOfType<CotcGameObject>().GetCloud().Done(cloud => {
+				met.Invoke(this, new object[] { cloud });
+			});
+		}
+		else {
+			met.Invoke(this, null);
+		}
 	}
 
 	protected string GetAllTestScopedId(string prefix) {
@@ -165,22 +179,21 @@ public class TestBase : MonoBehaviour {
 		if (action != null) action();
 	}
 
-	// For internal use (factoring). See RunTestMethod.
-	private void Run(string testMethodName) {
-		var met = GetType().GetMethod(testMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-		if (met == null) {
-			TestBase.FailTest("Method name not configured for this test!");
-			return;
-		}
-		var parms = met.GetParameters();
-		// Test methods can either have no param, either have one "Cloud" param, in which case we do the setup here to simplify
-		if (parms.Length >= 1 && parms[0].ParameterType == typeof(Cloud)) {
-			FindObjectOfType<CotcGameObject>().GetCloud().Done(cloud => {
-				met.Invoke(this, new object[] { cloud });
-			});
-		}
-		else {
-			met.Invoke(this, null);
-		}
+	protected Promise Wait(int millisec) {
+		Promise p = new Promise();
+		new Thread(new ThreadStart(() => {
+			Thread.Sleep(millisec);
+			p.Resolve();
+		})).Start();
+		return p;
+	}
+
+	protected Promise<T> Wait<T>(int millisec) {
+		Promise<T> p = new Promise<T>();
+		new Thread(new ThreadStart(() => {
+			Thread.Sleep(millisec);
+			p.Resolve(default(T));
+		})).Start();
+		return p;
 	}
 }

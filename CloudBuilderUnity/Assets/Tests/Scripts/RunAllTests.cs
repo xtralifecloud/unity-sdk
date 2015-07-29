@@ -12,19 +12,21 @@ public class RunAllTests : MonoBehaviour {
 	private static readonly Type[] TestTypes = {
 		typeof(CloudTests),
 		typeof(CommunityTests),
-/*		typeof(GamerTests),
+		typeof(GamerTests),
 		typeof(GameTests),
 		typeof(GodfatherTests),
 		typeof(IndexTests),
 		typeof(MatchTests),
 		typeof(ScoreTests),
 		typeof(TransactionTests),
-		typeof(VfsTests),*/
+		typeof(VfsTests),
 	};
-	// TODO restore
 	private const int TestTimeoutMillisec = 30000;
 	// Only run these tests (e.g. {"ShouldAddFriend", ...})
-	private static readonly string[] FilterByTestName = {"Test1", "Test2", "Test3", "Test4"};
+	private static readonly string[] FilterByTestName = {};
+	// But ignore these (takes precedence over FilterByTestName)
+	private static readonly string[] IgnoreTestNames = {"ShouldWriteBinaryKey"};
+
 	// Set CurrentTestClassNo to -1 when all tests have been executed
 	private int CurrentTestClassNo, PassedTests;
 	private List<string> FailedTests;
@@ -65,16 +67,23 @@ public class RunAllTests : MonoBehaviour {
 		}
 	}
 
-	private bool IsFilteredOut(string testMethodName) {
-		if (FilterByTestName.Length == 0) {
-			return false;
-		}
-		foreach (string s in FilterByTestName) {
+	private bool ShouldExecuteTest(string testMethodName) {
+		// Ignored?
+		foreach (string s in IgnoreTestNames) {
 			if (s == testMethodName) {
 				return false;
 			}
 		}
-		return true;
+		// Run all if list is empty
+		if (FilterByTestName.Length == 0) {
+			return true;
+		}
+		foreach (string s in FilterByTestName) {
+			if (s == testMethodName) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	private List<MethodInfo> ListTestMethods(Type type) {
@@ -84,7 +93,7 @@ public class RunAllTests : MonoBehaviour {
 			var attrs = method.GetCustomAttributes(typeof(Test), false);
 			if (attrs == null || attrs.Length == 0) continue;
 			// Method matches, just check if it's not filtered out
-			if (!IsFilteredOut(method.Name)) {
+			if (ShouldExecuteTest(method.Name)) {
 				matching.Add(method);
 			}
 		}
@@ -93,6 +102,11 @@ public class RunAllTests : MonoBehaviour {
 
 	// Called when a test completes
 	private void OnTestCompleted(bool successful) {
+//		Debug.Log("Completed test " + (PassedTests + 1));
+		if (CurrentTestClassNo == -1) {
+			Debug.LogError("Finished test with already having theoretically completed all tests. Your tests may be calling more than once TestBase.FailTest or so.");
+			return;
+		}
 		if (successful) PassedTests += 1;
 		else FailedTests.Add(CurrentClassMethods[CurrentTestMethodNo - 1].Name);
 		TestDone.Set();
@@ -103,9 +117,9 @@ public class RunAllTests : MonoBehaviour {
 	private void ProcessNextTestClass() {
 		if (CurrentTestClassNo >= TestTypes.Length) {
 			CurrentTestClassNo = -1;
-			Common.Log("Tests completed. Passed: " + PassedTests + ", failed: " + FailedTests.Count);
+			Common.Log("Tests completed. Passed: " + PassedTests + ", failed: " + FailedTests.Count + ", ignored: " + IgnoreTestNames.Length);
 			foreach (string name in FailedTests) {
-				Debug.Log(name);
+				Debug.Log("Failed test: " + name);
 			}
 			return;
 		}
@@ -118,24 +132,24 @@ public class RunAllTests : MonoBehaviour {
 	}
 
 	private void ProcessNextTestMethod() {
-		if (CurrentClassMethods.Count > 0) {
-			var method = CurrentClassMethods[CurrentTestMethodNo++];
-			Common.Log("Running method " + CurrentTestClassName + "::" + method.Name);
-			// Handle possible timeout
-			TestDone.Reset();
-			ThreadPool.RegisterWaitForSingleObject(TestDone, new WaitOrTimerCallback(TestTimedOut), null, TestTimeoutMillisec, true);
-			// Run the actual method
-			try {
-				IsRunningTestMethod = true;
-				CurrentClassTestComponent.RunTestMethodStandalone(method.Name);
-			}
-			catch (Exception ex) {
-				TestBase.FailTest("Exception inside test: " + ex.ToString());
-			}
-		}
 		// All methods of this class ran
 		if (CurrentTestMethodNo >= CurrentClassMethods.Count) {
 			ProcessNextTestClass();
+ 			return;
+		}
+
+		var method = CurrentClassMethods[CurrentTestMethodNo++];
+		Common.Log("Running method " + CurrentTestClassName + "::" + method.Name);
+		// Handle possible timeout
+		TestDone.Reset();
+		ThreadPool.RegisterWaitForSingleObject(TestDone, new WaitOrTimerCallback(TestTimedOut), null, TestTimeoutMillisec, true);
+		// Run the actual method
+		try {
+			IsRunningTestMethod = true;
+			CurrentClassTestComponent.RunTestMethodStandalone(method.Name);
+		}
+		catch (Exception ex) {
+			TestBase.FailTest("Exception inside test: " + ex.ToString());
 		}
 	}
 
