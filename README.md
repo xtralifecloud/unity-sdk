@@ -1,3 +1,7 @@
+## Downloading
+
+Open [Releases](https://github.com/clanofthecloud/unity-sdk/releases) and download the latest Unity package.
+
 ## Building the library
 
 ### Required components
