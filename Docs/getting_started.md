@@ -4,12 +4,13 @@ Getting started {#getting_started_ref}
 The Unity SDK is cut in several parts:
 - The core library, which contains all the core classes and communicates with our servers. It is small, has no dependencies and provides almost all functionality.
 - The facebook integration library. It depends on the facebook SDK for Unity and provides facebook related functionality. The integration library is provided as a separate package.
+- The push notification library, which provides that functionality, currently for Android and iOS.
 
-In order to get started without third party login support, you can simply download the Unity SDK library package. This package also includes a sample scene + script that you may include or not, as shown below.
+Due to its relatively small size, the downloadable package includes all the sub-libraries, along with a sample scene + script that you may include or not, as shown below.
 
 ![Import package screen](./Docs/img/importpackage01.png)
 
-You can deselect SampleScript.cs and SampleScene.unity if you do not need the sample code. After having imported the package, you just need to configure the SDK settings. For that, open the SampleScene and select the Clan of the Cloud SDK object. In the inspector, set the appropriate values (API Key and API Secret) as configured in the backoffice.
+You can deselect SampleScript.cs and SampleScene.unity if you do not need the sample code. If you do not need additional functionality (facebook support, push notifications...), you can deselect the corresponding packages as well. After having imported the package, you just need to configure the SDK settings. For that, open the SampleScene and select the Clan of the Cloud SDK object. In the inspector, set the appropriate values (API Key and API Secret) as configured in the backoffice.
 
 Note: if you want to start from zero, you may simply add a new scene and drag&drop the Clan of the Cloud SDK prefab object from the CotC/Prefabs folder into your scene. This object needs to be placed on any scene where you want to use Clan of the Cloud functionality.
 

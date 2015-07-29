@@ -6,7 +6,7 @@ Facebook {#facebook_ref}
 1. [Facebook Developer](#toc1)
 2. [Facebook SDK for Unity](#toc2)
 3. [Using it](#toc3)
-
+4. [Troubleshooting](#toc4)
 
 # Setup a Facebook App {#toc1}
 
@@ -37,4 +37,7 @@ From your code, find the object as for the Clan of the Cloud SDK and call method
 
 # Troubleshooting {#toc4}
 
-When compiling for iOS, you may have to tweak some settings if the resulting project fails to compile with an error related to an `autorelease` call or something like `no known class method for selector 'publishInstall:withHandler:'`. Open your project properties (select your project at the root of the project tree), go to the *Build Phases* tab, and under *Compile Sources*, double click on FbUnityInterface.mm and type in `-fno-objc-arc` to disable ARC for facebook. This step may not be required anymore at the time you are reading this though, so just try without it first.
+When compiling for iOS, you may have to tweak some settings if the resulting project fails to compile with an error related to an `autorelease` call or something like `no known class method for selector 'publishInstall:withHandler:'` or `Error: ARC forbids explicit message send of 'autorelease'`. Open your project properties (select your project at the root of the project tree), go to the *Build Phases* tab, and under *Compile Sources*, double click on FbUnityInterface.mm and type in `-fno-objc-arc` to disable ARC for facebook. This step may not be required anymore at the time you are reading this though, so just try without it first.
+
+When compiling for Android, you may get an error saying `java.lang.IllegalArgumentException: already added: Landroid/support/v4/accessibilityservice/AccessibilityServiceInfoCompat;`. This is caused by a conflict between the CotC SDK and the facebook plugins, which use a different build system although they reference the same library. In this case, you need to remove the `Assets/Plugins/Android/facebook/libs/android-support-v4.jar` and associated meta files.
+
