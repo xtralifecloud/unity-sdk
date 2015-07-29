@@ -24,9 +24,9 @@ public class RunAllTests : MonoBehaviour {
 	private Promise NextTestPromise;
 	private int CurrentTestClassNo = 0, PassedTests = 0, FailedTests = 0;
 	private ManualResetEvent TestDone = new ManualResetEvent(false);
-	private const int TestTimeoutMillisec = 30000;
+	private const int TestTimeoutMillisec = 3000;
 	// Only run these tests (e.g. {"ShouldAddFriend", ...})
-	private static readonly string[] FilterByTestName = {};
+	private static readonly string[] FilterByTestName = {"Test1", "Test2"};
 
 #if UNITY_IPHONE || UNITY_ANDROID
 	// Use this for initialization

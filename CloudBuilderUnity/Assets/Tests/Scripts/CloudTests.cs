@@ -202,4 +202,21 @@ public class CloudTests : TestBase {
 		};
 		Login(cloud, gamer => {});
 	}
+
+	[Test("Test")]
+	public void Test1() {
+		RunLater(4000, () => {
+
+			CompleteTest();
+		});
+	}
+
+	[Test("Test")]
+	public void Test2() {
+		Debug.Log("ICI");
+		RunLater(2000, () => {
+			Debug.Log("ICI2");
+			CompleteTest();
+		});
+	}
 }
