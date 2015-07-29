@@ -61,6 +61,21 @@ public class TestBase : MonoBehaviour {
 		if (OnTestCompleted != null) OnTestCompleted(false);
 	}
 
+	// For use by an external test runner
+	internal void RunTestMethodStandalone(string testMethodName) {
+		Run(testMethodName);
+	}
+
+	// For use in test classes themselves (Start method)
+	protected void RunTestMethod(string testMethodName) {
+		// Fail test on unhandled exception
+		Promise.UnhandledException += (sender, e) => {
+			TestBase.FailTest("Unhandled exception in test: " + e.Exception);
+		};
+		if (DoNotRunMethodsAutomatically) return;
+		Run(testMethodName);
+	}
+
 	protected string GetAllTestScopedId(string prefix) {
 		return FindObjectOfType<TestUtilities>().GetAllTestScopedId(prefix);
 	}
@@ -135,13 +150,23 @@ public class TestBase : MonoBehaviour {
 		if (runThisAction) action();
 	}
 
-	internal void RunTestMethod(string testMethodName, bool runAnyway = false) {
-		// Fail test on unhandled exception
-		Promise.UnhandledException += (sender, e) => {
-			TestBase.FailTest("Unhandled exception in test: " + e.Exception);
-		};
-		if (DoNotRunMethodsAutomatically && !runAnyway) return;
-		// Invoke the method described on the integration test script (TestMethodName)
+	[MethodImpl(MethodImplOptions.Synchronized)]
+	protected void Signal(string signalName) {
+		Action action = null;
+		lock (this) {
+			if (RegisteredSlots.ContainsKey(signalName)) {
+				action = RegisteredSlots[signalName];
+				RegisteredSlots.Remove(signalName);
+			}
+			else if (!PendingSignals.Contains(signalName)) {
+				PendingSignals.Add(signalName);
+			}
+		}
+		if (action != null) action();
+	}
+
+	// For internal use (factoring). See RunTestMethod.
+	private void Run(string testMethodName) {
 		var met = GetType().GetMethod(testMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 		if (met == null) {
 			TestBase.FailTest("Method name not configured for this test!");
@@ -157,20 +182,5 @@ public class TestBase : MonoBehaviour {
 		else {
 			met.Invoke(this, null);
 		}
-	}
-
-	[MethodImpl(MethodImplOptions.Synchronized)]
-	protected void Signal(string signalName) {
-		Action action = null;
-		lock (this) {
-			if (RegisteredSlots.ContainsKey(signalName)) {
-				action = RegisteredSlots[signalName];
-				RegisteredSlots.Remove(signalName);
-			}
-			else if (!PendingSignals.Contains(signalName)) {
-				PendingSignals.Add(signalName);
-			}
-		}
-		if (action != null) action();
 	}
 }

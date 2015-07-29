@@ -206,7 +206,7 @@ public class CloudTests : TestBase {
 	[Test("Test")]
 	public void Test1() {
 		RunLater(4000, () => {
-
+			Debug.Log("ICI");
 			CompleteTest();
 		});
 	}

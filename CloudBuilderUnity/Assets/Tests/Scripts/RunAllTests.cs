@@ -12,37 +12,58 @@ public class RunAllTests : MonoBehaviour {
 	private static readonly Type[] TestTypes = {
 		typeof(CloudTests),
 		typeof(CommunityTests),
-		typeof(GamerTests),
+/*		typeof(GamerTests),
 		typeof(GameTests),
 		typeof(GodfatherTests),
 		typeof(IndexTests),
 		typeof(MatchTests),
 		typeof(ScoreTests),
 		typeof(TransactionTests),
-		typeof(VfsTests),
+		typeof(VfsTests),*/
 	};
-	private Promise NextTestPromise;
-	private int CurrentTestClassNo = 0, PassedTests = 0, FailedTests = 0;
-	private ManualResetEvent TestDone = new ManualResetEvent(false);
-	private const int TestTimeoutMillisec = 3000;
+	// TODO restore
+	private const int TestTimeoutMillisec = 30000;
 	// Only run these tests (e.g. {"ShouldAddFriend", ...})
-	private static readonly string[] FilterByTestName = {"Test1", "Test2"};
+	private static readonly string[] FilterByTestName = {"Test1", "Test2", "Test3", "Test4"};
+	// Set CurrentTestClassNo to -1 when all tests have been executed
+	private int CurrentTestClassNo, PassedTests;
+	private List<string> FailedTests;
+	private ManualResetEvent TestDone = new ManualResetEvent(false);
+	// In order to run all methods on the main thread (via Update)
+	private TestBase CurrentClassTestComponent;
+	private string CurrentTestClassName;
+	private List<MethodInfo> CurrentClassMethods;
+	private int CurrentTestMethodNo = 0;
+	private bool IsRunningTestMethod;
 
-#if UNITY_IPHONE || UNITY_ANDROID
 	// Use this for initialization
 	void Start() {
 		// Prepare to run integration tests in detached mode (uses static classes so a little bit dirty)
 		TestBase.DoNotRunMethodsAutomatically = true;
 		TestBase.OnTestCompleted += OnTestCompleted;
+		// Fail test on unhandled exception
+		Promise.UnhandledException += (sender, e) => {
+			TestBase.FailTest("Unhandled exception in test: " + e.Exception);
+		};
 
 		// Run class by class, all test methods
+		CurrentTestClassNo = PassedTests = 0;
+		FailedTests = new List<string>();
+		IsRunningTestMethod = false;
 		ProcessNextTestClass();
 	}
-#else
-	void Start() {
-		Common.LogWarning("Not running tests (RunAllTests) on this platform");
+
+	void Update() {
+		// Tests all executed?
+		if (CurrentTestClassNo == -1) {
+			return;
+		}
+
+		// Process next method
+		if (!IsRunningTestMethod) {
+			ProcessNextTestMethod();
+		}
 	}
-#endif
 
 	private bool IsFilteredOut(string testMethodName) {
 		if (FilterByTestName.Length == 0) {
@@ -56,15 +77,15 @@ public class RunAllTests : MonoBehaviour {
 		return true;
 	}
 	
-	private Dictionary<string, MethodInfo> ListTestMethods(Type type) {
+	private List<MethodInfo> ListTestMethods(Type type) {
 		var allMethods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
-		var matching = new Dictionary<string, MethodInfo>();
+		var matching = new List<MethodInfo>();
 		foreach (var method in allMethods) {
 			var attrs = method.GetCustomAttributes(typeof(Test), false);
 			if (attrs == null || attrs.Length == 0) continue;
 			// Method matches, just check if it's not filtered out
 			if (!IsFilteredOut(method.Name)) {
-				matching[method.Name] = method;
+				matching.Add(method);
 			}
 		}
 		return matching;
@@ -73,49 +94,49 @@ public class RunAllTests : MonoBehaviour {
 	// Called when a test completes
 	private void OnTestCompleted(bool successful) {
 		if (successful) PassedTests += 1;
-		else FailedTests += 1;
+		else FailedTests.Add(CurrentClassMethods[CurrentTestMethodNo - 1].Name);
 		TestDone.Set();
-		var p = NextTestPromise;
-		NextTestPromise = null;
-		if (p != null) p.Resolve();
+		IsRunningTestMethod = false;
 	}
 
+	// Makes the next test class being the one executed
 	private void ProcessNextTestClass() {
 		if (CurrentTestClassNo >= TestTypes.Length) {
-			Common.Log("Tests completed. Passed: " + PassedTests + ", failed: " + FailedTests);
+			CurrentTestClassNo = -1;
+			Common.Log("Tests completed. Passed: " + PassedTests + ", failed: " + FailedTests.Count);
+			foreach (string name in FailedTests) {
+				Debug.Log(name);
+			}
 			return;
 		}
 
-		Type t = TestTypes[CurrentTestClassNo++];
-		TestBase test = (TestBase)gameObject.AddComponent(t);
-		var methods = ListTestMethods(t);
-		Promise initialPromise = new Promise(), allTestPromise = initialPromise;
-		// And run test methods
-		foreach (var pair in methods) {
-			string methodName = pair.Key;
-			allTestPromise = allTestPromise.Then(() => {
-				Common.Log("Running method " + t.Name + "::" + methodName);
-				// Will be resolved in OnTestCompleted
-				NextTestPromise = new Promise();
-				// Handle possible timeout
-				TestDone.Reset();
-				ThreadPool.RegisterWaitForSingleObject(TestDone, new WaitOrTimerCallback(TestTimedOut), null, TestTimeoutMillisec, true); 
-				// Run the actual method
-				try {
-					test.RunTestMethod(methodName, true);
-				}
-				catch (Exception ex) {
-					TestBase.FailTest ("Exception inside test: " + ex.ToString());
-				}
-				return NextTestPromise;
-			});
+		var t = TestTypes[CurrentTestClassNo++];
+		CurrentTestClassName = t.Name;
+		CurrentClassTestComponent = (TestBase)gameObject.AddComponent(t);
+		CurrentClassMethods = ListTestMethods(t);
+		CurrentTestMethodNo = 0;
+	}
+
+	private void ProcessNextTestMethod() {
+		if (CurrentClassMethods.Count > 0) {
+			var method = CurrentClassMethods[CurrentTestMethodNo++];
+			Common.Log("Running method " + CurrentTestClassName + "::" + method.Name);
+			// Handle possible timeout
+			TestDone.Reset();
+			ThreadPool.RegisterWaitForSingleObject(TestDone, new WaitOrTimerCallback(TestTimedOut), null, TestTimeoutMillisec, true);
+			// Run the actual method
+			try {
+				IsRunningTestMethod = true;
+				CurrentClassTestComponent.RunTestMethodStandalone(method.Name);
+			}
+			catch (Exception ex) {
+				TestBase.FailTest("Exception inside test: " + ex.ToString());
+			}
 		}
-		// Start the deferred chain
-		initialPromise.Resolve();
-		allTestPromise.Then(() => {
+		// All methods of this class ran
+		if (CurrentTestMethodNo >= CurrentClassMethods.Count) {
 			ProcessNextTestClass();
-		});
-		return;
+		}
 	}
 
 	// Called upon timeout.
