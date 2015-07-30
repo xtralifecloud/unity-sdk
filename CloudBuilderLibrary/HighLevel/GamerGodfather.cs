@@ -131,7 +131,6 @@ namespace CotcSdk
 		}
 
 		private void ReceivedLoopEvent(DomainEventLoop sender, EventLoopArgs e) {
-			string type = e.Message["type"];
 			if (e.Message["type"].AsString() == "godchildren" && onGotGodchild != null) {
 				onGotGodchild(new GotGodchildEvent(e.Message));
 			}

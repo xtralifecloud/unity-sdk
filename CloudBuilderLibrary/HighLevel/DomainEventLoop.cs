@@ -46,7 +46,6 @@ namespace CotcSdk {
 			Domain = domain;
 			Gamer = gamer;
 			LoopIterationDuration = iterationDuration * 1000;
-			Random = new Random((int)DateTime.UtcNow.Ticks);
 		}
 
 		/**
@@ -130,7 +129,6 @@ namespace CotcSdk {
 		}
 
 		private void Run() {
-			Cloud cloud = Gamer.Cloud;
 			int delay = LoopIterationDuration;
 			string messageToAcknowledge = null;
 			bool lastResultPositive = true;
@@ -188,7 +186,6 @@ namespace CotcSdk {
 			Common.Log("Finished pop event thread " + Thread.CurrentThread.ManagedThreadId);
 		}
 
-		private Random Random;
 		private AutoResetEvent SynchronousRequestLock = new AutoResetEvent(false);
 		private HttpRequest CurrentRequest;
 		private bool Stopped = false, AlreadyStarted = false, Paused = false;
