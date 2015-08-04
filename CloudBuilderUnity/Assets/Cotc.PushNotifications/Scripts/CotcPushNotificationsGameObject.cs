@@ -20,6 +20,7 @@ namespace CotcSdk.PushNotifications {
 			JavaClass.CallStatic("startup");
 #endif
 			Cotc.LoggedIn += Cotc_DidLogin;
+			Cotc.GotDomainLoopEvent += Cotc_GotDomainLoopEvent;
 		}
 
 		void OnDestroy() {
@@ -33,6 +34,21 @@ namespace CotcSdk.PushNotifications {
 				FinishedRegistering(token);
 				ShouldSendToken = false;
 			}
+		}
+
+		void Cotc_GotDomainLoopEvent(DomainEventLoop sender, EventLoopArgs args) {
+			// When we receive a message, it means that the pending notification has been approved, so reset the application badge
+#if UNITY_IPHONE
+			if (args.Message.Has("osn")) {
+				Debug.LogWarning ("Will clear events");
+				UnityEngine.iOS.NotificationServices.ClearRemoteNotifications();
+				var setCountNotif = new UnityEngine.iOS.LocalNotification();
+				setCountNotif.fireDate = System.DateTime.Now;
+				setCountNotif.applicationIconBadgeNumber = -1;
+				setCountNotif.hasAction = false;
+				UnityEngine.iOS.NotificationServices.ScheduleLocalNotification(setCountNotif);
+			}
+#endif
 		}
 
 		private void Cotc_DidLogin(object sender, Cotc.LoggedInEventArgs e) {

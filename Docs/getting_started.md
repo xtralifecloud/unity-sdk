@@ -17,6 +17,8 @@ You can deselect SampleScript.cs and SampleScene.unity if you do not need the sa
 
 Note: if you want to start from zero, you may simply add a new scene and drag&drop the Clan of the Cloud SDK prefab object from the CotC/Prefabs folder into your scene. This object needs to be placed on any scene where you want to use Clan of the Cloud functionality.
 
+Note: if you choose to keep any component, you need to proceed to its configuration prior to the first compilation. For instance, if you are importing the facebook related packages, you will need to import the facebook package as described in the [Facebook](#facebook_ref) section. That is why we recommend that you deselect all optional packages if you want to quickly try the SDK.
+
 # Usage
 
 Basic usage is provided by the Clan of the Cloud SDK prefab object. You just have to put it on your scene and invoke the GetCloud method on it to fetch a #CotcSdk.Cloud object allowing to use most features. For that, you may simply use [FindObjectOfType<CotcGameObject>](http://docs.unity3d.com/ScriptReference/Object.FindObjectOfType.html).

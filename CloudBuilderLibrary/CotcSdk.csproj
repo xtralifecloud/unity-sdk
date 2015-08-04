@@ -118,7 +118,11 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir -p $(SolutionDir)..\CloudBuilderUnity\Assets\Plugins
-copy $(TargetPath) $(SolutionDir)..\CloudBuilderUnity\Assets\Plugins</PostBuildEvent>
+if $(ConfigurationName) == Debug (
+    copy $(TargetPath) $(SolutionDir)..\CloudBuilderUnity\Assets\Plugins\CotcSdk-Debug.dll
+) else (
+    copy $(TargetPath) $(SolutionDir)..\CloudBuilderUnity\Assets\Plugins\
+)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

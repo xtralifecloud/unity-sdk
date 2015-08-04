@@ -81,9 +81,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="textblock"><h2>Table of Content</h2>
 <ol type="1">
 <li><a href="#toc1">Facebook Developer</a></li>
+<li><a href="#facebook_troubleshooting">Fixing platform specific issues</a></li>
 <li><a href="#toc2">Facebook SDK for Unity</a></li>
 <li><a href="#toc3">Using it</a></li>
-<li><a href="#toc4">Troubleshooting</a></li>
 </ol>
 <h1><a class="anchor" id="toc1"></a>
 Setup a Facebook App</h1>
@@ -97,6 +97,10 @@ Facebook Settings</div></div>
 Download the Facebook SDK for Unity</h1>
 <p>Download the facebook SDK for Unity <a href="https://developers.facebook.com/docs/unity/">here</a> and import the package into your project.</p>
 <p>Configure your AppID through the Facebook Settings menu in Unity. Do not forget this step as facebook will throw an error upon usage otherwise.</p>
+<h1><a class="anchor" id="facebook_troubleshooting"></a>
+Fixing platform specific issues</h1>
+<p>When compiling for iOS, you may have to tweak some settings if the resulting project fails to compile with an error related to an <code>autorelease</code> call or something like <code>no known class method for selector 'publishInstall:withHandler:'</code> or <code>Error: ARC forbids explicit message send of 'autorelease'</code>. Open your project properties (select your project at the root of the project tree), go to the <em>Build Phases</em> tab, and under <em>Compile Sources</em>, double click on FbUnityInterface.mm and type in <code>-fno-objc-arc</code> to disable ARC for facebook. This step may not be required anymore at the time you are reading this though, so just try without it first.</p>
+<p>When compiling for Android, you may get an error saying <code>java.lang.IllegalArgumentException: already added: Landroid/support/v4/accessibilityservice/AccessibilityServiceInfoCompat;</code>. This is caused by a conflict between the CotC SDK and the facebook plugins, which use a different build system although they reference the same library. In this case, you need to remove the <code>Assets/Plugins/Android/facebook/libs/android-support-v4.jar</code> and associated meta files.</p>
 <h1><a class="anchor" id="toc3"></a>
 Using the Facebook integration plugin</h1>
 <p>Import the Unity SDK Facebook Integration package into your project.</p>
@@ -104,14 +108,10 @@ Using the Facebook integration plugin</h1>
 <p>From your code, find the object as for the Clan of the Cloud SDK and call methods on it.</p>
 <div class="fragment"><div class="line">var fb = FindObjectOfType&lt;CotcFacebookIntegration&gt;();</div>
 <div class="line">fb.LoginWithFacebook(Cloud).Done(gamerResult =&gt; { ... });</div>
-</div><!-- fragment --><h1><a class="anchor" id="toc4"></a>
-Troubleshooting</h1>
-<p>When compiling for iOS, you may have to tweak some settings if the resulting project fails to compile with an error related to an <code>autorelease</code> call or something like <code>no known class method for selector 'publishInstall:withHandler:'</code> or <code>Error: ARC forbids explicit message send of 'autorelease'</code>. Open your project properties (select your project at the root of the project tree), go to the <em>Build Phases</em> tab, and under <em>Compile Sources</em>, double click on FbUnityInterface.mm and type in <code>-fno-objc-arc</code> to disable ARC for facebook. This step may not be required anymore at the time you are reading this though, so just try without it first.</p>
-<p>When compiling for Android, you may get an error saying <code>java.lang.IllegalArgumentException: already added: Landroid/support/v4/accessibilityservice/AccessibilityServiceInfoCompat;</code>. This is caused by a conflict between the CotC SDK and the facebook plugins, which use a different build system although they reference the same library. In this case, you need to remove the <code>Assets/Plugins/Android/facebook/libs/android-support-v4.jar</code> and associated meta files. </p>
-</div></div><!-- contents -->
+</div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 4 2015 08:32:37 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Aug 4 2015 13:45:16 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

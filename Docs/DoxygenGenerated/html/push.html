@@ -125,7 +125,7 @@ Setting up your Android push notifications with Clan of the Cloud back office</d
 <p> Now everything's been done on the Google Application side, we need to add a few snippets of code, so your application can communicate with the Google Cloud Messaging servers. First thing to modify is your AndroidManifest.xml, which is located under Assets/Plugins/Android.</p>
 <p>Inside the <code>&lt;manifest&gt;</code> tag, make sure to have the following entries: </p><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&lt;uses-permission android:name=&quot;com.google.android.c2dm.permission.RECEIVE&quot; /&gt;</div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;&lt;uses-permission android:name=&quot;android.permission.WAKE_LOCK&quot; /&gt;</div>
-</div><!-- fragment --><p>Inside the <code>&lt;application&gt;</code> tag, make sure to have the following entries: </p><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&lt;meta-data android:name=&quot;cotc.GcmSenderId&quot; android:value=&quot;XXXXXXXXXX&quot; /&gt;</div>
+</div><!-- fragment --><p>Inside the <code>&lt;application&gt;</code> tag, make sure to have the following entries: </p><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&lt;meta-data android:name=&quot;cotc.GcmSenderId&quot; android:value=&quot;\ XXXXXXXXXX&quot; /&gt;</div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;&lt;meta-data android:name=&quot;cotc.GcmNotificationIcon&quot; android:resource=&quot;@drawable/ic_stat_ic_notification&quot; /&gt;</div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;&lt;meta-data android:name=&quot;cotc.GcmNotificationTitle&quot; android:value=&quot;Cotc sample&quot; /&gt;</div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div>
@@ -161,7 +161,7 @@ Setting up your Android push notifications with Clan of the Cloud back office</d
 </div><!-- fragment --><p>You need to change the following:</p>
 <ul>
 <li><code>&lt;category android:name="com.clanofthecloud.sampleunityproject" /&gt;</code> to the Bundle Identifier of your application (under Player Settings, Android, Identification).</li>
-<li><code>&lt;meta-data android:name="cotc.GcmSenderId" android:value="XXXXXXXXXX" /&gt;</code> to the sender ID that you received when creating the application.</li>
+<li><code>&lt;meta-data android:name="cotc.GcmSenderId" android:value="\\ XXXXXXXXXX" /&gt;</code> to the sender ID that you received when creating the application. Note that the first backslash + space are necessary, else the field will be interpreted as an integer and might overflow, breaking the application silently (if you spot an INVALID_PARAMETERS message in the log, double check that).</li>
 <li><code>cotc.GcmNotificationIcon</code> node with the name of a resource to be used as icon.</li>
 <li><code>cotc.GcmNotificationTitle</code> node with the name of your application.</li>
 <li>If you are using facebook, you may need to remove <code>android-support-v4.jar</code> under Assets/Plugins/Android/Facebook/libs.</li>
@@ -170,7 +170,7 @@ Setting up your Android push notifications with Clan of the Cloud back office</d
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 4 2015 08:32:37 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Aug 4 2015 13:45:16 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

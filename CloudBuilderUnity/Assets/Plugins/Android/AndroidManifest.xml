@@ -23,7 +23,7 @@
     </activity>
     <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="\ 296632777192084" />
     <!-- [START GCM] -->
-    <meta-data android:name="cotc.GcmSenderId" android:value="906962523878" />
+    <meta-data android:name="cotc.GcmSenderId" android:value="\ 906962523878" />
     <meta-data android:name="cotc.GcmNotificationIcon" android:resource="@drawable/ic_stat_ic_notification" />
     <meta-data android:name="cotc.GcmNotificationTitle" android:value="Cotc sample" />
     <receiver android:name="com.google.android.gms.gcm.GcmReceiver" android:exported="true" android:permission="com.google.android.c2dm.permission.SEND">
