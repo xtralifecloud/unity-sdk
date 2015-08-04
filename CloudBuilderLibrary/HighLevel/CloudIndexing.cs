@@ -2,6 +2,9 @@
 
 namespace CotcSdk {
 
+	/**
+	 * Provides an API allowing to manipulate an index.
+	 */
 	public class CloudIndexing {
 
 		/**
@@ -44,7 +47,7 @@ namespace CotcSdk {
 		 *     thrown upon insertion.
 		 * @param payload another freeform object. These properties are attached to the document in the same way
 		 *     as the properties, however those are not indexed (cannot be looked for in a search request). Its
-		 *     content is returned in searches (#IndexResult.Payload property).
+		 *     content is returned in searches (#CotcSdk.IndexResult.Payload property).
 		 */
 		public Promise<Done> IndexObject(string objectId, Bundle properties, Bundle payload) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName);

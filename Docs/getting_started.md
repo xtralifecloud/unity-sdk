@@ -1,6 +1,9 @@
 Getting started {#getting_started_ref}
 ===========
 
+The Unity SDK is available at the following URL:
+https://github.com/clanofthecloud/unity-sdk/releases.
+
 The Unity SDK is cut in several parts:
 - The core library, which contains all the core classes and communicates with our servers. It is small, has no dependencies and provides almost all functionality.
 - The facebook integration library. It depends on the facebook SDK for Unity and provides facebook related functionality. The integration library is provided as a separate package.

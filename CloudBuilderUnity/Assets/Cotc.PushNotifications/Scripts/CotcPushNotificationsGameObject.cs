@@ -54,12 +54,10 @@ namespace CotcSdk.PushNotifications {
 			if (token != null) {
 				return System.BitConverter.ToString(token).Replace("-", "").ToLower();
 			}
-			else {
-				return null;
-			}
 #elif UNITY_ANDROID
 			return JavaClass.CallStatic<string>("getToken");
 #endif
+			return null;
 		}
 
 		private void FinishedRegistering(string token) {

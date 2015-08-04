@@ -6,8 +6,8 @@ namespace CotcSdk
 		/**
 		 * Method used to check or retrieve users from Clan of the Cloud community. The domain is not taken
 		 * in account for this search.
-		 * @return task returning the fetched list of users. The list is paginated (see #PagedList for more
-		 *     info).
+		 * @return task returning the fetched list of users. The list is paginated (see
+		 *     #CotcSdk.PagedList<DataType> for more info).
 		 * @param filter may contain a nickname, a display name or e-mail address.
 		 * @param limit the maximum number of results to return per page.
 		 * @param offset number of the first result.

@@ -3,7 +3,7 @@ namespace CotcSdk {
 
 	/**
 	 * Result of an index query. Represents a single returned object.
-	 * This object is a #PropertiesObject, meaning that additional properties can be queried. If you want to
+	 * This object is a #CotcSdk.PropertiesObject, meaning that additional properties can be queried. If you want to
 	 * check what is returned as a JSON object, simply log `this.ToString()`.
 	 */
 	public class IndexResult : PropertiesObject {

@@ -8,7 +8,7 @@ namespace CotcSdk
 	 * Important object from the SDK, allowing to perform many operations that depend on a currently logged in user.
 	 * 
 	 * This object is almost stateless. You may drop it without worrying about background processes that may still
-	 * run. User related events are handled by a corresponding instance of #DomainEventLoop, which should be started
+	 * run. User related events are handled by a corresponding instance of #CotcSdk.DomainEventLoop, which should be started
 	 * as soon as the user is logged in.
 	 */
 	public sealed partial class Gamer: PropertiesObject {
@@ -116,7 +116,7 @@ namespace CotcSdk
 		}
 
 		/**
-		 * Starts a #DomainEventLoop in order to catch events related to this logged in gamer.
+		 * Starts a #CotcSdk.DomainEventLoop in order to catch events related to this logged in gamer.
 		 * 
 		 * The loop will be running forever unless an error happens with this gamer (meaning that the
 		 * gamer is not valid anymore, which can happen if he's not logged in). When stopping

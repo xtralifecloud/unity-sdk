@@ -365,7 +365,7 @@ namespace CotcSdk {
 	}
 
 	/**
-	 * Response resulting from a #Match.DrawFromShoe call.
+	 * Response resulting from a #CotcSdk.Match.DrawFromShoe call.
 	 */
 	public class DrawnItemsResult : PropertiesObject {
 		public List<Bundle> Items;

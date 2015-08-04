@@ -49,7 +49,7 @@ The Back Office website gives you access to several informations about your game
 ~~~~
    
 The localisation user will match the 'lang' parameter in the profile of the user, or 'en' be default.
-See [PushEvent](@ref CloudBuilder::CUserManager::PushEvent) for more information
+See [SendEvent](@ref CotcSdk.GamerCommunity.SendEvent) for more information
 
 # The Front office
 

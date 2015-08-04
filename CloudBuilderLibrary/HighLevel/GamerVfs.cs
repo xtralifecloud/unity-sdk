@@ -47,9 +47,14 @@ namespace CotcSdk {
 			return Common.RunInTask<byte[]>(req, (response, task) => {
 				// We must then download the received URL
 				string downloadUrl = response.BodyString.Trim('"');
-				HttpRequest binaryRequest = Gamer.MakeHttpRequest(downloadUrl);
+				HttpRequest binaryRequest = new HttpRequest();
+				binaryRequest.Url = downloadUrl;
+				binaryRequest.FailedHandler = Gamer.Cloud.HttpRequestFailedHandler;
+				binaryRequest.Method = "GET";
+				binaryRequest.TimeoutMillisec = Gamer.Cloud.HttpTimeoutMillis;
+				binaryRequest.UserAgent = Gamer.Cloud.UserAgent;
 				Common.RunRequest(binaryRequest, task, binaryResponse => {
-					task.PostResult(response.Body, response.BodyJson);
+					task.Resolve(binaryResponse.Body);
 				});
 			});
 		}
@@ -91,7 +96,7 @@ namespace CotcSdk {
 				binaryRequest.TimeoutMillisec = Gamer.Cloud.HttpTimeoutMillis;
 				binaryRequest.UserAgent = Gamer.Cloud.UserAgent;
 				Common.RunRequest(binaryRequest, task, binaryResponse => {
-					task.PostResult(new Done(true), response.BodyJson);
+					task.Resolve(new Done(true));
 				});
 			});
 		}

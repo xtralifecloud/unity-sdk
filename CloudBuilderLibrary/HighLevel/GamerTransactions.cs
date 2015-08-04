@@ -37,7 +37,7 @@ namespace CotcSdk {
 		 * Fetches the history of transactions run for this user. The current balance (resulting values) needs to be queried
 		 * via a different call (Balance).
 		 * @return promise resolved when the operation has completed. The result is paginated, for more information see
-		 *     #PagedResultHandler.
+		 *     #CotcSdk.PagedList<DataType>.
 		 * @param unit if specified, retrieves only the transactions matching a given unit (e.g. "gold").
 		 * @param limit for pagination, allows to set a greater or smaller page size than the default 30.
 		 * @param offset for pagination, avoid using it explicitly.

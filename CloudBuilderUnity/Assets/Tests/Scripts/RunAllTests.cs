@@ -23,9 +23,9 @@ public class RunAllTests : MonoBehaviour {
 	};
 	private const int TestTimeoutMillisec = 30000;
 	// Only run these tests (e.g. {"ShouldAddFriend", ...})
-	private static readonly string[] FilterByTestName = {};
+	private static readonly string[] FilterByTestName = {"ShouldWriteBinaryKey"};
 	// But ignore these (takes precedence over FilterByTestName)
-	private static readonly string[] IgnoreTestNames = {"ShouldWriteBinaryKey"};
+	private static readonly string[] IgnoreTestNames = {};
 
 	// Set CurrentTestClassNo to -1 when all tests have been executed
 	private int CurrentTestClassNo, PassedTests;
