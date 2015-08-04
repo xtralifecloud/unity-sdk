@@ -34,6 +34,7 @@ var searchData=
   ['getkeybinary',['GetKeyBinary',['../class_cotc_sdk_1_1_gamer_vfs.html#a56a848101b3f0aea9720bf97572b2783',1,'CotcSdk::GamerVfs']]],
   ['getobject',['GetObject',['../class_cotc_sdk_1_1_cloud_indexing.html#a4b73ee97beba7880cd595902a459dde0',1,'CotcSdk::CloudIndexing']]],
   ['getrank',['GetRank',['../class_cotc_sdk_1_1_gamer_scores.html#a7d19893377c095acdc953bc1f945617d',1,'CotcSdk::GamerScores']]],
+  ['getting_20started',['Getting started',['../getting_started_ref.html',1,'']]],
   ['globalstate',['GlobalState',['../class_cotc_sdk_1_1_match.html#a1ebfaef159679819912287098b7c5722',1,'CotcSdk::Match']]],
   ['godfather',['Godfather',['../class_cotc_sdk_1_1_gamer.html#ad89bd7c937628ba1cabcb4ec5a860601',1,'CotcSdk::Gamer']]],
   ['gotgodchildevent',['GotGodchildEvent',['../class_cotc_sdk_1_1_got_godchild_event.html',1,'CotcSdk']]]

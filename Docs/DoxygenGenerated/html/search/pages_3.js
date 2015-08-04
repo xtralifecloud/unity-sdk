@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['push_20notification',['Push Notification',['../push_ref.html',1,'']]]
+  ['push_20notification',['Push Notification',['../push.html',1,'']]]
 ];

@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['the_20indexing_20api',['The indexing API',['../indexing.html',1,'']]],
   ['this_5bstring_20key_5d',['this[string key]',['../class_cotc_sdk_1_1_properties_object.html#a49c7c96cfe7245e23a766b08a2e89a71',1,'CotcSdk::PropertiesObject']]],
   ['tojson',['ToJson',['../class_cotc_sdk_1_1_properties_object.html#af3dfde134398c0d738f27e94e5614434',1,'CotcSdk::PropertiesObject']]],
   ['tostring',['ToString',['../class_cotc_sdk_1_1_properties_object.html#a6f9860c398a665da8643f18dada7d30a',1,'CotcSdk::PropertiesObject']]],
