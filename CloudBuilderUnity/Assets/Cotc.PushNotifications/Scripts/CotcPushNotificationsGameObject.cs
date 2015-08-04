@@ -36,10 +36,18 @@ namespace CotcSdk.PushNotifications {
 			}
 		}
 
-		void Cotc_GotDomainLoopEvent(DomainEventLoop sender, Cotc.EventLoopArgs args) {
+		void Cotc_GotDomainLoopEvent(DomainEventLoop sender, EventLoopArgs args) {
 			// When we receive a message, it means that the pending notification has been approved, so reset the application badge
 #if UNITY_IPHONE
-			UnityEngine.iOS.NotificationServices.ClearRemoteNotifications();
+			if (args.Message.Has("osn")) {
+				Debug.LogWarning ("Will clear events");
+				UnityEngine.iOS.NotificationServices.ClearRemoteNotifications();
+				var setCountNotif = new UnityEngine.iOS.LocalNotification();
+				setCountNotif.fireDate = System.DateTime.Now;
+				setCountNotif.applicationIconBadgeNumber = -1;
+				setCountNotif.hasAction = false;
+				UnityEngine.iOS.NotificationServices.ScheduleLocalNotification(setCountNotif);
+			}
 #endif
 		}
 
