@@ -21,5 +21,23 @@ namespace CotcSdk
 		public static void NotifyLoggedIn(object sender, Gamer gamer) {
 			if (loggedIn != null) loggedIn(sender, new LoggedInEventArgs(gamer));
 		}
+
+		public class ApplicationFocusChangedEventArgs : EventArgs {
+			public bool NewFocusState { get; private set; }
+
+			internal ApplicationFocusChangedEventArgs(bool newFocusState) {
+				NewFocusState = newFocusState;
+			}
+		}
+
+		private static EventHandler<ApplicationFocusChangedEventArgs> applicationFocusChanged;
+		public static event EventHandler<ApplicationFocusChangedEventArgs> ApplicationFocusChanged {
+			add { applicationFocusChanged += value; }
+			remove { applicationFocusChanged -= value; }
+		}
+
+		public static void NotifyFocusChanged(object sender, bool newState) {
+			if (applicationFocusChanged != null) applicationFocusChanged(sender, new ApplicationFocusChangedEventArgs(newState));
+		}
 	}
 }

@@ -5,10 +5,10 @@ namespace CotcSdk {
 	public static partial class Cotc {
 
 		static Cotc() {
-			// Bypass checks
-			System.Net.ServicePointManager.ServerCertificateValidationCallback += (s, ce, ca, p) => {
+			// Bypass checks TODO
+/*			System.Net.ServicePointManager.ServerCertificateValidationCallback += (s, ce, ca, p) => {
 				return true;
-			};
+			};*/
 		}
 
 		/**
@@ -43,6 +43,7 @@ namespace CotcSdk {
 					loop.Suspend();
 				}
 			}
+			NotifyFocusChanged(null, focused);
 		}
 
 		/**
