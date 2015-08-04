@@ -20,6 +20,7 @@ namespace CotcSdk.PushNotifications {
 			JavaClass.CallStatic("startup");
 #endif
 			Cotc.LoggedIn += Cotc_DidLogin;
+			Cotc.ApplicationFocusChanged += Cotc_ApplicationFocusChanged;
 		}
 
 		void OnDestroy() {
@@ -32,6 +33,15 @@ namespace CotcSdk.PushNotifications {
 			if (token != null && ShouldSendToken) {
 				FinishedRegistering(token);
 				ShouldSendToken = false;
+			}
+		}
+
+		void Cotc_ApplicationFocusChanged(object sender, Cotc.ApplicationFocusChangedEventArgs e) {
+			if (e.NewFocusState) {
+#if UNITY_IPHONE
+				// Discard the notification count icon on the app
+				UnityEngine.iOS.NotificationServices.ClearRemoteNotifications();
+#endif
 			}
 		}
 
