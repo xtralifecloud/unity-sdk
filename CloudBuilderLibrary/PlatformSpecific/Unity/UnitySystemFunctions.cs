@@ -8,8 +8,9 @@ namespace CotcSdk
 		Bundle ISystemFunctions.CollectDeviceInformation ()
 		{
 			Bundle result = Bundle.CreateObject();
+			result["id"] = SystemInfo.deviceName;
 			result["model"] = SystemInfo.deviceModel;
-			result["version"] = Common.SdkVersion;
+			result["version"] = "1";
 			result["osname"] = ((ISystemFunctions)this).GetOsName();
 			result["osversion"] = SystemInfo.operatingSystem;
 			result["name"] = SystemInfo.deviceName;

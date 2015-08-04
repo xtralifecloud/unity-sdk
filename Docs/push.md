@@ -60,7 +60,7 @@ Inside the `<manifest>` tag, make sure to have the following entries:
 
 Inside the `<application>` tag, make sure to have the following entries:
 ~~~
-	<meta-data android:name="cotc.GcmSenderId" android:value="XXXXXXXXXX" />
+	<meta-data android:name="cotc.GcmSenderId" android:value="\ XXXXXXXXXX" />
 	<meta-data android:name="cotc.GcmNotificationIcon" android:resource="@drawable/ic_stat_ic_notification" />
 	<meta-data android:name="cotc.GcmNotificationTitle" android:value="Cotc sample" />
 
@@ -98,7 +98,7 @@ Inside the `<application>` tag, make sure to have the following entries:
 You need to change the following:
 
 - `<category android:name="com.clanofthecloud.sampleunityproject" />` to the Bundle Identifier of your application (under Player Settings, Android, Identification).
-- `<meta-data android:name="cotc.GcmSenderId" android:value="XXXXXXXXXX" />` to the sender ID that you received when creating the application.
+- `<meta-data android:name="cotc.GcmSenderId" android:value="\ XXXXXXXXXX" />` to the sender ID that you received when creating the application. Note that the first backslash + space are necessary, else the field will be interpreted as an integer and might overflow, breaking the application silently (if you spot an INVALID_PARAMETERS message in the log, double check that).
 - `cotc.GcmNotificationIcon` node with the name of a resource to be used as icon.
 - `cotc.GcmNotificationTitle` node with the name of your application.
 - If you are using facebook, you may need to remove `android-support-v4.jar` under Assets/Plugins/Android/Facebook/libs.
