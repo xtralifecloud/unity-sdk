@@ -4,6 +4,7 @@ namespace CotcSdk
 {
 	/////// Events to be used for plugins ///////
 	public static partial class Cotc {
+		// LoggedIn
 		public class LoggedInEventArgs : EventArgs {
 			public Gamer Gamer { get; private set; }
 
@@ -22,6 +23,7 @@ namespace CotcSdk
 			if (loggedIn != null) loggedIn(sender, new LoggedInEventArgs(gamer));
 		}
 
+		// ApplicationFocusChanged
 		public class ApplicationFocusChangedEventArgs : EventArgs {
 			public bool NewFocusState { get; private set; }
 
@@ -38,6 +40,17 @@ namespace CotcSdk
 
 		public static void NotifyFocusChanged(object sender, bool newState) {
 			if (applicationFocusChanged != null) applicationFocusChanged(sender, new ApplicationFocusChangedEventArgs(newState));
+		}
+
+		// GotDomainLoopEvent (avoid using this for your own program, use the loops themselves
+		private static EventLoopHandler gotDomainLoopEvent;
+		public static event EventLoopHandler GotDomainLoopEvent {
+			add { gotDomainLoopEvent += value; }
+			remove { gotDomainLoopEvent -= value; }
+		}
+
+		public static void NotifyReceivedMessage(DomainEventLoop sender, EventLoopArgs args) {
+			if (gotDomainLoopEvent != null) gotDomainLoopEvent(sender, args);
 		}
 	}
 }

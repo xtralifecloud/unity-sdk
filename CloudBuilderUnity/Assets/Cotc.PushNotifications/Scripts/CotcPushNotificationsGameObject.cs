@@ -20,7 +20,7 @@ namespace CotcSdk.PushNotifications {
 			JavaClass.CallStatic("startup");
 #endif
 			Cotc.LoggedIn += Cotc_DidLogin;
-			Cotc.ApplicationFocusChanged += Cotc_ApplicationFocusChanged;
+			Cotc.GotDomainLoopEvent += Cotc_GotDomainLoopEvent;
 		}
 
 		void OnDestroy() {
@@ -36,13 +36,11 @@ namespace CotcSdk.PushNotifications {
 			}
 		}
 
-		void Cotc_ApplicationFocusChanged(object sender, Cotc.ApplicationFocusChangedEventArgs e) {
-			if (e.NewFocusState) {
+		void Cotc_GotDomainLoopEvent(DomainEventLoop sender, Cotc.EventLoopArgs args) {
+			// When we receive a message, it means that the pending notification has been approved, so reset the application badge
 #if UNITY_IPHONE
-				// Discard the notification count icon on the app
-				UnityEngine.iOS.NotificationServices.ClearRemoteNotifications();
+			UnityEngine.iOS.NotificationServices.ClearRemoteNotifications();
 #endif
-			}
 		}
 
 		private void Cotc_DidLogin(object sender, Cotc.LoggedInEventArgs e) {

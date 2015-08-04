@@ -123,7 +123,9 @@ namespace CotcSdk {
 		#region Private
 		private void ProcessEvent(HttpResponse res) {
 			try {
-				if (receivedEvent != null) receivedEvent(this, new EventLoopArgs(res.BodyJson));
+				EventLoopArgs args = new EventLoopArgs(res.BodyJson);
+				if (receivedEvent != null) receivedEvent(this, args);
+				Cotc.NotifyReceivedMessage(this, args);
 			}
 			catch (Exception e) {
 				Common.LogError("Exception in the event chain: " + e.ToString());
