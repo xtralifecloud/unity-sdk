@@ -12,5 +12,6 @@ var searchData=
   ['logeventargs',['LogEventArgs',['../class_cotc_sdk_1_1_log_event_args.html',1,'CotcSdk']]],
   ['loggedineventargs',['LoggedInEventArgs',['../class_cotc_sdk_1_1_cotc_1_1_logged_in_event_args.html',1,'CotcSdk::Cotc']]],
   ['login',['Login',['../class_cotc_sdk_1_1_cloud.html#a3109ee9f5a019b2ac4a4848bc81d797d',1,'CotcSdk::Cloud']]],
-  ['loginanonymously',['LoginAnonymously',['../class_cotc_sdk_1_1_cloud.html#a9ff54f02170f8df7256d535540f1b4d5',1,'CotcSdk::Cloud']]]
+  ['loginanonymously',['LoginAnonymously',['../class_cotc_sdk_1_1_cloud.html#a9ff54f02170f8df7256d535540f1b4d5',1,'CotcSdk::Cloud']]],
+  ['loginnetwork',['LoginNetwork',['../namespace_cotc_sdk.html#ad5e437023247d9f2be89e7f6be520fdb',1,'CotcSdk']]]
 ];

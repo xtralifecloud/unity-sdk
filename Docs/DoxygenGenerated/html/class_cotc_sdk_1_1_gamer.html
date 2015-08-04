@@ -37,7 +37,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Packages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li>
@@ -71,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Properties</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -105,7 +104,7 @@ Inheritance diagram for CotcSdk.Gamer:</div>
  </div></div>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Important object from the SDK, allowing to perform many operations that depend on a currently logged in user.</p>
-<p>This object is almost stateless. You may drop it without worrying about background processes that may still run. User related events are handled by a corresponding instance of #DomainEventLoop, which should be started as soon as the user is logged in. </p>
+<p>This object is almost stateless. You may drop it without worrying about background processes that may still run. User related events are handled by a corresponding instance of <a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html">CotcSdk.DomainEventLoop</a>, which should be started as soon as the user is logged in. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -135,7 +134,7 @@ List&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Domai
 <tr class="memitem:a39b6107ce7f1eec407838b0a68eb4e43"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer.html#a39b6107ce7f1eec407838b0a68eb4e43">GamerSecret</a><code> [get]</code></td></tr>
 <tr class="separator:a39b6107ce7f1eec407838b0a68eb4e43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a38b8f52ff39f45e3e6b022146647e4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1a38b8f52ff39f45e3e6b022146647e4"></a>
-LoginNetwork&#160;</td><td class="memItemRight" valign="bottom"><b>Network</b><code> [get]</code></td></tr>
+<a class="el" href="namespace_cotc_sdk.html#ad5e437023247d9f2be89e7f6be520fdb">LoginNetwork</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Network</b><code> [get]</code></td></tr>
 <tr class="separator:a1a38b8f52ff39f45e3e6b022146647e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aec82aa054c1c7e9013ff6a831efde5c0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aec82aa054c1c7e9013ff6a831efde5c0"></a>
 string&#160;</td><td class="memItemRight" valign="bottom"><b>NetworkId</b><code> [get]</code></td></tr>
@@ -194,7 +193,7 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Starts a #DomainEventLoop in order to catch events related to this logged in gamer.</p>
+<p>Starts a <a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html">CotcSdk.DomainEventLoop</a> in order to catch events related to this logged in gamer.</p>
 <p>The loop will be running forever unless an error happens with this gamer (meaning that the gamer is not valid anymore, which can happen if he's not logged in). When stopping or pausing the application, you should call the corresponding methods on the loop to stop or pause it. The system will pause the loop automatically upon application pause and resume it as needed, which is done through the <a class="el" href="class_cotc_sdk_1_1_cotc_game_object.html">CotcGameObject</a> as placed on your scene.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -481,12 +480,12 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>CloudBuilderLibrary/HighLevel/Gamer.cs</li>
+<li>C:/Users/Florian/Documents/CotC/unity-native/CloudBuilderLibrary/HighLevel/Gamer.cs</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 29 2015 21:22:40 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Aug 4 2015 08:26:06 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

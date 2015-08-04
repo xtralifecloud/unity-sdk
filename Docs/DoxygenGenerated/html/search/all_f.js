@@ -18,7 +18,6 @@ var searchData=
   ['promise_3c_20promisedt_20_3e',['Promise&lt; PromisedT &gt;',['../class_cotc_sdk_1_1_promise_3_01_promised_t_01_4.html',1,'CotcSdk']]],
   ['properties',['Properties',['../class_cotc_sdk_1_1_gamer.html#abcb3941380fd29a4afc07404c6c5c229',1,'CotcSdk.Gamer.Properties()'],['../class_cotc_sdk_1_1_index_result.html#aad4065a12859eed53a086781fb943641',1,'CotcSdk.IndexResult.Properties()']]],
   ['propertiesobject',['PropertiesObject',['../class_cotc_sdk_1_1_properties_object.html',1,'CotcSdk']]],
-  ['push_20notification',['Push Notification',['../push_ref.html',1,'']]],
   ['pushnotification',['PushNotification',['../class_cotc_sdk_1_1_push_notification.html',1,'CotcSdk']]],
   ['pushnotification',['PushNotification',['../class_cotc_sdk_1_1_push_notification.html#abde43e5eafb4aeb307bf194aeccfb1c2',1,'CotcSdk::PushNotification']]]
 ];

@@ -37,7 +37,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Packages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li>
@@ -71,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Properties</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -97,8 +96,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Root class of the SDK. It is stateless and allows to perform basic operations with the SDK, such as <code>Ping</code>.</p>
-<p>The #Cloud object may typically be used to log in, which would return a #Gamer object, another very important object from the SDK.</p>
-<p>Other objects such as a #CloudIndexing object can also be obtained synchronously in order to perform categorized operations. These objects may not be stateless though, so please refer to their respective documentation. </p>
+<p>The <a class="el" href="class_cotc_sdk_1_1_cloud.html">CotcSdk.Cloud</a> object may typically be used to log in, which would return a <a class="el" href="class_cotc_sdk_1_1_gamer.html">CotcSdk.Gamer</a> object, another very important object from the SDK.</p>
+<p>Other objects such as a <a class="el" href="class_cotc_sdk_1_1_cloud_indexing.html">CotcSdk.CloudIndexing</a> object can also be obtained synchronously in order to perform categorized operations. These objects may not be stateless though, so please refer to their respective documentation. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -110,13 +109,13 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae45b45f4637243e70c0578f3c3a01f2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ff54f02170f8df7256d535540f1b4d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_gamer.html">Gamer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_cloud.html#a9ff54f02170f8df7256d535540f1b4d5">LoginAnonymously</a> ()</td></tr>
 <tr class="separator:a9ff54f02170f8df7256d535540f1b4d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3109ee9f5a019b2ac4a4848bc81d797d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_gamer.html">Gamer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_cloud.html#a3109ee9f5a019b2ac4a4848bc81d797d">Login</a> (LoginNetwork network, string networkId, string networkSecret, bool preventRegistration=false)</td></tr>
+<tr class="memitem:a3109ee9f5a019b2ac4a4848bc81d797d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_gamer.html">Gamer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_cloud.html#a3109ee9f5a019b2ac4a4848bc81d797d">Login</a> (<a class="el" href="namespace_cotc_sdk.html#ad5e437023247d9f2be89e7f6be520fdb">LoginNetwork</a> network, string networkId, string networkSecret, bool preventRegistration=false)</td></tr>
 <tr class="separator:a3109ee9f5a019b2ac4a4848bc81d797d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e909fdc1753ed5b85c43f620b9ad8f4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_gamer.html">Gamer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_cloud.html#a6e909fdc1753ed5b85c43f620b9ad8f4">ResumeSession</a> (string gamerId, string gamerSecret)</td></tr>
 <tr class="separator:a6e909fdc1753ed5b85c43f620b9ad8f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e8cdb0c0a397ebe29f304e04ddfb6f1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_cloud.html#a1e8cdb0c0a397ebe29f304e04ddfb6f1">SendResetPasswordEmail</a> (string userEmail, string mailSender, string mailTitle, string mailBody)</td></tr>
 <tr class="separator:a1e8cdb0c0a397ebe29f304e04ddfb6f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad3bd5880a8fcee7aeac33bb6fd82d089"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_cloud.html#ad3bd5880a8fcee7aeac33bb6fd82d089">UserExists</a> (LoginNetwork network, string networkId)</td></tr>
+<tr class="memitem:ad3bd5880a8fcee7aeac33bb6fd82d089"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_cloud.html#ad3bd5880a8fcee7aeac33bb6fd82d089">UserExists</a> (<a class="el" href="namespace_cotc_sdk.html#ad5e437023247d9f2be89e7f6be520fdb">LoginNetwork</a> network, string networkId)</td></tr>
 <tr class="separator:ad3bd5880a8fcee7aeac33bb6fd82d089"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -192,7 +191,7 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Method used to check or retrieve users from Clan of the <a class="el" href="class_cotc_sdk_1_1_cloud.html">Cloud</a> community. The domain is not taken in account for this search. </p><dl class="section return"><dt>Returns</dt><dd>task returning the fetched list of users. The list is paginated (see #PagedList for more info). </dd></dl>
+<p>Method used to check or retrieve users from Clan of the <a class="el" href="class_cotc_sdk_1_1_cloud.html">Cloud</a> community. The domain is not taken in account for this search. </p><dl class="section return"><dt>Returns</dt><dd>task returning the fetched list of users. The list is paginated (see <a class="el" href="class_cotc_sdk_1_1_paged_list_3_01_data_type_01_4.html">CotcSdk.PagedList&lt;DataType&gt;</a> for more info). </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">filter</td><td>may contain a nickname, a display name or e-mail address. </td></tr>
@@ -211,7 +210,7 @@ Properties</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_gamer.html">Gamer</a>&gt; CotcSdk.Cloud.Login </td>
           <td>(</td>
-          <td class="paramtype">LoginNetwork&#160;</td>
+          <td class="paramtype"><a class="el" href="namespace_cotc_sdk.html#ad5e437023247d9f2be89e7f6be520fdb">LoginNetwork</a>&#160;</td>
           <td class="paramname"><em>network</em>, </td>
         </tr>
         <tr>
@@ -372,7 +371,7 @@ Properties</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_done.html">Done</a>&gt; CotcSdk.Cloud.UserExists </td>
           <td>(</td>
-          <td class="paramtype">LoginNetwork&#160;</td>
+          <td class="paramtype"><a class="el" href="namespace_cotc_sdk.html#ad5e437023247d9f2be89e7f6be520fdb">LoginNetwork</a>&#160;</td>
           <td class="paramname"><em>network</em>, </td>
         </tr>
         <tr>
@@ -435,13 +434,13 @@ Properties</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>CloudBuilderLibrary/HighLevel/Cloud.cs</li>
-<li>CloudBuilderLibrary/HighLevel/Cloud.LoginMethods.cs</li>
+<li>C:/Users/Florian/Documents/CotC/unity-native/CloudBuilderLibrary/HighLevel/Cloud.cs</li>
+<li>C:/Users/Florian/Documents/CotC/unity-native/CloudBuilderLibrary/HighLevel/Cloud.LoginMethods.cs</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 29 2015 21:22:40 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Aug 4 2015 08:26:06 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>
