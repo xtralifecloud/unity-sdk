@@ -1,4 +1,4 @@
-Push Notification {#push_ref}
+Push Notification {#push}
 ========
 
 ## Table of Content
