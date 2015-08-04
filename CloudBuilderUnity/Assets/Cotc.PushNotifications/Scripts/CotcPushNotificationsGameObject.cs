@@ -48,20 +48,32 @@ namespace CotcSdk.PushNotifications {
 			RegisteredGamer = e.Gamer;
 		}
 
+		private string GetOsName() {
+#if UNITY_IPHONE
+			return "ios";
+#elif UNITY_ANDROID
+			return "android";
+#else
+			return null;
+#endif
+		}
+
 		private string GetToken() {
 #if UNITY_IPHONE
 			var token = UnityEngine.iOS.NotificationServices.deviceToken;
 			if (token != null) {
 				return System.BitConverter.ToString(token).Replace("-", "").ToLower();
 			}
+			return null;
 #elif UNITY_ANDROID
 			return JavaClass.CallStatic<string>("getToken");
-#endif
+#else
 			return null;
+#endif
 		}
 
 		private void FinishedRegistering(string token) {
-			RegisteredGamer.Account.RegisterDevice("android", token)
+			RegisteredGamer.Account.RegisterDevice(GetOsName(), token)
 				.Catch(ex => {
 					Common.LogError("Failed to register Android device for push notifications");
 				});
