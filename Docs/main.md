@@ -9,5 +9,6 @@ Welcome to the documentation for the CloudBuilder SDK for Unity. If you haven't 
 - [Indexing data](@ref indexing)
 - [Achievements](@ref achievements)
 - [Matches](@ref matches)
+- [Push notifications](@ref push)
 - [The Backoffice](@ref backoffice)
 
