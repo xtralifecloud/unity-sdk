@@ -6,7 +6,7 @@ namespace CotcSdk {
 	/**
 	 * API methods related to the friends and so on of one gamer.
 	 * 
-	 * You may also want to subscribe to related events (see #OnFriendStatusChange).
+	 * You may also want to subscribe to related events (see #CotcSdk.GamerCommunity.OnFriendStatusChange).
 	 */
 	public class GamerCommunity {
 
@@ -84,7 +84,7 @@ namespace CotcSdk {
 		 * This will automatically add them as a friend on CotC as they get recognized on our servers.
 		 * The friends get associated to the domain of this object.
 		 * @return promise resolved when the operation has completed. The attached value is the same list as passed,
-		 *     enriched with potential information about the gamer (member #SocialNetworkFriend.ClanInfo) for
+		 *     enriched with potential information about the gamer (member #CotcSdk.SocialNetworkFriend.ClanInfo) for
 		 *     gamers who are already registered on CotC servers.
 		 * @param network the network with which these friends are associated
 		 * @param friends a list of data about the friends fetched on the social network.
@@ -113,7 +113,7 @@ namespace CotcSdk {
 		 * @return promise resolved when the operation has completed.
 		 * @param gamerId ID of the recipient gamer.
 		 * @param eventData JSON object representing the event to be sent. The recipient will receive it as is
-		 *     when subscribed to a #DomainEventLoop (ReceivedEvent property). If the application is not active,
+		 *     when subscribed to a #CotcSdk.DomainEventLoop (ReceivedEvent property). If the application is not active,
 		 *     the message will be queued and transmitted the next time the domain event loop is started.
 		 * @param notification push notification to send to the recipient player if not currently active.
 		 */

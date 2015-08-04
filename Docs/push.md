@@ -11,6 +11,8 @@ Push Notification {#push_ref}
 
 # Setup Notification for iOS {#toc_push_1}
 
+On iOS, push notifications use the Apple Push Notification Service, which we'll describe how to set up in the following paragraphs.
+
 First, set up a certificate with Push notifications enabled on the [Apple Developer Center](http://developer.apple.com/)
 ![Create Certificate](./img/ios-push-1.png)
 Download it,
@@ -39,7 +41,7 @@ Then, you simply have to import the Cotc.PushNotifications package. When you bui
 
 In case you need some more information about how Google Cloud Messaging works, please have a look at the [official Google documentation](https://developer.android.com/google/gcm/gcm.html). Otherwise, by following the steps below, you should be able to have your application manage push notifications pretty quickly.
 
-First, you need to setup a Google Application. The necessary steps to do this are explained in details in the [Google+ section](@ref gp_toc1). Once this is done, this Google Application needs to reference the Google Cloud Messaging for Android API. This is done from the APIs section of the Google Developer Console for your project.
+First, you need to setup a Google Application. Since this is changing quite rapidly at the time of writing, please follow the previous guide for information on how to do it. Once this is done, this Google Application needs to reference the Google Cloud Messaging for Android API. This is done from the APIs section of the Google Developer Console for your project.
 ![Activating Google Cloud Messaging](./img/Google_Messaging_Android.png)
 
 Next step is to create a Public API key. To do so, select the Credentials section, just below the APIs section in the previous step, scroll down to the bottom of the page, and click the "Create new Key" button for the Public API access list of keys. Then select "Server key" option, and then "Create", not modifying anything. You should now have a new, valid API key.
@@ -50,13 +52,13 @@ Once this is done, you're almost finished with parameterization, and only some b
 
 Now everything's been done on the Google Application side, we need to add a few snippets of code, so your application can communicate with the Google Cloud Messaging servers. First thing to modify is your AndroidManifest.xml, which is located under Assets/Plugins/Android.
 
-Inside the <manifest> tag, make sure to have the following entries:
+Inside the `<manifest>` tag, make sure to have the following entries:
 ~~~
 	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 	<uses-permission android:name="android.permission.WAKE_LOCK" />
 ~~~
 
-Inside the <application> tag, make sure to have the following entries:
+Inside the `<application>` tag, make sure to have the following entries:
 ~~~
 	<meta-data android:name="cotc.GcmSenderId" android:value="XXXXXXXXXX" />
 	<meta-data android:name="cotc.GcmNotificationIcon" android:resource="@drawable/ic_stat_ic_notification" />

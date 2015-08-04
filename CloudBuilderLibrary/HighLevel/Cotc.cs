@@ -4,6 +4,13 @@ using System.Collections.Generic;
 namespace CotcSdk {
 	public static partial class Cotc {
 
+		static Cotc() {
+			// Bypass checks
+			System.Net.ServicePointManager.ServerCertificateValidationCallback += (s, ce, ca, p) => {
+				return true;
+			};
+		}
+
 		/**
 		 * Call this at the very beginning to start using the library.
 		 * @return promise resolved when the process has finished, with the Cloud to be used for your operations (most

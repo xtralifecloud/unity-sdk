@@ -6,10 +6,10 @@ namespace CotcSdk
 	 * Root class of the SDK. It is stateless and allows to perform basic operations with the SDK, such as
 	 * `Ping`.
 	 * 
-	 * The #Cloud object may typically be used to log in, which would return a #Gamer object, another very
+	 * The #CotcSdk.Cloud object may typically be used to log in, which would return a #CotcSdk.Gamer object, another very
 	 * important object from the SDK.
 	 * 
-	 * Other objects such as a #CloudIndexing object can also be obtained synchronously in order to perform
+	 * Other objects such as a #CotcSdk.CloudIndexing object can also be obtained synchronously in order to perform
 	 * categorized operations. These objects may not be stateless though, so please refer to their
 	 * respective documentation.
 	 */

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace CotcSdk {
 
+	/**
+	 * Represents a paginated list, which allows for easy navigation through multiple results.
+	 */
 	public class PagedList<DataType> : List<DataType> {
 		/**
 		 * Fetches the next results and calls the same handler again.

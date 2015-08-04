@@ -4,7 +4,7 @@ using System.Threading;
 namespace CotcSdk {
 
 	/**
-	 * Delegate called when receiving a message on a #DomainEventLoop.
+	 * Delegate called when receiving a message on a #CotcSdk.DomainEventLoop.
 	 * @param sender domain loop that triggered the event.
 	 * @param e description of the received event.
 	 */
@@ -39,8 +39,10 @@ namespace CotcSdk {
 		 * @param domain the domain on which to listen for events. Note that you may create multiple event loops,
 		 * especially if you are using multiple domains. The default domain, that you should use unless you are
 		 * explicitly using multiple domains, is the private domain.
-		 * @param sets a custom timeout in seconds for the long polling event loop. Should be used with care and
-		 *	 set to a high value (at least 60). Defaults to 590 (~10 min).
+		 * @param gamer gamer, used to authenticate (receive events related to the said gamer).
+		 * @param domain domain on which to listen for events.
+		 * @param iterationDuration sets a custom timeout in seconds for the long polling event loop. Should be used
+		 *     with care and set to a high value (at least 60). Defaults to 590 (~10 min).
 		 */
 		public DomainEventLoop(Gamer gamer, String domain = Common.PrivateDomain, int iterationDuration = 590) {
 			Domain = domain;

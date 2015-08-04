@@ -42,7 +42,7 @@ Cloud.LoginAnonymously().Done((Gamer gamer1) => {
 Creating and listing matches
 -----------
 
-Creating a match is done by calling #CotcSdk.GamerMatches.CreateMatch. It will result in a #CotcSdk.Match object that you can keep for use later. The following two snippets show how to do it:
+Creating a match is done by calling #CotcSdk.GamerMatches.Create. It will result in a #CotcSdk.Match object that you can keep for use later. The following two snippets show how to do it:
 
 ~~~~{.cs}
 gamer.Matches.Domain("private").Create(

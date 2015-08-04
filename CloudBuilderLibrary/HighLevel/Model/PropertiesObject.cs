@@ -48,7 +48,7 @@ namespace CotcSdk {
 		}
 		/**
 		 * Allows to browse all keys (might include some that are already exposed as typed properties in the object).
-		 * @return an enumerator that allows to browse all key-value pairs. The values are #Bundle, on which you can
+		 * @return an enumerator that allows to browse all key-value pairs. The values are #CotcSdk.Bundle, on which you can
 		 * perform all the usual conversions, such as casting it as a string if the property is expected to be a
 		 * string for instance.
 		 */

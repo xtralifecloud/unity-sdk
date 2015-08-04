@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace CotcSdk {
 	
+	/**
+	 * Wraps information about a list of friends coming from a social network.
+	 */
 	public class SocialNetworkFriendResponse: PropertiesObject {
 		public Dictionary<LoginNetwork, List<SocialNetworkFriend>> ByNetwork;
 

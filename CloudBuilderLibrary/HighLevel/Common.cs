@@ -3,6 +3,9 @@ using System.Threading;
 
 namespace CotcSdk
 {
+	/**
+	 * Common SDK methods also usable by clients.
+	 */
 	public static class Common {
 		/**
 		 * Checks whether the response is negative (either it has failed completely,

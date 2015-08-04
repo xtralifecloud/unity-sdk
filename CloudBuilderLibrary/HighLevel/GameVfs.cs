@@ -24,7 +24,6 @@ namespace CotcSdk {
 		 * @return promise resolved when the operation has completed. The attached bundle contains the keys
 		 *     along with their values. If you would like to fetch the value of a given key and you expect
 		 *     it to be a string, you may simply do `string value = result.Value["key"];`.
-		 * @param key the name of the key to be fetched.
 		 */
 		public Promise<Bundle> GetAll() {
 			UrlBuilder url = new UrlBuilder("/v1/vfs").Path(domain);

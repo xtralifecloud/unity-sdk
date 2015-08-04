@@ -3,6 +3,7 @@ using System.IO;
 using UnityEngine;
 
 namespace CotcSdk {
+
 	[Serializable]
 	public class CotcSettings : ScriptableObject {
 		public const string AssetPath = "Assets/Resources/CotcSettings.asset";
