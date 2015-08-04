@@ -58,10 +58,11 @@ public class RegistrationIntentService extends IntentService {
                     Log.e(TAG, "!!!!!!!!! cotc.GcmSenderId not configured in manifest, push notifications won't work !!!!!!!!!");
                     senderId = "";
                 }
+                Log.v(TAG, "Using senderId: " + senderId.toString());
                 String token = instanceID.getToken(senderId.toString(),
                         GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
                 // [END get_token]
-                Log.i(TAG, "GCM Registration Token: " + token);
+                Log.v(TAG, "GCM Registration Token: " + token);
 
                 registrationToken = token;
 
