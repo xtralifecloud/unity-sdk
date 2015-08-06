@@ -53,7 +53,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>mkdir -p $(SolutionDir)..\CloudBuilderUnity\Assets\Plugins\Editor
+    <PostBuildEvent>md $(SolutionDir)..\CloudBuilderUnity\Assets\Plugins\Editor
 if $(ConfigurationName) == Debug (
     copy $(TargetPath) $(SolutionDir)..\CloudBuilderUnity\Assets\Plugins\Editor\CotcSdk-Editor-Debug.dll
 ) else (
