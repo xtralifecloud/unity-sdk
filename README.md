@@ -33,15 +33,18 @@ This should be very simple. Just open the sln file under the CloudBuilderLibrary
 
 ### Distributing the library
 
-Making a package for the core SDK only:
-- From Unity, Assets -> Export Package…
-- Deselect all
-- Select only Assets/CotC, Assets/Cotc.FacebookIntegration, Assets/Plugins/CotcSdk.dll, Assets/Plugins/Editor, Assets/SampleScene.unity and Assets/Script/SampleScript.cs.
+Use the editor menu, click `CotC` and then `Build Release Packages`.
 
-Making a package for the CotC Facebook Integration plugin
+## Running integration tests
 
+Integration tests are a very useful feature used throughout the developement of this SDK in order to quickly test new features and ensure that no regressions are made whenever features are modified.
 
-## Writing a new integration test
+Each time you add a feature, you should add one or several integration test as well. Also, when modifying the library, please run all integration tests and check if anything has been broken.
+
+Open the IntegrationTestScene on desktop, or build a mobile application with the MobileIntegrationTestScene scene if you are going to test on iOS for instance. Using IntegrationTestScene, open Unity Test Tools and Integration Test Runner from the menu, then click Run all. When using the MobileIntegrationTestScene, tests are run automatically upon startup. Just check the output (logs) to get the results. This scene may also be used on desktop, although we consider it less convenient.
+
+### Writing a new integration test
+
 
 
 
