@@ -216,6 +216,29 @@ namespace CotcSdk
 			Array.Add (value);
 		}
 
+		/**
+		 * Deep copies the bundle.
+		 */
+		public Bundle Clone() {
+			Bundle result;
+			switch (Type) {
+				case DataType.Object:
+					// Deep copy
+					result = Bundle.CreateObject();
+					foreach (var pair in Dictionary) result[pair.Key] = pair.Value.Clone();
+					return result;
+
+				case DataType.Array:
+					result = Bundle.CreateArray();
+					foreach (var value in Array) result.Add(value.Clone());
+					return result;
+	
+				default:
+					// No need to clone basic types
+					return this;
+			}
+		}
+
 		// Dictionary getters
 		public bool GetBool(string key, bool defaultValue = false) {
 			return Has(key) ? Dictionary[key].AsBool(defaultValue) : defaultValue;

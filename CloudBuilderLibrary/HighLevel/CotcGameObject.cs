@@ -15,7 +15,7 @@ namespace CotcSdk
 			CotcSettings s = CotcSettings.Instance;
 
 			// No need to initialize it once more
-			if (string.IsNullOrEmpty(s.ApiKey) || string.IsNullOrEmpty(s.ApiSecret)) {
+			if (s == null || string.IsNullOrEmpty(s.ApiKey) || string.IsNullOrEmpty(s.ApiSecret)) {
 				throw new ArgumentException("!!!! You need to set up the credentials of your application in the settings of your Cotc object !!!!");
 			}
 

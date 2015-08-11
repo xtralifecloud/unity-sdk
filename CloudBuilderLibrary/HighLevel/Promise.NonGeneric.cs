@@ -65,6 +65,12 @@ namespace CotcSdk {
 			RejectedHandlers.Clear();
 		}
 
+		public static Promise Rejected(Exception ex) {
+			Promise result = new Promise();
+			result.Reject(ex);
+			return result;
+		}
+
 		public void Resolve() {
 			if (State != PromiseState.Pending) throw new InvalidOperationException("Illegal promise state transition");
 			State = PromiseState.Fulfilled;

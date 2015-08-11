@@ -14,7 +14,7 @@ namespace CotcSdk.PushNotifications {
 #if UNITY_ANDROID
 			JavaClass = new AndroidJavaClass("com.clanofthecloud.cotcpushnotifications.Controller");
 			if (JavaClass == null) {
-				Common.LogError("Java class failed to load; check that the JAR is included properly in Assets/Plugins/Android");
+				Common.LogError("com.clanofthecloud.cotcpushnotifications.Controller java class failed to load; check that the AAR is included properly in Assets/Plugins/Android");
 				return;
 			}
 			JavaClass.CallStatic("startup");

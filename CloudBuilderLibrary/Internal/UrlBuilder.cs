@@ -1,7 +1,7 @@
 
 namespace CotcSdk {
 
-	internal class UrlBuilder {
+	public class UrlBuilder {
 		public UrlBuilder(string path, string server = null) {
 			Url = server ?? "";
 			Path(path);

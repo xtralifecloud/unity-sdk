@@ -41,6 +41,7 @@
     <Compile Include="HighLevel\Cloud.cs" />
     <Compile Include="HighLevel\Cloud.LoginMethods.cs" />
     <Compile Include="HighLevel\CloudIndexing.cs" />
+    <Compile Include="HighLevel\GamerStore.cs" />
     <Compile Include="HighLevel\Cotc.cs" />
     <Compile Include="HighLevel\CotcGameObject.cs" />
     <Compile Include="HighLevel\Common.cs" />

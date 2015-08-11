@@ -46,7 +46,7 @@ namespace CotcSdk
 			Managers.Logger.Log(LogLevel.Verbose, "[" + span.TotalMilliseconds + "/" + Thread.CurrentThread.ManagedThreadId + "] " + description);
 		}
 		
-		internal static T ParseEnum<T>(string value, T defaultValue = default(T)) {
+		public static T ParseEnum<T>(string value, T defaultValue = default(T)) {
 			try {
 				return (T)Enum.Parse(typeof(T), value, true);
 			}
@@ -56,7 +56,7 @@ namespace CotcSdk
 			return defaultValue;
 		}
 
-		internal static DateTime ParseHttpDate(string httpDate) {
+		public static DateTime ParseHttpDate(string httpDate) {
 			return httpDate != null ? DateTime.Parse(httpDate) : DateTime.MinValue;
 		}
 
@@ -99,7 +99,7 @@ namespace CotcSdk
 			return task;
 		}
 
-		internal static string ToHttpDateString(this DateTime d) {
+		public static string ToHttpDateString(this DateTime d) {
 			return d.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
 		}
 

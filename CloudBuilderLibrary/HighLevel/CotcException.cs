@@ -13,7 +13,7 @@ namespace CotcSdk {
 		/**
 		 * To be used for an higher level error. No information about the HTTP request would be attached.
 		 */
-		internal CotcException(ErrorCode code, string failureDescription = null) {
+		public CotcException(ErrorCode code, string failureDescription = null) {
 			ErrorCode = code;
 			ErrorInformation = failureDescription;
 		}

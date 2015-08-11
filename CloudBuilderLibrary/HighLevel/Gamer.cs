@@ -108,6 +108,15 @@ namespace CotcSdk
 		}
 
 		/**
+		 * Allows to list, buy products and so on. This functionality is low level and you should use the
+		 * appropriate external plugin to help with the purchase process.
+		 * @return an object that allows access to the store on a CotC point of view.
+		 */
+		public GamerStore Store {
+			get { return new GamerStore(this); }
+		}
+
+		/**
 		 * Allows to manipulate the transactions and related achievements of an user.
 		 * @return an object that allows to manipulate transactions and query achievements.
 		 */

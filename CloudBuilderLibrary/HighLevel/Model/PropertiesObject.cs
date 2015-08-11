@@ -16,6 +16,10 @@ namespace CotcSdk {
 	 * 
 	 * Usually these objects have a proper structure representing the predefined properties, and you can use the
 	 * PropertiesObject methods to query additional properties that might have been enriched in a hook for instance.
+	 * 
+	 * Beware however, querying a PropertiesObject using keys will return directly what the server has responded. Thus,
+	 * if you have modified a property and query its equivalent key, the values will differ. That is why we don't
+	 * usually make PropertiesObjects publicly writable.
 	 */
 	public class PropertiesObject {
 		protected Bundle Props;

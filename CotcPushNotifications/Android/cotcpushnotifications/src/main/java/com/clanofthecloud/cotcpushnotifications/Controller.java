@@ -20,7 +20,7 @@ import com.unity3d.player.UnityPlayer;
 public class Controller {
 	static final String REGISTRATION_COMPLETE = "registrationComplete";
 	private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-	private static final String TAG = Controller.class.getName();
+	private static final String TAG = "CotcPushController";
 	private BroadcastReceiver mRegistrationBroadcastReceiver;
 	private Activity activity;
 	private static Controller instance;
