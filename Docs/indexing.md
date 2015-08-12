@@ -56,6 +56,8 @@ gamer.Matches.Create(maxPlayers: 16, customProperties: Bundle.CreateObject("publ
 	.Then(dummy => cloud.Index("matches").Search("public: true"))
 	.Then(result => {
 		Assert(result.Hits.Count == 0);
-	});
-});
+	})
+	.Done();
+})
+.Done();
 ~~~~

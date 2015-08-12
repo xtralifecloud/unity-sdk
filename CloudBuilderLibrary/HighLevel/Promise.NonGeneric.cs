@@ -59,6 +59,9 @@ namespace CotcSdk {
 			if (State != PromiseState.Pending) throw new InvalidOperationException("Illegal promise state transition");
 			RejectedValue = ex;
 			State = PromiseState.Rejected;
+			if (Debug_OutputAllExceptions) {
+				Common.LogError("Rejected promise because of exception " + ex.ToString());
+			}
 			foreach (PromiseHandler<Exception> handler in RejectedHandlers) {
 				InvokeHandler(handler.Callback, handler.OnFailure, ex);
 			}
@@ -187,6 +190,9 @@ namespace CotcSdk {
 				callback();
 			}
 			catch (Exception ex) {
+				if (Debug_OutputAllExceptions) {
+					Common.LogError("Exception in promise Then/Done block: " + ex.ToString());
+				}
 				onFailure(ex);
 			}
 		}
@@ -196,20 +202,33 @@ namespace CotcSdk {
 				callback(value);
 			}
 			catch (Exception ex) {
+				if (Debug_OutputAllExceptions) {
+					Common.LogError("Exception in promise Catch block: " + ex.ToString());
+				}
 				onFailure(ex);
 			}
 		}
 
+		public override string ToString() {
+			return base.ToString() + ", State: " + State.ToString() + ", Res: " + ResolvedHandlers.Count + ", Rej: " + RejectedHandlers.Count;
+		}
+
 		private static EventHandler<ExceptionEventArgs> unhandledException;
 
-		/// <summary>
-		/// Event raised for unhandled errors.
-		/// For this to work you have to complete your promises with a call to Done().
-		/// </summary>
+		/**
+		 * Event raised for unhandled errors.
+		 * For this to work you have to complete your promises with a call to Done().
+		 */
 		public static event EventHandler<ExceptionEventArgs> UnhandledException {
 			add { unhandledException += value; }
 			remove { unhandledException -= value; }
 		}
+
+		/**
+		 * Set this to true in order to output any exception to the console, even if it is caught by a .Catch block.
+		 * Just a helper, never keep it true in production.
+		 */
+		public static bool Debug_OutputAllExceptions = false;
 
 		internal static void PropagateUnhandledException(object sender, Exception ex) {
 			if (unhandledException != null) {

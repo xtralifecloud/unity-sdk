@@ -118,10 +118,11 @@ Let's show an example:
 	})
 	.Catch(ex => {
 		Debug.LogError("Login failed: " + ex.ToString());
-	});
+	})
+	.Done();
 ~~~~
 
-Providing a Done block at the end is not mandatory. Doing so will just ensure that the @ref CotcSdk.Promise.UnhandledException "Unhandled exception handler" is called in case you do not provide a Catch block. That is why we prefer the use of Done over Then in our examples: it will prevent errors from being eaten up silently. However we recommend that you always provide a Catch block to handle the exceptional behaviour.
+Providing a Done block at the end is not mandatory. Doing so will just ensure that the @ref CotcSdk.Promise.UnhandledException "Unhandled exception handler" is called in case you do not provide a Catch block. That is why we prefer the use of Done over Then in our examples: it will prevent errors from being eaten up silently. We recommend that you always provide a Catch block to handle the exceptional behaviour, or end your chain with `.Done()` as shown above.
 
 But then there is better, let us say that we want to log in the user and then get his profile. We can return another promise from the Then block and provide a Catch block that will be invoked if either of the calls failed.
 

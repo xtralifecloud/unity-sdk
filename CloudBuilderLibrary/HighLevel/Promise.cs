@@ -46,6 +46,9 @@ namespace CotcSdk
 			if (State != PromiseState.Pending) throw new InvalidOperationException("Illegal promise state transition");
 			RejectedValue = ex;
 			State = PromiseState.Rejected;
+			if (Promise.Debug_OutputAllExceptions) {
+				Common.LogError("Rejected promise because of exception " + ex.ToString());
+			}
 			foreach (PromiseHandler<Exception> handler in RejectedHandlers) {
 				InvokeHandler(handler.Callback, handler.OnFailure, ex);
 			}
@@ -146,8 +149,15 @@ namespace CotcSdk
 				callback(value);
 			}
 			catch (Exception ex) {
+				if (Promise.Debug_OutputAllExceptions) {
+					Common.LogError("Exception in promise Then/Catch/Done block: " + ex.ToString());
+				}
 				onFailure(ex);
 			}
+		}
+
+		public override string ToString() {
+			return base.ToString() + ", State: " + State.ToString() + ", Res: " + ResolvedHandlers.Count + ", Rej: " + RejectedHandlers.Count;
 		}
 	}
 }

@@ -80,11 +80,12 @@ namespace CotcSdk {
 		/**
 		 * Runs a method on the main thread (actually at the next update).
 		 */
-		internal static void RunOnMainThread(Action action) {
+		public static void RunOnMainThread(Action action) {
 			lock (PendingForMainThread) {
 				PendingForMainThread.Add(action);
 			}
 		}
+
 		internal static DomainEventLoop GetEventLoopFor(string gamerId, string domain) {
 			foreach (DomainEventLoop loop in RunningEventLoops) {
 				if (loop.Domain == domain && loop.Gamer.GamerId == gamerId) {

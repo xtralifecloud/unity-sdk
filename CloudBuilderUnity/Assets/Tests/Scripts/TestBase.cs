@@ -37,6 +37,8 @@ public class TestBase : MonoBehaviour {
 	internal static bool DoNotRunMethodsAutomatically = false;
 	// Called whenever a test finishes with a boolean value indicating success
 	internal static event Action<bool> OnTestCompleted;
+	// Set this to false to prevent default behaviour and test Promise.UnhandledException
+	internal static bool FailOnUnhandledException = true;
 	private List<string> PendingSignals = new List<string>();
 	private Dictionary<string, Action> RegisteredSlots = new Dictionary<string, Action>();
 
@@ -65,7 +67,9 @@ public class TestBase : MonoBehaviour {
 	protected void RunTestMethod(string testMethodName) {
 		// Fail test on unhandled exception
 		Promise.UnhandledException += (sender, e) => {
-			TestBase.FailTest("Unhandled exception in test: " + e.Exception);
+			if (FailOnUnhandledException) {
+				TestBase.FailTest("Unhandled exception in test: " + e.Exception);
+			}
 		};
 		if (DoNotRunMethodsAutomatically) return;
 		RunTestMethodStandalone(testMethodName);
@@ -140,13 +144,6 @@ public class TestBase : MonoBehaviour {
 		return string.Format("test{0}@localhost.localdomain", randomPart);
 	}
 
-	protected void RunLater(int millisec, Action action) {
-		new Thread(new ThreadStart(() => {
-			Thread.Sleep(millisec);
-			action();
-		})).Start();
-	}
-
 	// Registers a method that is run once when a signal is triggered
 	protected void RunOnSignal(string signalName, Action action) {
 		bool runThisAction = false;
@@ -183,7 +180,7 @@ public class TestBase : MonoBehaviour {
 		Promise p = new Promise();
 		new Thread(new ThreadStart(() => {
 			Thread.Sleep(millisec);
-			p.Resolve();
+			Cotc.RunOnMainThread(p.Resolve);
 		})).Start();
 		return p;
 	}
@@ -192,7 +189,7 @@ public class TestBase : MonoBehaviour {
 		Promise<T> p = new Promise<T>();
 		new Thread(new ThreadStart(() => {
 			Thread.Sleep(millisec);
-			p.Resolve(default(T));
+			Cotc.RunOnMainThread(() => p.Resolve(default(T)));
 		})).Start();
 		return p;
 	}

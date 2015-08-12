@@ -13,8 +13,8 @@ public static class TestPromiseExtensions {
 	}
 
 	public static Promise<T> ExpectSuccess<T>(this Promise<T> p, Action<T> action = null) {
-		return p.Catch(ex => TestBase.FailTest("Test failed: " + ex.ToString()))
-		.Then((T result) => {
+		p = p.Catch(ex => TestBase.FailTest("Test failed: " + ex.ToString()));
+		return p.Then((T result) => {
 			try {
 				if (action != null) action(result);
 			}

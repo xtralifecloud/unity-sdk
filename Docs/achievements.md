@@ -85,7 +85,6 @@ gamer.Transactions.Post(Bundle.CreateObject("supersonic", +1))
 	if (txResult.TriggeredAchievements.ContainsKey("supersonic")) {
 		return gamer.Achievements.AssociateData("supersonic", Bundle.CreateObject("unhidden", true));
 	}
-	return null; // Nothing to do next
 })
-.Done(result => { /* All done properly */ });
+.Done();
 ~~~~

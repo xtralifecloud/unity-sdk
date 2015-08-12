@@ -45,7 +45,9 @@ public class RunAllTests : MonoBehaviour {
 		TestBase.OnTestCompleted += OnTestCompleted;
 		// Fail test on unhandled exception
 		Promise.UnhandledException += (sender, e) => {
-			TestBase.FailTest("Unhandled exception in test: " + e.Exception);
+			if (TestBase.FailOnUnhandledException) {
+				TestBase.FailTest("Unhandled exception in test: " + e.Exception);
+			}
 		};
 
 		// Run class by class, all test methods

@@ -4,6 +4,7 @@ using CotcSdk;
 using UnityEngine.UI;
 using CotcSdk.PushNotifications;
 using CotcSdk.InappPurchase;
+using System;
 
 public class SampleScript : MonoBehaviour {
 	// The cloud allows to make generic operations (non user related)
@@ -129,14 +130,15 @@ public class SampleScript : MonoBehaviour {
 		Gamer.Store.ListConfiguredProducts()
 			.Then(products => {
 				Debug.Log("Got BO products. Hum.");
-				FindObjectOfType<CotcInappPurchaseGameObject>().FetchProductInfo(products)
-					.Then(enrichedProducts => {
-						Debug.Log("Received enriched products");
-						foreach (ProductInfo pi in enrichedProducts) {
-							Debug.Log(pi.ToJson());
-						}
-					});
-			});
+				return FindObjectOfType<CotcInappPurchaseGameObject>().FetchProductInfo(products);
+			})
+			.Then(enrichedProducts => {
+				Debug.Log("Received enriched products");
+				foreach (ProductInfo pi in enrichedProducts) {
+					Debug.Log(pi.ToJson());
+				}
+			})
+			.Done();
 	}
 
 	// Invoked when any sign in operation has completed

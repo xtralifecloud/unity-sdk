@@ -195,10 +195,74 @@ public class CloudTests : TestBase {
 		});
 	}
 
-	[Test("Tests the DidLogin notification")]
+	[Test("Tests the DidLogin notification.")]
 	public void ShouldSendLoggedInNotification(Cloud cloud) {
 		Cotc.LoggedIn += GotLoggedInNotification;
 		Login(cloud, gamer => {});
+	}
+
+	[Test("Tests various functionality related to promises.")]
+	public void PromisesShouldWorkProperly() {
+		// 1) Tests that multiple Then and a Done block are called as expected.
+		Promise<bool> p1 = new Promise<bool>();
+		CountedPromise<bool> cp = new CountedPromise<bool>(3);
+		p1.Then(value => {
+			cp.Resolve(value);
+		})
+		.Then(value => {
+			cp.Resolve(value);
+		})
+		.Done(value => {
+			cp.Resolve(value);
+		});
+		p1.Resolve(true);
+		cp.WhenCompleted.ExpectSuccess(success => PromisesShouldWorkProperlyPart2());
+	}
+
+	private void PromisesShouldWorkProperlyPart2() {
+		// 2) Test that that an unhandled exception is triggered as expected
+		Promise[] expectingException = new Promise[1];
+		EventHandler<ExceptionEventArgs> promiseExHandler = (sender, e) => {
+			expectingException[0].Resolve();
+		};
+		FailOnUnhandledException = false;
+		Promise.UnhandledException += promiseExHandler;
+
+		Promise<bool> prom = new Promise<bool>();
+		// With just then, the handler should not be called
+		expectingException[0] = new Promise().Then(() => FailTest("Should not call UnhandledException yet"));
+		prom.Reject(new InvalidOperationException());
+
+		// But after a done, it should be invoked
+		Wait(100).Then(() => {
+			expectingException[0] = new Promise();
+			expectingException[0].Then(() => {
+				Promise.UnhandledException -= promiseExHandler;
+				FailOnUnhandledException = true;
+				PromisesShouldWorkProperlyPart3();
+			});
+			prom.Done();
+		});
+	}
+
+	private void PromisesShouldWorkProperlyPart3() {
+		// 3) This is normally prevented by the IPromise interface, but we removed it because of iOS AOT issues
+		Promise<bool> p1 = new Promise<bool>();
+		Promise<bool> p2 = p1.Then(dummy => FailTest("Should not be called"));
+		p2.Then(dummy => PromisesShouldWorkProperlyPart4());
+		p2.Resolve(true);
+	}
+
+	private void PromisesShouldWorkProperlyPart4() {
+		// 4) An exception in a Then block should be forwarded to the catch block
+		Promise<bool> p = new Promise<bool>();
+		p.Then(dummy => {
+			throw new InvalidOperationException();
+		})
+		.Catch(ex => {
+			CompleteTest();
+		});
+		p.Resolve(true);
 	}
 
 	#region Private
