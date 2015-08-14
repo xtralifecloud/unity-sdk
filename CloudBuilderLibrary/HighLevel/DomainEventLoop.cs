@@ -141,8 +141,6 @@ namespace CotcSdk {
 				if (!lastResultPositive) {
 					// Last time failed, wait a bit to avoid bombing the Internet.
 					Thread.Sleep(PopEventDelayThreadHold);
-					// And try with a smaller delay so that we can notify success (connection back) quickly.
-					delay = PopEventDelayAfterFailure;
 				}
 
 				UrlBuilder url = new UrlBuilder("/v1/gamer/event");
@@ -194,7 +192,7 @@ namespace CotcSdk {
 		private HttpRequest CurrentRequest;
 		private bool Stopped = false, AlreadyStarted = false, Paused = false;
 		private int LoopIterationDuration;
-		private const int PopEventDelayAfterFailure = 2000, PopEventDelayThreadHold = 20000;
+		private const int PopEventDelayThreadHold = 20000;
 		#endregion
 	}
 }

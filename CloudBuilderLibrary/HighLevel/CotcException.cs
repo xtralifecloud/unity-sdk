@@ -37,7 +37,7 @@ namespace CotcSdk {
 		}
 
 		public override string ToString() {
-			string start = String.Format("[CotcException error={0} ({0})", ErrorCode, ErrorInformation ?? ErrorCode.Description());
+			string start = String.Format("[CotcException error={0} ({1})", ErrorCode, ErrorInformation ?? ErrorCode.Description());
 			if (HttpStatusCode != 0) {
 				start += String.Format(" http={0}", HttpStatusCode);
 			}
