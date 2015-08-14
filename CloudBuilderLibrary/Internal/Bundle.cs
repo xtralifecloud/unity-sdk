@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using LitJson;
 
 namespace CotcSdk
@@ -327,10 +328,10 @@ namespace CotcSdk
 		public double AsDouble(double defaultValue = 0) {
 			double result = defaultValue;
 			switch (Type) {
-				case DataType.Boolean: return (int)longValue;
-				case DataType.Integer: return (int)longValue;
-				case DataType.Double: return (int)doubleValue;
-				case DataType.String: double.TryParse(stringValue, out result); return result;
+				case DataType.Boolean: return (double)longValue;
+				case DataType.Integer: return (double)longValue;
+				case DataType.Double: return doubleValue;
+				case DataType.String: double.TryParse(stringValue, NumberStyles.Any, CultureInfo.InvariantCulture, out result); return result;
 			}
 			return defaultValue;
 		}

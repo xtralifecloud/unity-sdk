@@ -265,6 +265,14 @@ public class CloudTests : TestBase {
 		p.Resolve(true);
 	}
 
+	[Test("Tests JSON-related functions.")]
+	public void ShouldInterpretJsonProperly() {
+		string json = "{\"products\":[{\"internalProductId\":\"android.test.purchased\",\"price\":0.965951,\"currency\":\"CHF\",\"productId\":\"CotcProduct3\"}]}";
+		Bundle data = Bundle.FromJson(json);
+		Assert(data["products"][0]["price"] == 0.965951, "Double values should be decoded properly");
+		CompleteTest();
+	}
+
 	#region Private
 	private void GotLoggedInNotification(object sender, Cotc.LoggedInEventArgs e) {
 		CompleteTest();
