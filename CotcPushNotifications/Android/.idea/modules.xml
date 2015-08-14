@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Android.iml" filepath="$PROJECT_DIR$/Android.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cotcinapppurchase/cotcinapppurchase.iml" filepath="$PROJECT_DIR$/cotcinapppurchase/cotcinapppurchase.iml" />
       <module fileurl="file://$PROJECT_DIR$/cotcpushnotifications/cotcpushnotifications.iml" filepath="$PROJECT_DIR$/cotcpushnotifications/cotcpushnotifications.iml" />
     </modules>
   </component>

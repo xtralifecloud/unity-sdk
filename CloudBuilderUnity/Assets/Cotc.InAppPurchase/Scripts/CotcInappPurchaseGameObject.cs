@@ -24,9 +24,8 @@ namespace CotcSdk.InappPurchase {
 		 * transactions in an open state and disrupt the purchase process (delivering several times
 		 * the product, etc.).
 		 */
-		public Promise<Done> CloseTransaction() {
-			// TODO
-			return Promise<Done>.Rejected(new CotcException(ErrorCode.Canceled));
+		public Promise<Done> CloseTransaction(PurchasedProduct product) {
+			return Store.TerminatePurchase(product);
 		}
 
 		/**
@@ -64,6 +63,10 @@ namespace CotcSdk.InappPurchase {
 		void Android_LaunchPurchase_Done(string message) {
 			((GooglePlayStoreImpl)Store).LaunchPurchase_Done(message);
 		}
+
+		void Android_TerminatePurchase_Done(string message) {
+			((GooglePlayStoreImpl)Store).TerminatePurchase_Done(message);
+		}
 #endif
 	}
 
@@ -74,16 +77,20 @@ namespace CotcSdk.InappPurchase {
 	public class PurchasedProduct {
 		public StoreType StoreType { get; private set; }
 		public string CotcProductId { get; private set; }
+		public string InternalProductId { get; private set; }
 		public float PaidPrice { get; private set; }
 		public string PaidCurrency { get; private set; }
 		public string Receipt { get; private set; }
+		public string Token { get; private set; }
 
-		internal PurchasedProduct(StoreType storeType, string cotcProductId, float paidPrice, string paidCurrency, string receipt) {
+		internal PurchasedProduct(StoreType storeType, string cotcProductId, string internalProductId, float paidPrice, string paidCurrency, string receipt, string token) {
 			StoreType = storeType;
 			CotcProductId = cotcProductId;
+			InternalProductId = internalProductId;
 			PaidPrice = paidPrice;
 			PaidCurrency = paidCurrency;
 			Receipt = receipt;
+			Token = token;
 		}
 	}
 

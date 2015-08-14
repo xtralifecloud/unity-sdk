@@ -29,18 +29,11 @@ namespace CotcSdk.InappPurchase {
 			internal set { Props["currency"] = value; }
 		}
 		/**
-		 * ID of the product on the Google Play Store (mapping with ProductId on CotC).
+		 * ID of the product on the platform-dependent Store (mapping with ProductId on CotC).
 		 */
-		public string AppStoreId {
-			get { return Props["appStoreId"]; }
-			internal set { Props["appStoreId"] = value; }
-		}
-		/**
-		 * ID of the product on the Google Play Store (mapping with ProductId on CotC).
-		 */
-		public string GooglePlayId {
-			get { return Props["googlePlayId"]; }
-			internal set { Props["googlePlayId"] = value; }
+		public string InternalProductId {
+			get { return Props["internalProductId"]; }
+			internal set { Props["internalProductId"] = value; }
 		}
 
 		internal ProductInfo() : base(Bundle.CreateObject()) { }

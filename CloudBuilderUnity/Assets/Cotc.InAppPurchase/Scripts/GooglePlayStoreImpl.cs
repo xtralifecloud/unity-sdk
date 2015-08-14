@@ -14,6 +14,7 @@ namespace CotcSdk.InappPurchase {
 		private AndroidJavaClass JavaClass;
 		private Promise<List<ProductInfo>> LastGetInformationAboutProductsPromise;
 		private Promise<PurchasedProduct> LastLaunchProductPromise;
+		private Promise<Done> LastTerminatePurchasePromise;
 
 		// GameObjectName is used for callbacks from Java
 		public GooglePlayStoreImpl(string gameObjectName) {
@@ -40,7 +41,7 @@ namespace CotcSdk.InappPurchase {
 			}
 
 			// Will call back the CotcInappPurchaseGameObject
-			JavaClass.CallStatic("listProducts", interop);
+			JavaClass.CallStatic("listProducts", interop.ToJson());
 			return LastGetInformationAboutProductsPromise;
 		}
 
@@ -54,8 +55,26 @@ namespace CotcSdk.InappPurchase {
 			}
 
 			// Will call back the CotcInappPurchaseGameObject
-			JavaClass.CallStatic("launchPurchase", product.AsBundle());
+			JavaClass.CallStatic("launchPurchase", product.ToJson());
 			return LastLaunchProductPromise;
+		}
+
+		Promise<Done> IStore.TerminatePurchase(PurchasedProduct product) {
+			// Already in progress? Refuse immediately.
+			lock (this) {
+				if (LastTerminatePurchasePromise != null) {
+					return Promise<Done>.Rejected(new CotcException(ErrorCode.AlreadyInProgress, "Terminating purchase"));
+				}
+				LastTerminatePurchasePromise = new Promise<Done>();
+			}
+
+			Bundle arg = Bundle.CreateObject();
+			arg["token"] = product.Token;
+			arg["internalProductId"] = product.InternalProductId;
+
+			// Will call back the CotcInappPurchaseGameObject
+			JavaClass.CallStatic("terminatePurchase", arg.ToJson());
+			return LastTerminatePurchasePromise;
 		}
 
 		// Callback from Java
@@ -72,8 +91,14 @@ namespace CotcSdk.InappPurchase {
 			}
 
 			Bundle json = Bundle.FromJson(message);
+			// Error
+			if (json.Has("error")) {
+				promise.Reject(ParseError(json));
+				return;
+			}
+
 			List<ProductInfo> result = new List<ProductInfo>();
-			foreach (Bundle obj in json.AsArray()) {
+			foreach (Bundle obj in json["products"].AsArray()) {
 				result.Add(new ProductInfo(obj));
 			}
 			promise.Resolve(result);
@@ -91,12 +116,39 @@ namespace CotcSdk.InappPurchase {
 			if (promise == null) {
 				Debug.LogWarning("Responding to LaunchPurchase without having promise set");
 			}
-			
-			Bundle bundle = Bundle.FromJson(message);
+
+			Bundle json = Bundle.FromJson(message);
+			if (json.Has("error")) {
+				promise.Reject(ParseError(json));
+				return;
+			}
+
 			PurchasedProduct product = new PurchasedProduct(
-				Common.ParseEnum<StoreType>(bundle["storeType"], StoreType.Googleplay),
-				bundle["productId"], bundle["price"], bundle["currency"], bundle["receipt"]);
+				Common.ParseEnum<StoreType>(json["store"], StoreType.Googleplay),
+				json["productId"], json["internalProductId"], json["price"],
+				json["currency"], json["receipt"], json["token"]);
 			promise.Resolve(product);
+		}
+
+		// Callback from Java
+		internal void TerminatePurchase_Done(string message) {
+			// Extract promise and allow again
+			Promise<Done> promise;
+			lock (this) {
+				promise = LastTerminatePurchasePromise;
+				LastTerminatePurchasePromise = null;
+			}
+
+			promise.Resolve(new Done(true, Bundle.Empty));
+		}
+
+		/**
+		 * Parses an error coming from an unity message sent from Android.
+		 * @param bundle error as received from Android, parsed to JSON.
+		 * @return an exception
+		 */
+		private CotcException ParseError(Bundle bundle) {
+			return new CotcException((ErrorCode) bundle["error"].AsInt(), bundle["description"]);
 		}
 	}
 }

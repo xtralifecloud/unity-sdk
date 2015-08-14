@@ -1,13 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.unity3d.player" android:installLocation="auto" android:versionCode="1" android:versionName="1.0">
   <supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" android:anyDensity="true" />
-  <!-- [START IAB] -->
-  <uses-permission android:name="com.android.vending.BILLING" />
 
-  <!-- [START GCM] -->
-  <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-  <uses-permission android:name="android.permission.WAKE_LOCK" />
-  <!-- [END GCM] -->
   <application android:theme="@android:style/Theme.NoTitleBar" android:icon="@drawable/app_icon" android:label="@string/app_name" android:debuggable="true">
     <activity android:name="com.unity3d.player.UnityPlayerActivity" android:label="@string/app_name">
       <intent-filter>
@@ -29,24 +23,6 @@
     <meta-data android:name="cotc.GcmSenderId" android:value="\ 906962523878" />
     <meta-data android:name="cotc.GcmNotificationIcon" android:resource="@drawable/ic_stat_ic_notification" />
     <meta-data android:name="cotc.GcmNotificationTitle" android:value="Cotc sample" />
-    <receiver android:name="com.google.android.gms.gcm.GcmReceiver" android:exported="true" android:permission="com.google.android.c2dm.permission.SEND">
-      <intent-filter>
-        <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-        <category android:name="com.clanofthecloud.sampleunityproject" />
-      </intent-filter>
-    </receiver>
-    <service android:name="com.clanofthecloud.cotcpushnotifications.MyGcmListenerService" android:exported="false">
-      <intent-filter>
-        <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-      </intent-filter>
-    </service>
-    <service android:name="com.clanofthecloud.cotcpushnotifications.MyInstanceIDListenerService" android:exported="false">
-      <intent-filter>
-        <action android:name="com.google.android.gms.iid.InstanceID" />
-      </intent-filter>
-    </service>
-    <service android:name="com.clanofthecloud.cotcpushnotifications.RegistrationIntentService" android:exported="false">
-    </service>
     <!-- [END GCM] -->
   </application>
 </manifest>

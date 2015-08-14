@@ -126,19 +126,41 @@ public class SampleScript : MonoBehaviour {
 	}
 
 	public void DoListProducts() {
+		var inApp = FindObjectOfType<CotcInappPurchaseGameObject>();
 		if (!RequireGamer()) return;
+
+		var pp = new PurchasedProduct[1];
+		var result = new Done[1];
 		Gamer.Store.ListConfiguredProducts()
 			.Then(products => {
-				Debug.Log("Got BO products. Hum.");
-				return FindObjectOfType<CotcInappPurchaseGameObject>().FetchProductInfo(products);
+				Debug.Log("Got BO products.");
+				return inApp.FetchProductInfo(products);
 			})
 			.Then(enrichedProducts => {
 				Debug.Log("Received enriched products");
 				foreach (ProductInfo pi in enrichedProducts) {
 					Debug.Log(pi.ToJson());
 				}
+
+				// Purchase the first one
+				return inApp.LaunchPurchase(enrichedProducts[0]);
 			})
-			.Done();
+			.Then(purchasedProduct => {
+				Debug.Log("Purchase ok");
+				pp[0] = purchasedProduct;
+				return Gamer.Store.ValidateReceipt(purchasedProduct.StoreType, purchasedProduct.CotcProductId, purchasedProduct.PaidPrice, purchasedProduct.PaidCurrency, purchasedProduct.Receipt);
+			})
+			.Then(done => {
+				Debug.Log("Validated receipt");
+				result[0] = done;
+				return inApp.CloseTransaction(pp[0]);
+			})
+			.Then(done => {
+				Debug.Log("Purchase transaction completed successfully: " + result[0].ToString());
+			})
+			.Catch(ex => {
+				Debug.LogError("Error during purchase: " + ex.ToString());
+			});
 	}
 
 	// Invoked when any sign in operation has completed
