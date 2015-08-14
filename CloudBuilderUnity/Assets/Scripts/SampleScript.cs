@@ -130,7 +130,7 @@ public class SampleScript : MonoBehaviour {
 		if (!RequireGamer()) return;
 
 		var pp = new PurchasedProduct[1];
-		var result = new Done[1];
+		var result = new ValidateReceiptResult[1];
 		Gamer.Store.ListConfiguredProducts()
 			.Then(products => {
 				Debug.Log("Got BO products.");
@@ -150,9 +150,9 @@ public class SampleScript : MonoBehaviour {
 				pp[0] = purchasedProduct;
 				return Gamer.Store.ValidateReceipt(purchasedProduct.StoreType, purchasedProduct.CotcProductId, purchasedProduct.PaidPrice, purchasedProduct.PaidCurrency, purchasedProduct.Receipt);
 			})
-			.Then(done => {
+			.Then(validationResult => {
 				Debug.Log("Validated receipt");
-				result[0] = done;
+				result[0] = validationResult;
 				return inApp.CloseTransaction(pp[0]);
 			})
 			.Then(done => {

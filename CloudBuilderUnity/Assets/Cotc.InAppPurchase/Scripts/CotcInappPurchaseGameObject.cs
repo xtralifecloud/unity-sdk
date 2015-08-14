@@ -7,9 +7,8 @@ namespace CotcSdk.InappPurchase {
 	public class CotcInappPurchaseGameObject : MonoBehaviour {
 
 		private IStore Store;
-		private bool PurchaseInProgress;
 
-		void Start () {
+		void Start() {
 #if UNITY_ANDROID
 			Store = new GooglePlayStoreImpl(gameObject.name);
 #else
@@ -69,29 +68,4 @@ namespace CotcSdk.InappPurchase {
 		}
 #endif
 	}
-
-	/**
-	 * Purchased product as returned by LaunchPurchase.
-	 * TODO move
-	 */
-	public class PurchasedProduct {
-		public StoreType StoreType { get; private set; }
-		public string CotcProductId { get; private set; }
-		public string InternalProductId { get; private set; }
-		public float PaidPrice { get; private set; }
-		public string PaidCurrency { get; private set; }
-		public string Receipt { get; private set; }
-		public string Token { get; private set; }
-
-		internal PurchasedProduct(StoreType storeType, string cotcProductId, string internalProductId, float paidPrice, string paidCurrency, string receipt, string token) {
-			StoreType = storeType;
-			CotcProductId = cotcProductId;
-			InternalProductId = internalProductId;
-			PaidPrice = paidPrice;
-			PaidCurrency = paidCurrency;
-			Receipt = receipt;
-			Token = token;
-		}
-	}
-
 }

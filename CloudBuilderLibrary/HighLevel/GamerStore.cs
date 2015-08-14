@@ -53,7 +53,7 @@ namespace CotcSdk {
 		 * @param paidCurrency currency of paid price (ISO code).
 		 * @param receipt receipt string, dependent on the store type.
 		 */
-		public Promise<Done> ValidateReceipt(StoreType storeType, string cotcProductId, float paidPrice, string paidCurrency, string receipt) {
+		public Promise<ValidateReceiptResult> ValidateReceipt(StoreType storeType, string cotcProductId, float paidPrice, string paidCurrency, string receipt) {
 			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/store/validateReceipt");
 			Bundle data = Bundle.CreateObject();
 			data["store"] = storeType.ToString().ToLower();
@@ -62,11 +62,10 @@ namespace CotcSdk {
 			data["currency"] = paidCurrency;
 			data["receipt"] = receipt;
 			req.BodyJson = data;
-			return Common.RunInTask<Done>(req, (response, task) => {
-				task.PostResult(new Done(response.BodyJson), response.BodyJson);
+			return Common.RunInTask<ValidateReceiptResult>(req, (response, task) => {
+				task.PostResult(new ValidateReceiptResult(response.BodyJson), response.BodyJson);
 			});
 		}
-
 
 		#region Private
 		internal GamerStore(Gamer parent) {
@@ -153,6 +152,23 @@ namespace CotcSdk {
 	}
 
 	/**
+	 * Result of #CotcSdk.GamerStore.ValidateReceipt.
+	 */
+	public class ValidateReceiptResult : PropertiesObject {
+		public bool Repeated {
+			get { return Props["repeated"]; }
+		}
+		public PurchaseTransaction Transaction {
+			get { return new PurchaseTransaction(Props["purchase"]); }
+		}
+		public bool Validated {
+			get { return Props["ok"]; }
+		}
+
+		internal ValidateReceiptResult(Bundle serverData) : base(serverData) { }
+	}
+
+	/**
 	 * Type of store in which products are purchased.
 	 */
 	public enum StoreType {
@@ -160,5 +176,4 @@ namespace CotcSdk {
 		Macstore,
 		Googleplay,
 	}
-
 }
