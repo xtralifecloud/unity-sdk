@@ -21,11 +21,11 @@ namespace CotcSdk
 		}
 		public bool Successful { get; private set; }
 
-		internal Done(Bundle serverData)
+		public Done(Bundle serverData)
 			: base(serverData) {
 			Successful = serverData["done"];
 		}
-		internal Done(bool done, Bundle serverData)
+		public Done(bool done, Bundle serverData)
 			: base(serverData) {
 			Successful = done;
 		}
