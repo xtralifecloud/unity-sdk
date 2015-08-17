@@ -117,12 +117,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">    .Then(dummy =&gt; cloud.Index(<span class="stringliteral">&quot;matches&quot;</span>).Search(<span class="stringliteral">&quot;public: true&quot;</span>))</div>
 <div class="line">    .Then(result =&gt; {</div>
 <div class="line">        Assert(result.Hits.Count == 0);</div>
-<div class="line">    });</div>
-<div class="line">});</div>
+<div class="line">    })</div>
+<div class="line">    .Done();</div>
+<div class="line">})</div>
+<div class="line">.Done();</div>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 4 2015 13:45:16 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Aug 17 2015 16:42:08 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

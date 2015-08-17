@@ -102,18 +102,22 @@ Inheritance diagram for CotcSdk.PropertiesObject:</div>
  <div class="center">
   <img src="class_cotc_sdk_1_1_properties_object.png" usemap="#CotcSdk.PropertiesObject_map" alt=""/>
   <map id="CotcSdk.PropertiesObject_map" name="CotcSdk.PropertiesObject_map">
-<area href="class_cotc_sdk_1_1_done.html" alt="CotcSdk.Done" shape="rect" coords="246,56,482,80"/>
-<area href="class_cotc_sdk_1_1_drawn_items_result.html" alt="CotcSdk.DrawnItemsResult" shape="rect" coords="246,112,482,136"/>
-<area href="class_cotc_sdk_1_1_gamer.html" alt="CotcSdk.Gamer" shape="rect" coords="246,168,482,192"/>
-<area href="class_cotc_sdk_1_1_gamer_info.html" alt="CotcSdk.GamerInfo" shape="rect" coords="246,224,482,248"/>
-<area href="class_cotc_sdk_1_1_gamer_profile.html" alt="CotcSdk.GamerProfile" shape="rect" coords="246,280,482,304"/>
-<area href="class_cotc_sdk_1_1_got_godchild_event.html" alt="CotcSdk.GotGodchildEvent" shape="rect" coords="246,336,482,360"/>
-<area href="class_cotc_sdk_1_1_index_result.html" alt="CotcSdk.IndexResult" shape="rect" coords="246,392,482,416"/>
-<area href="class_cotc_sdk_1_1_match.html" alt="CotcSdk.Match" shape="rect" coords="246,448,482,472"/>
-<area href="class_cotc_sdk_1_1_match_event.html" alt="CotcSdk.MatchEvent" shape="rect" coords="246,504,482,528"/>
-<area href="class_cotc_sdk_1_1_social_network_friend_response.html" alt="CotcSdk.SocialNetworkFriendResponse" shape="rect" coords="246,560,482,584"/>
-<area href="class_cotc_sdk_1_1_transaction_result.html" alt="CotcSdk.TransactionResult" shape="rect" coords="246,616,482,640"/>
-<area href="class_cotc_sdk_1_1_user_info.html" alt="CotcSdk.UserInfo" shape="rect" coords="246,672,482,696"/>
+<area href="class_cotc_sdk_1_1_configured_product.html" alt="CotcSdk.ConfiguredProduct" shape="rect" coords="246,56,482,80"/>
+<area href="class_cotc_sdk_1_1_done.html" alt="CotcSdk.Done" shape="rect" coords="246,112,482,136"/>
+<area href="class_cotc_sdk_1_1_drawn_items_result.html" alt="CotcSdk.DrawnItemsResult" shape="rect" coords="246,168,482,192"/>
+<area href="class_cotc_sdk_1_1_gamer.html" alt="CotcSdk.Gamer" shape="rect" coords="246,224,482,248"/>
+<area href="class_cotc_sdk_1_1_gamer_info.html" alt="CotcSdk.GamerInfo" shape="rect" coords="246,280,482,304"/>
+<area href="class_cotc_sdk_1_1_gamer_profile.html" alt="CotcSdk.GamerProfile" shape="rect" coords="246,336,482,360"/>
+<area href="class_cotc_sdk_1_1_got_godchild_event.html" alt="CotcSdk.GotGodchildEvent" shape="rect" coords="246,392,482,416"/>
+<area href="class_cotc_sdk_1_1_inapp_purchase_1_1_product_info.html" alt="CotcSdk.InappPurchase.ProductInfo" shape="rect" coords="246,448,482,472"/>
+<area href="class_cotc_sdk_1_1_index_result.html" alt="CotcSdk.IndexResult" shape="rect" coords="246,504,482,528"/>
+<area href="class_cotc_sdk_1_1_match.html" alt="CotcSdk.Match" shape="rect" coords="246,560,482,584"/>
+<area href="class_cotc_sdk_1_1_match_event.html" alt="CotcSdk.MatchEvent" shape="rect" coords="246,616,482,640"/>
+<area href="class_cotc_sdk_1_1_purchase_transaction.html" alt="CotcSdk.PurchaseTransaction" shape="rect" coords="246,672,482,696"/>
+<area href="class_cotc_sdk_1_1_social_network_friend_response.html" alt="CotcSdk.SocialNetworkFriendResponse" shape="rect" coords="246,728,482,752"/>
+<area href="class_cotc_sdk_1_1_transaction_result.html" alt="CotcSdk.TransactionResult" shape="rect" coords="246,784,482,808"/>
+<area href="class_cotc_sdk_1_1_user_info.html" alt="CotcSdk.UserInfo" shape="rect" coords="246,840,482,864"/>
+<area href="class_cotc_sdk_1_1_validate_receipt_result.html" alt="CotcSdk.ValidateReceiptResult" shape="rect" coords="246,896,482,920"/>
 </map>
  </div></div>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -123,7 +127,8 @@ Inheritance diagram for CotcSdk.PropertiesObject:</div>
 <div class="line"><span class="keywordflow">foreach</span> (KeyValuePair&lt;string, Bundle&gt; pair <span class="keywordflow">in</span> gamer) { ... }</div>
 <div class="line"><span class="comment">// Or using indexers</span></div>
 <div class="line"><span class="keywordflow">foreach</span> (<span class="keywordtype">string</span> key <span class="keywordflow">in</span> gamer.Keys()) { Debug.Log(gamer[key]); }</div>
-</div><!-- fragment --><p>Usually these objects have a proper structure representing the predefined properties, and you can use the <a class="el" href="class_cotc_sdk_1_1_properties_object.html">PropertiesObject</a> methods to query additional properties that might have been enriched in a hook for instance. </p>
+</div><!-- fragment --><p>Usually these objects have a proper structure representing the predefined properties, and you can use the <a class="el" href="class_cotc_sdk_1_1_properties_object.html">PropertiesObject</a> methods to query additional properties that might have been enriched in a hook for instance.</p>
+<p>Beware however, querying a <a class="el" href="class_cotc_sdk_1_1_properties_object.html">PropertiesObject</a> using keys will return directly what the server has responded. Thus, if you have modified a property and query its equivalent key, the values will differ. That is why we don't usually make PropertiesObjects publicly writable. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -261,12 +266,12 @@ Properties</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Users/Florian/Documents/CotC/unity-native/CloudBuilderLibrary/HighLevel/Model/PropertiesObject.cs</li>
+<li>C:/Users/Florian/Documents/CotC/unity-native/CotcSdk/HighLevel/Model/PropertiesObject.cs</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 4 2015 13:45:16 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Aug 17 2015 16:42:08 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

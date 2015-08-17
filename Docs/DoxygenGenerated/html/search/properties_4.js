@@ -8,5 +8,6 @@ var searchData=
   ['gamervfs',['GamerVfs',['../class_cotc_sdk_1_1_gamer.html#a20aed85cfcfceae8636d85f274f32785',1,'CotcSdk::Gamer']]],
   ['gamevfs',['GameVfs',['../class_cotc_sdk_1_1_game.html#a172224ee60cba61e7fc9f0d51d4bc337',1,'CotcSdk::Game']]],
   ['globalstate',['GlobalState',['../class_cotc_sdk_1_1_match.html#a1ebfaef159679819912287098b7c5722',1,'CotcSdk::Match']]],
-  ['godfather',['Godfather',['../class_cotc_sdk_1_1_gamer.html#ad89bd7c937628ba1cabcb4ec5a860601',1,'CotcSdk::Gamer']]]
+  ['godfather',['Godfather',['../class_cotc_sdk_1_1_gamer.html#ad89bd7c937628ba1cabcb4ec5a860601',1,'CotcSdk::Gamer']]],
+  ['googleplayid',['GooglePlayId',['../class_cotc_sdk_1_1_configured_product.html#a5581f8a86d423e28ee51cecc1bb3e9d5',1,'CotcSdk::ConfiguredProduct']]]
 ];

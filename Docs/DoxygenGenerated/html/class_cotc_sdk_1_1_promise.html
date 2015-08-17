@@ -88,6 +88,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="#properties">Properties</a> &#124;
 <a href="class_cotc_sdk_1_1_promise-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -133,14 +135,49 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Resolve</b> ()</td></
 <tr class="memitem:a560ffe03dcabd949f2a95dcc60d9fdc6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a560ffe03dcabd949f2a95dcc60d9fdc6"></a>
 <a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; ConvertedT &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Then&lt; ConvertedT &gt;</b> (Func&lt; <a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; ConvertedT &gt;&gt; onResolved, Action&lt; Exception &gt; onRejected)</td></tr>
 <tr class="separator:a560ffe03dcabd949f2a95dcc60d9fdc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b18c3dedc910fc32e78379e4e8806ce"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2b18c3dedc910fc32e78379e4e8806ce"></a>
+override string&#160;</td><td class="memItemRight" valign="bottom"><b>ToString</b> ()</td></tr>
+<tr class="separator:a2b18c3dedc910fc32e78379e4e8806ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a0f3153a8e49b23977a0a288a1e97ca9e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0f3153a8e49b23977a0a288a1e97ca9e"></a>
+static <a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Rejected</b> (Exception ex)</td></tr>
+<tr class="separator:a0f3153a8e49b23977a0a288a1e97ca9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:ad9a96c54922beb0e1566e0babf7aaff6"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_promise.html#ad9a96c54922beb0e1566e0babf7aaff6">Debug_OutputAllExceptions</a> = false</td></tr>
+<tr class="separator:ad9a96c54922beb0e1566e0babf7aaff6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
 <tr class="memitem:aacac7a3e73453048089ef81153782c15"><td class="memItemLeft" align="right" valign="top">static EventHandler<br class="typebreak" />
 &lt; <a class="el" href="class_cotc_sdk_1_1_exception_event_args.html">ExceptionEventArgs</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_promise.html#aacac7a3e73453048089ef81153782c15">UnhandledException</a></td></tr>
-<tr class="memdesc:aacac7a3e73453048089ef81153782c15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event raised for unhandled errors. For this to work you have to complete your promises with a call to Done().  <a href="#aacac7a3e73453048089ef81153782c15">More...</a><br /></td></tr>
 <tr class="separator:aacac7a3e73453048089ef81153782c15"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="ad9a96c54922beb0e1566e0babf7aaff6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CotcSdk.Promise.Debug_OutputAllExceptions = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set this to true in order to output any exception to the console, even if it is caught by a .Catch block. Just a helper, never keep it true in production. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Property Documentation</h2>
 <a class="anchor" id="aacac7a3e73453048089ef81153782c15"></a>
 <div class="memitem">
@@ -159,18 +196,17 @@ Properties</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
 <p>Event raised for unhandled errors. For this to work you have to complete your promises with a call to Done(). </p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Users/Florian/Documents/CotC/unity-native/CloudBuilderLibrary/HighLevel/Promise.NonGeneric.cs</li>
+<li>C:/Users/Florian/Documents/CotC/unity-native/CotcSdk/HighLevel/Promise.NonGeneric.cs</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 4 2015 13:45:16 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Aug 17 2015 16:42:08 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

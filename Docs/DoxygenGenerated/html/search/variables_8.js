@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['offset',['Offset',['../class_cotc_sdk_1_1_paged_list_3_01_data_type_01_4.html#a30b89c860089629f1a13cd74f9317ccc',1,'CotcSdk::PagedList&lt; DataType &gt;']]]
+  ['newstatus',['NewStatus',['../class_cotc_sdk_1_1_friend_status_change_event.html#a143bde9134f9496e489557f40b6253d3',1,'CotcSdk::FriendStatusChangeEvent']]]
 ];

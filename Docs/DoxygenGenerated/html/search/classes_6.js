@@ -14,6 +14,7 @@ var searchData=
   ['gamerprofilemethods',['GamerProfileMethods',['../class_cotc_sdk_1_1_gamer_profile_methods.html',1,'CotcSdk']]],
   ['gamerproperties',['GamerProperties',['../class_cotc_sdk_1_1_gamer_properties.html',1,'CotcSdk']]],
   ['gamerscores',['GamerScores',['../class_cotc_sdk_1_1_gamer_scores.html',1,'CotcSdk']]],
+  ['gamerstore',['GamerStore',['../class_cotc_sdk_1_1_gamer_store.html',1,'CotcSdk']]],
   ['gamertransactions',['GamerTransactions',['../class_cotc_sdk_1_1_gamer_transactions.html',1,'CotcSdk']]],
   ['gamervfs',['GamerVfs',['../class_cotc_sdk_1_1_gamer_vfs.html',1,'CotcSdk']]],
   ['gamevfs',['GameVfs',['../class_cotc_sdk_1_1_game_vfs.html',1,'CotcSdk']]],

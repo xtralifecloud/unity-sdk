@@ -123,9 +123,7 @@ Creating a new Server key</div></div>
 <div class="caption">
 Setting up your Android push notifications with Clan of the Cloud back office</div></div>
 <p> Now everything's been done on the Google Application side, we need to add a few snippets of code, so your application can communicate with the Google Cloud Messaging servers. First thing to modify is your AndroidManifest.xml, which is located under Assets/Plugins/Android.</p>
-<p>Inside the <code>&lt;manifest&gt;</code> tag, make sure to have the following entries: </p><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&lt;uses-permission android:name=&quot;com.google.android.c2dm.permission.RECEIVE&quot; /&gt;</div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;&lt;uses-permission android:name=&quot;android.permission.WAKE_LOCK&quot; /&gt;</div>
-</div><!-- fragment --><p>Inside the <code>&lt;application&gt;</code> tag, make sure to have the following entries: </p><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&lt;meta-data android:name=&quot;cotc.GcmSenderId&quot; android:value=&quot;\ XXXXXXXXXX&quot; /&gt;</div>
+<p>Inside the <code>&lt;application&gt;</code> tag, make sure to have the following entries: </p><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&lt;meta-data android:name=&quot;cotc.GcmSenderId&quot; android:value=&quot;\ XXXXXXXXXX&quot; /&gt;</div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;&lt;meta-data android:name=&quot;cotc.GcmNotificationIcon&quot; android:resource=&quot;@drawable/ic_stat_ic_notification&quot; /&gt;</div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;&lt;meta-data android:name=&quot;cotc.GcmNotificationTitle&quot; android:value=&quot;Cotc sample&quot; /&gt;</div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div>
@@ -138,26 +136,6 @@ Setting up your Android push notifications with Clan of the Cloud back office</d
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        &lt;category android:name=&quot;com.clanofthecloud.sampleunityproject&quot; /&gt;</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    &lt;/intent-filter&gt;</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;&lt;/receiver&gt;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;&lt;service</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    android:name=&quot;com.clanofthecloud.cotcpushnotifications.MyGcmListenerService&quot;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    android:exported=&quot;false&quot; &gt;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    &lt;intent-filter&gt;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        &lt;action android:name=&quot;com.google.android.c2dm.intent.RECEIVE&quot; /&gt;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    &lt;/intent-filter&gt;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;&lt;/service&gt;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;&lt;service</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    android:name=&quot;com.clanofthecloud.cotcpushnotifications.MyInstanceIDListenerService&quot;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    android:exported=&quot;false&quot;&gt;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    &lt;intent-filter&gt;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        &lt;action android:name=&quot;com.google.android.gms.iid.InstanceID&quot;/&gt;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    &lt;/intent-filter&gt;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;&lt;/service&gt;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;&lt;service</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    android:name=&quot;com.clanofthecloud.cotcpushnotifications.RegistrationIntentService&quot;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    android:exported=&quot;false&quot;&gt;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;&lt;/service&gt;</div>
 </div><!-- fragment --><p>You need to change the following:</p>
 <ul>
 <li><code>&lt;category android:name="com.clanofthecloud.sampleunityproject" /&gt;</code> to the Bundle Identifier of your application (under Player Settings, Android, Identification).</li>
@@ -170,7 +148,7 @@ Setting up your Android push notifications with Clan of the Cloud back office</d
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 4 2015 13:45:16 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Aug 17 2015 16:42:08 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

@@ -169,8 +169,9 @@ Import package screen</div></div>
 <div class="line">})</div>
 <div class="line">.Catch(ex =&gt; {</div>
 <div class="line">    Debug.LogError(<span class="stringliteral">&quot;Login failed: &quot;</span> + ex.ToString());</div>
-<div class="line">});</div>
-</div><!-- fragment --><p>Providing a Done block at the end is not mandatory. Doing so will just ensure that the <a class="el" href="class_cotc_sdk_1_1_promise.html#aacac7a3e73453048089ef81153782c15">Unhandled exception handler</a> is called in case you do not provide a Catch block. That is why we prefer the use of Done over Then in our examples: it will prevent errors from being eaten up silently. However we recommend that you always provide a Catch block to handle the exceptional behaviour.</p>
+<div class="line">})</div>
+<div class="line">.Done();</div>
+</div><!-- fragment --><p>Providing a Done block at the end is not mandatory. Doing so will just ensure that the <a class="el" href="class_cotc_sdk_1_1_promise.html#aacac7a3e73453048089ef81153782c15">Unhandled exception handler</a> is called in case you do not provide a Catch block. That is why we prefer the use of Done over Then in our examples: it will prevent errors from being eaten up silently. We recommend that you always provide a Catch block to handle the exceptional behaviour, or end your chain with <code>.Done()</code> as shown above.</p>
 <p>But then there is better, let us say that we want to log in the user and then get his profile. We can return another promise from the Then block and provide a Catch block that will be invoked if either of the calls failed.</p>
 <div class="fragment"><div class="line"><span class="comment">// Chaining multiple operations</span></div>
 <div class="line">Cloud.LoginAnonymously()</div>
@@ -230,7 +231,7 @@ Import package screen</div></div>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 4 2015 13:45:16 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Aug 17 2015 16:42:08 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

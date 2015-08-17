@@ -1,0 +1,9 @@
+Library
+*.csproj
+*.sln
+Temp
+obj
+bin
+UnityVS.CloudBuilderUnity.v11.suo
+Release
+

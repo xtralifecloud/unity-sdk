@@ -78,7 +78,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">Working with achievements </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>CloudBuilder provides a platform independent way of handling achievements for your game. Note that <b>achievements need to be defined on the backoffice</b> before being used on the client.</p>
+<div class="textblock"><p>CotC provides a platform independent way of handling achievements for your game. Note that <b>achievements need to be defined on the backoffice</b> before being used on the client.</p>
 <p>This page is aimed at being a little tutorial on how to work with achievements from the SDK (client). For the next steps, we will suppose that you already know how to create achievements from the backoffice. For a complete list of useful functions in the SDK, take a look at <a class="el" href="class_cotc_sdk_1_1_gamer_achievements.html">CotcSdk.GamerAchievements</a>.</p>
 <h2>Querying the progress of the gamer </h2>
 <p>Fetching the state of achievements is a function that require the customer to be logged in. In general, the status of achievements represents an association between a gamer and a game.</p>
@@ -136,13 +136,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">    <span class="keywordflow">if</span> (txResult.TriggeredAchievements.ContainsKey(<span class="stringliteral">&quot;supersonic&quot;</span>)) {</div>
 <div class="line">        <span class="keywordflow">return</span> gamer.Achievements.AssociateData(<span class="stringliteral">&quot;supersonic&quot;</span>, Bundle.CreateObject(<span class="stringliteral">&quot;unhidden&quot;</span>, <span class="keyword">true</span>));</div>
 <div class="line">    }</div>
-<div class="line">    <span class="keywordflow">return</span> null; <span class="comment">// Nothing to do next</span></div>
 <div class="line">})</div>
-<div class="line">.Done(result =&gt; { <span class="comment">/* All done properly */</span> });</div>
+<div class="line">.Done();</div>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 4 2015 13:45:16 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Aug 17 2015 16:42:08 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>
