@@ -27,8 +27,8 @@ public class Store {
 	private static String CB_TERMINATEPURCHASE = "Android_TerminatePurchase_Done";
 
 	/**
-	 * Call this at startup in order to be able to make in-app payments through CloudBuilder.
-	 * Does NOT work if any attempt to use the CloudBuilder has been made prior to calling this.
+	 * Call this at startup in order to be able to make in-app payments through CotC.
+	 * Does NOT work if any attempt to use the CotC has been made prior to calling this.
 	 * @param gameObjectName Name of the game object to send a message to when a result is to be
 	 *                       posted.
 	 */

@@ -38,13 +38,13 @@ dependencies {
 
 //task to delete the old jar
 task deleteOldJar(type: Delete) {
-	delete '../../../CloudBuilderUnity/Assets/Plugins/Android/Cotc.InAppPurchase.aar'
+	delete '../../../UnityProject/Assets/Plugins/Android/Cotc.InAppPurchase.aar'
 }
 
 //task to export contents as jar
 task exportJar(type: Copy) {
 	from('build/outputs/aar/')
-	into('../../../CloudBuilderUnity/Assets/Plugins/Android/')
+	into('../../../UnityProject/Assets/Plugins/Android/')
 	include('cotcinapppurchase-release.aar')
 	// Rename the jar
 	rename('cotcinapppurchase-release.aar', 'Cotc.InAppPurchase.aar')

@@ -1,7 +1,7 @@
 Working with achievements {#achievements}
 ===========
 
-CloudBuilder provides a platform independent way of handling achievements for your game. Note that **achievements need to be defined on the backoffice** before being used on the client.
+CotC provides a platform independent way of handling achievements for your game. Note that **achievements need to be defined on the backoffice** before being used on the client.
 
 This page is aimed at being a little tutorial on how to work with achievements from the SDK (client). For the next steps, we will suppose that you already know how to create achievements from the backoffice. For a complete list of useful functions in the SDK, take a look at #CotcSdk.GamerAchievements.
 

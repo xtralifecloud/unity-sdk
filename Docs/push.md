@@ -52,12 +52,6 @@ Once this is done, you're almost finished with parameterization, and only some b
 
 Now everything's been done on the Google Application side, we need to add a few snippets of code, so your application can communicate with the Google Cloud Messaging servers. First thing to modify is your AndroidManifest.xml, which is located under Assets/Plugins/Android.
 
-Inside the `<manifest>` tag, make sure to have the following entries:
-~~~
-	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-	<uses-permission android:name="android.permission.WAKE_LOCK" />
-~~~
-
 Inside the `<application>` tag, make sure to have the following entries:
 ~~~
 	<meta-data android:name="cotc.GcmSenderId" android:value="\ XXXXXXXXXX" />
@@ -73,26 +67,6 @@ Inside the `<application>` tag, make sure to have the following entries:
 			<category android:name="com.clanofthecloud.sampleunityproject" />
 		</intent-filter>
 	</receiver>
-
-	<service
-		android:name="com.clanofthecloud.cotcpushnotifications.MyGcmListenerService"
-		android:exported="false" >
-		<intent-filter>
-			<action android:name="com.google.android.c2dm.intent.RECEIVE" />
-		</intent-filter>
-	</service>
-
-	<service
-		android:name="com.clanofthecloud.cotcpushnotifications.MyInstanceIDListenerService"
-		android:exported="false">
-		<intent-filter>
-			<action android:name="com.google.android.gms.iid.InstanceID"/>
-		</intent-filter>
-	</service>
-	<service
-		android:name="com.clanofthecloud.cotcpushnotifications.RegistrationIntentService"
-		android:exported="false">
-	</service>
 ~~~
 
 You need to change the following:

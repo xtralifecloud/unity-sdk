@@ -23,6 +23,16 @@
     <meta-data android:name="cotc.GcmSenderId" android:value="\ 906962523878" />
     <meta-data android:name="cotc.GcmNotificationIcon" android:resource="@drawable/ic_stat_ic_notification" />
     <meta-data android:name="cotc.GcmNotificationTitle" android:value="Cotc sample" />
+
+	<receiver
+		android:name="com.google.android.gms.gcm.GcmReceiver"
+		android:exported="true"
+		android:permission="com.google.android.c2dm.permission.SEND" >
+		<intent-filter>
+			<action android:name="com.google.android.c2dm.intent.RECEIVE" />
+			<category android:name="com.clanofthecloud.sampleunityproject" />
+		</intent-filter>
+	</receiver>
     <!-- [END GCM] -->
   </application>
 </manifest>

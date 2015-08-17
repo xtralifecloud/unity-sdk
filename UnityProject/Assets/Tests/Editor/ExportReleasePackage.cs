@@ -30,7 +30,6 @@ public class ExportReleasePackage {
 			"CotcSdk.PushNotifications.unitypackage",
 			new string[] {
 				"Assets/Cotc.PushNotifications",
-				"Assets/Plugins/Android/AndroidManifest.xml",
 				"Assets/Plugins/Android/appcompat-v7-22.1.1.aar",
 				"Assets/Plugins/Android/Cotc.PushNotifications.aar",
 				"Assets/Plugins/Android/play-services-base-7.5.0.aar",
@@ -46,6 +45,15 @@ public class ExportReleasePackage {
 				"Assets/Plugins/Android/res/drawable-xxhdpi-v11/ic_stat_ic_notification.png",
 			}
 		},
+		{
+			"CotcSdk.InAppPurchase.unitypackage",
+			new string[] {
+				"Assets/Cotc.InAppPurchase",
+				"Assets/Plugins/Android/appcompat-v7-22.1.1.aar",
+				"Assets/Plugins/Android/Cotc.PushNotifications.aar",
+				"Assets/Plugins/Android/support-v4-22.1.1.aar",
+			}
+		},
 	};
 
 	[MenuItem("CotC/Build release packages")]
@@ -53,7 +61,7 @@ public class ExportReleasePackage {
 		var releaseDirectory = Path.Combine(Directory.GetParent(UnityEngine.Application.dataPath).FullName, ReleaseDirectory);
 
 		// First, build the DLLs
-		var buildScriptDir = Path.Combine(Directory.GetParent(UnityEngine.Application.dataPath).Parent.FullName, "CloudBuilderLibrary");
+		var buildScriptDir = Path.Combine(Directory.GetParent(UnityEngine.Application.dataPath).Parent.FullName, "CotcSdk");
 		var process = new System.Diagnostics.Process();
 		var succeeded = false;
 		process.StartInfo.FileName = Path.Combine(buildScriptDir, "Build.bat");

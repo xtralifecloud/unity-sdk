@@ -1,3 +1,3 @@
 #!/bin/sh
-mkdir -p ../CloudBuilderUnity/Assets/Plugins
-cp bin/Debug/CotcSdk.dll ../CloudBuilderUnity/Assets/Plugins/CotcSdk-Debug.dll
+mkdir -p ../UnityProject/Assets/Plugins
+cp bin/Debug/CotcSdk.dll ../UnityProject/Assets/Plugins/CotcSdk-Debug.dll

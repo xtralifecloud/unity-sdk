@@ -251,7 +251,7 @@ The list of pending invitations can be shown by using #CotcSdk.GamerMatches.List
 Random-generator based games (Casino "shoe"-like functionality)
 -----------
 
-CloudBuilder provides functionality to help building games of chance, allowing each individual players to check the outcome of the match in order to ensure consistency. It does this by providing a server-based randomizing device, which hides sensitive information. Therefore, it can help ensure that all players, including the match creator have the same chances. And that no one is able to predict the outcome of the match (or fiddle/hack with it either, as other players are able to detect it).
+CotC provides functionality to help building games of chance, allowing each individual players to check the outcome of the match in order to ensure consistency. It does this by providing a server-based randomizing device, which hides sensitive information. Therefore, it can help ensure that all players, including the match creator have the same chances. And that no one is able to predict the outcome of the match (or fiddle/hack with it either, as other players are able to detect it).
 
 The seed element that is returned with the detailed version of the match (i.e. when joining or fetching it), along with the shoe are the two elements which help building games of chance. The seed is a random number that is generated upon creation of every match. It can be used to initialize a pseudorandom number generator inside the game, and allows to ensure that every player will thus have the same sequence of values.
 

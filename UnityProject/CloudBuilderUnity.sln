@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{33680ADF-E3EC-E54C-FFEF-C000B0A31C15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CotcSdk", "..\CloudBuilderLibrary\CotcSdk.csproj", "{BDD85764-D606-4F8F-AEA8-8B5D52EB9D38}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CotcSdk", "..\CotcSdk\CotcSdk.csproj", "{BDD85764-D606-4F8F-AEA8-8B5D52EB9D38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

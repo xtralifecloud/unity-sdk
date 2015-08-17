@@ -1,9 +1,9 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
-Project("{39A7D985-9296-DD73-CBCB-F8AAEC43AC34}") = "CloudBuilderUnity", "Assembly-CSharp-vs.csproj", "{3F97A02D-E07A-6C03-3921-C6ECCA7E2129}"
+Project("{39A7D985-9296-DD73-CBCB-F8AAEC43AC34}") = "UnityProject", "Assembly-CSharp-vs.csproj", "{3F97A02D-E07A-6C03-3921-C6ECCA7E2129}"
 EndProject
-Project("{39A7D985-9296-DD73-CBCB-F8AAEC43AC34}") = "CloudBuilderUnity", "Assembly-CSharp-Editor-vs.csproj", "{33680ADF-E3EC-E54C-FFEF-C000B0A31C15}"
+Project("{39A7D985-9296-DD73-CBCB-F8AAEC43AC34}") = "UnityProject", "Assembly-CSharp-Editor-vs.csproj", "{33680ADF-E3EC-E54C-FFEF-C000B0A31C15}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

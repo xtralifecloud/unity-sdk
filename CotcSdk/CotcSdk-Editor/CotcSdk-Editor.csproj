@@ -53,11 +53,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>md $(SolutionDir)..\CloudBuilderUnity\Assets\Plugins\Editor
+    <PostBuildEvent>md $(SolutionDir)..\UnityProject\Assets\Plugins\Editor
 if $(ConfigurationName) == Debug (
-    copy $(TargetPath) $(SolutionDir)..\CloudBuilderUnity\Assets\Plugins\Editor\CotcSdk-Editor-Debug.dll
+    copy $(TargetPath) $(SolutionDir)..\UnityProject\Assets\Plugins\Editor\CotcSdk-Editor-Debug.dll
 ) else (
-    copy $(TargetPath) $(SolutionDir)..\CloudBuilderUnity\Assets\Plugins\Editor\
+    copy $(TargetPath) $(SolutionDir)..\UnityProject\Assets\Plugins\Editor\
 )</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

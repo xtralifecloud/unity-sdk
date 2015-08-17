@@ -13,14 +13,14 @@ The build system is currently made for Windows, and we are using Visual Studio 2
 ### Building the library
 
 The steps involved are:
-- Build the CloudBuilderLibrary solution,
+- Build the CotcSdk solution,
 - Use the CLI sample project to run the integration tests
 - Build a unity package from the same project
 
 
-#### Build the CloudBuilderLibrary solution
+#### Build the CotcSdk solution
 
-This should be very simple. Just open the sln file under the CloudBuilderLibrary directory.
+This should be very simple. Just open the sln file under the CotcSdk directory.
 
 
 ### Additional plugins

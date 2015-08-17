@@ -763,7 +763,7 @@ WARN_LOGFILE           =
 # spaces.
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = ../CloudBuilderLibrary \
+INPUT                  = ../CotcSdk \
                          Docs
 
 # This tag can be used to specify the character encoding of the source files
@@ -840,7 +840,7 @@ RECURSIVE              = YES
 # Note that relative paths are relative to the directory from which doxygen is
 # run.
 
-EXCLUDE                = ../CloudBuilderLibrary/Libs
+EXCLUDE                = ../CotcSdk/Libs
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
 # directories that are symbolic links (a Unix file system feature) are excluded

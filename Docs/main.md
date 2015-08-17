@@ -1,7 +1,7 @@
 Welcome {#mainpage}
 ===========
 
-Welcome to the documentation for the CloudBuilder SDK for Unity. If you haven't done it already, [click here](https://github.com/clanofthecloud/unity-sdk/releases) to visit the download page.
+Welcome to the documentation for the Clan of the Cloud SDK for Unity. If you haven't done it already, [click here](https://github.com/clanofthecloud/unity-sdk/releases) to visit the download page.
 
 - [Installing & getting started](@ref getting_started_ref)
 - [Setting up for Facebook](@ref facebook_ref)
