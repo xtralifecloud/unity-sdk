@@ -103,7 +103,7 @@ namespace CotcSdk.FacebookIntegration
 				string nextUrl = fbResult["paging"]["next"];
 				// Finished
 				if (data.Count == 0 || nextUrl == null) {
-					task.PostResult(addDataTo, Bundle.Empty);
+					task.PostResult(addDataTo);
 					return;
 				}
 

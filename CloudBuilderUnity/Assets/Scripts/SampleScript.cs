@@ -146,7 +146,7 @@ public class SampleScript : MonoBehaviour {
 				return inApp.LaunchPurchase(enrichedProducts[0]);
 			})
 			.Then(purchasedProduct => {
-				Debug.Log("Purchase ok");
+				Debug.Log("Purchase ok: " + purchasedProduct.ToString());
 				pp[0] = purchasedProduct;
 				return Gamer.Store.ValidateReceipt(purchasedProduct.StoreType, purchasedProduct.CotcProductId, purchasedProduct.PaidPrice, purchasedProduct.PaidCurrency, purchasedProduct.Receipt);
 			})

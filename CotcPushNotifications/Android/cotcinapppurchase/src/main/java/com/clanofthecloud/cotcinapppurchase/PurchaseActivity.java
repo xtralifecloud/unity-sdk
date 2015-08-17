@@ -52,7 +52,6 @@ public class PurchaseActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		Log.d("PurchaseActivity", "Result");
 		if (listener != null) {
 			listener.gotActivityResult(requestCode, resultCode, data);
 		}
