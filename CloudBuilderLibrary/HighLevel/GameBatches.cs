@@ -28,7 +28,7 @@ namespace CotcSdk {
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			req.BodyJson = batchParams ?? Bundle.Empty;
 			return Common.RunInTask<Bundle>(req, (response, task) => {
-				task.PostResult(response.BodyJson, response.BodyJson);
+				task.PostResult(response.BodyJson);
 			});
 		}
 

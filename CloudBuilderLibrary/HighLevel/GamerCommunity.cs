@@ -37,7 +37,7 @@ namespace CotcSdk {
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
 			return Common.RunInTask<Done>(req, (response, task) => {
-				task.PostResult(new Done(response.BodyJson), response.BodyJson);
+				task.PostResult(new Done(response.BodyJson));
 			});
 		}
 
@@ -75,7 +75,7 @@ namespace CotcSdk {
 				foreach (Bundle f in response.BodyJson["friends"].AsArray()) {
 					result.Add(new GamerInfo(f));
 				}
-				task.PostResult(result, response.BodyJson);
+				task.PostResult(result);
 			});
 		}
 
@@ -100,7 +100,7 @@ namespace CotcSdk {
 
 			req.BodyJson = friendData;
 			return Common.RunRequest(req, task, (HttpResponse response) => {
-				task.PostResult(new SocialNetworkFriendResponse(response.BodyJson), response.BodyJson);
+				task.PostResult(new SocialNetworkFriendResponse(response.BodyJson));
 			});
 		}
 
@@ -122,7 +122,7 @@ namespace CotcSdk {
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = eventData;
 			return Common.RunInTask<Done>(req, (response, task) => {
-				task.PostResult(new Done(true, response.BodyJson), response.BodyJson);
+				task.PostResult(new Done(true, response.BodyJson));
 			});
 		}
 

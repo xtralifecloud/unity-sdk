@@ -47,7 +47,7 @@ namespace CotcSdk
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "PUT";
 			return Common.RunInTask<string>(req, (response, task) => {
-				task.PostResult(response.BodyJson["godfathercode"], response.BodyJson);
+				task.PostResult(response.BodyJson["godfathercode"]);
 			});
 		}
 
@@ -63,7 +63,7 @@ namespace CotcSdk
 				foreach (Bundle b in response.BodyJson["godchildren"].AsArray()) {
 					result.Add(new GamerInfo(b));
 				}
-				task.PostResult(result, response.BodyJson);
+				task.PostResult(result);
 			});
 		}
 
@@ -75,7 +75,7 @@ namespace CotcSdk
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/godfather").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			return Common.RunInTask<GamerInfo>(req, (response, task) => {
-				task.PostResult(new GamerInfo(response.BodyJson["godfather"]), response.BodyJson);
+				task.PostResult(new GamerInfo(response.BodyJson["godfather"]));
 			});
 		}
 
@@ -101,7 +101,7 @@ namespace CotcSdk
 			config["reward"] = rewardTx;
 			req.BodyJson = config;
 			return Common.RunInTask<Done>(req, (response, task) => {
-				task.PostResult(new Done(response.BodyJson), response.BodyJson);
+				task.PostResult(new Done(response.BodyJson));
 			});
 		}
 

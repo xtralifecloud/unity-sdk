@@ -5,7 +5,6 @@ namespace CotcSdk
 	{
 		Bundle CollectDeviceInformation();
 		string GetOsName();
-		// TODO AchieveRegisterDevice
 	}
 }
 

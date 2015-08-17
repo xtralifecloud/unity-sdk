@@ -20,7 +20,7 @@ namespace CotcSdk {
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";
 			return Common.RunInTask<Done>(req, (response, task) => {
-				task.PostResult(new Done(true, response.BodyJson), response.BodyJson);
+				task.PostResult(new Done(true, response.BodyJson));
 			});
 		}
 

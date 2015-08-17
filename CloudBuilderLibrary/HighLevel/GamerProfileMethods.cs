@@ -15,7 +15,7 @@ namespace CotcSdk
 			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/profile");
 			return Common.RunInTask<GamerProfile>(req, (response, task) => {
 				GamerProfile profile = new GamerProfile(response.BodyJson);
-				task.PostResult(profile, response.BodyJson);
+				task.PostResult(profile);
 			});
 		}
 
@@ -33,7 +33,7 @@ namespace CotcSdk
 			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/profile");
 			req.BodyJson = data;
 			return Common.RunInTask<Done>(req, (response, task) => {
-				task.PostResult(new Done(response.BodyJson), response.BodyJson);
+				task.PostResult(new Done(response.BodyJson));
 			});
 		}
 

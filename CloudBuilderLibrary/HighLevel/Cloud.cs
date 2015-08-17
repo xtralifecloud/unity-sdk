@@ -40,7 +40,7 @@ namespace CotcSdk
 		public Promise<Done> Ping() {
 			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/ping");
 			return Common.RunInTask<Done>(req, (response, task) => {
-				task.PostResult(new Done(true, response.BodyJson), response.BodyJson);
+				task.PostResult(new Done(true, response.BodyJson));
 			});
 		}
 

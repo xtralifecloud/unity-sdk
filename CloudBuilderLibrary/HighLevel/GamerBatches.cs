@@ -29,7 +29,7 @@ namespace CotcSdk {
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = batchParams ?? Bundle.Empty;
 			return Common.RunInTask<Bundle>(req, (response, task) => {
-				task.PostResult(response.BodyJson, response.BodyJson);
+				task.PostResult(response.BodyJson);
 			});
 		}
 

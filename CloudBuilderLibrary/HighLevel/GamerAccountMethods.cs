@@ -23,7 +23,7 @@ namespace CotcSdk
 			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/email");
 			req.BodyJson = config;
 			return Common.RunRequest(req, task, (HttpResponse response) => {
-				task.PostResult(new Done(response.BodyJson), response.BodyJson);
+				task.PostResult(new Done(response.BodyJson));
 			});
 		}
 
@@ -42,7 +42,7 @@ namespace CotcSdk
 			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/password");
 			req.BodyJson = Bundle.CreateObject("password", newPassword);
 			return Common.RunRequest(req, task, (HttpResponse response) => {
-				task.PostResult(new Done(response.BodyJson), response.BodyJson);
+				task.PostResult(new Done(response.BodyJson));
 			});
 		}
 
@@ -69,7 +69,7 @@ namespace CotcSdk
 			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/convert");
 			req.BodyJson = config;
 			return Common.RunInTask<Done>(req, (response, task) => {
-				task.PostResult(new Done(response.BodyJson), response.BodyJson);
+				task.PostResult(new Done(response.BodyJson));
 			});
 		}
 
@@ -83,7 +83,7 @@ namespace CotcSdk
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "POST";
 			return Common.RunInTask<Done>(req, (response, task) => {
-				task.PostResult(new Done(response.BodyJson), response.BodyJson);
+				task.PostResult(new Done(response.BodyJson));
 			});
 		}
 
@@ -97,7 +97,7 @@ namespace CotcSdk
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";
 			return Common.RunInTask<Done>(req, (response, task) => {
-				task.PostResult(new Done(response.BodyJson), response.BodyJson);
+				task.PostResult(new Done(response.BodyJson));
 			});
 		}
 

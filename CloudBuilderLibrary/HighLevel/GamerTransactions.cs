@@ -18,7 +18,7 @@ namespace CotcSdk {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/tx").Path(domain).Path("balance");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			return Common.RunInTask<Bundle>(req, (response, task) => {
-				task.PostResult(response.BodyJson, response.BodyJson);
+				task.PostResult(response.BodyJson);
 			});
 		}
 
@@ -58,7 +58,7 @@ namespace CotcSdk {
 				if (offset + transactions.Count < transactions.Total) {
 					transactions.Next = () => History(unit, limit, offset + limit);
 				}
-				task.PostResult(transactions, response.BodyJson);
+				task.PostResult(transactions);
 			});
 		}
 
@@ -76,7 +76,7 @@ namespace CotcSdk {
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("transaction", transaction, "description", description);
 			return Common.RunInTask<TransactionResult>(req, (response, task) => {
-				task.PostResult(new TransactionResult(response.BodyJson), response.BodyJson);
+				task.PostResult(new TransactionResult(response.BodyJson));
 			});
 		}
 

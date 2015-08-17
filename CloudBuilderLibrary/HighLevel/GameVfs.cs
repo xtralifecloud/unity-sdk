@@ -29,7 +29,7 @@ namespace CotcSdk {
 			UrlBuilder url = new UrlBuilder("/v1/vfs").Path(domain);
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			return Common.RunInTask<Bundle>(req, (response, task) => {
-				task.PostResult(response.BodyJson, response.BodyJson);
+				task.PostResult(response.BodyJson);
 			});
 		}
 
@@ -44,7 +44,7 @@ namespace CotcSdk {
 			UrlBuilder url = new UrlBuilder("/v1/vfs").Path(domain).Path(key);
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			return Common.RunInTask<Bundle>(req, (response, task) => {
-				task.PostResult(response.BodyJson, response.BodyJson);
+				task.PostResult(response.BodyJson);
 			});
 		}
 

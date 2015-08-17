@@ -17,7 +17,7 @@ namespace CotcSdk {
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			req.Method = "DELETE";
 			return Common.RunInTask<Done>(req, (response, task) => {
-				task.PostResult(new Done(true, response.BodyJson), response.BodyJson);
+				task.PostResult(new Done(true, response.BodyJson));
 			});
 		}
 
@@ -30,7 +30,7 @@ namespace CotcSdk {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName).Path(objectId);
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			return Common.RunInTask<IndexResult>(req, (response, task) => {
-				task.PostResult(new IndexResult(response.BodyJson), response.BodyJson);
+				task.PostResult(new IndexResult(response.BodyJson));
 			});
 		}
 
@@ -58,7 +58,7 @@ namespace CotcSdk {
 				"payload", payload
 			);
 			return Common.RunInTask<Done>(req, (response, task) => {
-				task.PostResult(new Done(true, response.BodyJson), response.BodyJson);
+				task.PostResult(new Done(true, response.BodyJson));
 			});
 		}
 
@@ -145,7 +145,7 @@ namespace CotcSdk {
 						return promise;
 					};
 				}
-				task.PostResult(result, response.BodyJson);
+				task.PostResult(result);
 			});
 		}
 

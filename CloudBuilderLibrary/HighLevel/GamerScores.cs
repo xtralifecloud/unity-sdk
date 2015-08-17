@@ -51,7 +51,7 @@ namespace CotcSdk {
 				if (offset + scores.Count < scores.Total) {
 					scores.Next = () => List(board, limit, offset + limit);
 				}
-				task.PostResult(scores, response.BodyJson);
+				task.PostResult(scores);
 			});
 		}
 
@@ -68,7 +68,7 @@ namespace CotcSdk {
 				foreach (Bundle b in response.BodyJson[board].AsArray()) {
 					scores.Add(new Score(b));
 				}
-				task.PostResult(scores, response.BodyJson);
+				task.PostResult(scores);
 			});
 		}
 
@@ -88,7 +88,7 @@ namespace CotcSdk {
 					s.GamerInfo = null;
 					scores[pair.Key] = s;
 				}
-				task.PostResult(scores, response.BodyJson);
+				task.PostResult(scores);
 			});
 		}
 
@@ -106,7 +106,7 @@ namespace CotcSdk {
 			req.BodyJson = Bundle.CreateObject("score", score);
 			req.Method = "PUT";
 			return Common.RunInTask<int>(req, (response, task) => {
-				task.PostResult(response.BodyJson["rank"], response.BodyJson);
+				task.PostResult(response.BodyJson["rank"]);
 			});
 		}
 
@@ -134,7 +134,7 @@ namespace CotcSdk {
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("score", score, "info", scoreInfo);
 			return Common.RunInTask<PostedGameScore>(req, (response, task) => {
-				task.PostResult(new PostedGameScore(response.BodyJson), response.BodyJson);
+				task.PostResult(new PostedGameScore(response.BodyJson));
 			});
 		}
 

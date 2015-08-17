@@ -32,7 +32,7 @@ namespace CotcSdk
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = data;
 			return Common.RunInTask<AchievementDefinition>(req, (response, task) => {
-				task.PostResult(new AchievementDefinition(achName, response.BodyJson["achievement"]), response.BodyJson);
+				task.PostResult(new AchievementDefinition(achName, response.BodyJson["achievement"]));
 			});
 		}
 
@@ -49,7 +49,7 @@ namespace CotcSdk
 				foreach (var pair in response.BodyJson["achievements"].AsDictionary()) {
 					result[pair.Key] = new AchievementDefinition(pair.Key, pair.Value);
 				}
-				task.PostResult(result, response.BodyJson);
+				task.PostResult(result);
 			});
 		}
 

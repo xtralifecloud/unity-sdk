@@ -22,7 +22,7 @@ namespace CotcSdk {
 				foreach (Bundle b in response.BodyJson["products"].AsArray()) {
 					products.Add(new ConfiguredProduct(b));
 				}
-				task.PostResult(products, response.BodyJson);
+				task.PostResult(products);
 			});
 		}
 
@@ -38,7 +38,7 @@ namespace CotcSdk {
 				foreach (Bundle b in response.BodyJson["transactions"].AsArray()) {
 					products.Add(new PurchaseTransaction(b));
 				}
-				task.PostResult(products, response.BodyJson);
+				task.PostResult(products);
 			});
 		}
 
@@ -63,7 +63,7 @@ namespace CotcSdk {
 			data["receipt"] = receipt;
 			req.BodyJson = data;
 			return Common.RunInTask<ValidateReceiptResult>(req, (response, task) => {
-				task.PostResult(new ValidateReceiptResult(response.BodyJson), response.BodyJson);
+				task.PostResult(new ValidateReceiptResult(response.BodyJson));
 			});
 		}
 

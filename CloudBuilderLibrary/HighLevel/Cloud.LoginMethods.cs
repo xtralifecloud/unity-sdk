@@ -27,7 +27,7 @@ namespace CotcSdk
 				if (offset + result.Count < result.Total) {
 					result.Next = () => ListUsers(filter, limit, offset + limit);
 				}
-				task.PostResult(result, response.BodyJson);
+				task.PostResult(result);
 			});
 		}
 
@@ -44,7 +44,7 @@ namespace CotcSdk
 			req.BodyJson = config;
 			return Common.RunInTask<Gamer>(req, (response, task) => {
 				Gamer gamer = new Gamer(this, response.BodyJson);
-				task.PostResult(gamer, response.BodyJson);
+				task.PostResult(gamer);
 				Cotc.NotifyLoggedIn(this, gamer);
 			});
 		}
@@ -76,7 +76,7 @@ namespace CotcSdk
 			req.BodyJson = config;
 			return Common.RunInTask<Gamer>(req, (response, task) => {
 				Gamer gamer = new Gamer(this, response.BodyJson);
-				task.PostResult(gamer, response.BodyJson);
+				task.PostResult(gamer);
 				Cotc.NotifyLoggedIn(this, gamer);
 			});
 		}
@@ -113,7 +113,7 @@ namespace CotcSdk
 			req.BodyJson = config;
 
 			return Common.RunInTask<Done>(req, (response, task) => {
-				task.PostResult(new Done(response.BodyJson), response.BodyJson);
+				task.PostResult(new Done(response.BodyJson));
 			});
 		}
 
@@ -128,7 +128,7 @@ namespace CotcSdk
 				.Path(network.Describe()).Path(networkId);
 			HttpRequest req = MakeUnauthenticatedHttpRequest(url);
 			return Common.RunInTask<Done>(req, (response, task) => {
-				task.PostResult(new Done(true, response.BodyJson), response.BodyJson);
+				task.PostResult(new Done(true, response.BodyJson));
 			});
 		}
 	}

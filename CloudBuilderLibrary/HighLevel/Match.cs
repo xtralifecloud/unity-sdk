@@ -123,7 +123,7 @@ namespace CotcSdk {
 			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
 			return Common.RunInTask<DrawnItemsResult>(req, (response, task) => {
 				UpdateWithServerData(response.BodyJson["match"]);
-				task.PostResult(new DrawnItemsResult(response.BodyJson), response.BodyJson);
+				task.PostResult(new DrawnItemsResult(response.BodyJson));
 			});
 		}
 
@@ -147,7 +147,7 @@ namespace CotcSdk {
 					Gamer.Matches.Delete(MatchId).ForwardTo(task);
 				}
 				else {
-					task.PostResult(new Done(true, response.BodyJson), response.BodyJson);
+					task.PostResult(new Done(true, response.BodyJson));
 				}
 			});
 		}
@@ -166,7 +166,7 @@ namespace CotcSdk {
 			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
 			return Common.RunInTask<Done>(req, (response, task) => {
 				UpdateWithServerData(response.BodyJson["match"]);
-				task.PostResult(new Done(true, response.BodyJson), response.BodyJson);
+				task.PostResult(new Done(true, response.BodyJson));
 			});
 		}
 
@@ -181,7 +181,7 @@ namespace CotcSdk {
 			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
 			return Common.RunInTask<Done>(req, (response, task) => {
 				UpdateWithServerData(response.BodyJson["match"]);
-				task.PostResult(new Done(true, response.BodyJson), response.BodyJson);
+				task.PostResult(new Done(true, response.BodyJson));
 			});
 		}
 
@@ -222,7 +222,7 @@ namespace CotcSdk {
 					GlobalState = updatedGameState;
 				}
 				Moves.Add(new MatchMove(Gamer.GamerId, moveData));
-				task.PostResult(new Done(true, response.BodyJson), response.BodyJson);
+				task.PostResult(new Done(true, response.BodyJson));
 			});
 		}
 

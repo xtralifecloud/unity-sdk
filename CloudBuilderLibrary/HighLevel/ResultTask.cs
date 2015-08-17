@@ -11,7 +11,7 @@ namespace CotcSdk {
 			promise.Reject(new CotcException(code, reason));
 			return promise;
 		}
-		public static Promise<T> PostResult<T>(this Promise<T> promise, T value, Bundle serverData) {
+		public static Promise<T> PostResult<T>(this Promise<T> promise, T value) {
 			promise.Resolve(value);
 			return promise;
 		}

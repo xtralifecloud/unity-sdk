@@ -28,7 +28,7 @@ namespace CotcSdk {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			return Common.RunInTask<Bundle>(req, (response, task) => {
-				task.PostResult(response.BodyJson["properties"], response.BodyJson);
+				task.PostResult(response.BodyJson["properties"]);
 			});
 		}
 
@@ -43,7 +43,7 @@ namespace CotcSdk {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/property").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			return Common.RunInTask<Bundle>(req, (response, task) => {
-				task.PostResult(response.BodyJson["properties"], response.BodyJson);
+				task.PostResult(response.BodyJson["properties"]);
 			});
 		}
 
@@ -59,7 +59,7 @@ namespace CotcSdk {
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("value", value);
 			return Common.RunInTask<Done>(req, (response, task) => {
-				task.PostResult(new Done(response.BodyJson), response.BodyJson);
+				task.PostResult(new Done(response.BodyJson));
 			});
 		}
 
@@ -73,7 +73,7 @@ namespace CotcSdk {
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = properties;
 			return Common.RunInTask<Done>(req, (response, task) => {
-				task.PostResult(new Done(response.BodyJson), response.BodyJson);
+				task.PostResult(new Done(response.BodyJson));
 			});
 		}
 
@@ -87,7 +87,7 @@ namespace CotcSdk {
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";
 			return Common.RunInTask<Done>(req, (response, task) => {
-				task.PostResult(new Done(response.BodyJson), response.BodyJson);
+				task.PostResult(new Done(response.BodyJson));
 			});
 		}
 
@@ -100,7 +100,7 @@ namespace CotcSdk {
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";
 			return Common.RunInTask<Done>(req, (response, task) => {
-				task.PostResult(new Done(response.BodyJson), response.BodyJson);
+				task.PostResult(new Done(response.BodyJson));
 			});
 		}
 

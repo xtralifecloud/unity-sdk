@@ -26,7 +26,7 @@ namespace CotcSdk {
 			var task = new Promise<Cloud>();
 			lock (SpinLock) {
 				Cloud cloud = new Cloud(apiKey, apiSecret, environment, loadBalancerCount, httpVerbose, httpTimeout);
-				return task.PostResult(cloud, Bundle.Empty);
+				return task.PostResult(cloud);
 			}
 		}
 

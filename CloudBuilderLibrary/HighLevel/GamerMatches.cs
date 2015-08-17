@@ -42,7 +42,7 @@ namespace CotcSdk {
 			config["shoe"] = shoe;
 			req.BodyJson = config;
 			return Common.RunRequest(req, task, (HttpResponse response) => {
-				task.PostResult(new Match(Gamer, response.BodyJson["match"]), response.BodyJson);
+				task.PostResult(new Match(Gamer, response.BodyJson["match"]));
 			});
 		}
 
@@ -56,7 +56,7 @@ namespace CotcSdk {
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";
 			return Common.RunInTask<Done>(req, (response, task) => {
-				task.PostResult(new Done(response.BodyJson), response.BodyJson);
+				task.PostResult(new Done(response.BodyJson));
 			});
 		}
 
@@ -94,7 +94,7 @@ namespace CotcSdk {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(matchId);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			return Common.RunInTask<Match>(req, (response, task) => {
-				task.PostResult(new Match(Gamer, response.BodyJson["match"]), response.BodyJson);
+				task.PostResult(new Match(Gamer, response.BodyJson["match"]));
 			});
 		}
 
@@ -112,7 +112,7 @@ namespace CotcSdk {
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = Bundle.CreateObject("osn", notification != null ? notification.Data : null);
 			return Common.RunInTask<Match>(req, (response, task) => {
-				task.PostResult(new Match(Gamer, response.BodyJson["match"]), response.BodyJson);
+				task.PostResult(new Match(Gamer, response.BodyJson["match"]));
 			});
 		}
 
@@ -149,7 +149,7 @@ namespace CotcSdk {
 				if (offset + matches.Count < matches.Total) {
 					matches.Next = () => List(participating, invited, finished, full, limit, offset + limit);
 				}
-				task.PostResult(matches, response.BodyJson);
+				task.PostResult(matches);
 			});
 		}
 
