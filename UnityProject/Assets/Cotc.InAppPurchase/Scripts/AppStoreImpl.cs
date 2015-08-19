@@ -1,27 +1,32 @@
-﻿#if UNITY_ANDROID
+﻿#if UNITY_IPHONE
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Runtime.InteropServices;
 
 namespace CotcSdk.InappPurchase {
 
 	/**
-	 * Android implementation of the Store. Uses Java code for interfacing with the machine.
+	 * Apple implementation of the Store. Uses C for interfacing with the machine.
 	 */
-	class GooglePlayStoreImpl: IStore {
+	class AppStoreImpl: IStore {
 
-		private AndroidJavaClass JavaClass;
 		private Promise<List<ProductInfo>> LastGetInformationAboutProductsPromise;
 		private Promise<PurchasedProduct> LastLaunchProductPromise;
 		private Promise<Done> LastTerminatePurchasePromise;
 
+		[DllImport("__Internal")]
+		private static extern void CotcInappPurchase_startup(string callbackGameObjectName);
+		[DllImport("__Internal")]
+		private static extern void CotcInappPurchase_listProducts(string json);
+		[DllImport("__Internal")]
+		private static extern void CotcInappPurchase_launchPurchase(string json);
+		[DllImport("__Internal")]
+		private static extern void CotcInappPurchase_terminatePurchase(string json);
+
 		// GameObjectName is used for callbacks from Java
-		public GooglePlayStoreImpl(string gameObjectName) {
-			JavaClass = new AndroidJavaClass("com.clanofthecloud.cotcinapppurchase.Store");
-			if (JavaClass == null) {
-				throw new InvalidOperationException("com.clanofthecloud.cotcinapppurchase.Store java class failed to load; check that the AAR is included properly in Assets/Plugins/Android");
-			}
-			JavaClass.CallStatic("startup", gameObjectName);
+		public AppStoreImpl(string gameObjectName) {
+			CotcInappPurchase_startup(gameObjectName);
 		}
 
 		Promise<List<ProductInfo>> IStore.GetInformationAboutProducts(List<ConfiguredProduct> products) {
@@ -40,7 +45,7 @@ namespace CotcSdk.InappPurchase {
 			}
 
 			// Will call back the CotcInappPurchaseGameObject
-			JavaClass.CallStatic("listProducts", interop.ToJson());
+			CotcInappPurchase_listProducts(interop.ToJson());
 			return LastGetInformationAboutProductsPromise;
 		}
 
@@ -57,7 +62,6 @@ namespace CotcSdk.InappPurchase {
 				Debug.LogWarning("Responding to GetInformationAboutProducts without having promise set");
 			}
 
-			Common.TEMP("GetInformationAboutProducts_Done: " + message);
 			Bundle json = Bundle.FromJson(message);
 			// Error
 			if (json.Has("error")) {
@@ -82,7 +86,7 @@ namespace CotcSdk.InappPurchase {
 			}
 
 			// Will call back the CotcInappPurchaseGameObject
-			JavaClass.CallStatic("launchPurchase", product.ToJson());
+			CotcInappPurchase_launchPurchase(product.ToJson());
 			return LastLaunchProductPromise;
 		}
 
@@ -106,7 +110,7 @@ namespace CotcSdk.InappPurchase {
 			}
 			
 			PurchasedProduct product = new PurchasedProduct(
-				Common.ParseEnum<StoreType>(json["store"], StoreType.Googleplay),
+				Common.ParseEnum<StoreType>(json["store"], StoreType.Appstore),
 				json["productId"], json["internalProductId"], json["price"],
 				json["currency"], json["receipt"], json["token"]);
 			promise.Resolve(product);
@@ -126,7 +130,7 @@ namespace CotcSdk.InappPurchase {
 			arg["internalProductId"] = product.InternalProductId;
 
 			// Will call back the CotcInappPurchaseGameObject
-			JavaClass.CallStatic("terminatePurchase", arg.ToJson());
+			CotcInappPurchase_terminatePurchase(arg.ToJson());
 			return LastTerminatePurchasePromise;
 		}
 

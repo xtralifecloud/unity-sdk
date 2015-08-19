@@ -39,5 +39,10 @@ namespace CotcSdk.InappPurchase {
 		 * @return a promise that is resolved when the native operation has completed.
 		 */
 		Promise<Done> TerminatePurchase(PurchasedProduct product);
+
+		// ------------- Callback messages used by some native implementations -------------
+		void GetInformationAboutProducts_Done(string message);
+		void LaunchPurchase_Done(string message);
+		void TerminatePurchase_Done(string message);
 	}
 }

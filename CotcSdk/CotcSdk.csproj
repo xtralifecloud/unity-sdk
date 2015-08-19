@@ -114,6 +114,10 @@
     <Compile Include="PlatformSpecific\Unity\UnityLogger.cs" />
     <Compile Include="PlatformSpecific\Unity\UnitySystemFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="HighLevel\Model\ConfiguredProduct.cs" />
+    <Compile Include="HighLevel\Model\PurchaseTransaction.cs" />
+    <Compile Include="HighLevel\Model\StoreType.cs" />
+    <Compile Include="HighLevel\Model\ValidateReceiptResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HighLevel\GamerAccountMethods.cs" />

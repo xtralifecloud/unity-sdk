@@ -21,6 +21,7 @@ namespace CotcSdk
 		AlreadySetup = 2106,
 		SocialNetworkError = 2107,
 		LoginCanceled = 2108,
+		ErrorWithExternalStore = 2109,
 
 		/// You shouldn't receive this error, it's just a convenient value
 		LastError
@@ -47,6 +48,7 @@ namespace CotcSdk
 			case ErrorCode.AlreadySetup: return "Cannot set up twice";
 			case ErrorCode.SocialNetworkError: return "Error with a social network";
 			case ErrorCode.LoginCanceled: return "The login was canceled by the player";
+			case ErrorCode.ErrorWithExternalStore: return "An error occured with an external app store component";
 			}
 			return "No description available";
 		}

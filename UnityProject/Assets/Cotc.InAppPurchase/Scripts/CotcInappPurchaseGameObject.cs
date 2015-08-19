@@ -11,6 +11,8 @@ namespace CotcSdk.InappPurchase {
 		void Start() {
 #if UNITY_ANDROID
 			Store = new GooglePlayStoreImpl(gameObject.name);
+#elif UNITY_IPHONE
+			Store = new AppStoreImpl(gameObject.name);
 #else
 			Debug.LogError("In-app purchase not available on this platform");
 			Store = null;
@@ -52,19 +54,19 @@ namespace CotcSdk.InappPurchase {
 			return Store.LaunchPurchaseFlow(info);
 		}
 
-#if UNITY_ANDROID
+#if UNITY_ANDROID || UNITY_IPHONE
 		// Got from the GooglePlayStoreImpl when GetInformationAboutProducts calls back
-		void Android_GetInformationAboutProducts_Done(string message) {
-			((GooglePlayStoreImpl)Store).GetInformationAboutProducts_Done(message);
+		void GetInformationAboutProducts_Done(string message) {
+			Store.GetInformationAboutProducts_Done(message);
 		}
 
 		// Got from the GooglePlayStoreImpl when LaunchPurchase calls back
-		void Android_LaunchPurchase_Done(string message) {
-			((GooglePlayStoreImpl)Store).LaunchPurchase_Done(message);
+		void LaunchPurchase_Done(string message) {
+			Store.LaunchPurchase_Done(message);
 		}
 
-		void Android_TerminatePurchase_Done(string message) {
-			((GooglePlayStoreImpl)Store).TerminatePurchase_Done(message);
+		void TerminatePurchase_Done(string message) {
+			Store.TerminatePurchase_Done(message);
 		}
 #endif
 	}
