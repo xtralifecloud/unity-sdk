@@ -19,6 +19,7 @@ namespace CotcSdk
 			public override int GetHashCode() { return Url.GetHashCode(); }
 		}
 		private Dictionary<string, EnvironmentInfo> PredefinedEnvironments = new Dictionary<string,EnvironmentInfo>() {
+			{"Custom...", new EnvironmentInfo("", 0)},
 			{"Sandbox", new EnvironmentInfo("https://sandbox-api[id].clanofthecloud.mobi", 2)},
 			{"Production", new EnvironmentInfo("https://prod-api[id].clanofthecloud.mobi", 16)},
 #if DEBUG
@@ -41,31 +42,85 @@ namespace CotcSdk
 				AssetDatabase.CreateAsset(s, CotcSettings.AssetPath);
 				s = CotcSettings.Instance;
 			}
+			// Ensure there is at least one environment
+			if (s.Environments.Count == 0) {
+				var env = new CotcSettings.Environment() {
+					Name = "Default"
+				};
+				s.Environments.Add(env);
+			}
 
 			GUILayout.Label("CotC SDK Settings", EditorStyles.boldLabel);
 			GUILayout.Label("These are global to all scenes in your project (stored under Assets/Resources/).");
 			GUI.skin.label.wordWrap = true;
 			GUILayout.Space(5);
 
-			s.ApiKey = EditorGUILayout.TextField("API Key", s.ApiKey);
-			s.ApiSecret = EditorGUILayout.TextField("API Secret", s.ApiSecret);
+			// Show the predefined environment combo
+			string[] presets = new string[s.Environments.Count + 1];
+			int index = 0;
+			foreach (var env in s.Environments) {
+				presets[index] = (index + 1) + ": " + env.Name;
+				index++;
+			}
+			presets[index] = "Add new...";
+
+			s.SelectedEnvironment = EditorGUILayout.Popup("Preset", s.SelectedEnvironment, presets);
+			// Add new entry was selected
+			if (s.SelectedEnvironment == s.Environments.Count) {
+				var env = new CotcSettings.Environment() {
+					Name = "New preset"
+				};
+				s.Environments.Add(env);
+			}
+
+			CotcSettings.Environment ce = s.Environments[s.SelectedEnvironment];
+			GUILayout.BeginHorizontal();
+			ce.Name = EditorGUILayout.TextField("Preset name", ce.Name);
+			GUI.enabled = s.Environments.Count > 1;
+			if (GUILayout.Button("Remove", GUILayout.Width(80))) {
+				s.Environments.RemoveAt(s.SelectedEnvironment);
+				s.SelectedEnvironment = Math.Max(0, s.SelectedEnvironment - 1);
+			}
+			GUI.enabled = true;
+			EditorGUILayout.EndHorizontal();
+			GUILayout.Space(10);
+
+			// Now show standard params
+			ce.ApiKey = EditorGUILayout.TextField("API Key", ce.ApiKey);
+			ce.ApiSecret = EditorGUILayout.TextField("API Secret", ce.ApiSecret);
+
+			// Provide default sandbox environment
+			if (string.IsNullOrEmpty(ce.ServerUrl)) {
+				ce.ServerUrl = PredefinedEnvironments["Sandbox"].Url;
+				ce.LbCount = PredefinedEnvironments["Sandbox"].LbCount;
+			}
+
 			var keys = new string[PredefinedEnvironments.Keys.Count];
-			var comparison = new EnvironmentInfo(s.Environment, s.LbCount);
+			var comparison = new EnvironmentInfo(ce.ServerUrl, ce.LbCount);
 			PredefinedEnvironments.Keys.CopyTo(keys, 0);
-			var env = PredefinedEnvironments[keys[
-					EditorGUILayout.Popup("Environment", IndexInDict(comparison, PredefinedEnvironments), keys)
-				]];
-			s.Environment = env.Url;
-			s.LbCount = env.LbCount;
+			int currentIndex = IndexInDict(comparison, PredefinedEnvironments);
+			int newIndex = EditorGUILayout.Popup("Environment", currentIndex, keys);
+			// Custom env
+			if (newIndex == 0) {
+				if (currentIndex != 0) ce.ServerUrl = "http://";
+				ce.ServerUrl = EditorGUILayout.TextField("Env. URL", ce.ServerUrl);
+				ce.LbCount = 0;
+			}
+			else {
+				// Predefined env.
+				var env = PredefinedEnvironments[keys[newIndex]];
+				ce.ServerUrl = env.Url;
+				ce.LbCount = env.LbCount;
+			}
 
 			EditorGUILayout.GetControlRect(true, 16f, EditorStyles.foldout);
 			HttpGroupEnabled = EditorGUI.Foldout(GUILayoutUtility.GetLastRect(), HttpGroupEnabled, "Network Connection Settings");
 			if (HttpGroupEnabled) {
 				int tmpInt;
 				EditorGUI.indentLevel++;
-				s.HttpVerbose = EditorGUILayout.Toggle("Verbose logging", s.HttpVerbose);
-				if (int.TryParse(EditorGUILayout.TextField("Request timeout (sec)", s.HttpTimeout.ToString()), out tmpInt)) {
-					s.HttpTimeout = tmpInt;
+				ce.HttpVerbose = EditorGUILayout.Toggle("Verbose logging", ce.HttpVerbose);
+				if (int.TryParse(EditorGUILayout.TextField("Request timeout (sec)", ce.HttpTimeout.ToString()), out tmpInt)) {
+					ce.HttpTimeout = tmpInt;
 				}
 				EditorGUI.indentLevel--;
 			}
@@ -86,5 +141,3 @@ namespace CotcSdk
 		}
 	}
 }
-
-

@@ -11,9 +11,20 @@ MonoBehaviour:
   m_Script: {fileID: 659520464, guid: a4bb178865f594be68312d0ccba2eb51, type: 3}
   m_Name: CotcSettings
   m_EditorClassIdentifier: 
-  ApiKey: testgame-key
-  ApiSecret: testgame-secret
-  Environment: https://sandbox-api[id].clanofthecloud.mobi
-  LbCount: 2
-  HttpVerbose: 1
-  HttpTimeout: 60
+  FileVersion: 2
+  Environments:
+  - Name: Sandbox
+    ApiKey: testapi-key
+    ApiSecret: testapi-secret
+    ServerUrl: https://sandbox-api[id].clanofthecloud.mobi
+    LbCount: 2
+    HttpVerbose: 1
+    HttpTimeout: 60
+  - Name: Dev server
+    ApiKey: testgame-key
+    ApiSecret: testgame-secret
+    ServerUrl: http://195.154.227.44:8000
+    LbCount: 0
+    HttpVerbose: 1
+    HttpTimeout: 60
+  SelectedEnvironment: 0
