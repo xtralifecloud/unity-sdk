@@ -28,11 +28,12 @@ namespace CotcSdk
 			{"Parallels VM", new EnvironmentInfo("http://10.211.55.2:2000", 0)},
 #endif
 		};
-		private bool HttpGroupEnabled = true;
+		private bool HttpGroupEnabled = true, PresetGroupEnabled = false;
 
 		public override void OnInspectorGUI() {
 			// Auto-create the asset on the first time
 			CotcSettings s = CotcSettings.Instance;
+			CotcSettings.Environment ce;
 			if (s == null) {
 				string properPath = Path.Combine(Application.dataPath, Path.GetDirectoryName(CotcSettings.AssetPath));
                 if (!Directory.Exists(properPath)) {
@@ -55,35 +56,43 @@ namespace CotcSdk
 			GUI.skin.label.wordWrap = true;
 			GUILayout.Space(5);
 
-			// Show the predefined environment combo
-			string[] presets = new string[s.Environments.Count + 1];
-			int index = 0;
-			foreach (var env in s.Environments) {
-				presets[index] = (index + 1) + ": " + env.Name;
-				index++;
-			}
-			presets[index] = "Add new...";
+			EditorGUILayout.GetControlRect(true, 16f, EditorStyles.foldout);
+			PresetGroupEnabled = EditorGUI.Foldout(GUILayoutUtility.GetLastRect(), PresetGroupEnabled, "Predefined parameter sets");
+			if (PresetGroupEnabled) {
+				EditorGUI.indentLevel++;
+				// Show the predefined environment combo
+				string[] presets = new string[s.Environments.Count + 1];
+				int index = 0;
+				foreach (var env in s.Environments) {
+					presets[index] = (index + 1) + ": " + env.Name;
+					index++;
+				}
+				presets[index] = "Add new...";
 
-			s.SelectedEnvironment = EditorGUILayout.Popup("Preset", s.SelectedEnvironment, presets);
-			// Add new entry was selected
-			if (s.SelectedEnvironment == s.Environments.Count) {
-				var env = new CotcSettings.Environment() {
-					Name = "New preset"
-				};
-				s.Environments.Add(env);
-			}
+				s.SelectedEnvironment = EditorGUILayout.Popup("Preset", s.SelectedEnvironment, presets);
+				// Add new entry was selected
+				if (s.SelectedEnvironment == s.Environments.Count) {
+					var env = new CotcSettings.Environment() {
+						Name = "New preset"
+					};
+					s.Environments.Add(env);
+				}
 
-			CotcSettings.Environment ce = s.Environments[s.SelectedEnvironment];
-			GUILayout.BeginHorizontal();
-			ce.Name = EditorGUILayout.TextField("Preset name", ce.Name);
-			GUI.enabled = s.Environments.Count > 1;
-			if (GUILayout.Button("Remove", GUILayout.Width(80))) {
-				s.Environments.RemoveAt(s.SelectedEnvironment);
-				s.SelectedEnvironment = Math.Max(0, s.SelectedEnvironment - 1);
+				ce = s.Environments[s.SelectedEnvironment];
+				GUILayout.BeginHorizontal();
+				ce.Name = EditorGUILayout.TextField("Preset name", ce.Name);
+				GUI.enabled = s.Environments.Count > 1;
+				if (GUILayout.Button("Remove", GUILayout.Width(80))) {
+					s.Environments.RemoveAt(s.SelectedEnvironment);
+					s.SelectedEnvironment = Math.Max(0, s.SelectedEnvironment - 1);
+				}
+				GUI.enabled = true;
+				EditorGUILayout.EndHorizontal();
+				EditorGUI.indentLevel--;
 			}
-			GUI.enabled = true;
-			EditorGUILayout.EndHorizontal();
-			GUILayout.Space(10);
+			else {
+				ce = s.Environments[s.SelectedEnvironment];
+			}
 
 			// Now show standard params
 			ce.ApiKey = EditorGUILayout.TextField("API Key", ce.ApiKey);

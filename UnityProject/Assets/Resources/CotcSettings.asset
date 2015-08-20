@@ -14,8 +14,8 @@ MonoBehaviour:
   FileVersion: 2
   Environments:
   - Name: Sandbox
-    ApiKey: testapi-key
-    ApiSecret: testapi-secret
+    ApiKey: testgame-key
+    ApiSecret: testgame-secret
     ServerUrl: https://sandbox-api[id].clanofthecloud.mobi
     LbCount: 2
     HttpVerbose: 1
