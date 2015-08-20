@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
+#import <Foundation/Foundation.h>
 
 #define numberof(x) (sizeof(x)/sizeof(x[0]))
 #define local_str(x) x, numberof(x)
@@ -53,13 +54,18 @@ namespace safe {
 		cstring(const cstring &other);
 		cstring(cstring &&other);
 		cstring(const char *other);
+		cstring(NSString *other);
 		cstring(char *other, bool takeOwnership = false);
 		~cstring();
 		
 		cstring& operator = (const char *other);
 		cstring& operator = (cstring &other);
 		cstring& operator = (cstring &&other);
+//		cstring& operator = (NSString *other);
 		operator const char *() const { return buffer; }
+		operator NSString *() const { return [NSString stringWithUTF8String:buffer]; }
+		operator bool () const { return buffer != NULL; }
+		
 		/**
 		 * Transfers ownership of the string to this cstring object. The 'other' object will be freed when this cstring dies and no copy is made.
 		 * @param other string to use and be released at the end

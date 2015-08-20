@@ -8,6 +8,7 @@
 //  Main class. Defines the interface between the C# code and this native plugin.
 
 #import <Foundation/Foundation.h>
+#include "config.h"
 
 /** Call this before everything else. The object name is used as target for subsequent callbacks. */
 extern "C" void CotcInappPurchase_startup(const char *callbackGameObjectName);

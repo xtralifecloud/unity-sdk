@@ -11,7 +11,8 @@
 		17E0F3011B8448420025281A /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 17E0F3001B8448420025281A /* main.mm */; };
 		17E0F3071B8448420025281A /* libCotcInappPurchase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17E0F2FB1B8448420025281A /* libCotcInappPurchase.a */; };
 		17E0F3171B844E250025281A /* InappPurchaseWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 17E0F3161B844E250025281A /* InappPurchaseWrapper.mm */; };
-		17E0F3261B8469E90025281A /* safe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17E0F3241B8469E90025281A /* safe.cpp */; };
+		17E0F3261B8469E90025281A /* safe.mm in Sources */ = {isa = PBXBuildFile; fileRef = 17E0F3241B8469E90025281A /* safe.mm */; };
+		17E0F32C1B84B8F70025281A /* InteropTypes.mm in Sources */ = {isa = PBXBuildFile; fileRef = 17E0F32B1B84B8F70025281A /* InteropTypes.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1739D6E41B8667330042AD9B /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		17E0F2FB1B8448420025281A /* libCotcInappPurchase.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCotcInappPurchase.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		17E0F2FE1B8448420025281A /* main.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		17E0F3001B8448420025281A /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
@@ -45,9 +47,10 @@
 		17E0F30C1B8448420025281A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17E0F3151B844E250025281A /* InappPurchaseWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InappPurchaseWrapper.h; sourceTree = "<group>"; };
 		17E0F3161B844E250025281A /* InappPurchaseWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InappPurchaseWrapper.mm; sourceTree = "<group>"; };
-		17E0F3221B845B950025281A /* ErrorCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ErrorCode.h; sourceTree = "<group>"; };
-		17E0F3241B8469E90025281A /* safe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = safe.cpp; sourceTree = "<group>"; };
+		17E0F3241B8469E90025281A /* safe.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = safe.mm; sourceTree = "<group>"; };
 		17E0F3251B8469E90025281A /* safe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = safe.h; sourceTree = "<group>"; };
+		17E0F32A1B84B8F70025281A /* InteropTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteropTypes.h; sourceTree = "<group>"; };
+		17E0F32B1B84B8F70025281A /* InteropTypes.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InteropTypes.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,11 +95,13 @@
 			children = (
 				17E0F2FE1B8448420025281A /* main.h */,
 				17E0F3001B8448420025281A /* main.mm */,
+				1739D6E41B8667330042AD9B /* config.h */,
 				17E0F3151B844E250025281A /* InappPurchaseWrapper.h */,
 				17E0F3161B844E250025281A /* InappPurchaseWrapper.mm */,
-				17E0F3221B845B950025281A /* ErrorCode.h */,
-				17E0F3241B8469E90025281A /* safe.cpp */,
+				17E0F3241B8469E90025281A /* safe.mm */,
 				17E0F3251B8469E90025281A /* safe.h */,
+				17E0F32A1B84B8F70025281A /* InteropTypes.h */,
+				17E0F32B1B84B8F70025281A /* InteropTypes.mm */,
 			);
 			path = CotcInappPurchase;
 			sourceTree = "<group>";
@@ -224,8 +229,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				17E0F3011B8448420025281A /* main.mm in Sources */,
-				17E0F3261B8469E90025281A /* safe.cpp in Sources */,
+				17E0F3261B8469E90025281A /* safe.mm in Sources */,
 				17E0F3171B844E250025281A /* InappPurchaseWrapper.mm in Sources */,
+				17E0F32C1B84B8F70025281A /* InteropTypes.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,6 +403,7 @@
 				17E0F3111B8448420025281A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		17E0F3121B8448420025281A /* Build configuration list for PBXNativeTarget "CotcInappPurchaseTests" */ = {
 			isa = XCConfigurationList;
@@ -405,6 +412,7 @@
 				17E0F3141B8448420025281A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

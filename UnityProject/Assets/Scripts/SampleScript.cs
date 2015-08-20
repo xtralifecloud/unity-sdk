@@ -143,7 +143,7 @@ public class SampleScript : MonoBehaviour {
 				}
 
 				// Purchase the first one
-				return inApp.LaunchPurchase(enrichedProducts[0]);
+				return inApp.LaunchPurchase(Gamer, enrichedProducts[0]);
 			})
 			.Then(purchasedProduct => {
 				Debug.Log("Purchase ok: " + purchasedProduct.ToString());
@@ -181,7 +181,7 @@ public class SampleScript : MonoBehaviour {
 
 	private bool RequireGamer() {
 		if (Gamer == null)
-			Debug.LogError("You need to fetch a friend first. Fill the e-mail address field and click Fetch Friend.");
+			Debug.LogError("You need to login first. Click on a login button.");
 		return Gamer != null;
 	}
 

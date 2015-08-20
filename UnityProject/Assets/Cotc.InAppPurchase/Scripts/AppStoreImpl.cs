@@ -76,7 +76,7 @@ namespace CotcSdk.InappPurchase {
 			promise.Resolve(result);
 		}
 
-		Promise<PurchasedProduct> IStore.LaunchPurchaseFlow(ProductInfo product) {
+		Promise<PurchasedProduct> IStore.LaunchPurchaseFlow(Gamer gamer, ProductInfo product) {
 			// Already in progress? Refuse immediately.
 			lock (this) {
 				if (LastLaunchProductPromise != null) {
@@ -85,8 +85,11 @@ namespace CotcSdk.InappPurchase {
 				LastLaunchProductPromise = new Promise<PurchasedProduct>();
 			}
 
+			Bundle interop = product.AsBundle().Clone();
+			interop["userName"] = gamer.GamerId;
+
 			// Will call back the CotcInappPurchaseGameObject
-			CotcInappPurchase_launchPurchase(product.ToJson());
+			CotcInappPurchase_launchPurchase(interop.ToJson());
 			return LastLaunchProductPromise;
 		}
 

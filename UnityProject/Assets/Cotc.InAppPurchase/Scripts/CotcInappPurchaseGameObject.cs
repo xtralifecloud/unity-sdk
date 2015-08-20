@@ -48,10 +48,11 @@ namespace CotcSdk.InappPurchase {
 		 *     item. In order to validate the transaction, you need to call
 		 *     #CotcSdk.GamerStore.ValidateReceipt. More important, you MUST then call
 		 *     #CloseTransaction in case of success!
+		 * @param gamer gamer to associate with the purchase
 		 * @param info information about the product to be purchased. Obtained via #FetchProductInfo.
 		 */
-		public Promise<PurchasedProduct> LaunchPurchase(ProductInfo info) {
-			return Store.LaunchPurchaseFlow(info);
+		public Promise<PurchasedProduct> LaunchPurchase(Gamer gamer, ProductInfo info) {
+			return Store.LaunchPurchaseFlow(gamer, info);
 		}
 
 #if UNITY_ANDROID || UNITY_IPHONE

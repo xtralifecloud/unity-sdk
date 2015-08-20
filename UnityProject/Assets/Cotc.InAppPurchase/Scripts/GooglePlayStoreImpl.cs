@@ -72,7 +72,7 @@ namespace CotcSdk.InappPurchase {
 			promise.Resolve(result);
 		}
 
-		Promise<PurchasedProduct> IStore.LaunchPurchaseFlow(ProductInfo product) {
+		Promise<PurchasedProduct> IStore.LaunchPurchaseFlow(Gamer gamer, ProductInfo product) {
 			// Already in progress? Refuse immediately.
 			lock (this) {
 				if (LastLaunchProductPromise != null) {
