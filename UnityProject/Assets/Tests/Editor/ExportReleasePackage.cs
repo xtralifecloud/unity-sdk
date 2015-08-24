@@ -22,8 +22,8 @@ public class ExportReleasePackage {
 			"CotcSdk.FacebookIntegration.unitypackage",
 			new string[] {
 				"Assets/Cotc.FacebookIntegration",
-				"Assets/Scenes/SampleSceneWithFacebook.unity",
-				"Assets/Scripts/SampleScriptWithFacebook.cs",
+				"Assets/Scenes/FacebookSampleScene.unity",
+				"Assets/Scripts/FacebookSampleScene.cs",
 			}
 		},
 		{
@@ -52,6 +52,8 @@ public class ExportReleasePackage {
 				"Assets/Plugins/Android/appcompat-v7-22.1.1.aar",
 				"Assets/Plugins/Android/Cotc.PushNotifications.aar",
 				"Assets/Plugins/Android/support-v4-22.1.1.aar",
+				"Assets/Scenes/InappPurchaseSampleScene.unity",
+				"Assets/Scripts/InappPurchaseSampleScene.cs"
 			}
 		},
 	};

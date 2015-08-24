@@ -6,7 +6,7 @@ using CotcSdk.PushNotifications;
 using CotcSdk.InappPurchase;
 using System;
 
-public class SampleScript : MonoBehaviour {
+public class InappPurchaseSampleScene : MonoBehaviour {
 	// The cloud allows to make generic operations (non user related)
 	private Cloud Cloud;
 	// The gamer is the base to perform most operations. A gamer object is obtained after successfully signing in.

@@ -5,6 +5,9 @@ using System;
 
 namespace CotcSdk.FacebookIntegration
 {
+	/**
+	 * Facebook integration utility root entry point.
+	 */
 	[Serializable]
 	public class CotcFacebookIntegration : MonoBehaviour {
 

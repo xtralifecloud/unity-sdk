@@ -22,7 +22,7 @@ Download the facebook SDK for Unity [here](https://developers.facebook.com/docs/
 
 Configure your AppID through the Facebook Settings menu in Unity. Do not forget this step as facebook will throw an error upon usage otherwise.
 
-# Fixing platform specific issues {#facebook_troubleshooting}
+# Fix platform specific issues {#facebook_troubleshooting}
 
 When compiling for iOS, you may have to tweak some settings if the resulting project fails to compile with an error related to an `autorelease` call or something like `no known class method for selector 'publishInstall:withHandler:'` or `Error: ARC forbids explicit message send of 'autorelease'`. Open your project properties (select your project at the root of the project tree), go to the *Build Phases* tab, and under *Compile Sources*, double click on FbUnityInterface.mm and type in `-fno-objc-arc` to disable ARC for facebook. This step may not be required anymore at the time you are reading this though, so just try without it first.
 
@@ -30,11 +30,7 @@ When compiling for Android, you may get an error saying `java.lang.IllegalArgume
 
 # Using the Facebook integration plugin {#toc3}
 
-Import the Unity SDK Facebook Integration package into your project.
-
-Put the CotcFacebookIntegration object on your scene, from the `Cotc.FacebookIntegration/Prefabs` folder.
-
-From your code, find the object as for the Clan of the Cloud SDK and call methods on it.
+Import the facebook integration package and place the CotC Facebook Integration prefab on your scene (under `Cotc.FacebookIntegration/Prefabs`). Through this object, you will be able to access the #CotcSdk.FacebookIntegration.CotcFacebookIntegration API. Use FindObjectOfType as described in [getting started](@ref getting_started_ref).
 
 ~~~~{.cs}
 	var fb = FindObjectOfType<CotcFacebookIntegration>();
