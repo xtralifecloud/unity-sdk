@@ -45,7 +45,7 @@ namespace CotcSdk {
 		public Promise<List<PurchaseTransaction>> GetPurchaseHistory() {
 			return Common.RunInTask<List<PurchaseTransaction>>(Gamer.MakeHttpRequest("/v1/gamer/store/purchaseHistory"), (response, task) => {
 				List<PurchaseTransaction> products = new List<PurchaseTransaction>();
-				foreach (Bundle b in response.BodyJson["transactions"].AsArray()) {
+				foreach (Bundle b in response.BodyJson["purchases"].AsArray()) {
 					products.Add(new PurchaseTransaction(b));
 				}
 				task.PostResult(products);

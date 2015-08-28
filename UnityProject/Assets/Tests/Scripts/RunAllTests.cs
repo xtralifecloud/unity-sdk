@@ -18,6 +18,7 @@ public class RunAllTests : MonoBehaviour {
 		typeof(IndexTests),
 		typeof(MatchTests),
 		typeof(ScoreTests),
+		typeof(StoreTests),
 		typeof(TransactionTests),
 		typeof(VfsTests),
 	};
