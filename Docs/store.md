@@ -1,6 +1,8 @@
 In-app purchases {#store}
 ===========
 
+In-app purchase functionality is provided with the in-app purchase package, which may be downloaded separately. The API reference provided by the package @ref CotcSdk.InappPurchase.CotcInappPurchaseGameObject "is available here".
+
 CotC offer services that make it easier to provide in-app purchases within your game, while maintaining a familiar and reassuring user experience on each platform. That means that the purchases are made through the AppStore on iOS or Google Play on Android for instance.
 
 This also means that you need to configure the products to be sold within your application using the corresponding backend for each platform. Typically, if you are selling your application to iOS and Android devices, you will need to have an AppStore as well as a Google Play Developer membership. This configuration needs to be partially replicated on Clan of the Cloud servers in order for it to present a catalog to the player and perform security checks on purchases. The backoffice is used for this job as described below.

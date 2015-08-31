@@ -1,6 +1,8 @@
 Facebook {#facebook_ref}
 ========
 
+Facebook functionality is provided with the facebook package, which may be downloaded separately, and also requires the Facebook SDK for Unity. The API reference provided by the package @ref CotcSdk.FacebookIntegration.CotcFacebookIntegration "is available here".
+
 ## Table of Content
 
 1. [Facebook Developer](#toc1)

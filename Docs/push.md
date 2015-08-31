@@ -1,7 +1,9 @@
 Push Notification {#push}
 ========
 
-Push notifications require server side configuration. This documentation will describe how to set it up like any mobile application, and then how to integrate the SDK. We recommend that you perform the former steps first, since the changes made to the configuration on Google/Apple sides need some delay to take effect.
+Push notifications (not to be confused with @ref CotcSdk.PushNotification "the PushNotification class") are provided with the push notification package, which may be downloaded separately.
+
+Additionally, push notifications require server side configuration. This documentation will describe how to set it up like any mobile application, and then how to integrate the SDK. We recommend that you perform the former steps first, since the changes made to the configuration on Google/Apple sides need some delay to take effect.
 
 ## Table of Contents
 
