@@ -14,8 +14,8 @@ public class ExportReleasePackage {
 				"Assets/Cotc",
 				"Assets/Plugins/CotcSdk.dll",
 				"Assets/Plugins/Editor/CotcSdk-Editor.dll",
-				"Assets/Scenes/SampleSimpleScene.unity",
-				"Assets/Scripts/SampleScript.cs",
+				"Assets/Scenes/SampleScene.unity",
+				"Assets/Scripts/SampleScene.cs",
 			}
 		},
 		{
@@ -52,6 +52,7 @@ public class ExportReleasePackage {
 				"Assets/Plugins/Android/appcompat-v7-22.1.1.aar",
 				"Assets/Plugins/Android/Cotc.PushNotifications.aar",
 				"Assets/Plugins/Android/support-v4-22.1.1.aar",
+				"Assets/Plugins/iOS/libCotcInappPurchase.a",
 				"Assets/Scenes/InappPurchaseSampleScene.unity",
 				"Assets/Scripts/InappPurchaseSampleScene.cs"
 			}

@@ -2,8 +2,6 @@
 using System.Collections;
 using CotcSdk;
 using UnityEngine.UI;
-using CotcSdk.PushNotifications;
-using CotcSdk.InappPurchase;
 using System;
 
 public class SampleScene : MonoBehaviour {

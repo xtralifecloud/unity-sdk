@@ -34,4 +34,4 @@ MonoBehaviour:
     LbCount: 0
     HttpVerbose: 1
     HttpTimeout: 60
-  SelectedEnvironment: 2
+  SelectedEnvironment: 0

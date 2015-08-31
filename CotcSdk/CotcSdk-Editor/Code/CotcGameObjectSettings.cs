@@ -28,7 +28,7 @@ namespace CotcSdk
 			{"Parallels VM", new EnvironmentInfo("http://10.211.55.2:2000", 0)},
 #endif
 		};
-		private bool HttpGroupEnabled = true, PresetGroupEnabled = false;
+		private bool HttpGroupEnabled = true, NeedsInitialization = true, PresetGroupEnabled = true;
 
 		public override void OnInspectorGUI() {
 			// Auto-create the asset on the first time
@@ -50,8 +50,13 @@ namespace CotcSdk
 				};
 				s.Environments.Add(env);
 			}
+			// Initially unroll the preset group if more than one preset are configured
+			if (NeedsInitialization) {
+				NeedsInitialization = false;
+				PresetGroupEnabled = s.Environments.Count > 1;
+			}
 
-			GUILayout.Label("CotC SDK Settings", EditorStyles.boldLabel);
+			GUILayout.Label("CotC SDK Settings (v" + Cloud.SdkVersion + ")", EditorStyles.boldLabel);
 			GUILayout.Label("These are global to all scenes in your project (stored under Assets/Resources/).");
 			GUI.skin.label.wordWrap = true;
 			GUILayout.Space(5);
