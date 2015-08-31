@@ -78,14 +78,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">Push Notification </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2>Table of Content</h2>
+<div class="textblock"><p>Push notifications (not to be confused with <a class="el" href="class_cotc_sdk_1_1_push_notification.html">the PushNotification class</a>) are provided with the push notification package, which may be downloaded separately.</p>
+<p>Additionally, push notifications require server side configuration. This documentation will describe how to set it up like any mobile application, and then how to integrate the SDK. We recommend that you perform the former steps first, since the changes made to the configuration on Google/Apple sides need some delay to take effect.</p>
+<h2>Table of Contents</h2>
 <ol type="1">
 <li><a href="#toc_push_1">Push Notification for iOS</a></li>
 <li><a href="#toc_push_2">Push Notification for Android</a></li>
 </ol>
 <hr/>
 <h1><a class="anchor" id="toc_push_1"></a>
-Setup Notification for iOS</h1>
+Setup Notifications for iOS</h1>
 <p>On iOS, push notifications use the Apple Push Notification Service, which we'll describe how to set up in the following paragraphs.</p>
 <p>First, set up a certificate with Push notifications enabled on the <a href="http://developer.apple.com/">Apple Developer Center</a> </p><div class="image">
 <img src="ios-push-1.png" alt="ios-push-1.png"/>
@@ -106,9 +108,10 @@ Export your private key</div></div>
 <div class="caption">
 Setting up your iOS push notifications with Clan of the Cloud back office</div></div>
 <p> Then, you simply have to import the Cotc.PushNotifications package. When you build your application, check that you are using the provisioning profile for the application for which you enabled push notifications. Everything should be automatic with Xcode though.</p>
+<p>Push notifications require no further configuration on your side. You should not even have to implement anything: just placing the <code>CotcPushNotificationsGameObject</code> on your scenes will ensure that everything works fine. It will transparently ask for push notifications permission upon login done with the main CotC SDK Game Object and register the device for push notifications. When a message has been delivered successfully (processed by the SDK, raised via <a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html#af7a75c1c843136c1a92b20afc98e5170">CotcSdk.DomainEventLoop.ReceivedEvent</a>), the application badge is reseted.</p>
 <hr/>
 <h1><a class="anchor" id="toc_push_2"></a>
-Setup Notification for Android</h1>
+Setup Notifications for Android</h1>
 <p>In case you need some more information about how Google Cloud Messaging works, please have a look at the <a href="https://developer.android.com/google/gcm/gcm.html">official Google documentation</a>. Otherwise, by following the steps below, you should be able to have your application manage push notifications pretty quickly.</p>
 <p>First, you need to setup a Google Application. Since this is changing quite rapidly at the time of writing, please follow the previous guide for information on how to do it. Once this is done, this Google Application needs to reference the Google Cloud Messaging for Android API. This is done from the APIs section of the Google Developer Console for your project. </p><div class="image">
 <img src="Google_Messaging_Android.png" alt="Google_Messaging_Android.png"/>
@@ -144,11 +147,11 @@ Setting up your Android push notifications with Clan of the Cloud back office</d
 <li><code>cotc.GcmNotificationTitle</code> node with the name of your application.</li>
 <li>If you are using facebook, you may need to remove <code>android-support-v4.jar</code> under Assets/Plugins/Android/Facebook/libs.</li>
 </ul>
-<p>Your application is now ready to receive push notifications from Google Cloud Messaging! </p>
+<p>Your application is now ready to receive push notifications from Google Cloud Messaging! No further configuration is required on your side: just placing the <code>CotcPushNotificationsGameObject</code> on your scenes will ensure that everything works fine. It will transparently register for notifications upon login done with the main CotC SDK Game Object. Notifications will be received via the standard GCM service (running in background on your device), that starts a small piece of code embedded in our SDK upon event, showing a notification using the parameters set in the manifest. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 17 2015 16:42:08 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Aug 31 2015 13:23:00 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

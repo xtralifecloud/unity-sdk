@@ -83,17 +83,22 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>The core library, which contains all the core classes and communicates with our servers. It is small, has no dependencies and provides almost all functionality.</li>
 <li>The facebook integration library. It depends on the facebook SDK for Unity and provides facebook related functionality. The integration library is provided as a separate package.</li>
 <li>The push notification library, which provides that functionality, currently for Android and iOS.</li>
+<li>The in-app purchase library, which provides the corresponding functionality, currently for Android and iOS.</li>
 </ul>
-<p>Due to its relatively small size, the downloadable package includes all the sub-libraries, along with a sample scene + script that you may include or not, as shown below.</p>
+<p>Packages are distributed separately, although we zipped them together due to their relatively small size. Apart from facebook, they also include all their respective dependencies.</p>
 <div class="image">
 <img src="importpackage01.png" alt="importpackage01.png"/>
 <div class="caption">
 Import package screen</div></div>
-<p> You can deselect SampleScript.cs and SampleScene.unity if you do not need the sample code. If you do not need additional functionality (facebook support, push notifications...), you can deselect the corresponding packages as well. After having imported the package, you just need to configure the SDK settings. For that, open the SampleScene and select the Clan of the Cloud SDK object. In the inspector, set the appropriate values (API Key and API Secret) as configured in the backoffice.</p>
-<p>Note: if you want to start from zero, you may simply add a new scene and drag&amp;drop the Clan of the Cloud SDK prefab object from the CotC/Prefabs folder into your scene. This object needs to be placed on any scene where you want to use Clan of the Cloud functionality.</p>
-<p>Note: if you choose to keep any component, you need to proceed to its configuration prior to the first compilation. For instance, if you are importing the facebook related packages, you will need to import the facebook package as described in the <a href="#facebook_ref">Facebook</a> section. That is why we recommend that you deselect all optional packages if you want to quickly try the SDK.</p>
+<p> You can deselect SampleScript.cs and SampleScene.unity if you do not need the sample code. After having imported the package, you just need to configure the SDK settings. For that, open the SampleScene and select the Clan of the Cloud SDK object. In the inspector, set the appropriate values (API Key and API Secret) as configured in the backoffice.</p>
+<p>Note: if you want to start from zero, you may simply add a new scene and drag &amp; drop the Clan of the Cloud SDK prefab object from the CotC/Prefabs folder into your scene. This object needs to be placed on any scene where you want to use Clan of the Cloud functionality.</p>
+<p>Note: if you include any package which provides additional functionality, you need to proceed to its configuration prior to the first compilation. For instance, if you are importing the facebook related package, you will need to import the facebook package as described in the <a href="#facebook_ref">Facebook</a> section. Importing only the core package is the best way to quickly test SDK functionality inyour project.</p>
 <h1>Usage</h1>
-<p>Basic usage is provided by the Clan of the Cloud SDK prefab object. You just have to put it on your scene and invoke the GetCloud method on it to fetch a <a class="el" href="class_cotc_sdk_1_1_cloud.html">CotcSdk.Cloud</a> object allowing to use most features. For that, you may simply use <a href="http://docs.unity3d.com/ScriptReference/Object.FindObjectOfType.html">FindObjectOfType&lt;CotcGameObject&gt;</a>.</p>
+<div class="image">
+<img src="importpackage02.png" alt="importpackage02.png"/>
+<div class="caption">
+Import package screen</div></div>
+<p> Basic usage is provided by the Clan of the Cloud SDK prefab object. You just have to put it on your scene and invoke the GetCloud method on it to fetch a <a class="el" href="class_cotc_sdk_1_1_cloud.html">CotcSdk.Cloud</a> object allowing to use most features. For that, you may simply use <a href="http://docs.unity3d.com/ScriptReference/Object.FindObjectOfType.html">FindObjectOfType&lt;CotcGameObject&gt;</a>.</p>
 <div class="fragment"><div class="line"><span class="keyword">using</span> <a class="code" href="namespace_cotc_sdk.html">CotcSdk</a>;</div>
 <div class="line"></div>
 <div class="line"><span class="keyword">class </span>MyGameObject: MonoBehaviour {</div>
@@ -231,7 +236,7 @@ Import package screen</div></div>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 17 2015 16:42:08 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Aug 31 2015 13:23:00 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

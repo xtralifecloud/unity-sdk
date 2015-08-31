@@ -98,9 +98,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4b3aa6f412ff0504eb1b79056cc4b5f0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; List<br class="typebreak" />
-&lt; <a class="el" href="class_cotc_sdk_1_1_configured_product.html">ConfiguredProduct</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_store.html#a4b3aa6f412ff0504eb1b79056cc4b5f0">ListConfiguredProducts</a> ()</td></tr>
-<tr class="separator:a4b3aa6f412ff0504eb1b79056cc4b5f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad13ba4ea74f9456c82fd95187c2c76db"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; PagedList<br class="typebreak" />
+&lt; <a class="el" href="class_cotc_sdk_1_1_configured_product.html">ConfiguredProduct</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_store.html#ad13ba4ea74f9456c82fd95187c2c76db">ListConfiguredProducts</a> (int limit=30, int offset=0)</td></tr>
+<tr class="separator:ad13ba4ea74f9456c82fd95187c2c76db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7534f153660b75431e93ae7177b89abc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; List<br class="typebreak" />
 &lt; <a class="el" href="class_cotc_sdk_1_1_purchase_transaction.html">PurchaseTransaction</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_store.html#a7534f153660b75431e93ae7177b89abc">GetPurchaseHistory</a> ()</td></tr>
 <tr class="separator:a7534f153660b75431e93ae7177b89abc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -120,23 +120,41 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Fetches the list of transactions made by the logged in user. Only successful transactions show here. </p><dl class="section return"><dt>Returns</dt><dd>promise resolved when the operation has completed. The attached value describes a list of purchase transactions,without pagination functionality. </dd></dl>
+<p>Fetches the list of transactions made by the logged in user. Only successful transactions show here. </p><dl class="section return"><dt>Returns</dt><dd>promise resolved when the operation has completed. The attached value describes a list of purchase transactions, without pagination functionality. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a4b3aa6f412ff0504eb1b79056cc4b5f0"></a>
+<a class="anchor" id="ad13ba4ea74f9456c82fd95187c2c76db"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt;List&lt;<a class="el" href="class_cotc_sdk_1_1_configured_product.html">ConfiguredProduct</a>&gt; &gt; CotcSdk.GamerStore.ListConfiguredProducts </td>
+          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt;PagedList&lt;<a class="el" href="class_cotc_sdk_1_1_configured_product.html">ConfiguredProduct</a>&gt; &gt; CotcSdk.GamerStore.ListConfiguredProducts </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>limit</em> = <code>30</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>offset</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Fetch the list of products as configured on the backoffice. Note that this doesn't include any information about pricing and so on: the external store plugin is required to do so. Note that this call returns the catalog as configured on the CotC server, which may not be exhaustive if additional products are configured on iTunes Connect but not reported to the CotC servers. </p><dl class="section return"><dt>Returns</dt><dd>promise resolved when the operation has completed. The attached value describes a list of products, without pagination functionality. </dd></dl>
+<p>Fetch the list of products as configured on the backoffice. Note that this doesn't include any information about pricing and so on: the external store plugin is required to do so. Note that this call returns the catalog as configured on the CotC server, which may not be exhaustive if additional products are configured on iTunes Connect but not reported to the CotC servers. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">limit</td><td>the maximum number of results to return per page. </td></tr>
+    <tr><td class="paramname">offset</td><td>number of the first result. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>promise resolved when the operation has completed. The attached value describes a list of products, with pagination functionality. </dd></dl>
 
 </div>
 </div>
@@ -201,7 +219,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 17 2015 16:42:08 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Aug 31 2015 13:23:01 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

@@ -78,7 +78,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">Facebook </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2>Table of Content</h2>
+<div class="textblock"><p>Facebook functionality is provided with the facebook package, which may be downloaded separately, and also requires the Facebook SDK for Unity. The API reference provided by the package <a class="el" href="class_cotc_sdk_1_1_facebook_integration_1_1_cotc_facebook_integration.html">is available here</a>.</p>
+<h2>Table of Content</h2>
 <ol type="1">
 <li><a href="#toc1">Facebook Developer</a></li>
 <li><a href="#facebook_troubleshooting">Fixing platform specific issues</a></li>
@@ -98,20 +99,18 @@ Download the Facebook SDK for Unity</h1>
 <p>Download the facebook SDK for Unity <a href="https://developers.facebook.com/docs/unity/">here</a> and import the package into your project.</p>
 <p>Configure your AppID through the Facebook Settings menu in Unity. Do not forget this step as facebook will throw an error upon usage otherwise.</p>
 <h1><a class="anchor" id="facebook_troubleshooting"></a>
-Fixing platform specific issues</h1>
+Fix platform specific issues</h1>
 <p>When compiling for iOS, you may have to tweak some settings if the resulting project fails to compile with an error related to an <code>autorelease</code> call or something like <code>no known class method for selector 'publishInstall:withHandler:'</code> or <code>Error: ARC forbids explicit message send of 'autorelease'</code>. Open your project properties (select your project at the root of the project tree), go to the <em>Build Phases</em> tab, and under <em>Compile Sources</em>, double click on FbUnityInterface.mm and type in <code>-fno-objc-arc</code> to disable ARC for facebook. This step may not be required anymore at the time you are reading this though, so just try without it first.</p>
 <p>When compiling for Android, you may get an error saying <code>java.lang.IllegalArgumentException: already added: Landroid/support/v4/accessibilityservice/AccessibilityServiceInfoCompat;</code>. This is caused by a conflict between the CotC SDK and the facebook plugins, which use a different build system although they reference the same library. In this case, you need to remove the <code>Assets/Plugins/Android/facebook/libs/android-support-v4.jar</code> and associated meta files.</p>
 <h1><a class="anchor" id="toc3"></a>
 Using the Facebook integration plugin</h1>
-<p>Import the Unity SDK Facebook Integration package into your project.</p>
-<p>Put the CotcFacebookIntegration object on your scene, from the <code>Cotc.FacebookIntegration/Prefabs</code> folder.</p>
-<p>From your code, find the object as for the Clan of the Cloud SDK and call methods on it.</p>
+<p>Import the facebook integration package and place the CotC Facebook Integration prefab on your scene (under <code>Cotc.FacebookIntegration/Prefabs</code>). Through this object, you will be able to access the <a class="el" href="class_cotc_sdk_1_1_facebook_integration_1_1_cotc_facebook_integration.html">CotcSdk.FacebookIntegration.CotcFacebookIntegration</a> API. Use FindObjectOfType as described in <a class="el" href="getting_started_ref.html">getting started</a>.</p>
 <div class="fragment"><div class="line">var fb = FindObjectOfType&lt;CotcFacebookIntegration&gt;();</div>
 <div class="line">fb.LoginWithFacebook(Cloud).Done(gamerResult =&gt; { ... });</div>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 17 2015 16:42:08 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Aug 31 2015 13:23:00 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

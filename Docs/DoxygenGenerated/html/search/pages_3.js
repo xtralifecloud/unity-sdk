@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['push_20notification',['Push Notification',['../push.html',1,'']]]
+  ['in_2dapp_20purchases',['In-app purchases',['../store.html',1,'']]]
 ];

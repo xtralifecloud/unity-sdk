@@ -100,10 +100,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ae505d43249f7e489a49e9380fee8d496"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; List&lt; <a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_product_info.html">ProductInfo</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_cotc_sdk_1_1_inapp_purchase_1_1_i_store.html#ae505d43249f7e489a49e9380fee8d496">GetInformationAboutProducts</a> (List&lt; <a class="el" href="class_cotc_sdk_1_1_configured_product.html">ConfiguredProduct</a> &gt; products)</td></tr>
 <tr class="separator:ae505d43249f7e489a49e9380fee8d496"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa9ff95fdb7ac28fffee7e70e24779e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_purchased_product.html">PurchasedProduct</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_cotc_sdk_1_1_inapp_purchase_1_1_i_store.html#afa9ff95fdb7ac28fffee7e70e24779e1">LaunchPurchaseFlow</a> (<a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_product_info.html">ProductInfo</a> product)</td></tr>
-<tr class="separator:afa9ff95fdb7ac28fffee7e70e24779e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78d46e1aed92d8942647645a72d1b063"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_purchased_product.html">PurchasedProduct</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_cotc_sdk_1_1_inapp_purchase_1_1_i_store.html#a78d46e1aed92d8942647645a72d1b063">LaunchPurchaseFlow</a> (<a class="el" href="class_cotc_sdk_1_1_gamer.html">Gamer</a> gamer, <a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_product_info.html">ProductInfo</a> product)</td></tr>
+<tr class="separator:a78d46e1aed92d8942647645a72d1b063"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1912360d736e3422e6a89db72945dce0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_cotc_sdk_1_1_inapp_purchase_1_1_i_store.html#a1912360d736e3422e6a89db72945dce0">TerminatePurchase</a> (<a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_purchased_product.html">PurchasedProduct</a> product)</td></tr>
 <tr class="separator:a1912360d736e3422e6a89db72945dce0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae98847cc93fdaad1dd6f96853707844f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae98847cc93fdaad1dd6f96853707844f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>GetInformationAboutProducts_Done</b> (string message)</td></tr>
+<tr class="separator:ae98847cc93fdaad1dd6f96853707844f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4ae571d1c97eced56acddfa77de3b5a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa4ae571d1c97eced56acddfa77de3b5a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>LaunchPurchase_Done</b> (string message)</td></tr>
+<tr class="separator:aa4ae571d1c97eced56acddfa77de3b5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a681cd562e78b88bb2d0f2290e0230cf9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a681cd562e78b88bb2d0f2290e0230cf9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>TerminatePurchase_Done</b> (string message)</td></tr>
+<tr class="separator:a681cd562e78b88bb2d0f2290e0230cf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="ae505d43249f7e489a49e9380fee8d496"></a>
@@ -129,21 +138,32 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afa9ff95fdb7ac28fffee7e70e24779e1"></a>
+<a class="anchor" id="a78d46e1aed92d8942647645a72d1b063"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_purchased_product.html">PurchasedProduct</a>&gt; CotcSdk.InappPurchase.IStore.LaunchPurchaseFlow </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_product_info.html">ProductInfo</a>&#160;</td>
-          <td class="paramname"><em>product</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_gamer.html">Gamer</a>&#160;</td>
+          <td class="paramname"><em>gamer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_product_info.html">ProductInfo</a>&#160;</td>
+          <td class="paramname"><em>product</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Implements the actual purchase flow. This does not represent the whole purchase process though, only the first part where the store front end is presented to the user and allows him to pay. The purchase process will also incur an additional step consisting in a verification of the payment before actually delivering the goods. That is why you need to call #CotcSdk.GamerStore.SendStorePurchaseToServer after your purchase has been done and forward the result. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">gamer</td><td>gamer to associate with the purchase. </td></tr>
     <tr><td class="paramname">product</td><td>product to be purchased, as returned by <a class="el" href="interface_cotc_sdk_1_1_inapp_purchase_1_1_i_store.html#ae505d43249f7e489a49e9380fee8d496">GetInformationAboutProducts</a>. </td></tr>
   </table>
   </dd>
@@ -181,7 +201,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 17 2015 16:42:08 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Aug 31 2015 13:23:01 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>
