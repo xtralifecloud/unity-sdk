@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>2B14DE52-14F2-4E9E-A007-E87BDEE6E7DE</string>
+	<key>IDESourceControlProjectName</key>
+	<string>iOS</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>7E8973A88CA14640A5C5CC4CB6AE426BA5C5A7AF</key>
+		<string>https://github.com/clanofthecloud/unity-sdk.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>PlatformSpecific/iOS/iOS.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>7E8973A88CA14640A5C5CC4CB6AE426BA5C5A7AF</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/clanofthecloud/unity-sdk.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>7E8973A88CA14640A5C5CC4CB6AE426BA5C5A7AF</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>7E8973A88CA14640A5C5CC4CB6AE426BA5C5A7AF</string>
+			<key>IDESourceControlWCCName</key>
+			<string>unity-sdk</string>
+		</dict>
+	</array>
+</dict>
+</plist>

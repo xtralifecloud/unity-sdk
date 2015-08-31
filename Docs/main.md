@@ -10,5 +10,6 @@ Welcome to the documentation for the Clan of the Cloud SDK for Unity. If you hav
 - [Achievements](@ref achievements)
 - [Matches](@ref matches)
 - [Push notifications](@ref push)
+- [In-app purchases (store)](@ref store)
 - [The Backoffice](@ref backoffice)
 

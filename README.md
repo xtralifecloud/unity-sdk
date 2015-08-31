@@ -4,6 +4,10 @@ Open [Releases](https://github.com/clanofthecloud/unity-sdk/releases) and downlo
 
 Read the [Documentation](http://clanofthecloud.github.io/unity-sdk/) to get started.
 
+## Support
+
+The Unity SDK is developed on Unity 4 and tested on Unity 5 prior to release. The Android platform specific components are not guaranteed to work on Unity 4 as libraries are built using gradle and packaged using the new AAR format.
+
 ## Building the library
 
 ### Required components

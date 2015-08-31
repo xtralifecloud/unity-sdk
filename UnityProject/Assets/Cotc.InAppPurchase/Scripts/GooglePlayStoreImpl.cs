@@ -1,7 +1,6 @@
 ﻿#if UNITY_ANDROID
 using System;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace CotcSdk.InappPurchase {
@@ -45,7 +44,35 @@ namespace CotcSdk.InappPurchase {
 			return LastGetInformationAboutProductsPromise;
 		}
 
-		Promise<PurchasedProduct> IStore.LaunchPurchaseFlow(ProductInfo product) {
+		// Callback from native code
+		void IStore.GetInformationAboutProducts_Done(string message) {
+			// Extract promise and allow again
+			Promise<List<ProductInfo>> promise;
+			lock (this) {
+				promise = LastGetInformationAboutProductsPromise;
+				LastGetInformationAboutProductsPromise = null;
+			}
+			
+			if (promise == null) {
+				Debug.LogWarning("Responding to GetInformationAboutProducts without having promise set");
+			}
+
+			Common.TEMP("GetInformationAboutProducts_Done: " + message);
+			Bundle json = Bundle.FromJson(message);
+			// Error
+			if (json.Has("error")) {
+				promise.Reject(ParseError(json));
+				return;
+			}
+			
+			List<ProductInfo> result = new List<ProductInfo>();
+			foreach (Bundle obj in json["products"].AsArray()) {
+				result.Add(new ProductInfo(obj));
+			}
+			promise.Resolve(result);
+		}
+
+		Promise<PurchasedProduct> IStore.LaunchPurchaseFlow(Gamer gamer, ProductInfo product) {
 			// Already in progress? Refuse immediately.
 			lock (this) {
 				if (LastLaunchProductPromise != null) {
@@ -57,6 +84,32 @@ namespace CotcSdk.InappPurchase {
 			// Will call back the CotcInappPurchaseGameObject
 			JavaClass.CallStatic("launchPurchase", product.ToJson());
 			return LastLaunchProductPromise;
+		}
+
+		// Callback from native code
+		void IStore.LaunchPurchase_Done(string message) {
+			// Extract promise and allow again
+			Promise<PurchasedProduct> promise;
+			lock (this) {
+				promise = LastLaunchProductPromise;
+				LastLaunchProductPromise = null;
+			}
+			
+			if (promise == null) {
+				Debug.LogWarning("Responding to LaunchPurchase without having promise set");
+			}
+			
+			Bundle json = Bundle.FromJson(message);
+			if (json.Has("error")) {
+				promise.Reject(ParseError(json));
+				return;
+			}
+			
+			PurchasedProduct product = new PurchasedProduct(
+				Common.ParseEnum<StoreType>(json["store"], StoreType.Googleplay),
+				json["productId"], json["internalProductId"], json["price"],
+				json["currency"], json["receipt"], json["token"]);
+			promise.Resolve(product);
 		}
 
 		Promise<Done> IStore.TerminatePurchase(PurchasedProduct product) {
@@ -77,61 +130,8 @@ namespace CotcSdk.InappPurchase {
 			return LastTerminatePurchasePromise;
 		}
 
-		// Callback from Java
-		internal void GetInformationAboutProducts_Done(string message) {
-			// Extract promise and allow again
-			Promise<List<ProductInfo>> promise;
-			lock (this) {
-				promise = LastGetInformationAboutProductsPromise;
-				LastGetInformationAboutProductsPromise = null;
-			}
-
-			if (promise == null) {
-				Debug.LogWarning("Responding to GetInformationAboutProducts without having promise set");
-			}
-
-			Bundle json = Bundle.FromJson(message);
-			// Error
-			if (json.Has("error")) {
-				promise.Reject(ParseError(json));
-				return;
-			}
-
-			List<ProductInfo> result = new List<ProductInfo>();
-			foreach (Bundle obj in json["products"].AsArray()) {
-				result.Add(new ProductInfo(obj));
-			}
-			promise.Resolve(result);
-		}
-
-		// Callback from Java
-		internal void LaunchPurchase_Done(string message) {
-			// Extract promise and allow again
-			Promise<PurchasedProduct> promise;
-			lock (this) {
-				promise = LastLaunchProductPromise;
-				LastLaunchProductPromise = null;
-			}
-
-			if (promise == null) {
-				Debug.LogWarning("Responding to LaunchPurchase without having promise set");
-			}
-
-			Bundle json = Bundle.FromJson(message);
-			if (json.Has("error")) {
-				promise.Reject(ParseError(json));
-				return;
-			}
-
-			PurchasedProduct product = new PurchasedProduct(
-				Common.ParseEnum<StoreType>(json["store"], StoreType.Googleplay),
-				json["productId"], json["internalProductId"], json["price"],
-				json["currency"], json["receipt"], json["token"]);
-			promise.Resolve(product);
-		}
-
-		// Callback from Java
-		internal void TerminatePurchase_Done(string message) {
+		// Callback from native code
+		void IStore.TerminatePurchase_Done(string message) {
 			// Extract promise and allow again
 			Promise<Done> promise;
 			lock (this) {

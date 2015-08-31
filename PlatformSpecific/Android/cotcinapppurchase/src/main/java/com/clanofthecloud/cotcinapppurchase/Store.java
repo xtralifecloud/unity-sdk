@@ -22,9 +22,9 @@ public class Store {
 	public static int STORE_REQUEST_CODE = 0xC07C;
 	static String gameObjectName;
 	// Callbacks (messages sent to Unity) after operations completed
-	private static String CB_LISTPRODUCTS = "Android_GetInformationAboutProducts_Done";
-	private static String CB_LAUNCHPURCHASE = "Android_LaunchPurchase_Done";
-	private static String CB_TERMINATEPURCHASE = "Android_TerminatePurchase_Done";
+	private static String CB_LISTPRODUCTS = "GetInformationAboutProducts_Done";
+	private static String CB_LAUNCHPURCHASE = "LaunchPurchase_Done";
+	private static String CB_TERMINATEPURCHASE = "TerminatePurchase_Done";
 
 	/**
 	 * Call this at startup in order to be able to make in-app payments through CotC.

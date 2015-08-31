@@ -13,13 +13,15 @@ namespace CotcSdk
 
 		void Start() {
 			CotcSettings s = CotcSettings.Instance;
-
 			// No need to initialize it once more
-			if (s == null || string.IsNullOrEmpty(s.ApiKey) || string.IsNullOrEmpty(s.ApiSecret)) {
+			if (s == null || string.IsNullOrEmpty(s.Environments[s.SelectedEnvironment].ApiKey) ||
+				string.IsNullOrEmpty(s.Environments[s.SelectedEnvironment].ApiSecret))
+			{
 				throw new ArgumentException("!!!! You need to set up the credentials of your application in the settings of your Cotc object !!!!");
 			}
 
-			Cotc.Setup(s.ApiKey, s.ApiSecret, s.Environment, s.LbCount, s.HttpVerbose, s.HttpTimeout)
+			CotcSettings.Environment env = s.Environments[s.SelectedEnvironment];
+			Cotc.Setup(env.ApiKey, env.ApiSecret, env.ServerUrl, env.LbCount, env.HttpVerbose, env.HttpTimeout)
 			.Then(result => {
 				Common.Log("CotC inited");
 				whenStarted.Resolve(result);

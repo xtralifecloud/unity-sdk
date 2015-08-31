@@ -68,7 +68,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  iPhoneBundleIdentifier: com.clanofthecloud.sampleunityproject
+  iPhoneBundleIdentifier: com.Company.ProductName
   metroEnableIndependentInputSource: 0
   metroEnableLowLatencyPresentationAPI: 0
   productGUID: 906303eb651e54341aeafc0ff87f76fc
@@ -114,7 +114,7 @@ PlayerSettings:
   iOSLaunchScreenCustomXibPath: 
   AndroidTargetDevice: 0
   AndroidSplashScreenScale: 0
-  AndroidKeystoreName: C:/Users/Florian/Documents/CotC/sources/CLI/certificat-googleplay-cli/cli-release.jks
+  AndroidKeystoreName: /Users/florian/Documents/CotC/sources/CLI/certificat-googleplay-cli/cli-release.keystore
   AndroidKeyaliasName: cli-release
   resolutionDialogBanner: {fileID: 0}
   m_BuildTargetIcons:

@@ -11,6 +11,8 @@ namespace CotcSdk.InappPurchase {
 		void Start() {
 #if UNITY_ANDROID
 			Store = new GooglePlayStoreImpl(gameObject.name);
+#elif UNITY_IPHONE
+			Store = new AppStoreImpl(gameObject.name);
 #else
 			Debug.LogError("In-app purchase not available on this platform");
 			Store = null;
@@ -46,25 +48,26 @@ namespace CotcSdk.InappPurchase {
 		 *     item. In order to validate the transaction, you need to call
 		 *     #CotcSdk.GamerStore.ValidateReceipt. More important, you MUST then call
 		 *     #CloseTransaction in case of success!
+		 * @param gamer gamer to associate with the purchase
 		 * @param info information about the product to be purchased. Obtained via #FetchProductInfo.
 		 */
-		public Promise<PurchasedProduct> LaunchPurchase(ProductInfo info) {
-			return Store.LaunchPurchaseFlow(info);
+		public Promise<PurchasedProduct> LaunchPurchase(Gamer gamer, ProductInfo info) {
+			return Store.LaunchPurchaseFlow(gamer, info);
 		}
 
-#if UNITY_ANDROID
+#if UNITY_ANDROID || UNITY_IPHONE
 		// Got from the GooglePlayStoreImpl when GetInformationAboutProducts calls back
-		void Android_GetInformationAboutProducts_Done(string message) {
-			((GooglePlayStoreImpl)Store).GetInformationAboutProducts_Done(message);
+		void GetInformationAboutProducts_Done(string message) {
+			Store.GetInformationAboutProducts_Done(message);
 		}
 
 		// Got from the GooglePlayStoreImpl when LaunchPurchase calls back
-		void Android_LaunchPurchase_Done(string message) {
-			((GooglePlayStoreImpl)Store).LaunchPurchase_Done(message);
+		void LaunchPurchase_Done(string message) {
+			Store.LaunchPurchase_Done(message);
 		}
 
-		void Android_TerminatePurchase_Done(string message) {
-			((GooglePlayStoreImpl)Store).TerminatePurchase_Done(message);
+		void TerminatePurchase_Done(string message) {
+			Store.TerminatePurchase_Done(message);
 		}
 #endif
 	}

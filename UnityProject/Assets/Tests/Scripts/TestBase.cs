@@ -98,6 +98,32 @@ public class TestBase : MonoBehaviour {
 		return FindObjectOfType<TestUtilities>().GetAllTestScopedId(prefix);
 	}
 
+	/**
+	 * Executes a callback for each page. Return true from the callback to stop, return false to get the callback executed again with the next page when available.
+	 * 
+	 * The returned promise can be used to catch any error that would happen meanwhile. It returns true if a page did return true, or false if all pages have been
+	 * visited and no callback ever returned true.
+	 */
+	protected Promise<bool> ProcessAllPages<T>(PagedList<T> initialList, Func<PagedList<T>, bool> forEachPage) {
+		Promise<bool> result = new Promise<bool>();
+		var thenHandlerRef = new Action<PagedList<T>>[1];
+		Action<PagedList<T>> thenHandler = list => {
+			bool shouldStop = forEachPage(list);
+			if (shouldStop) {
+				result.Resolve(true);
+				return;
+			}
+			if (!list.HasNext) {
+				result.Resolve(false);
+				return;
+			}
+			list.FetchNext().Then(thenHandlerRef[0]);
+		};
+		thenHandlerRef[0] = thenHandler;
+		thenHandler(initialList);
+		return result;
+	}
+
 	protected void Login(Cloud cloud, Action<Gamer> done) {
 		cloud.Login(
 			network: LoginNetwork.Email,

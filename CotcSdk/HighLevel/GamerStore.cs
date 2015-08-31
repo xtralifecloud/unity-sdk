@@ -13,14 +13,24 @@ namespace CotcSdk {
 		 * about pricing and so on: the external store plugin is required to do so.
 		 * Note that this call returns the catalog as configured on the CotC server, which may not be exhaustive if
 		 * additional products are configured on iTunes Connect but not reported to the CotC servers.
+		 * @param limit the maximum number of results to return per page.
+		 * @param offset number of the first result.
 		 * @return promise resolved when the operation has completed. The attached value describes a list of products,
-		 *     without pagination functionality.
+		 *     with pagination functionality.
 		 */
-		public Promise<List<ConfiguredProduct>> ListConfiguredProducts() {
-			return Common.RunInTask<List<ConfiguredProduct>>(Gamer.MakeHttpRequest("/v1/gamer/store/products"), (response, task) => {
-				List<ConfiguredProduct> products = new List<ConfiguredProduct>();
+		public Promise<PagedList<ConfiguredProduct>> ListConfiguredProducts(int limit = 30, int offset = 0) {
+			UrlBuilder url = new UrlBuilder("/v1/gamer/store/products").QueryParam("limit", limit).QueryParam("skip", offset);
+			return Common.RunInTask<PagedList<ConfiguredProduct>>(Gamer.MakeHttpRequest(url), (response, task) => {
+				PagedList<ConfiguredProduct> products = new PagedList<ConfiguredProduct>(offset, response.BodyJson["count"]);
 				foreach (Bundle b in response.BodyJson["products"].AsArray()) {
 					products.Add(new ConfiguredProduct(b));
+				}
+				// Handle pagination
+				if (offset > 0) {
+					products.Previous = () => ListConfiguredProducts(limit, offset - limit);
+				}
+				if (offset + products.Count < products.Total) {
+					products.Next = () => ListConfiguredProducts(limit, offset + limit);
 				}
 				task.PostResult(products);
 			});
@@ -30,12 +40,12 @@ namespace CotcSdk {
 		 * Fetches the list of transactions made by the logged in user. Only successful transactions
 		 * show here.
 		 * @return promise resolved when the operation has completed. The attached value describes a list of purchase
-		 *     transactions,without pagination functionality.
+		 *     transactions, without pagination functionality.
 		 */
 		public Promise<List<PurchaseTransaction>> GetPurchaseHistory() {
 			return Common.RunInTask<List<PurchaseTransaction>>(Gamer.MakeHttpRequest("/v1/gamer/store/purchaseHistory"), (response, task) => {
 				List<PurchaseTransaction> products = new List<PurchaseTransaction>();
-				foreach (Bundle b in response.BodyJson["transactions"].AsArray()) {
+				foreach (Bundle b in response.BodyJson["purchases"].AsArray()) {
 					products.Add(new PurchaseTransaction(b));
 				}
 				task.PostResult(products);

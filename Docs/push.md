@@ -1,15 +1,18 @@
 Push Notification {#push}
 ========
 
-## Table of Content
+Push notifications (not to be confused with @ref CotcSdk.PushNotification "the PushNotification class") are provided with the push notification package, which may be downloaded separately.
+
+Additionally, push notifications require server side configuration. This documentation will describe how to set it up like any mobile application, and then how to integrate the SDK. We recommend that you perform the former steps first, since the changes made to the configuration on Google/Apple sides need some delay to take effect.
+
+## Table of Contents
 
 1. [Push Notification for iOS](#toc_push_1)
 2. [Push Notification for Android](#toc_push_2)
-
-   
+  
 - - - -
 
-# Setup Notification for iOS {#toc_push_1}
+# Setup Notifications for iOS {#toc_push_1}
 
 On iOS, push notifications use the Apple Push Notification Service, which we'll describe how to set up in the following paragraphs.
 
@@ -34,10 +37,12 @@ Once you've got your two .pem files, open a web page to our [Back Office](https:
 ![Setting up your iOS push notifications with Clan of the Cloud back office](./img/CotC_iOS_PushNotifs.png)
 
 Then, you simply have to import the Cotc.PushNotifications package. When you build your application, check that you are using the provisioning profile for the application for which you enabled push notifications. Everything should be automatic with Xcode though.
-   
+
+Push notifications require no further configuration on your side. You should not even have to implement anything: just placing the `CotcPushNotificationsGameObject` on your scenes will ensure that everything works fine. It will transparently ask for push notifications permission upon login done with the main CotC SDK Game Object and register the device for push notifications. When a message has been delivered successfully (processed by the SDK, raised via #CotcSdk.DomainEventLoop.ReceivedEvent), the application badge is reseted.
+
 - - - -
 
-# Setup Notification for Android {#toc_push_2}
+# Setup Notifications for Android {#toc_push_2}
 
 In case you need some more information about how Google Cloud Messaging works, please have a look at the [official Google documentation](https://developer.android.com/google/gcm/gcm.html). Otherwise, by following the steps below, you should be able to have your application manage push notifications pretty quickly.
 
@@ -77,4 +82,4 @@ You need to change the following:
 - `cotc.GcmNotificationTitle` node with the name of your application.
 - If you are using facebook, you may need to remove `android-support-v4.jar` under Assets/Plugins/Android/Facebook/libs.
 
-Your application is now ready to receive push notifications from Google Cloud Messaging!
+Your application is now ready to receive push notifications from Google Cloud Messaging! No further configuration is required on your side: just placing the `CotcPushNotificationsGameObject` on your scenes will ensure that everything works fine. It will transparently register for notifications upon login done with the main CotC SDK Game Object. Notifications will be received via the standard GCM service (running in background on your device), that starts a small piece of code embedded in our SDK upon event, showing a notification using the parameters set in the manifest.

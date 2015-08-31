@@ -24,10 +24,11 @@ namespace CotcSdk.InappPurchase {
 		 * verification of the payment before actually delivering the goods. That is why you need to
 		 * call #CotcSdk.GamerStore.SendStorePurchaseToServer after your purchase has been done
 		 * and forward the result.
+		 * @param gamer gamer to associate with the purchase.
 		 * @param product product to be purchased, as returned by #GetInformationAboutProducts.
 		 * @return promise resolved when the purchase has completed successfully.
 		 */
-		Promise<PurchasedProduct> LaunchPurchaseFlow(ProductInfo product);
+		Promise<PurchasedProduct> LaunchPurchaseFlow(Gamer gamer, ProductInfo product);
 
 		/**
 		 * Completes the purchase process. This step is mandatory in order to close the purchase transaction.
@@ -39,5 +40,10 @@ namespace CotcSdk.InappPurchase {
 		 * @return a promise that is resolved when the native operation has completed.
 		 */
 		Promise<Done> TerminatePurchase(PurchasedProduct product);
+
+		// ------------- Callback messages used by some native implementations -------------
+		void GetInformationAboutProducts_Done(string message);
+		void LaunchPurchase_Done(string message);
+		void TerminatePurchase_Done(string message);
 	}
 }
