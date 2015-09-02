@@ -15,4 +15,12 @@
 #	define Log(...)	NSLog(__VA_ARGS__);
 #endif
 
+#if defined(WIN32) || defined(__WP8__)
+#	define STDCALL __stdcall
+#else	// WIN32
+#	ifndef STDCALL
+#		define STDCALL
+#	endif
+#endif
+
 #endif

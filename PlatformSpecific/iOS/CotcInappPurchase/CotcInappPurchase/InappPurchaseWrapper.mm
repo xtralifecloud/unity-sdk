@@ -2,10 +2,13 @@
 #import "InappPurchaseWrapper.h"
 #import "safe.h"
 
+static cstring nullstring;
+
 @implementation InappPurchaseWrapper
 
-- (id)init {
+- (id)initWithAppStore:(AppStoreType)_storeType {
 	if ((self = [super init])) {
+		storeType = _storeType;
 		[[SKPaymentQueue defaultQueue] addTransactionObserver:self];
 	}
 	return self;
@@ -20,10 +23,11 @@
 			   error:(function<void (ErrorCode, const char *)>)onError {
 
 	NSMutableSet *productIdentifiers = [NSMutableSet set];
-	for (const ConfiguredProduct &p: products) {
+	for (const ConfiguredProduct& p: products) {
+		const cstring& pid = [self productId:p];
 		// Do not show those which are not configured for AppStore
-		if (p.appStoreId) {
-			[productIdentifiers addObject:p.appStoreId];
+		if (pid) {
+			[productIdentifiers addObject:pid];
 		}
 	}
 
@@ -61,7 +65,7 @@
 			
 			// Find the CotC product ID corresponding to the AppStore product ID
 			for (const ConfiguredProduct &p: products) {
-				if ([product.productIdentifier isEqualToString:p.appStoreId]) {
+				if ([product.productIdentifier isEqualToString:[self productId:p]]) {
 					pi.productId = p.productId;
 					break;
 				}
@@ -307,6 +311,14 @@
 - (void)markTransactionAsFinished:(SKPaymentTransaction *)tx {
 	Log(@"Closing transaction %@ (product %@)", tx.transactionIdentifier, tx.payment.productIdentifier);
 	[[SKPaymentQueue defaultQueue] finishTransaction:tx];
+}
+
+- (const cstring &)productId:(const ConfiguredProduct&)product {
+	switch (storeType) {
+		case IOS_STORE: return product.appStoreId;
+		case MAC_STORE: return product.macStoreId;
+		default: return nullstring;
+	}
 }
 
 - (void)setCallback:(function<void (SKProductsResponse *, NSError *)>)callback forNextRequest:(SKProductsRequest *)request {

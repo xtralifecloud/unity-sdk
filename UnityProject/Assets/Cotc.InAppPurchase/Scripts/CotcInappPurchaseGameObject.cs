@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace CotcSdk.InappPurchase {
-
+	
 	public class CotcInappPurchaseGameObject : MonoBehaviour {
 
 		private IStore Store;
@@ -13,9 +13,12 @@ namespace CotcSdk.InappPurchase {
 			Store = new GooglePlayStoreImpl(gameObject.name);
 #elif UNITY_IPHONE
 			Store = new AppStoreImpl(gameObject.name);
+#elif UNITY_EDITOR_OSX
+			Debug.LogError("In-app purchase not available on this platform: you need to build it standalone and configure it on iTunes Connect");
+#elif UNITY_STANDALONE_OSX
+			Store = new MacAppStoreImpl();
 #else
 			Debug.LogError("In-app purchase not available on this platform");
-			Store = null;
 #endif
 		}
 
