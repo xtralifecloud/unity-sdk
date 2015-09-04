@@ -14,10 +14,12 @@ namespace CotcSdk.InappPurchase {
 #elif UNITY_IPHONE
 			Store = new AppStoreImpl(gameObject.name);
 #elif UNITY_EDITOR_OSX
+			Store = null;
 			Debug.LogError("In-app purchase not available on this platform: you need to build it standalone and configure it on iTunes Connect");
 #elif UNITY_STANDALONE_OSX
 			Store = new MacAppStoreImpl();
 #else
+			Store = null;
 			Debug.LogError("In-app purchase not available on this platform");
 #endif
 		}
