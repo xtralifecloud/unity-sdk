@@ -1,17 +1,11 @@
 ﻿
 namespace CotcSdk {
 
-	/**
-	 * Contains the results of a search on the index.
-	 */
+	/// <summary>Contains the results of a search on the index.</summary>
 	public class IndexSearchResult {
-		/**
-		 * Paginated list of results.0
-		 */
+		/// <summary>Paginated list of results.0</summary>
 		public PagedList<IndexResult> Hits { get; private set; }
-		/**
-		 * Maximum score in the results.
-		 */
+		/// <summary>Maximum score in the results.</summary>
 		public int MaxScore;
 
 		internal IndexSearchResult(Bundle serverData, int currentOffset) {

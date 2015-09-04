@@ -1,29 +1,25 @@
 ﻿
 namespace CotcSdk {
 
-	/**
-	 * Data about a friend on the social network.
-	 * The most important field is the id, which allows to recognize the gamer uniquely among the given social network.
-	 */
+	/// <summary>
+	/// Data about a friend on the social network.
+	/// The most important field is the id, which allows to recognize the gamer uniquely among the given social network.
+	/// </summary>
 	public class SocialNetworkFriend {
-		/**
-		 * Required. The ID given by the social network, allowing to uniquely identify the friend in question.
-		 */
+		/// <summary>Required. The ID given by the social network, allowing to uniquely identify the friend in question.</summary>
 		public string Id;
-		/**
-		 * If you have either a name (composite of name/first name regardless of order), either the two components
-		 * (name, first name), pass them here. You should pass at least one of these.
-		 */
+		/// <summary>
+		/// If you have either a name (composite of name/first name regardless of order), either the two components
+		/// (name, first name), pass them here. You should pass at least one of these.
+		/// </summary>
 		public string FirstName, LastName, Name;
-		/**
-		 * Additional info that might have been enriched by the CotC servers.
-		 * You should never guess or create this info by yourself.
-		 */
+		/// <summary>
+		/// Additional info that might have been enriched by the CotC servers.
+		/// You should never guess or create this info by yourself.
+		/// </summary>
 		public GamerInfo ClanInfo { get; private set; }
 
-		/**
-		 * User constructor.
-		 */
+		/// <summary>User constructor.</summary>
 		public SocialNetworkFriend(string id, string firstName, string lastName, string name) {
 			Id = id;
 			FirstName = firstName;
@@ -31,12 +27,10 @@ namespace CotcSdk {
 			Name = name;
 		}
 
-		/** Default constructor for convenience. */
+		/// <summary>Default constructor for convenience.</summary>
 		public SocialNetworkFriend() { }
 
-		/**
-		 * Build from existing JSON data.
-		 */
+		/// <summary>Build from existing JSON data.</summary>
 		internal SocialNetworkFriend(Bundle serverData) {
 			Id = serverData["id"];
 			Name = serverData["name"];

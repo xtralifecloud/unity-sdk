@@ -3,21 +3,19 @@ using System.Collections.Generic;
 
 namespace CotcSdk {
 
-	/**
-	 * (App) Store API.
-	 */
+	/// <summary>(App) Store API.</summary>
 	public class GamerStore {
 
-		/**
-		 * Fetch the list of products as configured on the backoffice. Note that this doesn't include any information
-		 * about pricing and so on: the external store plugin is required to do so.
-		 * Note that this call returns the catalog as configured on the CotC server, which may not be exhaustive if
-		 * additional products are configured on iTunes Connect but not reported to the CotC servers.
-		 * @param limit the maximum number of results to return per page.
-		 * @param offset number of the first result.
-		 * @return promise resolved when the operation has completed. The attached value describes a list of products,
-		 *     with pagination functionality.
-		 */
+		/// <summary>
+		/// Fetch the list of products as configured on the backoffice. Note that this doesn't include any information
+		/// about pricing and so on: the external store plugin is required to do so.
+		/// Note that this call returns the catalog as configured on the CotC server, which may not be exhaustive if
+		/// additional products are configured on iTunes Connect but not reported to the CotC servers.
+		/// </summary>
+		/// <param name="limit">the maximum number of results to return per page.</param>
+		/// <param name="offset">number of the first result.</param>
+		/// <returns>promise resolved when the operation has completed. The attached value describes a list of products,
+		///     with pagination functionality.</returns>
 		public Promise<PagedList<ConfiguredProduct>> ListConfiguredProducts(int limit = 30, int offset = 0) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/store/products").QueryParam("limit", limit).QueryParam("skip", offset);
 			return Common.RunInTask<PagedList<ConfiguredProduct>>(Gamer.MakeHttpRequest(url), (response, task) => {
@@ -36,12 +34,12 @@ namespace CotcSdk {
 			});
 		}
 
-		/**
-		 * Fetches the list of transactions made by the logged in user. Only successful transactions
-		 * show here.
-		 * @return promise resolved when the operation has completed. The attached value describes a list of purchase
-		 *     transactions, without pagination functionality.
-		 */
+		/// <summary>
+		/// Fetches the list of transactions made by the logged in user. Only successful transactions
+		/// show here.
+		/// </summary>
+		/// <returns>promise resolved when the operation has completed. The attached value describes a list of purchase
+		///     transactions, without pagination functionality.</returns>
 		public Promise<List<PurchaseTransaction>> GetPurchaseHistory() {
 			return Common.RunInTask<List<PurchaseTransaction>>(Gamer.MakeHttpRequest("/v1/gamer/store/purchaseHistory"), (response, task) => {
 				List<PurchaseTransaction> products = new List<PurchaseTransaction>();
@@ -52,17 +50,17 @@ namespace CotcSdk {
 			});
 		}
 
-		/**
-		 * Last step in the purchase. Validates the receipt received by a native purchase. You may have to do additional
-		 * steps to close your purchase process.
-		 * @return promise indicating whether the recceipt was validated properly. In case of exception, you can inspect why
-		 *     the receipt failed to verify.
-		 * @param storeType type of Store, should be provided by the store plugin. Valid are appstore, macstore, googleplay.
-		 * @param cotcProductId ID of the product purchased (as configured on the backoffice).
-		 * @param paidPrice paid price in units.
-		 * @param paidCurrency currency of paid price (ISO code).
-		 * @param receipt receipt string, dependent on the store type.
-		 */
+		/// <summary>
+		/// Last step in the purchase. Validates the receipt received by a native purchase. You may have to do additional
+		/// steps to close your purchase process.
+		/// </summary>
+		/// <returns>promise indicating whether the recceipt was validated properly. In case of exception, you can inspect why
+		///     the receipt failed to verify.</returns>
+		/// <param name="storeType">type of Store, should be provided by the store plugin. Valid are appstore, macstore, googleplay.</param>
+		/// <param name="cotcProductId">ID of the product purchased (as configured on the backoffice).</param>
+		/// <param name="paidPrice">paid price in units.</param>
+		/// <param name="paidCurrency">currency of paid price (ISO code).</param>
+		/// <param name="receipt">receipt string, dependent on the store type.</param>
 		public Promise<ValidateReceiptResult> ValidateReceipt(StoreType storeType, string cotcProductId, float paidPrice, string paidCurrency, string receipt) {
 			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/store/validateReceipt");
 			Bundle data = Bundle.CreateObject();

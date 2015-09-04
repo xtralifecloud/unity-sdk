@@ -3,21 +3,17 @@ using System.Threading;
 
 namespace CotcSdk {
 
-	/**
-	 * Delegate called when receiving a message on a #CotcSdk.DomainEventLoop.
-	 * @param sender domain loop that triggered the event.
-	 * @param e description of the received event.
-	 */
+	/// <summary>Delegate called when receiving a message on a #CotcSdk.DomainEventLoop.</summary>
+	/// <param name="sender">domain loop that triggered the event.</param>
+	/// <param name="e">description of the received event.</param>
 	public delegate void EventLoopHandler(DomainEventLoop sender, EventLoopArgs e);
 
-	/**
-	 * Arguments of the EventLoopArgs.ReceivedEvent event. You can use `args.Message.ToJson()` to
-	 * obtain more information.
-	 */
+	/// <summary>
+	/// Arguments of the EventLoopArgs.ReceivedEvent event. You can use `args.Message.ToJson()` to
+	/// obtain more information.
+	/// </summary>
 	public class EventLoopArgs {
-		/**
-		 * Message received.
-		 */
+		/// <summary>Message received.</summary>
 		public Bundle Message {
 			get; private set;
 		}
@@ -27,50 +23,44 @@ namespace CotcSdk {
 		}
 	}
 
-	/**
-	 * This class is responsible for polling the server waiting for new events.
-	 * You should instantiate one and manage its lifecycle as the state of the application changes.
-	 */
+	/// <summary>
+	/// This class is responsible for polling the server waiting for new events.
+	/// You should instantiate one and manage its lifecycle as the state of the application changes.
+	/// </summary>
 	public sealed class DomainEventLoop {
-		/**
-		 * You need valid credentials in order to instantiate this class. Use Cloud.Login* methods for that purpose.
-		 * Once the object is created, you need to start the thread, please look at the other methods available.
-		 * @param gamer the gamer object received from a login or similar function.
-		 * @param domain the domain on which to listen for events. Note that you may create multiple event loops,
-		 * especially if you are using multiple domains. The default domain, that you should use unless you are
-		 * explicitly using multiple domains, is the private domain.
-		 * @param gamer gamer, used to authenticate (receive events related to the said gamer).
-		 * @param domain domain on which to listen for events.
-		 * @param iterationDuration sets a custom timeout in seconds for the long polling event loop. Should be used
-		 *     with care and set to a high value (at least 60). Defaults to 590 (~10 min).
-		 */
+		/// <summary>
+		/// You need valid credentials in order to instantiate this class. Use Cloud.Login* methods for that purpose.
+		/// Once the object is created, you need to start the thread, please look at the other methods available.
+		/// </summary>
+		/// <param name="gamer">the gamer object received from a login or similar function.</param>
+		/// <param name="domain">the domain on which to listen for events. Note that you may create multiple event loops,
+		///     especially if you are using multiple domains. The default domain, that you should use unless you are
+		///     explicitly using multiple domains, is the private domain.</param>
+		/// <param name="gamer">gamer, used to authenticate (receive events related to the said gamer).</param>
+		/// <param name="domain">domain on which to listen for events.</param>
+		/// <param name="iterationDuration">sets a custom timeout in seconds for the long polling event loop. Should be used
+		///     with care and set to a high value (at least 60). Defaults to 590 (~10 min).</param>
 		public DomainEventLoop(Gamer gamer, String domain = Common.PrivateDomain, int iterationDuration = 590) {
 			Domain = domain;
 			Gamer = gamer;
 			LoopIterationDuration = iterationDuration * 1000;
 		}
 
-		/**
-		 * The domain on which this loop is listening.
-		 */
+		/// <summary>The domain on which this loop is listening.</summary>
 		public String Domain {
 			get; private set;
 		}
 
 		public Gamer Gamer { get; private set; }
 
-		/**
-		 * This event is raised when an event is received.
-		 */
+		/// <summary>This event is raised when an event is received.</summary>
 		public event EventLoopHandler ReceivedEvent {
 			add { receivedEvent += value; }
 			remove { receivedEvent -= value; }
 		}
 		private EventLoopHandler receivedEvent;
 
-		/**
-		 * Starts the thread. Call this upon initialization.
-		 */
+		/// <summary>Starts the thread. Call this upon initialization.</summary>
 		public DomainEventLoop Start() {
 			if (Stopped) throw new InvalidOperationException("Never restart a loop that was stopped");
 			if (AlreadyStarted) return this;
@@ -81,10 +71,10 @@ namespace CotcSdk {
 			return this;
 		}
 
-		/**
-		 * Will stop the event thread. Might take some time until the current request finishes.
-		 * You should not use this object for other purposes later on. In particular, do not start it again.
-		 */
+		/// <summary>
+		/// Will stop the event thread. Might take some time until the current request finishes.
+		/// You should not use this object for other purposes later on. In particular, do not start it again.
+		/// </summary>
 		public DomainEventLoop Stop() {
 			Stopped = true;
 			Resume();
@@ -97,9 +87,7 @@ namespace CotcSdk {
 			return this;
 		}
 
-		/**
-		 * Suspends the event thread.
-		 */
+		/// <summary>Suspends the event thread.</summary>
 		public DomainEventLoop Suspend() {
 			Paused = true;
 			if (CurrentRequest != null) {
@@ -109,9 +97,7 @@ namespace CotcSdk {
 			return this;
 		}
 
-		/**
-		 * Resumes a suspended event thread.
-		 */
+		/// <summary>Resumes a suspended event thread.</summary>
 		public DomainEventLoop Resume() {
 			if (Paused) {
 				SynchronousRequestLock.Set();

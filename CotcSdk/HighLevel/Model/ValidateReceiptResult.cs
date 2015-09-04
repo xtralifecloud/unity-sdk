@@ -3,9 +3,7 @@ using System.Collections.Generic;
 
 namespace CotcSdk {
 
-	/**
-	 * Result of #CotcSdk.GamerStore.ValidateReceipt.
-	 */
+	/// <summary>Result of #CotcSdk.GamerStore.ValidateReceipt.</summary>
 	public class ValidateReceiptResult : PropertiesObject {
 		public bool Repeated {
 			get { return Props["repeated"]; }

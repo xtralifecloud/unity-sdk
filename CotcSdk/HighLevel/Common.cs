@@ -3,18 +3,16 @@ using System.Threading;
 
 namespace CotcSdk
 {
-	/**
-	 * Common SDK methods also usable by clients.
-	 */
+	/// <summary>Common SDK methods also usable by clients.</summary>
 	public static class Common {
-		/**
-		 * Checks whether the response is negative (either it has failed completely,
-		 * either it has given an error status code. You should not attempt to process
-		 * the entity from the response if this method return yes. Just build a Result
-		 * object with the response in question, add an error message and invoke the
-		 * result handler with it.
-		 * @return whether the server response is considered as failed
-		 */
+		/// <summary>
+		/// Checks whether the response is negative (either it has failed completely,
+		/// either it has given an error status code. You should not attempt to process
+		/// the entity from the response if this method return yes. Just build a Result
+		/// object with the response in question, add an error message and invoke the
+		/// result handler with it.
+		/// </summary>
+		/// <returns>whether the server response is considered as failed</returns>
 		internal static bool HasFailed(HttpResponse response) {
 			return response.HasFailed || response.StatusCode < 200 || response.StatusCode >= 300;
 		}
@@ -60,14 +58,14 @@ namespace CotcSdk
 			return httpDate != null ? DateTime.Parse(httpDate) : DateTime.MinValue;
 		}
 
-		/**
-		 * Wrapper around our standard work on Managers.HttpClient.Run. Automatically notifies the passed handler
-		 * of a failure.
-		 * @param req request to perform.
-		 * @param task task that is resolved in case of failure, else the onSuccess callback is called and you'll
-		 *     have to resolve it from inside.
-		 * @param onSuccess callback called in case of success only.
-		 */
+		/// <summary>
+		/// Wrapper around our standard work on Managers.HttpClient.Run. Automatically notifies the passed handler
+		/// of a failure.
+		/// </summary>
+		/// <param name="req">request to perform.</param>
+		/// <param name="task">task that is resolved in case of failure, else the onSuccess callback is called and you'll
+		///     have to resolve it from inside.</param>
+		/// <param name="onSuccess">callback called in case of success only.</param>
 		internal static Promise<T> RunRequest<T>(HttpRequest req, Promise<T> task, Action<HttpResponse> onSuccess) {
 			Managers.HttpClient.Run(req, (HttpResponse response) => {
 				if (HasFailed(response)) {
@@ -78,15 +76,15 @@ namespace CotcSdk
 			});
 			return task;
 		}
-		/**
-		 * Wrapper around our standard work on Managers.HttpClient.Run. Automatically notifies the passed handler
-		 * of a failure.
-		 * @param req request to perform.
-		 * @return a task that is resolved in case of failure (the onSuccess callback is not called) or to be resolved
-		 *     from the onSuccess block in case of success.
-		 * @param onSuccess callback called in case of success only, with the response and a new task that needs to
-		 *     be resolved from there.
-		 */
+		/// <summary>
+		/// Wrapper around our standard work on Managers.HttpClient.Run. Automatically notifies the passed handler
+		/// of a failure.
+		/// </summary>
+		/// <param name="req">request to perform.</param>
+		/// <returns>a task that is resolved in case of failure (the onSuccess callback is not called) or to be resolved
+		///     from the onSuccess block in case of success.</returns>
+		/// <param name="onSuccess">callback called in case of success only, with the response and a new task that needs to
+		///     be resolved from there.</param>
 		internal static Promise<T> RunInTask<T>(HttpRequest req, Action<HttpResponse, Promise<T>> onSuccess) {
 			var task = new Promise<T>();
 			Managers.HttpClient.Run(req, (HttpResponse response) => {
@@ -122,9 +120,7 @@ namespace CotcSdk
 		private static long InitialTicks;
 	}
 	
-	/**
-	 * Holds a cached single-time-instantiated member.
-	 */
+	/// <summary>Holds a cached single-time-instantiated member.</summary>
 	internal struct CachedMember <T> where T: class {
 		public void Clear() { Instance = null; }
 		public T Get(Func<T> instantiate) {
@@ -133,9 +129,7 @@ namespace CotcSdk
 		private T Instance;
 	}
 
-	/**
-	 * Information about a log entry.
-	 */
+	/// <summary>Information about a log entry.</summary>
 	public class LogEventArgs : EventArgs {
 		public LogLevel Level;
 		public string Text;

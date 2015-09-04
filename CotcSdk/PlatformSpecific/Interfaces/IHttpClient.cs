@@ -3,18 +3,14 @@ using System;
 
 namespace CotcSdk
 {
-	/**
-	 * Platform-specific HTTP client.
-	 */
+	/// <summary>Platform-specific HTTP client.</summary>
 	internal interface IHttpClient
 	{
 		bool VerboseMode { get; set; }
 
 		void Abort(HttpRequest request);
 		void Run(HttpRequest request, Action<HttpResponse> callback);
-		/**
-		 * Should abort all requests.
-		 */
+		/// <summary>Should abort all requests.</summary>
 		void Terminate();
 	}
 }

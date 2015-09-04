@@ -3,25 +3,17 @@ using System.Collections.Generic;
 
 namespace CotcSdk {
 
-	/**
-	 * Information about a configured product on the BO.
-	 */
+	/// <summary>Information about a configured product on the BO.</summary>
 	public class ConfiguredProduct : PropertiesObject {
-		/**
-		 * The product identifier as formatted in the query.
-		 */
+		/// <summary>The product identifier as formatted in the query.</summary>
 		public string ProductId {
 			get { return Props["productId"]; }
 		}
-		/**
-		 * ID of the product on the Google Play Store (mapping with ProductId on CotC).
-		 */
+		/// <summary>ID of the product on the Google Play Store (mapping with ProductId on CotC).</summary>
 		public string AppStoreId {
 			get { return Props["appStoreId"]; }
 		}
-		/**
-		 * ID of the product on the Google Play Store (mapping with ProductId on CotC).
-		 */
+		/// <summary>ID of the product on the Google Play Store (mapping with ProductId on CotC).</summary>
 		public string GooglePlayId {
 			get { return Props["googlePlayId"]; }
 		}

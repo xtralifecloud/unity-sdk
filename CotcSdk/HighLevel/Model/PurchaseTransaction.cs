@@ -3,52 +3,36 @@ using System.Collections.Generic;
 
 namespace CotcSdk {
 
-	/**
-	 * (App) Store API.
-	 */
+	/// <summary>(App) Store API.</summary>
 
-	/**
-	 * Information about a purchased product transaction.
-	 */
+	/// <summary>Information about a purchased product transaction.</summary>
 	public class PurchaseTransaction : PropertiesObject {
-		/**
-		 * The type of Store on which the purchase has been made.
-		 */
+		/// <summary>The type of Store on which the purchase has been made.</summary>
 		public StoreType Store {
 			get { return Common.ParseEnum<StoreType>(Props["store"]); }
 		}
 
-		/**
-		 * The ID of the product purchased.
-		 */
+		/// <summary>The ID of the product purchased.</summary>
 		public string ProductId {
 			get { return Props["productId"]; }
 		}
 
-		/**
-		 * Time of purchase.
-		 */
+		/// <summary>Time of purchase.</summary>
 		public DateTime PurchaseDate {
 			get { return Common.ParseHttpDate(Props["dateTime"]); }
 		}
 
-		/**
-		 * The price paid (the price might have been changed since then on iTunes Connect; any such change does not reflect here).
-		 */
+		/// <summary>The price paid (the price might have been changed since then on iTunes Connect; any such change does not reflect here).</summary>
 		public float Price {
 			get { return Props["price"]; }
 		}
 
-		/**
-		 * Currency unit of the price paid.
-		 */
+		/// <summary>Currency unit of the price paid.</summary>
 		public string Currency {
 			get { return Props["currency"]; }
 		}
 
-		/**
-		 * The ID of transaction on the original store. You might want to use it for customer service. Depends on the store type.
-		 */
+		/// <summary>The ID of transaction on the original store. You might want to use it for customer service. Depends on the store type.</summary>
 		public string StoreTransactionId {
 			get { return Props["storeTransactionId"]; }
 		}

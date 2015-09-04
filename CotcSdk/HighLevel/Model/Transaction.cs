@@ -6,9 +6,7 @@ namespace CotcSdk {
 		public string Description;
 		public string Domain;
 		public DateTime RunDate;
-		/**
-		 * The transaction itself (e.g. {"gold": 100}).
-		 */
+		/// <summary>The transaction itself (e.g. {"gold": 100}).</summary>
 		public Bundle TxData;
 
 		internal Transaction(Bundle serverData) {

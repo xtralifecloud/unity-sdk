@@ -1,16 +1,12 @@
 ﻿
 namespace CotcSdk
 {
-	/**
-	 * API functions acting on an user account (convert, etc.).
-	 */
+	/// <summary>API functions acting on an user account (convert, etc.).</summary>
 	public sealed class GamerAccountMethods {
 
-		/**
-		 * Changes the e-mail address of the current user. Works for e-mail type accounts.
-		 * @return promise resolved when the operation has completed.
-		 * @param newEmailAddress the new e-mail address to be used for signing in.
-		 */
+		/// <summary>Changes the e-mail address of the current user. Works for e-mail type accounts.</summary>
+		/// <returns>promise resolved when the operation has completed.</returns>
+		/// <param name="newEmailAddress">the new e-mail address to be used for signing in.</param>
 		public Promise<Done> ChangeEmailAddress(string newEmailAddress) {
 			var task = new Promise<Done>();
 			if (Gamer.Network != LoginNetwork.Email) {
@@ -27,11 +23,9 @@ namespace CotcSdk
 			});
 		}
 
-		/**
-		 * Changes the password of the current user. Works for e-mail type accounts.
-		 * @return promise resolved when the operation has completed.
-		 * @param newPassword the new password to be used for signing in.
-		 */
+		/// <summary>Changes the password of the current user. Works for e-mail type accounts.</summary>
+		/// <returns>promise resolved when the operation has completed.</returns>
+		/// <param name="newPassword">the new password to be used for signing in.</param>
 		public Promise<Done> ChangePassword(string newPassword) {
 			var task = new Promise<Done>();
 			if (Gamer.Network != LoginNetwork.Email) {
@@ -46,20 +40,20 @@ namespace CotcSdk
 			});
 		}
 
-		/**
-		 * Converts the account to sign in through another network.
-		 * For instance, you might have created an anonymous account, that you later want to convert to an account
-		 * logged on through a facebook account. Or, should you later want to convert this account to simply use an
-		 * e-mail address, this is the method that you will want to call.
-		 * In order to convert the account successfully, the provided network credentials need to be acceptable,
-		 * just as when calling Cloud.Login.
-		 * @return promise resolved when the operation has completed.
-		 * @param network the target network to connect with later on.
-		 * @param networkId the ID on the network. For example, with the facebook network, this would be the User ID.
-		 *     On e-mail accounts e-mail then, this would be the e-mail address.
-		 * @param networkSecret the secret for the network. For e-mail accounts, this would be the passord. For
-		 *     facebook or other SNS accounts, this would be the user token.
-		 */
+		/// <summary>
+		/// Converts the account to sign in through another network.
+		/// For instance, you might have created an anonymous account, that you later want to convert to an account
+		/// logged on through a facebook account. Or, should you later want to convert this account to simply use an
+		/// e-mail address, this is the method that you will want to call.
+		/// In order to convert the account successfully, the provided network credentials need to be acceptable,
+		/// just as when calling Cloud.Login.
+		/// </summary>
+		/// <returns>promise resolved when the operation has completed.</returns>
+		/// <param name="network">the target network to connect with later on.</param>
+		/// <param name="networkId">the ID on the network. For example, with the facebook network, this would be the User ID.
+		///     On e-mail accounts e-mail then, this would be the e-mail address.</param>
+		/// <param name="networkSecret">the secret for the network. For e-mail accounts, this would be the passord. For
+		///     facebook or other SNS accounts, this would be the user token.</param>
 		public Promise<Done> Convert(LoginNetwork network, string networkId, string networkSecret) {
 			Bundle config = Bundle.CreateObject();
 			config["network"] = network.Describe();
@@ -73,11 +67,9 @@ namespace CotcSdk
 			});
 		}
 
-		/**
-		 * Meant to be called for push notifications.
-		 * @param os operating system (should be determined by the native implementation: "ios", "android", "macos", …).
-		 * @param token push notification token (device specific).
-		 */
+		/// <summary>Meant to be called for push notifications.</summary>
+		/// <param name="os">operating system (should be determined by the native implementation: "ios", "android", "macos", …).</param>
+		/// <param name="token">push notification token (device specific).</param>
 		public Promise<Done> RegisterDevice(string os, string token) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/device").QueryParam("os", os).QueryParam("token", token);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
@@ -87,11 +79,9 @@ namespace CotcSdk
 			});
 		}
 
-		/**
-		 * Unregisters a previously registered device (see #RegisterDevice).
-		 * @param os operating system (should be determined by the native implementation: "ios", "android", "macos", …).
-		 * @param token push notification token (device specific).
-		 */
+		/// <summary>Unregisters a previously registered device (see #RegisterDevice).</summary>
+		/// <param name="os">operating system (should be determined by the native implementation: "ios", "android", "macos", …).</param>
+		/// <param name="token">push notification token (device specific).</param>
 		public Promise<Done> UnregisterDevice(string os, string token) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/device").QueryParam("os", os).QueryParam("token", token);
 			HttpRequest req = Gamer.MakeHttpRequest(url);

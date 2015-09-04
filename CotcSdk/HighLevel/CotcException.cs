@@ -10,16 +10,12 @@ namespace CotcSdk {
 			get { return Json; }
 		}
 
-		/**
-		 * To be used for an higher level error. No information about the HTTP request would be attached.
-		 */
+		/// <summary>To be used for an higher level error. No information about the HTTP request would be attached.</summary>
 		public CotcException(ErrorCode code, string failureDescription = null) {
 			ErrorCode = code;
 			ErrorInformation = failureDescription;
 		}
-		/**
-		 * To be used when an HTTP request has failed. Will extract a default error code (server error, network error) from the HTTP request.
-		 */
+		/// <summary>To be used when an HTTP request has failed. Will extract a default error code (server error, network error) from the HTTP request.</summary>
 		internal CotcException(HttpResponse response, string failureDescription = null) {
 			Json = response.BodyJson;
 			HttpStatusCode = response.StatusCode;

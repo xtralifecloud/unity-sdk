@@ -1,31 +1,29 @@
 ﻿
 namespace CotcSdk {
 
-	/**
-	 * Represents a key/value system, also known as virtual file system.
-	 * This class is scoped by domain, meaning that you can call .Domain("yourdomain") and perform
-	 * additional calls that are scoped.
-	 */
+	/// <summary>
+	/// Represents a key/value system, also known as virtual file system.
+	/// This class is scoped by domain, meaning that you can call .Domain("yourdomain") and perform
+	/// additional calls that are scoped.
+	/// </summary>
 	public sealed class GamerVfs {
 
-		/**
-		 * Sets the domain affected by this object.
-		 * You should typically use it this way: `gamer.GamerVfs.Domain("private").SetKey(...);`
-		 * @param domain domain on which to scope the VFS. Defaults to `private` if not specified.
-		 * @return this object for operation chaining.
-		 */
+		/// <summary>
+		/// Sets the domain affected by this object.
+		/// You should typically use it this way: `gamer.GamerVfs.Domain("private").SetKey(...);`
+		/// </summary>
+		/// <param name="domain">domain on which to scope the VFS. Defaults to `private` if not specified.</param>
+		/// <returns>this object for operation chaining.</returns>
 		public GamerVfs Domain(string domain) {
 			this.domain = domain;
 			return this;
 		}
 
-		/**
-		 * Retrieves an individual key from the key/value system.
-		 * @return promise resolved when the operation has completed. The attached bundle contains the fetched
-		 *     property. As usual with bundles, it can be casted to the proper type you are expecting.
-		 *     If the property doesn't exist, the call is marked as failed with a 404 status.
-		 * @param key the name of the key to be fetched.
-		 */
+		/// <summary>Retrieves an individual key from the key/value system.</summary>
+		/// <returns>promise resolved when the operation has completed. The attached bundle contains the fetched
+		///     property. As usual with bundles, it can be casted to the proper type you are expecting.
+		///     If the property doesn't exist, the call is marked as failed with a 404 status.</returns>
+		/// <param name="key">the name of the key to be fetched.</param>
 		public Promise<Bundle> GetKey(string key) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
@@ -34,13 +32,11 @@ namespace CotcSdk {
 			});
 		}
 
-		/**
-		 * Retrieves the binary data of an individual key from the key/value system.
-		 * @return promise resolved when the operation has completed. The binary data is attached as the value
-		 *     of the result. Please ensure that the key was set with binary data before, or this call will
-		 *     fail with a network error.
-		 * @param key the name of the key to be fetched.
-		 */
+		/// <summary>Retrieves the binary data of an individual key from the key/value system.</summary>
+		/// <returns>promise resolved when the operation has completed. The binary data is attached as the value
+		///     of the result. Please ensure that the key was set with binary data before, or this call will
+		///     fail with a network error.</returns>
+		/// <param name="key">the name of the key to be fetched.</param>
 		public Promise<byte[]> GetKeyBinary(string key) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key).QueryParam("binary");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
@@ -59,13 +55,11 @@ namespace CotcSdk {
 			});
 		}
 
-		/**
-		 * Sets the value of a key in the key/value system.
-		 * @return promise resolved when the operation has completed.
-		 * @param key the name of the key to set the value for.
-		 * @param value the value to set. As usual with bundles, casting is implicitly done, so you may as well
-		 *     call this method passing an integer or string as value for instance.
-		 */
+		/// <summary>Sets the value of a key in the key/value system.</summary>
+		/// <returns>promise resolved when the operation has completed.</returns>
+		/// <param name="key">the name of the key to set the value for.</param>
+		/// <param name="value">the value to set. As usual with bundles, casting is implicitly done, so you may as well
+		///     call this method passing an integer or string as value for instance.</param>
 		public Promise<Done> SetKey(string key, Bundle value) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
@@ -76,12 +70,10 @@ namespace CotcSdk {
 			});
 		}
 
-		/**
-		 * Sets the value of a key in the key/value system as binary data.
-		 * @return promise resolved when the operation has completed.
-		 * @param key the name of the key to set the value for.
-		 * @param binaryData the value to set as binary data.
-		 */
+		/// <summary>Sets the value of a key in the key/value system as binary data.</summary>
+		/// <returns>promise resolved when the operation has completed.</returns>
+		/// <param name="key">the name of the key to set the value for.</param>
+		/// <param name="binaryData">the value to set as binary data.</param>
 		public Promise<Done> SetKeyBinary(string key, byte[] binaryData) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key).QueryParam("binary");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
@@ -101,11 +93,9 @@ namespace CotcSdk {
 			});
 		}
 
-		/**
-		 * Removes a single key from the key/value system.
-		 * @return promise resolved when the operation has completed.
-		 * @param key the name of the key to remove.
-		 */
+		/// <summary>Removes a single key from the key/value system.</summary>
+		/// <returns>promise resolved when the operation has completed.</returns>
+		/// <param name="key">the name of the key to remove.</param>
 		public Promise<Done> RemoveKey(string key) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);

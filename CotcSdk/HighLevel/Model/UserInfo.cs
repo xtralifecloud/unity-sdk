@@ -1,24 +1,18 @@
 ﻿
 namespace CotcSdk {
 
-	/**
-	 * Info about a user.
-	 * Can be enriched with information, accessible using the index operator [].
-	 * Typically contains a profile field, with displayname, email and lang. You can fetch this by doing
-	 * `string name = UserInfo["profile"]["displayname"];`
-	 */
+	/// <summary>
+	/// Info about a user.
+	/// Can be enriched with information, accessible using the index operator [].
+	/// Typically contains a profile field, with displayname, email and lang. You can fetch this by doing
+	/// `string name = UserInfo["profile"]["displayname"];`
+	/// </summary>
 	public class UserInfo: PropertiesObject {
-		/**
-		 * Login network.
-		 */
+		/// <summary>Login network.</summary>
 		public LoginNetwork Network { get; private set; }
-		/**
-		 * Gamer credential. Use it to gain access to user related tasks.
-		 */
+		/// <summary>Gamer credential. Use it to gain access to user related tasks.</summary>
 		public string NetworkId { get; private set; }
-		/**
-		 * Id of the user (compatible with GamerId where used).
-		 */
+		/// <summary>Id of the user (compatible with GamerId where used).</summary>
 		public string UserId { get; private set; }
 
 		#region Private
