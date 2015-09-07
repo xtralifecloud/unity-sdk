@@ -48,8 +48,8 @@ namespace CotcSdk
 		}
 
 		/// <summary>Logs the current user in, using any supported social network.</summary>
-		/// <returns>task returning when the login has finished. The resulting Gamer object can then
-		///     be used for many purposes related to the signed in account.</returns>
+		/// <returns>promise resolved when the login has finished. The resulting Gamer object can then be used for many
+		///     purposes related to the signed in account.</returns>
 		/// <param name="network">the network to connect with. If an user is recognized on a given network (same network ID),
 		///     then it will be signed back in and its user data will be used.</param>
 		/// <param name="networkId">the ID on the network. For example, with the facebook network, this would be the User ID.
@@ -57,24 +57,7 @@ namespace CotcSdk
 		/// <param name="networkSecret">the secret for the network. For e-mail accounts, this would be the passord. For
 		///     facebook or other SNS accounts, this would be the user token.</param>
 		public Promise<Gamer> Login(LoginNetwork network, string networkId, string networkSecret, bool preventRegistration = false) {
-			Bundle config = Bundle.CreateObject();
-			config["network"] = network.Describe();
-			config["id"] = networkId;
-			config["secret"] = networkSecret;
-			config["device"] = Managers.SystemFunctions.CollectDeviceInformation();
-			if (preventRegistration) {
-				Bundle options = Bundle.CreateObject();
-				options["preventRegistration"] = preventRegistration;
-				config["options"] = options;
-			}
-
-			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/login");
-			req.BodyJson = config;
-			return Common.RunInTask<Gamer>(req, (response, task) => {
-				Gamer gamer = new Gamer(this, response.BodyJson);
-				task.PostResult(gamer);
-				Cotc.NotifyLoggedIn(this, gamer);
-			});
+			return Login(network.Describe(), networkId, networkSecret, preventRegistration);
 		}
 
 		/// <summary>
@@ -89,9 +72,20 @@ namespace CotcSdk
 			return Login(LoginNetwork.Anonymous, gamerId, gamerSecret);
 		}
 
+		/// <summary>Logs in by using a shortcode previously generated through #SendResetPasswordEmail.</summary>
+		/// <param name="shortcode">The shortcode received by the user by e-mail.</param>
+		/// <returns>Promise resolved when the login has finished. The resulting Gamer object can then be used for many
+		///     purposes related to the signed in account.</returns>
+		public Promise<Gamer> LoginWithShortcode(string shortcode) {
+			return Login("restore", "", shortcode, true);
+		}
+
 		/// <summary>
 		/// Can be used to send an e-mail to a user registered by 'email' network in order to help him
 		/// recover his/her password.
+		/// 
+		/// The user will receive an e-mail, containing a short code. This short code can be inputted in
+		/// the #LoginWithShortcode method.
 		/// </summary>
 		/// <returns>promise resolved when the request has finished.</returns>
 		/// <param name="userEmail">the user as identified by his e-mail address.</param>
@@ -125,5 +119,29 @@ namespace CotcSdk
 				task.PostResult(new Done(true, response.BodyJson));
 			});
 		}
+
+		#region Private
+		// See the public Login method for more info
+		public Promise<Gamer> Login(string network, string networkId, string networkSecret, bool preventRegistration = false) {
+			Bundle config = Bundle.CreateObject();
+			config["network"] = network;
+			config["id"] = networkId;
+			config["secret"] = networkSecret;
+			config["device"] = Managers.SystemFunctions.CollectDeviceInformation();
+			if (preventRegistration) {
+				Bundle options = Bundle.CreateObject();
+				options["preventRegistration"] = preventRegistration;
+				config["options"] = options;
+			}
+
+			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/login");
+			req.BodyJson = config;
+			return Common.RunInTask<Gamer>(req, (response, task) => {
+				Gamer gamer = new Gamer(this, response.BodyJson);
+				task.PostResult(gamer);
+				Cotc.NotifyLoggedIn(this, gamer);
+			});
+		}
+		#endregion
 	}
 }

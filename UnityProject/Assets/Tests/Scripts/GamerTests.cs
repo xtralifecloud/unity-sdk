@@ -127,4 +127,18 @@ public class GamerTests : TestBase {
 			});
 		});
 	}
+
+	[Test("Tests the outline functionality")]
+	public void ShouldReturnProperOutline(Cloud cloud) {
+		Login(cloud, gamer => {
+			gamer.Profile.Outline()
+			.ExpectSuccess(outline => {
+				Assert(outline.Network == gamer.Network, "Expected same network");
+				Assert(outline.NetworkId == gamer.NetworkId, "Expected same network ID");
+				Assert(outline["games"].Type == Bundle.DataType.Array, "Expected games array");
+				CompleteTest();
+			});
+		});
+	}
+
 }

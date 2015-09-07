@@ -18,6 +18,22 @@ namespace CotcSdk
 		}
 
 		/// <summary>
+		/// Fetches an outline of the currently logged in user. Basically returns all available data about
+		/// the user, including all domains he has been playing on. This can be used to avoid issuing
+		/// multiple requests on startup (one for the profile, games, etc.).
+		/// 
+		/// Non exhaustive list of fields include: `network`, `networkid`, `networksecret`, `registerTime`,
+		/// `registerBy`, `games` (array), `profile`, `devices` (array), `domains` (array), `serverTime`.
+		/// </summary>
+		/// <returns>promise resolved when the operation has completed with the resulting outline.</returns>
+		public Promise<GamerOutline> Outline() {
+			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/outline");
+			return Common.RunInTask<GamerOutline>(req, (response, task) => {
+				task.PostResult(new GamerOutline(response.BodyJson["outline"]));
+			});
+		}
+
+		/// <summary>
 		/// Method used to associate some optional data to the logged in profile in a JSON dictionary.
 		/// You can fill fields with keys "email", "displayName", "lang", "firstName", "lastName",
 		/// "addr1", "addr2", "addr3" and "avatar". Other fields will be ignored. These fields must be

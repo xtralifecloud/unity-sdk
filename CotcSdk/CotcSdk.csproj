@@ -69,6 +69,7 @@
     <Compile Include="HighLevel\Match.cs" />
     <Compile Include="HighLevel\MatchInfo.cs" />
     <Compile Include="HighLevel\Model\AchievementDefinition.cs" />
+    <Compile Include="HighLevel\Model\GamerOutline.cs" />
     <Compile Include="HighLevel\Model\Done.cs" />
     <Compile Include="HighLevel\Model\SocialNetworkFriendResponse.cs" />
     <Compile Include="HighLevel\Model\UserInfo.cs" />
