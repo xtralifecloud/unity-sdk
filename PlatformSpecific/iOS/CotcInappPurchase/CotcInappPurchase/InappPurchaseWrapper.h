@@ -21,6 +21,11 @@ using safe::cstring;
 
 #import "InteropTypes.h"
 
+enum AppStoreType {
+	IOS_STORE,
+	MAC_STORE,
+};
+
 @interface InappPurchaseWrapper : NSObject <SKProductsRequestDelegate, SKRequestDelegate, SKPaymentTransactionObserver> {
 @private
 	map<SKRequest*, function<void(SKProductsResponse*, NSError*)>> productsResponseHandlers;
@@ -28,9 +33,10 @@ using safe::cstring;
 	// Transactions that have been notified but not yet acknowledged (probably because there hasn't
 	// been a productPurchasedHandlers registered for the corresponding product).
 	map<cstring, SKPaymentTransaction*> pendingTransactions;
+	AppStoreType storeType;
 }
 
-- (id)init;
+- (id)initWithAppStore:(AppStoreType)storeType;
 
 - (void)listProducts:(const vector<ConfiguredProduct> &)products
 			 success:(function<void(const vector<ProductInfo> &)>)onSuccess
@@ -51,6 +57,7 @@ using safe::cstring;
 			   error:(function<void(ErrorCode code, const char *desc)>)onError;
 - (NSString *)hashedValueForAccountName:(const char*)accountName;
 - (void)markTransactionAsFinished:(SKPaymentTransaction*)tx;
+- (const cstring&)productId:(const ConfiguredProduct&)product;
 - (void)setCallback:(function<void(SKProductsResponse *response, NSError *error)>)callback
 	 forNextRequest:(SKRequest*)request;
 // Transactions that are in a finished state only will be processed (pending and so on are discarded)
