@@ -37,8 +37,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Packages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -93,14 +91,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">CotcSdk.GameBatches Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Allows to run batches authenticated as a game (that is, unauthenticated). 
+ <a href="class_cotc_sdk_1_1_game_batches.html#details">More...</a></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Allows to run batches authenticated as a game (that is, unauthenticated). </p>
+<div class="textblock"><p>Allows to run batches authenticated as a game (that is, unauthenticated).</p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a2d0916fe47a4a7f014a5fd5afcbb9180"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_game_batches.html">GameBatches</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_game_batches.html#a2d0916fe47a4a7f014a5fd5afcbb9180">Domain</a> (string domain)</td></tr>
+<tr class="memdesc:a2d0916fe47a4a7f014a5fd5afcbb9180"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the domain affected by the next operations. You should typically use it this way: <code>gamer.Batches.Domain("private").Run(...);</code>  <a href="#a2d0916fe47a4a7f014a5fd5afcbb9180">More...</a><br /></td></tr>
 <tr class="separator:a2d0916fe47a4a7f014a5fd5afcbb9180"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9340d144e12fe9654d1e213cd589cf90"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_game_batches.html#a9340d144e12fe9654d1e213cd589cf90">Run</a> (string batchName, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> batchParams=null)</td></tr>
+<tr class="memdesc:a9340d144e12fe9654d1e213cd589cf90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs a batch on the server, unauthenticated (game-scoped). <a href="#a9340d144e12fe9654d1e213cd589cf90">More...</a><br /></td></tr>
 <tr class="separator:a9340d144e12fe9654d1e213cd589cf90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -117,13 +120,15 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Changes the domain affected by the next operations. You should typically use it this way: <code>gamer.Batches.Domain("private").Run(...);</code> </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Changes the domain affected by the next operations. You should typically use it this way: <code>gamer.Batches.Domain("private").Run(...);</code> </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">domain</td><td>domain on which to scope the next operations. </td></tr>
+    <tr><td class="paramname">domain</td><td>Domain on which to scope the next operations.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>this object for operation chaining. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>This object for operation chaining.</dd></dl>
 
 </div>
 </div>
@@ -150,11 +155,13 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Runs a batch on the server, unauthenticated (game-scoped). </p><dl class="section return"><dt>Returns</dt><dd>promise resolved when the request has finished. The attached bundle is the JSON data returned by the match. </dd></dl>
+
+<p>Runs a batch on the server, unauthenticated (game-scoped).</p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> resolved when the request has finished. The attached bundle is the JSON data returned by the match.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">batchName</td><td>name of the batch to run, as configured on the server. </td></tr>
-    <tr><td class="paramname">batchParams</td><td>parameters to be passed to the batch. </td></tr>
+    <tr><td class="paramname">batchName</td><td>Name of the batch to run, as configured on the server.</td></tr>
+    <tr><td class="paramname">batchParams</td><td>Parameters to be passed to the batch.</td></tr>
   </table>
   </dd>
 </dl>
@@ -167,7 +174,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 31 2015 13:23:01 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 8 2015 11:31:39 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

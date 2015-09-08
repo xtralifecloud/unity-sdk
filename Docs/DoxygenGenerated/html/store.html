@@ -37,8 +37,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Packages</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -133,13 +131,13 @@ Linking the Service Account to the project in the Google Play Developer Console<
 <h3>For Android</h3>
 <p>On Android, you do not need anything special. The supplied plugin in AAR form will automatically modify your manifest as required.</p>
 <h2>API basics </h2>
-<p>The InappPurchaseSampleScene scene and associated script, bundled with the plugin, are a very good start. The integration requires multiple steps, but they ensure a maximum of flexibility and security. The <a class="el" href="class_cotc_sdk_1_1_gamer_store.html">CotcSdk.GamerStore</a> object is accessed through a logged in <a class="el" href="class_cotc_sdk_1_1_gamer.html">CotcSdk.Gamer</a> and provide CotC backend related functions. The other is the <a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_cotc_inapp_purchase_game_object.html">CotcSdk.InappPurchase.CotcInappPurchaseGameObject</a> which exposes functions that interact with the platform dependent store. You will need to mix the two in order to perform a purchase. Typically, we have:</p>
+<p>The InappPurchaseSampleScene scene and associated script, bundled with the plugin, are a very good start. The integration requires multiple steps, but they ensure a maximum of flexibility and security. The <a class="el" href="class_cotc_sdk_1_1_gamer_store.html" title="(App) Store API.">CotcSdk.GamerStore</a> object is accessed through a logged in <a class="el" href="class_cotc_sdk_1_1_gamer.html" title="Important object from the SDK, allowing to perform many operations that depend on a currently logged ...">CotcSdk.Gamer</a> and provide CotC backend related functions. The other is the <a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_cotc_inapp_purchase_game_object.html">CotcSdk.InappPurchase.CotcInappPurchaseGameObject</a> which exposes functions that interact with the platform dependent store. You will need to mix the two in order to perform a purchase. Typically, we have:</p>
 <ol type="1">
-<li>List configured products on CotC (<a class="el" href="class_cotc_sdk_1_1_gamer_store.html#ad13ba4ea74f9456c82fd95187c2c76db">CotcSdk.GamerStore.ListConfiguredProducts</a>)</li>
-<li>Enrich products with information from the native store (<a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_cotc_inapp_purchase_game_object.html#ac1d0144233e88a9554423c75b61303ae">CotcSdk.InappPurchase.CotcInappPurchaseGameObject.FetchProductInfo</a>)</li>
-<li>Launch purchase for one of these enriched products (<a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_cotc_inapp_purchase_game_object.html#acb94dd14509dd28ca67e8a2da134ce9c">CotcSdk.InappPurchase.CotcInappPurchaseGameObject.LaunchPurchase</a>)</li>
-<li>Validate the financial transaction against CotC servers (<a class="el" href="class_cotc_sdk_1_1_gamer_store.html#a307f2f31a7362420961091f8c405b5a8">CotcSdk.GamerStore.ValidateReceipt</a>)</li>
-<li>In case of successful purchase, close the device-dependent store transaction (<a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_cotc_inapp_purchase_game_object.html#a6317ff1aebb217cf90ad941155030365">CotcSdk.InappPurchase.CotcInappPurchaseGameObject.CloseTransaction</a>).</li>
+<li>List configured products on CotC (<a class="el" href="class_cotc_sdk_1_1_gamer_store.html#ad13ba4ea74f9456c82fd95187c2c76db" title="Fetch the list of products as configured on the backoffice. Note that this doesn&#39;t include any inform...">CotcSdk.GamerStore.ListConfiguredProducts</a>)</li>
+<li>Enrich products with information from the native store (<a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_cotc_inapp_purchase_game_object.html#ac1d0144233e88a9554423c75b61303ae" title="Enriches a catalog fetched by CotcSdk.GamerStore.ListConfiguredProducts with price information and su...">CotcSdk.InappPurchase.CotcInappPurchaseGameObject.FetchProductInfo</a>)</li>
+<li>Launch purchase for one of these enriched products (<a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_cotc_inapp_purchase_game_object.html#acb94dd14509dd28ca67e8a2da134ce9c" title="Launches a purchase process for a given product. The purchase process is asynchronous, may take a lot of time and may not necessarily ever finish (i.e. the application may be killed before it actually finishes). That said, only one purchase process is running at at a time. ">CotcSdk.InappPurchase.CotcInappPurchaseGameObject.LaunchPurchase</a>)</li>
+<li>Validate the financial transaction against CotC servers (<a class="el" href="class_cotc_sdk_1_1_gamer_store.html#a307f2f31a7362420961091f8c405b5a8" title="Last step in the purchase. Validates the receipt received by a native purchase. You may have to do ad...">CotcSdk.GamerStore.ValidateReceipt</a>)</li>
+<li>In case of successful purchase, close the device-dependent store transaction (<a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_cotc_inapp_purchase_game_object.html#a6317ff1aebb217cf90ad941155030365" title="Extremely important call to be made in case success is returned from LaunchPurchase and then validate...">CotcSdk.InappPurchase.CotcInappPurchaseGameObject.CloseTransaction</a>).</li>
 </ol>
 <h2>Querying the list of available products </h2>
 <p>Prior to starting any purchase, the first thing that a game should do is to query the products available for sale. This can be used to show an UI to the player indicating what he is able to purchase and possibly the price. Querying product information can be done as in the snippet below.</p>
@@ -156,14 +154,14 @@ Linking the Service Account to the project in the Google Play Developer Console<
 <div class="line">    }</div>
 <div class="line">})</div>
 <div class="line">.Done();</div>
-</div><!-- fragment --><p>The <a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_product_info.html">CotcSdk.InappPurchase.ProductInfo</a> object contains a lot of information about the product to be purchased, regardless of the current platform. This is what should be used to present a store front to the user.</p>
-<p>The first 30 products are returned by default, and pagination may be used as described under <a class="el" href="class_cotc_sdk_1_1_paged_list_3_01_data_type_01_4.html">CotcSdk.PagedList&lt;DataType&gt;</a>.</p>
+</div><!-- fragment --><p>The <a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_product_info.html" title="Information about a given product. Returned by CotC when querying the product list and used throughou...">CotcSdk.InappPurchase.ProductInfo</a> object contains a lot of information about the product to be purchased, regardless of the current platform. This is what should be used to present a store front to the user.</p>
+<p>The first 30 products are returned by default, and pagination may be used as described under <a class="el" href="class_cotc_sdk_1_1_paged_list_3_01_data_type_01_4.html" title="Represents a paginated list, which allows for easy navigation through multiple results.">CotcSdk.PagedList&lt;DataType&gt;</a>.</p>
 <p>With <code>FetchProductInfo</code>, the product information for each product configured on the Clan of the Cloud backoffice for this game is consolidated with the product information returned by the app store. If product information for a given product can not be fetched, the product is removed from the list. This means that even though products are configured on the backoffice, if something is wrong on the servers of the app store, in the above snippet <code>backofficeProducts</code> will be non-empty but <code>enrichedProducts</code> may be.</p>
 <h2>Launching a purchase </h2>
 <p>Launching a purchase brings a store front end to the customer, prompting him to purchase the product. The UI is the native one as expected by your players. The result handler is called whether the purchase is successful or failed.</p>
 <p><b>Notes:</b> While launching a purchase is straightforward using CotC, the process that does run on the device is not. Therefore, CotC <b>can not guarantee</b> that you will receive a response for a given call to <code>LaunchPurchase</code> (that is, the handler is ever called). The application might have a shorter livecycle. CotC does however offer a guarantee that no product will have to be purchased twice by the client without the purchase being registered properly on the Clan of the Cloud servers, unless the application is uninstalled after a purchase that failed to be validated to Clan of the Cloud servers.</p>
 <p>After having received a positive result from the purchase process, you should validate it through CotC. Purchases usually trigger a transaction as configured in the backoffice, that might give the player additional abilities or otherwise affect his inventory. It means that you should reload the <em>balance</em> after any purchase reported as successful. Also, it is very important that you close the transaction once CotC reports your purchase as taken in account successfully. Unless a completed transaction is closed, the product will be reported as purchased for any additional attempts to purchase it. This protection prevents that any crash happening between the purchase on the store and the validation on CotC servers makes the product "lost" (purchased, but not delivered).</p>
-<p>Here is how you may drive a purchase flow once the <a class="el" href="class_cotc_sdk_1_1_configured_product.html">CotcSdk.ConfiguredProduct</a> is chosen:</p>
+<p>Here is how you may drive a purchase flow once the <a class="el" href="class_cotc_sdk_1_1_configured_product.html" title="Information about a configured product on the BO.">CotcSdk.ConfiguredProduct</a> is chosen:</p>
 <div class="fragment"><div class="line">var inApp = FindObjectOfType&lt;CotcInappPurchaseGameObject&gt;();</div>
 <div class="line"></div>
 <div class="line">inApp.LaunchPurchase(Gamer, configuredProduct)</div>
@@ -188,7 +186,7 @@ Linking the Service Account to the project in the Google Play Developer Console<
 <div class="line">.Done();</div>
 </div><!-- fragment --><h2>Retrieving the purchase history </h2>
 <p>You can query the history of purchased products for the logged in user. Note that this won't actually query the history of purchases made on the current device, but by the current Clan of the Cloud user. This distinction is important, and means that a player having purchased something must avoid losing his Clan of the Cloud account.</p>
-<p>Querying the product list may be done as shown in the following snippet. Take a look at the <a class="el" href="class_cotc_sdk_1_1_gamer_store.html#a7534f153660b75431e93ae7177b89abc">CotcSdk.GamerStore.GetPurchaseHistory</a> method for information about what is precisely returned.</p>
+<p>Querying the product list may be done as shown in the following snippet. Take a look at the <a class="el" href="class_cotc_sdk_1_1_gamer_store.html#a7534f153660b75431e93ae7177b89abc" title="Fetches the list of transactions made by the logged in user. Only successful transactions show here...">CotcSdk.GamerStore.GetPurchaseHistory</a> method for information about what is precisely returned.</p>
 <div class="fragment"><div class="line">Gamer.Store.GetPurchaseHistory()</div>
 <div class="line">.Then((List&lt;PurchaseTransaction&gt; transactions) =&gt; {</div>
 <div class="line">    <span class="keywordflow">foreach</span> (var t <span class="keywordflow">in</span> transactions) {</div>
@@ -199,7 +197,7 @@ Linking the Service Account to the project in the Google Play Developer Console<
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 31 2015 13:23:00 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 8 2015 11:31:38 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

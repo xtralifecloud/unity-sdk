@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['catch',['Catch',['../class_cotc_sdk_1_1_promise_3_01_promised_t_01_4.html#a183215f1caffafaad82ca3a3aa217a0c',1,'CotcSdk::Promise&lt; PromisedT &gt;']]],
   ['changeemailaddress',['ChangeEmailAddress',['../class_cotc_sdk_1_1_gamer_account_methods.html#ad89562c85797d3ee5c7abd351c8c9c4e',1,'CotcSdk::GamerAccountMethods']]],
   ['changepassword',['ChangePassword',['../class_cotc_sdk_1_1_gamer_account_methods.html#aeee1a02a8c8bb14d948dee4a067efa78',1,'CotcSdk::GamerAccountMethods']]],
   ['changerelationshipstatus',['ChangeRelationshipStatus',['../class_cotc_sdk_1_1_gamer_community.html#ab97f2d879fd792f7db14e6003fa4cb46',1,'CotcSdk::GamerCommunity']]],
@@ -19,7 +20,6 @@ var searchData=
   ['cotcproductid',['CotcProductId',['../class_cotc_sdk_1_1_inapp_purchase_1_1_purchased_product.html#a295d24ed608d5a5459e8a2f485b9c4b2',1,'CotcSdk::InappPurchase::PurchasedProduct']]],
   ['cotcpushnotificationsgameobject',['CotcPushNotificationsGameObject',['../class_cotc_sdk_1_1_push_notifications_1_1_cotc_push_notifications_game_object.html',1,'CotcSdk::PushNotifications']]],
   ['cotcsdk',['CotcSdk',['../namespace_cotc_sdk.html',1,'']]],
-  ['cotcsettings',['CotcSettings',['../class_cotc_sdk_1_1_cotc_settings.html',1,'CotcSdk']]],
   ['count',['Count',['../class_cotc_sdk_1_1_match_shoe_drawn_event.html#a6fba21bb46822efcc3395d12471015fc',1,'CotcSdk::MatchShoeDrawnEvent']]],
   ['create',['Create',['../class_cotc_sdk_1_1_gamer_matches.html#ad240e59b87eb919fb808be0c9e1dc663',1,'CotcSdk::GamerMatches']]],
   ['creator',['Creator',['../class_cotc_sdk_1_1_match.html#acd70a2000f6a6221476828a9e77caf94',1,'CotcSdk.Match.Creator()'],['../class_cotc_sdk_1_1_match_list_result.html#ac1535fab555787d54489fc05224fc686',1,'CotcSdk.MatchListResult.Creator()']]],

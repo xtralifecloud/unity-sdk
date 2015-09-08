@@ -37,8 +37,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Packages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -93,50 +91,66 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">CotcSdk.PurchaseTransaction Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>(App) Store API. 
+ <a href="class_cotc_sdk_1_1_purchase_transaction.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for CotcSdk.PurchaseTransaction:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="class_cotc_sdk_1_1_purchase_transaction.png" usemap="#CotcSdk.PurchaseTransaction_map" alt=""/>
   <map id="CotcSdk.PurchaseTransaction_map" name="CotcSdk.PurchaseTransaction_map">
-<area href="class_cotc_sdk_1_1_properties_object.html" alt="CotcSdk.PropertiesObject" shape="rect" coords="0,0,183,24"/>
+<area href="class_cotc_sdk_1_1_properties_object.html" title="Defines an object that can be queried for additional properties using indexers. The structure of the ..." alt="CotcSdk.PropertiesObject" shape="rect" coords="0,0,183,24"/>
 </map>
  </div></div>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>(App) Store API. Information about a purchased product transaction. </p>
+<div class="textblock"><p>(App) Store API.</p>
+<p>Information about a purchased product transaction.</p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
 <tr class="memitem:aa4745367d4ab9ebb2bd94474df1dc3d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_cotc_sdk.html#a81559f66b6278243aa82a8cd14d79e80">StoreType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_purchase_transaction.html#aa4745367d4ab9ebb2bd94474df1dc3d4">Store</a><code> [get]</code></td></tr>
+<tr class="memdesc:aa4745367d4ab9ebb2bd94474df1dc3d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type of Store on which the purchase has been made. <a href="#aa4745367d4ab9ebb2bd94474df1dc3d4">More...</a><br /></td></tr>
 <tr class="separator:aa4745367d4ab9ebb2bd94474df1dc3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab7de795dc134b215b15bccee7d94e897"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_purchase_transaction.html#ab7de795dc134b215b15bccee7d94e897">ProductId</a><code> [get]</code></td></tr>
+<tr class="memdesc:ab7de795dc134b215b15bccee7d94e897"><td class="mdescLeft">&#160;</td><td class="mdescRight">The ID of the product purchased. <a href="#ab7de795dc134b215b15bccee7d94e897">More...</a><br /></td></tr>
 <tr class="separator:ab7de795dc134b215b15bccee7d94e897"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7178056bb12733906799bacee2ba92a4"><td class="memItemLeft" align="right" valign="top">DateTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_purchase_transaction.html#a7178056bb12733906799bacee2ba92a4">PurchaseDate</a><code> [get]</code></td></tr>
+<tr class="memdesc:a7178056bb12733906799bacee2ba92a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time of purchase. <a href="#a7178056bb12733906799bacee2ba92a4">More...</a><br /></td></tr>
 <tr class="separator:a7178056bb12733906799bacee2ba92a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a949c2944b2cbc47ec83a56a52473e3f2"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_purchase_transaction.html#a949c2944b2cbc47ec83a56a52473e3f2">Price</a><code> [get]</code></td></tr>
+<tr class="memdesc:a949c2944b2cbc47ec83a56a52473e3f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The price paid (the price might have been changed since then on iTunes Connect; any such change does not reflect here). <a href="#a949c2944b2cbc47ec83a56a52473e3f2">More...</a><br /></td></tr>
 <tr class="separator:a949c2944b2cbc47ec83a56a52473e3f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a650c1765fb2851f0543fe41e9fad8456"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_purchase_transaction.html#a650c1765fb2851f0543fe41e9fad8456">Currency</a><code> [get]</code></td></tr>
+<tr class="memdesc:a650c1765fb2851f0543fe41e9fad8456"><td class="mdescLeft">&#160;</td><td class="mdescRight">Currency unit of the price paid. <a href="#a650c1765fb2851f0543fe41e9fad8456">More...</a><br /></td></tr>
 <tr class="separator:a650c1765fb2851f0543fe41e9fad8456"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c1e30306733e1fe2bcb572803289dfe"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_purchase_transaction.html#a2c1e30306733e1fe2bcb572803289dfe">StoreTransactionId</a><code> [get]</code></td></tr>
+<tr class="memdesc:a2c1e30306733e1fe2bcb572803289dfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">The ID of transaction on the original store. You might want to use it for customer service. Depends on the store type. <a href="#a2c1e30306733e1fe2bcb572803289dfe">More...</a><br /></td></tr>
 <tr class="separator:a2c1e30306733e1fe2bcb572803289dfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header properties_class_cotc_sdk_1_1_properties_object"><td colspan="2" onclick="javascript:toggleInherit('properties_class_cotc_sdk_1_1_properties_object')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="class_cotc_sdk_1_1_properties_object.html">CotcSdk.PropertiesObject</a></td></tr>
 <tr class="memitem:a49c7c96cfe7245e23a766b08a2e89a71 inherit properties_class_cotc_sdk_1_1_properties_object"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html#a49c7c96cfe7245e23a766b08a2e89a71">this[string key]</a><code> [get]</code></td></tr>
+<tr class="memdesc:a49c7c96cfe7245e23a766b08a2e89a71 inherit properties_class_cotc_sdk_1_1_properties_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to query additional properties via an indexer (can be enriched via hooks). <a href="#a49c7c96cfe7245e23a766b08a2e89a71">More...</a><br /></td></tr>
 <tr class="separator:a49c7c96cfe7245e23a766b08a2e89a71 inherit properties_class_cotc_sdk_1_1_properties_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_methods_class_cotc_sdk_1_1_properties_object"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_cotc_sdk_1_1_properties_object')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_cotc_sdk_1_1_properties_object.html">CotcSdk.PropertiesObject</a></td></tr>
 <tr class="memitem:aacdfc8f0edc93f3611d4c40f12be9073 inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html#aacdfc8f0edc93f3611d4c40f12be9073">AsBundle</a> ()</td></tr>
+<tr class="memdesc:aacdfc8f0edc93f3611d4c40f12be9073 inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the underlying <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object...">Bundle</a>. Dangerous, only use internally, when you want to put the contents of a properties object into an existing bundle.  <a href="#aacdfc8f0edc93f3611d4c40f12be9073">More...</a><br /></td></tr>
 <tr class="separator:aacdfc8f0edc93f3611d4c40f12be9073 inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3e6a4b30fa74bc0e763e961d9fdfad3b inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; string, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> &gt;<br class="typebreak" />
 .KeyCollection&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html#a3e6a4b30fa74bc0e763e961d9fdfad3b">Keys</a> ()</td></tr>
+<tr class="memdesc:a3e6a4b30fa74bc0e763e961d9fdfad3b inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to browse all keys (might include some that are already exposed as typed properties in the object). <a href="#a3e6a4b30fa74bc0e763e961d9fdfad3b">More...</a><br /></td></tr>
 <tr class="separator:a3e6a4b30fa74bc0e763e961d9fdfad3b inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16242913dd8dc6aae516f97fc6cbff9d inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; string, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> &gt;<br class="typebreak" />
 .Enumerator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html#a16242913dd8dc6aae516f97fc6cbff9d">GetEnumerator</a> ()</td></tr>
+<tr class="memdesc:a16242913dd8dc6aae516f97fc6cbff9d inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to browse all keys (might include some that are already exposed as typed properties in the object). <a href="#a16242913dd8dc6aae516f97fc6cbff9d">More...</a><br /></td></tr>
 <tr class="separator:a16242913dd8dc6aae516f97fc6cbff9d inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f9860c398a665da8643f18dada7d30a inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memItemLeft" align="right" valign="top">override string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html#a6f9860c398a665da8643f18dada7d30a">ToString</a> ()</td></tr>
+<tr class="memdesc:a6f9860c398a665da8643f18dada7d30a inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">You may use this to debug what is inside this property object. <a href="#a6f9860c398a665da8643f18dada7d30a">More...</a><br /></td></tr>
 <tr class="separator:a6f9860c398a665da8643f18dada7d30a inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3dfde134398c0d738f27e94e5614434 inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html#af3dfde134398c0d738f27e94e5614434">ToJson</a> ()</td></tr>
+<tr class="memdesc:af3dfde134398c0d738f27e94e5614434 inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds a JSON representation of this object, same as ToString actually. <a href="#af3dfde134398c0d738f27e94e5614434">More...</a><br /></td></tr>
 <tr class="separator:af3dfde134398c0d738f27e94e5614434 inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_class_cotc_sdk_1_1_properties_object"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_cotc_sdk_1_1_properties_object')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_cotc_sdk_1_1_properties_object.html">CotcSdk.PropertiesObject</a></td></tr>
 <tr class="memitem:a207197a2308cacc2ef3194e3f5e6a867 inherit pro_methods_class_cotc_sdk_1_1_properties_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a207197a2308cacc2ef3194e3f5e6a867"></a>
@@ -165,7 +179,8 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Currency unit of the price paid. </p>
+
+<p>Currency unit of the price paid.</p>
 
 </div>
 </div>
@@ -186,7 +201,8 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>The price paid (the price might have been changed since then on iTunes Connect; any such change does not reflect here). </p>
+
+<p>The price paid (the price might have been changed since then on iTunes Connect; any such change does not reflect here).</p>
 
 </div>
 </div>
@@ -207,7 +223,8 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>The ID of the product purchased. </p>
+
+<p>The ID of the product purchased.</p>
 
 </div>
 </div>
@@ -228,7 +245,8 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Time of purchase. </p>
+
+<p>Time of purchase.</p>
 
 </div>
 </div>
@@ -249,7 +267,8 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>The type of Store on which the purchase has been made. </p>
+
+<p>The type of Store on which the purchase has been made.</p>
 
 </div>
 </div>
@@ -270,7 +289,8 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>The ID of transaction on the original store. You might want to use it for customer service. Depends on the store type. </p>
+
+<p>The ID of transaction on the original store. You might want to use it for customer service. Depends on the store type.</p>
 
 </div>
 </div>
@@ -280,7 +300,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 31 2015 13:23:01 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 8 2015 11:31:39 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

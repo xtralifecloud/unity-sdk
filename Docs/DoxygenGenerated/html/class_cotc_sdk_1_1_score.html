@@ -37,8 +37,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Packages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -93,20 +91,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">CotcSdk.Score Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Represents a score fetched from a leaderboard. 
+ <a href="class_cotc_sdk_1_1_score.html#details">More...</a></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Represents a score fetched from a leaderboard. </p>
+<div class="textblock"><p>Represents a score fetched from a leaderboard.</p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
 <tr class="memitem:a2aafc298befdee988b7b49518bdb80cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_gamer_info.html">GamerInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_score.html#a2aafc298befdee988b7b49518bdb80cc">GamerInfo</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a2aafc298befdee988b7b49518bdb80cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Info about the gamer who posted the score. This information may not be present for some calls (calls scoped to the current user) and the member be null. Please read the documentation to find out which calls apply this policy.  <a href="#a2aafc298befdee988b7b49518bdb80cc">More...</a><br /></td></tr>
 <tr class="separator:a2aafc298befdee988b7b49518bdb80cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa70f4f797f25e2f2b182d84920bc5036"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_score.html#aa70f4f797f25e2f2b182d84920bc5036">Info</a><code> [get]</code></td></tr>
+<tr class="memdesc:aa70f4f797f25e2f2b182d84920bc5036"><td class="mdescLeft">&#160;</td><td class="mdescRight">Info about the score (passed when posted). <a href="#aa70f4f797f25e2f2b182d84920bc5036">More...</a><br /></td></tr>
 <tr class="separator:aa70f4f797f25e2f2b182d84920bc5036"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a54868e6251738deb25aeeae117366a5b"><td class="memItemLeft" align="right" valign="top">DateTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_score.html#a54868e6251738deb25aeeae117366a5b">PostedAt</a><code> [get]</code></td></tr>
+<tr class="memdesc:a54868e6251738deb25aeeae117366a5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time at which the score was processed by the server (posted). <a href="#a54868e6251738deb25aeeae117366a5b">More...</a><br /></td></tr>
 <tr class="separator:a54868e6251738deb25aeeae117366a5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea120196c73e050c4009be334c79c45b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_score.html#aea120196c73e050c4009be334c79c45b">Rank</a><code> [get]</code></td></tr>
+<tr class="memdesc:aea120196c73e050c4009be334c79c45b"><td class="mdescLeft">&#160;</td><td class="mdescRight">One-based rank of this score on the board. <a href="#aea120196c73e050c4009be334c79c45b">More...</a><br /></td></tr>
 <tr class="separator:aea120196c73e050c4009be334c79c45b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a5fee04311042f12ce48042e3160d7e"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_score.html#a7a5fee04311042f12ce48042e3160d7e">Value</a><code> [get]</code></td></tr>
+<tr class="memdesc:a7a5fee04311042f12ce48042e3160d7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actual score value. <a href="#a7a5fee04311042f12ce48042e3160d7e">More...</a><br /></td></tr>
 <tr class="separator:a7a5fee04311042f12ce48042e3160d7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Property Documentation</h2>
@@ -127,6 +133,7 @@ Properties</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
 <p>Info about the gamer who posted the score. This information may not be present for some calls (calls scoped to the current user) and the member be null. Please read the documentation to find out which calls apply this policy. </p>
 
 </div>
@@ -148,7 +155,8 @@ Properties</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Info about the score (passed when posted). </p>
+
+<p>Info about the score (passed when posted).</p>
 
 </div>
 </div>
@@ -169,7 +177,8 @@ Properties</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Time at which the score was processed by the server (posted). </p>
+
+<p>Time at which the score was processed by the server (posted).</p>
 
 </div>
 </div>
@@ -190,7 +199,8 @@ Properties</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>One-based rank of this score on the board. </p>
+
+<p>One-based rank of this score on the board.</p>
 
 </div>
 </div>
@@ -211,7 +221,8 @@ Properties</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Actual score value. </p>
+
+<p>Actual score value.</p>
 
 </div>
 </div>
@@ -221,7 +232,7 @@ Properties</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 31 2015 13:23:01 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 8 2015 11:31:39 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

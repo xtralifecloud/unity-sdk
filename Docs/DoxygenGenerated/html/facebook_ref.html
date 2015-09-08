@@ -37,8 +37,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Packages</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -104,13 +102,13 @@ Fix platform specific issues</h1>
 <p>When compiling for Android, you may get an error saying <code>java.lang.IllegalArgumentException: already added: Landroid/support/v4/accessibilityservice/AccessibilityServiceInfoCompat;</code>. This is caused by a conflict between the CotC SDK and the facebook plugins, which use a different build system although they reference the same library. In this case, you need to remove the <code>Assets/Plugins/Android/facebook/libs/android-support-v4.jar</code> and associated meta files.</p>
 <h1><a class="anchor" id="toc3"></a>
 Using the Facebook integration plugin</h1>
-<p>Import the facebook integration package and place the CotC Facebook Integration prefab on your scene (under <code>Cotc.FacebookIntegration/Prefabs</code>). Through this object, you will be able to access the <a class="el" href="class_cotc_sdk_1_1_facebook_integration_1_1_cotc_facebook_integration.html">CotcSdk.FacebookIntegration.CotcFacebookIntegration</a> API. Use FindObjectOfType as described in <a class="el" href="getting_started_ref.html">getting started</a>.</p>
+<p>Import the facebook integration package and place the CotC Facebook Integration prefab on your scene (under <code>Cotc.FacebookIntegration/Prefabs</code>). Through this object, you will be able to access the <a class="el" href="class_cotc_sdk_1_1_facebook_integration_1_1_cotc_facebook_integration.html" title="Facebook integration utility root entry point.">CotcSdk.FacebookIntegration.CotcFacebookIntegration</a> API. Use FindObjectOfType as described in <a class="el" href="getting_started_ref.html">getting started</a>.</p>
 <div class="fragment"><div class="line">var fb = FindObjectOfType&lt;CotcFacebookIntegration&gt;();</div>
 <div class="line">fb.LoginWithFacebook(Cloud).Done(gamerResult =&gt; { ... });</div>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 31 2015 13:23:00 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 8 2015 11:31:38 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

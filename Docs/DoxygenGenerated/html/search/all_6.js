@@ -14,6 +14,7 @@ var searchData=
   ['gamerinfo',['GamerInfo',['../class_cotc_sdk_1_1_gamer_info.html',1,'CotcSdk']]],
   ['gamerinfo',['GamerInfo',['../class_cotc_sdk_1_1_score.html#a2aafc298befdee988b7b49518bdb80cc',1,'CotcSdk::Score']]],
   ['gamermatches',['GamerMatches',['../class_cotc_sdk_1_1_gamer_matches.html',1,'CotcSdk']]],
+  ['gameroutline',['GamerOutline',['../class_cotc_sdk_1_1_gamer_outline.html',1,'CotcSdk']]],
   ['gamerprofile',['GamerProfile',['../class_cotc_sdk_1_1_gamer_profile.html',1,'CotcSdk']]],
   ['gamerprofilemethods',['GamerProfileMethods',['../class_cotc_sdk_1_1_gamer_profile_methods.html',1,'CotcSdk']]],
   ['gamerproperties',['GamerProperties',['../class_cotc_sdk_1_1_gamer_properties.html',1,'CotcSdk']]],

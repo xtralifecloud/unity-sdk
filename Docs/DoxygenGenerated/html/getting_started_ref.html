@@ -37,8 +37,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Packages</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -98,7 +96,7 @@ Import package screen</div></div>
 <img src="importpackage02.png" alt="importpackage02.png"/>
 <div class="caption">
 Import package screen</div></div>
-<p> Basic usage is provided by the Clan of the Cloud SDK prefab object. You just have to put it on your scene and invoke the GetCloud method on it to fetch a <a class="el" href="class_cotc_sdk_1_1_cloud.html">CotcSdk.Cloud</a> object allowing to use most features. For that, you may simply use <a href="http://docs.unity3d.com/ScriptReference/Object.FindObjectOfType.html">FindObjectOfType&lt;CotcGameObject&gt;</a>.</p>
+<p> Basic usage is provided by the Clan of the Cloud SDK prefab object. You just have to put it on your scene and invoke the GetCloud method on it to fetch a <a class="el" href="class_cotc_sdk_1_1_cloud.html" title="Root class of the SDK. It is stateless and allows to perform basic operations with the SDK...">CotcSdk.Cloud</a> object allowing to use most features. For that, you may simply use <a href="http://docs.unity3d.com/ScriptReference/Object.FindObjectOfType.html">FindObjectOfType&lt;CotcGameObject&gt;</a>.</p>
 <div class="fragment"><div class="line"><span class="keyword">using</span> <a class="code" href="namespace_cotc_sdk.html">CotcSdk</a>;</div>
 <div class="line"></div>
 <div class="line"><span class="keyword">class </span>MyGameObject: MonoBehaviour {</div>
@@ -112,7 +110,7 @@ Import package screen</div></div>
 <div class="line">    }</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>This code will fetch a cloud object. This operation is asynchronous but will usually take only a very small amount of time, since it only waits for the CotcGameObject to be initialized. You should do it at startup as shown above and keep it as a member of your class.</p>
-<p>Another very important object is the <a class="el" href="class_cotc_sdk_1_1_gamer.html">CotcSdk.Gamer</a> object. This represents a signed in user, and provides all functionality that requires to be logged in. You will obtain it by logging in through the cloud object.</p>
+<p>Another very important object is the <a class="el" href="class_cotc_sdk_1_1_gamer.html" title="Important object from the SDK, allowing to perform many operations that depend on a currently logged ...">CotcSdk.Gamer</a> object. This represents a signed in user, and provides all functionality that requires to be logged in. You will obtain it by logging in through the cloud object.</p>
 <div class="fragment"><div class="line">Cloud.LoginAnonymously()</div>
 <div class="line">.Catch(ex =&gt; {</div>
 <div class="line">    Debug.LogError(<span class="stringliteral">&quot;Login failed: &quot;</span> + ex.ToString());</div>
@@ -158,7 +156,7 @@ Import package screen</div></div>
 <div class="line">gamerPromise = gamerPromise.Catch((Exception ex) =&gt; {</div>
 <div class="line">    ...</div>
 <div class="line">});</div>
-</div><!-- fragment --><p>Note that the Then and Catch block return a new promise that can itself be linked to another Then/Catch block. However you should provide a Catch block only after all Then blocks or just before a Done block. The Done method returns no promise, and just tells that it is the last thing that you will do with the result. If you provide a Then block, you may then:</p>
+</div><!-- fragment --><p>Note that the <a class="el" href="class_cotc_sdk_1_1_promise_3_01_promised_t_01_4.html#ae2f094cd9b4f856ef48492a103eefa75">Then</a> and <a class="el" href="class_cotc_sdk_1_1_promise_3_01_promised_t_01_4.html#a183215f1caffafaad82ca3a3aa217a0c">Catch</a> block return a new promise that can itself be linked to another Then/Catch block. However you should provide a Catch block only after all Then blocks or just before a Done block. The <a class="el" href="class_cotc_sdk_1_1_promise_3_01_promised_t_01_4.html#a0060e4253c0b5b54369b67bd0e26d9cf">Done</a> method returns no promise, and just tells that it is the last thing that you will do with the result. If you provide a Then block, you may then:</p>
 <ul>
 <li>Provide other Then blocks, which will receive the same result (if the lambda provided in the Then block returns an empty result).</li>
 <li>Handle the result returned by the next promise (in case the lambda provided in the previous Then block returned another Promise).</li>
@@ -232,11 +230,11 @@ Import package screen</div></div>
 <div class="line">};</div>
 </div><!-- fragment --><p>This should be done at the very startup, after the cloud has been received. The handler is chosen when an HTTP request is built, so if you change it while an HTTP request is running, it will have no effect.</p>
 <h1>Bundle</h1>
-<p>Some function calls use bundles. They act as a generic, typed dictionary. Read more at <a class="el" href="class_cotc_sdk_1_1_bundle.html">CotcSdk.Bundle</a>. </p>
+<p>Some function calls use bundles. They act as a generic, typed dictionary. Read more at <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object...">CotcSdk.Bundle</a>. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 31 2015 13:23:00 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 8 2015 11:31:38 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

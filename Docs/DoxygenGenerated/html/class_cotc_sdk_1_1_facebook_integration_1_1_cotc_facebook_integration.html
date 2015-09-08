@@ -37,8 +37,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Packages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -93,6 +91,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">CotcSdk.FacebookIntegration.CotcFacebookIntegration Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Facebook integration utility root entry point. 
+ <a href="class_cotc_sdk_1_1_facebook_integration_1_1_cotc_facebook_integration.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for CotcSdk.FacebookIntegration.CotcFacebookIntegration:</div>
 <div class="dyncontent">
@@ -102,14 +103,16 @@ Inheritance diagram for CotcSdk.FacebookIntegration.CotcFacebookIntegration:</di
 </map>
  </div></div>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Facebook integration utility root entry point. </p>
+<div class="textblock"><p>Facebook integration utility root entry point.</p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a880ef9703bf191be2062641c2e7374c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_gamer.html">Gamer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_facebook_integration_1_1_cotc_facebook_integration.html#a880ef9703bf191be2062641c2e7374c4">LoginWithFacebook</a> (<a class="el" href="class_cotc_sdk_1_1_cloud.html">Cloud</a> cloud)</td></tr>
+<tr class="memdesc:a880ef9703bf191be2062641c2e7374c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs in to CotC through facebook. This will bring an user interface allowing to sign in to facebook.  <a href="#a880ef9703bf191be2062641c2e7374c4">More...</a><br /></td></tr>
 <tr class="separator:a880ef9703bf191be2062641c2e7374c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a40c40d936f5d8f21f061b956c20c3fa6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a><br class="typebreak" />
 &lt; <a class="el" href="class_cotc_sdk_1_1_social_network_friend_response.html">SocialNetworkFriendResponse</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_facebook_integration_1_1_cotc_facebook_integration.html#a40c40d936f5d8f21f061b956c20c3fa6">FetchFriends</a> (<a class="el" href="class_cotc_sdk_1_1_gamer.html">Gamer</a> gamer)</td></tr>
+<tr class="memdesc:a40c40d936f5d8f21f061b956c20c3fa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches the list of friends on facebook and sends them to CotC so that they automatically become friend with you. Note that this can only fetch the friends who are actually playing the game, so the list may be empty especially when in development.  <a href="#a40c40d936f5d8f21f061b956c20c3fa6">More...</a><br /></td></tr>
 <tr class="separator:a40c40d936f5d8f21f061b956c20c3fa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -126,10 +129,12 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Fetches the list of friends on facebook and sends them to CotC so that they automatically become friend with you. Note that this can only fetch the friends who are actually playing the game, so the list may be empty especially when in development. </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Fetches the list of friends on facebook and sends them to CotC so that they automatically become friend with you. Note that this can only fetch the friends who are actually playing the game, so the list may be empty especially when in development. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> resolved when the request has finished. The value is as returned by <a class="el" href="class_cotc_sdk_1_1_gamer_community.html#a5ef72c223a174df5f5a51923c3af4a93" title="When you have data about friends from another social network, you can post them using these function...">CotcSdk.GamerCommunity.PostSocialNetworkFriends</a>.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">done</td><td>callback invoked when the request has finished. The value is as returned by #GamerCommunity.PostSocialNetworkFriends. </td></tr>
-    <tr><td class="paramname">gamer</td><td>gamer object used to link the data to the account. </td></tr>
+    <tr><td class="paramname">gamer</td><td><a class="el" href="class_cotc_sdk_1_1_gamer.html" title="Important object from the SDK, allowing to perform many operations that depend on a currently logged ...">Gamer</a> object used to link the data to the account.</td></tr>
   </table>
   </dd>
 </dl>
@@ -149,10 +154,12 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Logs in to CotC through facebook. This will bring an user interface allowing to sign in to facebook. </p><dl class="section return"><dt>Returns</dt><dd>task returning when the login has finished. The resulting <a class="el" href="class_cotc_sdk_1_1_gamer.html">Gamer</a> object can then be used for many purposes related to the signed in account. </dd></dl>
+
+<p>Logs in to CotC through facebook. This will bring an user interface allowing to sign in to facebook. </p>
+<dl class="section return"><dt>Returns</dt><dd>task returning when the login has finished. The resulting <a class="el" href="class_cotc_sdk_1_1_gamer.html" title="Important object from the SDK, allowing to perform many operations that depend on a currently logged ...">Gamer</a> object can then be used for many purposes related to the signed in account.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">cloud</td><td>needed to perform various tasks. Ensure that the SDK is initialized properly and fetch a cloud object. </td></tr>
+    <tr><td class="paramname">cloud</td><td>needed to perform various tasks. Ensure that the SDK is initialized properly and fetch a cloud object.</td></tr>
   </table>
   </dd>
 </dl>
@@ -165,7 +172,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 31 2015 13:23:01 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 8 2015 11:31:39 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

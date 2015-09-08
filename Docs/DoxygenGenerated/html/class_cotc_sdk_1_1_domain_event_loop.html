@@ -37,8 +37,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Packages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -94,30 +92,40 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">CotcSdk.DomainEventLoop Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>This class is responsible for polling the server waiting for new events. You should instantiate one and manage its lifecycle as the state of the application changes.  
+ <a href="class_cotc_sdk_1_1_domain_event_loop.html#details">More...</a></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class is responsible for polling the server waiting for new events. You should instantiate one and manage its lifecycle as the state of the application changes. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a3d0722573afda668fc8317f89f74948e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html#a3d0722573afda668fc8317f89f74948e">DomainEventLoop</a> (<a class="el" href="class_cotc_sdk_1_1_gamer.html">Gamer</a> gamer, String domain=Common.PrivateDomain, int iterationDuration=590)</td></tr>
+<tr class="memdesc:a3d0722573afda668fc8317f89f74948e"><td class="mdescLeft">&#160;</td><td class="mdescRight">You need valid credentials in order to instantiate this class. Use <a class="el" href="class_cotc_sdk_1_1_cloud.html#a3109ee9f5a019b2ac4a4848bc81d797d" title="Logs the current user in, using any supported social network.">Cloud.Login</a>* methods for that purpose. Once the object is created, you need to start the thread, please look at the other methods available.  <a href="#a3d0722573afda668fc8317f89f74948e">More...</a><br /></td></tr>
 <tr class="separator:a3d0722573afda668fc8317f89f74948e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab83f3b180cfa9ce92fc1d42ed56ce0ec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html">DomainEventLoop</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html#ab83f3b180cfa9ce92fc1d42ed56ce0ec">Start</a> ()</td></tr>
+<tr class="memdesc:ab83f3b180cfa9ce92fc1d42ed56ce0ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the thread. Call this upon initialization. <a href="#ab83f3b180cfa9ce92fc1d42ed56ce0ec">More...</a><br /></td></tr>
 <tr class="separator:ab83f3b180cfa9ce92fc1d42ed56ce0ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af1b57ce6abe7fac634e711ec7c4fdb90"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html">DomainEventLoop</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html#af1b57ce6abe7fac634e711ec7c4fdb90">Stop</a> ()</td></tr>
+<tr class="memdesc:af1b57ce6abe7fac634e711ec7c4fdb90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Will stop the event thread. Might take some time until the current request finishes. You should not use this object for other purposes later on. In particular, do not start it again.  <a href="#af1b57ce6abe7fac634e711ec7c4fdb90">More...</a><br /></td></tr>
 <tr class="separator:af1b57ce6abe7fac634e711ec7c4fdb90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5779575ce1b1a3ee0e3aa7ccab3fe07f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html">DomainEventLoop</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html#a5779575ce1b1a3ee0e3aa7ccab3fe07f">Suspend</a> ()</td></tr>
+<tr class="memdesc:a5779575ce1b1a3ee0e3aa7ccab3fe07f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Suspends the event thread. <a href="#a5779575ce1b1a3ee0e3aa7ccab3fe07f">More...</a><br /></td></tr>
 <tr class="separator:a5779575ce1b1a3ee0e3aa7ccab3fe07f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5c6e23f5d98b5b0bd15524cb6d4b387"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html">DomainEventLoop</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html#ad5c6e23f5d98b5b0bd15524cb6d4b387">Resume</a> ()</td></tr>
+<tr class="memdesc:ad5c6e23f5d98b5b0bd15524cb6d4b387"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resumes a suspended event thread. <a href="#ad5c6e23f5d98b5b0bd15524cb6d4b387">More...</a><br /></td></tr>
 <tr class="separator:ad5c6e23f5d98b5b0bd15524cb6d4b387"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
 <tr class="memitem:a016eb7763f881b5da6caa404ab47b406"><td class="memItemLeft" align="right" valign="top">String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html#a016eb7763f881b5da6caa404ab47b406">Domain</a><code> [get]</code></td></tr>
+<tr class="memdesc:a016eb7763f881b5da6caa404ab47b406"><td class="mdescLeft">&#160;</td><td class="mdescRight">The domain on which this loop is listening. <a href="#a016eb7763f881b5da6caa404ab47b406">More...</a><br /></td></tr>
 <tr class="separator:a016eb7763f881b5da6caa404ab47b406"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2381ba33ea74f4601397da4e24be402e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2381ba33ea74f4601397da4e24be402e"></a>
 <a class="el" href="class_cotc_sdk_1_1_gamer.html">Gamer</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Gamer</b><code> [get]</code></td></tr>
 <tr class="separator:a2381ba33ea74f4601397da4e24be402e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af7a75c1c843136c1a92b20afc98e5170"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_cotc_sdk.html#a84cf1d0e3235ee0696f4b9c684be025d">EventLoopHandler</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html#af7a75c1c843136c1a92b20afc98e5170">ReceivedEvent</a></td></tr>
+<tr class="memdesc:af7a75c1c843136c1a92b20afc98e5170"><td class="mdescLeft">&#160;</td><td class="mdescRight">This event is raised when an event is received. <a href="#af7a75c1c843136c1a92b20afc98e5170">More...</a><br /></td></tr>
 <tr class="separator:af7a75c1c843136c1a92b20afc98e5170"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -150,13 +158,15 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>You need valid credentials in order to instantiate this class. Use <a class="el" href="class_cotc_sdk_1_1_cloud.html#a3109ee9f5a019b2ac4a4848bc81d797d">Cloud.Login</a>* methods for that purpose. Once the object is created, you need to start the thread, please look at the other methods available. </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>You need valid credentials in order to instantiate this class. Use <a class="el" href="class_cotc_sdk_1_1_cloud.html#a3109ee9f5a019b2ac4a4848bc81d797d" title="Logs the current user in, using any supported social network.">Cloud.Login</a>* methods for that purpose. Once the object is created, you need to start the thread, please look at the other methods available. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">gamer</td><td>the gamer object received from a login or similar function. </td></tr>
-    <tr><td class="paramname">domain</td><td>the domain on which to listen for events. Note that you may create multiple event loops, especially if you are using multiple domains. The default domain, that you should use unless you are explicitly using multiple domains, is the private domain. </td></tr>
-    <tr><td class="paramname">gamer</td><td>gamer, used to authenticate (receive events related to the said gamer). </td></tr>
-    <tr><td class="paramname">domain</td><td>domain on which to listen for events. </td></tr>
-    <tr><td class="paramname">iterationDuration</td><td>sets a custom timeout in seconds for the long polling event loop. Should be used with care and set to a high value (at least 60). Defaults to 590 (~10 min). </td></tr>
+    <tr><td class="paramname">gamer</td><td>The gamer object received from a login or similar function.</td></tr>
+    <tr><td class="paramname">domain</td><td>The domain on which to listen for events. Note that you may create multiple event loops, especially if you are using multiple domains. The default domain, that you should use unless you are explicitly using multiple domains, is the private domain.</td></tr>
+    <tr><td class="paramname">gamer</td><td><a class="el" href="class_cotc_sdk_1_1_gamer.html" title="Important object from the SDK, allowing to perform many operations that depend on a currently logged ...">Gamer</a>, used to authenticate (receive events related to the said gamer).</td></tr>
+    <tr><td class="paramname">domain</td><td>Domain on which to listen for events.</td></tr>
+    <tr><td class="paramname">iterationDuration</td><td>Sets a custom timeout in seconds for the long polling event loop. Should be used with care and set to a high value (at least 60). Defaults to 590 (~10 min).</td></tr>
   </table>
   </dd>
 </dl>
@@ -176,7 +186,8 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Resumes a suspended event thread. </p>
+
+<p>Resumes a suspended event thread.</p>
 
 </div>
 </div>
@@ -192,7 +203,8 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Starts the thread. Call this upon initialization. </p>
+
+<p>Starts the thread. Call this upon initialization.</p>
 
 </div>
 </div>
@@ -208,6 +220,7 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
 <p>Will stop the event thread. Might take some time until the current request finishes. You should not use this object for other purposes later on. In particular, do not start it again. </p>
 
 </div>
@@ -224,7 +237,8 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Suspends the event thread. </p>
+
+<p>Suspends the event thread.</p>
 
 </div>
 </div>
@@ -246,7 +260,8 @@ Properties</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>The domain on which this loop is listening. </p>
+
+<p>The domain on which this loop is listening.</p>
 
 </div>
 </div>
@@ -267,7 +282,8 @@ Properties</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This event is raised when an event is received. </p>
+
+<p>This event is raised when an event is received.</p>
 
 </div>
 </div>
@@ -277,7 +293,7 @@ Properties</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 31 2015 13:23:01 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 8 2015 11:31:38 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

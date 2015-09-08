@@ -17,5 +17,6 @@ var searchData=
   ['login',['Login',['../class_cotc_sdk_1_1_cloud.html#a3109ee9f5a019b2ac4a4848bc81d797d',1,'CotcSdk::Cloud']]],
   ['loginanonymously',['LoginAnonymously',['../class_cotc_sdk_1_1_cloud.html#a9ff54f02170f8df7256d535540f1b4d5',1,'CotcSdk::Cloud']]],
   ['loginnetwork',['LoginNetwork',['../namespace_cotc_sdk.html#ad5e437023247d9f2be89e7f6be520fdb',1,'CotcSdk']]],
-  ['loginwithfacebook',['LoginWithFacebook',['../class_cotc_sdk_1_1_facebook_integration_1_1_cotc_facebook_integration.html#a880ef9703bf191be2062641c2e7374c4',1,'CotcSdk::FacebookIntegration::CotcFacebookIntegration']]]
+  ['loginwithfacebook',['LoginWithFacebook',['../class_cotc_sdk_1_1_facebook_integration_1_1_cotc_facebook_integration.html#a880ef9703bf191be2062641c2e7374c4',1,'CotcSdk::FacebookIntegration::CotcFacebookIntegration']]],
+  ['loginwithshortcode',['LoginWithShortcode',['../class_cotc_sdk_1_1_cloud.html#a2926f63e1be0c689a3aa2456059cde46',1,'CotcSdk::Cloud']]]
 ];

@@ -37,8 +37,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Packages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -93,16 +91,22 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">CotcSdk.GameVfs Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Represents a key/value system, also known as virtual file system, to be used for game properties. This class is scoped by domain, meaning that you can call .Domain("yourdomain") and perform additional calls that are scoped.  
+ <a href="class_cotc_sdk_1_1_game_vfs.html#details">More...</a></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a key/value system, also known as virtual file system, to be used for game properties. This class is scoped by domain, meaning that you can call .Domain("yourdomain") and perform additional calls that are scoped. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a2412f636826c2c97afa9c9a41c84f5b2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_game_vfs.html">GameVfs</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_game_vfs.html#a2412f636826c2c97afa9c9a41c84f5b2">Domain</a> (string domain)</td></tr>
+<tr class="memdesc:a2412f636826c2c97afa9c9a41c84f5b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the domain affected by this object. You should typically use it this way: <code>gamer.GamerVfs.Domain("private").SetKey(...);</code>  <a href="#a2412f636826c2c97afa9c9a41c84f5b2">More...</a><br /></td></tr>
 <tr class="separator:a2412f636826c2c97afa9c9a41c84f5b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aebbedd75e34a7a2d635e88bee4c93437"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_game_vfs.html#aebbedd75e34a7a2d635e88bee4c93437">GetAll</a> ()</td></tr>
+<tr class="memdesc:aebbedd75e34a7a2d635e88bee4c93437"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves all keys from the key/value system for the current domain. <a href="#aebbedd75e34a7a2d635e88bee4c93437">More...</a><br /></td></tr>
 <tr class="separator:aebbedd75e34a7a2d635e88bee4c93437"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acde95be1a609d4f57450c230d8314b1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_game_vfs.html#acde95be1a609d4f57450c230d8314b1f">GetKey</a> (string key)</td></tr>
+<tr class="memdesc:acde95be1a609d4f57450c230d8314b1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves an individual key from the key/value system. <a href="#acde95be1a609d4f57450c230d8314b1f">More...</a><br /></td></tr>
 <tr class="separator:acde95be1a609d4f57450c230d8314b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -119,13 +123,15 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Sets the domain affected by this object. You should typically use it this way: <code>gamer.GamerVfs.Domain("private").SetKey(...);</code> </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Sets the domain affected by this object. You should typically use it this way: <code>gamer.GamerVfs.Domain("private").SetKey(...);</code> </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">domain</td><td>domain on which to scope the VFS. Defaults to <code>private</code> if not specified. </td></tr>
+    <tr><td class="paramname">domain</td><td>Domain on which to scope the VFS. Defaults to <code>private</code> if not specified.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>this object, so you can chain operations </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>This object, so you can chain operations</dd></dl>
 
 </div>
 </div>
@@ -141,7 +147,9 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Retrieves all keys from the key/value system for the current domain. </p><dl class="section return"><dt>Returns</dt><dd>promise resolved when the operation has completed. The attached bundle contains the keys along with their values. If you would like to fetch the value of a given key and you expect it to be a string, you may simply do <code>string value = result.Value["key"];</code>. </dd></dl>
+
+<p>Retrieves all keys from the key/value system for the current domain.</p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> resolved when the operation has completed. The attached bundle contains the keys along with their values. If you would like to fetch the value of a given key and you expect it to be a string, you may simply do <code>string value = result.Value["key"];</code>.</dd></dl>
 
 </div>
 </div>
@@ -158,10 +166,12 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Retrieves an individual key from the key/value system. </p><dl class="section return"><dt>Returns</dt><dd>promise resolved when the operation has completed. The attached bundle contains the fetched property. As usual with bundles, it can be casted to the proper type you are expecting. If the property doesn't exist, the call is marked as failed with a 404 status. </dd></dl>
+
+<p>Retrieves an individual key from the key/value system.</p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> resolved when the operation has completed. The attached bundle contains the fetched property. As usual with bundles, it can be casted to the proper type you are expecting. If the property doesn't exist, the call is marked as failed with a 404 status.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">key</td><td>the name of the key to be fetched. </td></tr>
+    <tr><td class="paramname">key</td><td>The name of the key to be fetched.</td></tr>
   </table>
   </dd>
 </dl>
@@ -174,7 +184,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 31 2015 13:23:01 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 8 2015 11:31:39 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

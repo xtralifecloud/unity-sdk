@@ -37,8 +37,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Packages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -94,17 +92,22 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">CotcSdk.MatchInfo Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Represents a basic match with less information associated than a real match. This is the kind of matches that you may find in sub-objects returned by some calls (list, etc.).  
+ <a href="class_cotc_sdk_1_1_match_info.html#details">More...</a></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a basic match with less information associated than a real match. This is the kind of matches that you may find in sub-objects returned by some calls (list, etc.). </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a78a23e3234ff3f384f0952e9167a2a02"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match_info.html#a78a23e3234ff3f384f0952e9167a2a02">DismissInvitation</a> ()</td></tr>
+<tr class="memdesc:a78a23e3234ff3f384f0952e9167a2a02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dismisses a pending invitation for the current user and the match. Fails if the user has not been invited. <a href="#a78a23e3234ff3f384f0952e9167a2a02">More...</a><br /></td></tr>
 <tr class="separator:a78a23e3234ff3f384f0952e9167a2a02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
 <tr class="memitem:a161d56ae0cca1d57e10331ecf343ead8"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match_info.html#a161d56ae0cca1d57e10331ecf343ead8">MatchId</a><code> [get]</code></td></tr>
+<tr class="memdesc:a161d56ae0cca1d57e10331ecf343ead8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The ID of the match. <a href="#a161d56ae0cca1d57e10331ecf343ead8">More...</a><br /></td></tr>
 <tr class="separator:a161d56ae0cca1d57e10331ecf343ead8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -120,7 +123,9 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Dismisses a pending invitation for the current user and the match. Fails if the user has not been invited. </p><dl class="section return"><dt>Returns</dt><dd>promise resolved when the operation has completed. </dd></dl>
+
+<p>Dismisses a pending invitation for the current user and the match. Fails if the user has not been invited.</p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> resolved when the operation has completed.</dd></dl>
 
 </div>
 </div>
@@ -142,7 +147,8 @@ Properties</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>The ID of the match. </p>
+
+<p>The ID of the match.</p>
 
 </div>
 </div>
@@ -152,7 +158,7 @@ Properties</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 31 2015 13:23:01 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 8 2015 11:31:39 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

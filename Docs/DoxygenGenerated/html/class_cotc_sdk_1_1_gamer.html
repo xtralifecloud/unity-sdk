@@ -37,8 +37,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Packages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -94,35 +92,44 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">CotcSdk.Gamer Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Important object from the SDK, allowing to perform many operations that depend on a currently logged in user.  
+ <a href="class_cotc_sdk_1_1_gamer.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for CotcSdk.Gamer:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="class_cotc_sdk_1_1_gamer.png" usemap="#CotcSdk.Gamer_map" alt=""/>
   <map id="CotcSdk.Gamer_map" name="CotcSdk.Gamer_map">
-<area href="class_cotc_sdk_1_1_properties_object.html" alt="CotcSdk.PropertiesObject" shape="rect" coords="0,0,158,24"/>
+<area href="class_cotc_sdk_1_1_properties_object.html" title="Defines an object that can be queried for additional properties using indexers. The structure of the ..." alt="CotcSdk.PropertiesObject" shape="rect" coords="0,0,158,24"/>
 </map>
  </div></div>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Important object from the SDK, allowing to perform many operations that depend on a currently logged in user.</p>
-<p>This object is almost stateless. You may drop it without worrying about background processes that may still run. User related events are handled by a corresponding instance of <a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html">CotcSdk.DomainEventLoop</a>, which should be started as soon as the user is logged in. </p>
+<div class="textblock"><p>Important object from the SDK, allowing to perform many operations that depend on a currently logged in user. </p>
+<p>This object is almost stateless. You may drop it without worrying about background processes that may still run. User related events are handled by a corresponding instance of <a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html" title="This class is responsible for polling the server waiting for new events. You should instantiate one a...">CotcSdk.DomainEventLoop</a>, which should be started as soon as the user is logged in. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a6d9794f099e8cbc2d3faa30591a08c62"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html">DomainEventLoop</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer.html#a6d9794f099e8cbc2d3faa30591a08c62">StartEventLoop</a> (string domain=Common.PrivateDomain)</td></tr>
+<tr class="memdesc:a6d9794f099e8cbc2d3faa30591a08c62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a <a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html" title="This class is responsible for polling the server waiting for new events. You should instantiate one a...">CotcSdk.DomainEventLoop</a> in order to catch events related to this logged in gamer.  <a href="#a6d9794f099e8cbc2d3faa30591a08c62">More...</a><br /></td></tr>
 <tr class="separator:a6d9794f099e8cbc2d3faa30591a08c62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_cotc_sdk_1_1_properties_object"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_cotc_sdk_1_1_properties_object')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_cotc_sdk_1_1_properties_object.html">CotcSdk.PropertiesObject</a></td></tr>
 <tr class="memitem:aacdfc8f0edc93f3611d4c40f12be9073 inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html#aacdfc8f0edc93f3611d4c40f12be9073">AsBundle</a> ()</td></tr>
+<tr class="memdesc:aacdfc8f0edc93f3611d4c40f12be9073 inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the underlying <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object...">Bundle</a>. Dangerous, only use internally, when you want to put the contents of a properties object into an existing bundle.  <a href="#aacdfc8f0edc93f3611d4c40f12be9073">More...</a><br /></td></tr>
 <tr class="separator:aacdfc8f0edc93f3611d4c40f12be9073 inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3e6a4b30fa74bc0e763e961d9fdfad3b inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; string, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> &gt;<br class="typebreak" />
 .KeyCollection&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html#a3e6a4b30fa74bc0e763e961d9fdfad3b">Keys</a> ()</td></tr>
+<tr class="memdesc:a3e6a4b30fa74bc0e763e961d9fdfad3b inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to browse all keys (might include some that are already exposed as typed properties in the object). <a href="#a3e6a4b30fa74bc0e763e961d9fdfad3b">More...</a><br /></td></tr>
 <tr class="separator:a3e6a4b30fa74bc0e763e961d9fdfad3b inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16242913dd8dc6aae516f97fc6cbff9d inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; string, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> &gt;<br class="typebreak" />
 .Enumerator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html#a16242913dd8dc6aae516f97fc6cbff9d">GetEnumerator</a> ()</td></tr>
+<tr class="memdesc:a16242913dd8dc6aae516f97fc6cbff9d inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to browse all keys (might include some that are already exposed as typed properties in the object). <a href="#a16242913dd8dc6aae516f97fc6cbff9d">More...</a><br /></td></tr>
 <tr class="separator:a16242913dd8dc6aae516f97fc6cbff9d inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f9860c398a665da8643f18dada7d30a inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memItemLeft" align="right" valign="top">override string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html#a6f9860c398a665da8643f18dada7d30a">ToString</a> ()</td></tr>
+<tr class="memdesc:a6f9860c398a665da8643f18dada7d30a inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">You may use this to debug what is inside this property object. <a href="#a6f9860c398a665da8643f18dada7d30a">More...</a><br /></td></tr>
 <tr class="separator:a6f9860c398a665da8643f18dada7d30a inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3dfde134398c0d738f27e94e5614434 inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html#af3dfde134398c0d738f27e94e5614434">ToJson</a> ()</td></tr>
+<tr class="memdesc:af3dfde134398c0d738f27e94e5614434 inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds a JSON representation of this object, same as ToString actually. <a href="#af3dfde134398c0d738f27e94e5614434">More...</a><br /></td></tr>
 <tr class="separator:af3dfde134398c0d738f27e94e5614434 inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
@@ -131,8 +138,10 @@ Properties</h2></td></tr>
 List&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Domains</b><code> [get]</code></td></tr>
 <tr class="separator:aef91278bed500bceabd52d794efec882"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99ce6ec2614b905f4a7d30fc9ef0284b"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer.html#a99ce6ec2614b905f4a7d30fc9ef0284b">GamerId</a><code> [get]</code></td></tr>
+<tr class="memdesc:a99ce6ec2614b905f4a7d30fc9ef0284b"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_cotc_sdk_1_1_gamer.html" title="Important object from the SDK, allowing to perform many operations that depend on a currently logged ...">Gamer</a> credential. Use it to gain access to user related tasks. <a href="#a99ce6ec2614b905f4a7d30fc9ef0284b">More...</a><br /></td></tr>
 <tr class="separator:a99ce6ec2614b905f4a7d30fc9ef0284b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39b6107ce7f1eec407838b0a68eb4e43"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer.html#a39b6107ce7f1eec407838b0a68eb4e43">GamerSecret</a><code> [get]</code></td></tr>
+<tr class="memdesc:a39b6107ce7f1eec407838b0a68eb4e43"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_cotc_sdk_1_1_gamer.html" title="Important object from the SDK, allowing to perform many operations that depend on a currently logged ...">Gamer</a> credential (secret). Same purpose as GamerId, and you will need those in pair. <a href="#a39b6107ce7f1eec407838b0a68eb4e43">More...</a><br /></td></tr>
 <tr class="separator:a39b6107ce7f1eec407838b0a68eb4e43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a38b8f52ff39f45e3e6b022146647e4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1a38b8f52ff39f45e3e6b022146647e4"></a>
 <a class="el" href="namespace_cotc_sdk.html#ad5e437023247d9f2be89e7f6be520fdb">LoginNetwork</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Network</b><code> [get]</code></td></tr>
@@ -144,31 +153,44 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>NetworkId</b><code>
 DateTime&#160;</td><td class="memItemRight" valign="bottom"><b>RegisterTime</b><code> [get]</code></td></tr>
 <tr class="separator:a2e95a6d50880c23e9611e4229bba0fa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac55c27125c1eb857dbdd5fc8b88828e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_gamer_account_methods.html">GamerAccountMethods</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer.html#ac55c27125c1eb857dbdd5fc8b88828e0">Account</a><code> [get]</code></td></tr>
+<tr class="memdesc:ac55c27125c1eb857dbdd5fc8b88828e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides account related functions for the current gamer. <a href="#ac55c27125c1eb857dbdd5fc8b88828e0">More...</a><br /></td></tr>
 <tr class="separator:ac55c27125c1eb857dbdd5fc8b88828e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9899f26bc096071bdf58a9c4a2d7fa91"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_gamer_achievements.html">GamerAchievements</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer.html#a9899f26bc096071bdf58a9c4a2d7fa91">Achievements</a><code> [get]</code></td></tr>
+<tr class="memdesc:a9899f26bc096071bdf58a9c4a2d7fa91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides an API to manipulate achievements. <a href="#a9899f26bc096071bdf58a9c4a2d7fa91">More...</a><br /></td></tr>
 <tr class="separator:a9899f26bc096071bdf58a9c4a2d7fa91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae2393976edd9bd7224528376d515a35"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_gamer_batches.html">GamerBatches</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer.html#aae2393976edd9bd7224528376d515a35">Batches</a><code> [get]</code></td></tr>
+<tr class="memdesc:aae2393976edd9bd7224528376d515a35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides an API to run batches. <a href="#aae2393976edd9bd7224528376d515a35">More...</a><br /></td></tr>
 <tr class="separator:aae2393976edd9bd7224528376d515a35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6bbb5a15fc7f84842575cd8bb84de3b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_gamer_community.html">GamerCommunity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer.html#ad6bbb5a15fc7f84842575cd8bb84de3b">Community</a><code> [get]</code></td></tr>
+<tr class="memdesc:ad6bbb5a15fc7f84842575cd8bb84de3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides an API to interact with friends on CotC. <a href="#ad6bbb5a15fc7f84842575cd8bb84de3b">More...</a><br /></td></tr>
 <tr class="separator:ad6bbb5a15fc7f84842575cd8bb84de3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a20aed85cfcfceae8636d85f274f32785"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_gamer_vfs.html">GamerVfs</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer.html#a20aed85cfcfceae8636d85f274f32785">GamerVfs</a><code> [get]</code></td></tr>
+<tr class="memdesc:a20aed85cfcfceae8636d85f274f32785"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an object that allows to manipulate the key/value system associated with this user. <a href="#a20aed85cfcfceae8636d85f274f32785">More...</a><br /></td></tr>
 <tr class="separator:a20aed85cfcfceae8636d85f274f32785"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad89bd7c937628ba1cabcb4ec5a860601"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_gamer_godfather.html">GamerGodfather</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer.html#ad89bd7c937628ba1cabcb4ec5a860601">Godfather</a><code> [get]</code></td></tr>
+<tr class="memdesc:ad89bd7c937628ba1cabcb4ec5a860601"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exposes functionality related to the godfathers. <a href="#ad89bd7c937628ba1cabcb4ec5a860601">More...</a><br /></td></tr>
 <tr class="separator:ad89bd7c937628ba1cabcb4ec5a860601"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4c37b4cb648cf7340e6f9fcf9aec8cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_gamer_matches.html">GamerMatches</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer.html#aa4c37b4cb648cf7340e6f9fcf9aec8cb">Matches</a><code> [get]</code></td></tr>
+<tr class="memdesc:aa4c37b4cb648cf7340e6f9fcf9aec8cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides an API to manipulate matches (mainly start them, since working with existing matches is provided by the <a class="el" href="class_cotc_sdk_1_1_match.html" title="Represents a match with which you can interact through high level functionality. A match object is re...">Match</a> class).  <a href="#aa4c37b4cb648cf7340e6f9fcf9aec8cb">More...</a><br /></td></tr>
 <tr class="separator:aa4c37b4cb648cf7340e6f9fcf9aec8cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a921f0b949e3b4ca563dd1c8e0ec7d07d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_gamer_profile_methods.html">GamerProfileMethods</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer.html#a921f0b949e3b4ca563dd1c8e0ec7d07d">Profile</a><code> [get]</code></td></tr>
+<tr class="memdesc:a921f0b949e3b4ca563dd1c8e0ec7d07d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to manipulate information related to the gamer profile. <a href="#a921f0b949e3b4ca563dd1c8e0ec7d07d">More...</a><br /></td></tr>
 <tr class="separator:a921f0b949e3b4ca563dd1c8e0ec7d07d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abcb3941380fd29a4afc07404c6c5c229"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_gamer_properties.html">GamerProperties</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer.html#abcb3941380fd29a4afc07404c6c5c229">Properties</a><code> [get]</code></td></tr>
+<tr class="memdesc:abcb3941380fd29a4afc07404c6c5c229"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to manipulate the properties of the current gamer. <a href="#abcb3941380fd29a4afc07404c6c5c229">More...</a><br /></td></tr>
 <tr class="separator:abcb3941380fd29a4afc07404c6c5c229"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f98b7b4e2243246c9dc273bacd71e1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_gamer_scores.html">GamerScores</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer.html#a0f98b7b4e2243246c9dc273bacd71e1f">Scores</a><code> [get]</code></td></tr>
+<tr class="memdesc:a0f98b7b4e2243246c9dc273bacd71e1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides an API able to handle functionality related to the leaderboards and scores. <a href="#a0f98b7b4e2243246c9dc273bacd71e1f">More...</a><br /></td></tr>
 <tr class="separator:a0f98b7b4e2243246c9dc273bacd71e1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a77820b5da36315113711fdf29ae9a887"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_gamer_store.html">GamerStore</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer.html#a77820b5da36315113711fdf29ae9a887">Store</a><code> [get]</code></td></tr>
+<tr class="memdesc:a77820b5da36315113711fdf29ae9a887"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to list, buy products and so on. This functionality is low level and you should use the appropriate external plugin to help with the purchase process.  <a href="#a77820b5da36315113711fdf29ae9a887">More...</a><br /></td></tr>
 <tr class="separator:a77820b5da36315113711fdf29ae9a887"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5e9a20a17ad30e1e829ab8f89db5c8e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_gamer_transactions.html">GamerTransactions</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer.html#ad5e9a20a17ad30e1e829ab8f89db5c8e">Transactions</a><code> [get]</code></td></tr>
+<tr class="memdesc:ad5e9a20a17ad30e1e829ab8f89db5c8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to manipulate the transactions and related achievements of an user. <a href="#ad5e9a20a17ad30e1e829ab8f89db5c8e">More...</a><br /></td></tr>
 <tr class="separator:ad5e9a20a17ad30e1e829ab8f89db5c8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header properties_class_cotc_sdk_1_1_properties_object"><td colspan="2" onclick="javascript:toggleInherit('properties_class_cotc_sdk_1_1_properties_object')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="class_cotc_sdk_1_1_properties_object.html">CotcSdk.PropertiesObject</a></td></tr>
 <tr class="memitem:a49c7c96cfe7245e23a766b08a2e89a71 inherit properties_class_cotc_sdk_1_1_properties_object"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html#a49c7c96cfe7245e23a766b08a2e89a71">this[string key]</a><code> [get]</code></td></tr>
+<tr class="memdesc:a49c7c96cfe7245e23a766b08a2e89a71 inherit properties_class_cotc_sdk_1_1_properties_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to query additional properties via an indexer (can be enriched via hooks). <a href="#a49c7c96cfe7245e23a766b08a2e89a71">More...</a><br /></td></tr>
 <tr class="separator:a49c7c96cfe7245e23a766b08a2e89a71 inherit properties_class_cotc_sdk_1_1_properties_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
@@ -196,15 +218,16 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Starts a <a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html">CotcSdk.DomainEventLoop</a> in order to catch events related to this logged in gamer.</p>
+
+<p>Starts a <a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html" title="This class is responsible for polling the server waiting for new events. You should instantiate one a...">CotcSdk.DomainEventLoop</a> in order to catch events related to this logged in gamer. </p>
 <p>The loop will be running forever unless an error happens with this gamer (meaning that the gamer is not valid anymore, which can happen if he's not logged in). When stopping or pausing the application, you should call the corresponding methods on the loop to stop or pause it. The system will pause the loop automatically upon application pause and resume it as needed, which is done through the <a class="el" href="class_cotc_sdk_1_1_cotc_game_object.html">CotcGameObject</a> as placed on your scene.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">domain</td><td>domain to listen on. The <code>private</code> domain is used to receive system notifications as well as messages sent by other players. Unless cross-game functionality is used, you should start one loop on the private domain as soon as the gamer is signed in. </td></tr>
+    <tr><td class="paramname">domain</td><td>Domain to listen on. The <code>private</code> domain is used to receive system notifications as well as messages sent by other players. Unless cross-game functionality is used, you should start one loop on the private domain as soon as the gamer is signed in.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>a domain event loop that is in started state. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A domain event loop that is in started state.</dd></dl>
 
 </div>
 </div>
@@ -226,7 +249,9 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Provides account related functions for the current gamer. </p><dl class="section return"><dt>Returns</dt><dd>an object allowing to manipulate the account of the current gamer. </dd></dl>
+
+<p>Provides account related functions for the current gamer.</p>
+<dl class="section return"><dt>Returns</dt><dd>An object allowing to manipulate the account of the current gamer.</dd></dl>
 
 </div>
 </div>
@@ -247,7 +272,9 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Provides an API to manipulate achievements. </p><dl class="section return"><dt>Returns</dt><dd>an object that allows to manipulate achievements. </dd></dl>
+
+<p>Provides an API to manipulate achievements.</p>
+<dl class="section return"><dt>Returns</dt><dd>An object that allows to manipulate achievements.</dd></dl>
 
 </div>
 </div>
@@ -268,7 +295,9 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Provides an API to run batches. </p><dl class="section return"><dt>Returns</dt><dd>an object that allows to manipulate batches. </dd></dl>
+
+<p>Provides an API to run batches.</p>
+<dl class="section return"><dt>Returns</dt><dd>An object that allows to manipulate batches.</dd></dl>
 
 </div>
 </div>
@@ -289,7 +318,9 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Provides an API to interact with friends on CotC. </p><dl class="section return"><dt>Returns</dt><dd>an object that allow to manipulate friends. </dd></dl>
+
+<p>Provides an API to interact with friends on CotC.</p>
+<dl class="section return"><dt>Returns</dt><dd>An object that allow to manipulate friends.</dd></dl>
 
 </div>
 </div>
@@ -310,7 +341,8 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p><a class="el" href="class_cotc_sdk_1_1_gamer.html">Gamer</a> credential. Use it to gain access to user related tasks. </p>
+
+<p><a class="el" href="class_cotc_sdk_1_1_gamer.html" title="Important object from the SDK, allowing to perform many operations that depend on a currently logged ...">Gamer</a> credential. Use it to gain access to user related tasks.</p>
 
 </div>
 </div>
@@ -331,7 +363,8 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p><a class="el" href="class_cotc_sdk_1_1_gamer.html">Gamer</a> credential (secret). Same purpose as GamerId, and you will need those in pair. </p>
+
+<p><a class="el" href="class_cotc_sdk_1_1_gamer.html" title="Important object from the SDK, allowing to perform many operations that depend on a currently logged ...">Gamer</a> credential (secret). Same purpose as GamerId, and you will need those in pair.</p>
 
 </div>
 </div>
@@ -352,7 +385,9 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Returns an object that allows to manipulate the key/value system associated with this user. </p><dl class="section return"><dt>Returns</dt><dd>an object allowing to manipulate key/values for this user/domain. </dd></dl>
+
+<p>Returns an object that allows to manipulate the key/value system associated with this user.</p>
+<dl class="section return"><dt>Returns</dt><dd>An object allowing to manipulate key/values for this user/domain.</dd></dl>
 
 </div>
 </div>
@@ -373,7 +408,9 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Exposes functionality related to the godfathers. </p><dl class="section return"><dt>Returns</dt><dd>an object that allows to add a godfather, generate a code, etc. </dd></dl>
+
+<p>Exposes functionality related to the godfathers.</p>
+<dl class="section return"><dt>Returns</dt><dd>An object that allows to add a godfather, generate a code, etc.</dd></dl>
 
 </div>
 </div>
@@ -394,7 +431,9 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Provides an API to manipulate matches (mainly start them, since working with existing matches is provided by the <a class="el" href="class_cotc_sdk_1_1_match.html">Match</a> class). </p><dl class="section return"><dt>Returns</dt><dd>an object that allows to perform basic operations on matches. </dd></dl>
+
+<p>Provides an API to manipulate matches (mainly start them, since working with existing matches is provided by the <a class="el" href="class_cotc_sdk_1_1_match.html" title="Represents a match with which you can interact through high level functionality. A match object is re...">Match</a> class). </p>
+<dl class="section return"><dt>Returns</dt><dd>An object that allows to perform basic operations on matches.</dd></dl>
 
 </div>
 </div>
@@ -415,7 +454,9 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Allows to manipulate information related to the gamer profile. </p><dl class="section return"><dt>Returns</dt><dd>an object that allows to read and set the profile. </dd></dl>
+
+<p>Allows to manipulate information related to the gamer profile.</p>
+<dl class="section return"><dt>Returns</dt><dd>An object that allows to read and set the profile.</dd></dl>
 
 </div>
 </div>
@@ -436,7 +477,9 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Allows to manipulate the properties of the current gamer. </p><dl class="section return"><dt>Returns</dt><dd>an object that allows to set, delete, etc. property values. </dd></dl>
+
+<p>Allows to manipulate the properties of the current gamer.</p>
+<dl class="section return"><dt>Returns</dt><dd>An object that allows to set, delete, etc. property values.</dd></dl>
 
 </div>
 </div>
@@ -457,7 +500,9 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Provides an API able to handle functionality related to the leaderboards and scores. </p><dl class="section return"><dt>Returns</dt><dd>an object that allows to manipulate scores. </dd></dl>
+
+<p>Provides an API able to handle functionality related to the leaderboards and scores.</p>
+<dl class="section return"><dt>Returns</dt><dd>An object that allows to manipulate scores.</dd></dl>
 
 </div>
 </div>
@@ -478,7 +523,9 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Allows to list, buy products and so on. This functionality is low level and you should use the appropriate external plugin to help with the purchase process. </p><dl class="section return"><dt>Returns</dt><dd>an object that allows access to the store on a CotC point of view. </dd></dl>
+
+<p>Allows to list, buy products and so on. This functionality is low level and you should use the appropriate external plugin to help with the purchase process. </p>
+<dl class="section return"><dt>Returns</dt><dd>An object that allows access to the store on a CotC point of view.</dd></dl>
 
 </div>
 </div>
@@ -499,7 +546,9 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Allows to manipulate the transactions and related achievements of an user. </p><dl class="section return"><dt>Returns</dt><dd>an object that allows to manipulate transactions and query achievements. </dd></dl>
+
+<p>Allows to manipulate the transactions and related achievements of an user.</p>
+<dl class="section return"><dt>Returns</dt><dd>An object that allows to manipulate transactions and query achievements.</dd></dl>
 
 </div>
 </div>
@@ -509,7 +558,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 31 2015 13:23:01 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 8 2015 11:31:39 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

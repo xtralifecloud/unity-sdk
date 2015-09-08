@@ -14,7 +14,6 @@ var searchData=
   ['postedgamescore',['PostedGameScore',['../class_cotc_sdk_1_1_posted_game_score.html',1,'CotcSdk']]],
   ['postmove',['PostMove',['../class_cotc_sdk_1_1_match.html#a1a9d3bb410a1ae4def0a12710103e588',1,'CotcSdk::Match']]],
   ['postsocialnetworkfriends',['PostSocialNetworkFriends',['../class_cotc_sdk_1_1_gamer_community.html#a5ef72c223a174df5f5a51923c3af4a93',1,'CotcSdk::GamerCommunity']]],
-  ['preferencepane',['PreferencePane',['../class_cotc_sdk_1_1_preference_pane.html',1,'CotcSdk']]],
   ['price',['Price',['../class_cotc_sdk_1_1_purchase_transaction.html#a949c2944b2cbc47ec83a56a52473e3f2',1,'CotcSdk.PurchaseTransaction.Price()'],['../class_cotc_sdk_1_1_inapp_purchase_1_1_product_info.html#ae83298053a8e3fc574ab2f17afa124f6',1,'CotcSdk.InappPurchase.ProductInfo.Price()']]],
   ['productid',['ProductId',['../class_cotc_sdk_1_1_configured_product.html#a0bf719d64641db3637bf50cc2dac1dd2',1,'CotcSdk.ConfiguredProduct.ProductId()'],['../class_cotc_sdk_1_1_purchase_transaction.html#ab7de795dc134b215b15bccee7d94e897',1,'CotcSdk.PurchaseTransaction.ProductId()'],['../class_cotc_sdk_1_1_inapp_purchase_1_1_product_info.html#a2ae0b1883c16b35b2ff9da482df7714f',1,'CotcSdk.InappPurchase.ProductInfo.ProductId()']]],
   ['productinfo',['ProductInfo',['../class_cotc_sdk_1_1_inapp_purchase_1_1_product_info.html',1,'CotcSdk::InappPurchase']]],
@@ -27,6 +26,6 @@ var searchData=
   ['purchasedproduct',['PurchasedProduct',['../class_cotc_sdk_1_1_inapp_purchase_1_1_purchased_product.html',1,'CotcSdk::InappPurchase']]],
   ['purchasetransaction',['PurchaseTransaction',['../class_cotc_sdk_1_1_purchase_transaction.html',1,'CotcSdk']]],
   ['push_20notification',['Push Notification',['../push.html',1,'']]],
-  ['pushnotification',['PushNotification',['../class_cotc_sdk_1_1_push_notification.html#abde43e5eafb4aeb307bf194aeccfb1c2',1,'CotcSdk::PushNotification']]],
-  ['pushnotification',['PushNotification',['../class_cotc_sdk_1_1_push_notification.html',1,'CotcSdk']]]
+  ['pushnotification',['PushNotification',['../class_cotc_sdk_1_1_push_notification.html',1,'CotcSdk']]],
+  ['pushnotification',['PushNotification',['../class_cotc_sdk_1_1_push_notification.html#abde43e5eafb4aeb307bf194aeccfb1c2',1,'CotcSdk::PushNotification']]]
 ];

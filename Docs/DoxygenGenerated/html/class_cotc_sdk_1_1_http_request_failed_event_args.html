@@ -37,8 +37,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Packages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -95,24 +93,31 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">CotcSdk.HttpRequestFailedEventArgs Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>This class is passed to the HttpRequestFailed handler as set on the <a class="el" href="class_cotc_sdk_1_1_cloud.html" title="Root class of the SDK. It is stateless and allows to perform basic operations with the SDK...">Cloud</a>. You need to do something with it, either call Abort or RetryIn else the http service will throw an exception.  
+ <a href="class_cotc_sdk_1_1_http_request_failed_event_args.html#details">More...</a></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This class is passed to the HttpRequestFailed handler as set on the <a class="el" href="class_cotc_sdk_1_1_cloud.html">Cloud</a>. You need to do something with it, either call Abort or RetryIn else the http service will throw an exception. </p>
+<div class="textblock"><p>This class is passed to the HttpRequestFailed handler as set on the <a class="el" href="class_cotc_sdk_1_1_cloud.html" title="Root class of the SDK. It is stateless and allows to perform basic operations with the SDK...">Cloud</a>. You need to do something with it, either call Abort or RetryIn else the http service will throw an exception. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a5f390a95fcaaa33eed641028316487b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_http_request_failed_event_args.html#a5f390a95fcaaa33eed641028316487b6">Abort</a> ()</td></tr>
+<tr class="memdesc:a5f390a95fcaaa33eed641028316487b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call this to abort the request. It won't be tried ever again. <a href="#a5f390a95fcaaa33eed641028316487b6">More...</a><br /></td></tr>
 <tr class="separator:a5f390a95fcaaa33eed641028316487b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac03110965bc9b6b45902bf3952e02d56"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_http_request_failed_event_args.html#ac03110965bc9b6b45902bf3952e02d56">RetryIn</a> (int milliseconds)</td></tr>
+<tr class="memdesc:ac03110965bc9b6b45902bf3952e02d56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call this to retry the request later. <a href="#ac03110965bc9b6b45902bf3952e02d56">More...</a><br /></td></tr>
 <tr class="separator:ac03110965bc9b6b45902bf3952e02d56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:ae6f9621f943935fbffc782237367212c"><td class="memItemLeft" align="right" valign="top">object&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_http_request_failed_event_args.html#ae6f9621f943935fbffc782237367212c">UserData</a></td></tr>
+<tr class="memdesc:ae6f9621f943935fbffc782237367212c"><td class="mdescLeft">&#160;</td><td class="mdescRight">You can set this member from the handler; in case the request fails again, this data will be set to the same value as set last time. It is always set to null when the request fails for the first time.  <a href="#ae6f9621f943935fbffc782237367212c">More...</a><br /></td></tr>
 <tr class="separator:ae6f9621f943935fbffc782237367212c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
 <tr class="memitem:a6f2f5213afcbc5f02c45c1236a1dee99"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_http_request_failed_event_args.html#a6f2f5213afcbc5f02c45c1236a1dee99">Url</a><code> [get]</code></td></tr>
+<tr class="memdesc:a6f2f5213afcbc5f02c45c1236a1dee99"><td class="mdescLeft">&#160;</td><td class="mdescRight">The original URL that the request failed to reach. <a href="#a6f2f5213afcbc5f02c45c1236a1dee99">More...</a><br /></td></tr>
 <tr class="separator:a6f2f5213afcbc5f02c45c1236a1dee99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -128,7 +133,8 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Call this to abort the request. It won't be tried ever again. </p>
+
+<p>Call this to abort the request. It won't be tried ever again.</p>
 
 </div>
 </div>
@@ -145,9 +151,11 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Call this to retry the request later. </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Call this to retry the request later.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">milliseconds</td><td>time in which to try again. No other request will be executed during this time (they will be queued) as to respect the issuing order. Please keep this in mind when setting a high delay. </td></tr>
+    <tr><td class="paramname">milliseconds</td><td>Time in which to try again. No other request will be executed during this time (they will be queued) as to respect the issuing order. Please keep this in mind when setting a high delay.</td></tr>
   </table>
   </dd>
 </dl>
@@ -164,6 +172,7 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
 <p>You can set this member from the handler; in case the request fails again, this data will be set to the same value as set last time. It is always set to null when the request fails for the first time. </p>
 
 </div>
@@ -186,7 +195,8 @@ Properties</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>The original URL that the request failed to reach. </p>
+
+<p>The original URL that the request failed to reach.</p>
 
 </div>
 </div>
@@ -196,7 +206,7 @@ Properties</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 31 2015 13:23:01 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 8 2015 11:31:39 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

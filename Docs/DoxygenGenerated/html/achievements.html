@@ -37,8 +37,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Packages</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -79,10 +77,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>CotC provides a platform independent way of handling achievements for your game. Note that <b>achievements need to be defined on the backoffice</b> before being used on the client.</p>
-<p>This page is aimed at being a little tutorial on how to work with achievements from the SDK (client). For the next steps, we will suppose that you already know how to create achievements from the backoffice. For a complete list of useful functions in the SDK, take a look at <a class="el" href="class_cotc_sdk_1_1_gamer_achievements.html">CotcSdk.GamerAchievements</a>.</p>
+<p>This page is aimed at being a little tutorial on how to work with achievements from the SDK (client). For the next steps, we will suppose that you already know how to create achievements from the backoffice. For a complete list of useful functions in the SDK, take a look at <a class="el" href="class_cotc_sdk_1_1_gamer_achievements.html" title="API functions related to the achievements.">CotcSdk.GamerAchievements</a>.</p>
 <h2>Querying the progress of the gamer </h2>
 <p>Fetching the state of achievements is a function that require the customer to be logged in. In general, the status of achievements represents an association between a gamer and a game.</p>
-<p>The call that we are going to use is <a class="el" href="class_cotc_sdk_1_1_gamer_achievements.html#a3068ff18569430ec9528443c81084e26">CotcSdk.GamerAchievements.List</a>. An example is shown below, we'll create UI buttons with information about each achievement. The GUI toolkit is virtual, and you may want to implement additional features such as pagination.</p>
+<p>The call that we are going to use is <a class="el" href="class_cotc_sdk_1_1_gamer_achievements.html#a3068ff18569430ec9528443c81084e26" title="Fetches information about the status of the achievements configured for this game.">CotcSdk.GamerAchievements.List</a>. An example is shown below, we'll create UI buttons with information about each achievement. The GUI toolkit is virtual, and you may want to implement additional features such as pagination.</p>
 <div class="fragment"><div class="line">gamer.Achievements.List()</div>
 <div class="line">.Done(achievements =&gt; {</div>
 <div class="line">    <span class="keywordflow">foreach</span> (var pair <span class="keywordflow">in</span> achievements) {</div>
@@ -129,7 +127,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --><h2>Domains </h2>
 <p>By default, achievements use the key/value storage associated with the private domain (that is, reserved for this game). You may create achievement on different domains, in which case they refer to units posted in the corresponding domain.</p>
 <h2>Associating user data with an achievement </h2>
-<p>Arbitrary data can be associated for an user and an achievement by using the <a class="el" href="class_cotc_sdk_1_1_gamer_achievements.html#a3b88ee3dae586c54203cc28173818746">CotcSdk.GamerAchievements.AssociateData</a> API call. For instance, this could be used to store any useful detail on how the gamer was realized. The following example describes yet another use case: we want to unhide an achievement that has been marked as hidden by default and not listed in the section above.</p>
+<p>Arbitrary data can be associated for an user and an achievement by using the <a class="el" href="class_cotc_sdk_1_1_gamer_achievements.html#a3b88ee3dae586c54203cc28173818746" title="Allows to store arbitrary data for a given achievement and the current player (appears in the &#39;gamerD...">CotcSdk.GamerAchievements.AssociateData</a> API call. For instance, this could be used to store any useful detail on how the gamer was realized. The following example describes yet another use case: we want to unhide an achievement that has been marked as hidden by default and not listed in the section above.</p>
 <div class="fragment"><div class="line">gamer.Transactions.Post(Bundle.CreateObject(<span class="stringliteral">&quot;supersonic&quot;</span>, +1))</div>
 <div class="line">.Then(txResult =&gt; {</div>
 <div class="line">    <span class="comment">// Achievement triggered =&gt; associate data</span></div>
@@ -141,7 +139,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 31 2015 13:23:00 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 8 2015 11:31:38 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

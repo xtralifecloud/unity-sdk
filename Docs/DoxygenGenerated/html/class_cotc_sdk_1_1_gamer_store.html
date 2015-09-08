@@ -37,8 +37,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Packages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -93,18 +91,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">CotcSdk.GamerStore Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>(App) Store API. 
+ <a href="class_cotc_sdk_1_1_gamer_store.html#details">More...</a></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>(App) Store API. </p>
+<div class="textblock"><p>(App) Store API.</p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad13ba4ea74f9456c82fd95187c2c76db"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; PagedList<br class="typebreak" />
 &lt; <a class="el" href="class_cotc_sdk_1_1_configured_product.html">ConfiguredProduct</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_store.html#ad13ba4ea74f9456c82fd95187c2c76db">ListConfiguredProducts</a> (int limit=30, int offset=0)</td></tr>
+<tr class="memdesc:ad13ba4ea74f9456c82fd95187c2c76db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch the list of products as configured on the backoffice. Note that this doesn't include any information about pricing and so on: the external store plugin is required to do so. Note that this call returns the catalog as configured on the CotC server, which may not be exhaustive if additional products are configured on iTunes Connect but not reported to the CotC servers.  <a href="#ad13ba4ea74f9456c82fd95187c2c76db">More...</a><br /></td></tr>
 <tr class="separator:ad13ba4ea74f9456c82fd95187c2c76db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7534f153660b75431e93ae7177b89abc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; List<br class="typebreak" />
 &lt; <a class="el" href="class_cotc_sdk_1_1_purchase_transaction.html">PurchaseTransaction</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_store.html#a7534f153660b75431e93ae7177b89abc">GetPurchaseHistory</a> ()</td></tr>
+<tr class="memdesc:a7534f153660b75431e93ae7177b89abc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches the list of transactions made by the logged in user. Only successful transactions show here.  <a href="#a7534f153660b75431e93ae7177b89abc">More...</a><br /></td></tr>
 <tr class="separator:a7534f153660b75431e93ae7177b89abc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a307f2f31a7362420961091f8c405b5a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_validate_receipt_result.html">ValidateReceiptResult</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_store.html#a307f2f31a7362420961091f8c405b5a8">ValidateReceipt</a> (<a class="el" href="namespace_cotc_sdk.html#a81559f66b6278243aa82a8cd14d79e80">StoreType</a> storeType, string cotcProductId, float paidPrice, string paidCurrency, string receipt)</td></tr>
+<tr class="memdesc:a307f2f31a7362420961091f8c405b5a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Last step in the purchase. Validates the receipt received by a native purchase. You may have to do additional steps to close your purchase process.  <a href="#a307f2f31a7362420961091f8c405b5a8">More...</a><br /></td></tr>
 <tr class="separator:a307f2f31a7362420961091f8c405b5a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -120,7 +124,9 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Fetches the list of transactions made by the logged in user. Only successful transactions show here. </p><dl class="section return"><dt>Returns</dt><dd>promise resolved when the operation has completed. The attached value describes a list of purchase transactions, without pagination functionality. </dd></dl>
+
+<p>Fetches the list of transactions made by the logged in user. Only successful transactions show here. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> resolved when the operation has completed. The attached value describes a list of purchase transactions, without pagination functionality.</dd></dl>
 
 </div>
 </div>
@@ -147,14 +153,16 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Fetch the list of products as configured on the backoffice. Note that this doesn't include any information about pricing and so on: the external store plugin is required to do so. Note that this call returns the catalog as configured on the CotC server, which may not be exhaustive if additional products are configured on iTunes Connect but not reported to the CotC servers. </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Fetch the list of products as configured on the backoffice. Note that this doesn't include any information about pricing and so on: the external store plugin is required to do so. Note that this call returns the catalog as configured on the CotC server, which may not be exhaustive if additional products are configured on iTunes Connect but not reported to the CotC servers. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">limit</td><td>the maximum number of results to return per page. </td></tr>
-    <tr><td class="paramname">offset</td><td>number of the first result. </td></tr>
+    <tr><td class="paramname">limit</td><td>The maximum number of results to return per page.</td></tr>
+    <tr><td class="paramname">offset</td><td>Number of the first result.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>promise resolved when the operation has completed. The attached value describes a list of products, with pagination functionality. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> resolved when the operation has completed. The attached value describes a list of products, with pagination functionality.</dd></dl>
 
 </div>
 </div>
@@ -199,14 +207,16 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Last step in the purchase. Validates the receipt received by a native purchase. You may have to do additional steps to close your purchase process. </p><dl class="section return"><dt>Returns</dt><dd>promise indicating whether the recceipt was validated properly. In case of exception, you can inspect why the receipt failed to verify. </dd></dl>
+
+<p>Last step in the purchase. Validates the receipt received by a native purchase. You may have to do additional steps to close your purchase process. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> indicating whether the recceipt was validated properly. In case of exception, you can inspect why the receipt failed to verify.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">storeType</td><td>type of Store, should be provided by the store plugin. Valid are appstore, macstore, googleplay. </td></tr>
-    <tr><td class="paramname">cotcProductId</td><td>ID of the product purchased (as configured on the backoffice). </td></tr>
-    <tr><td class="paramname">paidPrice</td><td>paid price in units. </td></tr>
-    <tr><td class="paramname">paidCurrency</td><td>currency of paid price (ISO code). </td></tr>
-    <tr><td class="paramname">receipt</td><td>receipt string, dependent on the store type. </td></tr>
+    <tr><td class="paramname">storeType</td><td>Type of Store, should be provided by the store plugin. Valid are appstore, macstore, googleplay.</td></tr>
+    <tr><td class="paramname">cotcProductId</td><td>ID of the product purchased (as configured on the backoffice).</td></tr>
+    <tr><td class="paramname">paidPrice</td><td>Paid price in units.</td></tr>
+    <tr><td class="paramname">paidCurrency</td><td>Currency of paid price (ISO code).</td></tr>
+    <tr><td class="paramname">receipt</td><td>Receipt string, dependent on the store type.</td></tr>
   </table>
   </dd>
 </dl>
@@ -219,7 +229,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 31 2015 13:23:01 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 8 2015 11:31:39 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

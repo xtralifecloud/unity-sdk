@@ -37,8 +37,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Packages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -93,16 +91,22 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">CotcSdk.InappPurchase.IStore Interface Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Interface about the platform-specific store. 
+ <a href="interface_cotc_sdk_1_1_inapp_purchase_1_1_i_store.html#details">More...</a></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Interface about the platform-specific store. </p>
+<div class="textblock"><p>Interface about the platform-specific store.</p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ae505d43249f7e489a49e9380fee8d496"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; List&lt; <a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_product_info.html">ProductInfo</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_cotc_sdk_1_1_inapp_purchase_1_1_i_store.html#ae505d43249f7e489a49e9380fee8d496">GetInformationAboutProducts</a> (List&lt; <a class="el" href="class_cotc_sdk_1_1_configured_product.html">ConfiguredProduct</a> &gt; products)</td></tr>
+<tr class="memdesc:ae505d43249f7e489a49e9380fee8d496"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements the actual listing of products. Note that this is not necessarily called when the customer is actually querying the list of products.  <a href="#ae505d43249f7e489a49e9380fee8d496">More...</a><br /></td></tr>
 <tr class="separator:ae505d43249f7e489a49e9380fee8d496"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78d46e1aed92d8942647645a72d1b063"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_purchased_product.html">PurchasedProduct</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_cotc_sdk_1_1_inapp_purchase_1_1_i_store.html#a78d46e1aed92d8942647645a72d1b063">LaunchPurchaseFlow</a> (<a class="el" href="class_cotc_sdk_1_1_gamer.html">Gamer</a> gamer, <a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_product_info.html">ProductInfo</a> product)</td></tr>
+<tr class="memdesc:a78d46e1aed92d8942647645a72d1b063"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements the actual purchase flow. This does not represent the whole purchase process though, only the first part where the store front end is presented to the user and allows him to pay. The purchase process will also incur an additional step consisting in a verification of the payment before actually delivering the goods. That is why you need to call <a class="el" href="class_cotc_sdk_1_1_gamer_store.html#a307f2f31a7362420961091f8c405b5a8" title="Last step in the purchase. Validates the receipt received by a native purchase. You may have to do ad...">CotcSdk.GamerStore.ValidateReceipt</a> after your purchase has been done and forward the result.  <a href="#a78d46e1aed92d8942647645a72d1b063">More...</a><br /></td></tr>
 <tr class="separator:a78d46e1aed92d8942647645a72d1b063"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1912360d736e3422e6a89db72945dce0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_cotc_sdk_1_1_inapp_purchase_1_1_i_store.html#a1912360d736e3422e6a89db72945dce0">TerminatePurchase</a> (<a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_purchased_product.html">PurchasedProduct</a> product)</td></tr>
+<tr class="memdesc:a1912360d736e3422e6a89db72945dce0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Completes the purchase process. This step is mandatory in order to close the purchase transaction. You can not start another purchase until you haven't validated the previous one. In order to validate it, you need to pass it to CotC servers via the <a class="el" href="class_cotc_sdk_1_1_gamer_store.html#a307f2f31a7362420961091f8c405b5a8" title="Last step in the purchase. Validates the receipt received by a native purchase. You may have to do ad...">CotcSdk.GamerStore.ValidateReceipt</a> method. In case of success, do not forget to call TerminatePurchase. This operation is local and should not fail.  <a href="#a1912360d736e3422e6a89db72945dce0">More...</a><br /></td></tr>
 <tr class="separator:a1912360d736e3422e6a89db72945dce0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae98847cc93fdaad1dd6f96853707844f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae98847cc93fdaad1dd6f96853707844f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>GetInformationAboutProducts_Done</b> (string message)</td></tr>
@@ -128,13 +132,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>TerminatePurchase_Don
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Implements the actual listing of products. Note that this is not necessarily called when the customer is actually querying the list of products. </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Implements the actual listing of products. Note that this is not necessarily called when the customer is actually querying the list of products. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">products</td><td>list of products to query information for on the store. Should come from the product info as returned by Cotc. </td></tr>
+    <tr><td class="paramname">products</td><td>list of products to query information for on the store. Should come from the product info as returned by Cotc.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>promise resolved when the operation has completed, with consolidated product information. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>promise resolved when the operation has completed, with consolidated product information.</dd></dl>
 
 </div>
 </div>
@@ -161,14 +167,16 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>TerminatePurchase_Don
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Implements the actual purchase flow. This does not represent the whole purchase process though, only the first part where the store front end is presented to the user and allows him to pay. The purchase process will also incur an additional step consisting in a verification of the payment before actually delivering the goods. That is why you need to call #CotcSdk.GamerStore.SendStorePurchaseToServer after your purchase has been done and forward the result. </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Implements the actual purchase flow. This does not represent the whole purchase process though, only the first part where the store front end is presented to the user and allows him to pay. The purchase process will also incur an additional step consisting in a verification of the payment before actually delivering the goods. That is why you need to call <a class="el" href="class_cotc_sdk_1_1_gamer_store.html#a307f2f31a7362420961091f8c405b5a8" title="Last step in the purchase. Validates the receipt received by a native purchase. You may have to do ad...">CotcSdk.GamerStore.ValidateReceipt</a> after your purchase has been done and forward the result. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">gamer</td><td>gamer to associate with the purchase. </td></tr>
-    <tr><td class="paramname">product</td><td>product to be purchased, as returned by <a class="el" href="interface_cotc_sdk_1_1_inapp_purchase_1_1_i_store.html#ae505d43249f7e489a49e9380fee8d496">GetInformationAboutProducts</a>. </td></tr>
+    <tr><td class="paramname">gamer</td><td>gamer to associate with the purchase.</td></tr>
+    <tr><td class="paramname">product</td><td>product to be purchased, as returned by <a class="el" href="interface_cotc_sdk_1_1_inapp_purchase_1_1_i_store.html#ae505d43249f7e489a49e9380fee8d496" title="Implements the actual listing of products. Note that this is not necessarily called when the customer...">GetInformationAboutProducts</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>promise resolved when the purchase has completed successfully. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>promise resolved when the purchase has completed successfully.</dd></dl>
 
 </div>
 </div>
@@ -185,13 +193,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>TerminatePurchase_Don
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Completes the purchase process. This step is mandatory in order to close the purchase transaction. You can not start another purchase until you haven't validated the previous one. In order to validate it, you need to pass it to CotC servers via the <a class="el" href="class_cotc_sdk_1_1_gamer_store.html#a307f2f31a7362420961091f8c405b5a8">CotcSdk.GamerStore.ValidateReceipt</a> method. In case of success, do not forget to call TerminatePurchase. This operation is local and should not fail. </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Completes the purchase process. This step is mandatory in order to close the purchase transaction. You can not start another purchase until you haven't validated the previous one. In order to validate it, you need to pass it to CotC servers via the <a class="el" href="class_cotc_sdk_1_1_gamer_store.html#a307f2f31a7362420961091f8c405b5a8" title="Last step in the purchase. Validates the receipt received by a native purchase. You may have to do ad...">CotcSdk.GamerStore.ValidateReceipt</a> method. In case of success, do not forget to call TerminatePurchase. This operation is local and should not fail. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">product</td><td>product as returned by LaunchPurchaseFlow. </td></tr>
+    <tr><td class="paramname">product</td><td>product as returned by LaunchPurchaseFlow.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>a promise that is resolved when the native operation has completed. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>a promise that is resolved when the native operation has completed.</dd></dl>
 
 </div>
 </div>
@@ -201,7 +211,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>TerminatePurchase_Don
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 31 2015 13:23:01 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 8 2015 11:31:39 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

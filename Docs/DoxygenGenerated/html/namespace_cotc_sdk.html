@@ -37,8 +37,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li class="current"><a href="namespaces.html"><span>Packages</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -102,18 +100,25 @@ Namespaces</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_achievement_definition.html">AchievementDefinition</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definition of an achievement. Achievements are inputted on the backoffice and are triggered under defined circumstances.  <a href="class_cotc_sdk_1_1_achievement_definition.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object, behaving like a C# dictionary, but with inferred typing and more safety.  <a href="class_cotc_sdk_1_1_bundle.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><b>CachedMember&lt; T &gt;</b></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds a cached single-time-instantiated member.<br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_cloud.html">Cloud</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Root class of the SDK. It is stateless and allows to perform basic operations with the SDK, such as <code>Ping</code>.  <a href="class_cotc_sdk_1_1_cloud.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_cloud_indexing.html">CloudIndexing</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides an API allowing to manipulate an index. <a href="class_cotc_sdk_1_1_cloud_indexing.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><b>Common</b></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common SDK methods also usable by clients.<br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_configured_product.html">ConfiguredProduct</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Information about a configured product on the BO. <a href="class_cotc_sdk_1_1_configured_product.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><b>Cotc</b></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -121,117 +126,158 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_cotc_game_object.html">CotcGameObject</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_cotc_settings.html">CotcSettings</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html">DomainEventLoop</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class is responsible for polling the server waiting for new events. You should instantiate one and manage its lifecycle as the state of the application changes.  <a href="class_cotc_sdk_1_1_domain_event_loop.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_done.html">Done</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic result for an API call that has been successful and simply gives an indication of whether it was done properly or not. Usually the result should be true, but some operations may succeed and give an indication that nothing was done. You may use it as a boolean or get additional information by using it as a <a class="el" href="class_cotc_sdk_1_1_properties_object.html" title="Defines an object that can be queried for additional properties using indexers. The structure of the ...">PropertiesObject</a>.  <a href="class_cotc_sdk_1_1_done.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_drawn_items_result.html">DrawnItemsResult</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Response resulting from a <a class="el" href="class_cotc_sdk_1_1_match.html#a4f1fd65251cda8c5966d5188c88ec086" title="Draws an item from the shoe.">CotcSdk.Match.DrawFromShoe</a> call. <a href="class_cotc_sdk_1_1_drawn_items_result.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_empty_bundle.html">EmptyBundle</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Never instantiate this class. Use <a class="el" href="class_cotc_sdk_1_1_bundle.html#a9e1489ca059f1ebfc7cfa140dbb78011" title="Empty (null-like) Bundle. See class documentation for more information.">Bundle.Empty</a> instead. Pass that everywhere an explicit configuration is not wanted. <a href="class_cotc_sdk_1_1_empty_bundle.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><b>ErrorCodeStringifier</b></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_event_loop_args.html">EventLoopArgs</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Arguments of the EventLoopArgs.ReceivedEvent event. You can use <code>args.Message.ToJson()</code> to obtain more information.  <a href="class_cotc_sdk_1_1_event_loop_args.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_exception_event_args.html">ExceptionEventArgs</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_friend_status_change_event.html">FriendStatusChangeEvent</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event triggered when someone adds this gamer as a friend or changes his friendship status. <a href="class_cotc_sdk_1_1_friend_status_change_event.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_game.html">Game</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_game_batches.html">GameBatches</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to run batches authenticated as a game (that is, unauthenticated). <a href="class_cotc_sdk_1_1_game_batches.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer.html">Gamer</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Important object from the SDK, allowing to perform many operations that depend on a currently logged in user.  <a href="class_cotc_sdk_1_1_gamer.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_account_methods.html">GamerAccountMethods</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">API functions acting on an user account (convert, etc.). <a href="class_cotc_sdk_1_1_gamer_account_methods.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_achievements.html">GamerAchievements</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">API functions related to the achievements. <a href="class_cotc_sdk_1_1_gamer_achievements.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_batches.html">GamerBatches</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to run batches authenticated as a user. <a href="class_cotc_sdk_1_1_gamer_batches.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_community.html">GamerCommunity</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">API methods related to the friends and so on of one gamer.  <a href="class_cotc_sdk_1_1_gamer_community.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_godfather.html">GamerGodfather</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Godfather (code) related functions. You may also want to subscribe to events (see <a class="el" href="class_cotc_sdk_1_1_gamer_godfather.html#aca14dde733c72d81635f847a90b6543a" title="Event triggered when someone adds this gamer as a friend or changes his friendship status...">CotcSdk.GamerGodfather.OnGotGodchild</a>). <a href="class_cotc_sdk_1_1_gamer_godfather.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_info.html">GamerInfo</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Info about a player. Can be enriched with information, accessible using the index operator []. Typically contains a profile field, with displayname, email and lang. You can fetch this by doing <code>string name = <a class="el" href="class_cotc_sdk_1_1_gamer_info.html" title="Info about a player. Can be enriched with information, accessible using the index operator []...">GamerInfo</a>["profile"]["displayname"];</code>  <a href="class_cotc_sdk_1_1_gamer_info.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_matches.html">GamerMatches</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Some methods accept a <a class="el" href="class_cotc_sdk_1_1_push_notification.html" title="Push notifications can be specified in some API calls to push an OS push notification to inactive use...">PushNotification</a> parameter. This parameter can be used to forward a push notification to the users who are not active at the moment.  <a href="class_cotc_sdk_1_1_gamer_matches.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_outline.html">GamerOutline</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Outline information about a player. Can be enriched with information, accessible using the index operator []. Typically contains a profile field, with displayname, email and lang. You can fetch this by doing <code>string name = <a class="el" href="class_cotc_sdk_1_1_gamer_outline.html" title="Outline information about a player. Can be enriched with information, accessible using the index oper...">GamerOutline</a>["profile"]["displayname"];</code>  <a href="class_cotc_sdk_1_1_gamer_outline.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_profile.html">GamerProfile</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Might contain the following: { "displayName" : "xxx", "email" : "xxx',
+"lang" : "en" } Usage: <code>string name = gamerProfile["displayName"];</code>.  <a href="class_cotc_sdk_1_1_gamer_profile.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_profile_methods.html">GamerProfileMethods</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exposes methods allowing to fetch and modify the profile of the signed in gamer. <a href="class_cotc_sdk_1_1_gamer_profile_methods.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_properties.html">GamerProperties</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to manipulate the gamer properties. <a href="class_cotc_sdk_1_1_gamer_properties.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_scores.html">GamerScores</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scoring and leaderboard related functions. <a href="class_cotc_sdk_1_1_gamer_scores.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_store.html">GamerStore</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">(App) Store API. <a href="class_cotc_sdk_1_1_gamer_store.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_transactions.html">GamerTransactions</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class allowing to manipulate the transactions and perform tasks related to achievements. This class is scoped by domain, meaning that you can call .Domain("yourdomain") and perform additional calls that are scoped.  <a href="class_cotc_sdk_1_1_gamer_transactions.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_vfs.html">GamerVfs</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a key/value system, also known as virtual file system. This class is scoped by domain, meaning that you can call .Domain("yourdomain") and perform additional calls that are scoped.  <a href="class_cotc_sdk_1_1_gamer_vfs.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_game_vfs.html">GameVfs</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a key/value system, also known as virtual file system, to be used for game properties. This class is scoped by domain, meaning that you can call .Domain("yourdomain") and perform additional calls that are scoped.  <a href="class_cotc_sdk_1_1_game_vfs.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_got_godchild_event.html">GotGodchildEvent</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event triggered when a godfather code is used. This event is received by the one who originated the code (godfather). See <a class="el" href="class_cotc_sdk_1_1_gamer_godfather.html#a61cd879778c7534560b4c189387486bd" title="Method to call in order to generate a temporary code that can be passed to another gamer so he can ad...">CotcSdk.GamerGodfather.GenerateCode</a>.  <a href="class_cotc_sdk_1_1_got_godchild_event.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><b>HttpRequest</b></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_http_request_failed_event_args.html">HttpRequestFailedEventArgs</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class is passed to the HttpRequestFailed handler as set on the <a class="el" href="class_cotc_sdk_1_1_cloud.html" title="Root class of the SDK. It is stateless and allows to perform basic operations with the SDK...">Cloud</a>. You need to do something with it, either call Abort or RetryIn else the http service will throw an exception.  <a href="class_cotc_sdk_1_1_http_request_failed_event_args.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><b>HttpResponse</b></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><b>HttpTimeoutException</b></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">interface &#160;</td><td class="memItemRight" valign="bottom"><b>IHttpClient</b></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Platform-specific HTTP client.<br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">interface &#160;</td><td class="memItemRight" valign="bottom"><b>ILogger</b></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_index_result.html">IndexResult</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Result of an index query. Represents a single returned object. This object is a <a class="el" href="class_cotc_sdk_1_1_properties_object.html" title="Defines an object that can be queried for additional properties using indexers. The structure of the ...">CotcSdk.PropertiesObject</a>, meaning that additional properties can be queried. If you want to check what is returned as a JSON object, simply log <code>this.ToString()</code>.  <a href="class_cotc_sdk_1_1_index_result.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_index_search_result.html">IndexSearchResult</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains the results of a search on the index. <a href="class_cotc_sdk_1_1_index_search_result.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">interface &#160;</td><td class="memItemRight" valign="bottom"><b>ISystemFunctions</b></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_log_event_args.html">LogEventArgs</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Information about a log entry. <a href="class_cotc_sdk_1_1_log_event_args.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><b>LoginNetworkExtensions</b></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">You can call LoginNetwork.Describe() to stringify the login network and pass it to various APIs.<br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><b>Managers</b></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match.html">Match</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a match with which you can interact through high level functionality. A match object is returned when you create a match, join it and so on. You should subscribe to ReceivedEvent right after you got this object.  <a href="class_cotc_sdk_1_1_match.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match_event.html">MatchEvent</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Basis for a match event. An event is actually always one of the subclasses (Match*Event). <a href="class_cotc_sdk_1_1_match_event.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match_finish_event.html">MatchFinishEvent</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event of type match.finish. Broadcasted to all participants except the one who initiated the request when a match is finished.  <a href="class_cotc_sdk_1_1_match_finish_event.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match_info.html">MatchInfo</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a basic match with less information associated than a real match. This is the kind of matches that you may find in sub-objects returned by some calls (list, etc.).  <a href="class_cotc_sdk_1_1_match_info.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match_invite_event.html">MatchInviteEvent</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event of type match.invite. Received by another player when someone invites him to the match.  <a href="class_cotc_sdk_1_1_match_invite_event.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match_join_event.html">MatchJoinEvent</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event of type match.join. Broadcasted when a player joins a match. The joining player himself doesn't receive the event.  <a href="class_cotc_sdk_1_1_match_join_event.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match_leave_event.html">MatchLeaveEvent</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event of type match.leave. Broadcasted when a player leaves the match. The leaving player himself doesn't receive the event.  <a href="class_cotc_sdk_1_1_match_leave_event.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match_list_result.html">MatchListResult</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match_move.html">MatchMove</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match_move_event.html">MatchMoveEvent</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event of type match.move. Broadcasted when a player makes a move. The player himself doesn't receive the event.  <a href="class_cotc_sdk_1_1_match_move_event.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match_shoe_drawn_event.html">MatchShoeDrawnEvent</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event of type match.shoedraw. Broadcasted when a player draws items from the shoe. The player himself does not receive the event.  <a href="class_cotc_sdk_1_1_match_shoe_drawn_event.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_paged_list_3_01_data_type_01_4.html">PagedList&lt; DataType &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a paginated list, which allows for easy navigation through multiple results. <a href="class_cotc_sdk_1_1_paged_list_3_01_data_type_01_4.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_posted_game_score.html">PostedGameScore</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_preference_pane.html">PreferencePane</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_promise_3_01_promised_t_01_4.html">Promise&lt; PromisedT &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> of future result, which may fail or succeed. Returned as a result of any asnychronous operation. <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise">https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise</a>  <a href="class_cotc_sdk_1_1_promise_3_01_promised_t_01_4.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><b>PromiseExtensions</b></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -240,20 +286,27 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><b>PromiseHandler&lt; T &gt;</b></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html">PropertiesObject</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines an object that can be queried for additional properties using indexers. The structure of the object remains read only though.  <a href="class_cotc_sdk_1_1_properties_object.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_purchase_transaction.html">PurchaseTransaction</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">(App) Store API. <a href="class_cotc_sdk_1_1_purchase_transaction.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_push_notification.html">PushNotification</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Push notifications can be specified in some API calls to push an OS push notification to inactive users. It is typically a JSON with made of attributes which represent language -&gt; message pairs. Here is an example: <code>new <a class="el" href="class_cotc_sdk_1_1_push_notification.html#abde43e5eafb4aeb307bf194aeccfb1c2" title="Default constructor.">PushNotification()</a>.Message("en", "Help me!").Message("fr", "Aidez moi!")</code>.  <a href="class_cotc_sdk_1_1_push_notification.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_score.html">Score</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a score fetched from a leaderboard. <a href="class_cotc_sdk_1_1_score.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_social_network_friend.html">SocialNetworkFriend</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data about a friend on the social network. The most important field is the id, which allows to recognize the gamer uniquely among the given social network.  <a href="class_cotc_sdk_1_1_social_network_friend.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_social_network_friend_response.html">SocialNetworkFriendResponse</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wraps information about a list of friends coming from a social network. <a href="class_cotc_sdk_1_1_social_network_friend_response.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_transaction.html">Transaction</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_transaction_result.html">TransactionResult</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Result of a transaction call. Contains the new balance (after the transaction has been executed atomically) and the list of triggered achievements.  <a href="class_cotc_sdk_1_1_transaction_result.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><b>UnityHttpClient</b></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -264,8 +317,10 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_url_builder.html">UrlBuilder</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_user_info.html">UserInfo</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Info about a user. Can be enriched with information, accessible using the index operator []. Typically contains a profile field, with displayname, email and lang. You can fetch this by doing <code>string name = <a class="el" href="class_cotc_sdk_1_1_user_info.html" title="Info about a user. Can be enriched with information, accessible using the index operator []...">UserInfo</a>["profile"]["displayname"];</code>  <a href="class_cotc_sdk_1_1_user_info.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_validate_receipt_result.html">ValidateReceiptResult</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Result of <a class="el" href="class_cotc_sdk_1_1_gamer_store.html#a307f2f31a7362420961091f8c405b5a8" title="Last step in the purchase. Validates the receipt received by a native purchase. You may have to do ad...">CotcSdk.GamerStore.ValidateReceipt</a>. <a href="class_cotc_sdk_1_1_validate_receipt_result.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
@@ -304,6 +359,7 @@ Enumerations</h2></td></tr>
 <tr class="memitem:a0b33fb730620778c7b2ebfb967cf33ab"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_cotc_sdk.html#a0b33fb730620778c7b2ebfb967cf33ab">ScoreOrder</a> { <b>HighToLow</b>, 
 <b>LowToHigh</b>
  }</td></tr>
+<tr class="memdesc:a0b33fb730620778c7b2ebfb967cf33ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes the possible sorting orders for the score leaderboard. <a href="namespace_cotc_sdk.html#a0b33fb730620778c7b2ebfb967cf33ab">More...</a><br /></td></tr>
 <tr class="separator:a0b33fb730620778c7b2ebfb967cf33ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8d048a20e3e26f2e7afdd662024e6253"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8d048a20e3e26f2e7afdd662024e6253"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>MatchStatus</b> { <b>Running</b>, 
 <b>Finished</b>
@@ -311,17 +367,20 @@ Enumerations</h2></td></tr>
 <tr class="separator:a8d048a20e3e26f2e7afdd662024e6253"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0060eb6baeba21d296b115e3e3277f6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_cotc_sdk.html#ab0060eb6baeba21d296b115e3e3277f6">AchievementType</a> { <b>Limit</b>
  }</td></tr>
+<tr class="memdesc:ab0060eb6baeba21d296b115e3e3277f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of achievement. The rules and the "Config" member of an AchievementDefinition depends on this. <a href="namespace_cotc_sdk.html#ab0060eb6baeba21d296b115e3e3277f6">More...</a><br /></td></tr>
 <tr class="separator:ab0060eb6baeba21d296b115e3e3277f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5e437023247d9f2be89e7f6be520fdb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_cotc_sdk.html#ad5e437023247d9f2be89e7f6be520fdb">LoginNetwork</a> { <b>Anonymous</b>, 
 <b>Email</b>, 
 <b>Facebook</b>, 
 <b>GooglePlus</b>
  }</td></tr>
+<tr class="memdesc:ad5e437023247d9f2be89e7f6be520fdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Social network used for identification / signing in. <a href="namespace_cotc_sdk.html#ad5e437023247d9f2be89e7f6be520fdb">More...</a><br /></td></tr>
 <tr class="separator:ad5e437023247d9f2be89e7f6be520fdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81559f66b6278243aa82a8cd14d79e80"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_cotc_sdk.html#a81559f66b6278243aa82a8cd14d79e80">StoreType</a> { <b>Appstore</b>, 
 <b>Macstore</b>, 
 <b>Googleplay</b>
  }</td></tr>
+<tr class="memdesc:a81559f66b6278243aa82a8cd14d79e80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of store in which products are purchased. <a href="namespace_cotc_sdk.html#a81559f66b6278243aa82a8cd14d79e80">More...</a><br /></td></tr>
 <tr class="separator:a81559f66b6278243aa82a8cd14d79e80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43da1ffda53fc493e74b8e0e0b7f4366"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a43da1ffda53fc493e74b8e0e0b7f4366"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>LogLevel</b> { <b>Verbose</b>, 
 <b>Info</b>, 
@@ -333,8 +392,10 @@ Enumerations</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a84cf1d0e3235ee0696f4b9c684be025d"><td class="memItemLeft" align="right" valign="top">delegate void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_cotc_sdk.html#a84cf1d0e3235ee0696f4b9c684be025d">EventLoopHandler</a> (<a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html">DomainEventLoop</a> sender, <a class="el" href="class_cotc_sdk_1_1_event_loop_args.html">EventLoopArgs</a> e)</td></tr>
+<tr class="memdesc:a84cf1d0e3235ee0696f4b9c684be025d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delegate called when receiving a message on a <a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html" title="This class is responsible for polling the server waiting for new events. You should instantiate one a...">CotcSdk.DomainEventLoop</a>. <a href="#a84cf1d0e3235ee0696f4b9c684be025d">More...</a><br /></td></tr>
 <tr class="separator:a84cf1d0e3235ee0696f4b9c684be025d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad144f952d9880e03de7d485fadfdbd4c"><td class="memItemLeft" align="right" valign="top">delegate void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_cotc_sdk.html#ad144f952d9880e03de7d485fadfdbd4c">HttpRequestFailedHandler</a> (<a class="el" href="class_cotc_sdk_1_1_http_request_failed_event_args.html">HttpRequestFailedEventArgs</a> e)</td></tr>
+<tr class="memdesc:ad144f952d9880e03de7d485fadfdbd4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delegate for failed HTTP requests. See <a class="el" href="class_cotc_sdk_1_1_cloud.html#ab4be4ab0b74b9892e3823d39f068a305" title="This handler, when set, is called synchronously whenever an HTTP request fails with a recoverable err...">Cloud.HttpRequestFailedHandler</a>. <a href="#ad144f952d9880e03de7d485fadfdbd4c">More...</a><br /></td></tr>
 <tr class="separator:ad144f952d9880e03de7d485fadfdbd4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
@@ -347,7 +408,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of achievement. The rules and the "Config" member of an <a class="el" href="class_cotc_sdk_1_1_achievement_definition.html">AchievementDefinition</a> depends on this. </p>
+
+<p>Type of achievement. The rules and the "Config" member of an <a class="el" href="class_cotc_sdk_1_1_achievement_definition.html" title="Definition of an achievement. Achievements are inputted on the backoffice and are triggered under def...">AchievementDefinition</a> depends on this.</p>
 
 </div>
 </div>
@@ -380,7 +442,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Social network used for identification / signing in. </p>
+
+<p>Social network used for identification / signing in.</p>
 
 </div>
 </div>
@@ -393,7 +456,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Describes the possible sorting orders for the score leaderboard. </p>
+
+<p>Describes the possible sorting orders for the score leaderboard.</p>
 
 </div>
 </div>
@@ -406,7 +470,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of store in which products are purchased. </p>
+
+<p>Type of store in which products are purchased.</p>
 
 </div>
 </div>
@@ -434,10 +499,12 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Delegate called when receiving a message on a <a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html">CotcSdk.DomainEventLoop</a>. </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Delegate called when receiving a message on a <a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html" title="This class is responsible for polling the server waiting for new events. You should instantiate one a...">CotcSdk.DomainEventLoop</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">sender</td><td>domain loop that triggered the event. </td></tr>
-    <tr><td class="paramname">e</td><td>description of the received event. </td></tr>
+    <tr><td class="paramname">sender</td><td>Domain loop that triggered the event.</td></tr>
+    <tr><td class="paramname">e</td><td>Description of the received event.</td></tr>
   </table>
   </dd>
 </dl>
@@ -457,14 +524,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Delegate for failed HTTP requests. See <a class="el" href="class_cotc_sdk_1_1_cloud.html#ab4be4ab0b74b9892e3823d39f068a305">Cloud.HttpRequestFailedHandler</a>. </p>
+
+<p>Delegate for failed HTTP requests. See <a class="el" href="class_cotc_sdk_1_1_cloud.html#ab4be4ab0b74b9892e3823d39f068a305" title="This handler, when set, is called synchronously whenever an HTTP request fails with a recoverable err...">Cloud.HttpRequestFailedHandler</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 31 2015 13:23:00 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 8 2015 11:31:38 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

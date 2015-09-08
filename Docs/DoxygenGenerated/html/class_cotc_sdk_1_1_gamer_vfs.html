@@ -37,8 +37,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Packages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -93,22 +91,31 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">CotcSdk.GamerVfs Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Represents a key/value system, also known as virtual file system. This class is scoped by domain, meaning that you can call .Domain("yourdomain") and perform additional calls that are scoped.  
+ <a href="class_cotc_sdk_1_1_gamer_vfs.html#details">More...</a></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a key/value system, also known as virtual file system. This class is scoped by domain, meaning that you can call .Domain("yourdomain") and perform additional calls that are scoped. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a8ddc78a12477660f9355674478967a9b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_gamer_vfs.html">GamerVfs</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_vfs.html#a8ddc78a12477660f9355674478967a9b">Domain</a> (string domain)</td></tr>
+<tr class="memdesc:a8ddc78a12477660f9355674478967a9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the domain affected by this object. You should typically use it this way: <code>gamer.GamerVfs.Domain("private").SetKey(...);</code>  <a href="#a8ddc78a12477660f9355674478967a9b">More...</a><br /></td></tr>
 <tr class="separator:a8ddc78a12477660f9355674478967a9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42b7a3bd2c055da1e74a3bd7b3c5a720"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_vfs.html#a42b7a3bd2c055da1e74a3bd7b3c5a720">GetKey</a> (string key)</td></tr>
+<tr class="memdesc:a42b7a3bd2c055da1e74a3bd7b3c5a720"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves an individual key from the key/value system. <a href="#a42b7a3bd2c055da1e74a3bd7b3c5a720">More...</a><br /></td></tr>
 <tr class="separator:a42b7a3bd2c055da1e74a3bd7b3c5a720"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56a848101b3f0aea9720bf97572b2783"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; byte[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_vfs.html#a56a848101b3f0aea9720bf97572b2783">GetKeyBinary</a> (string key)</td></tr>
+<tr class="memdesc:a56a848101b3f0aea9720bf97572b2783"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the binary data of an individual key from the key/value system. <a href="#a56a848101b3f0aea9720bf97572b2783">More...</a><br /></td></tr>
 <tr class="separator:a56a848101b3f0aea9720bf97572b2783"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8fb9b6d983ab7bc45e75fa24e3c4e691"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_vfs.html#a8fb9b6d983ab7bc45e75fa24e3c4e691">SetKey</a> (string key, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> value)</td></tr>
+<tr class="memdesc:a8fb9b6d983ab7bc45e75fa24e3c4e691"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the value of a key in the key/value system. <a href="#a8fb9b6d983ab7bc45e75fa24e3c4e691">More...</a><br /></td></tr>
 <tr class="separator:a8fb9b6d983ab7bc45e75fa24e3c4e691"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a74c57f5312643854a9e84449bb914eb6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_vfs.html#a74c57f5312643854a9e84449bb914eb6">SetKeyBinary</a> (string key, byte[] binaryData)</td></tr>
+<tr class="memdesc:a74c57f5312643854a9e84449bb914eb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the value of a key in the key/value system as binary data. <a href="#a74c57f5312643854a9e84449bb914eb6">More...</a><br /></td></tr>
 <tr class="separator:a74c57f5312643854a9e84449bb914eb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d0fc794e79ae36270179759ac3d4695"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_vfs.html#a1d0fc794e79ae36270179759ac3d4695">RemoveKey</a> (string key)</td></tr>
+<tr class="memdesc:a1d0fc794e79ae36270179759ac3d4695"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a single key from the key/value system. <a href="#a1d0fc794e79ae36270179759ac3d4695">More...</a><br /></td></tr>
 <tr class="separator:a1d0fc794e79ae36270179759ac3d4695"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -125,13 +132,15 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Sets the domain affected by this object. You should typically use it this way: <code>gamer.GamerVfs.Domain("private").SetKey(...);</code> </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Sets the domain affected by this object. You should typically use it this way: <code>gamer.GamerVfs.Domain("private").SetKey(...);</code> </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">domain</td><td>domain on which to scope the VFS. Defaults to <code>private</code> if not specified. </td></tr>
+    <tr><td class="paramname">domain</td><td>Domain on which to scope the VFS. Defaults to <code>private</code> if not specified.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>this object for operation chaining. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>This object for operation chaining.</dd></dl>
 
 </div>
 </div>
@@ -148,10 +157,12 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Retrieves an individual key from the key/value system. </p><dl class="section return"><dt>Returns</dt><dd>promise resolved when the operation has completed. The attached bundle contains the fetched property. As usual with bundles, it can be casted to the proper type you are expecting. If the property doesn't exist, the call is marked as failed with a 404 status. </dd></dl>
+
+<p>Retrieves an individual key from the key/value system.</p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> resolved when the operation has completed. The attached bundle contains the fetched property. As usual with bundles, it can be casted to the proper type you are expecting. If the property doesn't exist, the call is marked as failed with a 404 status.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">key</td><td>the name of the key to be fetched. </td></tr>
+    <tr><td class="paramname">key</td><td>The name of the key to be fetched.</td></tr>
   </table>
   </dd>
 </dl>
@@ -171,10 +182,12 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Retrieves the binary data of an individual key from the key/value system. </p><dl class="section return"><dt>Returns</dt><dd>promise resolved when the operation has completed. The binary data is attached as the value of the result. Please ensure that the key was set with binary data before, or this call will fail with a network error. </dd></dl>
+
+<p>Retrieves the binary data of an individual key from the key/value system.</p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> resolved when the operation has completed. The binary data is attached as the value of the result. Please ensure that the key was set with binary data before, or this call will fail with a network error.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">key</td><td>the name of the key to be fetched. </td></tr>
+    <tr><td class="paramname">key</td><td>The name of the key to be fetched.</td></tr>
   </table>
   </dd>
 </dl>
@@ -194,10 +207,12 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Removes a single key from the key/value system. </p><dl class="section return"><dt>Returns</dt><dd>promise resolved when the operation has completed. </dd></dl>
+
+<p>Removes a single key from the key/value system.</p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> resolved when the operation has completed.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">key</td><td>the name of the key to remove. </td></tr>
+    <tr><td class="paramname">key</td><td>The name of the key to remove.</td></tr>
   </table>
   </dd>
 </dl>
@@ -227,11 +242,13 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Sets the value of a key in the key/value system. </p><dl class="section return"><dt>Returns</dt><dd>promise resolved when the operation has completed. </dd></dl>
+
+<p>Sets the value of a key in the key/value system.</p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> resolved when the operation has completed.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">key</td><td>the name of the key to set the value for. </td></tr>
-    <tr><td class="paramname">value</td><td>the value to set. As usual with bundles, casting is implicitly done, so you may as well call this method passing an integer or string as value for instance. </td></tr>
+    <tr><td class="paramname">key</td><td>The name of the key to set the value for.</td></tr>
+    <tr><td class="paramname">value</td><td>The value to set. As usual with bundles, casting is implicitly done, so you may as well call this method passing an integer or string as value for instance.</td></tr>
   </table>
   </dd>
 </dl>
@@ -261,11 +278,13 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Sets the value of a key in the key/value system as binary data. </p><dl class="section return"><dt>Returns</dt><dd>promise resolved when the operation has completed. </dd></dl>
+
+<p>Sets the value of a key in the key/value system as binary data.</p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> resolved when the operation has completed.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">key</td><td>the name of the key to set the value for. </td></tr>
-    <tr><td class="paramname">binaryData</td><td>the value to set as binary data. </td></tr>
+    <tr><td class="paramname">key</td><td>The name of the key to set the value for.</td></tr>
+    <tr><td class="paramname">binaryData</td><td>The value to set as binary data.</td></tr>
   </table>
   </dd>
 </dl>
@@ -278,7 +297,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 31 2015 13:23:01 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 8 2015 11:31:39 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

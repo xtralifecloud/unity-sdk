@@ -1,16 +1,13 @@
 var searchData=
 [
-  ['search',['Search',['../class_cotc_sdk_1_1_cloud_indexing.html#a68fc5ca3202c3d7e9ec3d7628f277457',1,'CotcSdk::CloudIndexing']]],
-  ['searchextended',['SearchExtended',['../class_cotc_sdk_1_1_cloud_indexing.html#ab970b368f2c9d62a6803921b2fc00829',1,'CotcSdk::CloudIndexing']]],
-  ['sendevent',['SendEvent',['../class_cotc_sdk_1_1_gamer_community.html#a609279241aa013555789c78905a49c7f',1,'CotcSdk::GamerCommunity']]],
-  ['sendresetpasswordemail',['SendResetPasswordEmail',['../class_cotc_sdk_1_1_cloud.html#a1e8cdb0c0a397ebe29f304e04ddfb6f1',1,'CotcSdk::Cloud']]],
-  ['set',['Set',['../class_cotc_sdk_1_1_gamer_profile_methods.html#ac3526dfe2c64f5955681606e12fae28c',1,'CotcSdk::GamerProfileMethods']]],
-  ['setall',['SetAll',['../class_cotc_sdk_1_1_gamer_properties.html#af169f3794dcc5bd4a8125bc341d4ffed',1,'CotcSdk::GamerProperties']]],
-  ['setkey',['SetKey',['../class_cotc_sdk_1_1_gamer_properties.html#a6b7ff42d5d260a9fb002698341e377c9',1,'CotcSdk.GamerProperties.SetKey()'],['../class_cotc_sdk_1_1_gamer_vfs.html#a8fb9b6d983ab7bc45e75fa24e3c4e691',1,'CotcSdk.GamerVfs.SetKey()']]],
-  ['setkeybinary',['SetKeyBinary',['../class_cotc_sdk_1_1_gamer_vfs.html#a74c57f5312643854a9e84449bb914eb6',1,'CotcSdk::GamerVfs']]],
-  ['socialnetworkfriend',['SocialNetworkFriend',['../class_cotc_sdk_1_1_social_network_friend.html#a053a2475e244caa6224cbfda8bbad117',1,'CotcSdk.SocialNetworkFriend.SocialNetworkFriend(string id, string firstName, string lastName, string name)'],['../class_cotc_sdk_1_1_social_network_friend.html#aef46a2385c12e4595c6dfa4ad9ab4684',1,'CotcSdk.SocialNetworkFriend.SocialNetworkFriend()']]],
-  ['start',['Start',['../class_cotc_sdk_1_1_domain_event_loop.html#ab83f3b180cfa9ce92fc1d42ed56ce0ec',1,'CotcSdk::DomainEventLoop']]],
-  ['starteventloop',['StartEventLoop',['../class_cotc_sdk_1_1_gamer.html#a6d9794f099e8cbc2d3faa30591a08c62',1,'CotcSdk::Gamer']]],
-  ['stop',['Stop',['../class_cotc_sdk_1_1_domain_event_loop.html#af1b57ce6abe7fac634e711ec7c4fdb90',1,'CotcSdk::DomainEventLoop']]],
-  ['suspend',['Suspend',['../class_cotc_sdk_1_1_domain_event_loop.html#a5779575ce1b1a3ee0e3aa7ccab3fe07f',1,'CotcSdk::DomainEventLoop']]]
+  ['registerdevice',['RegisterDevice',['../class_cotc_sdk_1_1_gamer_account_methods.html#ab852359a280618ab2b1ae297d4ae3626',1,'CotcSdk::GamerAccountMethods']]],
+  ['reject',['Reject',['../class_cotc_sdk_1_1_promise_3_01_promised_t_01_4.html#a18a73f07c5ade368222654e531c29c11',1,'CotcSdk::Promise&lt; PromisedT &gt;']]],
+  ['rejected',['Rejected',['../class_cotc_sdk_1_1_promise_3_01_promised_t_01_4.html#a929ff59c3bce60117526b8f0ca1dae49',1,'CotcSdk::Promise&lt; PromisedT &gt;']]],
+  ['removeall',['RemoveAll',['../class_cotc_sdk_1_1_gamer_properties.html#a72f573fca9567458699898f960f1f4aa',1,'CotcSdk::GamerProperties']]],
+  ['removekey',['RemoveKey',['../class_cotc_sdk_1_1_gamer_properties.html#a209a5efdc90333521abc76b8abca66c2',1,'CotcSdk.GamerProperties.RemoveKey()'],['../class_cotc_sdk_1_1_gamer_vfs.html#a1d0fc794e79ae36270179759ac3d4695',1,'CotcSdk.GamerVfs.RemoveKey()']]],
+  ['resolve',['Resolve',['../class_cotc_sdk_1_1_promise_3_01_promised_t_01_4.html#a125c4059c2d36c2cb410886f3c8bc713',1,'CotcSdk::Promise&lt; PromisedT &gt;']]],
+  ['resume',['Resume',['../class_cotc_sdk_1_1_domain_event_loop.html#ad5c6e23f5d98b5b0bd15524cb6d4b387',1,'CotcSdk::DomainEventLoop']]],
+  ['resumesession',['ResumeSession',['../class_cotc_sdk_1_1_cloud.html#a6e909fdc1753ed5b85c43f620b9ad8f4',1,'CotcSdk::Cloud']]],
+  ['retryin',['RetryIn',['../class_cotc_sdk_1_1_http_request_failed_event_args.html#ac03110965bc9b6b45902bf3952e02d56',1,'CotcSdk::HttpRequestFailedEventArgs']]],
+  ['run',['Run',['../class_cotc_sdk_1_1_game_batches.html#a9340d144e12fe9654d1e213cd589cf90',1,'CotcSdk.GameBatches.Run()'],['../class_cotc_sdk_1_1_gamer_batches.html#a3388338c2763019dd96ce97a4e5e59f7',1,'CotcSdk.GamerBatches.Run()']]]
 ];

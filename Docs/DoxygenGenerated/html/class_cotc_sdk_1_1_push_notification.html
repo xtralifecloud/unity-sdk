@@ -37,8 +37,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Packages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -93,14 +91,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">CotcSdk.PushNotification Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Push notifications can be specified in some API calls to push an OS push notification to inactive users. It is typically a JSON with made of attributes which represent language -&gt; message pairs. Here is an example: <code>new <a class="el" href="class_cotc_sdk_1_1_push_notification.html#abde43e5eafb4aeb307bf194aeccfb1c2" title="Default constructor.">PushNotification()</a>.Message("en", "Help me!").Message("fr", "Aidez moi!")</code>.  
+ <a href="class_cotc_sdk_1_1_push_notification.html#details">More...</a></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Push notifications can be specified in some API calls to push an OS push notification to inactive users. It is typically a JSON with made of attributes which represent language -&gt; message pairs. Here is an example: <code>new <a class="el" href="class_cotc_sdk_1_1_push_notification.html#abde43e5eafb4aeb307bf194aeccfb1c2">PushNotification()</a>.Message("en", "Help me!").Message("fr", "Aidez moi!")</code>. </p>
+<div class="textblock"><p>Push notifications can be specified in some API calls to push an OS push notification to inactive users. It is typically a JSON with made of attributes which represent language -&gt; message pairs. Here is an example: <code>new <a class="el" href="class_cotc_sdk_1_1_push_notification.html#abde43e5eafb4aeb307bf194aeccfb1c2" title="Default constructor.">PushNotification()</a>.Message("en", "Help me!").Message("fr", "Aidez moi!")</code>. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:abde43e5eafb4aeb307bf194aeccfb1c2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_push_notification.html#abde43e5eafb4aeb307bf194aeccfb1c2">PushNotification</a> ()</td></tr>
+<tr class="memdesc:abde43e5eafb4aeb307bf194aeccfb1c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <a href="#abde43e5eafb4aeb307bf194aeccfb1c2">More...</a><br /></td></tr>
 <tr class="separator:abde43e5eafb4aeb307bf194aeccfb1c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a76dc7a15520dfdc25aa7a9164542475a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_push_notification.html">PushNotification</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_push_notification.html#a76dc7a15520dfdc25aa7a9164542475a">Message</a> (string language, string text)</td></tr>
+<tr class="memdesc:a76dc7a15520dfdc25aa7a9164542475a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds or replaces a string for a given language. <a href="#a76dc7a15520dfdc25aa7a9164542475a">More...</a><br /></td></tr>
 <tr class="separator:a76dc7a15520dfdc25aa7a9164542475a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -116,7 +119,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Default constructor. </p>
+
+<p>Default constructor.</p>
 
 </div>
 </div>
@@ -144,10 +148,12 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Adds or replaces a string for a given language. </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Adds or replaces a string for a given language.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">language</td><td>language code, ex. "en", "ja", etc. </td></tr>
-    <tr><td class="paramname">text</td><td>the text for this language. </td></tr>
+    <tr><td class="paramname">language</td><td>Language code, ex. "en", "ja", etc.</td></tr>
+    <tr><td class="paramname">text</td><td>The text for this language.</td></tr>
   </table>
   </dd>
 </dl>
@@ -160,7 +166,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 31 2015 13:23:01 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 8 2015 11:31:39 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

@@ -37,8 +37,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Packages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -105,10 +103,13 @@ Inheritance diagram for CotcSdk.InappPurchase.CotcInappPurchaseGameObject:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a6317ff1aebb217cf90ad941155030365"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_cotc_inapp_purchase_game_object.html#a6317ff1aebb217cf90ad941155030365">CloseTransaction</a> (<a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_purchased_product.html">PurchasedProduct</a> product)</td></tr>
+<tr class="memdesc:a6317ff1aebb217cf90ad941155030365"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extremely important call to be made in case success is returned from <a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_cotc_inapp_purchase_game_object.html#acb94dd14509dd28ca67e8a2da134ce9c" title="Launches a purchase process for a given product. The purchase process is asynchronous, may take a lot of time and may not necessarily ever finish (i.e. the application may be killed before it actually finishes). That said, only one purchase process is running at at a time. ">LaunchPurchase</a> and then validated to <a class="el" href="class_cotc_sdk_1_1_gamer_store.html#a307f2f31a7362420961091f8c405b5a8" title="Last step in the purchase. Validates the receipt received by a native purchase. You may have to do ad...">CotcSdk.GamerStore.ValidateReceipt</a>. Failure to do that may leave transactions in an open state and disrupt the purchase process (delivering several times the product, etc.).  <a href="#a6317ff1aebb217cf90ad941155030365">More...</a><br /></td></tr>
 <tr class="separator:a6317ff1aebb217cf90ad941155030365"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac1d0144233e88a9554423c75b61303ae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; List&lt; <a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_product_info.html">ProductInfo</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_cotc_inapp_purchase_game_object.html#ac1d0144233e88a9554423c75b61303ae">FetchProductInfo</a> (List&lt; <a class="el" href="class_cotc_sdk_1_1_configured_product.html">ConfiguredProduct</a> &gt; products)</td></tr>
+<tr class="memdesc:ac1d0144233e88a9554423c75b61303ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enriches a catalog fetched by <a class="el" href="class_cotc_sdk_1_1_gamer_store.html#ad13ba4ea74f9456c82fd95187c2c76db" title="Fetch the list of products as configured on the backoffice. Note that this doesn&#39;t include any inform...">CotcSdk.GamerStore.ListConfiguredProducts</a> with price information and such.  <a href="#ac1d0144233e88a9554423c75b61303ae">More...</a><br /></td></tr>
 <tr class="separator:ac1d0144233e88a9554423c75b61303ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb94dd14509dd28ca67e8a2da134ce9c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_purchased_product.html">PurchasedProduct</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_cotc_inapp_purchase_game_object.html#acb94dd14509dd28ca67e8a2da134ce9c">LaunchPurchase</a> (<a class="el" href="class_cotc_sdk_1_1_gamer.html">Gamer</a> gamer, <a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_product_info.html">ProductInfo</a> info)</td></tr>
+<tr class="memdesc:acb94dd14509dd28ca67e8a2da134ce9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Launches a purchase process for a given product. The purchase process is asynchronous, may take a lot of time and may not necessarily ever finish (i.e. the application may be killed before it actually finishes). That said, only one purchase process is running at at a time.  <a href="#acb94dd14509dd28ca67e8a2da134ce9c">More...</a><br /></td></tr>
 <tr class="separator:acb94dd14509dd28ca67e8a2da134ce9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -125,7 +126,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Extremely important call to be made in case success is returned from <a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_cotc_inapp_purchase_game_object.html#acb94dd14509dd28ca67e8a2da134ce9c">LaunchPurchase</a> and then validated to <a class="el" href="class_cotc_sdk_1_1_gamer_store.html#a307f2f31a7362420961091f8c405b5a8">CotcSdk.GamerStore.ValidateReceipt</a>. Failure to do that may leave transactions in an open state and disrupt the purchase process (delivering several times the product, etc.). </p>
+
+<p>Extremely important call to be made in case success is returned from <a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_cotc_inapp_purchase_game_object.html#acb94dd14509dd28ca67e8a2da134ce9c" title="Launches a purchase process for a given product. The purchase process is asynchronous, may take a lot of time and may not necessarily ever finish (i.e. the application may be killed before it actually finishes). That said, only one purchase process is running at at a time. ">LaunchPurchase</a> and then validated to <a class="el" href="class_cotc_sdk_1_1_gamer_store.html#a307f2f31a7362420961091f8c405b5a8" title="Last step in the purchase. Validates the receipt received by a native purchase. You may have to do ad...">CotcSdk.GamerStore.ValidateReceipt</a>. Failure to do that may leave transactions in an open state and disrupt the purchase process (delivering several times the product, etc.). </p>
 
 </div>
 </div>
@@ -142,7 +144,9 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Enriches a catalog fetched by <a class="el" href="class_cotc_sdk_1_1_gamer_store.html#ad13ba4ea74f9456c82fd95187c2c76db">CotcSdk.GamerStore.ListConfiguredProducts</a> with price information and such. </p><dl class="section return"><dt>Returns</dt><dd>promise resolved when the operation has completed. Contains a non-paginated list of products configured on the backend. </dd></dl>
+
+<p>Enriches a catalog fetched by <a class="el" href="class_cotc_sdk_1_1_gamer_store.html#ad13ba4ea74f9456c82fd95187c2c76db" title="Fetch the list of products as configured on the backoffice. Note that this doesn&#39;t include any inform...">CotcSdk.GamerStore.ListConfiguredProducts</a> with price information and such. </p>
+<dl class="section return"><dt>Returns</dt><dd>promise resolved when the operation has completed. Contains a non-paginated list of products configured on the backend.</dd></dl>
 
 </div>
 </div>
@@ -169,11 +173,13 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Launches a purchase process for a given product. The purchase process is asynchronous, may take a lot of time and may not necessarily ever finish (i.e. the application may be killed before it actually finishes). That said, only one purchase process is running at at a time. </p><dl class="section return"><dt>Returns</dt><dd>promise resolved when the purchase completes with information about the purchased item. In order to validate the transaction, you need to call <a class="el" href="class_cotc_sdk_1_1_gamer_store.html#a307f2f31a7362420961091f8c405b5a8">CotcSdk.GamerStore.ValidateReceipt</a>. More important, you MUST then call <a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_cotc_inapp_purchase_game_object.html#a6317ff1aebb217cf90ad941155030365">CloseTransaction</a> in case of success! </dd></dl>
+
+<p>Launches a purchase process for a given product. The purchase process is asynchronous, may take a lot of time and may not necessarily ever finish (i.e. the application may be killed before it actually finishes). That said, only one purchase process is running at at a time. </p>
+<dl class="section return"><dt>Returns</dt><dd>promise resolved when the purchase completes with information about the purchased item. In order to validate the transaction, you need to call <a class="el" href="class_cotc_sdk_1_1_gamer_store.html#a307f2f31a7362420961091f8c405b5a8" title="Last step in the purchase. Validates the receipt received by a native purchase. You may have to do ad...">CotcSdk.GamerStore.ValidateReceipt</a>. More important, you MUST then call <a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_cotc_inapp_purchase_game_object.html#a6317ff1aebb217cf90ad941155030365" title="Extremely important call to be made in case success is returned from LaunchPurchase and then validate...">CloseTransaction</a> in case of success!</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">gamer</td><td>gamer to associate with the purchase </td></tr>
-    <tr><td class="paramname">info</td><td>information about the product to be purchased. Obtained via <a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_cotc_inapp_purchase_game_object.html#ac1d0144233e88a9554423c75b61303ae">FetchProductInfo</a>. </td></tr>
+    <tr><td class="paramname">gamer</td><td>gamer to associate with the purchase</td></tr>
+    <tr><td class="paramname">info</td><td>information about the product to be purchased. Obtained via <a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_cotc_inapp_purchase_game_object.html#ac1d0144233e88a9554423c75b61303ae" title="Enriches a catalog fetched by CotcSdk.GamerStore.ListConfiguredProducts with price information and su...">FetchProductInfo</a>.</td></tr>
   </table>
   </dd>
 </dl>
@@ -186,7 +192,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 31 2015 13:23:01 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 8 2015 11:31:39 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

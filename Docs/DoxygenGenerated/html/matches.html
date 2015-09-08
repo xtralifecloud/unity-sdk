@@ -37,8 +37,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Packages</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -82,7 +80,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>It means that this match system is better suited for turn by turn games, rather than real time games such as MMORPGs, which may require a more sophisticated logic to be handled on your servers.</p>
 <p>As with other functionality, matches are scoped by domain, allowing to share data amongst multiple games. By default, your game has one dedicated domain called <code>private</code>, which you should use unless you need cross-game functionality.</p>
 <h2>API basics </h2>
-<p>The match manager is exposed through the <a class="el" href="class_cotc_sdk_1_1_gamer_matches.html">CotcSdk.GamerMatches</a> objects which is obtained through an instance of <a class="el" href="class_cotc_sdk_1_1_gamer.html">CotcSdk.Gamer</a>. This class exposes what is required to create or join a match, as well as managing invitations by other players. Once a match is started, joined or resumed, an instance of <a class="el" href="class_cotc_sdk_1_1_match.html">CotcSdk.Match</a> is received and can be used to perform various operations on the ongoing match.</p>
+<p>The match manager is exposed through the <a class="el" href="class_cotc_sdk_1_1_gamer_matches.html" title="Some methods accept a PushNotification parameter. This parameter can be used to forward a push notifi...">CotcSdk.GamerMatches</a> objects which is obtained through an instance of <a class="el" href="class_cotc_sdk_1_1_gamer.html" title="Important object from the SDK, allowing to perform many operations that depend on a currently logged ...">CotcSdk.Gamer</a>. This class exposes what is required to create or join a match, as well as managing invitations by other players. Once a match is started, joined or resumed, an instance of <a class="el" href="class_cotc_sdk_1_1_match.html" title="Represents a match with which you can interact through high level functionality. A match object is re...">CotcSdk.Match</a> is received and can be used to perform various operations on the ongoing match.</p>
 <p>An example of match with two players logged in locally (which usually do not happen as they will be on separate machines) is shown below:</p>
 <div class="fragment"><div class="line">Cloud.LoginAnonymously().Done((Gamer gamer1) =&gt; {</div>
 <div class="line">    Cloud.LoginAnonymously().Done((Gamer gamer2) =&gt; {</div>
@@ -107,7 +105,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">    });</div>
 <div class="line">});</div>
 </div><!-- fragment --><h2>Creating and listing matches </h2>
-<p>Creating a match is done by calling <a class="el" href="class_cotc_sdk_1_1_gamer_matches.html#ad240e59b87eb919fb808be0c9e1dc663">CotcSdk.GamerMatches.Create</a>. It will result in a <a class="el" href="class_cotc_sdk_1_1_match.html">CotcSdk.Match</a> object that you can keep for use later. The following two snippets show how to do it:</p>
+<p>Creating a match is done by calling <a class="el" href="class_cotc_sdk_1_1_gamer_matches.html#ad240e59b87eb919fb808be0c9e1dc663" title="Creates a match, available for join by other players. If you would like to make your match private...">CotcSdk.GamerMatches.Create</a>. It will result in a <a class="el" href="class_cotc_sdk_1_1_match.html" title="Represents a match with which you can interact through high level functionality. A match object is re...">CotcSdk.Match</a> object that you can keep for use later. The following two snippets show how to do it:</p>
 <div class="fragment"><div class="line">gamer.Matches.Domain(<span class="stringliteral">&quot;private&quot;</span>).Create(</div>
 <div class="line">    maxPlayers: 10,</div>
 <div class="line">    description: <span class="stringliteral">&quot;My match&quot;</span>,</div>
@@ -117,7 +115,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">})</div>
 <div class="line">.Catch(ex =&gt; Debug.LogError(<span class="stringliteral">&quot;Failed to create match: &quot;</span> + ex.ToString()));</div>
 </div><!-- fragment --><p>Match objects do not need any special lifecycle management. They simply keep a local copy of the match state for easy querying, and provide the necessary methods to interact with the match in its current state. If you drop a reference to a Match object, nothing will happen. You may even have several of them referring to the same match.</p>
-<p>Once your game is created, you will want other players to join it, and <a class="el" href="class_cotc_sdk_1_1_gamer_matches.html#a17a58535c1568e0b89116a1656b2d16c">CotcSdk.GamerMatches.List</a> is here for that. As described previously, your game has a dedicated domain. On this domain, any player is able to create matches. This means that there are potentially millions of matches scoped to your domain. In order to refine the potential matches that one may want to display, conditions can be specified as parameters. By default, a number of conditions will hide some matches from the list. These include the maximum number of players having been reached or the match being in finished state.</p>
+<p>Once your game is created, you will want other players to join it, and <a class="el" href="class_cotc_sdk_1_1_gamer_matches.html#a17a58535c1568e0b89116a1656b2d16c" title="Can be used to list the active matches for this game. In general, it is not recommended to proceed th...">CotcSdk.GamerMatches.List</a> is here for that. As described previously, your game has a dedicated domain. On this domain, any player is able to create matches. This means that there are potentially millions of matches scoped to your domain. In order to refine the potential matches that one may want to display, conditions can be specified as parameters. By default, a number of conditions will hide some matches from the list. These include the maximum number of players having been reached or the match being in finished state.</p>
 <p>In order to refine the searches, you are encouraged to use indexing. Let's say that your match has an attribute "type", which determines what type of game it is (coop, versus, capture the flag, etc.), and you would like to find all matches from a given type. The solution is to index a match whenever it is created in an index named for instance "matches", with the object ID being the match ID and indexed properties being for instance the type. This should mostly be done on the server by using hooks (<code>after-match-create</code>) and so on, but you may as well do it on the client.</p>
 <div class="fragment"><div class="line">gamer.Matches.Create(maxPlayers: 16)</div>
 <div class="line">.Then(match =&gt; {</div>
@@ -137,11 +135,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --><p>In that case, if the properties of the match change, you will need to reindex it. That is why it is much safer and simpler to do it on the server using hooks (i.e. <code>after-match-create</code>, <code>after-match-join</code>, etc.).</p>
 <h2>The lifecycle of a match </h2>
 <p>A match is created by a player which is called <code>creator</code>. A <code>creator</code> is solely able to perform some administrative functions, such as deleting or finishing a match. When creating a match, you automatically become a player (although you are able to leave it right away). Everyone is free to join the match, and leave it anytime. A notification is sent to every player whenever that happens.</p>
-<p>When the match is considered complete, the <code>creator</code> should mark it finished by calling <a class="el" href="class_cotc_sdk_1_1_match.html#aa7bb24b19c0f12fb9e961419ccf215dd">CotcSdk.Match.Finish</a>. He may optionally delete it once finshed successfully. Finished matches are not listed by default and all calls interacting with them do fail.</p>
+<p>When the match is considered complete, the <code>creator</code> should mark it finished by calling <a class="el" href="class_cotc_sdk_1_1_match.html#aa7bb24b19c0f12fb9e961419ccf215dd" title="Terminates the match. You need to be the creator of the match to perform this operation.">CotcSdk.Match.Finish</a>. He may optionally delete it once finshed successfully. Finished matches are not listed by default and all calls interacting with them do fail.</p>
 <h2>Match notifications </h2>
 <p>Match notifications (aKa events) are broadcasted on the domain corresponding to the match being run. Any player who has joined the match will automatically receive events indicating changes made to the match. These events happen when a player joins the match, leaves it or posts a move.</p>
-<p>These events must be processed by each player prior to issuing additional commands. The class <a class="el" href="class_cotc_sdk_1_1_match.html">CotcSdk.Match</a> takes care of this internally by catching them via a <a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html">CotcSdk.DomainEventLoop</a>. Therefore, you need to start one for the domain your match is running on prior to subscribing to any event or starting/joining/resuming a match. A warning will be issued in the console should you forget to do so, so keep an eye on it.</p>
-<p>In a match played properly, a player should only make a move when it is his turn to do so. This should be evaluated by deterministic game rules, in order to avoid situations where two players may make a move at the same time, leading to race conditions. And you should only allow to perform a move to a given player when the the player whose turn was previous has played (subscribe to #CotcSdk.Match.OnMovePosted). Race conditions are detected by CotC and will lead to an exception as shown in the snippet below.</p>
+<p>These events must be processed by each player prior to issuing additional commands. The class <a class="el" href="class_cotc_sdk_1_1_match.html" title="Represents a match with which you can interact through high level functionality. A match object is re...">CotcSdk.Match</a> takes care of this internally by catching them via a <a class="el" href="class_cotc_sdk_1_1_domain_event_loop.html" title="This class is responsible for polling the server waiting for new events. You should instantiate one a...">CotcSdk.DomainEventLoop</a>. Therefore, you need to start one for the domain your match is running on prior to subscribing to any event or starting/joining/resuming a match. A warning will be issued in the console should you forget to do so, so keep an eye on it.</p>
+<p>In a match played properly, a player should only make a move when it is his turn to do so. This should be evaluated by deterministic game rules, in order to avoid situations where two players may make a move at the same time, leading to race conditions. And you should only allow to perform a move to a given player when the the player whose turn was previous has played (subscribe to <a class="el" href="class_cotc_sdk_1_1_match.html#a48d57d66417932d5e0de1516d8a9f842" title="Event raised when a move is posted by any player except us in the match.">CotcSdk.Match.OnMovePosted</a>). Race conditions are detected by CotC and will lead to an exception as shown in the snippet below.</p>
 <div class="fragment"><div class="line">match.PostMove(...)</div>
 <div class="line">.Then(dummy =&gt; {...})</div>
 <div class="line">.Catch(ex =&gt; {</div>
@@ -149,7 +147,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">        <span class="comment">// There was a synchronization problem</span></div>
 <div class="line">    }</div>
 <div class="line">});</div>
-</div><!-- fragment --><p>In order to improve race condition detection, you may ensure that no event is emitted during the preparation of your next API request by using <a class="el" href="class_cotc_sdk_1_1_match.html#ab201d6d0ab0da32d9812c95a110c596f">CotcSdk.Match.Lock</a>. This will defer any event that may modify the state of the match. It can be useful in cases where the following scenario is possible:</p>
+</div><!-- fragment --><p>In order to improve race condition detection, you may ensure that no event is emitted during the preparation of your next API request by using <a class="el" href="class_cotc_sdk_1_1_match.html#ab201d6d0ab0da32d9812c95a110c596f" title="Protects the match against concurrent modification. Please look at the tutorial for more information ...">CotcSdk.Match.Lock</a>. This will defer any event that may modify the state of the match. It can be useful in cases where the following scenario is possible:</p>
 <ul>
 <li>Let M be a match with players P1 and P2. A player P1 can only attack another player P2 if both are still playing.</li>
 <li>P1 wants to attack P2 and prepares a <code>PostMove</code> call for this.</li>
@@ -167,7 +165,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">        });</div>
 <div class="line">    }</div>
 <div class="line">});</div>
-</div><!-- fragment --><p>In case a player joins the match, the following event will be received by other players. You can subscribe to it at a higher level by using the #Cotc.Match.OnPlayerJoined event.</p>
+</div><!-- fragment --><p>In case a player joins the match, the following event will be received by other players. You can subscribe to it at a higher level by using the <a class="el" href="class_cotc_sdk_1_1_match.html#a36f024bf51e70f701de7679fd3733cd7" title="Event raised when a player joins the match (excluding us obviously).">CotcSdk.Match.OnPlayerJoined</a> event.</p>
 <div class="fragment"><div class="line">{</div>
 <div class="line">    <span class="stringliteral">&quot;event&quot;</span>: {</div>
 <div class="line">        <span class="stringliteral">&quot;_id&quot;</span>: <span class="stringliteral">&quot;548866edba0ec600005e1941&quot;</span>,</div>
@@ -185,7 +183,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">    <span class="stringliteral">&quot;id&quot;</span>: <span class="stringliteral">&quot;9155987d-6322-46d4-9403-e90ab4ba5fa3&quot;</span>,</div>
 <div class="line">    <span class="stringliteral">&quot;type&quot;</span>: <span class="stringliteral">&quot;match.join&quot;</span></div>
 <div class="line">}</div>
-</div><!-- fragment --><p>In case a player leaves the match, similarly the following event will be received by others. You can subscribe to it at a higher level by using the #Cotc.Match.OnPlayerLeft event.</p>
+</div><!-- fragment --><p>In case a player leaves the match, similarly the following event will be received by others. You can subscribe to it at a higher level by using the <a class="el" href="class_cotc_sdk_1_1_match.html#a41a8ec903f551b3f2b8198a2b11c4f78" title="Event raised when a player leaves the match (excluding us obviously).">CotcSdk.Match.OnPlayerLeft</a> event.</p>
 <div class="fragment"><div class="line">{</div>
 <div class="line">    <span class="stringliteral">&quot;event&quot;</span>: {</div>
 <div class="line">        <span class="stringliteral">&quot;_id&quot;</span>: <span class="stringliteral">&quot;548866eeba0ec600005e1948&quot;</span>,</div>
@@ -203,7 +201,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">    <span class="stringliteral">&quot;id&quot;</span>: <span class="stringliteral">&quot;5007fd0a-1365-4e87-aba8-5d916731e684&quot;</span>,</div>
 <div class="line">    <span class="stringliteral">&quot;type&quot;</span>: <span class="stringliteral">&quot;match.leave&quot;</span></div>
 <div class="line">}</div>
-</div><!-- fragment --><p>In case the match is marked as finished, the following event will be broadcasted to all players except the one who initiated it. You can subscribe to it at a higher level by using the #Cotc.Match.OnMatchFinished event.</p>
+</div><!-- fragment --><p>In case the match is marked as finished, the following event will be broadcasted to all players except the one who initiated it. You can subscribe to it at a higher level by using the <a class="el" href="class_cotc_sdk_1_1_match.html#adb3b853a42c2c611840798fbba6b4796" title="Event raised when the match is marked as finished. As with most match events, this event is delivered...">CotcSdk.Match.OnMatchFinished</a> event.</p>
 <div class="fragment"><div class="line">{</div>
 <div class="line">    <span class="stringliteral">&quot;type&quot;</span>: <span class="stringliteral">&quot;match.finish&quot;</span>,</div>
 <div class="line">    <span class="stringliteral">&quot;event&quot;</span>: {</div>
@@ -213,7 +211,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">    },</div>
 <div class="line">    <span class="stringliteral">&quot;id&quot;</span>: <span class="stringliteral">&quot;d2f908d1-40d8-4f73-802e-fe0086bb6cd5&quot;</span></div>
 <div class="line">}</div>
-</div><!-- fragment --><p>In case a move was posted, an event like the following one is fired. You can subscribe to it at a higher level by using the #Cotc.Match.OnShoeDrawn event.</p>
+</div><!-- fragment --><p>In case a move was posted, an event like the following one is fired. You can subscribe to it at a higher level by using the <a class="el" href="class_cotc_sdk_1_1_match.html#a40020788093e06252e4ff1708d243a30" title="Event raised when an element is drawn from the shoe.">CotcSdk.Match.OnShoeDrawn</a> event.</p>
 <div class="fragment"><div class="line">{</div>
 <div class="line">    <span class="stringliteral">&quot;type&quot;</span>: <span class="stringliteral">&quot;match.move&quot;</span>,</div>
 <div class="line">    <span class="stringliteral">&quot;event&quot;</span>: {</div>
@@ -225,7 +223,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">    },</div>
 <div class="line">    <span class="stringliteral">&quot;id&quot;</span>: <span class="stringliteral">&quot;d0fb71c1-3cd0-4bbd-a9ec-29cb46cf9203&quot;</span></div>
 <div class="line">}</div>
-</div><!-- fragment --><p>In case an element was drawn from the shoe, an event like this is fired. You can subscribe to it at a higher level by using the #Cotc.Match.OnMovePosted event.</p>
+</div><!-- fragment --><p>In case an element was drawn from the shoe, an event like this is fired. You can subscribe to it at a higher level by using the <a class="el" href="class_cotc_sdk_1_1_match.html#a48d57d66417932d5e0de1516d8a9f842" title="Event raised when a move is posted by any player except us in the match.">CotcSdk.Match.OnMovePosted</a> event.</p>
 <div class="fragment"><div class="line">{</div>
 <div class="line">    <span class="stringliteral">&quot;type&quot;</span>: <span class="stringliteral">&quot;match.shoedraw&quot;</span>,</div>
 <div class="line">    <span class="stringliteral">&quot;event&quot;</span>: {</div>
@@ -251,12 +249,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">};</div>
 <div class="line"></div>
 <div class="line">match.InvitePlayer(gamer.GamerId);</div>
-</div><!-- fragment --><p>The list of pending invitations can be shown by using <a class="el" href="class_cotc_sdk_1_1_gamer_matches.html#a17a58535c1568e0b89116a1656b2d16c">CotcSdk.GamerMatches.List</a> and setting <code>invited</code> to true. An invitation is cleared when the player joins the match or by calling <a class="el" href="class_cotc_sdk_1_1_match_info.html#a78a23e3234ff3f384f0952e9167a2a02">CotcSdk.MatchInfo.DismissInvitation</a>.</p>
+</div><!-- fragment --><p>The list of pending invitations can be shown by using <a class="el" href="class_cotc_sdk_1_1_gamer_matches.html#a17a58535c1568e0b89116a1656b2d16c" title="Can be used to list the active matches for this game. In general, it is not recommended to proceed th...">CotcSdk.GamerMatches.List</a> and setting <code>invited</code> to true. An invitation is cleared when the player joins the match or by calling <a class="el" href="class_cotc_sdk_1_1_match_info.html#a78a23e3234ff3f384f0952e9167a2a02" title="Dismisses a pending invitation for the current user and the match. Fails if the user has not been inv...">CotcSdk.MatchInfo.DismissInvitation</a>.</p>
 <h2>Random-generator based games (Casino "shoe"-like functionality) </h2>
 <p>CotC provides functionality to help building games of chance, allowing each individual players to check the outcome of the match in order to ensure consistency. It does this by providing a server-based randomizing device, which hides sensitive information. Therefore, it can help ensure that all players, including the match creator have the same chances. And that no one is able to predict the outcome of the match (or fiddle/hack with it either, as other players are able to detect it).</p>
 <p>The seed element that is returned with the detailed version of the match (i.e. when joining or fetching it), along with the shoe are the two elements which help building games of chance. The seed is a random number that is generated upon creation of every match. It can be used to initialize a pseudorandom number generator inside the game, and allows to ensure that every player will thus have the same sequence of values.</p>
 <p>The shoe, as in Casino, is basically a container of possible values that are returned in a random order as they are poked. It could represent the values of the cards for instance. It is possible to have more than once the same element in the shoe (as when having two card sets). The shoe is posted by the person who creates the game and then shuffled. The shoe remains hidden, with no one having access to it, until the match is finished.</p>
-<p>Players can draw one or more elements off the shoe by posting a request to this resource. The shoe is shared with all players, meaning that any element from the shoe is returned only once to a player having requested it. When all items have been drawn from the shoe and more items are requested, the existing serie is duplicated, shuffled and appended to the current shoe, meaning an endless play can be considered. Drawing items from the shoe will trigger one event of type <a class="el" href="class_cotc_sdk_1_1_match_shoe_drawn_event.html">CotcSdk.MatchShoeDrawnEvent</a> per request, sent to players except the caller. When the match finishes, fetching detailed info about the match will return the shoe. It can be used by all players to check that the game has been fair: should one player have hacked the game, it is possible to detect it by comparing the shoe to the actual moves.</p>
+<p>Players can draw one or more elements off the shoe by posting a request to this resource. The shoe is shared with all players, meaning that any element from the shoe is returned only once to a player having requested it. When all items have been drawn from the shoe and more items are requested, the existing serie is duplicated, shuffled and appended to the current shoe, meaning an endless play can be considered. Drawing items from the shoe will trigger one event of type <a class="el" href="class_cotc_sdk_1_1_match_shoe_drawn_event.html" title="Event of type match.shoedraw. Broadcasted when a player draws items from the shoe. The player himself does not receive the event. ">CotcSdk.MatchShoeDrawnEvent</a> per request, sent to players except the caller. When the match finishes, fetching detailed info about the match will return the shoe. It can be used by all players to check that the game has been fair: should one player have hacked the game, it is possible to detect it by comparing the shoe to the actual moves.</p>
 <p>To use the shoe in your match, the match creator must post an array of values in the configuration JSON. These values may be any object, from a simple number to an object with a complex hierarchy. We suggest using values as simple as possible though, to spare bandwidth when drawing items from the shoe. An example is shown below.</p>
 <div class="fragment"><div class="line">gamer.Matches.Create(</div>
 <div class="line">    maxPlayers: 10,</div>
@@ -267,11 +265,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">.Done((DrawnItemsResult result) =&gt; {</div>
 <div class="line">    Debug.Log(<span class="stringliteral">&quot;Item drawn: &quot;</span> + (<span class="keywordtype">int</span>)result.Items[0]);</div>
 <div class="line">});</div>
-</div><!-- fragment --><p>When the game is finished, anyone is able check the contents of the shoe by using <a class="el" href="class_cotc_sdk_1_1_gamer_matches.html#a89afde906b959dbeef05e12b828cad7e">CotcSdk.GamerMatches.Fetch</a> and inspecting the <code>shoe</code> subnode of the <code>match</code> node present in the result. </p>
+</div><!-- fragment --><p>When the game is finished, anyone is able check the contents of the shoe by using <a class="el" href="class_cotc_sdk_1_1_gamer_matches.html#a89afde906b959dbeef05e12b828cad7e" title="Fetches a Match object corresponding to a match which the player already belongs to. It can be used either to obtain additional information about a running match (by inspecting the resulting match object), or to continue an existing match (by keeping the match object which corresponds to the one that was returned by the Create method). This call is not scoped by domain (it uses the Match ID directly). ">CotcSdk.GamerMatches.Fetch</a> and inspecting the <code>shoe</code> subnode of the <code>match</code> node present in the result. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 31 2015 13:23:00 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 8 2015 11:31:38 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>
