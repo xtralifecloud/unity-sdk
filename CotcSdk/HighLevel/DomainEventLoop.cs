@@ -4,8 +4,8 @@ using System.Threading;
 namespace CotcSdk {
 
 	/// <summary>Delegate called when receiving a message on a #CotcSdk.DomainEventLoop.</summary>
-	/// <param name="sender">domain loop that triggered the event.</param>
-	/// <param name="e">description of the received event.</param>
+	/// <param name="sender">Domain loop that triggered the event.</param>
+	/// <param name="e">Description of the received event.</param>
 	public delegate void EventLoopHandler(DomainEventLoop sender, EventLoopArgs e);
 
 	/// <summary>
@@ -32,13 +32,13 @@ namespace CotcSdk {
 		/// You need valid credentials in order to instantiate this class. Use Cloud.Login* methods for that purpose.
 		/// Once the object is created, you need to start the thread, please look at the other methods available.
 		/// </summary>
-		/// <param name="gamer">the gamer object received from a login or similar function.</param>
-		/// <param name="domain">the domain on which to listen for events. Note that you may create multiple event loops,
+		/// <param name="gamer">The gamer object received from a login or similar function.</param>
+		/// <param name="domain">The domain on which to listen for events. Note that you may create multiple event loops,
 		///     especially if you are using multiple domains. The default domain, that you should use unless you are
 		///     explicitly using multiple domains, is the private domain.</param>
-		/// <param name="gamer">gamer, used to authenticate (receive events related to the said gamer).</param>
-		/// <param name="domain">domain on which to listen for events.</param>
-		/// <param name="iterationDuration">sets a custom timeout in seconds for the long polling event loop. Should be used
+		/// <param name="gamer">Gamer, used to authenticate (receive events related to the said gamer).</param>
+		/// <param name="domain">Domain on which to listen for events.</param>
+		/// <param name="iterationDuration">Sets a custom timeout in seconds for the long polling event loop. Should be used
 		///     with care and set to a high value (at least 60). Defaults to 590 (~10 min).</param>
 		public DomainEventLoop(Gamer gamer, String domain = Common.PrivateDomain, int iterationDuration = 590) {
 			Domain = domain;

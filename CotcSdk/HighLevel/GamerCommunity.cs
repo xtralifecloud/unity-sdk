@@ -16,18 +16,18 @@ namespace CotcSdk {
 		}
 
 		/// <summary>Easy way to add a friend knowing his gamer ID inside the CotC community.</summary>
-		/// <returns>promise resolved when the operation has completed.</returns>
+		/// <returns>Promise resolved when the operation has completed.</returns>
 		/// <param name="gamerId">ID of the gamer to add as a friend (fetched using ListFriends for instance).</param>
-		/// <param name="notification">optional OS notification to be sent to indicate the player that the status has changed.</param>
+		/// <param name="notification">Optional OS notification to be sent to indicate the player that the status has changed.</param>
 		public Promise<Done> AddFriend(string gamerId, PushNotification notification = null) {
 			return ChangeRelationshipStatus(gamerId, FriendRelationshipStatus.Add, notification);
 		}
 
 		/// <summary>Allows to change the relation of a friendship inside the application.</summary>
-		/// <returns>promise resolved when the operation has completed.</returns>
+		/// <returns>Promise resolved when the operation has completed.</returns>
 		/// <param name="gamerId">ID of the gamer to change the relationship (fetched using ListFriends for instance).</param>
-		/// <param name="state">the new state to set.</param>
-		/// <param name="notification">optional OS notification to be sent to indicate the player that the status has changed.</param>
+		/// <param name="state">The new state to set.</param>
+		/// <param name="notification">Optional OS notification to be sent to indicate the player that the status has changed.</param>
 		public Promise<Done> ChangeRelationshipStatus(string gamerId, FriendRelationshipStatus state, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/friends").Path(domain).Path(gamerId).QueryParam("status", state.ToString().ToLower());
 			HttpRequest req = Gamer.MakeHttpRequest(url);
@@ -50,16 +50,16 @@ namespace CotcSdk {
 		/// Changes the domain affected by the next operations.
 		/// You should typically use it this way: `gamer.Community.Domain("private").ListFriends(...);`
 		/// </summary>
-		/// <param name="domain">domain on which to scope the next operations.</param>
-		/// <returns>this object for operation chaining.</returns>
+		/// <param name="domain">Domain on which to scope the next operations.</param>
+		/// <returns>This object for operation chaining.</returns>
 		public GamerCommunity Domain(string domain) {
 			this.domain = domain;
 			return this;
 		}
 
 		/// <summary>Method used to retrieve the application's friends of the currently logged in profile.</summary>
-		/// <returns>promise resolved when the operation has completed, with the fetched list of friends.</returns>
-		/// <param name="filterBlacklisted">when set to true, restricts to blacklisted friends.</param>
+		/// <returns>Promise resolved when the operation has completed, with the fetched list of friends.</returns>
+		/// <param name="filterBlacklisted">When set to true, restricts to blacklisted friends.</param>
 		public Promise<List<GamerInfo>> ListFriends(bool filterBlacklisted = false) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/friends").Path(domain);
 			if (filterBlacklisted) url.QueryParam("status", "blacklist");
@@ -78,11 +78,11 @@ namespace CotcSdk {
 		/// This will automatically add them as a friend on CotC as they get recognized on our servers.
 		/// The friends get associated to the domain of this object.
 		/// </summary>
-		/// <returns>promise resolved when the operation has completed. The attached value is the same list as passed,
+		/// <returns>Promise resolved when the operation has completed. The attached value is the same list as passed,
 		///     enriched with potential information about the gamer (member #CotcSdk.SocialNetworkFriend.ClanInfo) for
 		///     gamers who are already registered on CotC servers.</returns>
-		/// <param name="network">the network with which these friends are associated</param>
-		/// <param name="friends">a list of data about the friends fetched on the social network.</param>
+		/// <param name="network">The network with which these friends are associated</param>
+		/// <param name="friends">A list of data about the friends fetched on the social network.</param>
 		public Promise<SocialNetworkFriendResponse> PostSocialNetworkFriends(LoginNetwork network, List<SocialNetworkFriend> friends) {
 			var task = new Promise<SocialNetworkFriendResponse>();
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/friends").Path(domain).QueryParam("network", network.Describe());
@@ -105,12 +105,12 @@ namespace CotcSdk {
 		/// across games (or use private for messages sent to your game only).
 		///
 		/// </summary>
-		/// <returns>promise resolved when the operation has completed.</returns>
+		/// <returns>Promise resolved when the operation has completed.</returns>
 		/// <param name="gamerId">ID of the recipient gamer.</param>
 		/// <param name="eventData">JSON object representing the event to be sent. The recipient will receive it as is
 		///     when subscribed to a #CotcSdk.DomainEventLoop (ReceivedEvent property). If the application is not active,
 		///     the message will be queued and transmitted the next time the domain event loop is started.</param>
-		/// <param name="notification">push notification to send to the recipient player if not currently active.</param>
+		/// <param name="notification">Push notification to send to the recipient player if not currently active.</param>
 		public Promise<Done> SendEvent(string gamerId, Bundle eventData, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/event").Path(domain).Path(gamerId);
 			HttpRequest req = Gamer.MakeHttpRequest(url);

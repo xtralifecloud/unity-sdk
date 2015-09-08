@@ -9,8 +9,8 @@ namespace CotcSdk
 		/// Changes the domain affected by the next operations.
 		/// You should typically use it this way: `gamer.Achievements.Domain("private").List(...);`
 		/// </summary>
-		/// <param name="domain">domain on which to scope the next operations.</param>
-		/// <returns>this object for operation chaining.</returns>
+		/// <param name="domain">Domain on which to scope the next operations.</param>
+		/// <returns>This object for operation chaining.</returns>
 		public GamerAchievements Domain(string domain) {
 			this.domain = domain;
 			return this;
@@ -20,10 +20,10 @@ namespace CotcSdk
 		/// Allows to store arbitrary data for a given achievement and the current player (appears in the
 		/// 'gamerData' node of achievements).
 		/// </summary>
-		/// <returns>promise resolved when the operation has completed. The attached value contains the updated definition
+		/// <returns>Promise resolved when the operation has completed. The attached value contains the updated definition
 		///     of the achievement.</returns>
-		/// <param name="achName">name of the achievement to update.</param>
-		/// <param name="data">data to associate with the achievement, merged with the current data (that is, existing keys
+		/// <param name="achName">Name of the achievement to update.</param>
+		/// <param name="data">Data to associate with the achievement, merged with the current data (that is, existing keys
 		///     are not affected)</param>
 		public Promise<AchievementDefinition> AssociateData(string achName, Bundle data) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/achievements").Path(domain).Path(achName).Path("gamerdata");
@@ -35,7 +35,7 @@ namespace CotcSdk
 		}
 
 		/// <summary>Fetches information about the status of the achievements configured for this game.</summary>
-		/// <returns>promise resolved when the operation has completed. The attached value is the list of achievements
+		/// <returns>Promise resolved when the operation has completed. The attached value is the list of achievements
 		///     with their current state.</returns>
 		public Promise<Dictionary<string, AchievementDefinition>> List() {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/achievements").Path(domain);

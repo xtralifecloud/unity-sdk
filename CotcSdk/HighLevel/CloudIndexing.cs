@@ -6,7 +6,7 @@ namespace CotcSdk {
 	public class CloudIndexing {
 
 		/// <summary>Deletes an indexed entry. If you just want to update an entry, simply use IndexObject.</summary>
-		/// <returns>promise resolved when the request has finished.</returns>
+		/// <returns>Promise resolved when the request has finished.</returns>
 		/// <param name="objectId">ID of the object to delete, as passed when indexing.</param>
 		public Promise<Done> DeleteObject(string objectId) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName).Path(objectId);
@@ -18,7 +18,7 @@ namespace CotcSdk {
 		}
 
 		/// <summary>Fetches a previously indexed object.</summary>
-		/// <returns>promise resolved when the request has finished.</returns>
+		/// <returns>Promise resolved when the request has finished.</returns>
 		/// <param name="objectId">ID of the object to look for, as passed when indexing.</param>
 		public Promise<IndexResult> GetObject(string objectId) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName).Path(objectId);
@@ -34,13 +34,13 @@ namespace CotcSdk {
 		/// for gamer properties, one for matches, one for finished matches, etc. It only depends on what you
 		/// want to search for.
 		/// </summary>
-		/// <returns>promise resolved when the request has finished.</returns>
-		/// <param name="objectId">the ID of the object to be indexed. It can be anything; this ID only needs to uniquely
+		/// <returns>Promise resolved when the request has finished.</returns>
+		/// <param name="objectId">The ID of the object to be indexed. It can be anything; this ID only needs to uniquely
 		///     identify your document. Therefore, using the match ID to index a match is recommended for instance.</param>
-		/// <param name="properties">a freeform object, whose attributes will be indexed and searchable. These properties
+		/// <param name="properties">A freeform object, whose attributes will be indexed and searchable. These properties
 		///     are typed! So if 'age' is once passed as an int, it must always be an int, or an error will be
 		///     thrown upon insertion.</param>
-		/// <param name="payload">another freeform object. These properties are attached to the document in the same way
+		/// <param name="payload">Another freeform object. These properties are attached to the document in the same way
 		///     as the properties, however those are not indexed (cannot be looked for in a search request). Its
 		///     content is returned in searches (#CotcSdk.IndexResult.Payload property).</param>
 		public Promise<Done> IndexObject(string objectId, Bundle properties, Bundle payload) {
@@ -64,14 +64,14 @@ namespace CotcSdk {
 		/// http://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html
 		///
 		/// </summary>
-		/// <returns>promise resolved when the operation has finished. The attached object contains various
+		/// <returns>Promise resolved when the operation has finished. The attached object contains various
 		///     information about the results, including a Hits member, which handles the results in a
 		///     paginated way.</returns>
-		/// <param name="query">query string. Example: "item:silver". See Elastic documentation.</param>
-		/// <param name="sortingProperties">name of properties (fields) to sort the results with. Example:
+		/// <param name="query">Query string. Example: "item:silver". See Elastic documentation.</param>
+		/// <param name="sortingProperties">Name of properties (fields) to sort the results with. Example:
 		///     new List<string>() { "item:asc" }.</param>
-		/// <param name="limit">the maximum number of results to return per page.</param>
-		/// <param name="offset">number of the first result.</param>
+		/// <param name="limit">The maximum number of results to return per page.</param>
+		/// <param name="offset">Number of the first result.</param>
 		public Promise<IndexSearchResult> Search(string query, List<string> sortingProperties = null, int limit = 30, int offset = 0) {
 			return Search(query, null, sortingProperties, limit, offset);
 		}
@@ -84,11 +84,11 @@ namespace CotcSdk {
 		/// https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
 		///
 		/// </summary>
-		/// <returns>promise resolved when the operation has finished. The attached object contains various
+		/// <returns>Promise resolved when the operation has finished. The attached object contains various
 		///     information about the results, including a Hits member, which handles the results in a
 		///     paginated way.</returns>
-		/// <param name="limit">the maximum number of results to return per page.</param>
-		/// <param name="offset">number of the first result.</param>
+		/// <param name="limit">The maximum number of results to return per page.</param>
+		/// <param name="offset">Number of the first result.</param>
 		public Promise<IndexSearchResult> SearchExtended(Bundle query, int limit = 30, int offset = 0) {
 			return Search(null, query, null, limit, offset);
 		}

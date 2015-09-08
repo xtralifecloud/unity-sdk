@@ -23,37 +23,37 @@ namespace CotcSdk
 		public DateTime RegisterTime { get; private set; }
 
 		/// <summary>Provides account related functions for the current gamer.</summary>
-		/// <returns>an object allowing to manipulate the account of the current gamer.</returns>
+		/// <returns>An object allowing to manipulate the account of the current gamer.</returns>
 		public GamerAccountMethods Account {
 			get { return new GamerAccountMethods(this); }
 		}
 
 		/// <summary>Provides an API to manipulate achievements.</summary>
-		/// <returns>an object that allows to manipulate achievements.</returns>
+		/// <returns>An object that allows to manipulate achievements.</returns>
 		public GamerAchievements Achievements {
 			get { return new GamerAchievements(this); }
 		}
 
 		/// <summary>Provides an API to run batches.</summary>
-		/// <returns>an object that allows to manipulate batches.</returns>
+		/// <returns>An object that allows to manipulate batches.</returns>
 		public GamerBatches Batches {
 			get { return new GamerBatches(this); }
 		}
 
 		/// <summary>Provides an API to interact with friends on CotC.</summary>
-		/// <returns>an object that allow to manipulate friends.</returns>
+		/// <returns>An object that allow to manipulate friends.</returns>
 		public GamerCommunity Community {
 			get { return new GamerCommunity(this); }
 		}
 
 		/// <summary>Returns an object that allows to manipulate the key/value system associated with this user.</summary>
-		/// <returns>an object allowing to manipulate key/values for this user/domain.</returns>
+		/// <returns>An object allowing to manipulate key/values for this user/domain.</returns>
 		public GamerVfs GamerVfs {
 			get { return new GamerVfs(this); }
 		}
 
 		/// <summary>Exposes functionality related to the godfathers.</summary>
-		/// <returns>an object that allows to add a godfather, generate a code, etc.</returns>
+		/// <returns>An object that allows to add a godfather, generate a code, etc.</returns>
 		public GamerGodfather Godfather {
 			get { return new GamerGodfather(this); }
 		}
@@ -62,25 +62,25 @@ namespace CotcSdk
 		/// Provides an API to manipulate matches (mainly start them, since working with
 		/// existing matches is provided by the Match class).
 		/// </summary>
-		/// <returns>an object that allows to perform basic operations on matches.</returns>
+		/// <returns>An object that allows to perform basic operations on matches.</returns>
 		public GamerMatches Matches {
 			get { MatchesInstance = MatchesInstance ?? new GamerMatches(this); return MatchesInstance; }
 		}
 
 		/// <summary>Allows to manipulate information related to the gamer profile.</summary>
-		/// <returns>an object that allows to read and set the profile.</returns>
+		/// <returns>An object that allows to read and set the profile.</returns>
 		public GamerProfileMethods Profile {
 			get { return new GamerProfileMethods(this); }
 		}
 
 		/// <summary>Allows to manipulate the properties of the current gamer.</summary>
-		/// <returns>an object that allows to set, delete, etc. property values.</returns>
+		/// <returns>An object that allows to set, delete, etc. property values.</returns>
 		public GamerProperties Properties {
 			get { return new GamerProperties(this); }
 		}
 
 		/// <summary>Provides an API able to handle functionality related to the leaderboards and scores.</summary>
-		/// <returns>an object that allows to manipulate scores.</returns>
+		/// <returns>An object that allows to manipulate scores.</returns>
 		public GamerScores Scores {
 			get { return new GamerScores(this); }
 		}
@@ -89,13 +89,13 @@ namespace CotcSdk
 		/// Allows to list, buy products and so on. This functionality is low level and you should use the
 		/// appropriate external plugin to help with the purchase process.
 		/// </summary>
-		/// <returns>an object that allows access to the store on a CotC point of view.</returns>
+		/// <returns>An object that allows access to the store on a CotC point of view.</returns>
 		public GamerStore Store {
 			get { return new GamerStore(this); }
 		}
 
 		/// <summary>Allows to manipulate the transactions and related achievements of an user.</summary>
-		/// <returns>an object that allows to manipulate transactions and query achievements.</returns>
+		/// <returns>An object that allows to manipulate transactions and query achievements.</returns>
 		public GamerTransactions Transactions {
 			get { return new GamerTransactions(this); }
 		}
@@ -110,10 +110,10 @@ namespace CotcSdk
 		/// it as needed, which is done through the CotcGameObject as placed on your scene.
 		///
 		/// </summary>
-		/// <param name="domain">domain to listen on. The `private` domain is used to receive system notifications
+		/// <param name="domain">Domain to listen on. The `private` domain is used to receive system notifications
 		///     as well as messages sent by other players. Unless cross-game functionality is used, you
 		///     should start one loop on the private domain as soon as the gamer is signed in.</param>
-		/// <returns>a domain event loop that is in started state.</returns>
+		/// <returns>A domain event loop that is in started state.</returns>
 		public DomainEventLoop StartEventLoop(string domain = Common.PrivateDomain) {
 			return new DomainEventLoop(this, domain).Start();
 		}

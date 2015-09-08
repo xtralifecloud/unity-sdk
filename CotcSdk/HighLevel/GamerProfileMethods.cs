@@ -8,7 +8,7 @@ namespace CotcSdk
 		/// Method used to retrieve some optional data of the logged in profile previously set by
 		/// method SetProfile.
 		/// </summary>
-		/// <returns>promise resolved when the operation has completed.</returns>
+		/// <returns>Promise resolved when the operation has completed.</returns>
 		public Promise<GamerProfile> Get() {
 			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/profile");
 			return Common.RunInTask<GamerProfile>(req, (response, task) => {
@@ -25,7 +25,7 @@ namespace CotcSdk
 		/// Non exhaustive list of fields include: `network`, `networkid`, `networksecret`, `registerTime`,
 		/// `registerBy`, `games` (array), `profile`, `devices` (array), `domains` (array), `serverTime`.
 		/// </summary>
-		/// <returns>promise resolved when the operation has completed with the resulting outline.</returns>
+		/// <returns>Promise resolved when the operation has completed with the resulting outline.</returns>
 		public Promise<GamerOutline> Outline() {
 			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/outline");
 			return Common.RunInTask<GamerOutline>(req, (response, task) => {
@@ -40,8 +40,8 @@ namespace CotcSdk
 		/// strings, and some are pre-populated when the account is created, using the available info
 		/// from the social network used to create the account.
 		/// </summary>
-		/// <returns>promise resolved when the operation has completed.</returns>
-		/// <param name="data">is a Bundle holding the data to save for this user. The object can hold the
+		/// <returns>Promise resolved when the operation has completed.</returns>
+		/// <param name="data">Is a Bundle holding the data to save for this user. The object can hold the
 		///     whole profile or just a subset of the keys.</param>
 		public Promise<Done> Set(Bundle data) {
 			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/profile");

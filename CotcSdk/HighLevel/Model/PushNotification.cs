@@ -14,8 +14,8 @@ namespace CotcSdk {
 		}
 
 		/// <summary>Adds or replaces a string for a given language.</summary>
-		/// <param name="language">language code, ex. "en", "ja", etc.</param>
-		/// <param name="text">the text for this language.</param>
+		/// <param name="language">Language code, ex. "en", "ja", etc.</param>
+		/// <param name="text">The text for this language.</param>
 		public PushNotification Message(string language, string text) {
 			Data[language] = text;
 			return this;

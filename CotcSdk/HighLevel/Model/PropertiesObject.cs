@@ -42,12 +42,12 @@ namespace CotcSdk {
 		}
 
 		/// <summary>Allows to browse all keys (might include some that are already exposed as typed properties in the object).</summary>
-		/// <returns>the list of keys.</returns>
+		/// <returns>The list of keys.</returns>
 		public Dictionary<string, Bundle>.KeyCollection Keys() {
 			return Props.AsDictionary().Keys;
 		}
 		/// <summary>Allows to browse all keys (might include some that are already exposed as typed properties in the object).</summary>
-		/// <returns>an enumerator that allows to browse all key-value pairs. The values are #CotcSdk.Bundle, on which you can
+		/// <returns>An enumerator that allows to browse all key-value pairs. The values are #CotcSdk.Bundle, on which you can
 		///     perform all the usual conversions, such as casting it as a string if the property is expected to be a
 		///     string for instance.</returns>
 		public Dictionary<string, Bundle>.Enumerator GetEnumerator() {
@@ -55,13 +55,13 @@ namespace CotcSdk {
 		}
 
 		/// <summary>You may use this to debug what is inside this property object.</summary>
-		/// <returns>a JSON string representing the object.</returns>
+		/// <returns>A JSON string representing the object.</returns>
 		public override string ToString() {
 			return Props.ToJson();
 		}
 
 		/// <summary>Builds a JSON representation of this object, same as ToString actually.</summary>
-		/// <returns>a JSON string representing the object.</returns>
+		/// <returns>A JSON string representing the object.</returns>
 		public string ToJson() {
 			return Props.ToJson();
 		}

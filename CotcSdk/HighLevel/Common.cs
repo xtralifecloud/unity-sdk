@@ -12,7 +12,7 @@ namespace CotcSdk
 		/// object with the response in question, add an error message and invoke the
 		/// result handler with it.
 		/// </summary>
-		/// <returns>whether the server response is considered as failed</returns>
+		/// <returns>Whether the server response is considered as failed</returns>
 		internal static bool HasFailed(HttpResponse response) {
 			return response.HasFailed || response.StatusCode < 200 || response.StatusCode >= 300;
 		}
@@ -62,10 +62,10 @@ namespace CotcSdk
 		/// Wrapper around our standard work on Managers.HttpClient.Run. Automatically notifies the passed handler
 		/// of a failure.
 		/// </summary>
-		/// <param name="req">request to perform.</param>
-		/// <param name="task">task that is resolved in case of failure, else the onSuccess callback is called and you'll
+		/// <param name="req">Request to perform.</param>
+		/// <param name="task">Task that is resolved in case of failure, else the onSuccess callback is called and you'll
 		///     have to resolve it from inside.</param>
-		/// <param name="onSuccess">callback called in case of success only.</param>
+		/// <param name="onSuccess">Callback called in case of success only.</param>
 		internal static Promise<T> RunRequest<T>(HttpRequest req, Promise<T> task, Action<HttpResponse> onSuccess) {
 			Managers.HttpClient.Run(req, (HttpResponse response) => {
 				if (HasFailed(response)) {
@@ -80,10 +80,10 @@ namespace CotcSdk
 		/// Wrapper around our standard work on Managers.HttpClient.Run. Automatically notifies the passed handler
 		/// of a failure.
 		/// </summary>
-		/// <param name="req">request to perform.</param>
-		/// <returns>a task that is resolved in case of failure (the onSuccess callback is not called) or to be resolved
+		/// <param name="req">Request to perform.</param>
+		/// <returns>A task that is resolved in case of failure (the onSuccess callback is not called) or to be resolved
 		///     from the onSuccess block in case of success.</returns>
-		/// <param name="onSuccess">callback called in case of success only, with the response and a new task that needs to
+		/// <param name="onSuccess">Callback called in case of success only, with the response and a new task that needs to
 		///     be resolved from there.</param>
 		internal static Promise<T> RunInTask<T>(HttpRequest req, Action<HttpResponse, Promise<T>> onSuccess) {
 			var task = new Promise<T>();

@@ -27,7 +27,7 @@ namespace CotcSdk {
 		}
 
 		/// <summary>Call this to retry the request later.</summary>
-		/// <param name="milliseconds">time in which to try again. No other request will be executed during this time
+		/// <param name="milliseconds">Time in which to try again. No other request will be executed during this time
 		///     (they will be queued) as to respect the issuing order. Please keep this in mind when setting a
 		///     high delay.</param>
 		public void RetryIn(int milliseconds) {

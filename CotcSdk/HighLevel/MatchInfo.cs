@@ -10,7 +10,7 @@ namespace CotcSdk {
 		public string MatchId { get; private set; }
 
 		/// <summary>Dismisses a pending invitation for the current user and the match. Fails if the user has not been invited.</summary>
-		/// <returns>promise resolved when the operation has completed.</returns>
+		/// <returns>Promise resolved when the operation has completed.</returns>
 		public Promise<Done> DismissInvitation() {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("invitation");
 			HttpRequest req = Gamer.MakeHttpRequest(url);

@@ -12,18 +12,18 @@ namespace CotcSdk {
 		/// Sets the domain affected by this object.
 		/// You should typically use it this way: `gamer.GamerVfs.Domain("private").SetKey(...);`
 		/// </summary>
-		/// <param name="domain">domain on which to scope the VFS. Defaults to `private` if not specified.</param>
-		/// <returns>this object for operation chaining.</returns>
+		/// <param name="domain">Domain on which to scope the VFS. Defaults to `private` if not specified.</param>
+		/// <returns>This object for operation chaining.</returns>
 		public GamerVfs Domain(string domain) {
 			this.domain = domain;
 			return this;
 		}
 
 		/// <summary>Retrieves an individual key from the key/value system.</summary>
-		/// <returns>promise resolved when the operation has completed. The attached bundle contains the fetched
+		/// <returns>Promise resolved when the operation has completed. The attached bundle contains the fetched
 		///     property. As usual with bundles, it can be casted to the proper type you are expecting.
 		///     If the property doesn't exist, the call is marked as failed with a 404 status.</returns>
-		/// <param name="key">the name of the key to be fetched.</param>
+		/// <param name="key">The name of the key to be fetched.</param>
 		public Promise<Bundle> GetKey(string key) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
@@ -33,10 +33,10 @@ namespace CotcSdk {
 		}
 
 		/// <summary>Retrieves the binary data of an individual key from the key/value system.</summary>
-		/// <returns>promise resolved when the operation has completed. The binary data is attached as the value
+		/// <returns>Promise resolved when the operation has completed. The binary data is attached as the value
 		///     of the result. Please ensure that the key was set with binary data before, or this call will
 		///     fail with a network error.</returns>
-		/// <param name="key">the name of the key to be fetched.</param>
+		/// <param name="key">The name of the key to be fetched.</param>
 		public Promise<byte[]> GetKeyBinary(string key) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key).QueryParam("binary");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
@@ -56,9 +56,9 @@ namespace CotcSdk {
 		}
 
 		/// <summary>Sets the value of a key in the key/value system.</summary>
-		/// <returns>promise resolved when the operation has completed.</returns>
-		/// <param name="key">the name of the key to set the value for.</param>
-		/// <param name="value">the value to set. As usual with bundles, casting is implicitly done, so you may as well
+		/// <returns>Promise resolved when the operation has completed.</returns>
+		/// <param name="key">The name of the key to set the value for.</param>
+		/// <param name="value">The value to set. As usual with bundles, casting is implicitly done, so you may as well
 		///     call this method passing an integer or string as value for instance.</param>
 		public Promise<Done> SetKey(string key, Bundle value) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key);
@@ -71,9 +71,9 @@ namespace CotcSdk {
 		}
 
 		/// <summary>Sets the value of a key in the key/value system as binary data.</summary>
-		/// <returns>promise resolved when the operation has completed.</returns>
-		/// <param name="key">the name of the key to set the value for.</param>
-		/// <param name="binaryData">the value to set as binary data.</param>
+		/// <returns>Promise resolved when the operation has completed.</returns>
+		/// <param name="key">The name of the key to set the value for.</param>
+		/// <param name="binaryData">The value to set as binary data.</param>
 		public Promise<Done> SetKeyBinary(string key, byte[] binaryData) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key).QueryParam("binary");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
@@ -94,8 +94,8 @@ namespace CotcSdk {
 		}
 
 		/// <summary>Removes a single key from the key/value system.</summary>
-		/// <returns>promise resolved when the operation has completed.</returns>
-		/// <param name="key">the name of the key to remove.</param>
+		/// <returns>Promise resolved when the operation has completed.</returns>
+		/// <param name="key">The name of the key to remove.</param>
 		public Promise<Done> RemoveKey(string key) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);

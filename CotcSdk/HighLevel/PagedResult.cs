@@ -14,21 +14,21 @@ namespace CotcSdk {
 			return Previous();
 		}
 		/// <summary></summary>
-		/// <returns>whether there is a previous page. Call FetchPrevious to go back to it.</returns>
+		/// <returns>Whether there is a previous page. Call FetchPrevious to go back to it.</returns>
 		public bool HasPrevious {
 			get { return Previous != null; }
 		}
 		/// <summary></summary>
-		/// <returns>whether there is a next page. Call FetchNext to go back to it.</returns>
+		/// <returns>Whether there is a next page. Call FetchNext to go back to it.</returns>
 		public bool HasNext {
 			get { return Next != null; }
 		}
 		/// <summary></summary>
-		/// <returns>the number of the first result in the list.</returns>
+		/// <returns>The number of the first result in the list.</returns>
 		public int Offset;
 		public Bundle ServerData { get; private set; }
 		/// <summary></summary>
-		/// <returns>the total number of items (possibly greater than the page size).</returns>
+		/// <returns>The total number of items (possibly greater than the page size).</returns>
 		public int Total;
 
 		public override string ToString() {

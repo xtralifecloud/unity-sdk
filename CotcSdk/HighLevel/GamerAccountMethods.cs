@@ -5,8 +5,8 @@ namespace CotcSdk
 	public sealed class GamerAccountMethods {
 
 		/// <summary>Changes the e-mail address of the current user. Works for e-mail type accounts.</summary>
-		/// <returns>promise resolved when the operation has completed.</returns>
-		/// <param name="newEmailAddress">the new e-mail address to be used for signing in.</param>
+		/// <returns>Promise resolved when the operation has completed.</returns>
+		/// <param name="newEmailAddress">The new e-mail address to be used for signing in.</param>
 		public Promise<Done> ChangeEmailAddress(string newEmailAddress) {
 			var task = new Promise<Done>();
 			if (Gamer.Network != LoginNetwork.Email) {
@@ -24,8 +24,8 @@ namespace CotcSdk
 		}
 
 		/// <summary>Changes the password of the current user. Works for e-mail type accounts.</summary>
-		/// <returns>promise resolved when the operation has completed.</returns>
-		/// <param name="newPassword">the new password to be used for signing in.</param>
+		/// <returns>Promise resolved when the operation has completed.</returns>
+		/// <param name="newPassword">The new password to be used for signing in.</param>
 		public Promise<Done> ChangePassword(string newPassword) {
 			var task = new Promise<Done>();
 			if (Gamer.Network != LoginNetwork.Email) {
@@ -48,11 +48,11 @@ namespace CotcSdk
 		/// In order to convert the account successfully, the provided network credentials need to be acceptable,
 		/// just as when calling Cloud.Login.
 		/// </summary>
-		/// <returns>promise resolved when the operation has completed.</returns>
-		/// <param name="network">the target network to connect with later on.</param>
-		/// <param name="networkId">the ID on the network. For example, with the facebook network, this would be the User ID.
+		/// <returns>Promise resolved when the operation has completed.</returns>
+		/// <param name="network">The target network to connect with later on.</param>
+		/// <param name="networkId">The ID on the network. For example, with the facebook network, this would be the User ID.
 		///     On e-mail accounts e-mail then, this would be the e-mail address.</param>
-		/// <param name="networkSecret">the secret for the network. For e-mail accounts, this would be the passord. For
+		/// <param name="networkSecret">The secret for the network. For e-mail accounts, this would be the passord. For
 		///     facebook or other SNS accounts, this would be the user token.</param>
 		public Promise<Done> Convert(LoginNetwork network, string networkId, string networkSecret) {
 			Bundle config = Bundle.CreateObject();
@@ -68,8 +68,8 @@ namespace CotcSdk
 		}
 
 		/// <summary>Meant to be called for push notifications.</summary>
-		/// <param name="os">operating system (should be determined by the native implementation: "ios", "android", "macos", …).</param>
-		/// <param name="token">push notification token (device specific).</param>
+		/// <param name="os">Operating system (should be determined by the native implementation: "ios", "android", "macos", …).</param>
+		/// <param name="token">Push notification token (device specific).</param>
 		public Promise<Done> RegisterDevice(string os, string token) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/device").QueryParam("os", os).QueryParam("token", token);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
@@ -80,8 +80,8 @@ namespace CotcSdk
 		}
 
 		/// <summary>Unregisters a previously registered device (see #RegisterDevice).</summary>
-		/// <param name="os">operating system (should be determined by the native implementation: "ios", "android", "macos", …).</param>
-		/// <param name="token">push notification token (device specific).</param>
+		/// <param name="os">Operating system (should be determined by the native implementation: "ios", "android", "macos", …).</param>
+		/// <param name="token">Push notification token (device specific).</param>
 		public Promise<Done> UnregisterDevice(string os, string token) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/device").QueryParam("os", os).QueryParam("token", token);
 			HttpRequest req = Gamer.MakeHttpRequest(url);

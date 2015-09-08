@@ -22,7 +22,7 @@ namespace CotcSdk {
 		/// <summary>The global state of the game, which may be modified using a move.</summary>
 		public Bundle GlobalState { get; private set; }
 		/// <summary></summary>
-		/// <returns>whether you are the creator of the match, and as such have special privileges (like the ability
+		/// <returns>Whether you are the creator of the match, and as such have special privileges (like the ability
 		///     to finish and delete a match).</returns>
 		public bool IsCreator {
 			get { return Creator.GamerId == Gamer.GamerId; }
@@ -85,10 +85,10 @@ namespace CotcSdk {
 		}
 
 		/// <summary>Draws an item from the shoe.</summary>
-		/// <returns>promise resolved when the operation has completed. The attached bundle contains an array of items drawn
+		/// <returns>Promise resolved when the operation has completed. The attached bundle contains an array of items drawn
 		///     from the shoe. You may do `(int)result.Value[0]` to fetch the first value as integer.</returns>
-		/// <param name="count">the number of items to draw from the shoe.</param>
-		/// <param name="notification">a notification that can be sent to all players currently playing the match (except you).</param>
+		/// <param name="count">The number of items to draw from the shoe.</param>
+		/// <param name="notification">A notification that can be sent to all players currently playing the match (except you).</param>
 		public Promise<DrawnItemsResult> DrawFromShoe(int count = 1, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("shoe").Path("draw");
 			url.QueryParam("count", count).QueryParam("lastEventId", LastEventId);
@@ -101,9 +101,9 @@ namespace CotcSdk {
 		}
 
 		/// <summary>Terminates the match. You need to be the creator of the match to perform this operation.</summary>
-		/// <returns>promise resolved when the operation has completed.</returns>
-		/// <param name="deleteToo">if true, deletes the match if it finishes successfully or is already finished.</param>
-		/// <param name="notification">a notification that can be sent to all players currently playing the match (except you).</param>
+		/// <returns>Promise resolved when the operation has completed.</returns>
+		/// <param name="deleteToo">If true, deletes the match if it finishes successfully or is already finished.</param>
+		/// <param name="notification">A notification that can be sent to all players currently playing the match (except you).</param>
 		public Promise<Done> Finish(bool deleteToo = false, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("finish");
 			url.QueryParam("lastEventId", LastEventId);
@@ -127,10 +127,10 @@ namespace CotcSdk {
 		/// Allows to invite a player to join a match. You need to be part of the match to send an invitation.
 		/// This can be used to invite an opponent to a match that is not shown publicly.
 		/// </summary>
-		/// <returns>promise resolved when the operation has completed.</returns>
+		/// <returns>Promise resolved when the operation has completed.</returns>
 		/// <param name="playerId">ID of the player to invite to the match. Player IDs can be found in the properties of the
 		///     match (GamerInfo.GamerId).</param>
-		/// <param name="notification">a push notification that can be sent to the invitee.</param>
+		/// <param name="notification">A push notification that can be sent to the invitee.</param>
 		public Promise<Done> InvitePlayer(string playerId, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("invite").Path(playerId);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
@@ -142,8 +142,8 @@ namespace CotcSdk {
 		}
 
 		/// <summary>Leaves the match.</summary>
-		/// <returns>promise resolved when the operation has completed.</returns>
-		/// <param name="notification">a push notification that can be sent to all players except you.</param>
+		/// <returns>Promise resolved when the operation has completed.</returns>
+		/// <param name="notification">A push notification that can be sent to all players except you.</param>
 		public Promise<Done> Leave(PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("leave");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
@@ -165,13 +165,13 @@ namespace CotcSdk {
 		}
 
 		/// <summary>Posts a move to other players.</summary>
-		/// <returns>promise resolved when the operation has completed.</returns>
-		/// <param name="moveData">a freeform object indicating the move data to be posted and transfered to other players. This
+		/// <returns>Promise resolved when the operation has completed.</returns>
+		/// <param name="moveData">A freeform object indicating the move data to be posted and transfered to other players. This
 		///     move data will be kept in the events, and new players should be able to use it to reproduce the local game
 		///     state.</param>
-		/// <param name="updatedGameState">a freeform object replacing the global game state, to be used by players who join from
+		/// <param name="updatedGameState">A freeform object replacing the global game state, to be used by players who join from
 		///     now on. Passing a non null value clears the pending events in the match.</param>
-		/// <param name="notification">a push notification that can be sent to all players except you.</param>
+		/// <param name="notification">A push notification that can be sent to all players except you.</param>
 		public Promise<Done> PostMove(Bundle moveData, Bundle updatedGameState = null, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("move").QueryParam("lastEventId", LastEventId);
 			Bundle config = Bundle.CreateObject();

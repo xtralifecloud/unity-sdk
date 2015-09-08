@@ -12,14 +12,14 @@ namespace CotcSdk {
 		}
 
 		/// <summary>Call this at the very beginning to start using the library.</summary>
-		/// <returns>promise resolved when the process has finished, with the Cloud to be used for your operations (most
+		/// <returns>Promise resolved when the process has finished, with the Cloud to be used for your operations (most
 		///     likely synchronously).</returns>
-		/// <param name="apiKey">the community key.</param>
+		/// <param name="apiKey">The community key.</param>
 		/// <param name="apiSecret">The community secret (credentials when registering to CotC).</param>
-		/// <param name="environment">the URL of the server. Should use one of the predefined constants.</param>
-		/// <param name="httpVerbose">set to true to output detailed information about the requests performed to CotC servers. Can be used
+		/// <param name="environment">The URL of the server. Should use one of the predefined constants.</param>
+		/// <param name="httpVerbose">Set to true to output detailed information about the requests performed to CotC servers. Can be used
 		///     for debugging, though it does pollute the logs.</param>
-		/// <param name="httpTimeout">sets a custom timeout for all requests in seconds. Defaults to 1 minute.</param>
+		/// <param name="httpTimeout">Sets a custom timeout for all requests in seconds. Defaults to 1 minute.</param>
 		public static Promise<Cloud> Setup(string apiKey, string apiSecret, string environment, int loadBalancerCount, bool httpVerbose, int httpTimeout) {
 			var task = new Promise<Cloud>();
 			lock (SpinLock) {

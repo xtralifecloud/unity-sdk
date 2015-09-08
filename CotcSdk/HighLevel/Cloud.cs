@@ -16,14 +16,14 @@ namespace CotcSdk
 	public sealed partial class Cloud {
 
 		/// <summary>Provides an API to manipulate game data, such as key/value or leaderboards.</summary>
-		/// <returns>an object that allow to manipulate game specific data.</returns>
+		/// <returns>An object that allow to manipulate game specific data.</returns>
 		public Game Game {
 			get { return new Game(this); }
 		}
 
 		/// <summary>Allows to manipulate an index. Usage: `Cloud.Index("matches").IndexObject(...);`.</summary>
-		/// <param name="indexName">name of the index; scopes your searches.</param>
-		/// <param name="domain">the domain to manipulate the index on.</param>
+		/// <param name="indexName">Name of the index; scopes your searches.</param>
+		/// <param name="domain">The domain to manipulate the index on.</param>
 		public CloudIndexing Index(string indexName, string domain = Common.PrivateDomain) {
 			return new CloudIndexing(this, indexName, domain);
 		}
@@ -31,7 +31,7 @@ namespace CotcSdk
 		/// <summary>
 		/// Executes a "ping" request to the server. Allows to know whether the server is currently working as expected.
 		/// </summary>
-		/// <returns>promise resolved when the request has finished.</returns>
+		/// <returns>Promise resolved when the request has finished.</returns>
 		public Promise<Done> Ping() {
 			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/ping");
 			return Common.RunInTask<Done>(req, (response, task) => {
