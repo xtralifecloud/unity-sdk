@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace CotcSdk
 {
+	/** @cond private */
 	[CustomEditor(typeof(CotcGameObject))]
 	public class PreferencePane : Editor {
 		private class EnvironmentInfo {
@@ -154,4 +155,5 @@ namespace CotcSdk
 			return defaultChoice;
 		}
 	}
+	/** @endcond */
 }

@@ -56,6 +56,8 @@
                 On e-mail accounts e-mail then, this would be the e-mail address.</param>
             <param name="networkSecret">The secret for the network. For e-mail accounts, this would be the passord. For
                 facebook or other SNS accounts, this would be the user token.</param>
+            <param name="preventRegistration">Fail instead of silently creating an account in case it doesn't already exist on
+                the CotC servers.</param>
         </member>
         <member name="M:CotcSdk.Cloud.ResumeSession(System.String,System.String)">
             <summary>
@@ -92,6 +94,7 @@
             <summary>Checks that an user exists on a given network.</summary>
             <returns>Promise resolved when the user is found. If the user does not exist, it fails with
                 an HTTP status code of 400.</returns>
+            <param name="network">Network used to log in (scoping the networkId).</param>
             <param name="networkId">The ID of the user on the network, like the e-mail address.</param>
         </member>
         <member name="P:CotcSdk.Cloud.Game">
@@ -141,6 +144,7 @@
              <returns>Promise resolved when the operation has finished. The attached object contains various
                  information about the results, including a Hits member, which handles the results in a
                  paginated way.</returns>
+             <param name="query">Search query as described in the summary.</param>
              <param name="limit">The maximum number of results to return per page.</param>
              <param name="offset">Number of the first result.</param>
         </member>
@@ -1552,6 +1556,9 @@
         </member>
         <member name="T:CotcSdk.EmptyBundle">
             <summary>Never instantiate this class. Use Bundle.Empty instead. Pass that everywhere an explicit configuration is not wanted.</summary>
+        </member>
+        <member name="T:CotcSdk.CotcSettings">
+            @cond private 
         </member>
         <member name="F:CotcSdk.HttpRequest.DoNotEnqueue">
             <summary>Set to perform the request immediately, regardless of a request already being run.</summary>
