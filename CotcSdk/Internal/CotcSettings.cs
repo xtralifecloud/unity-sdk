@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace CotcSdk {
 
+	/** @cond private */
 	[Serializable]
 	public class CotcSettings : ScriptableObject {
 		public const string AssetPath = "Assets/Resources/CotcSettings.asset";
@@ -45,4 +46,5 @@ namespace CotcSdk {
 		[SerializeField]
 		public int SelectedEnvironment = 0;
 	}
+	/** @endcond */
 }
