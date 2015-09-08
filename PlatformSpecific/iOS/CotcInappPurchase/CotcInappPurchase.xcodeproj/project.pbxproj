@@ -7,53 +7,45 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		17E0F2FF1B8448420025281A /* main.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 17E0F2FE1B8448420025281A /* main.h */; };
-		17E0F3011B8448420025281A /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 17E0F3001B8448420025281A /* main.mm */; };
-		17E0F3071B8448420025281A /* libCotcInappPurchase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17E0F2FB1B8448420025281A /* libCotcInappPurchase.a */; };
+		17A4A98D1B94A427005DA7B6 /* InappPurchaseWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 17E0F3161B844E250025281A /* InappPurchaseWrapper.mm */; };
+		17A4A98E1B94A427005DA7B6 /* safe.mm in Sources */ = {isa = PBXBuildFile; fileRef = 17E0F3241B8469E90025281A /* safe.mm */; };
+		17A4A9911B94A459005DA7B6 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17A4A9901B94A459005DA7B6 /* StoreKit.framework */; };
+		17A4A9971B94B8FE005DA7B6 /* utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 17A4A9951B94B8FE005DA7B6 /* utils.mm */; };
+		17A4A99B1B94BA71005DA7B6 /* utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 17A4A9951B94B8FE005DA7B6 /* utils.mm */; };
+		17A4A99C1B94BA81005DA7B6 /* main-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 17A4A9991B94BA65005DA7B6 /* main-mac.mm */; };
+		17E0F3011B8448420025281A /* main-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 17E0F3001B8448420025281A /* main-ios.mm */; };
 		17E0F3171B844E250025281A /* InappPurchaseWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 17E0F3161B844E250025281A /* InappPurchaseWrapper.mm */; };
 		17E0F3261B8469E90025281A /* safe.mm in Sources */ = {isa = PBXBuildFile; fileRef = 17E0F3241B8469E90025281A /* safe.mm */; };
-		17E0F32C1B84B8F70025281A /* InteropTypes.mm in Sources */ = {isa = PBXBuildFile; fileRef = 17E0F32B1B84B8F70025281A /* InteropTypes.mm */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		17E0F3081B8448420025281A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 17E0F2F31B8448420025281A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 17E0F2FA1B8448420025281A;
-			remoteInfo = CotcInappPurchase;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		17E0F2F91B8448420025281A /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "include/$(PRODUCT_NAME)";
-			dstSubfolderSpec = 16;
-			files = (
-				17E0F2FF1B8448420025281A /* main.h in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1739D6E41B8667330042AD9B /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		17A4A9851B94A331005DA7B6 /* MacCotcInappPurchase.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MacCotcInappPurchase.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		17A4A9881B94A331005DA7B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		17A4A9901B94A459005DA7B6 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
+		17A4A9951B94B8FE005DA7B6 /* utils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = utils.mm; sourceTree = "<group>"; };
+		17A4A9961B94B8FE005DA7B6 /* utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
+		17A4A9981B94BA65005DA7B6 /* main-mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "main-mac.h"; sourceTree = "<group>"; };
+		17A4A9991B94BA65005DA7B6 /* main-mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "main-mac.mm"; sourceTree = "<group>"; };
 		17E0F2FB1B8448420025281A /* libCotcInappPurchase.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCotcInappPurchase.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		17E0F2FE1B8448420025281A /* main.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
-		17E0F3001B8448420025281A /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
-		17E0F3061B8448420025281A /* CotcInappPurchaseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CotcInappPurchaseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		17E0F30C1B8448420025281A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		17E0F2FE1B8448420025281A /* main-ios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "main-ios.h"; sourceTree = "<group>"; };
+		17E0F3001B8448420025281A /* main-ios.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "main-ios.mm"; sourceTree = "<group>"; };
 		17E0F3151B844E250025281A /* InappPurchaseWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InappPurchaseWrapper.h; sourceTree = "<group>"; };
 		17E0F3161B844E250025281A /* InappPurchaseWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InappPurchaseWrapper.mm; sourceTree = "<group>"; };
 		17E0F3241B8469E90025281A /* safe.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = safe.mm; sourceTree = "<group>"; };
 		17E0F3251B8469E90025281A /* safe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = safe.h; sourceTree = "<group>"; };
 		17E0F32A1B84B8F70025281A /* InteropTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteropTypes.h; sourceTree = "<group>"; };
-		17E0F32B1B84B8F70025281A /* InteropTypes.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InteropTypes.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		17A4A9821B94A331005DA7B6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17A4A9911B94A459005DA7B6 /* StoreKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		17E0F2F81B8448420025281A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -61,22 +53,33 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		17E0F3031B8448420025281A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				17E0F3071B8448420025281A /* libCotcInappPurchase.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		17A4A9861B94A331005DA7B6 /* MacCotcInappPurchase */ = {
+			isa = PBXGroup;
+			children = (
+				17A4A9981B94BA65005DA7B6 /* main-mac.h */,
+				17A4A9991B94BA65005DA7B6 /* main-mac.mm */,
+				17A4A9871B94A331005DA7B6 /* Supporting Files */,
+			);
+			path = MacCotcInappPurchase;
+			sourceTree = "<group>";
+		};
+		17A4A9871B94A331005DA7B6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				17A4A9881B94A331005DA7B6 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		17E0F2F21B8448420025281A = {
 			isa = PBXGroup;
 			children = (
+				17A4A9901B94A459005DA7B6 /* StoreKit.framework */,
 				17E0F2FD1B8448420025281A /* CotcInappPurchase */,
-				17E0F30A1B8448420025281A /* CotcInappPurchaseTests */,
+				17A4A9861B94A331005DA7B6 /* MacCotcInappPurchase */,
 				17E0F2FC1B8448420025281A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -85,7 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				17E0F2FB1B8448420025281A /* libCotcInappPurchase.a */,
-				17E0F3061B8448420025281A /* CotcInappPurchaseTests.xctest */,
+				17A4A9851B94A331005DA7B6 /* MacCotcInappPurchase.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -93,45 +96,46 @@
 		17E0F2FD1B8448420025281A /* CotcInappPurchase */ = {
 			isa = PBXGroup;
 			children = (
-				17E0F2FE1B8448420025281A /* main.h */,
-				17E0F3001B8448420025281A /* main.mm */,
+				17E0F2FE1B8448420025281A /* main-ios.h */,
+				17E0F3001B8448420025281A /* main-ios.mm */,
 				1739D6E41B8667330042AD9B /* config.h */,
 				17E0F3151B844E250025281A /* InappPurchaseWrapper.h */,
 				17E0F3161B844E250025281A /* InappPurchaseWrapper.mm */,
 				17E0F3241B8469E90025281A /* safe.mm */,
 				17E0F3251B8469E90025281A /* safe.h */,
 				17E0F32A1B84B8F70025281A /* InteropTypes.h */,
-				17E0F32B1B84B8F70025281A /* InteropTypes.mm */,
+				17A4A9951B94B8FE005DA7B6 /* utils.mm */,
+				17A4A9961B94B8FE005DA7B6 /* utils.h */,
 			);
 			path = CotcInappPurchase;
-			sourceTree = "<group>";
-		};
-		17E0F30A1B8448420025281A /* CotcInappPurchaseTests */ = {
-			isa = PBXGroup;
-			children = (
-				17E0F30B1B8448420025281A /* Supporting Files */,
-			);
-			path = CotcInappPurchaseTests;
-			sourceTree = "<group>";
-		};
-		17E0F30B1B8448420025281A /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				17E0F30C1B8448420025281A /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		17A4A9841B94A331005DA7B6 /* MacCotcInappPurchase */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17A4A9891B94A331005DA7B6 /* Build configuration list for PBXNativeTarget "MacCotcInappPurchase" */;
+			buildPhases = (
+				17A4A9811B94A331005DA7B6 /* Sources */,
+				17A4A9821B94A331005DA7B6 /* Frameworks */,
+				17A4A99D1B94BCC8005DA7B6 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MacCotcInappPurchase;
+			productName = MacCotcInappPurchase;
+			productReference = 17A4A9851B94A331005DA7B6 /* MacCotcInappPurchase.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
 		17E0F2FA1B8448420025281A /* CotcInappPurchase */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 17E0F30F1B8448420025281A /* Build configuration list for PBXNativeTarget "CotcInappPurchase" */;
 			buildPhases = (
 				17E0F2F71B8448420025281A /* Sources */,
 				17E0F2F81B8448420025281A /* Frameworks */,
-				17E0F2F91B8448420025281A /* CopyFiles */,
 				17E0F3271B847EAE0025281A /* Run Script */,
 			);
 			buildRules = (
@@ -143,24 +147,6 @@
 			productReference = 17E0F2FB1B8448420025281A /* libCotcInappPurchase.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		17E0F3051B8448420025281A /* CotcInappPurchaseTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 17E0F3121B8448420025281A /* Build configuration list for PBXNativeTarget "CotcInappPurchaseTests" */;
-			buildPhases = (
-				17E0F3021B8448420025281A /* Sources */,
-				17E0F3031B8448420025281A /* Frameworks */,
-				17E0F3041B8448420025281A /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				17E0F3091B8448420025281A /* PBXTargetDependency */,
-			);
-			name = CotcInappPurchaseTests;
-			productName = CotcInappPurchaseTests;
-			productReference = 17E0F3061B8448420025281A /* CotcInappPurchaseTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -170,10 +156,10 @@
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = "Clan of the Cloud";
 				TargetAttributes = {
-					17E0F2FA1B8448420025281A = {
+					17A4A9841B94A331005DA7B6 = {
 						CreatedOnToolsVersion = 6.4;
 					};
-					17E0F3051B8448420025281A = {
+					17E0F2FA1B8448420025281A = {
 						CreatedOnToolsVersion = 6.4;
 					};
 				};
@@ -191,22 +177,25 @@
 			projectRoot = "";
 			targets = (
 				17E0F2FA1B8448420025281A /* CotcInappPurchase */,
-				17E0F3051B8448420025281A /* CotcInappPurchaseTests */,
+				17A4A9841B94A331005DA7B6 /* MacCotcInappPurchase */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXResourcesBuildPhase section */
-		17E0F3041B8448420025281A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
+/* Begin PBXShellScriptBuildPhase section */
+		17A4A99D1B94BCC8005DA7B6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
 			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "mkdir -p \"$PROJECT_DIR/../../../UnityProject/Assets/Plugins/Mac\"\ncp -r \"$BUILD_DIR/$CONFIGURATION/MacCotcInappPurchase.bundle\" \"$PROJECT_DIR/../../../UnityProject/Assets/Plugins/Mac/\"\n";
 		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
 		17E0F3271B847EAE0025281A /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -224,35 +213,66 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		17A4A9811B94A331005DA7B6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17A4A99C1B94BA81005DA7B6 /* main-mac.mm in Sources */,
+				17A4A98D1B94A427005DA7B6 /* InappPurchaseWrapper.mm in Sources */,
+				17A4A98E1B94A427005DA7B6 /* safe.mm in Sources */,
+				17A4A99B1B94BA71005DA7B6 /* utils.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		17E0F2F71B8448420025281A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				17E0F3011B8448420025281A /* main.mm in Sources */,
-				17E0F3261B8469E90025281A /* safe.mm in Sources */,
+				17E0F3011B8448420025281A /* main-ios.mm in Sources */,
 				17E0F3171B844E250025281A /* InappPurchaseWrapper.mm in Sources */,
-				17E0F32C1B84B8F70025281A /* InteropTypes.mm in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		17E0F3021B8448420025281A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				17E0F3261B8469E90025281A /* safe.mm in Sources */,
+				17A4A9971B94B8FE005DA7B6 /* utils.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		17E0F3091B8448420025281A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 17E0F2FA1B8448420025281A /* CotcInappPurchase */;
-			targetProxy = 17E0F3081B8448420025281A /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin XCBuildConfiguration section */
+		17A4A98A1B94A331005DA7B6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = MacCotcInappPurchase/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		17A4A98B1B94A331005DA7B6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = MacCotcInappPurchase/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
 		17E0F30D1B8448420025281A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -352,41 +372,18 @@
 			};
 			name = Release;
 		};
-		17E0F3131B8448420025281A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = CotcInappPurchaseTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		17E0F3141B8448420025281A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = CotcInappPurchaseTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		17A4A9891B94A331005DA7B6 /* Build configuration list for PBXNativeTarget "MacCotcInappPurchase" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17A4A98A1B94A331005DA7B6 /* Debug */,
+				17A4A98B1B94A331005DA7B6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		17E0F2F61B8448420025281A /* Build configuration list for PBXProject "CotcInappPurchase" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -401,15 +398,6 @@
 			buildConfigurations = (
 				17E0F3101B8448420025281A /* Debug */,
 				17E0F3111B8448420025281A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		17E0F3121B8448420025281A /* Build configuration list for PBXNativeTarget "CotcInappPurchaseTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				17E0F3131B8448420025281A /* Debug */,
-				17E0F3141B8448420025281A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

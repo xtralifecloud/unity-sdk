@@ -3,9 +3,7 @@ using System.Collections.Generic;
 
 namespace CotcSdk {
 
-	/**
-	 * Type of store in which products are purchased.
-	 */
+	/// <summary>Type of store in which products are purchased.</summary>
 	public enum StoreType {
 		Appstore,
 		Macstore,

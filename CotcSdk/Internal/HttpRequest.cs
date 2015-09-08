@@ -22,9 +22,7 @@ namespace CotcSdk {
 		public Bundle BodyJson {
 			set { BodyString = value.ToJson(); Headers["Content-Type"] = "application/json"; }
 		}
-		/**
-		 * Set to perform the request immediately, regardless of a request already being run.
-		 */
+		/// <summary>Set to perform the request immediately, regardless of a request already being run.</summary>
 		public bool DoNotEnqueue;
 		public bool HasBody {
 			get { return Body != null; }
@@ -32,9 +30,7 @@ namespace CotcSdk {
 		public Dictionary<String, String> Headers = new Dictionary<string, string>();
 		public HttpRequestFailedHandler FailedHandler;
 		public int LoadBalancerCount = 1;
-		/**
-		 * When not set (null), uses GET if no body is provided, or POST otherwise.
-		 */
+		/// <summary>When not set (null), uses GET if no body is provided, or POST otherwise.</summary>
 		public string Method;
 		public Policy RetryPolicy = Policy.NonpermanentErrors;
 		public string Url;

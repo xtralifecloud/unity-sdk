@@ -22,11 +22,13 @@ NSArray *makeJsonArray(const vector<T> list) {
 struct ConfiguredProduct {
 	cstring appStoreId;
 	cstring googlePlayId;
+	cstring macStoreId;
 	cstring productId;
 	
 	ConfiguredProduct(NSDictionary *sourceJson) {
 		appStoreId = [[sourceJson objectForKey:@"appStoreId"] UTF8String];
 		googlePlayId = [[sourceJson objectForKey:@"googlePlayId"] UTF8String];
+		macStoreId = [[sourceJson objectForKey:@"macStoreId"] UTF8String];
 		productId = [[sourceJson objectForKey:@"productId"] UTF8String];
 	}
 
@@ -34,6 +36,7 @@ struct ConfiguredProduct {
 		NSMutableDictionary *result = [NSMutableDictionary dictionary];
 		[result setObject:[NSString stringWithUTF8String:appStoreId] forKey:@"appStoreId"];
 		[result setObject:[NSString stringWithUTF8String:googlePlayId] forKey:@"googlePlayId"];
+		[result setObject:[NSString stringWithUTF8String:macStoreId] forKey:@"macStoreId"];
 		[result setObject:[NSString stringWithUTF8String:productId] forKey:@"productId"];
 		return result;
 	}

@@ -1,5 +1,5 @@
 //
-//  main.h
+//  main-ios.h
 //  CotcInappPurchase
 //
 //  Created by Florian on 19/08/15.

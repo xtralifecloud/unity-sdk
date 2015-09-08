@@ -11,17 +11,15 @@ namespace CotcSdk {
 			};*/
 		}
 
-		/**
-		 * Call this at the very beginning to start using the library.
-		 * @return promise resolved when the process has finished, with the Cloud to be used for your operations (most
-		 *     likely synchronously).
-		 * @param apiKey the community key.
-		 * @param apiSecret The community secret (credentials when registering to CotC).
-		 * @param environment the URL of the server. Should use one of the predefined constants.
-		 * @param httpVerbose set to true to output detailed information about the requests performed to CotC servers. Can be used
-		 *	 for debugging, though it does pollute the logs.
-		 * @param httpTimeout sets a custom timeout for all requests in seconds. Defaults to 1 minute.
-		 */
+		/// <summary>Call this at the very beginning to start using the library.</summary>
+		/// <returns>Promise resolved when the process has finished, with the Cloud to be used for your operations (most
+		///     likely synchronously).</returns>
+		/// <param name="apiKey">The community key.</param>
+		/// <param name="apiSecret">The community secret (credentials when registering to CotC).</param>
+		/// <param name="environment">The URL of the server. Should use one of the predefined constants.</param>
+		/// <param name="httpVerbose">Set to true to output detailed information about the requests performed to CotC servers. Can be used
+		///     for debugging, though it does pollute the logs.</param>
+		/// <param name="httpTimeout">Sets a custom timeout for all requests in seconds. Defaults to 1 minute.</param>
 		public static Promise<Cloud> Setup(string apiKey, string apiSecret, string environment, int loadBalancerCount, bool httpVerbose, int httpTimeout) {
 			var task = new Promise<Cloud>();
 			lock (SpinLock) {
@@ -30,10 +28,10 @@ namespace CotcSdk {
 			}
 		}
 
-		/**
-		 * Please call this in an override of OnApplicationFocus on your main object (e.g. scene).
-		 * http://docs.unity3d.com/ScriptReference/MonoBehaviour.OnApplicationFocus.html
-		 */
+		/// <summary>
+		/// Please call this in an override of OnApplicationFocus on your main object (e.g. scene).
+		/// http://docs.unity3d.com/ScriptReference/MonoBehaviour.OnApplicationFocus.html
+		/// </summary>
 		public static void OnApplicationFocus(bool focused) {
 			foreach (DomainEventLoop loop in RunningEventLoops) {
 				if (focused) {
@@ -46,10 +44,10 @@ namespace CotcSdk {
 			NotifyFocusChanged(null, focused);
 		}
 
-		/**
-		 * Shuts off the existing instance of the Cloud and its descendent objects.
-		 * Works synchronously so might take a bit of time.
-		 */
+		/// <summary>
+		/// Shuts off the existing instance of the Cloud and its descendent objects.
+		/// Works synchronously so might take a bit of time.
+		/// </summary>
 		public static void OnApplicationQuit() {
 			// Stop all running loops (in case the developer forgot to do it).
 			// The loops will remove themselves from the list so make a copy.
@@ -61,10 +59,10 @@ namespace CotcSdk {
 			Managers.HttpClient.Terminate();
 		}
 
-		/**
-		 * Needs to be called from the update method of your main game object.
-		 * Not needed if the CotcGameObject is used...
-		 */
+		/// <summary>
+		/// Needs to be called from the update method of your main game object.
+		/// Not needed if the CotcGameObject is used...
+		/// </summary>
 		public static void Update() {
 			// Run pending actions
 			lock (PendingForMainThread) {
@@ -77,9 +75,7 @@ namespace CotcSdk {
 			}
 		}
 		
-		/**
-		 * Runs a method on the main thread (actually at the next update).
-		 */
+		/// <summary>Runs a method on the main thread (actually at the next update).</summary>
 		public static void RunOnMainThread(Action action) {
 			lock (PendingForMainThread) {
 				PendingForMainThread.Add(action);

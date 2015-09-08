@@ -1,20 +1,16 @@
 ﻿
 namespace CotcSdk {
 
-	/**
-	 * Represents a basic match with less information associated than a real match.
-	 * This is the kind of matches that you may find in sub-objects returned by some calls (list, etc.).
-	 */
+	/// <summary>
+	/// Represents a basic match with less information associated than a real match.
+	/// This is the kind of matches that you may find in sub-objects returned by some calls (list, etc.).
+	/// </summary>
 	public class MatchInfo {
-		/**
-		 * The ID of the match.
-		 */
+		/// <summary>The ID of the match.</summary>
 		public string MatchId { get; private set; }
 
-		/**
-		 * Dismisses a pending invitation for the current user and the match. Fails if the user has not been invited.
-		 * @return promise resolved when the operation has completed.
-		 */
+		/// <summary>Dismisses a pending invitation for the current user and the match. Fails if the user has not been invited.</summary>
+		/// <returns>Promise resolved when the operation has completed.</returns>
 		public Promise<Done> DismissInvitation() {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(MatchId).Path("invitation");
 			HttpRequest req = Gamer.MakeHttpRequest(url);

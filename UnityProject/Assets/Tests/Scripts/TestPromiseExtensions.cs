@@ -43,8 +43,14 @@ public static class TestPromiseExtensions {
 		return p.Then(value => TestBase.FailTest("Test failed: value should not be returned"))
 		.Catch(ex => {
 			if (action != null) {
-				if (ex is CotcException)
-					action((CotcException)ex);
+				if (ex is CotcException) {
+					try {
+						action((CotcException)ex);
+					}
+					catch (Exception ex2) {
+						TestBase.FailTest("Test failed because of error in ExpectFailure body: " + ex2.ToString());
+					}
+				}
 				else
 					TestBase.FailTest("Exception not of type CotcException: " + ex);
 			}

@@ -2,10 +2,10 @@
 
 namespace CotcSdk {
 
-	/**
-	 * Result of a transaction call. Contains the new balance (after the transaction has been
-	 * executed atomically) and the list of triggered achievements.
-	 */
+	/// <summary>
+	/// Result of a transaction call. Contains the new balance (after the transaction has been
+	/// executed atomically) and the list of triggered achievements.
+	/// </summary>
 	public sealed class TransactionResult: PropertiesObject {
 		public Bundle Balance;
 		public Dictionary<string, AchievementDefinition> TriggeredAchievements = new Dictionary<string,AchievementDefinition>();

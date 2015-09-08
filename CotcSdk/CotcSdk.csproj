@@ -35,6 +35,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\CotcSdk.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -68,6 +69,7 @@
     <Compile Include="HighLevel\Match.cs" />
     <Compile Include="HighLevel\MatchInfo.cs" />
     <Compile Include="HighLevel\Model\AchievementDefinition.cs" />
+    <Compile Include="HighLevel\Model\GamerOutline.cs" />
     <Compile Include="HighLevel\Model\Done.cs" />
     <Compile Include="HighLevel\Model\SocialNetworkFriendResponse.cs" />
     <Compile Include="HighLevel\Model\UserInfo.cs" />
@@ -129,9 +131,10 @@
   <PropertyGroup>
     <PostBuildEvent>md $(SolutionDir)..\UnityProject\Assets\Plugins
 if $(ConfigurationName) == Debug (
-    copy $(TargetPath) $(SolutionDir)..\UnityProject\Assets\Plugins\CotcSdk-Debug.dll
+    copy $(TargetDir)\CotcSdk.dll $(SolutionDir)..\UnityProject\Assets\Plugins\CotcSdk-Debug.dll
 ) else (
-    copy $(TargetPath) $(SolutionDir)..\UnityProject\Assets\Plugins\
+    copy $(TargetDir)\CotcSdk.dll $(SolutionDir)..\UnityProject\Assets\Plugins\
+    copy $(TargetDir)\CotcSdk.XML $(SolutionDir)..\UnityProject\Assets\Plugins\
 )</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

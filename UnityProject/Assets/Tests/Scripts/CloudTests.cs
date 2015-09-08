@@ -273,6 +273,15 @@ public class CloudTests : TestBase {
 		CompleteTest();
 	}
 
+	[Test("Fails to log in by short code (that's the best we can test without access to an actual e-mail address.")]
+	public void ShouldLoginByShortcode(Cloud cloud) {
+		cloud.LoginWithShortcode("lzX84KYj").ExpectFailure(ex => {
+			Assert(ex.HttpStatusCode == 400, "Should return 400 HTTP code");
+			Assert(ex.ServerData["name"] == "BadToken", "Bad token expected");
+			CompleteTest();
+		});
+	}
+
 	#region Private
 	private void GotLoggedInNotification(object sender, Cotc.LoggedInEventArgs e) {
 		CompleteTest();

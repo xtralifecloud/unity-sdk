@@ -5,9 +5,7 @@ using System;
 
 namespace CotcSdk.FacebookIntegration
 {
-	/**
-	 * Facebook integration utility root entry point.
-	 */
+	/// <summary>Facebook integration utility root entry point.</summary>
 	[Serializable]
 	public class CotcFacebookIntegration : MonoBehaviour {
 
@@ -25,14 +23,14 @@ namespace CotcSdk.FacebookIntegration
 			});
 		}
 
-		/**
-		 * Logs in to CotC through facebook. This will bring an user interface allowing to sign in
-		 * to facebook.
-		 * @return task returning when the login has finished. The resulting Gamer object can then
-		 *     be used for many purposes related to the signed in account.
-		 * @param cloud needed to perform various tasks. Ensure that the SDK is initialized properly and fetch a
-		 *     cloud object.
-		 */
+		/// <summary>
+		/// Logs in to CotC through facebook. This will bring an user interface allowing to sign in
+		/// to facebook.
+		/// </summary>
+		/// <returns>task returning when the login has finished. The resulting Gamer object can then
+		/// be used for many purposes related to the signed in account.</returns>
+		/// <param name="cloud">needed to perform various tasks. Ensure that the SDK is initialized properly and fetch a
+		/// cloud object.</param>
 		public Promise<Gamer> LoginWithFacebook(Cloud cloud) {
 			var task = new Promise<Gamer>();
 			EnsureFacebookLoaded(() => {
@@ -54,14 +52,14 @@ namespace CotcSdk.FacebookIntegration
 			return task;
 		}
 
-		/**
-		 * Fetches the list of friends on facebook and sends them to CotC so that they automatically become friend with you.
-		 * Note that this can only fetch the friends who are actually playing the game, so the list may be empty especially
-		 * when in development.
-		 * @param done callback invoked when the request has finished. The value is as returned by
-		 *     #GamerCommunity.PostSocialNetworkFriends.
-		 * @param gamer gamer object used to link the data to the account.
-		 */
+		/// <summary>
+		/// Fetches the list of friends on facebook and sends them to CotC so that they automatically become friend with you.
+		/// Note that this can only fetch the friends who are actually playing the game, so the list may be empty especially
+		/// when in development.
+		/// </summary>
+		/// <returns>Promise resolved when the request has finished. The value is as returned by
+		/// #CotcSdk.GamerCommunity.PostSocialNetworkFriends.</returns>
+		/// <param name="gamer">Gamer object used to link the data to the account.</param>
 		public Promise<SocialNetworkFriendResponse> FetchFriends(Gamer gamer) {
 			var task = new Promise<SocialNetworkFriendResponse>();
 			EnsureFacebookLoaded(() => {

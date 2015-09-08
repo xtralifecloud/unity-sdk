@@ -46,9 +46,7 @@ namespace CotcSdk
 		#endregion
 
 		#region Private
-		/**
-		 * Asynchronous request state.
-		 */
+		/// <summary>Asynchronous request state.</summary>
 		private class RequestState {
 			// This class stores the State of the request.
 			public const int BufferSize = 1024;
@@ -78,7 +76,7 @@ namespace CotcSdk
 			CurrentLoadBalancerId = Random.Next(1, req.LoadBalancerCount + 1);
 		}
 
-		/** Enqueues a request to make it processed asynchronously. Will potentially wait for the other requests enqueued to finish. */
+		/// <summary>Enqueues a request to make it processed asynchronously. Will potentially wait for the other requests enqueued to finish.</summary>
 		private void EnqueueRequest(HttpRequest req) {
 			// On the first time, choose a load balancer
 			if (CurrentLoadBalancerId == -1) {
@@ -103,7 +101,7 @@ namespace CotcSdk
 			ProcessRequest(req);
 		}
 
-		/** Called after an HTTP request has been processed in any way (error or failure). Decides what to do next. */
+		/// <summary>Called after an HTTP request has been processed in any way (error or failure). Decides what to do next.</summary>
 		private void FinishWithRequest(RequestState state, HttpResponse response) {
 			// IDEA This function could probably be moved to another file with a little gymnastic…
 			HttpRequest nextReq;
@@ -158,7 +156,7 @@ namespace CotcSdk
 			ProcessRequest(nextReq);
 		}
 
-		/** Got a network stream to write to. */
+		/// <summary>Got a network stream to write to.</summary>
 		private void GetRequestStreamCallback(IAsyncResult asynchronousResult) {
 			RequestState state = asynchronousResult.AsyncState as RequestState;
 			try {
@@ -178,7 +176,7 @@ namespace CotcSdk
 			}
 		}
 				
-		/** Prints the current request for user convenience. */
+		/// <summary>Prints the current request for user convenience.</summary>
 		private void LogRequest(RequestState state) {
 			if (!VerboseMode) { return; }
 
@@ -195,7 +193,7 @@ namespace CotcSdk
 			Common.Log(sb.ToString());
 		}
 
-		/** Prints information about the response for debugging purposes. */
+		/// <summary>Prints information about the response for debugging purposes.</summary>
 		private void LogResponse(RequestState state, HttpResponse response) {
 			if (!VerboseMode) { return; }
 
@@ -212,7 +210,7 @@ namespace CotcSdk
 			Common.Log(sb.ToString());
 		}
 
-		/** Processes a single request asynchronously. Will continue to FinishWithRequest in some way. */
+		/// <summary>Processes a single request asynchronously. Will continue to FinishWithRequest in some way.</summary>
 		private void ProcessRequest(HttpRequest request, object previousUserData = null) {
 			String url = request.Url.Replace("[id]", CurrentLoadBalancerId.ToString("00"));
 			HttpWebRequest req = HttpWebRequest.Create(url) as HttpWebRequest;
@@ -249,7 +247,7 @@ namespace CotcSdk
 			}
 		}
 
-		/** Called when a response has been received by the HttpWebRequest. */
+		/// <summary>Called when a response has been received by the HttpWebRequest.</summary>
 		private void RespCallback(IAsyncResult asynchronousResult) {
 			RequestState state = asynchronousResult.AsyncState as RequestState;
 			try {
@@ -287,7 +285,7 @@ namespace CotcSdk
 			AllDone.Set();
 		}
 
-		/** Reads the response buffer little by little. */
+		/// <summary>Reads the response buffer little by little.</summary>
 		private void ReadCallBack(IAsyncResult asyncResult) {
 			RequestState state = asyncResult.AsyncState as RequestState;
 			try {
@@ -323,7 +321,7 @@ namespace CotcSdk
 			AllDone.Set();
 		}
 
-		/** Called upon timeout. */
+		/// <summary>Called upon timeout.</summary>
 		private static void TimeoutCallback(object state, bool timedOut) { 
 			if (timedOut) {
 				RequestState requestState = state as RequestState;

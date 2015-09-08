@@ -215,19 +215,19 @@ namespace CotcSdk {
 
 		private static EventHandler<ExceptionEventArgs> unhandledException;
 
-		/**
-		 * Event raised for unhandled errors.
-		 * For this to work you have to complete your promises with a call to Done().
-		 */
+		/// <summary>
+		/// Event raised for unhandled errors.
+		/// For this to work you have to complete your promises with a call to Done().
+		/// </summary>
 		public static event EventHandler<ExceptionEventArgs> UnhandledException {
 			add { unhandledException += value; }
 			remove { unhandledException -= value; }
 		}
 
-		/**
-		 * Set this to true in order to output any exception to the console, even if it is caught by a .Catch block.
-		 * Just a helper, never keep it true in production.
-		 */
+		/// <summary>
+		/// Set this to true in order to output any exception to the console, even if it is caught by a .Catch block.
+		/// Just a helper, never keep it true in production.
+		/// </summary>
 		public static bool Debug_OutputAllExceptions = false;
 
 		internal static void PropagateUnhandledException(object sender, Exception ex) {

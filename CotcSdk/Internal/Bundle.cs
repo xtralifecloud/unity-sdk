@@ -6,132 +6,132 @@ using LitJson;
 
 namespace CotcSdk
 {
-	/**
-	 * The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object, behaving
-	 * like a C# dictionary, but with inferred typing and more safety.
-	 *
-	 * You need bundles in many calls, either to decode generic data received by the server (when such data can be
-	 * enriched by hooks typically) or to pass generic user parameters, such as when creating a match.
-	 * 
-	 * Bundles are instantiated through their factory methods: Bundle.CreateObject or Bundle.CreateArray. The type of
-	 * the resulting object can be inspected via the Type member. While objects and arrays are containers for further
-	 * objects, a bundle is a simple node in the graph and may as such contain a value, such as a string.
-	 * 
-	 * Sub-objects are fetched using the index operator (brackets), either with a numeric argument for arrays or a
-	 * string argument for dictionaries. Conversions are performed automatically based. Let's consider the following
-	 * example:
-	 * 
-	 * ~~~~{.cs}
-	 * Bundle b = Bundle.CreateObject();
-	 * b["hello"] = "world";
-	 * ~~~~
-	 * 
-	 * The bundle object, considered as dictionary will have its key "hello" set with a new Bundle node of type string
-	 * (implicitly created from the string). So later on, you might fetch this value as well:
-	 * 
-	 * ~~~~{.cs}
-	 * string value = b["hello"];
-	 * ~~~~
-	 * 
-	 * What happens here is that the bundle under the key "hello" is fetched, and then implicitly converted to a string.
-	 * 
-	 * Bundle provides a safe way to browse a predefined graph, as when a key doesn't exist it returns the
-	 * Bundle.Empty (no null value). This special bundle allows to fetch sub-objects but they will always translate to
-	 * Bundle.Empty as well. If the values are to be converted to a primitive type, the result will be the default
-	 * value for this type (null for a string, 0 for an int, etc.). As such, you may do this:
-	 * 
-	 * ~~~~{.cs}
-	 * int value = bundle["nonexisting"]["key"];
-	 * ~~~~
-	 * 
-	 * Since the "nonexisting" key is not found on bundle, Bundle.Empty is returned. Further fetching "key" will return
-	 * an empty bundle as well. Which will be converted implicitly to an integer as 0. Bundle.Empty is a constant value
-	 * that always refers to an empty bundle, and attempting to modify it will result in an exception.
-	 * 
-	 * ~~~~{.cs}
-	 * Bundle b = Bundle.Empty;
-	 * b["value"] = "something"; // Exception
-	 * ~~~~
-	 * 
-	 * The bundle hierarchy doesn't accept null or Bundle.Empty values (it just rejects them). You should avoid
-	 * manipulating null Bundles and use Bundle.Empty wherever possible, however you may assign a null bundle to a key,
-	 * which will have no effect.
-	 * This can be useful for optional arguments. For instance, the following snippet will not affect the bundle.
-	 * 
-	 * ~~~~{.cs}
-	 * string value = null; // converts to Empty.Bundle and rejects assignment
-	 * bundle["key"] = value;
-	 * ~~~~
-	 * 
-	 * Note that Bundle.Empty is not strictly identical to an empty bundle object. Bundle.Empty is never considered
-	 * as a value and is discarded upon assignment. For instance:
-	 * 
-	 * ~~~~{.cs}
-	 * Bundle a = Bundle.CreateObject();
-	 * Bundle b = Bundle.CreateObject();
-	 * a["key"] = Bundle.Empty;
-	 * b["key"] = Bundle.CreateObject();
-	 * Log(a.ToJson()); // {}
-	 * Log(b.ToJson()); // {"key": {}}
-	 * ~~~~
-	 * 
-	 * If you need a special value for keys that do not match the expected type or are not found in the hierarchy, you
-	 * may as well use the .As* methods. For instance, the previous snippet could be written as follows to have a default
-	 * value of one:
-	 * 
-	 * ~~~~{.cs}
-	 * int value = bundle["nonexisting"]["key"].AsInt(1);
-	 * ~~~~
-	 * 
-	 * It is also possible to inspect the Type property of the Bundle in order to ensure that the value was provided as
-	 * expected.
-	 * 
-	 * A bundle may be pre-filled at creation by passing arguments to Bundle.CreateObject and Bundle.CreateArray. For
-	 * instance:
-	 * 
-	 * ~~~~{.cs}
-	 * Bundle b = Bundle.CreateObject("key1", "value1", "key2", "value2");
-	 * ~~~~
-	 * 
-	 * Is equivalent to writing:
-	 * 
-	 * ~~~~{.cs}
-	 * Bundle b = Bundle.CreateObject();
-	 * b["key1"] = "value1";
-	 * b["key2"] = "value2";
-	 * ~~~~
-	 * 
-	 * A bundle can quickly be transformed from/to JSON using ToJson and Bundle.FromJson methods. One can also check
-	 * for the presence of keys and remove them with the .Has respectively .Remove methods.
-	 * 
-	 * Iterating a JSON object is made using the explicit .As* methods. For instance, here how you iterate over an
-	 * array bundle (no harm will happen if the key doesn't exist or is not an array, since an empty array is returned):
-	 * 
-	 * ~~~~{.cs}
-	 * Bundle b;
-	 * foreach (Bundle value in b) { ... }
-	 * ~~~~
-	 * 
-	 * For an object, use AsDictionary().
-	 *
-	 * ~~~~{.cs}
-	 * Bundle b;
-	 * foreach (KeyValuePair<string, Bundle> pair in b["key"].AsDictionary()) { ... }
-	 * ~~~~
-	 * 
-	 * This loop is safe as well even if the bundle doesn't contain a "key" entry or the "key" entry is not an object.
-	 * 
-	 * Null bundles should be avoided! Use Bundle.Empty every time you need a "void", non mutable bundle value.
-	 * Converting from a null bundle will result in an exception.
-	 * 
-	 * ~~~~{.cs}
-	 * Bundle b = null;
-	 * string value = b; // Null pointer exception!
-	 * ~~~~
-	 * 
-	 * That's all what there is to know about bundles. In general they should make any code interacting with generic
-	 * objects simple and safe.
-	 */
+	/// <summary>
+	/// The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object, behaving
+	/// like a C# dictionary, but with inferred typing and more safety.
+	/// 
+	/// You need bundles in many calls, either to decode generic data received by the server (when such data can be
+	/// enriched by hooks typically) or to pass generic user parameters, such as when creating a match.
+	/// 
+	/// Bundles are instantiated through their factory methods: Bundle.CreateObject or Bundle.CreateArray. The type of
+	/// the resulting object can be inspected via the Type member. While objects and arrays are containers for further
+	/// objects, a bundle is a simple node in the graph and may as such contain a value, such as a string.
+	/// 
+	/// Sub-objects are fetched using the index operator (brackets), either with a numeric argument for arrays or a
+	/// string argument for dictionaries. Conversions are performed automatically based. Let's consider the following
+	/// example:
+	/// 
+	/// ~~~~{.cs}
+	/// Bundle b = Bundle.CreateObject();
+	/// b["hello"] = "world";
+	/// ~~~~
+	/// 
+	/// The bundle object, considered as dictionary will have its key "hello" set with a new Bundle node of type string
+	/// (implicitly created from the string). So later on, you might fetch this value as well:
+	/// 
+	/// ~~~~{.cs}
+	/// string value = b["hello"];
+	/// ~~~~
+	/// 
+	/// What happens here is that the bundle under the key "hello" is fetched, and then implicitly converted to a string.
+	/// 
+	/// Bundle provides a safe way to browse a predefined graph, as when a key doesn't exist it returns the
+	/// Bundle.Empty (no null value). This special bundle allows to fetch sub-objects but they will always translate to
+	/// Bundle.Empty as well. If the values are to be converted to a primitive type, the result will be the default
+	/// value for this type (null for a string, 0 for an int, etc.). As such, you may do this:
+	/// 
+	/// ~~~~{.cs}
+	/// int value = bundle["nonexisting"]["key"];
+	/// ~~~~
+	/// 
+	/// Since the "nonexisting" key is not found on bundle, Bundle.Empty is returned. Further fetching "key" will return
+	/// an empty bundle as well. Which will be converted implicitly to an integer as 0. Bundle.Empty is a constant value
+	/// that always refers to an empty bundle, and attempting to modify it will result in an exception.
+	/// 
+	/// ~~~~{.cs}
+	/// Bundle b = Bundle.Empty;
+	/// b["value"] = "something"; // Exception
+	/// ~~~~
+	/// 
+	/// The bundle hierarchy doesn't accept null or Bundle.Empty values (it just rejects them). You should avoid
+	/// manipulating null Bundles and use Bundle.Empty wherever possible, however you may assign a null bundle to a key,
+	/// which will have no effect.
+	/// This can be useful for optional arguments. For instance, the following snippet will not affect the bundle.
+	/// 
+	/// ~~~~{.cs}
+	/// string value = null; // converts to Empty.Bundle and rejects assignment
+	/// bundle["key"] = value;
+	/// ~~~~
+	/// 
+	/// Note that Bundle.Empty is not strictly identical to an empty bundle object. Bundle.Empty is never considered
+	/// as a value and is discarded upon assignment. For instance:
+	/// 
+	/// ~~~~{.cs}
+	/// Bundle a = Bundle.CreateObject();
+	/// Bundle b = Bundle.CreateObject();
+	/// a["key"] = Bundle.Empty;
+	/// b["key"] = Bundle.CreateObject();
+	/// Log(a.ToJson()); // {}
+	/// Log(b.ToJson()); // {"key": {}}
+	/// ~~~~
+	/// 
+	/// If you need a special value for keys that do not match the expected type or are not found in the hierarchy, you
+	/// may as well use the .As* methods. For instance, the previous snippet could be written as follows to have a default
+	/// value of one:
+	/// 
+	/// ~~~~{.cs}
+	/// int value = bundle["nonexisting"]["key"].AsInt(1);
+	/// ~~~~
+	/// 
+	/// It is also possible to inspect the Type property of the Bundle in order to ensure that the value was provided as
+	/// expected.
+	/// 
+	/// A bundle may be pre-filled at creation by passing arguments to Bundle.CreateObject and Bundle.CreateArray. For
+	/// instance:
+	/// 
+	/// ~~~~{.cs}
+	/// Bundle b = Bundle.CreateObject("key1", "value1", "key2", "value2");
+	/// ~~~~
+	/// 
+	/// Is equivalent to writing:
+	/// 
+	/// ~~~~{.cs}
+	/// Bundle b = Bundle.CreateObject();
+	/// b["key1"] = "value1";
+	/// b["key2"] = "value2";
+	/// ~~~~
+	/// 
+	/// A bundle can quickly be transformed from/to JSON using ToJson and Bundle.FromJson methods. One can also check
+	/// for the presence of keys and remove them with the .Has respectively .Remove methods.
+	/// 
+	/// Iterating a JSON object is made using the explicit .As* methods. For instance, here how you iterate over an
+	/// array bundle (no harm will happen if the key doesn't exist or is not an array, since an empty array is returned):
+	/// 
+	/// ~~~~{.cs}
+	/// Bundle b;
+	/// foreach (Bundle value in b) { ... }
+	/// ~~~~
+	/// 
+	/// For an object, use AsDictionary().
+	/// 
+	/// ~~~~{.cs}
+	/// Bundle b;
+	/// foreach (KeyValuePair<string, Bundle> pair in b["key"].AsDictionary()) { ... }
+	/// ~~~~
+	/// 
+	/// This loop is safe as well even if the bundle doesn't contain a "key" entry or the "key" entry is not an object.
+	/// 
+	/// Null bundles should be avoided! Use Bundle.Empty every time you need a "void", non mutable bundle value.
+	/// Converting from a null bundle will result in an exception.
+	/// 
+	/// ~~~~{.cs}
+	/// Bundle b = null;
+	/// string value = b; // Null pointer exception!
+	/// ~~~~
+	/// 
+	/// That's all what there is to know about bundles. In general they should make any code interacting with generic
+	/// objects simple and safe.
+	/// </summary>
 	public class Bundle {
 		public enum DataType {
 			None, Boolean, Integer, Double, String, Array, Object
@@ -174,9 +174,7 @@ namespace CotcSdk
 			return result;
 		}
 
-		/**
-		 * Empty (null-like) Bundle. See class documentation for more information.
-		 */
+		/// <summary>Empty (null-like) Bundle. See class documentation for more information.</summary>
 		public static readonly EmptyBundle Empty = new EmptyBundle();
 
 		// Construction (internal)
@@ -217,9 +215,7 @@ namespace CotcSdk
 			Array.Add (value);
 		}
 
-		/**
-		 * Deep copies the bundle.
-		 */
+		/// <summary>Deep copies the bundle.</summary>
 		public Bundle Clone() {
 			Bundle result;
 			switch (Type) {
@@ -428,9 +424,7 @@ namespace CotcSdk
 		}
 	}
 
-	/**
-	 * Never instantiate this class. Use Bundle.Empty instead. Pass that everywhere an explicit configuration is not wanted.
-	 */
+	/// <summary>Never instantiate this class. Use Bundle.Empty instead. Pass that everywhere an explicit configuration is not wanted.</summary>
 	public class EmptyBundle : Bundle
 	{
 		internal EmptyBundle() : base(Bundle.DataType.None) { }

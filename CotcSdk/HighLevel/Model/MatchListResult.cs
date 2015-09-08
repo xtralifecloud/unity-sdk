@@ -2,29 +2,17 @@
 namespace CotcSdk {
 
 	public class MatchListResult {
-		/**
-		 * Describes the creator of the match.
-		 */
+		/// <summary>Describes the creator of the match.</summary>
 		public GamerInfo Creator { get; private set; }
-		/**
-		 * Custom properties, as passed at the creation of the match.
-		 */
+		/// <summary>Custom properties, as passed at the creation of the match.</summary>
 		public Bundle CustomProperties { get; private set; }
-		/**
-		 * Description of the match, as defined by the user upon creation.
-		 */
+		/// <summary>Description of the match, as defined by the user upon creation.</summary>
 		public string Description { get; private set; }
-		/**
-		 * The ID of the match. Keep this for later as it is useful to continue a match.
-		 */
+		/// <summary>The ID of the match. Keep this for later as it is useful to continue a match.</summary>
 		public string MatchId { get; private set; }
-		/**
-		 * Maximum number of players, as passed.
-		 */
+		/// <summary>Maximum number of players, as passed.</summary>
 		public int MaxPlayers { get; private set; }
-		/**
-		 * The current state of the match (running, finished).
-		 */
+		/// <summary>The current state of the match (running, finished).</summary>
 		public MatchStatus Status { get; private set; }
 
 		internal MatchListResult(Bundle serverData) {

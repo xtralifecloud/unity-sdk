@@ -163,6 +163,35 @@ public class InappPurchaseSampleScene : MonoBehaviour {
 			});
 	}
 
+	public void DoAcknowledgePendingPurchase() {
+		var inApp = FindObjectOfType<CotcInappPurchaseGameObject>();
+		if (!RequireGamer()) return;
+		
+		Gamer.Store.ListConfiguredProducts()
+			.Then(products => {
+				Debug.Log("Got BO products.");
+				return inApp.FetchProductInfo(products);
+			})
+			.Then(enrichedProducts => {
+				Debug.Log("Received enriched products");
+				// Purchase the first one
+				return inApp.LaunchPurchase(Gamer, enrichedProducts[0]);
+			})
+			.Then(purchasedProduct => {
+				Debug.Log("Purchase ok: " + purchasedProduct.ToString() + ", closing it without sending it to CotC");
+				// Important: we should be validating the purchase through CotC. The thing is, under some circumstances
+				// (test orders, certificate not yet configured on our BO) it might be refused by our server.
+				// This button acknowledges it locally. Never do that in production.
+				return inApp.CloseTransaction(purchasedProduct);
+			})
+			.Then(done => {
+				Debug.Log("Purchase closed successfully");
+			})
+			.Catch(ex => {
+				Debug.LogError("Error during purchase: " + ex.ToString());
+			});
+	}
+
 	// Invoked when any sign in operation has completed
 	private void DidLogin(Gamer newGamer) {
 		if (Gamer != null) {

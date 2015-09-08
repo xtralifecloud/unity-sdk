@@ -2,16 +2,12 @@
 
 namespace CotcSdk {
 
-	/**
-	 * Provides an API allowing to manipulate an index.
-	 */
+	/// <summary>Provides an API allowing to manipulate an index.</summary>
 	public class CloudIndexing {
 
-		/**
-		 * Deletes an indexed entry. If you just want to update an entry, simply use IndexObject.
-		 * @return promise resolved when the request has finished.
-		 * @param objectId ID of the object to delete, as passed when indexing.
-		 */
+		/// <summary>Deletes an indexed entry. If you just want to update an entry, simply use IndexObject.</summary>
+		/// <returns>Promise resolved when the request has finished.</returns>
+		/// <param name="objectId">ID of the object to delete, as passed when indexing.</param>
 		public Promise<Done> DeleteObject(string objectId) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName).Path(objectId);
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
@@ -21,11 +17,9 @@ namespace CotcSdk {
 			});
 		}
 
-		/**
-		 * Fetches a previously indexed object.
-		 * @return promise resolved when the request has finished.
-		 * @param objectId ID of the object to look for, as passed when indexing.
-		 */
+		/// <summary>Fetches a previously indexed object.</summary>
+		/// <returns>Promise resolved when the request has finished.</returns>
+		/// <param name="objectId">ID of the object to look for, as passed when indexing.</param>
 		public Promise<IndexResult> GetObject(string objectId) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName).Path(objectId);
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
@@ -34,21 +28,21 @@ namespace CotcSdk {
 			});
 		}
 
-		/**
-		 * Indexes a new object.
-		 * Use this API to add or update an object in an index. You can have as many indexes as you need: one
-		 * for gamer properties, one for matches, one for finished matches, etc. It only depends on what you
-		 * want to search for.
-		 * @return promise resolved when the request has finished.
-		 * @param objectId the ID of the object to be indexed. It can be anything; this ID only needs to uniquely
-		 *     identify your document. Therefore, using the match ID to index a match is recommended for instance.
-		 * @param properties a freeform object, whose attributes will be indexed and searchable. These properties
-		 *     are typed! So if 'age' is once passed as an int, it must always be an int, or an error will be
-		 *     thrown upon insertion.
-		 * @param payload another freeform object. These properties are attached to the document in the same way
-		 *     as the properties, however those are not indexed (cannot be looked for in a search request). Its
-		 *     content is returned in searches (#CotcSdk.IndexResult.Payload property).
-		 */
+		/// <summary>
+		/// Indexes a new object.
+		/// Use this API to add or update an object in an index. You can have as many indexes as you need: one
+		/// for gamer properties, one for matches, one for finished matches, etc. It only depends on what you
+		/// want to search for.
+		/// </summary>
+		/// <returns>Promise resolved when the request has finished.</returns>
+		/// <param name="objectId">The ID of the object to be indexed. It can be anything; this ID only needs to uniquely
+		///     identify your document. Therefore, using the match ID to index a match is recommended for instance.</param>
+		/// <param name="properties">A freeform object, whose attributes will be indexed and searchable. These properties
+		///     are typed! So if 'age' is once passed as an int, it must always be an int, or an error will be
+		///     thrown upon insertion.</param>
+		/// <param name="payload">Another freeform object. These properties are attached to the document in the same way
+		///     as the properties, however those are not indexed (cannot be looked for in a search request). Its
+		///     content is returned in searches (#CotcSdk.IndexResult.Payload property).</param>
 		public Promise<Done> IndexObject(string objectId, Bundle properties, Bundle payload) {
 			UrlBuilder url = new UrlBuilder("/v1/index").Path(Domain).Path(IndexName);
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
@@ -62,39 +56,40 @@ namespace CotcSdk {
 			});
 		}
 
-		/**
-		 * Searches the index.
-		 * 
-		 * You can search documents in the index with this API. It allows you to make complex queries.
-		 * See the Elastic documentation to learn the full syntax. It’s easy and quite powerful.
-		 * http://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html
-		 * 
-		 * @return promise resolved when the operation has finished. The attached object contains various
-		 *     information about the results, including a Hits member, which handles the results in a
-		 *     paginated way.
-		 * @param query query string. Example: "item:silver". See Elastic documentation.
-		 * @param sortingProperties name of properties (fields) to sort the results with. Example:
-		 *     new List<string>() { "item:asc" }.
-		 * @param limit the maximum number of results to return per page.
-		 * @param offset number of the first result.
-		 */
+		/// <summary>
+		/// Searches the index.
+		/// 
+		/// You can search documents in the index with this API. It allows you to make complex queries.
+		/// See the Elastic documentation to learn the full syntax. It’s easy and quite powerful.
+		/// http://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html
+		///
+		/// </summary>
+		/// <returns>Promise resolved when the operation has finished. The attached object contains various
+		///     information about the results, including a Hits member, which handles the results in a
+		///     paginated way.</returns>
+		/// <param name="query">Query string. Example: "item:silver". See Elastic documentation.</param>
+		/// <param name="sortingProperties">Name of properties (fields) to sort the results with. Example:
+		///     new List<string>() { "item:asc" }.</param>
+		/// <param name="limit">The maximum number of results to return per page.</param>
+		/// <param name="offset">Number of the first result.</param>
 		public Promise<IndexSearchResult> Search(string query, List<string> sortingProperties = null, int limit = 30, int offset = 0) {
 			return Search(query, null, sortingProperties, limit, offset);
 		}
 
-		/**
-		 * Alternative search function (see #Search for more information) that takes a bundle as a search criteria.
-		 * 
-		 * It allows using the full Elastic search capabilities with full query DSL search. The query bundle represents
-		 * the JSON document as documented here:
-		 * https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
-		 * 
-		 * @return promise resolved when the operation has finished. The attached object contains various
-		 *     information about the results, including a Hits member, which handles the results in a
-		 *     paginated way.
-		 * @param limit the maximum number of results to return per page.
-		 * @param offset number of the first result.
-		 */
+		/// <summary>
+		/// Alternative search function (see #Search for more information) that takes a bundle as a search criteria.
+		/// 
+		/// It allows using the full Elastic search capabilities with full query DSL search. The query bundle represents
+		/// the JSON document as documented here:
+		/// https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
+		///
+		/// </summary>
+		/// <returns>Promise resolved when the operation has finished. The attached object contains various
+		///     information about the results, including a Hits member, which handles the results in a
+		///     paginated way.</returns>
+		/// <param name="query">Search query as described in the summary.</param>
+		/// <param name="limit">The maximum number of results to return per page.</param>
+		/// <param name="offset">Number of the first result.</param>
 		public Promise<IndexSearchResult> SearchExtended(Bundle query, int limit = 30, int offset = 0) {
 			return Search(null, query, null, limit, offset);
 		}

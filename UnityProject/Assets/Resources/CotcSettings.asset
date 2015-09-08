@@ -27,7 +27,7 @@ MonoBehaviour:
     LbCount: 0
     HttpVerbose: 1
     HttpTimeout: 60
-  - Name: My machine
+  - Name: Parallels
     ApiKey: testgame-key
     ApiSecret: testgame-secret
     ServerUrl: http://10.211.55.2:2000
