@@ -35,23 +35,31 @@ namespace CotcSdk {
 		public int MaxPlayers { get; private set; }
 		/// <summary>List of existing events, which may be used to reproduce the state of the game.</summary>
 		public List<MatchMove> Moves { get; private set; }
-		// Subscribe to these events to be notified of events related to the match, such as when a move was posted.
+		/// <summary>
+		/// Event raised when the match is marked as finished. As with most match events, this event is
+		/// delivered to all users currently participating to the match except the user who initiated it
+		/// (that is, oneself).
+		/// </summary>
 		public event Action<Match, MatchFinishEvent> OnMatchFinished {
 			add { onMatchFinished += value; CheckEventLoopNeeded(); }
 			remove { onMatchFinished -= value; CheckEventLoopNeeded(); }
 		}
+		/// <summary>Event raised when a player joins the match (excluding us obviously).</summary>
 		public event Action<Match, MatchJoinEvent> OnPlayerJoined {
 			add { onPlayerJoined += value; CheckEventLoopNeeded(); }
 			remove { onPlayerJoined -= value; CheckEventLoopNeeded(); }
 		}
+		/// <summary>Event raised when a player leaves the match (excluding us obviously).</summary>
 		public event Action<Match, MatchLeaveEvent> OnPlayerLeft {
 			add { onPlayerLeft += value; CheckEventLoopNeeded(); }
 			remove { onPlayerLeft -= value; CheckEventLoopNeeded(); }
 		}
+		/// <summary>Event raised when a move is posted by any player except us in the match.</summary>
 		public event Action<Match, MatchMoveEvent> OnMovePosted {
 			add { onMovePosted += value; CheckEventLoopNeeded(); }
 			remove { onMovePosted -= value; CheckEventLoopNeeded(); }
 		}
+		/// <summary>Event raised when an element is drawn from the shoe.</summary>
 		public event Action<Match, MatchShoeDrawnEvent> OnShoeDrawn {
 			add { onShoeDrawn += value; CheckEventLoopNeeded(); }
 			remove { onShoeDrawn -= value; CheckEventLoopNeeded(); }

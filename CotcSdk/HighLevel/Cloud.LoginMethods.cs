@@ -56,6 +56,8 @@ namespace CotcSdk
 		///     On e-mail accounts e-mail then, this would be the e-mail address.</param>
 		/// <param name="networkSecret">The secret for the network. For e-mail accounts, this would be the passord. For
 		///     facebook or other SNS accounts, this would be the user token.</param>
+		/// <param name="preventRegistration">Fail instead of silently creating an account in case it doesn't already exist on
+		///     the CotC servers.</param>
 		public Promise<Gamer> Login(LoginNetwork network, string networkId, string networkSecret, bool preventRegistration = false) {
 			return Login(network.Describe(), networkId, networkSecret, preventRegistration);
 		}
@@ -110,6 +112,7 @@ namespace CotcSdk
 		/// <summary>Checks that an user exists on a given network.</summary>
 		/// <returns>Promise resolved when the user is found. If the user does not exist, it fails with
 		///     an HTTP status code of 400.</returns>
+		/// <param name="network">Network used to log in (scoping the networkId).</param>
 		/// <param name="networkId">The ID of the user on the network, like the e-mail address.</param>
 		public Promise<Done> UserExists(LoginNetwork network, string networkId) {
 			UrlBuilder url = new UrlBuilder("/v1/users")

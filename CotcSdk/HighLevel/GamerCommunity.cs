@@ -10,6 +10,7 @@ namespace CotcSdk {
 	/// </summary>
 	public class GamerCommunity {
 
+		/// <summary>Event triggered when someone adds this gamer as a friend or changes his friendship status.</summary>
 		public event Action<FriendStatusChangeEvent> OnFriendStatusChange {
 			add { onFriendStatusChange += value; CheckEventLoopNeeded(); }
 			remove { onFriendStatusChange -= value; CheckEventLoopNeeded(); }

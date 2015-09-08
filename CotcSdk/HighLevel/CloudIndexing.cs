@@ -87,6 +87,7 @@ namespace CotcSdk {
 		/// <returns>Promise resolved when the operation has finished. The attached object contains various
 		///     information about the results, including a Hits member, which handles the results in a
 		///     paginated way.</returns>
+		/// <param name="query">Search query as described in the summary.</param>
 		/// <param name="limit">The maximum number of results to return per page.</param>
 		/// <param name="offset">Number of the first result.</param>
 		public Promise<IndexSearchResult> SearchExtended(Bundle query, int limit = 30, int offset = 0) {

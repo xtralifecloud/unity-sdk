@@ -19,14 +19,14 @@
         </member>
         <member name="M:CotcSdk.Cloud.Index(System.String,System.String)">
             <summary>Allows to manipulate an index. Usage: `Cloud.Index("matches").IndexObject(...);`.</summary>
-            <param name="indexName">name of the index; scopes your searches.</param>
-            <param name="domain">the domain to manipulate the index on.</param>
+            <param name="indexName">Name of the index; scopes your searches.</param>
+            <param name="domain">The domain to manipulate the index on.</param>
         </member>
         <member name="M:CotcSdk.Cloud.Ping">
             <summary>
             Executes a "ping" request to the server. Allows to know whether the server is currently working as expected.
             </summary>
-            <returns>promise resolved when the request has finished.</returns>
+            <returns>Promise resolved when the request has finished.</returns>
         </member>
         <member name="F:CotcSdk.Cloud.HttpRequestFailedHandler">
             <summary>
@@ -43,18 +43,18 @@
         <!-- Badly formed XML comment ignored for member "M:CotcSdk.Cloud.ListUsers(System.String,System.Int32,System.Int32)" -->
         <member name="M:CotcSdk.Cloud.LoginAnonymously">
             <summary>Logs the current user in anonymously.</summary>
-            <returns>task returning when the login has finished. The resulting Gamer object can then
+            <returns>Task returning when the login has finished. The resulting Gamer object can then
                 be used for many purposes related to the signed in account.</returns>
         </member>
         <member name="M:CotcSdk.Cloud.Login(CotcSdk.LoginNetwork,System.String,System.String,System.Boolean)">
             <summary>Logs the current user in, using any supported social network.</summary>
-            <returns>promise resolved when the login has finished. The resulting Gamer object can then be used for many
+            <returns>Promise resolved when the login has finished. The resulting Gamer object can then be used for many
                 purposes related to the signed in account.</returns>
-            <param name="network">the network to connect with. If an user is recognized on a given network (same network ID),
+            <param name="network">The network to connect with. If an user is recognized on a given network (same network ID),
                 then it will be signed back in and its user data will be used.</param>
-            <param name="networkId">the ID on the network. For example, with the facebook network, this would be the User ID.
+            <param name="networkId">The ID on the network. For example, with the facebook network, this would be the User ID.
                 On e-mail accounts e-mail then, this would be the e-mail address.</param>
-            <param name="networkSecret">the secret for the network. For e-mail accounts, this would be the passord. For
+            <param name="networkSecret">The secret for the network. For e-mail accounts, this would be the passord. For
                 facebook or other SNS accounts, this would be the user token.</param>
         </member>
         <member name="M:CotcSdk.Cloud.ResumeSession(System.String,System.String)">
@@ -62,10 +62,10 @@
             Logs back in with existing credentials. Should be used for users who have already been logged in
             previously and the application has been quit for instance.
             </summary>
-            <returns>task returning when the login has finished. The resulting Gamer object can then
+            <returns>Task returning when the login has finished. The resulting Gamer object can then
                 be used for many purposes related to the signed in account.</returns>
-            <param name="gamerId">credentials of the previous session (Gamer.GamerId).</param>
-            <param name="gamerSecret">credentials of the previous session (Gamer.GamerSecret).</param>
+            <param name="gamerId">Credentials of the previous session (Gamer.GamerId).</param>
+            <param name="gamerSecret">Credentials of the previous session (Gamer.GamerSecret).</param>
         </member>
         <member name="M:CotcSdk.Cloud.LoginWithShortcode(System.String)">
             <summary>Logs in by using a shortcode previously generated through #SendResetPasswordEmail.</summary>
@@ -81,34 +81,34 @@
             The user will receive an e-mail, containing a short code. This short code can be inputted in
             the #LoginWithShortcode method.
             </summary>
-            <returns>promise resolved when the request has finished.</returns>
-            <param name="userEmail">the user as identified by his e-mail address.</param>
-            <param name="mailSender">the sender e-mail address as it will appear on the e-mail.</param>
-            <param name="mailTitle">the title of the e-mail.</param>
-            <param name="mailBody">the body of the mail. You should include the string [[SHORTCODE]], which will
+            <returns>Promise resolved when the request has finished.</returns>
+            <param name="userEmail">The user as identified by his e-mail address.</param>
+            <param name="mailSender">The sender e-mail address as it will appear on the e-mail.</param>
+            <param name="mailTitle">The title of the e-mail.</param>
+            <param name="mailBody">The body of the mail. You should include the string [[SHORTCODE]], which will
                 be replaced by the generated short code.</param>
         </member>
         <member name="M:CotcSdk.Cloud.UserExists(CotcSdk.LoginNetwork,System.String)">
             <summary>Checks that an user exists on a given network.</summary>
-            <returns>promise resolved when the user is found. If the user does not exist, it fails with
+            <returns>Promise resolved when the user is found. If the user does not exist, it fails with
                 an HTTP status code of 400.</returns>
-            <param name="networkId">the ID of the user on the network, like the e-mail address.</param>
+            <param name="networkId">The ID of the user on the network, like the e-mail address.</param>
         </member>
         <member name="P:CotcSdk.Cloud.Game">
             <summary>Provides an API to manipulate game data, such as key/value or leaderboards.</summary>
-            <returns>an object that allow to manipulate game specific data.</returns>
+            <returns>An object that allow to manipulate game specific data.</returns>
         </member>
         <member name="T:CotcSdk.CloudIndexing">
             <summary>Provides an API allowing to manipulate an index.</summary>
         </member>
         <member name="M:CotcSdk.CloudIndexing.DeleteObject(System.String)">
             <summary>Deletes an indexed entry. If you just want to update an entry, simply use IndexObject.</summary>
-            <returns>promise resolved when the request has finished.</returns>
+            <returns>Promise resolved when the request has finished.</returns>
             <param name="objectId">ID of the object to delete, as passed when indexing.</param>
         </member>
         <member name="M:CotcSdk.CloudIndexing.GetObject(System.String)">
             <summary>Fetches a previously indexed object.</summary>
-            <returns>promise resolved when the request has finished.</returns>
+            <returns>Promise resolved when the request has finished.</returns>
             <param name="objectId">ID of the object to look for, as passed when indexing.</param>
         </member>
         <member name="M:CotcSdk.CloudIndexing.IndexObject(System.String,CotcSdk.Bundle,CotcSdk.Bundle)">
@@ -118,13 +118,13 @@
             for gamer properties, one for matches, one for finished matches, etc. It only depends on what you
             want to search for.
             </summary>
-            <returns>promise resolved when the request has finished.</returns>
-            <param name="objectId">the ID of the object to be indexed. It can be anything; this ID only needs to uniquely
+            <returns>Promise resolved when the request has finished.</returns>
+            <param name="objectId">The ID of the object to be indexed. It can be anything; this ID only needs to uniquely
                 identify your document. Therefore, using the match ID to index a match is recommended for instance.</param>
-            <param name="properties">a freeform object, whose attributes will be indexed and searchable. These properties
+            <param name="properties">A freeform object, whose attributes will be indexed and searchable. These properties
                 are typed! So if 'age' is once passed as an int, it must always be an int, or an error will be
                 thrown upon insertion.</param>
-            <param name="payload">another freeform object. These properties are attached to the document in the same way
+            <param name="payload">Another freeform object. These properties are attached to the document in the same way
                 as the properties, however those are not indexed (cannot be looked for in a search request). Its
                 content is returned in searches (#CotcSdk.IndexResult.Payload property).</param>
         </member>
@@ -138,11 +138,11 @@
              https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
             
              </summary>
-             <returns>promise resolved when the operation has finished. The attached object contains various
+             <returns>Promise resolved when the operation has finished. The attached object contains various
                  information about the results, including a Hits member, which handles the results in a
                  paginated way.</returns>
-             <param name="limit">the maximum number of results to return per page.</param>
-             <param name="offset">number of the first result.</param>
+             <param name="limit">The maximum number of results to return per page.</param>
+             <param name="offset">Number of the first result.</param>
         </member>
         <member name="T:CotcSdk.GamerStore">
             <summary>(App) Store API.</summary>
@@ -154,9 +154,9 @@
             Note that this call returns the catalog as configured on the CotC server, which may not be exhaustive if
             additional products are configured on iTunes Connect but not reported to the CotC servers.
             </summary>
-            <param name="limit">the maximum number of results to return per page.</param>
-            <param name="offset">number of the first result.</param>
-            <returns>promise resolved when the operation has completed. The attached value describes a list of products,
+            <param name="limit">The maximum number of results to return per page.</param>
+            <param name="offset">Number of the first result.</param>
+            <returns>Promise resolved when the operation has completed. The attached value describes a list of products,
                 with pagination functionality.</returns>
         </member>
         <member name="M:CotcSdk.GamerStore.GetPurchaseHistory">
@@ -164,7 +164,7 @@
             Fetches the list of transactions made by the logged in user. Only successful transactions
             show here.
             </summary>
-            <returns>promise resolved when the operation has completed. The attached value describes a list of purchase
+            <returns>Promise resolved when the operation has completed. The attached value describes a list of purchase
                 transactions, without pagination functionality.</returns>
         </member>
         <member name="M:CotcSdk.GamerStore.ValidateReceipt(CotcSdk.StoreType,System.String,System.Single,System.String,System.String)">
@@ -172,24 +172,24 @@
             Last step in the purchase. Validates the receipt received by a native purchase. You may have to do additional
             steps to close your purchase process.
             </summary>
-            <returns>promise indicating whether the recceipt was validated properly. In case of exception, you can inspect why
+            <returns>Promise indicating whether the recceipt was validated properly. In case of exception, you can inspect why
                 the receipt failed to verify.</returns>
-            <param name="storeType">type of Store, should be provided by the store plugin. Valid are appstore, macstore, googleplay.</param>
+            <param name="storeType">Type of Store, should be provided by the store plugin. Valid are appstore, macstore, googleplay.</param>
             <param name="cotcProductId">ID of the product purchased (as configured on the backoffice).</param>
-            <param name="paidPrice">paid price in units.</param>
-            <param name="paidCurrency">currency of paid price (ISO code).</param>
-            <param name="receipt">receipt string, dependent on the store type.</param>
+            <param name="paidPrice">Paid price in units.</param>
+            <param name="paidCurrency">Currency of paid price (ISO code).</param>
+            <param name="receipt">Receipt string, dependent on the store type.</param>
         </member>
         <member name="M:CotcSdk.Cotc.Setup(System.String,System.String,System.String,System.Int32,System.Boolean,System.Int32)">
             <summary>Call this at the very beginning to start using the library.</summary>
-            <returns>promise resolved when the process has finished, with the Cloud to be used for your operations (most
+            <returns>Promise resolved when the process has finished, with the Cloud to be used for your operations (most
                 likely synchronously).</returns>
-            <param name="apiKey">the community key.</param>
+            <param name="apiKey">The community key.</param>
             <param name="apiSecret">The community secret (credentials when registering to CotC).</param>
-            <param name="environment">the URL of the server. Should use one of the predefined constants.</param>
-            <param name="httpVerbose">set to true to output detailed information about the requests performed to CotC servers. Can be used
+            <param name="environment">The URL of the server. Should use one of the predefined constants.</param>
+            <param name="httpVerbose">Set to true to output detailed information about the requests performed to CotC servers. Can be used
                 for debugging, though it does pollute the logs.</param>
-            <param name="httpTimeout">sets a custom timeout for all requests in seconds. Defaults to 1 minute.</param>
+            <param name="httpTimeout">Sets a custom timeout for all requests in seconds. Defaults to 1 minute.</param>
         </member>
         <member name="M:CotcSdk.Cotc.OnApplicationFocus(System.Boolean)">
             <summary>
@@ -223,27 +223,27 @@
             object with the response in question, add an error message and invoke the
             result handler with it.
             </summary>
-            <returns>whether the server response is considered as failed</returns>
+            <returns>Whether the server response is considered as failed</returns>
         </member>
         <member name="M:CotcSdk.Common.RunRequest``1(CotcSdk.HttpRequest,CotcSdk.Promise{``0},System.Action{CotcSdk.HttpResponse})">
             <summary>
             Wrapper around our standard work on Managers.HttpClient.Run. Automatically notifies the passed handler
             of a failure.
             </summary>
-            <param name="req">request to perform.</param>
-            <param name="task">task that is resolved in case of failure, else the onSuccess callback is called and you'll
+            <param name="req">Request to perform.</param>
+            <param name="task">Task that is resolved in case of failure, else the onSuccess callback is called and you'll
                 have to resolve it from inside.</param>
-            <param name="onSuccess">callback called in case of success only.</param>
+            <param name="onSuccess">Callback called in case of success only.</param>
         </member>
         <member name="M:CotcSdk.Common.RunInTask``1(CotcSdk.HttpRequest,System.Action{CotcSdk.HttpResponse,CotcSdk.Promise{``0}})">
             <summary>
             Wrapper around our standard work on Managers.HttpClient.Run. Automatically notifies the passed handler
             of a failure.
             </summary>
-            <param name="req">request to perform.</param>
-            <returns>a task that is resolved in case of failure (the onSuccess callback is not called) or to be resolved
+            <param name="req">Request to perform.</param>
+            <returns>A task that is resolved in case of failure (the onSuccess callback is not called) or to be resolved
                 from the onSuccess block in case of success.</returns>
-            <param name="onSuccess">callback called in case of success only, with the response and a new task that needs to
+            <param name="onSuccess">Callback called in case of success only, with the response and a new task that needs to
                 be resolved from there.</param>
         </member>
         <member name="T:CotcSdk.CachedMember`1">
@@ -260,8 +260,8 @@
             Changes the domain affected by the next operations.
             You should typically use it this way: `gamer.Godfather.Domain("private").Associate(...);`
             </summary>
-            <param name="domain">domain on which to scope the next operations.</param>
-            <returns>this object for operation chaining.</returns>
+            <param name="domain">Domain on which to scope the next operations.</param>
+            <returns>This object for operation chaining.</returns>
         </member>
         <member name="M:CotcSdk.GamerGodfather.DiscardEventHandlers">
             <summary>
@@ -278,28 +278,31 @@
              established. "private" means it's local to this game only.
             
              </summary>
-             <returns>promise resolved when the operation has completed. The attached string is the generated code.</returns>
+             <returns>Promise resolved when the operation has completed. The attached string is the generated code.</returns>
         </member>
         <member name="M:CotcSdk.GamerGodfather.GetGodchildren">
             <summary>This method can be used to retrieve the gamer who have added you as a godfather.</summary>
-            <returns>promise resolved when the operation has completed.</returns>
+            <returns>Promise resolved when the operation has completed.</returns>
         </member>
         <member name="M:CotcSdk.GamerGodfather.GetGodfather">
             <summary>This method can be used to retrieve the godfather of the gamer.</summary>
-            <returns>promise resolved when the operation has completed.</returns>
+            <returns>Promise resolved when the operation has completed.</returns>
         </member>
         <member name="M:CotcSdk.GamerGodfather.UseCode(System.String,CotcSdk.Bundle,CotcSdk.PushNotification)">
             <summary>Call this to attribute a godfather to the currently logged in user.</summary>
-            <returns>promise resolved when the operation has completed.</returns>
-            <param name="code">is a string as generated by #GenerateCode.</param>
-            <param name="rewardTx">a transaction Json rewarding the godfather formed as follows:
+            <returns>Promise resolved when the operation has completed.</returns>
+            <param name="code">Is a string as generated by #GenerateCode.</param>
+            <param name="rewardTx">A transaction Json rewarding the godfather formed as follows:
                 { transaction : { "unit" : amount},
                 description : "reward transaction",
                 domain : "com.clanoftcloud.text.DOMAIN" }
                 where description and domain are optional.</param>
-            <param name="notification">optional OS notification to be sent to the godfather who generated the code.
+            <param name="notification">Optional OS notification to be sent to the godfather who generated the code.
                 The godfather will reveive an event of type 'godchildren' containing the id of the godchildren
                 and the balance/achievements field if rewarded.</param>
+        </member>
+        <member name="E:CotcSdk.GamerGodfather.OnGotGodchild">
+            <summary>Event triggered when someone adds this gamer as a friend or changes his friendship status.</summary>
         </member>
         <member name="T:CotcSdk.GotGodchildEvent">
             <summary>
@@ -316,21 +319,21 @@
         </member>
         <member name="M:CotcSdk.PropertiesObject.Keys">
             <summary>Allows to browse all keys (might include some that are already exposed as typed properties in the object).</summary>
-            <returns>the list of keys.</returns>
+            <returns>The list of keys.</returns>
         </member>
         <member name="M:CotcSdk.PropertiesObject.GetEnumerator">
             <summary>Allows to browse all keys (might include some that are already exposed as typed properties in the object).</summary>
-            <returns>an enumerator that allows to browse all key-value pairs. The values are #CotcSdk.Bundle, on which you can
+            <returns>An enumerator that allows to browse all key-value pairs. The values are #CotcSdk.Bundle, on which you can
                 perform all the usual conversions, such as casting it as a string if the property is expected to be a
                 string for instance.</returns>
         </member>
         <member name="M:CotcSdk.PropertiesObject.ToString">
             <summary>You may use this to debug what is inside this property object.</summary>
-            <returns>a JSON string representing the object.</returns>
+            <returns>A JSON string representing the object.</returns>
         </member>
         <member name="M:CotcSdk.PropertiesObject.ToJson">
             <summary>Builds a JSON representation of this object, same as ToString actually.</summary>
-            <returns>a JSON string representing the object.</returns>
+            <returns>A JSON string representing the object.</returns>
         </member>
         <member name="P:CotcSdk.PropertiesObject.Item(System.String)">
             <summary>Allows to query additional properties via an indexer (can be enriched via hooks).</summary>
@@ -349,14 +352,14 @@
             Changes the domain affected by the next operations.
             You should typically use it this way: `gamer.Batches.Domain("private").Run(...);`
             </summary>
-            <param name="domain">domain on which to scope the next operations.</param>
-            <returns>this object for operation chaining.</returns>
+            <param name="domain">Domain on which to scope the next operations.</param>
+            <returns>This object for operation chaining.</returns>
         </member>
         <member name="M:CotcSdk.GameBatches.Run(System.String,CotcSdk.Bundle)">
             <summary>Runs a batch on the server, unauthenticated (game-scoped).</summary>
-            <returns>promise resolved when the request has finished. The attached bundle is the JSON data returned by the match.</returns>
-            <param name="batchName">name of the batch to run, as configured on the server.</param>
-            <param name="batchParams">parameters to be passed to the batch.</param>
+            <returns>Promise resolved when the request has finished. The attached bundle is the JSON data returned by the match.</returns>
+            <param name="batchName">Name of the batch to run, as configured on the server.</param>
+            <param name="batchParams">Parameters to be passed to the batch.</param>
         </member>
         <member name="T:CotcSdk.GamerAchievements">
             <summary>API functions related to the achievements.</summary>
@@ -366,23 +369,23 @@
             Changes the domain affected by the next operations.
             You should typically use it this way: `gamer.Achievements.Domain("private").List(...);`
             </summary>
-            <param name="domain">domain on which to scope the next operations.</param>
-            <returns>this object for operation chaining.</returns>
+            <param name="domain">Domain on which to scope the next operations.</param>
+            <returns>This object for operation chaining.</returns>
         </member>
         <member name="M:CotcSdk.GamerAchievements.AssociateData(System.String,CotcSdk.Bundle)">
             <summary>
             Allows to store arbitrary data for a given achievement and the current player (appears in the
             'gamerData' node of achievements).
             </summary>
-            <returns>promise resolved when the operation has completed. The attached value contains the updated definition
+            <returns>Promise resolved when the operation has completed. The attached value contains the updated definition
                 of the achievement.</returns>
-            <param name="achName">name of the achievement to update.</param>
-            <param name="data">data to associate with the achievement, merged with the current data (that is, existing keys
+            <param name="achName">Name of the achievement to update.</param>
+            <param name="data">Data to associate with the achievement, merged with the current data (that is, existing keys
                 are not affected)</param>
         </member>
         <member name="M:CotcSdk.GamerAchievements.List">
             <summary>Fetches information about the status of the achievements configured for this game.</summary>
-            <returns>promise resolved when the operation has completed. The attached value is the list of achievements
+            <returns>Promise resolved when the operation has completed. The attached value is the list of achievements
                 with their current state.</returns>
         </member>
         <member name="T:CotcSdk.GamerBatches">
@@ -393,15 +396,15 @@
             Changes the domain affected by the next operations.
             You should typically use it this way: `gamer.Batches.Domain("private").Run(...);`
             </summary>
-            <param name="domain">domain on which to scope the next operations.</param>
-            <returns>this object for operation chaining.</returns>
+            <param name="domain">Domain on which to scope the next operations.</param>
+            <returns>This object for operation chaining.</returns>
         </member>
         <member name="M:CotcSdk.GamerBatches.Run(System.String,CotcSdk.Bundle)">
             <summary>Runs a batch on the server, authenticated as a gamer (gamer-scoped).</summary>
-            <returns>promise resolved when the operation has completed. The attached bundle is the JSON data returned
+            <returns>Promise resolved when the operation has completed. The attached bundle is the JSON data returned
                 by the batch.</returns>
-            <param name="batchName">name of the batch to run, as configured on the server.</param>
-            <param name="batchParams">parameters to be passed to the batch.</param>
+            <param name="batchName">Name of the batch to run, as configured on the server.</param>
+            <param name="batchParams">Parameters to be passed to the batch.</param>
         </member>
         <member name="T:CotcSdk.GamerMatches">
             <summary>
@@ -414,19 +417,19 @@
             Creates a match, available for join by other players. If you would like to make your match private, please read
             the general documentation about matches.
             </summary>
-            <returns>promise resolved when the operation has completed. The attached Match object allows to operate with the
+            <returns>Promise resolved when the operation has completed. The attached Match object allows to operate with the
                 match.</returns>
-            <param name="maxPlayers">the maximum number of players who may be in the game at a time.</param>
-            <param name="description">string describing the match (available for other who want to join).</param>
-            <param name="customProperties">freeform object containing the properties of the match, which may be used by other players
+            <param name="maxPlayers">The maximum number of players who may be in the game at a time.</param>
+            <param name="description">String describing the match (available for other who want to join).</param>
+            <param name="customProperties">Freeform object containing the properties of the match, which may be used by other players
                 to search for a suited match.</param>
-            <param name="shoe">freeform object containing a list of objects which will be shuffled upon match creation. This offers
+            <param name="shoe">Freeform object containing a list of objects which will be shuffled upon match creation. This offers
                 an easy way to make a random generator that is safe, unbiased (since made on the server) and can be verified
                 by all players once the game is finished. This bundle needs to be an array (use Bundle.CreateArray).</param>
         </member>
         <member name="M:CotcSdk.GamerMatches.Delete(System.String)">
             <summary>Deletes a match. Only works if you are the one who created it and it is already finished.</summary>
-            <returns>promise resolved when the operation has completed.</returns>
+            <returns>Promise resolved when the operation has completed.</returns>
             <param name="matchId">ID of the match to delete.</param>
         </member>
         <member name="M:CotcSdk.GamerMatches.DiscardEventHandlers">
@@ -440,8 +443,8 @@
             Changes the domain affected by the next operations.
             You should typically use it this way: `gamer.Matches.Domain("private").List(...);`
             </summary>
-            <param name="domain">domain on which to scope the matches. Default to `private` if unmodified.</param>
-            <returns>this object for operation chaining.</returns>
+            <param name="domain">Domain on which to scope the matches. Default to `private` if unmodified.</param>
+            <returns>This object for operation chaining.</returns>
         </member>
         <member name="M:CotcSdk.GamerMatches.Fetch(System.String)">
             <summary>
@@ -451,20 +454,20 @@
             that was returned by the Create method).
             This call is not scoped by domain (it uses the Match ID directly).
             </summary>
-            <returns>promise resolved when the operation has completed. The attached Match object allows to operate with
+            <returns>Promise resolved when the operation has completed. The attached Match object allows to operate with
                 the match.</returns>
-            <param name="matchId">the ID of an existing match to resume. It can be fetched from the Match object (MatchId).</param>
+            <param name="matchId">The ID of an existing match to resume. It can be fetched from the Match object (MatchId).</param>
         </member>
         <member name="M:CotcSdk.GamerMatches.Join(System.String,CotcSdk.PushNotification)">
             <summary>
             Asks to join the match with a given ID. Do not use this if you are already part of the match.
             This call is not scoped by domain (it uses the Match ID directly).
             </summary>
-            <returns>promise resolved when the operation has completed. In case of success, you get the exact same
+            <returns>Promise resolved when the operation has completed. In case of success, you get the exact same
                 match object that would be returned by a call to Create or Fetch. It can be used to interact with
                 the match as the user who just joined.</returns>
-            <param name="matchId">the ID of an existing match to join. It can be fetched from the Match object (MatchId).</param>
-            <param name="notification">optional push notification to be sent to inactive players (see class definition).</param>
+            <param name="matchId">The ID of an existing match to join. It can be fetched from the Match object (MatchId).</param>
+            <param name="notification">Optional push notification to be sent to inactive players (see class definition).</param>
         </member>
         <member name="M:CotcSdk.GamerMatches.List(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Int32,System.Int32)">
             <summary>
@@ -472,14 +475,14 @@
             if your goal is to display the games that may be joined. The indexing API is better suited to this use case
             (index the match along with properties and look for matches matching the desired properties).
             </summary>
-            <returns>promise resolved when the operation has completed. The list of matches filtered according to the
+            <returns>Promise resolved when the operation has completed. The list of matches filtered according to the
                 following parameters is provided.</returns>
-            <param name="participating">set to true to only list matches to which this user is participating.</param>
-            <param name="invited">set to true to filter by matches you are invited to (only include them).</param>
-            <param name="finished">set to true to also include finished matchs (which are filtered out by default).</param>
-            <param name="full">set to true to also include games where the maximum number of players has been reached.</param>
-            <param name="limit">for pagination, allows to set a greater or smaller page size than the default 30.</param>
-            <param name="offset">for pagination, avoid using it explicitly.</param>
+            <param name="participating">Set to true to only list matches to which this user is participating.</param>
+            <param name="invited">Set to true to filter by matches you are invited to (only include them).</param>
+            <param name="finished">Set to true to also include finished matchs (which are filtered out by default).</param>
+            <param name="full">Set to true to also include games where the maximum number of players has been reached.</param>
+            <param name="limit">For pagination, allows to set a greater or smaller page size than the default 30.</param>
+            <param name="offset">For pagination, avoid using it explicitly.</param>
         </member>
         <member name="T:CotcSdk.GamerCommunity">
             <summary>
@@ -490,16 +493,16 @@
         </member>
         <member name="M:CotcSdk.GamerCommunity.AddFriend(System.String,CotcSdk.PushNotification)">
             <summary>Easy way to add a friend knowing his gamer ID inside the CotC community.</summary>
-            <returns>promise resolved when the operation has completed.</returns>
+            <returns>Promise resolved when the operation has completed.</returns>
             <param name="gamerId">ID of the gamer to add as a friend (fetched using ListFriends for instance).</param>
-            <param name="notification">optional OS notification to be sent to indicate the player that the status has changed.</param>
+            <param name="notification">Optional OS notification to be sent to indicate the player that the status has changed.</param>
         </member>
         <member name="M:CotcSdk.GamerCommunity.ChangeRelationshipStatus(System.String,CotcSdk.FriendRelationshipStatus,CotcSdk.PushNotification)">
             <summary>Allows to change the relation of a friendship inside the application.</summary>
-            <returns>promise resolved when the operation has completed.</returns>
+            <returns>Promise resolved when the operation has completed.</returns>
             <param name="gamerId">ID of the gamer to change the relationship (fetched using ListFriends for instance).</param>
-            <param name="state">the new state to set.</param>
-            <param name="notification">optional OS notification to be sent to indicate the player that the status has changed.</param>
+            <param name="state">The new state to set.</param>
+            <param name="notification">Optional OS notification to be sent to indicate the player that the status has changed.</param>
         </member>
         <member name="M:CotcSdk.GamerCommunity.DiscardEventHandlers">
             <summary>
@@ -512,13 +515,13 @@
             Changes the domain affected by the next operations.
             You should typically use it this way: `gamer.Community.Domain("private").ListFriends(...);`
             </summary>
-            <param name="domain">domain on which to scope the next operations.</param>
-            <returns>this object for operation chaining.</returns>
+            <param name="domain">Domain on which to scope the next operations.</param>
+            <returns>This object for operation chaining.</returns>
         </member>
         <member name="M:CotcSdk.GamerCommunity.ListFriends(System.Boolean)">
             <summary>Method used to retrieve the application's friends of the currently logged in profile.</summary>
-            <returns>promise resolved when the operation has completed, with the fetched list of friends.</returns>
-            <param name="filterBlacklisted">when set to true, restricts to blacklisted friends.</param>
+            <returns>Promise resolved when the operation has completed, with the fetched list of friends.</returns>
+            <param name="filterBlacklisted">When set to true, restricts to blacklisted friends.</param>
         </member>
         <member name="M:CotcSdk.GamerCommunity.PostSocialNetworkFriends(CotcSdk.LoginNetwork,System.Collections.Generic.List{CotcSdk.SocialNetworkFriend})">
             <summary>
@@ -526,11 +529,11 @@
             This will automatically add them as a friend on CotC as they get recognized on our servers.
             The friends get associated to the domain of this object.
             </summary>
-            <returns>promise resolved when the operation has completed. The attached value is the same list as passed,
+            <returns>Promise resolved when the operation has completed. The attached value is the same list as passed,
                 enriched with potential information about the gamer (member #CotcSdk.SocialNetworkFriend.ClanInfo) for
                 gamers who are already registered on CotC servers.</returns>
-            <param name="network">the network with which these friends are associated</param>
-            <param name="friends">a list of data about the friends fetched on the social network.</param>
+            <param name="network">The network with which these friends are associated</param>
+            <param name="friends">A list of data about the friends fetched on the social network.</param>
         </member>
         <member name="M:CotcSdk.GamerCommunity.SendEvent(System.String,CotcSdk.Bundle,CotcSdk.PushNotification)">
              <summary>
@@ -540,12 +543,15 @@
              across games (or use private for messages sent to your game only).
             
              </summary>
-             <returns>promise resolved when the operation has completed.</returns>
+             <returns>Promise resolved when the operation has completed.</returns>
              <param name="gamerId">ID of the recipient gamer.</param>
              <param name="eventData">JSON object representing the event to be sent. The recipient will receive it as is
                  when subscribed to a #CotcSdk.DomainEventLoop (ReceivedEvent property). If the application is not active,
                  the message will be queued and transmitted the next time the domain event loop is started.</param>
-             <param name="notification">push notification to send to the recipient player if not currently active.</param>
+             <param name="notification">Push notification to send to the recipient player if not currently active.</param>
+        </member>
+        <member name="E:CotcSdk.GamerCommunity.OnFriendStatusChange">
+            <summary>Event triggered when someone adds this gamer as a friend or changes his friendship status.</summary>
         </member>
         <member name="T:CotcSdk.FriendStatusChangeEvent">
             <summary>Event triggered when someone adds this gamer as a friend or changes his friendship status.</summary>
@@ -564,51 +570,51 @@
             Changes the domain affected by the next operations.
             You should typically use it this way: `game.Scores.Domain("private").Post(...);`
             </summary>
-            <param name="domain">domain on which to scope the next operations.</param>
-            <returns>this object for operation chaining.</returns>
+            <param name="domain">Domain on which to scope the next operations.</param>
+            <returns>This object for operation chaining.</returns>
         </member>
         <member name="M:CotcSdk.GamerScores.List(System.String,System.Int32,System.Int32)">
             <summary>Fetch the score list for a given board.</summary>
-            <returns>promise resolved when the operation has completed. The attached value describes a list of scores, and
+            <returns>Promise resolved when the operation has completed. The attached value describes a list of scores, and
                 provides pagination functionality.</returns>
-            <param name="board">the name of the board to fetch scores from.</param>
-            <param name="limit">the maximum number of results to return per page.</param>
-            <param name="offset">number of the first result. Needs to be a multiple of `limit`. The special value of -1 can be used
+            <param name="board">The name of the board to fetch scores from.</param>
+            <param name="limit">The maximum number of results to return per page.</param>
+            <param name="offset">Number of the first result. Needs to be a multiple of `limit`. The special value of -1 can be used
                 to auto-select the page where the current logged in user is located, including his score in the result. After
                 that, you may use the paged result handler to fetch pages nearby.</param>
         </member>
         <member name="M:CotcSdk.GamerScores.ListFriendScores(System.String)">
             <summary>Fetch the score list for a given board, restricting to the scores made by the friends of the current user.</summary>
-            <returns>promise resolved when the operation has completed. The attached value describes a list of scores,
+            <returns>Promise resolved when the operation has completed. The attached value describes a list of scores,
                 without pagination functionality.</returns>
-            <param name="board">the name of the board to fetch scores from.</param>
+            <param name="board">The name of the board to fetch scores from.</param>
         </member>
         <member name="M:CotcSdk.GamerScores.ListUserBestScores">
             <summary>Retrieves the best scores of this gamer, on all board he has posted one score to.</summary>
-            <returns>promise resolved when the operation has completed. The attached value contains information about
+            <returns>Promise resolved when the operation has completed. The attached value contains information about
                 the best scores of the user, indexed by board name.
                 *IMPORTANT*: in the results, the gamer information is not provided. GamerInfo is always null.</returns>
         </member>
         <member name="M:CotcSdk.GamerScores.GetRank(System.Int64,System.String)">
             <summary>Retrieves the rank that a given score would have on the leaderboard, without actually registering the score.</summary>
-            <returns>promise resolved when the operation has completed. The attached value contains the rank that the
+            <returns>Promise resolved when the operation has completed. The attached value contains the rank that the
                 score would have (position in the board).</returns>
-            <param name="score">the score (numeric value) to check for ranking.</param>
-            <param name="board">the name of the board to check the ranking against. Should match the board where a score has
+            <param name="score">The score (numeric value) to check for ranking.</param>
+            <param name="board">The name of the board to check the ranking against. Should match the board where a score has
                 already been posted.</param>
         </member>
         <member name="M:CotcSdk.GamerScores.Post(System.Int64,System.String,CotcSdk.ScoreOrder,System.String,System.Boolean)">
             <summary>Post a score.</summary>
-            <returns>promise resolved when the operation has completed. The attached value contains the new rank of the
+            <returns>Promise resolved when the operation has completed. The attached value contains the new rank of the
                 player as well as whether the score was saved.</returns>
-            <param name="score">the score (numeric value) to record.</param>
-            <param name="board">the name of the board to post the score to. You may have as many boards as you like for your
+            <param name="score">The score (numeric value) to record.</param>
+            <param name="board">The name of the board to post the score to. You may have as many boards as you like for your
                 game, and scores are scoped between them.</param>
-            <param name="order">the order for this board. As board are not configured on the server, any client can create a
+            <param name="order">The order for this board. As board are not configured on the server, any client can create a
                 board dynamically. This parameter serves as as a description for the board and is used only upon
                 creation (that is, the first player posting to the named board).</param>
-            <param name="scoreInfo">an optional string used to describe the score made by the user.</param>
-            <param name="forceSave">when set to true, the score is saved even if its value is less than the past best score
+            <param name="scoreInfo">An optional string used to describe the score made by the user.</param>
+            <param name="forceSave">When set to true, the score is saved even if its value is less than the past best score
                 for this player.</param>
         </member>
         <member name="T:CotcSdk.ScoreOrder">
@@ -626,26 +632,26 @@
             Sets the domain affected by this object.
             You should typically use it this way: `gamer.GamerVfs.Domain("private").SetKey(...);`
             </summary>
-            <param name="domain">domain on which to scope the VFS. Defaults to `private` if not specified.</param>
-            <returns>this object, so you can chain operations</returns>
+            <param name="domain">Domain on which to scope the VFS. Defaults to `private` if not specified.</param>
+            <returns>This object, so you can chain operations</returns>
         </member>
         <member name="M:CotcSdk.GameVfs.GetAll">
             <summary>Retrieves all keys from the key/value system for the current domain.</summary>
-            <returns>promise resolved when the operation has completed. The attached bundle contains the keys
+            <returns>Promise resolved when the operation has completed. The attached bundle contains the keys
                 along with their values. If you would like to fetch the value of a given key and you expect
                 it to be a string, you may simply do `string value = result.Value["key"];`.</returns>
         </member>
         <member name="M:CotcSdk.GameVfs.GetKey(System.String)">
             <summary>Retrieves an individual key from the key/value system.</summary>
-            <returns>promise resolved when the operation has completed. The attached bundle contains the fetched property.
+            <returns>Promise resolved when the operation has completed. The attached bundle contains the fetched property.
                 As usual with bundles, it can be casted to the proper type you are expecting.
                 If the property doesn't exist, the call is marked as failed with a 404 status.</returns>
-            <param name="key">the name of the key to be fetched.</param>
+            <param name="key">The name of the key to be fetched.</param>
         </member>
         <member name="T:CotcSdk.EventLoopHandler">
             <summary>Delegate called when receiving a message on a #CotcSdk.DomainEventLoop.</summary>
-            <param name="sender">domain loop that triggered the event.</param>
-            <param name="e">description of the received event.</param>
+            <param name="sender">Domain loop that triggered the event.</param>
+            <param name="e">Description of the received event.</param>
         </member>
         <member name="T:CotcSdk.EventLoopArgs">
             <summary>
@@ -667,13 +673,13 @@
             You need valid credentials in order to instantiate this class. Use Cloud.Login* methods for that purpose.
             Once the object is created, you need to start the thread, please look at the other methods available.
             </summary>
-            <param name="gamer">the gamer object received from a login or similar function.</param>
-            <param name="domain">the domain on which to listen for events. Note that you may create multiple event loops,
+            <param name="gamer">The gamer object received from a login or similar function.</param>
+            <param name="domain">The domain on which to listen for events. Note that you may create multiple event loops,
                 especially if you are using multiple domains. The default domain, that you should use unless you are
                 explicitly using multiple domains, is the private domain.</param>
-            <param name="gamer">gamer, used to authenticate (receive events related to the said gamer).</param>
-            <param name="domain">domain on which to listen for events.</param>
-            <param name="iterationDuration">sets a custom timeout in seconds for the long polling event loop. Should be used
+            <param name="gamer">Gamer, used to authenticate (receive events related to the said gamer).</param>
+            <param name="domain">Domain on which to listen for events.</param>
+            <param name="iterationDuration">Sets a custom timeout in seconds for the long polling event loop. Should be used
                 with care and set to a high value (at least 60). Defaults to 590 (~10 min).</param>
         </member>
         <member name="M:CotcSdk.DomainEventLoop.Start">
@@ -705,11 +711,11 @@
         </member>
         <member name="P:CotcSdk.Game.Batches">
             <summary>Provides an API to run game-scoped (unauthenticated) batches.</summary>
-            <returns>an object that allows to manipulate batches.</returns>
+            <returns>An object that allows to manipulate batches.</returns>
         </member>
         <member name="P:CotcSdk.Game.GameVfs">
             <summary>Returns an object that allows to manipulate the key/value system associated with this game.</summary>
-            <returns>an object allowing to manipulate key/values for this user/game/domain.</returns>
+            <returns>An object allowing to manipulate key/values for this user/game/domain.</returns>
         </member>
         <member name="T:CotcSdk.Gamer">
             <summary>
@@ -731,10 +737,10 @@
              it as needed, which is done through the CotcGameObject as placed on your scene.
             
              </summary>
-             <param name="domain">domain to listen on. The `private` domain is used to receive system notifications
+             <param name="domain">Domain to listen on. The `private` domain is used to receive system notifications
                  as well as messages sent by other players. Unless cross-game functionality is used, you
                  should start one loop on the private domain as soon as the gamer is signed in.</param>
-             <returns>a domain event loop that is in started state.</returns>
+             <returns>A domain event loop that is in started state.</returns>
         </member>
         <member name="M:CotcSdk.Gamer.#ctor(CotcSdk.Cloud,CotcSdk.Bundle)">
             <summary>Only instantiated internally.</summary>
@@ -748,57 +754,57 @@
         </member>
         <member name="P:CotcSdk.Gamer.Account">
             <summary>Provides account related functions for the current gamer.</summary>
-            <returns>an object allowing to manipulate the account of the current gamer.</returns>
+            <returns>An object allowing to manipulate the account of the current gamer.</returns>
         </member>
         <member name="P:CotcSdk.Gamer.Achievements">
             <summary>Provides an API to manipulate achievements.</summary>
-            <returns>an object that allows to manipulate achievements.</returns>
+            <returns>An object that allows to manipulate achievements.</returns>
         </member>
         <member name="P:CotcSdk.Gamer.Batches">
             <summary>Provides an API to run batches.</summary>
-            <returns>an object that allows to manipulate batches.</returns>
+            <returns>An object that allows to manipulate batches.</returns>
         </member>
         <member name="P:CotcSdk.Gamer.Community">
             <summary>Provides an API to interact with friends on CotC.</summary>
-            <returns>an object that allow to manipulate friends.</returns>
+            <returns>An object that allow to manipulate friends.</returns>
         </member>
         <member name="P:CotcSdk.Gamer.GamerVfs">
             <summary>Returns an object that allows to manipulate the key/value system associated with this user.</summary>
-            <returns>an object allowing to manipulate key/values for this user/domain.</returns>
+            <returns>An object allowing to manipulate key/values for this user/domain.</returns>
         </member>
         <member name="P:CotcSdk.Gamer.Godfather">
             <summary>Exposes functionality related to the godfathers.</summary>
-            <returns>an object that allows to add a godfather, generate a code, etc.</returns>
+            <returns>An object that allows to add a godfather, generate a code, etc.</returns>
         </member>
         <member name="P:CotcSdk.Gamer.Matches">
             <summary>
             Provides an API to manipulate matches (mainly start them, since working with
             existing matches is provided by the Match class).
             </summary>
-            <returns>an object that allows to perform basic operations on matches.</returns>
+            <returns>An object that allows to perform basic operations on matches.</returns>
         </member>
         <member name="P:CotcSdk.Gamer.Profile">
             <summary>Allows to manipulate information related to the gamer profile.</summary>
-            <returns>an object that allows to read and set the profile.</returns>
+            <returns>An object that allows to read and set the profile.</returns>
         </member>
         <member name="P:CotcSdk.Gamer.Properties">
             <summary>Allows to manipulate the properties of the current gamer.</summary>
-            <returns>an object that allows to set, delete, etc. property values.</returns>
+            <returns>An object that allows to set, delete, etc. property values.</returns>
         </member>
         <member name="P:CotcSdk.Gamer.Scores">
             <summary>Provides an API able to handle functionality related to the leaderboards and scores.</summary>
-            <returns>an object that allows to manipulate scores.</returns>
+            <returns>An object that allows to manipulate scores.</returns>
         </member>
         <member name="P:CotcSdk.Gamer.Store">
             <summary>
             Allows to list, buy products and so on. This functionality is low level and you should use the
             appropriate external plugin to help with the purchase process.
             </summary>
-            <returns>an object that allows access to the store on a CotC point of view.</returns>
+            <returns>An object that allows access to the store on a CotC point of view.</returns>
         </member>
         <member name="P:CotcSdk.Gamer.Transactions">
             <summary>Allows to manipulate the transactions and related achievements of an user.</summary>
-            <returns>an object that allows to manipulate transactions and query achievements.</returns>
+            <returns>An object that allows to manipulate transactions and query achievements.</returns>
         </member>
         <member name="T:CotcSdk.GamerProfileMethods">
             <summary>Exposes methods allowing to fetch and modify the profile of the signed in gamer.</summary>
@@ -808,7 +814,7 @@
             Method used to retrieve some optional data of the logged in profile previously set by
             method SetProfile.
             </summary>
-            <returns>promise resolved when the operation has completed.</returns>
+            <returns>Promise resolved when the operation has completed.</returns>
         </member>
         <member name="M:CotcSdk.GamerProfileMethods.Outline">
             <summary>
@@ -819,7 +825,7 @@
             Non exhaustive list of fields include: `network`, `networkid`, `networksecret`, `registerTime`,
             `registerBy`, `games` (array), `profile`, `devices` (array), `domains` (array), `serverTime`.
             </summary>
-            <returns>promise resolved when the operation has completed with the resulting outline.</returns>
+            <returns>Promise resolved when the operation has completed with the resulting outline.</returns>
         </member>
         <member name="M:CotcSdk.GamerProfileMethods.Set(CotcSdk.Bundle)">
             <summary>
@@ -829,8 +835,8 @@
             strings, and some are pre-populated when the account is created, using the available info
             from the social network used to create the account.
             </summary>
-            <returns>promise resolved when the operation has completed.</returns>
-            <param name="data">is a Bundle holding the data to save for this user. The object can hold the
+            <returns>Promise resolved when the operation has completed.</returns>
+            <param name="data">Is a Bundle holding the data to save for this user. The object can hold the
                 whole profile or just a subset of the keys.</param>
         </member>
         <member name="T:CotcSdk.GamerTransactions">
@@ -845,7 +851,7 @@
             Retrieves the balance of the user. That is, the amount of "items" remaining after the various executed
             transactions.
             </summary>
-            <returns>promise resolved when the operation has completed. The attached bundle contains the balance.
+            <returns>Promise resolved when the operation has completed. The attached bundle contains the balance.
                 You can query the individual items by doing `result.Value["gold"]` for instance.</returns>
         </member>
         <member name="M:CotcSdk.GamerTransactions.Domain(System.String)">
@@ -853,18 +859,18 @@
             Changes the domain affected by the next operations.
             You should typically use it this way: `gamer.Transactions.Domain("private").Post(...);`
             </summary>
-            <param name="domain">domain on which to scope the transactions. Default to `private` if unmodified.</param>
-            <returns>this object for operation chaining.</returns>
+            <param name="domain">Domain on which to scope the transactions. Default to `private` if unmodified.</param>
+            <returns>This object for operation chaining.</returns>
         </member>
         <!-- Badly formed XML comment ignored for member "M:CotcSdk.GamerTransactions.History(System.String,System.Int32,System.Int32)" -->
         <member name="M:CotcSdk.GamerTransactions.Post(CotcSdk.Bundle,System.String)">
             <summary>Executes a transaction on the behalf of the user.</summary>
-            <returns>promise resolved when the operation has completed. The attached result contains the new balance
+            <returns>Promise resolved when the operation has completed. The attached result contains the new balance
                 and the possibly triggered achievements.</returns>
-            <param name="transaction">transaction to run. Consists of keys and associated integer values. A negative value
+            <param name="transaction">Transaction to run. Consists of keys and associated integer values. A negative value
                 indicates that the associated balance should be decremented. The special value "-auto" resets the value
                 to zero.</param>
-            <param name="description">description of the transaction. Will appear in the back office.</param>
+            <param name="description">Description of the transaction. Will appear in the back office.</param>
         </member>
         <member name="T:CotcSdk.HttpRequestFailedHandler">
             <summary>Delegate for failed HTTP requests. See Cloud.HttpRequestFailedHandler.</summary>
@@ -887,7 +893,7 @@
         </member>
         <member name="M:CotcSdk.HttpRequestFailedEventArgs.RetryIn(System.Int32)">
             <summary>Call this to retry the request later.</summary>
-            <param name="milliseconds">time in which to try again. No other request will be executed during this time
+            <param name="milliseconds">Time in which to try again. No other request will be executed during this time
                 (they will be queued) as to respect the issuing order. Please keep this in mind when setting a
                 high delay.</param>
         </member>
@@ -909,31 +915,31 @@
         </member>
         <member name="M:CotcSdk.Match.DrawFromShoe(System.Int32,CotcSdk.PushNotification)">
             <summary>Draws an item from the shoe.</summary>
-            <returns>promise resolved when the operation has completed. The attached bundle contains an array of items drawn
+            <returns>Promise resolved when the operation has completed. The attached bundle contains an array of items drawn
                 from the shoe. You may do `(int)result.Value[0]` to fetch the first value as integer.</returns>
-            <param name="count">the number of items to draw from the shoe.</param>
-            <param name="notification">a notification that can be sent to all players currently playing the match (except you).</param>
+            <param name="count">The number of items to draw from the shoe.</param>
+            <param name="notification">A notification that can be sent to all players currently playing the match (except you).</param>
         </member>
         <member name="M:CotcSdk.Match.Finish(System.Boolean,CotcSdk.PushNotification)">
             <summary>Terminates the match. You need to be the creator of the match to perform this operation.</summary>
-            <returns>promise resolved when the operation has completed.</returns>
-            <param name="deleteToo">if true, deletes the match if it finishes successfully or is already finished.</param>
-            <param name="notification">a notification that can be sent to all players currently playing the match (except you).</param>
+            <returns>Promise resolved when the operation has completed.</returns>
+            <param name="deleteToo">If true, deletes the match if it finishes successfully or is already finished.</param>
+            <param name="notification">A notification that can be sent to all players currently playing the match (except you).</param>
         </member>
         <member name="M:CotcSdk.Match.InvitePlayer(System.String,CotcSdk.PushNotification)">
             <summary>
             Allows to invite a player to join a match. You need to be part of the match to send an invitation.
             This can be used to invite an opponent to a match that is not shown publicly.
             </summary>
-            <returns>promise resolved when the operation has completed.</returns>
+            <returns>Promise resolved when the operation has completed.</returns>
             <param name="playerId">ID of the player to invite to the match. Player IDs can be found in the properties of the
                 match (GamerInfo.GamerId).</param>
-            <param name="notification">a push notification that can be sent to the invitee.</param>
+            <param name="notification">A push notification that can be sent to the invitee.</param>
         </member>
         <member name="M:CotcSdk.Match.Leave(CotcSdk.PushNotification)">
             <summary>Leaves the match.</summary>
-            <returns>promise resolved when the operation has completed.</returns>
-            <param name="notification">a push notification that can be sent to all players except you.</param>
+            <returns>Promise resolved when the operation has completed.</returns>
+            <param name="notification">A push notification that can be sent to all players except you.</param>
         </member>
         <member name="M:CotcSdk.Match.Lock(System.Action)">
             <summary>
@@ -943,13 +949,13 @@
         </member>
         <member name="M:CotcSdk.Match.PostMove(CotcSdk.Bundle,CotcSdk.Bundle,CotcSdk.PushNotification)">
             <summary>Posts a move to other players.</summary>
-            <returns>promise resolved when the operation has completed.</returns>
-            <param name="moveData">a freeform object indicating the move data to be posted and transfered to other players. This
+            <returns>Promise resolved when the operation has completed.</returns>
+            <param name="moveData">A freeform object indicating the move data to be posted and transfered to other players. This
                 move data will be kept in the events, and new players should be able to use it to reproduce the local game
                 state.</param>
-            <param name="updatedGameState">a freeform object replacing the global game state, to be used by players who join from
+            <param name="updatedGameState">A freeform object replacing the global game state, to be used by players who join from
                 now on. Passing a non null value clears the pending events in the match.</param>
-            <param name="notification">a push notification that can be sent to all players except you.</param>
+            <param name="notification">A push notification that can be sent to all players except you.</param>
         </member>
         <member name="P:CotcSdk.Match.Creator">
             <summary>Describes the creator of the match.</summary>
@@ -971,7 +977,7 @@
         </member>
         <member name="P:CotcSdk.Match.IsCreator">
             <summary></summary>
-            <returns>whether you are the creator of the match, and as such have special privileges (like the ability
+            <returns>Whether you are the creator of the match, and as such have special privileges (like the ability
                 to finish and delete a match).</returns>
         </member>
         <member name="P:CotcSdk.Match.LastEventId">
@@ -985,6 +991,25 @@
         </member>
         <member name="P:CotcSdk.Match.Moves">
             <summary>List of existing events, which may be used to reproduce the state of the game.</summary>
+        </member>
+        <member name="E:CotcSdk.Match.OnMatchFinished">
+            <summary>
+            Event raised when the match is marked as finished. As with most match events, this event is
+            delivered to all users currently participating to the match except the user who initiated it
+            (that is, oneself).
+            </summary>
+        </member>
+        <member name="E:CotcSdk.Match.OnPlayerJoined">
+            <summary>Event raised when a player joins the match (excluding us obviously).</summary>
+        </member>
+        <member name="E:CotcSdk.Match.OnPlayerLeft">
+            <summary>Event raised when a player leaves the match (excluding us obviously).</summary>
+        </member>
+        <member name="E:CotcSdk.Match.OnMovePosted">
+            <summary>Event raised when a move is posted by any player except us in the match.</summary>
+        </member>
+        <member name="E:CotcSdk.Match.OnShoeDrawn">
+            <summary>Event raised when an element is drawn from the shoe.</summary>
         </member>
         <member name="P:CotcSdk.Match.Players">
             <summary>IDs of players participating to the match, including the creator (which is reported alone there at creation).</summary>
@@ -1021,7 +1046,7 @@
         </member>
         <member name="M:CotcSdk.MatchInfo.DismissInvitation">
             <summary>Dismisses a pending invitation for the current user and the match. Fails if the user has not been invited.</summary>
-            <returns>promise resolved when the operation has completed.</returns>
+            <returns>Promise resolved when the operation has completed.</returns>
         </member>
         <member name="P:CotcSdk.MatchInfo.MatchId">
             <summary>The ID of the match.</summary>
@@ -1109,43 +1134,43 @@
             Sets the domain affected by this object.
             You should typically use it this way: `gamer.Properties.Domain("private").Post(...);`
             </summary>
-            <param name="domain">optional domain on which to scope the properties. Default to `private` if unmodified.</param>
-            <returns>this object for operation chaining.</returns>
+            <param name="domain">Optional domain on which to scope the properties. Default to `private` if unmodified.</param>
+            <returns>This object for operation chaining.</returns>
         </member>
         <member name="M:CotcSdk.GamerProperties.GetKey(System.String)">
             <summary>Retrieves an individual key from the gamer properties.</summary>
-            <returns>promise resolved when the operation has completed. The attached bundle contains the fetched property.
+            <returns>Promise resolved when the operation has completed. The attached bundle contains the fetched property.
                 As usual with bundles, it can be casted to the proper type you are expecting.
                 In case the call fails, the bundle is not attached, the call is marked as failed with a 404 status.</returns>
-            <param name="key">the name of the key to be fetched.</param>
+            <param name="key">The name of the key to be fetched.</param>
         </member>
         <member name="M:CotcSdk.GamerProperties.GetAll">
             <summary>Retrieves all the properties of the gamer.</summary>
-            <returns>promise resolved when the operation has completed. The attached bundle contains the keys along with their
+            <returns>Promise resolved when the operation has completed. The attached bundle contains the keys along with their
                 values. If you would like to fetch the value of a given key and you expect it to be a string, you may simply
                 do `string value = result.Value["key"];`. Bundle handles automatic conversions as well, so if you passed an
                 integer, you may as well fetch it as a string and vice versa.</returns>
         </member>
         <member name="M:CotcSdk.GamerProperties.SetKey(System.String,CotcSdk.Bundle)">
             <summary>Sets a single key from the user properties.</summary>
-            <returns>promise resolved when the operation has completed. The enclosed value indicates success.</returns>
-            <param name="key">the name of the key to set the value for.</param>
-            <param name="value">the value to set. As usual with bundles, casting is implicitly done, so you may as well
+            <returns>Promise resolved when the operation has completed. The enclosed value indicates success.</returns>
+            <param name="key">The name of the key to set the value for.</param>
+            <param name="value">The value to set. As usual with bundles, casting is implicitly done, so you may as well
                 call this method passing an integer or string as value for instance.</param>
         </member>
         <member name="M:CotcSdk.GamerProperties.SetAll(CotcSdk.Bundle)">
             <summary>Sets all keys at once.</summary>
-            <returns>promise resolved when the operation has completed. The enclosed value indicates success.</returns>
-            <param name="properties">a bundle of key/value properties to set. An example is `Bundle.CreateObject("key", "value")`.</param>
+            <returns>Promise resolved when the operation has completed. The enclosed value indicates success.</returns>
+            <param name="properties">A bundle of key/value properties to set. An example is `Bundle.CreateObject("key", "value")`.</param>
         </member>
         <member name="M:CotcSdk.GamerProperties.RemoveKey(System.String)">
             <summary>Removes a single key from the user properties.</summary>
-            <returns>promise resolved when the operation has completed.</returns>
-            <param name="key">the name of the key to remove.</param>
+            <returns>Promise resolved when the operation has completed.</returns>
+            <param name="key">The name of the key to remove.</param>
         </member>
         <member name="M:CotcSdk.GamerProperties.RemoveAll">
             <summary>Remove all properties for the user.</summary>
-            <returns>promise resolved when the operation has completed.</returns>
+            <returns>Promise resolved when the operation has completed.</returns>
         </member>
         <member name="T:CotcSdk.IndexResult">
             <summary>
@@ -1283,8 +1308,8 @@
         </member>
         <member name="M:CotcSdk.PushNotification.Message(System.String,System.String)">
             <summary>Adds or replaces a string for a given language.</summary>
-            <param name="language">language code, ex. "en", "ja", etc.</param>
-            <param name="text">the text for this language.</param>
+            <param name="language">Language code, ex. "en", "ja", etc.</param>
+            <param name="text">The text for this language.</param>
         </member>
         <member name="T:CotcSdk.Score">
             <summary>Represents a score fetched from a leaderboard.</summary>
@@ -1370,19 +1395,19 @@
         </member>
         <member name="F:CotcSdk.PagedList`1.Offset">
             <summary></summary>
-            <returns>the number of the first result in the list.</returns>
+            <returns>The number of the first result in the list.</returns>
         </member>
         <member name="F:CotcSdk.PagedList`1.Total">
             <summary></summary>
-            <returns>the total number of items (possibly greater than the page size).</returns>
+            <returns>The total number of items (possibly greater than the page size).</returns>
         </member>
         <member name="P:CotcSdk.PagedList`1.HasPrevious">
             <summary></summary>
-            <returns>whether there is a previous page. Call FetchPrevious to go back to it.</returns>
+            <returns>Whether there is a previous page. Call FetchPrevious to go back to it.</returns>
         </member>
         <member name="P:CotcSdk.PagedList`1.HasNext">
             <summary></summary>
-            <returns>whether there is a next page. Call FetchNext to go back to it.</returns>
+            <returns>Whether there is a next page. Call FetchNext to go back to it.</returns>
         </member>
         <member name="M:CotcSdk.CotcException.#ctor(CotcSdk.ErrorCode,System.String)">
             <summary>To be used for an higher level error. No information about the HTTP request would be attached.</summary>
@@ -1402,41 +1427,110 @@
             Sets the domain affected by this object.
             You should typically use it this way: `gamer.GamerVfs.Domain("private").SetKey(...);`
             </summary>
-            <param name="domain">domain on which to scope the VFS. Defaults to `private` if not specified.</param>
-            <returns>this object for operation chaining.</returns>
+            <param name="domain">Domain on which to scope the VFS. Defaults to `private` if not specified.</param>
+            <returns>This object for operation chaining.</returns>
         </member>
         <member name="M:CotcSdk.GamerVfs.GetKey(System.String)">
             <summary>Retrieves an individual key from the key/value system.</summary>
-            <returns>promise resolved when the operation has completed. The attached bundle contains the fetched
+            <returns>Promise resolved when the operation has completed. The attached bundle contains the fetched
                 property. As usual with bundles, it can be casted to the proper type you are expecting.
                 If the property doesn't exist, the call is marked as failed with a 404 status.</returns>
-            <param name="key">the name of the key to be fetched.</param>
+            <param name="key">The name of the key to be fetched.</param>
         </member>
         <member name="M:CotcSdk.GamerVfs.GetKeyBinary(System.String)">
             <summary>Retrieves the binary data of an individual key from the key/value system.</summary>
-            <returns>promise resolved when the operation has completed. The binary data is attached as the value
+            <returns>Promise resolved when the operation has completed. The binary data is attached as the value
                 of the result. Please ensure that the key was set with binary data before, or this call will
                 fail with a network error.</returns>
-            <param name="key">the name of the key to be fetched.</param>
+            <param name="key">The name of the key to be fetched.</param>
         </member>
         <member name="M:CotcSdk.GamerVfs.SetKey(System.String,CotcSdk.Bundle)">
             <summary>Sets the value of a key in the key/value system.</summary>
-            <returns>promise resolved when the operation has completed.</returns>
-            <param name="key">the name of the key to set the value for.</param>
-            <param name="value">the value to set. As usual with bundles, casting is implicitly done, so you may as well
+            <returns>Promise resolved when the operation has completed.</returns>
+            <param name="key">The name of the key to set the value for.</param>
+            <param name="value">The value to set. As usual with bundles, casting is implicitly done, so you may as well
                 call this method passing an integer or string as value for instance.</param>
         </member>
         <member name="M:CotcSdk.GamerVfs.SetKeyBinary(System.String,System.Byte[])">
             <summary>Sets the value of a key in the key/value system as binary data.</summary>
-            <returns>promise resolved when the operation has completed.</returns>
-            <param name="key">the name of the key to set the value for.</param>
-            <param name="binaryData">the value to set as binary data.</param>
+            <returns>Promise resolved when the operation has completed.</returns>
+            <param name="key">The name of the key to set the value for.</param>
+            <param name="binaryData">The value to set as binary data.</param>
         </member>
         <member name="M:CotcSdk.GamerVfs.RemoveKey(System.String)">
             <summary>Removes a single key from the key/value system.</summary>
-            <returns>promise resolved when the operation has completed.</returns>
-            <param name="key">the name of the key to remove.</param>
+            <returns>Promise resolved when the operation has completed.</returns>
+            <param name="key">The name of the key to remove.</param>
         </member>
+        <member name="T:CotcSdk.Promise`1">
+            <summary>
+            Promise of future result, which may fail or succeed. Returned as a result of any asnychronous operation.
+            https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise
+            </summary>
+            <typeparam name="PromisedT">Expected result type (in case of success, else an exception is returned).</typeparam>
+        </member>
+        <member name="M:CotcSdk.Promise`1.Catch(System.Action{System.Exception})">
+            <summary>Catches a failure at that point in the chain.</summary>
+            <param name="onRejected">Block handling the exception.</param>
+            <returns>Another promise which is rejected under any circumstances: either for the same reason as this one (if
+            the promise is caught further in the chain and this block executes well) or with another exception (if the
+            onRejected block throws an exception). As such, it is highly recommended to provide a .Done() block after your
+            Catch block, so that any exception in the catch body can be propagated to the unhandled exception handler.</returns>
+        </member>
+        <member name="M:CotcSdk.Promise`1.Done(System.Action{`0},System.Action{System.Exception})">
+            <summary>Put this at the end of a promise chain. It ensures that unhandled exceptions can be delivered properly.</summary>
+            <param name="onResolved">Execute upon success of all the chain steps.</param>
+            <param name="onRejected">Execute upon rejection of the promise chain (any failure within the chain).</param>
+        </member>
+        <member name="M:CotcSdk.Promise`1.Done(System.Action{`0})">
+            <summary>Put this at the end of a promise chain.</summary>
+            <param name="onResolved">Execute upon success (as is, this is nearly equivalent to providing a simple Then block, except
+            that you can not do further chain the promise. Therefore, it ensures that an exception not handled at that point will never
+            be and allows unhandled exceptions to be delivered properly.</param>
+        </member>
+        <member name="M:CotcSdk.Promise`1.Done">
+            <summary>Put this at the end of a promise chain. It ensures that unhandled exceptions can be delivered properly.</summary>
+        </member>
+        <member name="M:CotcSdk.Promise`1.Reject(System.Exception)">
+            <summary>Reject this promise (indicate that the process failed for some reason).</summary>
+            <param name="ex">Exception to return as the failure result.</param>
+        </member>
+        <member name="M:CotcSdk.Promise`1.Rejected(System.Exception)">
+            <summary>Shorthand to create a promise that is already rejected.</summary>
+            <param name="ex">Exception to reject the promise with.</param>
+            <returns>A promise that is rejected right away.</returns>
+        </member>
+        <member name="M:CotcSdk.Promise`1.Resolve(`0)">
+            <summary>Resolves the promise, i.e. notifies a successful result of the async operation.</summary>
+            <param name="value">Result of the async operation. Caught by subscribers to this promise via a Then block.</param>
+        </member>
+        <member name="M:CotcSdk.Promise`1.Then``1(System.Func{`0,CotcSdk.Promise{``0}})">
+            <summary>
+            Add a resolved callback and a rejected callback.
+            The resolved callback chains a value promise (optionally converting to a different value type).
+            </summary>
+            <typeparam name="ConvertedT">Type of the expected result (it should be guessed automatically).</typeparam>
+            <param name="onResolved">Executed upon successful result.</param>
+            <returns>A new promise from another type.</returns>
+        </member>
+        <member name="M:CotcSdk.Promise`1.Then(System.Action{`0})">
+            <summary>
+            Registers a block of code to be executed when the promise returns a successful result.
+            </summary>
+            <param name="onResolved">Executed upon successful result.</param>
+            <returns>A new promise to be used for chaining (you can Catch an exception that happened in the block for
+            instance.</returns>
+        </member>
+        <member name="M:CotcSdk.Promise`1.Then(System.Action{`0},System.Action{System.Exception})">
+            <summary>
+            Add a resolved callback and a rejected callback.
+            The resolved callback chains a non-value promise.
+            </summary>
+            <param name="onResolved">Executed upon successful result.</param>
+            <param name="onRejected">Executed upon failure (promise rejected).</param>
+            <returns>A promise that can be further chained.</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:CotcSdk.Promise`1.Then``1(System.Func{`0,CotcSdk.Promise{``0}},System.Action{System.Exception})" -->
         <member name="F:CotcSdk.Promise.Debug_OutputAllExceptions">
             <summary>
             Set this to true in order to output any exception to the console, even if it is caught by a .Catch block.
@@ -1554,13 +1648,13 @@
         </member>
         <member name="M:CotcSdk.GamerAccountMethods.ChangeEmailAddress(System.String)">
             <summary>Changes the e-mail address of the current user. Works for e-mail type accounts.</summary>
-            <returns>promise resolved when the operation has completed.</returns>
-            <param name="newEmailAddress">the new e-mail address to be used for signing in.</param>
+            <returns>Promise resolved when the operation has completed.</returns>
+            <param name="newEmailAddress">The new e-mail address to be used for signing in.</param>
         </member>
         <member name="M:CotcSdk.GamerAccountMethods.ChangePassword(System.String)">
             <summary>Changes the password of the current user. Works for e-mail type accounts.</summary>
-            <returns>promise resolved when the operation has completed.</returns>
-            <param name="newPassword">the new password to be used for signing in.</param>
+            <returns>Promise resolved when the operation has completed.</returns>
+            <param name="newPassword">The new password to be used for signing in.</param>
         </member>
         <member name="M:CotcSdk.GamerAccountMethods.Convert(CotcSdk.LoginNetwork,System.String,System.String)">
             <summary>
@@ -1571,22 +1665,22 @@
             In order to convert the account successfully, the provided network credentials need to be acceptable,
             just as when calling Cloud.Login.
             </summary>
-            <returns>promise resolved when the operation has completed.</returns>
-            <param name="network">the target network to connect with later on.</param>
-            <param name="networkId">the ID on the network. For example, with the facebook network, this would be the User ID.
+            <returns>Promise resolved when the operation has completed.</returns>
+            <param name="network">The target network to connect with later on.</param>
+            <param name="networkId">The ID on the network. For example, with the facebook network, this would be the User ID.
                 On e-mail accounts e-mail then, this would be the e-mail address.</param>
-            <param name="networkSecret">the secret for the network. For e-mail accounts, this would be the passord. For
+            <param name="networkSecret">The secret for the network. For e-mail accounts, this would be the passord. For
                 facebook or other SNS accounts, this would be the user token.</param>
         </member>
         <member name="M:CotcSdk.GamerAccountMethods.RegisterDevice(System.String,System.String)">
             <summary>Meant to be called for push notifications.</summary>
-            <param name="os">operating system (should be determined by the native implementation: "ios", "android", "macos", …).</param>
-            <param name="token">push notification token (device specific).</param>
+            <param name="os">Operating system (should be determined by the native implementation: "ios", "android", "macos", …).</param>
+            <param name="token">Push notification token (device specific).</param>
         </member>
         <member name="M:CotcSdk.GamerAccountMethods.UnregisterDevice(System.String,System.String)">
             <summary>Unregisters a previously registered device (see #RegisterDevice).</summary>
-            <param name="os">operating system (should be determined by the native implementation: "ios", "android", "macos", …).</param>
-            <param name="token">push notification token (device specific).</param>
+            <param name="os">Operating system (should be determined by the native implementation: "ios", "android", "macos", …).</param>
+            <param name="token">Push notification token (device specific).</param>
         </member>
     </members>
 </doc>

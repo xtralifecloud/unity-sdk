@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace CotcSdk.PushNotifications {
 
+	/// <summary>
+	/// This class allows to interact with the underlying implementation of push notifications for your platform.
+	/// You should not need to do anything with it.
+	/// </summary>
 	public class CotcPushNotificationsGameObject : MonoBehaviour {
 
 #if UNITY_ANDROID

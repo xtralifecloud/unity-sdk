@@ -6,6 +6,7 @@ namespace CotcSdk
 	/// <summary>Godfather (code) related functions. You may also want to subscribe to events (see #CotcSdk.GamerGodfather.OnGotGodchild).</summary>
 	public class GamerGodfather {
 
+		/// <summary>Event triggered when someone adds this gamer as a friend or changes his friendship status.</summary>
 		public event Action<GotGodchildEvent> OnGotGodchild {
 			add { onGotGodchild += value; CheckEventLoopNeeded(); }
 			remove { onGotGodchild -= value; CheckEventLoopNeeded(); }

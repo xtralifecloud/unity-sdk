@@ -129,7 +129,7 @@ match.Lock(() => {
 });
 ~~~~
 
-In case a player joins the match, the following event will be received by other players. You can subscribe to it at a higher level by using the #Cotc.Match.OnPlayerJoined event.
+In case a player joins the match, the following event will be received by other players. You can subscribe to it at a higher level by using the #CotcSdk.Match.OnPlayerJoined event.
 
 ~~~~{.js}
 {
@@ -151,7 +151,7 @@ In case a player joins the match, the following event will be received by other 
 }
 ~~~~
 
-In case a player leaves the match, similarly the following event will be received by others. You can subscribe to it at a higher level by using the #Cotc.Match.OnPlayerLeft event.
+In case a player leaves the match, similarly the following event will be received by others. You can subscribe to it at a higher level by using the #CotcSdk.Match.OnPlayerLeft event.
 
 ~~~~{.js}
 {
@@ -173,7 +173,7 @@ In case a player leaves the match, similarly the following event will be receive
 }
 ~~~~
 
-In case the match is marked as finished, the following event will be broadcasted to all players except the one who initiated it. You can subscribe to it at a higher level by using the #Cotc.Match.OnMatchFinished event.
+In case the match is marked as finished, the following event will be broadcasted to all players except the one who initiated it. You can subscribe to it at a higher level by using the #CotcSdk.Match.OnMatchFinished event.
 
 ~~~~{.js}
     {
@@ -187,7 +187,7 @@ In case the match is marked as finished, the following event will be broadcasted
     }
 ~~~~
 
-In case a move was posted, an event like the following one is fired. You can subscribe to it at a higher level by using the #Cotc.Match.OnShoeDrawn event.
+In case a move was posted, an event like the following one is fired. You can subscribe to it at a higher level by using the #CotcSdk.Match.OnShoeDrawn event.
 
 ~~~~{.js}
 {
@@ -203,7 +203,7 @@ In case a move was posted, an event like the following one is fired. You can sub
 }
 ~~~~
 
-In case an element was drawn from the shoe, an event like this is fired. You can subscribe to it at a higher level by using the #Cotc.Match.OnMovePosted event.
+In case an element was drawn from the shoe, an event like this is fired. You can subscribe to it at a higher level by using the #CotcSdk.Match.OnMovePosted event.
 
 ~~~~{.js}
 	{

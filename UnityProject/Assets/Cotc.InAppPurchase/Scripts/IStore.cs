@@ -22,8 +22,8 @@ namespace CotcSdk.InappPurchase {
 		 * though, only the first part where the store front end is presented to the user and allows
 		 * him to pay. The purchase process will also incur an additional step consisting in a
 		 * verification of the payment before actually delivering the goods. That is why you need to
-		 * call #CotcSdk.GamerStore.SendStorePurchaseToServer after your purchase has been done
-		 * and forward the result.
+		 * call #CotcSdk.GamerStore.ValidateReceipt after your purchase has been done and forward the
+		 * result.
 		 * @param gamer gamer to associate with the purchase.
 		 * @param product product to be purchased, as returned by #GetInformationAboutProducts.
 		 * @return promise resolved when the purchase has completed successfully.
