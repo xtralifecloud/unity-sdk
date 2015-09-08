@@ -5,9 +5,7 @@ using UnityEngine;
 
 namespace CotcSdk.InappPurchase {
 
-	/**
-	 * Android implementation of the Store. Uses Java code for interfacing with the machine.
-	 */
+	/// <summary>Android implementation of the Store. Uses Java code for interfacing with the machine.</summary>
 	class GooglePlayStoreImpl: IStore {
 
 		private AndroidJavaClass JavaClass;
@@ -142,11 +140,9 @@ namespace CotcSdk.InappPurchase {
 			promise.Resolve(new Done(true, Bundle.Empty));
 		}
 
-		/**
-		 * Parses an error coming from an unity message sent from Android.
-		 * @param bundle error as received from Android, parsed to JSON.
-		 * @return an exception
-		 */
+		/// <summary>Parses an error coming from an unity message sent from Android.</summary>
+		/// <param name="bundle">error as received from Android, parsed to JSON.</param>
+		/// <returns>an exception</returns>
 		private CotcException ParseError(Bundle bundle) {
 			return new CotcException((ErrorCode) bundle["error"].AsInt(), bundle["description"]);
 		}
