@@ -9,8 +9,12 @@ namespace CotcSdk
 	}
 
 	/// <summary>
-	/// Promise of future result, which may fail or succeed. Returned as a result of any asnychronous operation.
-	/// https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise
+	/// %Promise of future result, which may fail or succeed. Returned as a result of any asnychronous operation.
+	/// 
+	/// Complies to the standard %Promise specification: https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise
+	/// 
+	/// Used throughout most API calls to ease the manipulation of asynchronous methods. See [this chapter](#getting_started_ref) for a
+	/// tutorial on how to use promises with the SDK.
 	/// </summary>
 	/// <typeparam name="PromisedT">Expected result type (in case of success, else an exception is returned).</typeparam>
 	public class Promise<PromisedT> {
@@ -146,7 +150,8 @@ namespace CotcSdk
 		/// <summary>
 		/// Adds a resolved and rejected callback. Allows for chaining (i.e. return another promise, potentially of another type,
 		/// indicating an operation to be waited for). Example:
-		/// @code Promise<int> longIntOperation();
+		/// @code{.cs}
+		/// Promise<int> longIntOperation();
 		/// Promise<bool> longBoolOperation();
 		/// longIntOperation()
 		/// .Then((int result) => {

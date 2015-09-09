@@ -4,25 +4,25 @@ Getting started {#getting_started_ref}
 The Unity SDK is available at the following URL:
 https://github.com/clanofthecloud/unity-sdk/releases.
 
-The Unity SDK is cut in several parts:
-- The core library, which contains all the core classes and communicates with our servers. It is small, has no dependencies and provides almost all functionality.
-- The facebook integration library. It depends on the facebook SDK for Unity and provides facebook related functionality. The integration library is provided as a separate package.
-- The push notification library, which provides that functionality, currently for Android and iOS.
-- The in-app purchase library, which provides the corresponding functionality, currently for Android and iOS.
+We decided to cut it in several parts:
+- **The core library**, which contains all the core classes and communicates with our servers. It is small, has no dependencies and provides almost all functionality.
+- **The facebook integration library**. It depends on the facebook SDK for Unity and provides facebook related functionality. The integration library is provided as a separate package.
+- **The push notification library**, which provides that functionality, currently for Android and iOS.
+- **The in-app purchase library**, which provides the corresponding functionality, currently for Android and iOS.
 
 Packages are distributed separately, although we zipped them together due to their relatively small size. Apart from facebook, they also include all their respective dependencies.
 
 ![Import package screen](./Docs/img/importpackage01.png)
 
-You can deselect SampleScript.cs and SampleScene.unity if you do not need the sample code. After having imported the package, you just need to configure the SDK settings. For that, open the SampleScene and select the Clan of the Cloud SDK object. In the inspector, set the appropriate values (API Key and API Secret) as configured in the backoffice.
+You can deselect `SampleScript.cs` and `SampleScene.unity` if you do not need the sample code. After having imported the package, you just need to configure the SDK settings. For that, open the SampleScene and select the Clan of the Cloud SDK object. In the inspector, set the appropriate values (API Key and API Secret) as configured in the backoffice.
 
-Note: if you want to start from zero, you may simply add a new scene and drag & drop the Clan of the Cloud SDK prefab object from the CotC/Prefabs folder into your scene. This object needs to be placed on any scene where you want to use Clan of the Cloud functionality.
+Note: if you want to start from zero, you may simply add a new scene and drag & drop the `Clan of the Cloud SDK` prefab object from the `CotC/Prefabs` folder into your scene. This object needs to be placed on any scene where you want to use Clan of the Cloud functionality.
 
-Note: if you include any package which provides additional functionality, you need to proceed to its configuration prior to the first compilation. For instance, if you are importing the facebook related package, you will need to import the facebook package as described in the [Facebook](#facebook_ref) section. Importing only the core package is the best way to quickly test SDK functionality inyour project.
-
-# Usage
+Note: if you include any package which provides additional functionality, you need to proceed to its configuration prior to the first compilation. For instance, if you are importing the facebook related package, you will need to import the facebook package as described in the [Facebook](#facebook_ref) section. Importing only the core package is the best way to quickly test SDK functionality in your project.
 
 ![Import package screen](./Docs/img/importpackage02.png)
+
+# Usage {#cotcgameobject_ref}
 
 Basic usage is provided by the Clan of the Cloud SDK prefab object. You just have to put it on your scene and invoke the GetCloud method on it to fetch a #CotcSdk.Cloud object allowing to use most features. For that, you may simply use [FindObjectOfType<CotcGameObject>](http://docs.unity3d.com/ScriptReference/Object.FindObjectOfType.html).
 
@@ -55,7 +55,7 @@ Another very important object is the #CotcSdk.Gamer object. This represents a si
 	});
 ~~~~
 
-# Promises
+# Promises {#promises_ref}
 
 All functions are asynchronous. Due to the current lack of async/await functionality in Unity, we introduced an asynchronous programming pattern borrowed from Javascript, called promises. You can get more info by [clicking here](https://promisesaplus.com/).
 

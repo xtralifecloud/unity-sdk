@@ -24,11 +24,8 @@
 
   <!-- Layout definition for a class page -->
   <class>
-    <briefdescription visible="yes"/>
-    <includes visible="$SHOW_INCLUDE_FILES"/>
-    <inheritancegraph visible="$CLASS_GRAPH"/>
-    <collaborationgraph visible="$COLLABORATION_GRAPH"/>
-    <detaileddescription title=""/>
+    <briefdescription visible="no"/>
+    <detaileddescription title="Description"/>
     <memberdecl>
       <nestedclasses visible="yes" title=""/>
       <publictypes title=""/>
@@ -36,6 +33,7 @@
       <interfaces title=""/>
       <publicslots title=""/>
       <signals title=""/>
+      <properties title=""/>
       <publicmethods title=""/>
       <publicstaticmethods title=""/>
       <publicattributes title=""/>
@@ -51,7 +49,6 @@
       <packagestaticmethods title=""/>
       <packageattributes title=""/>
       <packagestaticattributes title=""/>
-      <properties title=""/>
       <events title=""/>
       <privatetypes title=""/>
       <privateslots title=""/>
@@ -63,6 +60,9 @@
       <related title="" subtitle=""/>
       <membergroups visible="yes"/>
     </memberdecl>
+    <includes visible="$SHOW_INCLUDE_FILES"/>
+    <inheritancegraph visible="$CLASS_GRAPH"/>
+    <collaborationgraph visible="$COLLABORATION_GRAPH"/>
     <memberdef>
       <inlineclasses title=""/>
       <typedefs title=""/>
@@ -70,10 +70,10 @@
       <services title=""/>
       <interfaces title=""/>
       <constructors title=""/>
+      <properties title=""/>
       <functions title=""/>
       <related title=""/>
       <variables title=""/>
-      <properties title=""/>
       <events title=""/>
     </memberdef>
     <allmemberslink visible="yes"/>

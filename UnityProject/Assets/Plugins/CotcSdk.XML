@@ -59,6 +59,12 @@
             <param name="preventRegistration">Fail instead of silently creating an account in case it doesn't already exist on
                 the CotC servers.</param>
         </member>
+        <member name="M:CotcSdk.Cloud.LoginWithShortcode(System.String)">
+            <summary>Logs in by using a shortcode previously generated through #SendResetPasswordEmail.</summary>
+            <param name="shortcode">The shortcode received by the user by e-mail.</param>
+            <returns>Promise resolved when the login has finished. The resulting Gamer object can then be used for many
+                purposes related to the signed in account.</returns>
+        </member>
         <member name="M:CotcSdk.Cloud.ResumeSession(System.String,System.String)">
             <summary>
             Logs back in with existing credentials. Should be used for users who have already been logged in
@@ -68,12 +74,6 @@
                 be used for many purposes related to the signed in account.</returns>
             <param name="gamerId">Credentials of the previous session (Gamer.GamerId).</param>
             <param name="gamerSecret">Credentials of the previous session (Gamer.GamerSecret).</param>
-        </member>
-        <member name="M:CotcSdk.Cloud.LoginWithShortcode(System.String)">
-            <summary>Logs in by using a shortcode previously generated through #SendResetPasswordEmail.</summary>
-            <param name="shortcode">The shortcode received by the user by e-mail.</param>
-            <returns>Promise resolved when the login has finished. The resulting Gamer object can then be used for many
-                purposes related to the signed in account.</returns>
         </member>
         <member name="M:CotcSdk.Cloud.SendResetPasswordEmail(System.String,System.String,System.String,System.String)">
             <summary>
@@ -1388,31 +1388,6 @@
             executed atomically) and the list of triggered achievements.
             </summary>
         </member>
-        <member name="T:CotcSdk.PagedList`1">
-            <summary>Represents a paginated list, which allows for easy navigation through multiple results.</summary>
-        </member>
-        <member name="M:CotcSdk.PagedList`1.FetchNext">
-            <summary>Fetches the next results and calls the same handler again.</summary>
-        </member>
-        <member name="M:CotcSdk.PagedList`1.FetchPrevious">
-            <summary>Fetches the previous results and calls the same handler again.</summary>
-        </member>
-        <member name="F:CotcSdk.PagedList`1.Offset">
-            <summary></summary>
-            <returns>The number of the first result in the list.</returns>
-        </member>
-        <member name="F:CotcSdk.PagedList`1.Total">
-            <summary></summary>
-            <returns>The total number of items (possibly greater than the page size).</returns>
-        </member>
-        <member name="P:CotcSdk.PagedList`1.HasPrevious">
-            <summary></summary>
-            <returns>Whether there is a previous page. Call FetchPrevious to go back to it.</returns>
-        </member>
-        <member name="P:CotcSdk.PagedList`1.HasNext">
-            <summary></summary>
-            <returns>Whether there is a next page. Call FetchNext to go back to it.</returns>
-        </member>
         <member name="M:CotcSdk.CotcException.#ctor(CotcSdk.ErrorCode,System.String)">
             <summary>To be used for an higher level error. No information about the HTTP request would be attached.</summary>
         </member>
@@ -1466,10 +1441,39 @@
             <returns>Promise resolved when the operation has completed.</returns>
             <param name="key">The name of the key to remove.</param>
         </member>
+        <member name="T:CotcSdk.PagedList`1">
+            <summary>Represents a paginated list, which allows for easy navigation through multiple results.</summary>
+        </member>
+        <member name="M:CotcSdk.PagedList`1.FetchNext">
+            <summary>Fetches the next results and calls the same handler again.</summary>
+        </member>
+        <member name="M:CotcSdk.PagedList`1.FetchPrevious">
+            <summary>Fetches the previous results and calls the same handler again.</summary>
+        </member>
+        <member name="F:CotcSdk.PagedList`1.Offset">
+            <summary></summary>
+            <returns>The number of the first result in the list.</returns>
+        </member>
+        <member name="F:CotcSdk.PagedList`1.Total">
+            <summary></summary>
+            <returns>The total number of items (possibly greater than the page size).</returns>
+        </member>
+        <member name="P:CotcSdk.PagedList`1.HasPrevious">
+            <summary></summary>
+            <returns>Whether there is a previous page. Call FetchPrevious to go back to it.</returns>
+        </member>
+        <member name="P:CotcSdk.PagedList`1.HasNext">
+            <summary></summary>
+            <returns>Whether there is a next page. Call FetchNext to go back to it.</returns>
+        </member>
         <member name="T:CotcSdk.Promise`1">
             <summary>
-            Promise of future result, which may fail or succeed. Returned as a result of any asnychronous operation.
-            https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise
+            %Promise of future result, which may fail or succeed. Returned as a result of any asnychronous operation.
+            
+            Complies to the standard %Promise specification: https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise
+            
+            Used throughout most API calls to ease the manipulation of asynchronous methods. See [this chapter](#getting_started_ref) for a
+            tutorial on how to use promises with the SDK.
             </summary>
             <typeparam name="PromisedT">Expected result type (in case of success, else an exception is returned).</typeparam>
         </member>
