@@ -14,6 +14,7 @@
   $(document).ready(function() { searchBox.OnSelectItem(0); });
 </script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="OutputCustomization.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -85,70 +86,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#properties">Properties</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="class_cotc_sdk_1_1_match-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">CotcSdk.Match Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Represents a match with which you can interact through high level functionality. A match object is returned when you create a match, join it and so on. You should subscribe to ReceivedEvent right after you got this object.  
- <a href="class_cotc_sdk_1_1_match.html#details">More...</a></p>
-<div class="dynheader">
-Inheritance diagram for CotcSdk.Match:</div>
-<div class="dyncontent">
- <div class="center">
-  <img src="class_cotc_sdk_1_1_match.png" usemap="#CotcSdk.Match_map" alt=""/>
-  <map id="CotcSdk.Match_map" name="CotcSdk.Match_map">
-<area href="class_cotc_sdk_1_1_properties_object.html" title="Defines an object that can be queried for additional properties using indexers. The structure of the ..." alt="CotcSdk.PropertiesObject" shape="rect" coords="0,0,158,24"/>
-</map>
- </div></div>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <div class="textblock"><p>Represents a match with which you can interact through high level functionality. A match object is returned when you create a match, join it and so on. You should subscribe to ReceivedEvent right after you got this object. </p>
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a47942ad9db8a9cc94d37434b9cff6f13"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match.html#a47942ad9db8a9cc94d37434b9cff6f13">DiscardEventHandlers</a> ()</td></tr>
-<tr class="memdesc:a47942ad9db8a9cc94d37434b9cff6f13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears all event handlers subscribed, ensuring that a match object can be dismissed without causing further actions in the background.  <a href="#a47942ad9db8a9cc94d37434b9cff6f13">More...</a><br /></td></tr>
-<tr class="separator:a47942ad9db8a9cc94d37434b9cff6f13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f1fd65251cda8c5966d5188c88ec086"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_drawn_items_result.html">DrawnItemsResult</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match.html#a4f1fd65251cda8c5966d5188c88ec086">DrawFromShoe</a> (int count=1, <a class="el" href="class_cotc_sdk_1_1_push_notification.html">PushNotification</a> notification=null)</td></tr>
-<tr class="memdesc:a4f1fd65251cda8c5966d5188c88ec086"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws an item from the shoe. <a href="#a4f1fd65251cda8c5966d5188c88ec086">More...</a><br /></td></tr>
-<tr class="separator:a4f1fd65251cda8c5966d5188c88ec086"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7bb24b19c0f12fb9e961419ccf215dd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match.html#aa7bb24b19c0f12fb9e961419ccf215dd">Finish</a> (bool deleteToo=false, <a class="el" href="class_cotc_sdk_1_1_push_notification.html">PushNotification</a> notification=null)</td></tr>
-<tr class="memdesc:aa7bb24b19c0f12fb9e961419ccf215dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Terminates the match. You need to be the creator of the match to perform this operation. <a href="#aa7bb24b19c0f12fb9e961419ccf215dd">More...</a><br /></td></tr>
-<tr class="separator:aa7bb24b19c0f12fb9e961419ccf215dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a610258d4548936a569ef9b7a77c103c7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match.html#a610258d4548936a569ef9b7a77c103c7">InvitePlayer</a> (string playerId, <a class="el" href="class_cotc_sdk_1_1_push_notification.html">PushNotification</a> notification=null)</td></tr>
-<tr class="memdesc:a610258d4548936a569ef9b7a77c103c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to invite a player to join a match. You need to be part of the match to send an invitation. This can be used to invite an opponent to a match that is not shown publicly.  <a href="#a610258d4548936a569ef9b7a77c103c7">More...</a><br /></td></tr>
-<tr class="separator:a610258d4548936a569ef9b7a77c103c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8acb975dc2e27dae896c21f3f1a9cc41"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match.html#a8acb975dc2e27dae896c21f3f1a9cc41">Leave</a> (<a class="el" href="class_cotc_sdk_1_1_push_notification.html">PushNotification</a> notification=null)</td></tr>
-<tr class="memdesc:a8acb975dc2e27dae896c21f3f1a9cc41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Leaves the match. <a href="#a8acb975dc2e27dae896c21f3f1a9cc41">More...</a><br /></td></tr>
-<tr class="separator:a8acb975dc2e27dae896c21f3f1a9cc41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab201d6d0ab0da32d9812c95a110c596f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match.html#ab201d6d0ab0da32d9812c95a110c596f">Lock</a> (Action block)</td></tr>
-<tr class="memdesc:ab201d6d0ab0da32d9812c95a110c596f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Protects the match against concurrent modification. Please look at the tutorial for more information on this subject. Basically, you should use it to protect your game state from race conditions.  <a href="#ab201d6d0ab0da32d9812c95a110c596f">More...</a><br /></td></tr>
-<tr class="separator:ab201d6d0ab0da32d9812c95a110c596f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a9d3bb410a1ae4def0a12710103e588"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match.html#a1a9d3bb410a1ae4def0a12710103e588">PostMove</a> (<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> moveData, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> updatedGameState=null, <a class="el" href="class_cotc_sdk_1_1_push_notification.html">PushNotification</a> notification=null)</td></tr>
-<tr class="memdesc:a1a9d3bb410a1ae4def0a12710103e588"><td class="mdescLeft">&#160;</td><td class="mdescRight">Posts a move to other players. <a href="#a1a9d3bb410a1ae4def0a12710103e588">More...</a><br /></td></tr>
-<tr class="separator:a1a9d3bb410a1ae4def0a12710103e588"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_class_cotc_sdk_1_1_properties_object"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_cotc_sdk_1_1_properties_object')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_cotc_sdk_1_1_properties_object.html">CotcSdk.PropertiesObject</a></td></tr>
-<tr class="memitem:aacdfc8f0edc93f3611d4c40f12be9073 inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html#aacdfc8f0edc93f3611d4c40f12be9073">AsBundle</a> ()</td></tr>
-<tr class="memdesc:aacdfc8f0edc93f3611d4c40f12be9073 inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the underlying <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object...">Bundle</a>. Dangerous, only use internally, when you want to put the contents of a properties object into an existing bundle.  <a href="#aacdfc8f0edc93f3611d4c40f12be9073">More...</a><br /></td></tr>
-<tr class="separator:aacdfc8f0edc93f3611d4c40f12be9073 inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e6a4b30fa74bc0e763e961d9fdfad3b inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; string, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> &gt;<br class="typebreak" />
-.KeyCollection&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html#a3e6a4b30fa74bc0e763e961d9fdfad3b">Keys</a> ()</td></tr>
-<tr class="memdesc:a3e6a4b30fa74bc0e763e961d9fdfad3b inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to browse all keys (might include some that are already exposed as typed properties in the object). <a href="#a3e6a4b30fa74bc0e763e961d9fdfad3b">More...</a><br /></td></tr>
-<tr class="separator:a3e6a4b30fa74bc0e763e961d9fdfad3b inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16242913dd8dc6aae516f97fc6cbff9d inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; string, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> &gt;<br class="typebreak" />
-.Enumerator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html#a16242913dd8dc6aae516f97fc6cbff9d">GetEnumerator</a> ()</td></tr>
-<tr class="memdesc:a16242913dd8dc6aae516f97fc6cbff9d inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to browse all keys (might include some that are already exposed as typed properties in the object). <a href="#a16242913dd8dc6aae516f97fc6cbff9d">More...</a><br /></td></tr>
-<tr class="separator:a16242913dd8dc6aae516f97fc6cbff9d inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f9860c398a665da8643f18dada7d30a inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memItemLeft" align="right" valign="top">override string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html#a6f9860c398a665da8643f18dada7d30a">ToString</a> ()</td></tr>
-<tr class="memdesc:a6f9860c398a665da8643f18dada7d30a inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">You may use this to debug what is inside this property object. <a href="#a6f9860c398a665da8643f18dada7d30a">More...</a><br /></td></tr>
-<tr class="separator:a6f9860c398a665da8643f18dada7d30a inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3dfde134398c0d738f27e94e5614434 inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html#af3dfde134398c0d738f27e94e5614434">ToJson</a> ()</td></tr>
-<tr class="memdesc:af3dfde134398c0d738f27e94e5614434 inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds a JSON representation of this object, same as ToString actually. <a href="#af3dfde134398c0d738f27e94e5614434">More...</a><br /></td></tr>
-<tr class="separator:af3dfde134398c0d738f27e94e5614434 inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
 <tr class="memitem:acd70a2000f6a6221476828a9e77caf94"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_gamer_info.html">GamerInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match.html#acd70a2000f6a6221476828a9e77caf94">Creator</a><code> [get]</code></td></tr>
@@ -216,6 +163,48 @@ Properties</h2></td></tr>
 <tr class="memdesc:a49c7c96cfe7245e23a766b08a2e89a71 inherit properties_class_cotc_sdk_1_1_properties_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to query additional properties via an indexer (can be enriched via hooks). <a href="#a49c7c96cfe7245e23a766b08a2e89a71">More...</a><br /></td></tr>
 <tr class="separator:a49c7c96cfe7245e23a766b08a2e89a71 inherit properties_class_cotc_sdk_1_1_properties_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a47942ad9db8a9cc94d37434b9cff6f13"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match.html#a47942ad9db8a9cc94d37434b9cff6f13">DiscardEventHandlers</a> ()</td></tr>
+<tr class="memdesc:a47942ad9db8a9cc94d37434b9cff6f13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears all event handlers subscribed, ensuring that a match object can be dismissed without causing further actions in the background.  <a href="#a47942ad9db8a9cc94d37434b9cff6f13">More...</a><br /></td></tr>
+<tr class="separator:a47942ad9db8a9cc94d37434b9cff6f13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f1fd65251cda8c5966d5188c88ec086"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_drawn_items_result.html">DrawnItemsResult</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match.html#a4f1fd65251cda8c5966d5188c88ec086">DrawFromShoe</a> (int count=1, <a class="el" href="class_cotc_sdk_1_1_push_notification.html">PushNotification</a> notification=null)</td></tr>
+<tr class="memdesc:a4f1fd65251cda8c5966d5188c88ec086"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws an item from the shoe. <a href="#a4f1fd65251cda8c5966d5188c88ec086">More...</a><br /></td></tr>
+<tr class="separator:a4f1fd65251cda8c5966d5188c88ec086"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7bb24b19c0f12fb9e961419ccf215dd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match.html#aa7bb24b19c0f12fb9e961419ccf215dd">Finish</a> (bool deleteToo=false, <a class="el" href="class_cotc_sdk_1_1_push_notification.html">PushNotification</a> notification=null)</td></tr>
+<tr class="memdesc:aa7bb24b19c0f12fb9e961419ccf215dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Terminates the match. You need to be the creator of the match to perform this operation. <a href="#aa7bb24b19c0f12fb9e961419ccf215dd">More...</a><br /></td></tr>
+<tr class="separator:aa7bb24b19c0f12fb9e961419ccf215dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a610258d4548936a569ef9b7a77c103c7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match.html#a610258d4548936a569ef9b7a77c103c7">InvitePlayer</a> (string playerId, <a class="el" href="class_cotc_sdk_1_1_push_notification.html">PushNotification</a> notification=null)</td></tr>
+<tr class="memdesc:a610258d4548936a569ef9b7a77c103c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to invite a player to join a match. You need to be part of the match to send an invitation. This can be used to invite an opponent to a match that is not shown publicly.  <a href="#a610258d4548936a569ef9b7a77c103c7">More...</a><br /></td></tr>
+<tr class="separator:a610258d4548936a569ef9b7a77c103c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8acb975dc2e27dae896c21f3f1a9cc41"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match.html#a8acb975dc2e27dae896c21f3f1a9cc41">Leave</a> (<a class="el" href="class_cotc_sdk_1_1_push_notification.html">PushNotification</a> notification=null)</td></tr>
+<tr class="memdesc:a8acb975dc2e27dae896c21f3f1a9cc41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Leaves the match. <a href="#a8acb975dc2e27dae896c21f3f1a9cc41">More...</a><br /></td></tr>
+<tr class="separator:a8acb975dc2e27dae896c21f3f1a9cc41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab201d6d0ab0da32d9812c95a110c596f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match.html#ab201d6d0ab0da32d9812c95a110c596f">Lock</a> (Action block)</td></tr>
+<tr class="memdesc:ab201d6d0ab0da32d9812c95a110c596f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Protects the match against concurrent modification. Please look at the tutorial for more information on this subject. Basically, you should use it to protect your game state from race conditions.  <a href="#ab201d6d0ab0da32d9812c95a110c596f">More...</a><br /></td></tr>
+<tr class="separator:ab201d6d0ab0da32d9812c95a110c596f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a9d3bb410a1ae4def0a12710103e588"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_match.html#a1a9d3bb410a1ae4def0a12710103e588">PostMove</a> (<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> moveData, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> updatedGameState=null, <a class="el" href="class_cotc_sdk_1_1_push_notification.html">PushNotification</a> notification=null)</td></tr>
+<tr class="memdesc:a1a9d3bb410a1ae4def0a12710103e588"><td class="mdescLeft">&#160;</td><td class="mdescRight">Posts a move to other players. <a href="#a1a9d3bb410a1ae4def0a12710103e588">More...</a><br /></td></tr>
+<tr class="separator:a1a9d3bb410a1ae4def0a12710103e588"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_cotc_sdk_1_1_properties_object"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_cotc_sdk_1_1_properties_object')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_cotc_sdk_1_1_properties_object.html">CotcSdk.PropertiesObject</a></td></tr>
+<tr class="memitem:aacdfc8f0edc93f3611d4c40f12be9073 inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html#aacdfc8f0edc93f3611d4c40f12be9073">AsBundle</a> ()</td></tr>
+<tr class="memdesc:aacdfc8f0edc93f3611d4c40f12be9073 inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the underlying <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object...">Bundle</a>. Dangerous, only use internally, when you want to put the contents of a properties object into an existing bundle.  <a href="#aacdfc8f0edc93f3611d4c40f12be9073">More...</a><br /></td></tr>
+<tr class="separator:aacdfc8f0edc93f3611d4c40f12be9073 inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e6a4b30fa74bc0e763e961d9fdfad3b inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; string, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> &gt;<br class="typebreak" />
+.KeyCollection&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html#a3e6a4b30fa74bc0e763e961d9fdfad3b">Keys</a> ()</td></tr>
+<tr class="memdesc:a3e6a4b30fa74bc0e763e961d9fdfad3b inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to browse all keys (might include some that are already exposed as typed properties in the object). <a href="#a3e6a4b30fa74bc0e763e961d9fdfad3b">More...</a><br /></td></tr>
+<tr class="separator:a3e6a4b30fa74bc0e763e961d9fdfad3b inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16242913dd8dc6aae516f97fc6cbff9d inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; string, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> &gt;<br class="typebreak" />
+.Enumerator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html#a16242913dd8dc6aae516f97fc6cbff9d">GetEnumerator</a> ()</td></tr>
+<tr class="memdesc:a16242913dd8dc6aae516f97fc6cbff9d inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to browse all keys (might include some that are already exposed as typed properties in the object). <a href="#a16242913dd8dc6aae516f97fc6cbff9d">More...</a><br /></td></tr>
+<tr class="separator:a16242913dd8dc6aae516f97fc6cbff9d inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f9860c398a665da8643f18dada7d30a inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memItemLeft" align="right" valign="top">override string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html#a6f9860c398a665da8643f18dada7d30a">ToString</a> ()</td></tr>
+<tr class="memdesc:a6f9860c398a665da8643f18dada7d30a inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">You may use this to debug what is inside this property object. <a href="#a6f9860c398a665da8643f18dada7d30a">More...</a><br /></td></tr>
+<tr class="separator:a6f9860c398a665da8643f18dada7d30a inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3dfde134398c0d738f27e94e5614434 inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html#af3dfde134398c0d738f27e94e5614434">ToJson</a> ()</td></tr>
+<tr class="memdesc:af3dfde134398c0d738f27e94e5614434 inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds a JSON representation of this object, same as ToString actually. <a href="#af3dfde134398c0d738f27e94e5614434">More...</a><br /></td></tr>
+<tr class="separator:af3dfde134398c0d738f27e94e5614434 inherit pub_methods_class_cotc_sdk_1_1_properties_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_methods_class_cotc_sdk_1_1_properties_object"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_cotc_sdk_1_1_properties_object')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_cotc_sdk_1_1_properties_object.html">CotcSdk.PropertiesObject</a></td></tr>
@@ -227,218 +216,15 @@ Additional Inherited Members</h2></td></tr>
 <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Props</b></td></tr>
 <tr class="separator:a9542c00c17e112898aa85110cd71c2bb inherit pro_attribs_class_cotc_sdk_1_1_properties_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a47942ad9db8a9cc94d37434b9cff6f13"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CotcSdk.Match.DiscardEventHandlers </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Clears all event handlers subscribed, ensuring that a match object can be dismissed without causing further actions in the background. </p>
-
-</div>
-</div>
-<a class="anchor" id="a4f1fd65251cda8c5966d5188c88ec086"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_drawn_items_result.html">DrawnItemsResult</a>&gt; CotcSdk.Match.DrawFromShoe </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>count</em> = <code>1</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_push_notification.html">PushNotification</a>&#160;</td>
-          <td class="paramname"><em>notification</em> = <code>null</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Draws an item from the shoe.</p>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> resolved when the operation has completed. The attached bundle contains an array of items drawn from the shoe. You may do <code>(int)result.Value[0]</code> to fetch the first value as integer.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">count</td><td>The number of items to draw from the shoe.</td></tr>
-    <tr><td class="paramname">notification</td><td>A notification that can be sent to all players currently playing the match (except you).</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="aa7bb24b19c0f12fb9e961419ccf215dd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_done.html">Done</a>&gt; CotcSdk.Match.Finish </td>
-          <td>(</td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>deleteToo</em> = <code>false</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_push_notification.html">PushNotification</a>&#160;</td>
-          <td class="paramname"><em>notification</em> = <code>null</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Terminates the match. You need to be the creator of the match to perform this operation.</p>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> resolved when the operation has completed.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">deleteToo</td><td>If true, deletes the match if it finishes successfully or is already finished.</td></tr>
-    <tr><td class="paramname">notification</td><td>A notification that can be sent to all players currently playing the match (except you).</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a610258d4548936a569ef9b7a77c103c7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_done.html">Done</a>&gt; CotcSdk.Match.InvitePlayer </td>
-          <td>(</td>
-          <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>playerId</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_push_notification.html">PushNotification</a>&#160;</td>
-          <td class="paramname"><em>notification</em> = <code>null</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Allows to invite a player to join a match. You need to be part of the match to send an invitation. This can be used to invite an opponent to a match that is not shown publicly. </p>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> resolved when the operation has completed.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">playerId</td><td>ID of the player to invite to the match. Player IDs can be found in the properties of the match (<a class="el" href="class_cotc_sdk_1_1_gamer_info.html#a5dd52c8b491e651a0b51adae9e60bc4b" title="Id of the gamer.">GamerInfo.GamerId</a>).</td></tr>
-    <tr><td class="paramname">notification</td><td>A push notification that can be sent to the invitee.</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a8acb975dc2e27dae896c21f3f1a9cc41"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_done.html">Done</a>&gt; CotcSdk.Match.Leave </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_push_notification.html">PushNotification</a>&#160;</td>
-          <td class="paramname"><em>notification</em> = <code>null</code></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Leaves the match.</p>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> resolved when the operation has completed.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">notification</td><td>A push notification that can be sent to all players except you.</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ab201d6d0ab0da32d9812c95a110c596f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CotcSdk.Match.Lock </td>
-          <td>(</td>
-          <td class="paramtype">Action&#160;</td>
-          <td class="paramname"><em>block</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Protects the match against concurrent modification. Please look at the tutorial for more information on this subject. Basically, you should use it to protect your game state from race conditions. </p>
-
-</div>
-</div>
-<a class="anchor" id="a1a9d3bb410a1ae4def0a12710103e588"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_done.html">Done</a>&gt; CotcSdk.Match.PostMove </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td>
-          <td class="paramname"><em>moveData</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td>
-          <td class="paramname"><em>updatedGameState</em> = <code>null</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_push_notification.html">PushNotification</a>&#160;</td>
-          <td class="paramname"><em>notification</em> = <code>null</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Posts a move to other players.</p>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> resolved when the operation has completed.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">moveData</td><td>A freeform object indicating the move data to be posted and transfered to other players. This move data will be kept in the events, and new players should be able to use it to reproduce the local game state.</td></tr>
-    <tr><td class="paramname">updatedGameState</td><td>A freeform object replacing the global game state, to be used by players who join from now on. Passing a non null value clears the pending events in the match.</td></tr>
-    <tr><td class="paramname">notification</td><td>A push notification that can be sent to all players except you.</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
+<div class="dynheader">
+Inheritance diagram for CotcSdk.Match:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="class_cotc_sdk_1_1_match.png" usemap="#CotcSdk.Match_map" alt=""/>
+  <map id="CotcSdk.Match_map" name="CotcSdk.Match_map">
+<area href="class_cotc_sdk_1_1_properties_object.html" title="Defines an object that can be queried for additional properties using indexers. The structure of the ..." alt="CotcSdk.PropertiesObject" shape="rect" coords="0,0,158,24"/>
+</map>
+ </div></div>
 <h2 class="groupheader">Property Documentation</h2>
 <a class="anchor" id="acd70a2000f6a6221476828a9e77caf94"></a>
 <div class="memitem">
@@ -881,13 +667,225 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a47942ad9db8a9cc94d37434b9cff6f13"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CotcSdk.Match.DiscardEventHandlers </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Clears all event handlers subscribed, ensuring that a match object can be dismissed without causing further actions in the background. </p>
+
+</div>
+</div>
+<a class="anchor" id="a4f1fd65251cda8c5966d5188c88ec086"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_drawn_items_result.html">DrawnItemsResult</a>&gt; CotcSdk.Match.DrawFromShoe </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>count</em> = <code>1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_push_notification.html">PushNotification</a>&#160;</td>
+          <td class="paramname"><em>notification</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Draws an item from the shoe.</p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> resolved when the operation has completed. The attached bundle contains an array of items drawn from the shoe. You may do <code>(int)result.Value[0]</code> to fetch the first value as integer.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">count</td><td>The number of items to draw from the shoe.</td></tr>
+    <tr><td class="paramname">notification</td><td>A notification that can be sent to all players currently playing the match (except you).</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aa7bb24b19c0f12fb9e961419ccf215dd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_done.html">Done</a>&gt; CotcSdk.Match.Finish </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>deleteToo</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_push_notification.html">PushNotification</a>&#160;</td>
+          <td class="paramname"><em>notification</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Terminates the match. You need to be the creator of the match to perform this operation.</p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> resolved when the operation has completed.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">deleteToo</td><td>If true, deletes the match if it finishes successfully or is already finished.</td></tr>
+    <tr><td class="paramname">notification</td><td>A notification that can be sent to all players currently playing the match (except you).</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a610258d4548936a569ef9b7a77c103c7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_done.html">Done</a>&gt; CotcSdk.Match.InvitePlayer </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>playerId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_push_notification.html">PushNotification</a>&#160;</td>
+          <td class="paramname"><em>notification</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Allows to invite a player to join a match. You need to be part of the match to send an invitation. This can be used to invite an opponent to a match that is not shown publicly. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> resolved when the operation has completed.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">playerId</td><td>ID of the player to invite to the match. Player IDs can be found in the properties of the match (<a class="el" href="class_cotc_sdk_1_1_gamer_info.html#a5dd52c8b491e651a0b51adae9e60bc4b" title="Id of the gamer.">GamerInfo.GamerId</a>).</td></tr>
+    <tr><td class="paramname">notification</td><td>A push notification that can be sent to the invitee.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a8acb975dc2e27dae896c21f3f1a9cc41"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_done.html">Done</a>&gt; CotcSdk.Match.Leave </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_push_notification.html">PushNotification</a>&#160;</td>
+          <td class="paramname"><em>notification</em> = <code>null</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Leaves the match.</p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> resolved when the operation has completed.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">notification</td><td>A push notification that can be sent to all players except you.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ab201d6d0ab0da32d9812c95a110c596f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CotcSdk.Match.Lock </td>
+          <td>(</td>
+          <td class="paramtype">Action&#160;</td>
+          <td class="paramname"><em>block</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Protects the match against concurrent modification. Please look at the tutorial for more information on this subject. Basically, you should use it to protect your game state from race conditions. </p>
+
+</div>
+</div>
+<a class="anchor" id="a1a9d3bb410a1ae4def0a12710103e588"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_done.html">Done</a>&gt; CotcSdk.Match.PostMove </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td>
+          <td class="paramname"><em>moveData</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td>
+          <td class="paramname"><em>updatedGameState</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_push_notification.html">PushNotification</a>&#160;</td>
+          <td class="paramname"><em>notification</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Posts a move to other players.</p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> resolved when the operation has completed.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">moveData</td><td>A freeform object indicating the move data to be posted and transfered to other players. This move data will be kept in the events, and new players should be able to use it to reproduce the local game state.</td></tr>
+    <tr><td class="paramname">updatedGameState</td><td>A freeform object replacing the global game state, to be used by players who join from now on. Passing a non null value clears the pending events in the match.</td></tr>
+    <tr><td class="paramname">notification</td><td>A push notification that can be sent to all players except you.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>C:/Users/Florian/Documents/CotC/unity-native/CotcSdk/HighLevel/Match.cs</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 8 2015 11:31:39 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Sep 9 2015 10:17:54 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

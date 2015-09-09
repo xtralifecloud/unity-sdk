@@ -14,6 +14,7 @@
   $(document).ready(function() { searchBox.OnSelectItem(0); });
 </script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="OutputCustomization.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -92,11 +93,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">CotcSdk.Promise&lt; PromisedT &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> of future result, which may fail or succeed. Returned as a result of any asnychronous operation. <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise">https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise</a>  
- <a href="class_cotc_sdk_1_1_promise_3_01_promised_t_01_4.html#details">More...</a></p>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> of future result, which may fail or succeed. Returned as a result of any asnychronous operation. <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise">https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise</a> </p>
+<a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+<div class="textblock"><p>Promise of future result, which may fail or succeed. Returned as a result of any asnychronous operation. </p>
+<p>Complies to the standard Promise specification: <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise">https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise</a></p>
+<p>Used throughout most API calls to ease the manipulation of asynchronous methods. See <a href="#getting_started_ref">this chapter</a> for a tutorial on how to use promises with the SDK. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">PromisedT</td><td>Expected result type (in case of success, else an exception is returned).</td></tr>
@@ -446,7 +446,7 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Adds a resolved and rejected callback. Allows for chaining (i.e. return another promise, potentially of another type, indicating an operation to be waited for). Example: </p>
-<div class="fragment"><div class="line"> Promise&lt;int&gt; longIntOperation();</div>
+<div class="fragment"><div class="line">Promise&lt;int&gt; longIntOperation();</div>
 <div class="line">Promise&lt;bool&gt; longBoolOperation();</div>
 <div class="line">longIntOperation()</div>
 <div class="line">.Then((<span class="keywordtype">int</span> result) =&gt; {</div>
@@ -482,7 +482,7 @@ Static Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 8 2015 11:31:39 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Sep 9 2015 10:17:54 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

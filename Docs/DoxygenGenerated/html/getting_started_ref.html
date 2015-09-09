@@ -14,6 +14,7 @@
   $(document).ready(function() { searchBox.OnSelectItem(0); });
 </script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="OutputCustomization.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -77,26 +78,27 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>The Unity SDK is available at the following URL: <a href="https://github.com/clanofthecloud/unity-sdk/releases">https://github.com/clanofthecloud/unity-sdk/releases</a>.</p>
-<p>The Unity SDK is cut in several parts:</p><ul>
-<li>The core library, which contains all the core classes and communicates with our servers. It is small, has no dependencies and provides almost all functionality.</li>
-<li>The facebook integration library. It depends on the facebook SDK for Unity and provides facebook related functionality. The integration library is provided as a separate package.</li>
-<li>The push notification library, which provides that functionality, currently for Android and iOS.</li>
-<li>The in-app purchase library, which provides the corresponding functionality, currently for Android and iOS.</li>
+<p>We decided to cut it in several parts:</p><ul>
+<li><b>The core library</b>, which contains all the core classes and communicates with our servers. It is small, has no dependencies and provides almost all functionality.</li>
+<li><b>The facebook integration library</b>. It depends on the facebook SDK for Unity and provides facebook related functionality. The integration library is provided as a separate package.</li>
+<li><b>The push notification library</b>, which provides that functionality, currently for Android and iOS.</li>
+<li><b>The in-app purchase library</b>, which provides the corresponding functionality, currently for Android and iOS.</li>
 </ul>
 <p>Packages are distributed separately, although we zipped them together due to their relatively small size. Apart from facebook, they also include all their respective dependencies.</p>
 <div class="image">
 <img src="importpackage01.png" alt="importpackage01.png"/>
 <div class="caption">
 Import package screen</div></div>
-<p> You can deselect SampleScript.cs and SampleScene.unity if you do not need the sample code. After having imported the package, you just need to configure the SDK settings. For that, open the SampleScene and select the Clan of the Cloud SDK object. In the inspector, set the appropriate values (API Key and API Secret) as configured in the backoffice.</p>
-<p>Note: if you want to start from zero, you may simply add a new scene and drag &amp; drop the Clan of the Cloud SDK prefab object from the CotC/Prefabs folder into your scene. This object needs to be placed on any scene where you want to use Clan of the Cloud functionality.</p>
-<p>Note: if you include any package which provides additional functionality, you need to proceed to its configuration prior to the first compilation. For instance, if you are importing the facebook related package, you will need to import the facebook package as described in the <a href="#facebook_ref">Facebook</a> section. Importing only the core package is the best way to quickly test SDK functionality inyour project.</p>
-<h1>Usage</h1>
+<p> You can deselect <code>SampleScript.cs</code> and <code>SampleScene.unity</code> if you do not need the sample code. After having imported the package, you just need to configure the SDK settings. For that, open the SampleScene and select the Clan of the Cloud SDK object. In the inspector, set the appropriate values (API Key and API Secret) as configured in the backoffice.</p>
+<p>Note: if you want to start from zero, you may simply add a new scene and drag &amp; drop the <code>Clan of the Cloud SDK</code> prefab object from the <code>CotC/Prefabs</code> folder into your scene. This object needs to be placed on any scene where you want to use Clan of the Cloud functionality.</p>
+<p>Note: if you include any package which provides additional functionality, you need to proceed to its configuration prior to the first compilation. For instance, if you are importing the facebook related package, you will need to import the facebook package as described in the <a href="#facebook_ref">Facebook</a> section. Importing only the core package is the best way to quickly test SDK functionality in your project.</p>
 <div class="image">
 <img src="importpackage02.png" alt="importpackage02.png"/>
 <div class="caption">
 Import package screen</div></div>
-<p> Basic usage is provided by the Clan of the Cloud SDK prefab object. You just have to put it on your scene and invoke the GetCloud method on it to fetch a <a class="el" href="class_cotc_sdk_1_1_cloud.html" title="Root class of the SDK. It is stateless and allows to perform basic operations with the SDK...">CotcSdk.Cloud</a> object allowing to use most features. For that, you may simply use <a href="http://docs.unity3d.com/ScriptReference/Object.FindObjectOfType.html">FindObjectOfType&lt;CotcGameObject&gt;</a>.</p>
+ <h1><a class="anchor" id="cotcgameobject_ref"></a>
+Usage</h1>
+<p>Basic usage is provided by the Clan of the Cloud SDK prefab object. You just have to put it on your scene and invoke the GetCloud method on it to fetch a <a class="el" href="class_cotc_sdk_1_1_cloud.html" title="Root class of the SDK. It is stateless and allows to perform basic operations with the SDK...">CotcSdk.Cloud</a> object allowing to use most features. For that, you may simply use <a href="http://docs.unity3d.com/ScriptReference/Object.FindObjectOfType.html">FindObjectOfType&lt;CotcGameObject&gt;</a>.</p>
 <div class="fragment"><div class="line"><span class="keyword">using</span> <a class="code" href="namespace_cotc_sdk.html">CotcSdk</a>;</div>
 <div class="line"></div>
 <div class="line"><span class="keyword">class </span>MyGameObject: MonoBehaviour {</div>
@@ -118,7 +120,8 @@ Import package screen</div></div>
 <div class="line">.Done(gamer =&gt; {</div>
 <div class="line">    Debug.Log(<span class="stringliteral">&quot;Signed in successfully (ID = &quot;</span> + gamer.GamerId + <span class="stringliteral">&quot;)&quot;</span>);   });</div>
 <div class="line">});</div>
-</div><!-- fragment --><h1>Promises</h1>
+</div><!-- fragment --><h1><a class="anchor" id="promises_ref"></a>
+Promises</h1>
 <p>All functions are asynchronous. Due to the current lack of async/await functionality in Unity, we introduced an asynchronous programming pattern borrowed from Javascript, called promises. You can get more info by <a href="https://promisesaplus.com/">clicking here</a>.</p>
 <p>Getting used to promises can take a bit of time, but in a nutshell, you may simply use them as an optional callback as shown below.</p>
 <div class="fragment"><div class="line"><span class="comment">// Usual callback-based API</span></div>
@@ -234,7 +237,7 @@ Import package screen</div></div>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 8 2015 11:31:38 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Sep 9 2015 10:17:54 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

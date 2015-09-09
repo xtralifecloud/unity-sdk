@@ -14,6 +14,7 @@
   $(document).ready(function() { searchBox.OnSelectItem(0); });
 </script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="OutputCustomization.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -85,44 +86,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#properties">Properties</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
-<a href="#properties">Properties</a> &#124;
 <a href="class_cotc_sdk_1_1_properties_object-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">CotcSdk.PropertiesObject Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Defines an object that can be queried for additional properties using indexers. The structure of the object remains read only though.  
- <a href="class_cotc_sdk_1_1_properties_object.html#details">More...</a></p>
-<div class="dynheader">
-Inheritance diagram for CotcSdk.PropertiesObject:</div>
-<div class="dyncontent">
- <div class="center">
-  <img src="class_cotc_sdk_1_1_properties_object.png" usemap="#CotcSdk.PropertiesObject_map" alt=""/>
-  <map id="CotcSdk.PropertiesObject_map" name="CotcSdk.PropertiesObject_map">
-<area href="class_cotc_sdk_1_1_configured_product.html" title="Information about a configured product on the BO." alt="CotcSdk.ConfiguredProduct" shape="rect" coords="246,56,482,80"/>
-<area href="class_cotc_sdk_1_1_done.html" title="Generic result for an API call that has been successful and simply gives an indication of whether it ..." alt="CotcSdk.Done" shape="rect" coords="246,112,482,136"/>
-<area href="class_cotc_sdk_1_1_drawn_items_result.html" title="Response resulting from a CotcSdk.Match.DrawFromShoe call." alt="CotcSdk.DrawnItemsResult" shape="rect" coords="246,168,482,192"/>
-<area href="class_cotc_sdk_1_1_gamer.html" title="Important object from the SDK, allowing to perform many operations that depend on a currently logged ..." alt="CotcSdk.Gamer" shape="rect" coords="246,224,482,248"/>
-<area href="class_cotc_sdk_1_1_gamer_info.html" title="Info about a player. Can be enriched with information, accessible using the index operator []..." alt="CotcSdk.GamerInfo" shape="rect" coords="246,280,482,304"/>
-<area href="class_cotc_sdk_1_1_gamer_outline.html" title="Outline information about a player. Can be enriched with information, accessible using the index oper..." alt="CotcSdk.GamerOutline" shape="rect" coords="246,336,482,360"/>
-<area href="class_cotc_sdk_1_1_gamer_profile.html" title="Might contain the following: { "displayName" : "xxx", "email" : "xxx&#39;, "lang" : "en" } Usage: string ..." alt="CotcSdk.GamerProfile" shape="rect" coords="246,392,482,416"/>
-<area href="class_cotc_sdk_1_1_got_godchild_event.html" title="Event triggered when a godfather code is used. This event is received by the one who originated the c..." alt="CotcSdk.GotGodchildEvent" shape="rect" coords="246,448,482,472"/>
-<area href="class_cotc_sdk_1_1_inapp_purchase_1_1_product_info.html" title="Information about a given product. Returned by CotC when querying the product list and used throughou..." alt="CotcSdk.InappPurchase.ProductInfo" shape="rect" coords="246,504,482,528"/>
-<area href="class_cotc_sdk_1_1_index_result.html" title="Result of an index query. Represents a single returned object. This object is a CotcSdk.PropertiesObject, meaning that additional properties can be queried. If you want to check what is returned as a JSON object, simply log this.ToString(). " alt="CotcSdk.IndexResult" shape="rect" coords="246,560,482,584"/>
-<area href="class_cotc_sdk_1_1_match.html" title="Represents a match with which you can interact through high level functionality. A match object is re..." alt="CotcSdk.Match" shape="rect" coords="246,616,482,640"/>
-<area href="class_cotc_sdk_1_1_match_event.html" title="Basis for a match event. An event is actually always one of the subclasses (Match*Event)." alt="CotcSdk.MatchEvent" shape="rect" coords="246,672,482,696"/>
-<area href="class_cotc_sdk_1_1_purchase_transaction.html" title="(App) Store API." alt="CotcSdk.PurchaseTransaction" shape="rect" coords="246,728,482,752"/>
-<area href="class_cotc_sdk_1_1_social_network_friend_response.html" title="Wraps information about a list of friends coming from a social network." alt="CotcSdk.SocialNetworkFriendResponse" shape="rect" coords="246,784,482,808"/>
-<area href="class_cotc_sdk_1_1_transaction_result.html" title="Result of a transaction call. Contains the new balance (after the transaction has been executed atomi..." alt="CotcSdk.TransactionResult" shape="rect" coords="246,840,482,864"/>
-<area href="class_cotc_sdk_1_1_user_info.html" title="Info about a user. Can be enriched with information, accessible using the index operator []..." alt="CotcSdk.UserInfo" shape="rect" coords="246,896,482,920"/>
-<area href="class_cotc_sdk_1_1_validate_receipt_result.html" title="Result of CotcSdk.GamerStore.ValidateReceipt." alt="CotcSdk.ValidateReceiptResult" shape="rect" coords="246,952,482,976"/>
-</map>
- </div></div>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <div class="textblock"><p>Defines an object that can be queried for additional properties using indexers. The structure of the object remains read only though. </p>
 <div class="fragment"><div class="line">GamerInfo gamer = ...;</div>
 <div class="line"><span class="comment">// Browse all keys</span></div>
@@ -132,6 +105,12 @@ Inheritance diagram for CotcSdk.PropertiesObject:</div>
 </div><!-- fragment --><p>Usually these objects have a proper structure representing the predefined properties, and you can use the <a class="el" href="class_cotc_sdk_1_1_properties_object.html" title="Defines an object that can be queried for additional properties using indexers. The structure of the ...">PropertiesObject</a> methods to query additional properties that might have been enriched in a hook for instance.</p>
 <p>Beware however, querying a <a class="el" href="class_cotc_sdk_1_1_properties_object.html" title="Defines an object that can be queried for additional properties using indexers. The structure of the ...">PropertiesObject</a> using keys will return directly what the server has responded. Thus, if you have modified a property and query its equivalent key, the values will differ. That is why we don't usually make PropertiesObjects publicly writable. </p>
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
+Properties</h2></td></tr>
+<tr class="memitem:a49c7c96cfe7245e23a766b08a2e89a71"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html#a49c7c96cfe7245e23a766b08a2e89a71">this[string key]</a><code> [get]</code></td></tr>
+<tr class="memdesc:a49c7c96cfe7245e23a766b08a2e89a71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to query additional properties via an indexer (can be enriched via hooks). <a href="#a49c7c96cfe7245e23a766b08a2e89a71">More...</a><br /></td></tr>
+<tr class="separator:a49c7c96cfe7245e23a766b08a2e89a71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aacdfc8f0edc93f3611d4c40f12be9073"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html#aacdfc8f0edc93f3611d4c40f12be9073">AsBundle</a> ()</td></tr>
@@ -163,13 +142,55 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a9542c00c17e112898aa85110cd71c2bb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9542c00c17e112898aa85110cd71c2bb"></a>
 <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Props</b></td></tr>
 <tr class="separator:a9542c00c17e112898aa85110cd71c2bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
-Properties</h2></td></tr>
-<tr class="memitem:a49c7c96cfe7245e23a766b08a2e89a71"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html#a49c7c96cfe7245e23a766b08a2e89a71">this[string key]</a><code> [get]</code></td></tr>
-<tr class="memdesc:a49c7c96cfe7245e23a766b08a2e89a71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to query additional properties via an indexer (can be enriched via hooks). <a href="#a49c7c96cfe7245e23a766b08a2e89a71">More...</a><br /></td></tr>
-<tr class="separator:a49c7c96cfe7245e23a766b08a2e89a71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<div class="dynheader">
+Inheritance diagram for CotcSdk.PropertiesObject:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="class_cotc_sdk_1_1_properties_object.png" usemap="#CotcSdk.PropertiesObject_map" alt=""/>
+  <map id="CotcSdk.PropertiesObject_map" name="CotcSdk.PropertiesObject_map">
+<area href="class_cotc_sdk_1_1_configured_product.html" title="Information about a configured product on the BO." alt="CotcSdk.ConfiguredProduct" shape="rect" coords="246,56,482,80"/>
+<area href="class_cotc_sdk_1_1_done.html" title="Generic result for an API call that has been successful and simply gives an indication of whether it ..." alt="CotcSdk.Done" shape="rect" coords="246,112,482,136"/>
+<area href="class_cotc_sdk_1_1_drawn_items_result.html" title="Response resulting from a CotcSdk.Match.DrawFromShoe call." alt="CotcSdk.DrawnItemsResult" shape="rect" coords="246,168,482,192"/>
+<area href="class_cotc_sdk_1_1_gamer.html" title="Important object from the SDK, allowing to perform many operations that depend on a currently logged ..." alt="CotcSdk.Gamer" shape="rect" coords="246,224,482,248"/>
+<area href="class_cotc_sdk_1_1_gamer_info.html" title="Info about a player. Can be enriched with information, accessible using the index operator []..." alt="CotcSdk.GamerInfo" shape="rect" coords="246,280,482,304"/>
+<area href="class_cotc_sdk_1_1_gamer_outline.html" title="Outline information about a player. Can be enriched with information, accessible using the index oper..." alt="CotcSdk.GamerOutline" shape="rect" coords="246,336,482,360"/>
+<area href="class_cotc_sdk_1_1_gamer_profile.html" title="Might contain the following: { "displayName" : "xxx", "email" : "xxx&#39;, "lang" : "en" } Usage: string ..." alt="CotcSdk.GamerProfile" shape="rect" coords="246,392,482,416"/>
+<area href="class_cotc_sdk_1_1_got_godchild_event.html" title="Event triggered when a godfather code is used. This event is received by the one who originated the c..." alt="CotcSdk.GotGodchildEvent" shape="rect" coords="246,448,482,472"/>
+<area href="class_cotc_sdk_1_1_inapp_purchase_1_1_product_info.html" title="Information about a given product. Returned by CotC when querying the product list and used throughou..." alt="CotcSdk.InappPurchase.ProductInfo" shape="rect" coords="246,504,482,528"/>
+<area href="class_cotc_sdk_1_1_index_result.html" title="Result of an index query. Represents a single returned object. This object is a CotcSdk.PropertiesObject, meaning that additional properties can be queried. If you want to check what is returned as a JSON object, simply log this.ToString(). " alt="CotcSdk.IndexResult" shape="rect" coords="246,560,482,584"/>
+<area href="class_cotc_sdk_1_1_match.html" title="Represents a match with which you can interact through high level functionality. A match object is re..." alt="CotcSdk.Match" shape="rect" coords="246,616,482,640"/>
+<area href="class_cotc_sdk_1_1_match_event.html" title="Basis for a match event. An event is actually always one of the subclasses (Match*Event)." alt="CotcSdk.MatchEvent" shape="rect" coords="246,672,482,696"/>
+<area href="class_cotc_sdk_1_1_purchase_transaction.html" title="(App) Store API." alt="CotcSdk.PurchaseTransaction" shape="rect" coords="246,728,482,752"/>
+<area href="class_cotc_sdk_1_1_social_network_friend_response.html" title="Wraps information about a list of friends coming from a social network." alt="CotcSdk.SocialNetworkFriendResponse" shape="rect" coords="246,784,482,808"/>
+<area href="class_cotc_sdk_1_1_transaction_result.html" title="Result of a transaction call. Contains the new balance (after the transaction has been executed atomi..." alt="CotcSdk.TransactionResult" shape="rect" coords="246,840,482,864"/>
+<area href="class_cotc_sdk_1_1_user_info.html" title="Info about a user. Can be enriched with information, accessible using the index operator []..." alt="CotcSdk.UserInfo" shape="rect" coords="246,896,482,920"/>
+<area href="class_cotc_sdk_1_1_validate_receipt_result.html" title="Result of CotcSdk.GamerStore.ValidateReceipt." alt="CotcSdk.ValidateReceiptResult" shape="rect" coords="246,952,482,976"/>
+</map>
+ </div></div>
+<h2 class="groupheader">Property Documentation</h2>
+<a class="anchor" id="a49c7c96cfe7245e23a766b08a2e89a71"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> CotcSdk.PropertiesObject.this[string key]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Allows to query additional properties via an indexer (can be enriched via hooks).</p>
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="aacdfc8f0edc93f3611d4c40f12be9073"></a>
 <div class="memitem">
@@ -260,36 +281,13 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<h2 class="groupheader">Property Documentation</h2>
-<a class="anchor" id="a49c7c96cfe7245e23a766b08a2e89a71"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> CotcSdk.PropertiesObject.this[string key]</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Allows to query additional properties via an indexer (can be enriched via hooks).</p>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>C:/Users/Florian/Documents/CotC/unity-native/CotcSdk/HighLevel/Model/PropertiesObject.cs</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 8 2015 11:31:39 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Sep 9 2015 10:17:54 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

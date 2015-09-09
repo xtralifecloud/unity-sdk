@@ -3,6 +3,7 @@ var searchData=
   ['generatecode',['GenerateCode',['../class_cotc_sdk_1_1_gamer_godfather.html#a61cd879778c7534560b4c189387486bd',1,'CotcSdk::GamerGodfather']]],
   ['get',['Get',['../class_cotc_sdk_1_1_gamer_profile_methods.html#a668537c88c449c6db54c2bf64482613b',1,'CotcSdk::GamerProfileMethods']]],
   ['getall',['GetAll',['../class_cotc_sdk_1_1_gamer_properties.html#a9a44015385f9856c0132ace3ece863d6',1,'CotcSdk.GamerProperties.GetAll()'],['../class_cotc_sdk_1_1_game_vfs.html#aebbedd75e34a7a2d635e88bee4c93437',1,'CotcSdk.GameVfs.GetAll()']]],
+  ['getcloud',['GetCloud',['../class_cotc_sdk_1_1_cotc_game_object.html#ab6f6a78405e802c2447dc5bbea1f1513',1,'CotcSdk::CotcGameObject']]],
   ['getenumerator',['GetEnumerator',['../class_cotc_sdk_1_1_properties_object.html#a16242913dd8dc6aae516f97fc6cbff9d',1,'CotcSdk::PropertiesObject']]],
   ['getgodchildren',['GetGodchildren',['../class_cotc_sdk_1_1_gamer_godfather.html#a51b4d58cc9d6ad09c2f8e2c7f52f2b2a',1,'CotcSdk::GamerGodfather']]],
   ['getgodfather',['GetGodfather',['../class_cotc_sdk_1_1_gamer_godfather.html#ac1380b3337b4dfae6342e81a00b0e9b0',1,'CotcSdk::GamerGodfather']]],

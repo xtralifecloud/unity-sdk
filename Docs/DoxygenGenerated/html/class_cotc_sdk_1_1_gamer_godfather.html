@@ -14,6 +14,7 @@
   $(document).ready(function() { searchBox.OnSelectItem(0); });
 </script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="OutputCustomization.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -85,19 +86,22 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#properties">Properties</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="class_cotc_sdk_1_1_gamer_godfather-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">CotcSdk.GamerGodfather Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Godfather (code) related functions. You may also want to subscribe to events (see <a class="el" href="class_cotc_sdk_1_1_gamer_godfather.html#aca14dde733c72d81635f847a90b6543a" title="Event triggered when someone adds this gamer as a friend or changes his friendship status...">CotcSdk.GamerGodfather.OnGotGodchild</a>). 
- <a href="class_cotc_sdk_1_1_gamer_godfather.html#details">More...</a></p>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <div class="textblock"><p>Godfather (code) related functions. You may also want to subscribe to events (see <a class="el" href="class_cotc_sdk_1_1_gamer_godfather.html#aca14dde733c72d81635f847a90b6543a" title="Event triggered when someone adds this gamer as a friend or changes his friendship status...">CotcSdk.GamerGodfather.OnGotGodchild</a>).</p>
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
+Properties</h2></td></tr>
+<tr class="memitem:aca14dde733c72d81635f847a90b6543a"><td class="memItemLeft" align="right" valign="top">Action&lt; <a class="el" href="class_cotc_sdk_1_1_got_godchild_event.html">GotGodchildEvent</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_godfather.html#aca14dde733c72d81635f847a90b6543a">OnGotGodchild</a></td></tr>
+<tr class="memdesc:aca14dde733c72d81635f847a90b6543a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event triggered when someone adds this gamer as a friend or changes his friendship status. <a href="#aca14dde733c72d81635f847a90b6543a">More...</a><br /></td></tr>
+<tr class="separator:aca14dde733c72d81635f847a90b6543a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aeff4bee0b71375a18fc35d52452eb7e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_gamer_godfather.html">GamerGodfather</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_godfather.html#aeff4bee0b71375a18fc35d52452eb7e9">Domain</a> (string domain)</td></tr>
@@ -118,13 +122,30 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a44ab8c6ad38eb40728681ae77d2486d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_godfather.html#a44ab8c6ad38eb40728681ae77d2486d5">UseCode</a> (string code, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> rewardTx=null, <a class="el" href="class_cotc_sdk_1_1_push_notification.html">PushNotification</a> notification=null)</td></tr>
 <tr class="memdesc:a44ab8c6ad38eb40728681ae77d2486d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call this to attribute a godfather to the currently logged in user. <a href="#a44ab8c6ad38eb40728681ae77d2486d5">More...</a><br /></td></tr>
 <tr class="separator:a44ab8c6ad38eb40728681ae77d2486d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
-Properties</h2></td></tr>
-<tr class="memitem:aca14dde733c72d81635f847a90b6543a"><td class="memItemLeft" align="right" valign="top">Action&lt; <a class="el" href="class_cotc_sdk_1_1_got_godchild_event.html">GotGodchildEvent</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_godfather.html#aca14dde733c72d81635f847a90b6543a">OnGotGodchild</a></td></tr>
-<tr class="memdesc:aca14dde733c72d81635f847a90b6543a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event triggered when someone adds this gamer as a friend or changes his friendship status. <a href="#aca14dde733c72d81635f847a90b6543a">More...</a><br /></td></tr>
-<tr class="separator:aca14dde733c72d81635f847a90b6543a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Property Documentation</h2>
+<a class="anchor" id="aca14dde733c72d81635f847a90b6543a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Action&lt;<a class="el" href="class_cotc_sdk_1_1_got_godchild_event.html">GotGodchildEvent</a>&gt; CotcSdk.GamerGodfather.OnGotGodchild</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">add</span><span class="mlabel">remove</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Event triggered when someone adds this gamer as a friend or changes his friendship status.</p>
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="ae2c201fbd93b43cb584bc74ac8e2aa78"></a>
 <div class="memitem">
@@ -266,36 +287,13 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<h2 class="groupheader">Property Documentation</h2>
-<a class="anchor" id="aca14dde733c72d81635f847a90b6543a"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Action&lt;<a class="el" href="class_cotc_sdk_1_1_got_godchild_event.html">GotGodchildEvent</a>&gt; CotcSdk.GamerGodfather.OnGotGodchild</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">add</span><span class="mlabel">remove</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Event triggered when someone adds this gamer as a friend or changes his friendship status.</p>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>C:/Users/Florian/Documents/CotC/unity-native/CotcSdk/HighLevel/GamerGodfather.cs</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 8 2015 11:31:39 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Sep 9 2015 10:17:54 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>
