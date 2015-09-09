@@ -26,6 +26,29 @@ namespace CotcSdk {
 	/// <summary>
 	/// This class is responsible for polling the server waiting for new events.
 	/// You should instantiate one and manage its lifecycle as the state of the application changes.
+	/// 
+	/// A loop is typically managed through the Gamer.StartEventLoop method (loops are always running as an authenticated
+	/// gamer) and should be started once the gamer is logged in, and stopped at logout. The loop is automatically paused
+	/// by the system when the user leaves the application, and automatically restarted as well.
+	/// 
+	/// @code{.cs}
+	/// DomainEventLoop loop;
+	/// 
+	/// void Login() {
+	///     Cloud.LoginAnonymous()
+	///     .Then(gamer => {
+	///         loop = gamer.StartEventLoop();
+	///         loop.ReceivedEvent += ReceivedEvent;
+	///     });
+	/// }
+	/// 
+	/// void Logout() {
+	///     loop.Stop();
+	/// }
+	/// 
+	/// void ReceivedEvent(DomainEventLoop sender, EventLoopArgs e) {
+	///     Debug.Log("Received event of type " + e.Message.Type + ": " + e.Message.ToJson());
+	/// } @endcode
 	/// </summary>
 	public sealed class DomainEventLoop {
 		/// <summary>

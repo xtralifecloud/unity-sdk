@@ -88,9 +88,9 @@
     <Compile Include="HighLevel\Model\SocialNetworkFriend.cs" />
     <Compile Include="HighLevel\Model\Transaction.cs" />
     <Compile Include="HighLevel\Model\TransactionResult.cs" />
-    <Compile Include="HighLevel\PagedResult.cs" />
     <Compile Include="HighLevel\CotcException.cs" />
     <Compile Include="HighLevel\GamerVfs.cs" />
+    <Compile Include="HighLevel\PagedList.cs" />
     <Compile Include="HighLevel\Promise.cs" />
     <Compile Include="HighLevel\Promise.NonGeneric.cs" />
     <Compile Include="HighLevel\ResultTask.cs" />

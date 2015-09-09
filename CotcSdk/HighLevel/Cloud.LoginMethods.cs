@@ -62,6 +62,14 @@ namespace CotcSdk
 			return Login(network.Describe(), networkId, networkSecret, preventRegistration);
 		}
 
+		/// <summary>Logs in by using a shortcode previously generated through #SendResetPasswordEmail.</summary>
+		/// <param name="shortcode">The shortcode received by the user by e-mail.</param>
+		/// <returns>Promise resolved when the login has finished. The resulting Gamer object can then be used for many
+		///     purposes related to the signed in account.</returns>
+		public Promise<Gamer> LoginWithShortcode(string shortcode) {
+			return Login("restore", "", shortcode, true);
+		}
+
 		/// <summary>
 		/// Logs back in with existing credentials. Should be used for users who have already been logged in
 		/// previously and the application has been quit for instance.
@@ -72,14 +80,6 @@ namespace CotcSdk
 		/// <param name="gamerSecret">Credentials of the previous session (Gamer.GamerSecret).</param>
 		public Promise<Gamer> ResumeSession(string gamerId, string gamerSecret) {
 			return Login(LoginNetwork.Anonymous, gamerId, gamerSecret);
-		}
-
-		/// <summary>Logs in by using a shortcode previously generated through #SendResetPasswordEmail.</summary>
-		/// <param name="shortcode">The shortcode received by the user by e-mail.</param>
-		/// <returns>Promise resolved when the login has finished. The resulting Gamer object can then be used for many
-		///     purposes related to the signed in account.</returns>
-		public Promise<Gamer> LoginWithShortcode(string shortcode) {
-			return Login("restore", "", shortcode, true);
 		}
 
 		/// <summary>
@@ -125,7 +125,7 @@ namespace CotcSdk
 
 		#region Private
 		// See the public Login method for more info
-		public Promise<Gamer> Login(string network, string networkId, string networkSecret, bool preventRegistration = false) {
+		private Promise<Gamer> Login(string network, string networkId, string networkSecret, bool preventRegistration = false) {
 			Bundle config = Bundle.CreateObject();
 			config["network"] = network;
 			config["id"] = networkId;

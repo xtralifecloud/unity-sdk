@@ -3,10 +3,25 @@ using UnityEngine;
 
 namespace CotcSdk
 {
+	/// <summary>
+	/// Place this object on all scenes where you would like to use CotC functionality, as described @ref cotcgameobject_ref "in this tutorial".
+	/// 
+	/// Then call #GetCloud to get a Cloud object, which provides an entry point (through sub objects) to all functionality provided by the SDK.
+	/// </summary>
 	public class CotcGameObject : MonoBehaviour {
 
 		private Promise<Cloud> whenStarted = new Promise<Cloud>();
 
+		/// <summary>
+		/// Use this to get a Cloud object, as shown below:
+		/// @code{.cs}
+		/// var cotc = FindObjectOfType<CotcGameObject>();
+		/// cotc.GetCloud(cloud => {
+		///     cloud.Login(...);
+		/// } @endcode
+		/// </summary>
+		/// <returns>A promise that returns a Cloud object to be used for most operations. Although the returned object may be shared among
+		/// multiple scenes, you need to place a CotcGameObject and call GetCloud on all your scenes to ensure proper operations.</returns>
 		public Promise<Cloud> GetCloud() {
 			return whenStarted;
 		}
