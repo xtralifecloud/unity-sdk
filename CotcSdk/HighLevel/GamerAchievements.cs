@@ -2,7 +2,8 @@
 
 namespace CotcSdk
 {
-	/// <summary>API functions related to the achievements.</summary>
+	/// @ingroup gamer_classes
+	/// API functions related to the achievements.</summary>
 	public class GamerAchievements {
 
 		/// <summary>

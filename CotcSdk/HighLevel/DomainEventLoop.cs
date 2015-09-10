@@ -3,11 +3,14 @@ using System.Threading;
 
 namespace CotcSdk {
 
-	/// <summary>Delegate called when receiving a message on a #CotcSdk.DomainEventLoop.</summary>
+	/// @ingroup data_classes
+	/// <summary>
+	/// Delegate called when receiving a message on a #CotcSdk.DomainEventLoop.</summary>
 	/// <param name="sender">Domain loop that triggered the event.</param>
 	/// <param name="e">Description of the received event.</param>
 	public delegate void EventLoopHandler(DomainEventLoop sender, EventLoopArgs e);
 
+	/// @ingroup data_classes
 	/// <summary>
 	/// Arguments of the EventLoopArgs.ReceivedEvent event. You can use `args.Message.ToJson()` to
 	/// obtain more information.
@@ -23,6 +26,7 @@ namespace CotcSdk {
 		}
 	}
 
+	/// @ingroup main_classes
 	/// <summary>
 	/// This class is responsible for polling the server waiting for new events.
 	/// You should instantiate one and manage its lifecycle as the state of the application changes.

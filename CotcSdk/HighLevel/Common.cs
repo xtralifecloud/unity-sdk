@@ -3,6 +3,7 @@ using System.Threading;
 
 namespace CotcSdk
 {
+	/// @ingroup utility_classes
 	/// <summary>Common SDK methods also usable by clients.</summary>
 	public static class Common {
 		/// <summary>

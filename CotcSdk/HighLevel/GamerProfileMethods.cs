@@ -1,6 +1,7 @@
 
 namespace CotcSdk
 {
+	/// @ingroup gamer_classes
 	/// <summary>Exposes methods allowing to fetch and modify the profile of the signed in gamer.</summary>
 	public sealed class GamerProfileMethods {
 

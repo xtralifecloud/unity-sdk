@@ -1,6 +1,7 @@
 ﻿
 namespace CotcSdk
 {
+	/// @ingroup gamer_classes
 	/// <summary>API functions acting on an user account (convert, etc.).</summary>
 	public sealed class GamerAccountMethods {
 

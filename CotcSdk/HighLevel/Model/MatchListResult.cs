@@ -1,6 +1,8 @@
 ﻿
 namespace CotcSdk {
 
+	/// @ingroup model_classes
+	/// <summary>Entry within a list of matches.</summary>
 	public class MatchListResult {
 		/// <summary>Describes the creator of the match.</summary>
 		public GamerInfo Creator { get; private set; }

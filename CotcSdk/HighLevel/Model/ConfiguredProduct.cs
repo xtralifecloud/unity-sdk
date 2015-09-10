@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace CotcSdk {
 
+	/// @ingroup model_classes
 	/// <summary>Information about a configured product on the BO.</summary>
 	public class ConfiguredProduct : PropertiesObject {
 		/// <summary>The product identifier as formatted in the query.</summary>

@@ -2,6 +2,7 @@
 
 namespace CotcSdk {
 
+	/// @ingroup gamer_classes
 	/// <summary>
 	/// Some methods accept a PushNotification parameter. This parameter can be used to forward a push notification to the
 	/// users who are not active at the moment.

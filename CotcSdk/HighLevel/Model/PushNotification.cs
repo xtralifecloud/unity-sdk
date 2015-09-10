@@ -1,6 +1,7 @@
 ﻿
 namespace CotcSdk {
 
+	/// @ingroup data_classes
 	/// <summary>
 	/// Push notifications can be specified in some API calls to push an OS push notification to inactive users.
 	/// It is typically a JSON with made of attributes which represent language -> message pairs.

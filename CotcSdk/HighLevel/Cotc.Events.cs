@@ -2,7 +2,8 @@
 
 namespace CotcSdk
 {
-	/////// Events to be used for plugins ///////
+	/** @cond private
+	 * Events to be used by plugins. */
 	public static partial class Cotc {
 		// LoggedIn
 		public class LoggedInEventArgs : EventArgs {
@@ -53,4 +54,5 @@ namespace CotcSdk
 			if (gotDomainLoopEvent != null) gotDomainLoopEvent(sender, args);
 		}
 	}
+	/** @endcond */
 }

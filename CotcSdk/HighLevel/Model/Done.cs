@@ -1,6 +1,7 @@
 ﻿
 namespace CotcSdk
 {
+	/// @ingroup model_classes
 	/// <summary>
 	/// Generic result for an API call that has been successful and simply gives an indication of whether it was done properly or not.
 	/// Usually the result should be true, but some operations may succeed and give an indication that nothing was done.

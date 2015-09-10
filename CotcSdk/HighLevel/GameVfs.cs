@@ -1,6 +1,7 @@
 ﻿
 namespace CotcSdk {
 
+	/// @ingroup gamer_classes
 	/// <summary>
 	/// Represents a key/value system, also known as virtual file system, to be used for game properties.
 	/// This class is scoped by domain, meaning that you can call .Domain("yourdomain") and perform

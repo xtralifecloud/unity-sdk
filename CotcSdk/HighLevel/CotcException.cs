@@ -2,6 +2,10 @@
 
 namespace CotcSdk {
 
+	/// @ingroup main_classes
+	/// <summary>
+	/// Standard type of exceptions as forwarded most of the time in case of API error (network included).
+	/// </summary>
 	public class CotcException : Exception {
 		public ErrorCode ErrorCode;
 		public string ErrorInformation;

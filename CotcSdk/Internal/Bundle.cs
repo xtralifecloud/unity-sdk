@@ -6,6 +6,7 @@ using LitJson;
 
 namespace CotcSdk
 {
+	/// @ingroup main_classes
 	/// <summary>
 	/// The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object, behaving
 	/// like a C# dictionary, but with inferred typing and more safety.

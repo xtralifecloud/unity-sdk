@@ -1,6 +1,7 @@
 ﻿
 namespace CotcSdk {
 
+	/// @ingroup model_classes
 	/// <summary>
 	/// Info about a player.
 	/// Can be enriched with information, accessible using the index operator [].

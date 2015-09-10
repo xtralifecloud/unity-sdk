@@ -1,6 +1,7 @@
 ﻿
 namespace CotcSdk {
 
+	/// @ingroup model_classes
 	/// <summary>
 	/// Represents a basic match with less information associated than a real match.
 	/// This is the kind of matches that you may find in sub-objects returned by some calls (list, etc.).

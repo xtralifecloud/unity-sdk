@@ -1,6 +1,10 @@
 ﻿
 namespace CotcSdk {
 
+	/// @ingroup main_classes
+	/// <summary>
+	/// Provides functionality related to the entire game.
+	/// </summary>
 	public class Game {
 
 		/// <summary>Provides an API to run game-scoped (unauthenticated) batches.</summary>

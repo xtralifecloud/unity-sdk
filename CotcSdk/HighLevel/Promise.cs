@@ -8,6 +8,7 @@ namespace CotcSdk
 		public Action<Exception> OnFailure;
 	}
 
+	/// @ingroup main_classes
 	/// <summary>
 	/// %Promise of future result, which may fail or succeed. Returned as a result of any asnychronous operation.
 	/// 

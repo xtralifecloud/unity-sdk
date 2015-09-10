@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace CotcSdk {
 
+	/// @ingroup gamer_classes
 	/// <summary>
 	/// API methods related to the friends and so on of one gamer.
 	/// 

@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace CotcSdk
 {
+	/// @ingroup main_classes
 	/// <summary>
 	/// Place this object on all scenes where you would like to use CotC functionality, as described @ref cotcgameobject_ref "in this tutorial".
 	/// 

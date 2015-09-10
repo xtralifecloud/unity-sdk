@@ -2,6 +2,7 @@ using System;
 
 namespace CotcSdk
 {
+	/// @ingroup main_classes
 	/// <summary>
 	/// Root class of the SDK. It is stateless and allows to perform basic operations with the SDK, such as
 	/// `Ping`.

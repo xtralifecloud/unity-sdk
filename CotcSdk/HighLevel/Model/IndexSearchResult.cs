@@ -1,6 +1,7 @@
 ﻿
 namespace CotcSdk {
 
+	/// @ingroup model_classes
 	/// <summary>Contains the results of a search on the index.</summary>
 	public class IndexSearchResult {
 		/// <summary>Paginated list of results.0</summary>

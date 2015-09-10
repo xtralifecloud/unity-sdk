@@ -1,11 +1,13 @@
 ﻿
 namespace CotcSdk {
 
+	/// @ingroup model_classes
 	/// <summary>Type of achievement. The rules and the "Config" member of an AchievementDefinition depends on this.</summary>
 	public enum AchievementType {
 		Limit
 	}
 
+	/// @ingroup model_classes
 	/// <summary>
 	/// Definition of an achievement. Achievements are inputted on the backoffice and are triggered under
 	/// defined circumstances.

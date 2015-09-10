@@ -2,6 +2,7 @@
 
 namespace CotcSdk {
 
+	/// @ingroup model_classes
 	/// <summary>Represents a score fetched from a leaderboard.</summary>
 	public class Score {
 		/// <summary>

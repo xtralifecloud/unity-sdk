@@ -1,6 +1,7 @@
 
 namespace CotcSdk
 {
+	/// @ingroup model_classes
 	/// <summary>
 	/// Might contain the following:
 	/// {

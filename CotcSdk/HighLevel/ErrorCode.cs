@@ -1,6 +1,10 @@
 ﻿
 namespace CotcSdk
 {
+	/// @ingroup data_classes
+	/// <summary>
+	/// Represents an error code as returned by a CotcException.
+	/// </summary>
 	public enum ErrorCode {
 		/// No error.
 		Ok = 0,

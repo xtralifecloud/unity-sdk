@@ -2,6 +2,7 @@
 
 namespace CotcSdk {
 
+	/// @ingroup utility_classes
 	/// <summary>Provides an API allowing to manipulate an index.</summary>
 	public class CloudIndexing {
 
