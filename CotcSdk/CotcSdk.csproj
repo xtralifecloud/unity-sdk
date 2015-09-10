@@ -93,7 +93,7 @@
     <Compile Include="HighLevel\PagedList.cs" />
     <Compile Include="HighLevel\Promise.cs" />
     <Compile Include="HighLevel\Promise.NonGeneric.cs" />
-    <Compile Include="HighLevel\ResultTask.cs" />
+    <Compile Include="HighLevel\PromiseExtensions.cs" />
     <Compile Include="Internal\Bundle.cs" />
     <Compile Include="Internal\CotcSettings.cs" />
     <Compile Include="Internal\HttpRequest.cs" />

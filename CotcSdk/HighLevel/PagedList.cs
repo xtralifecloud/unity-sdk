@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace CotcSdk {
 
+	/// @ingroup main_classes
 	/// <summary>Represents a paginated list, which allows for easy navigation through multiple results.</summary>
 	public class PagedList<DataType> : List<DataType> {
 		/// <summary>Fetches the next results and calls the same handler again.</summary>

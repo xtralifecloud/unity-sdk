@@ -1,6 +1,7 @@
 ﻿
 namespace CotcSdk {
 
+	/// @ingroup gamer_classes
 	/// <summary>Allows to manipulate the gamer properties.</summary>
 	public sealed class GamerProperties {
 

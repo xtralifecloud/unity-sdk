@@ -1,6 +1,7 @@
 ﻿
 namespace CotcSdk {
 
+	/// @ingroup model_classes
 	/// <summary>
 	/// Data about a friend on the social network.
 	/// The most important field is the id, which allows to recognize the gamer uniquely among the given social network.

@@ -1,6 +1,7 @@
 ﻿
 namespace CotcSdk {
 
+	/// @ingroup model_classes
 	/// <summary>
 	/// Result of an index query. Represents a single returned object.
 	/// This object is a #CotcSdk.PropertiesObject, meaning that additional properties can be queried. If you want to

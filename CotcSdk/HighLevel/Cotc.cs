@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 
 namespace CotcSdk {
+	/** @cond private */
 	public static partial class Cotc {
 
 		static Cotc() {
@@ -100,4 +101,5 @@ namespace CotcSdk {
 		private static List<Action> CurrentActions = new List<Action>();
 		#endregion
 	}
+	/** @endcond */
 }

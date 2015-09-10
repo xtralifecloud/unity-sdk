@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 
 namespace CotcSdk {
-	
+
+	/// @ingroup model_classes
 	/// <summary>Wraps information about a list of friends coming from a social network.</summary>
 	public class SocialNetworkFriendResponse: PropertiesObject {
 		public Dictionary<LoginNetwork, List<SocialNetworkFriend>> ByNetwork;

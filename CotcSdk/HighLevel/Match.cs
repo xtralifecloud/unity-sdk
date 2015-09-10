@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace CotcSdk {
 
+	/// @ingroup match_classes
 	/// <summary>
 	/// Represents a match with which you can interact through high level functionality.
 	/// A match object is returned when you create a match, join it and so on.
@@ -318,11 +319,15 @@ namespace CotcSdk {
 		#endregion
 	}
 
+	/// @ingroup match_classes
+	/// <summary>Status of a match.</summary>
 	public enum MatchStatus {
 		Running,
 		Finished,
 	}
 
+	/// @ingroup match_classes
+	/// <summary>Represents a move in a match.</summary>
 	public class MatchMove {
 		/// <summary>The data passed by the player when performing the move.</summary>
 		public Bundle MoveData;
@@ -335,6 +340,7 @@ namespace CotcSdk {
 		}
 	}
 
+	/// @ingroup model_classes
 	/// <summary>Response resulting from a #CotcSdk.Match.DrawFromShoe call.</summary>
 	public class DrawnItemsResult : PropertiesObject {
 		public List<Bundle> Items;

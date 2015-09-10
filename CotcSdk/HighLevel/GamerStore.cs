@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace CotcSdk {
 
+	/// @ingroup gamer_classes
 	/// <summary>(App) Store API.</summary>
 	public class GamerStore {
 

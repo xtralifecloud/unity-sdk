@@ -2,6 +2,7 @@
 
 namespace CotcSdk {
 
+	/// @ingroup model_classes
 	/// <summary>
 	/// Result of a transaction call. Contains the new balance (after the transaction has been
 	/// executed atomically) and the list of triggered achievements.

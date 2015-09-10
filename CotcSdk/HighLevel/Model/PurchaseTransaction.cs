@@ -3,8 +3,7 @@ using System.Collections.Generic;
 
 namespace CotcSdk {
 
-	/// <summary>(App) Store API.</summary>
-
+	/// @ingroup model_classes
 	/// <summary>Information about a purchased product transaction.</summary>
 	public class PurchaseTransaction : PropertiesObject {
 		/// <summary>The type of Store on which the purchase has been made.</summary>

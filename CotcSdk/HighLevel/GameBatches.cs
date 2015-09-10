@@ -1,7 +1,9 @@
 ﻿
 namespace CotcSdk {
-	
-	/// <summary>Allows to run batches authenticated as a game (that is, unauthenticated).</summary>
+
+	/// @ingroup game_classes
+	/// <summary>
+	/// Allows to run batches authenticated as a game (that is, unauthenticated).</summary>
 	public class GameBatches {
 
 		/// <summary>

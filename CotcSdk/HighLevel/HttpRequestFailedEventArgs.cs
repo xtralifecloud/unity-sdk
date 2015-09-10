@@ -1,9 +1,11 @@
 ﻿
 namespace CotcSdk {
 
+	/// @ingroup data_classes
 	/// <summary>Delegate for failed HTTP requests. See Cloud.HttpRequestFailedHandler.</summary>
 	public delegate void HttpRequestFailedHandler(HttpRequestFailedEventArgs e);
 
+	/// @ingroup data_classes
 	/// <summary>
 	/// This class is passed to the HttpRequestFailed handler as set on the Cloud.
 	/// You need to do something with it, either call Abort or RetryIn else the http service will

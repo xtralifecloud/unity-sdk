@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace CotcSdk {
 
+	/// @ingroup gamer_classes
 	/// <summary>Scoring and leaderboard related functions.</summary>
 	public class GamerScores {
 

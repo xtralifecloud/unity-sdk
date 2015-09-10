@@ -2,6 +2,7 @@
 
 namespace CotcSdk {
 
+	/// @ingroup match_classes
 	/// <summary>Basis for a match event. An event is actually always one of the subclasses (Match*Event).</summary>
 	public abstract class MatchEvent: PropertiesObject {
 		/// <summary>The unique ID of the event. Might match the last event ID of an existing match.</summary>
@@ -14,6 +15,7 @@ namespace CotcSdk {
 		}
 	}
 
+	/// @ingroup match_classes
 	/// <summary>
 	/// Event of type match.join.
 	/// Broadcasted when a player joins a match. The joining player himself doesn't receive the event.
@@ -29,6 +31,7 @@ namespace CotcSdk {
 		}
 	}
 
+	/// @ingroup match_classes
 	/// <summary>
 	/// Event of type match.leave.
 	/// Broadcasted when a player leaves the match. The leaving player himself doesn't receive the event.
@@ -44,6 +47,7 @@ namespace CotcSdk {
 		}
 	}
 
+	/// @ingroup match_classes
 	/// <summary>
 	/// Event of type match.finish.
 	/// Broadcasted to all participants except the one who initiated the request when a match is finished.
@@ -57,6 +61,7 @@ namespace CotcSdk {
 		}
 	}
 
+	/// @ingroup match_classes
 	/// <summary>
 	/// Event of type match.move.
 	/// Broadcasted when a player makes a move. The player himself doesn't receive the event.
@@ -73,6 +78,7 @@ namespace CotcSdk {
 		}
 	}
 
+	/// @ingroup match_classes
 	/// <summary>
 	/// Event of type match.shoedraw.
 	/// Broadcasted when a player draws items from the shoe. The player himself does not receive the event.
@@ -86,6 +92,7 @@ namespace CotcSdk {
 		}
 	}
 
+	/// @ingroup match_classes
 	/// <summary>
 	/// Event of type match.invite.
 	/// Received by another player when someone invites him to the match.

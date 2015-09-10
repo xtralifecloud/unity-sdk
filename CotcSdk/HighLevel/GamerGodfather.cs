@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace CotcSdk
 {
+	/// @ingroup gamer_classes
 	/// <summary>Godfather (code) related functions. You may also want to subscribe to events (see #CotcSdk.GamerGodfather.OnGotGodchild).</summary>
 	public class GamerGodfather {
 

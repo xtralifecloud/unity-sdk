@@ -4,6 +4,7 @@ using System.Text;
 
 namespace CotcSdk
 {
+	/// @ingroup main_classes
 	/// <summary>
 	/// Important object from the SDK, allowing to perform many operations that depend on a currently logged in user.
 	/// 

@@ -2,6 +2,8 @@
 
 namespace CotcSdk {
 
+	/// @ingroup model_classes
+	/// <summary>Transaction as archived on the CotC servers.</summary>
 	public sealed class Transaction {
 		public string Description;
 		public string Domain;

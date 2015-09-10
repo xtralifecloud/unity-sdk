@@ -1,6 +1,7 @@
 ﻿
 namespace CotcSdk {
-	
+
+	/// @ingroup gamer_classes
 	/// <summary>Allows to run batches authenticated as a user.</summary>
 	public class GamerBatches {
 

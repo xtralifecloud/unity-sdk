@@ -2,6 +2,7 @@
 
 namespace CotcSdk {
 
+	/// @ingroup model_classes
 	/// <summary>
 	/// Defines an object that can be queried for additional properties using indexers. The structure of the object
 	/// remains read only though.

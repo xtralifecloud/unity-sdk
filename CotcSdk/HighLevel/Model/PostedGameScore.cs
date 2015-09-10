@@ -1,6 +1,8 @@
 ﻿
 namespace CotcSdk {
 
+	/// @ingroup model_classes
+	/// <summary>Result of posting a score.</summary>
 	public class PostedGameScore {
 		/// <summary>Whether the score was saved. This can be set to false if the score is not as good as a previous best for the player.</summary>
 		public bool HasBeenSaved {
