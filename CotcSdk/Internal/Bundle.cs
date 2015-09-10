@@ -60,7 +60,7 @@ namespace CotcSdk
 	/// This can be useful for optional arguments. For instance, the following snippet will not affect the bundle.
 	/// 
 	/// ~~~~{.cs}
-	/// string value = null; // converts to Empty.Bundle and rejects assignment
+	/// string value = null; // converts to Bundle.Empty and rejects assignment
 	/// bundle["key"] = value;
 	/// ~~~~
 	/// 
@@ -105,7 +105,7 @@ namespace CotcSdk
 	/// A bundle can quickly be transformed from/to JSON using ToJson and Bundle.FromJson methods. One can also check
 	/// for the presence of keys and remove them with the .Has respectively .Remove methods.
 	/// 
-	/// Iterating a JSON object is made using the explicit .As* methods. For instance, here how you iterate over an
+	/// Iterating a JSON object is made using the explicit .As* methods. For instance, here is how you iterate over an
 	/// array bundle (no harm will happen if the key doesn't exist or is not an array, since an empty array is returned):
 	/// 
 	/// ~~~~{.cs}
@@ -144,10 +144,9 @@ namespace CotcSdk
 		private Dictionary<string, Bundle> objectValue;
 		private List<Bundle> arrayValue;
 
-		// Explicit constructors
-		public static Bundle CreateArray() {
-			return new Bundle(DataType.Array);
-		}
+		/// <summary>Creates a bundle of type object. You may also pass up to three key/value pairs (in this order),
+		/// which will be put in the object initially.</summary>
+		/// <returns>A new bundle.</returns>
 		public static Bundle CreateObject() {
 			return new Bundle(DataType.Object);
 		}
@@ -169,6 +168,10 @@ namespace CotcSdk
 			result[key3] = value3;
 			return result;
 		}
+		/// <summary>Creates a bundle of type array.</summary>
+		/// <param name="values">Optional values to pre-fill the array with. Since bundle are implicitly converted, remember
+		/// that you may pass an integer, string, etc.</param>
+		/// <returns>A new bundle.</returns>
 		public static Bundle CreateArray(params Bundle[] values) {
 			Bundle result = new Bundle(DataType.Array);
 			foreach (Bundle b in values) result.Add(b);

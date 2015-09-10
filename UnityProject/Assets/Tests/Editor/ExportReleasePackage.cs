@@ -63,6 +63,11 @@ public class ExportReleasePackage {
 	public static void ReleasePackages() {
 		var releaseDirectory = Path.Combine(Directory.GetParent(UnityEngine.Application.dataPath).FullName, ReleaseDirectory);
 
+		// Prompt the user to check the version as we have no mean of automatically updating it (yet)
+		if (!EditorUtility.DisplayDialog("Building packages", "The release packages are about to be built. Please check the following:\n\n- SDK Version will be " + CotcSdk.Cloud.SdkVersion + "\n\nIf you are unsure, please fix Cloud.SdkVersion, rebuild the library and try again.", "Proceed", "Cancel")) {
+			return;
+		}
+
 		// First, build the DLLs
 		var buildScriptDir = Path.Combine(Directory.GetParent(UnityEngine.Application.dataPath).Parent.FullName, "CotcSdk");
 		var process = new System.Diagnostics.Process();
