@@ -8,5 +8,6 @@ var searchData=
   ['userdata',['UserData',['../class_cotc_sdk_1_1_http_request_failed_event_args.html#ae6f9621f943935fbffc782237367212c',1,'CotcSdk::HttpRequestFailedEventArgs']]],
   ['userexists',['UserExists',['../class_cotc_sdk_1_1_cloud.html#ad3bd5880a8fcee7aeac33bb6fd82d089',1,'CotcSdk::Cloud']]],
   ['userid',['UserId',['../class_cotc_sdk_1_1_user_info.html#af919f37a9150c5b3be6c09ed4020eeef',1,'CotcSdk::UserInfo']]],
-  ['userinfo',['UserInfo',['../class_cotc_sdk_1_1_user_info.html',1,'CotcSdk']]]
+  ['userinfo',['UserInfo',['../class_cotc_sdk_1_1_user_info.html',1,'CotcSdk']]],
+  ['utility_20classes',['Utility classes',['../group__utility__classes.html',1,'']]]
 ];

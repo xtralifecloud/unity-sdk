@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['scoreorder',['ScoreOrder',['../namespace_cotc_sdk.html#a0b33fb730620778c7b2ebfb967cf33ab',1,'CotcSdk']]],
-  ['storetype',['StoreType',['../namespace_cotc_sdk.html#a81559f66b6278243aa82a8cd14d79e80',1,'CotcSdk']]]
+  ['matchstatus',['MatchStatus',['../group__match__classes.html#ga8d048a20e3e26f2e7afdd662024e6253',1,'CotcSdk']]]
 ];

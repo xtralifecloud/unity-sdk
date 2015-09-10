@@ -38,6 +38,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -70,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Modules</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -91,10 +92,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="class_cotc_sdk_1_1_cotc_exception-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">CotcSdk.CotcException Class Reference</div>  </div>
+<div class="title">CotcSdk.CotcException Class Reference<div class="ingroups"><a class="el" href="group__main__classes.html">Classes providing main SDK functionality (entry points)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
+<a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+<div class="textblock"><p>Standard type of exceptions as forwarded most of the time in case of API error (network included). </p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
 <tr class="memitem:a112332bb7a7cc0f0f33a32d7eaf68126"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a112332bb7a7cc0f0f33a32d7eaf68126"></a>
@@ -103,7 +106,7 @@ Properties</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac6504c0059d1c2712782ab86c4a474b3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_cotc_exception.html#ac6504c0059d1c2712782ab86c4a474b3">CotcException</a> (<a class="el" href="namespace_cotc_sdk.html#a49400c75979dda6834139d30bad775da">ErrorCode</a> code, string failureDescription=null)</td></tr>
+<tr class="memitem:ac6504c0059d1c2712782ab86c4a474b3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_cotc_exception.html#ac6504c0059d1c2712782ab86c4a474b3">CotcException</a> (<a class="el" href="group__data__classes.html#ga49400c75979dda6834139d30bad775da">ErrorCode</a> code, string failureDescription=null)</td></tr>
 <tr class="memdesc:ac6504c0059d1c2712782ab86c4a474b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">To be used for an higher level error. No information about the HTTP request would be attached. <a href="#ac6504c0059d1c2712782ab86c4a474b3">More...</a><br /></td></tr>
 <tr class="separator:ac6504c0059d1c2712782ab86c4a474b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf03f6e45116a464c12585176f952d7d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adf03f6e45116a464c12585176f952d7d"></a>
@@ -113,7 +116,7 @@ override string&#160;</td><td class="memItemRight" valign="bottom"><b>ToString</
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:ae31bb964fb3a0e927cb2119dbe6d9b9d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae31bb964fb3a0e927cb2119dbe6d9b9d"></a>
-<a class="el" href="namespace_cotc_sdk.html#a49400c75979dda6834139d30bad775da">ErrorCode</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ErrorCode</b></td></tr>
+<a class="el" href="group__data__classes.html#ga49400c75979dda6834139d30bad775da">ErrorCode</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ErrorCode</b></td></tr>
 <tr class="separator:ae31bb964fb3a0e927cb2119dbe6d9b9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4dea35238580f42e2a6b7eaa92386df0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4dea35238580f42e2a6b7eaa92386df0"></a>
 string&#160;</td><td class="memItemRight" valign="bottom"><b>ErrorInformation</b></td></tr>
@@ -138,7 +141,7 @@ Inheritance diagram for CotcSdk.CotcException:</div>
         <tr>
           <td class="memname">CotcSdk.CotcException.CotcException </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespace_cotc_sdk.html#a49400c75979dda6834139d30bad775da">ErrorCode</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="group__data__classes.html#ga49400c75979dda6834139d30bad775da">ErrorCode</a>&#160;</td>
           <td class="paramname"><em>code</em>, </td>
         </tr>
         <tr>
@@ -165,7 +168,7 @@ Inheritance diagram for CotcSdk.CotcException:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 10 2015 09:38:03 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 10 2015 07:06:45 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

@@ -2,9 +2,11 @@ var searchData=
 [
   ['game',['Game',['../class_cotc_sdk_1_1_game.html',1,'CotcSdk']]],
   ['game',['Game',['../class_cotc_sdk_1_1_cloud.html#a97bb9d73aed9f22bfc9796be6573fc8c',1,'CotcSdk::Cloud']]],
+  ['game_20subclasses',['Game subclasses',['../group__game__classes.html',1,'']]],
   ['gamebatches',['GameBatches',['../class_cotc_sdk_1_1_game_batches.html',1,'CotcSdk']]],
   ['gamer',['Gamer',['../class_cotc_sdk_1_1_got_godchild_event.html#a6d91bfdd1733b363090b79628dc5231d',1,'CotcSdk.GotGodchildEvent.Gamer()'],['../class_cotc_sdk_1_1_match.html#ad5fb1993bb8149548b0e44661d2f0056',1,'CotcSdk.Match.Gamer()']]],
   ['gamer',['Gamer',['../class_cotc_sdk_1_1_gamer.html',1,'CotcSdk']]],
+  ['gamer_20subclasses',['Gamer subclasses',['../group__gamer__classes.html',1,'']]],
   ['gameraccountmethods',['GamerAccountMethods',['../class_cotc_sdk_1_1_gamer_account_methods.html',1,'CotcSdk']]],
   ['gamerachievements',['GamerAchievements',['../class_cotc_sdk_1_1_gamer_achievements.html',1,'CotcSdk']]],
   ['gamerbatches',['GamerBatches',['../class_cotc_sdk_1_1_gamer_batches.html',1,'CotcSdk']]],
@@ -43,5 +45,6 @@ var searchData=
   ['globalstate',['GlobalState',['../class_cotc_sdk_1_1_match.html#a1ebfaef159679819912287098b7c5722',1,'CotcSdk::Match']]],
   ['godfather',['Godfather',['../class_cotc_sdk_1_1_gamer.html#ad89bd7c937628ba1cabcb4ec5a860601',1,'CotcSdk::Gamer']]],
   ['googleplayid',['GooglePlayId',['../class_cotc_sdk_1_1_configured_product.html#a5581f8a86d423e28ee51cecc1bb3e9d5',1,'CotcSdk::ConfiguredProduct']]],
-  ['gotgodchildevent',['GotGodchildEvent',['../class_cotc_sdk_1_1_got_godchild_event.html',1,'CotcSdk']]]
+  ['gotgodchildevent',['GotGodchildEvent',['../class_cotc_sdk_1_1_got_godchild_event.html',1,'CotcSdk']]],
+  ['groups',['groups',['../md_groups.html',1,'']]]
 ];

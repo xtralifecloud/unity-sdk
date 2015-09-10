@@ -27,5 +27,6 @@ var searchData=
   ['customproperties',['CustomProperties',['../class_cotc_sdk_1_1_match.html#a2d1836f1b13f00896722a006459cc9a5',1,'CotcSdk.Match.CustomProperties()'],['../class_cotc_sdk_1_1_match_list_result.html#a8106908e4d86e01f4f460a7a80797ee8',1,'CotcSdk.MatchListResult.CustomProperties()']]],
   ['facebookintegration',['FacebookIntegration',['../namespace_cotc_sdk_1_1_facebook_integration.html',1,'CotcSdk']]],
   ['inapppurchase',['InappPurchase',['../namespace_cotc_sdk_1_1_inapp_purchase.html',1,'CotcSdk']]],
+  ['classes_20providing_20main_20sdk_20functionality_20_28entry_20points_29',['Classes providing main SDK functionality (entry points)',['../group__main__classes.html',1,'']]],
   ['pushnotifications',['PushNotifications',['../namespace_cotc_sdk_1_1_push_notifications.html',1,'CotcSdk']]]
 ];

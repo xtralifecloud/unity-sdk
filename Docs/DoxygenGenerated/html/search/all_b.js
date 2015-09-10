@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['lasterror',['LastError',['../namespace_cotc_sdk.html#a49400c75979dda6834139d30bad775daa49b8f9d972a16a3efaab2442f79bcacb',1,'CotcSdk']]],
+  ['lasterror',['LastError',['../group__data__classes.html#gga49400c75979dda6834139d30bad775daa49b8f9d972a16a3efaab2442f79bcacb',1,'CotcSdk']]],
   ['lasteventid',['LastEventId',['../class_cotc_sdk_1_1_match.html#adb87d3000bd1d4d56c4a08e95b930591',1,'CotcSdk::Match']]],
   ['launchpurchase',['LaunchPurchase',['../class_cotc_sdk_1_1_inapp_purchase_1_1_cotc_inapp_purchase_game_object.html#acb94dd14509dd28ca67e8a2da134ce9c',1,'CotcSdk::InappPurchase::CotcInappPurchaseGameObject']]],
   ['launchpurchaseflow',['LaunchPurchaseFlow',['../interface_cotc_sdk_1_1_inapp_purchase_1_1_i_store.html#a78d46e1aed92d8942647645a72d1b063',1,'CotcSdk::InappPurchase::IStore']]],
@@ -13,10 +13,9 @@ var searchData=
   ['listusers',['ListUsers',['../class_cotc_sdk_1_1_cloud.html#ae45b45f4637243e70c0578f3c3a01f2f',1,'CotcSdk::Cloud']]],
   ['lock',['Lock',['../class_cotc_sdk_1_1_match.html#ab201d6d0ab0da32d9812c95a110c596f',1,'CotcSdk::Match']]],
   ['logeventargs',['LogEventArgs',['../class_cotc_sdk_1_1_log_event_args.html',1,'CotcSdk']]],
-  ['loggedineventargs',['LoggedInEventArgs',['../class_cotc_sdk_1_1_cotc_1_1_logged_in_event_args.html',1,'CotcSdk::Cotc']]],
   ['login',['Login',['../class_cotc_sdk_1_1_cloud.html#a3109ee9f5a019b2ac4a4848bc81d797d',1,'CotcSdk::Cloud']]],
   ['loginanonymously',['LoginAnonymously',['../class_cotc_sdk_1_1_cloud.html#a9ff54f02170f8df7256d535540f1b4d5',1,'CotcSdk::Cloud']]],
-  ['loginnetwork',['LoginNetwork',['../namespace_cotc_sdk.html#ad5e437023247d9f2be89e7f6be520fdb',1,'CotcSdk']]],
+  ['loginnetwork',['LoginNetwork',['../group__model__classes.html#gad5e437023247d9f2be89e7f6be520fdb',1,'CotcSdk']]],
   ['loginwithfacebook',['LoginWithFacebook',['../class_cotc_sdk_1_1_facebook_integration_1_1_cotc_facebook_integration.html#a880ef9703bf191be2062641c2e7374c4',1,'CotcSdk::FacebookIntegration::CotcFacebookIntegration']]],
   ['loginwithshortcode',['LoginWithShortcode',['../class_cotc_sdk_1_1_cloud.html#a2926f63e1be0c689a3aa2456059cde46',1,'CotcSdk::Cloud']]]
 ];
