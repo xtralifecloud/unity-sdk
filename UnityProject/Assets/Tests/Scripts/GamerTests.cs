@@ -23,11 +23,11 @@ public class GamerTests : TestBase {
 			.ExpectSuccess(setResult => {
 				Assert(setResult["done"] == 1, "Expected done = 1");
 
-				gamer.Properties.GetAll()
-				.ExpectSuccess(getResult => {
-					Assert(getResult.Has("testkey"), "Previously set key is missing");
-					CompleteTest();
-				});
+				return gamer.Properties.GetAll();
+			})
+			.ExpectSuccess(getResult => {
+				Assert(getResult.Has("testkey"), "Previously set key is missing");
+				CompleteTest();
 			});
 		});
 	}
