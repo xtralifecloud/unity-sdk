@@ -188,12 +188,12 @@ In case a network error happens, the request is not retried by default. But ther
 	const int RetryTimes = {100 /* ms */, 5000 /* ms */};
 	cloud.HttpRequestFailedHandler = (HttpRequestFailedEventArgs e) => {
 		// Store retry count in UserData field (persisted among retries of a given request)
-		int retriedCount = e.UserData != null ? (int)e.UserData : 0;
-		e.UserData = retriedCount + 1;
-		if (retriedAlready >= RetryTimes.Length)
+		int retryCount = e.UserData != null ? (int)e.UserData : 0;
+		e.UserData = retryCount + 1;
+		if (retryCount >= RetryTimes.Length)
 			e.Abort();
 		else
-			e.RetryIn(RetryTimes[retriedAlready]);
+			e.RetryIn(RetryTimes[retryCount]);
 	};
 ~~~~
 

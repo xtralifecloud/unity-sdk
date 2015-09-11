@@ -189,15 +189,18 @@ namespace CotcSdk
 		}
 		public Bundle(bool value) { type = DataType.Boolean; longValue = value ? 1 : 0; }
 		public Bundle(long value) { type = DataType.Integer; longValue = value; }
+		public Bundle(float value) : this((double)value) { }
 		public Bundle(double value) { type = DataType.Double; doubleValue = value; }
 		public Bundle(string value) { type = DataType.String; stringValue = value; }
 		public static implicit operator Bundle(bool value) { return new Bundle(value); }
 		public static implicit operator Bundle(long value) { return new Bundle(value); }
+		public static implicit operator Bundle(float value) { return new Bundle(value); }
 		public static implicit operator Bundle(double value) { return new Bundle(value); }
 		public static implicit operator Bundle(string value) { return value != null ? new Bundle(value) : Empty; }
 		public static implicit operator bool(Bundle b) { return b.AsBool(); }
 		public static implicit operator int(Bundle b) { return b.AsInt(); }
 		public static implicit operator long(Bundle b) { return b.AsLong(); }
+		public static implicit operator float(Bundle b) { return (float)b.AsDouble(); }
 		public static implicit operator double(Bundle b) { return b.AsDouble(); }
 		public static implicit operator string(Bundle b) { return b.AsString(); }
 
@@ -241,35 +244,45 @@ namespace CotcSdk
 		}
 
 		// Dictionary getters
+		[Obsolete("Will be removed soon. Use bundle[key].As*(defaultValue) instead.")]
 		public bool GetBool(string key, bool defaultValue = false) {
 			return Has(key) ? Dictionary[key].AsBool(defaultValue) : defaultValue;
 		}
+		[Obsolete("Will be removed soon. Use bundle[key].As*(defaultValue) instead.")]
 		public int GetInt(string key, int defaultValue = 0) {
 			return Has(key) ? Dictionary[key].AsInt(defaultValue) : defaultValue;
 		}
+		[Obsolete("Will be removed soon. Use bundle[key].As*(defaultValue) instead.")]
 		public long GetLong(string key, long defaultValue = 0) {
 			return Has(key) ? Dictionary[key].AsLong(defaultValue) : defaultValue;
 		}
+		[Obsolete("Will be removed soon. Use bundle[key].As*(defaultValue) instead.")]
 		public double GetDouble(string key, double defaultValue = 0) {
 			return Has(key) ? Dictionary[key].AsDouble(defaultValue) : defaultValue;
 		}
+		[Obsolete("Will be removed soon. Use bundle[key].As*(defaultValue) instead.")]
 		public string GetString(string key, string defaultValue = null) {
 			return Has(key) ? Dictionary[key].AsString(defaultValue) : defaultValue;
 		}
 
 		// Array getters
+		[Obsolete("Will be removed soon. Use bundle[index].As*(defaultValue) instead.")]
 		public bool GetBool(int index) {
 			return Array[index].AsBool();
 		}
+		[Obsolete("Will be removed soon. Use bundle[index].As*(defaultValue) instead.")]
 		public int GetInt(int index) {
 			return Array[index].AsInt();
 		}
+		[Obsolete("Will be removed soon. Use bundle[index].As*(defaultValue) instead.")]
 		public long GetLong(int index) {
 			return Array[index].AsLong();
 		}
+		[Obsolete("Will be removed soon. Use bundle[index].As*(defaultValue) instead.")]
 		public double GetDouble(int index) {
 			return Array[index].AsDouble();
 		}
+		[Obsolete("Will be removed soon. Use bundle[index].As*(defaultValue) instead.")]
 		public string GetString(int index) {
 			return Array[index].AsString();
 		}
@@ -324,6 +337,9 @@ namespace CotcSdk
 				case DataType.String: long.TryParse(stringValue, out result); return result;
 			}
 			return defaultValue;
+		}
+		public double AsFloat(float defaultValue = 0) {
+			return (float)AsDouble(defaultValue);
 		}
 		public double AsDouble(double defaultValue = 0) {
 			double result = defaultValue;
