@@ -185,7 +185,7 @@ The exceptions provided by the API in Catch blocks are always of type `CotcExcep
 In case a network error happens, the request is not retried by default. But there is a `HttpRequestFailedHandler` member on Cloud which can be set to an user defined callback. This callback tells what to do with the error (retry it, cancel it). The following code retries any failed request twice, once after 100ms, once after 5s, then aborts it.
 
 ~~~~{.cs}
-	const int RetryTimes = {100 /* ms */, 5000 /* ms */};
+	int[] RetryTimes = { 100 /* ms */, 5000 /* ms */};
 	cloud.HttpRequestFailedHandler = (HttpRequestFailedEventArgs e) => {
 		// Store retry count in UserData field (persisted among retries of a given request)
 		int retryCount = e.UserData != null ? (int)e.UserData : 0;
