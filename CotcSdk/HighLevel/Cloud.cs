@@ -80,12 +80,12 @@ namespace CotcSdk
 			LoadBalancerCount = loadBalancerCount;
 			Managers.HttpClient.VerboseMode = httpVerbose;
 			HttpTimeoutMillis = httpTimeout * 1000;
-			UserAgent = String.Format(Common.UserAgent, Managers.SystemFunctions.GetOsName(), Common.SdkVersion);
+			UserAgent = String.Format(Common.UserAgent, Managers.SystemFunctions.GetOsName(), Cloud.SdkVersion);
 		}
 		#endregion
 
 		#region Members
-		public const string SdkVersion = "0.03";
+		public const string SdkVersion = "1.0.1";
 		private string ApiKey, ApiSecret, Server;
 		internal int HttpTimeoutMillis {
 			get; private set;

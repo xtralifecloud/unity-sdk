@@ -112,7 +112,6 @@ namespace CotcSdk
 		}
 
 		// TODO Replace by a soft value (changed upon branching?)
-		public const string SdkVersion = "0.01";
 		public const string PrivateDomain = "private";
 		public const string UserAgent = "cloudbuilder-unity-{0}-{1}";	// os, sdkversion
 		public static event EventHandler<LogEventArgs> LoggedLine;

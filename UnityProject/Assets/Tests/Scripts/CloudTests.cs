@@ -282,6 +282,21 @@ public class CloudTests : TestBase {
 		});
 	}
 
+	[Test("Tests the floating point bundle functionality")]
+	public void ShouldStoreFloatsInBundles() {
+		// Use a relatively "complex" value (PI) to ensure that precision is not lost internally
+		Bundle b = Bundle.CreateObject("preset", Mathf.PI);
+		Assert(b["preset"] == Mathf.PI, "Constructor-passed floating point check failed");
+		b["key"] = Mathf.PI / 2;
+		Assert(b["key"] == Mathf.PI / 2, "Floating point equality check failed");
+		Assert(b["dummy"].AsFloat(Mathf.PI / 3) == Mathf.PI / 3, "Default float value failed");
+
+		// 2nd test case
+		Bundle floatBundle = 1.99f;
+		Assert(floatBundle == 1.99f, "Implicit conversion equality check failed");
+		CompleteTest();
+	}
+
 	#region Private
 	private void GotLoggedInNotification(object sender, Cotc.LoggedInEventArgs e) {
 		CompleteTest();

@@ -60,7 +60,7 @@ namespace CotcSdk
 	/// This can be useful for optional arguments. For instance, the following snippet will not affect the bundle.
 	/// 
 	/// ~~~~{.cs}
-	/// string value = null; // converts to Empty.Bundle and rejects assignment
+	/// string value = null; // converts to Bundle.Empty and rejects assignment
 	/// bundle["key"] = value;
 	/// ~~~~
 	/// 
@@ -105,7 +105,7 @@ namespace CotcSdk
 	/// A bundle can quickly be transformed from/to JSON using ToJson and Bundle.FromJson methods. One can also check
 	/// for the presence of keys and remove them with the .Has respectively .Remove methods.
 	/// 
-	/// Iterating a JSON object is made using the explicit .As* methods. For instance, here how you iterate over an
+	/// Iterating a JSON object is made using the explicit .As* methods. For instance, here is how you iterate over an
 	/// array bundle (no harm will happen if the key doesn't exist or is not an array, since an empty array is returned):
 	/// 
 	/// ~~~~{.cs}
@@ -144,10 +144,9 @@ namespace CotcSdk
 		private Dictionary<string, Bundle> objectValue;
 		private List<Bundle> arrayValue;
 
-		// Explicit constructors
-		public static Bundle CreateArray() {
-			return new Bundle(DataType.Array);
-		}
+		/// <summary>Creates a bundle of type object. You may also pass up to three key/value pairs (in this order),
+		/// which will be put in the object initially.</summary>
+		/// <returns>A new bundle.</returns>
 		public static Bundle CreateObject() {
 			return new Bundle(DataType.Object);
 		}
@@ -169,6 +168,10 @@ namespace CotcSdk
 			result[key3] = value3;
 			return result;
 		}
+		/// <summary>Creates a bundle of type array.</summary>
+		/// <param name="values">Optional values to pre-fill the array with. Since bundle are implicitly converted, remember
+		/// that you may pass an integer, string, etc.</param>
+		/// <returns>A new bundle.</returns>
 		public static Bundle CreateArray(params Bundle[] values) {
 			Bundle result = new Bundle(DataType.Array);
 			foreach (Bundle b in values) result.Add(b);
@@ -186,15 +189,18 @@ namespace CotcSdk
 		}
 		public Bundle(bool value) { type = DataType.Boolean; longValue = value ? 1 : 0; }
 		public Bundle(long value) { type = DataType.Integer; longValue = value; }
+		public Bundle(float value) : this((double)value) { }
 		public Bundle(double value) { type = DataType.Double; doubleValue = value; }
 		public Bundle(string value) { type = DataType.String; stringValue = value; }
 		public static implicit operator Bundle(bool value) { return new Bundle(value); }
 		public static implicit operator Bundle(long value) { return new Bundle(value); }
+		public static implicit operator Bundle(float value) { return new Bundle(value); }
 		public static implicit operator Bundle(double value) { return new Bundle(value); }
 		public static implicit operator Bundle(string value) { return value != null ? new Bundle(value) : Empty; }
 		public static implicit operator bool(Bundle b) { return b.AsBool(); }
 		public static implicit operator int(Bundle b) { return b.AsInt(); }
 		public static implicit operator long(Bundle b) { return b.AsLong(); }
+		public static implicit operator float(Bundle b) { return (float)b.AsDouble(); }
 		public static implicit operator double(Bundle b) { return b.AsDouble(); }
 		public static implicit operator string(Bundle b) { return b.AsString(); }
 
@@ -238,35 +244,45 @@ namespace CotcSdk
 		}
 
 		// Dictionary getters
+		[Obsolete("Will be removed soon. Use bundle[key].As*(defaultValue) instead.")]
 		public bool GetBool(string key, bool defaultValue = false) {
 			return Has(key) ? Dictionary[key].AsBool(defaultValue) : defaultValue;
 		}
+		[Obsolete("Will be removed soon. Use bundle[key].As*(defaultValue) instead.")]
 		public int GetInt(string key, int defaultValue = 0) {
 			return Has(key) ? Dictionary[key].AsInt(defaultValue) : defaultValue;
 		}
+		[Obsolete("Will be removed soon. Use bundle[key].As*(defaultValue) instead.")]
 		public long GetLong(string key, long defaultValue = 0) {
 			return Has(key) ? Dictionary[key].AsLong(defaultValue) : defaultValue;
 		}
+		[Obsolete("Will be removed soon. Use bundle[key].As*(defaultValue) instead.")]
 		public double GetDouble(string key, double defaultValue = 0) {
 			return Has(key) ? Dictionary[key].AsDouble(defaultValue) : defaultValue;
 		}
+		[Obsolete("Will be removed soon. Use bundle[key].As*(defaultValue) instead.")]
 		public string GetString(string key, string defaultValue = null) {
 			return Has(key) ? Dictionary[key].AsString(defaultValue) : defaultValue;
 		}
 
 		// Array getters
+		[Obsolete("Will be removed soon. Use bundle[index].As*(defaultValue) instead.")]
 		public bool GetBool(int index) {
 			return Array[index].AsBool();
 		}
+		[Obsolete("Will be removed soon. Use bundle[index].As*(defaultValue) instead.")]
 		public int GetInt(int index) {
 			return Array[index].AsInt();
 		}
+		[Obsolete("Will be removed soon. Use bundle[index].As*(defaultValue) instead.")]
 		public long GetLong(int index) {
 			return Array[index].AsLong();
 		}
+		[Obsolete("Will be removed soon. Use bundle[index].As*(defaultValue) instead.")]
 		public double GetDouble(int index) {
 			return Array[index].AsDouble();
 		}
+		[Obsolete("Will be removed soon. Use bundle[index].As*(defaultValue) instead.")]
 		public string GetString(int index) {
 			return Array[index].AsString();
 		}
@@ -321,6 +337,9 @@ namespace CotcSdk
 				case DataType.String: long.TryParse(stringValue, out result); return result;
 			}
 			return defaultValue;
+		}
+		public double AsFloat(float defaultValue = 0) {
+			return (float)AsDouble(defaultValue);
 		}
 		public double AsDouble(double defaultValue = 0) {
 			double result = defaultValue;

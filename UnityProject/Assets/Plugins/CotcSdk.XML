@@ -771,7 +771,7 @@
             You shouldn't receive this error, it's just a convenient value
         </member>
         <member name="T:CotcSdk.Game">
-            @ingroup main_classes @ingroup game_classes
+            @ingroup main_classes
             <summary>
             Provides functionality related to the entire game.
             </summary>
@@ -785,7 +785,7 @@
             <returns>An object allowing to manipulate key/values for this user/game/domain.</returns>
         </member>
         <member name="T:CotcSdk.Gamer">
-            @ingroup main_classes @ingroup gamer_classes
+            @ingroup main_classes
             <summary>
             Important object from the SDK, allowing to perform many operations that depend on a currently logged in user.
             
@@ -1676,6 +1676,17 @@
             </summary>
         </member>
         <!-- Badly formed XML comment ignored for member "T:CotcSdk.Bundle" -->
+        <member name="M:CotcSdk.Bundle.CreateObject">
+            <summary>Creates a bundle of type object. You may also pass up to three key/value pairs (in this order),
+            which will be put in the object initially.</summary>
+            <returns>A new bundle.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.CreateArray(CotcSdk.Bundle[])">
+            <summary>Creates a bundle of type array.</summary>
+            <param name="values">Optional values to pre-fill the array with. Since bundle are implicitly converted, remember
+            that you may pass an integer, string, etc.</param>
+            <returns>A new bundle.</returns>
+        </member>
         <member name="F:CotcSdk.Bundle.Empty">
             <summary>Empty (null-like) Bundle. See class documentation for more information.</summary>
         </member>
