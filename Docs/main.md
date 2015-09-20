@@ -4,6 +4,7 @@ Welcome {#mainpage}
 Welcome to the documentation for the Clan of the Cloud SDK for Unity. If you haven't done it already, [click here](https://github.com/clanofthecloud/unity-sdk/releases) to visit the download page.
 
 - [Installing & getting started](@ref getting_started_ref)
+- [Known issues](@ref known_issues_ref)
 - **API reference** (showing main classes; open [class list](annotated.html) for a comprehensive reference)
   - @ref CotcSdk.CotcGameObject "The CotC Game Object"
   - @ref CotcSdk.Cloud "Cloud" (entry point)
