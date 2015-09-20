@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.8"/>
-<title>CotC SDK Unity: Member List</title>
+<title>CotC SDK Unity: Known issues</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -39,7 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -58,14 +58,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       </li>
     </ul>
   </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
-      <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
-      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
-      <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
-    </ul>
-  </div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -80,25 +72,32 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="namespace_cotc_sdk.html">CotcSdk</a></li><li class="navelem"><a class="el" href="class_cotc_sdk_1_1_social_network_friend.html">SocialNetworkFriend</a></li>  </ul>
-</div>
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">CotcSdk.SocialNetworkFriend Member List</div>  </div>
+<div class="title">Known issues </div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>This is the complete list of members for <a class="el" href="class_cotc_sdk_1_1_social_network_friend.html">CotcSdk.SocialNetworkFriend</a>, including all inherited members.</p>
-<table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="class_cotc_sdk_1_1_social_network_friend.html#aa5eee552331fe6122dfc11e9c3745cf2">ClanInfo</a></td><td class="entry"><a class="el" href="class_cotc_sdk_1_1_social_network_friend.html">CotcSdk.SocialNetworkFriend</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="class_cotc_sdk_1_1_social_network_friend.html#a6ae51fa3e5284c27a4298e2c8d194c5c">FirstName</a></td><td class="entry"><a class="el" href="class_cotc_sdk_1_1_social_network_friend.html">CotcSdk.SocialNetworkFriend</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_cotc_sdk_1_1_social_network_friend.html#a840b2b9d756ab57271ecf22a94cd3411">Id</a></td><td class="entry"><a class="el" href="class_cotc_sdk_1_1_social_network_friend.html">CotcSdk.SocialNetworkFriend</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="class_cotc_sdk_1_1_social_network_friend.html#a053a2475e244caa6224cbfda8bbad117">SocialNetworkFriend</a>(string id, string firstName, string lastName, string name)</td><td class="entry"><a class="el" href="class_cotc_sdk_1_1_social_network_friend.html">CotcSdk.SocialNetworkFriend</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_cotc_sdk_1_1_social_network_friend.html#aef46a2385c12e4595c6dfa4ad9ab4684">SocialNetworkFriend</a>()</td><td class="entry"><a class="el" href="class_cotc_sdk_1_1_social_network_friend.html">CotcSdk.SocialNetworkFriend</a></td><td class="entry"></td></tr>
-</table></div><!-- contents -->
+<div class="textblock"><p>There are a few use cases that we know to be causing issues, which are usually due to broken functionality in Unity. If you are experiencing strange behaviour, please check out the following list first.</p>
+<h2>HTTP request freezing on second run from the editor</h2>
+<p>This bug has been reproduced on Unity 4 on MS Windows (8.1). It is currently unknown whether it affects subsequent or previous versions of either the operating system or Unity software, but it does not affect the Mac OS X build of Unity 5 at least.</p>
+<p>Any request (such as login) will freeze upon second run of a scene just after having launched Unity. Retrying the request will then work immediately. Subsequent requests and runs of the scene also work. In order to reproduce the issue, you need to quit Unity, launch the scene, stop it, then launch it again; the first request will then time out.</p>
+<p>This bug has been reported in the official bug tracker at Unity.</p>
+<h2>ERROR building certificate chain on iOS</h2>
+<p>The following warning might be outputted on iOS only during the first request.</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;ERROR building certificate chain: System.ArgumentException: certificate ---&gt; System.Security.Cryptography.CryptographicException: Unsupported hash algorithm: 1.2.840.113549.1.1.12</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;  at Mono.Security.X509.X509Certificate.VerifySignature (System.Security.Cryptography.RSA rsa) [0x00000] in &lt;filename unknown&gt;:0 </div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;  at Mono.Security.X509.X509Certificate.VerifySignature (System.Security.Cryptography.AsymmetricAlgorithm aa) [0x00000] in &lt;filename unknown&gt;:0 </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;  at System.Security.Cryptography.X509Certificates.X509Chain.IsSignedWith (System.Security.Cryptography.X509Certificates.X509Certificate2 signed, System.Security.Cryptography.AsymmetricAlgorithm pubkey) [0x00000] in &lt;filename unknown&gt;:0 </div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;  at System.Security.Cryptography.X509Certificates.X509Chain.Process (Int32 n) [0x00000] in &lt;filename unknown&gt;:0 </div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;  at System.Security.Cryptography.X509Certificates.X509Chain.ValidateChain (X509ChainStatusFlags flag) [0x00000] in &lt;filename unknown&gt;:0 </div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;  at System.Security.Cryptography.X509Certificates.X509Chain.Build (System.Security.Cryptography.X509Certificates.X509Certificate2 certificate) [0x00000] in &lt;filename unknown&gt;:0 </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;  --- End of inner exception stack trace ---</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;  at System.Security.Cryptography.X509Certificates.X509Chain.Build (System.Security.Cryptography.X509Certificates.X509Certificate2 certificate) [0x00000] in &lt;filename unknown&gt;:0 </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;  at System.Net.ServicePointManager+ChainValidationHelper.ValidateChain (Mono.Security.X509.X509CertificateCollection certs) [0x00000] in &lt;filename unknown&gt;:0 </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;Please, report this problem to the Mono team</div>
+</div><!-- fragment --><p>This error is due to the implementation of HTTPS on Unity iOS which does not support secure enough protocols. We are currently trying to work out this issue and have submitted a bug report. </p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated on Sun Sep 20 2015 15:20:42 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">

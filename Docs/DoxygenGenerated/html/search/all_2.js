@@ -22,6 +22,8 @@ var searchData=
   ['cotcsdk',['CotcSdk',['../namespace_cotc_sdk.html',1,'']]],
   ['count',['Count',['../class_cotc_sdk_1_1_match_shoe_drawn_event.html#a6fba21bb46822efcc3395d12471015fc',1,'CotcSdk::MatchShoeDrawnEvent']]],
   ['create',['Create',['../class_cotc_sdk_1_1_gamer_matches.html#ad240e59b87eb919fb808be0c9e1dc663',1,'CotcSdk::GamerMatches']]],
+  ['createarray',['CreateArray',['../class_cotc_sdk_1_1_bundle.html#a2140b81af8afb1462a85fa78ebc3fa0c',1,'CotcSdk::Bundle']]],
+  ['createobject',['CreateObject',['../class_cotc_sdk_1_1_bundle.html#a1e58870c761a527212833b7d27ab7585',1,'CotcSdk::Bundle']]],
   ['creator',['Creator',['../class_cotc_sdk_1_1_match.html#acd70a2000f6a6221476828a9e77caf94',1,'CotcSdk.Match.Creator()'],['../class_cotc_sdk_1_1_match_list_result.html#ac1535fab555787d54489fc05224fc686',1,'CotcSdk.MatchListResult.Creator()']]],
   ['currency',['Currency',['../class_cotc_sdk_1_1_purchase_transaction.html#a650c1765fb2851f0543fe41e9fad8456',1,'CotcSdk.PurchaseTransaction.Currency()'],['../class_cotc_sdk_1_1_inapp_purchase_1_1_product_info.html#ace398bae1d746e84a54c4824ae223d0d',1,'CotcSdk.InappPurchase.ProductInfo.Currency()']]],
   ['customproperties',['CustomProperties',['../class_cotc_sdk_1_1_match.html#a2d1836f1b13f00896722a006459cc9a5',1,'CotcSdk.Match.CustomProperties()'],['../class_cotc_sdk_1_1_match_list_result.html#a8106908e4d86e01f4f460a7a80797ee8',1,'CotcSdk.MatchListResult.CustomProperties()']]],

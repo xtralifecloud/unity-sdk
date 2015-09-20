@@ -8,5 +8,7 @@ var searchData=
   ['closetransaction',['CloseTransaction',['../class_cotc_sdk_1_1_inapp_purchase_1_1_cotc_inapp_purchase_game_object.html#a6317ff1aebb217cf90ad941155030365',1,'CotcSdk::InappPurchase::CotcInappPurchaseGameObject']]],
   ['convert',['Convert',['../class_cotc_sdk_1_1_gamer_account_methods.html#ab135e00414d31248a0f466f8cbd1652f',1,'CotcSdk::GamerAccountMethods']]],
   ['cotcexception',['CotcException',['../class_cotc_sdk_1_1_cotc_exception.html#ac6504c0059d1c2712782ab86c4a474b3',1,'CotcSdk::CotcException']]],
-  ['create',['Create',['../class_cotc_sdk_1_1_gamer_matches.html#ad240e59b87eb919fb808be0c9e1dc663',1,'CotcSdk::GamerMatches']]]
+  ['create',['Create',['../class_cotc_sdk_1_1_gamer_matches.html#ad240e59b87eb919fb808be0c9e1dc663',1,'CotcSdk::GamerMatches']]],
+  ['createarray',['CreateArray',['../class_cotc_sdk_1_1_bundle.html#a2140b81af8afb1462a85fa78ebc3fa0c',1,'CotcSdk::Bundle']]],
+  ['createobject',['CreateObject',['../class_cotc_sdk_1_1_bundle.html#a1e58870c761a527212833b7d27ab7585',1,'CotcSdk::Bundle']]]
 ];

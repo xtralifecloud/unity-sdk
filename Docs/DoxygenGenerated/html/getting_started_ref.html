@@ -222,15 +222,15 @@ Promises</h1>
 <div class="line">});</div>
 </div><!-- fragment --><h1>Network error handlers</h1>
 <p>In case a network error happens, the request is not retried by default. But there is a <code>HttpRequestFailedHandler</code> member on Cloud which can be set to an user defined callback. This callback tells what to do with the error (retry it, cancel it). The following code retries any failed request twice, once after 100ms, once after 5s, then aborts it.</p>
-<div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">int</span> RetryTimes = {100 <span class="comment">/* ms */</span>, 5000 <span class="comment">/* ms */</span>};</div>
+<div class="fragment"><div class="line"><span class="keywordtype">int</span>[] RetryTimes = { 100 <span class="comment">/* ms */</span>, 5000 <span class="comment">/* ms */</span>};</div>
 <div class="line">cloud.HttpRequestFailedHandler = (HttpRequestFailedEventArgs e) =&gt; {</div>
 <div class="line">    <span class="comment">// Store retry count in UserData field (persisted among retries of a given request)</span></div>
-<div class="line">    <span class="keywordtype">int</span> retriedCount = e.UserData != null ? (int)e.UserData : 0;</div>
-<div class="line">    e.UserData = retriedCount + 1;</div>
-<div class="line">    if (retriedAlready &gt;= RetryTimes.Length)</div>
+<div class="line">    <span class="keywordtype">int</span> retryCount = e.UserData != null ? (int)e.UserData : 0;</div>
+<div class="line">    e.UserData = retryCount + 1;</div>
+<div class="line">    if (retryCount &gt;= RetryTimes.Length)</div>
 <div class="line">        e.Abort();</div>
 <div class="line">    <span class="keywordflow">else</span></div>
-<div class="line">        e.RetryIn(RetryTimes[retriedAlready]);</div>
+<div class="line">        e.RetryIn(RetryTimes[retryCount]);</div>
 <div class="line">};</div>
 </div><!-- fragment --><p>This should be done at the very startup, after the cloud has been received. The handler is chosen when an HTTP request is built, so if you change it while an HTTP request is running, it will have no effect.</p>
 <h1>Bundle</h1>
@@ -238,7 +238,7 @@ Promises</h1>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 10 2015 07:06:45 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Sep 20 2015 15:20:42 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

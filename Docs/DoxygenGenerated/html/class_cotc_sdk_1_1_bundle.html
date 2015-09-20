@@ -101,7 +101,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <div class="textblock"><p>The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object, behaving like a C# dictionary, but with inferred typing and more safety. </p>
 <p>You need bundles in many calls, either to decode generic data received by the server (when such data can be enriched by hooks typically) or to pass generic user parameters, such as when creating a match.</p>
-<p>Bundles are instantiated through their factory methods: Bundle.CreateObject or Bundle.CreateArray. The type of the resulting object can be inspected via the Type member. While objects and arrays are containers for further objects, a bundle is a simple node in the graph and may as such contain a value, such as a string.</p>
+<p>Bundles are instantiated through their factory methods: <a class="el" href="class_cotc_sdk_1_1_bundle.html#a1e58870c761a527212833b7d27ab7585" title="Creates a bundle of type object. You may also pass up to three key/value pairs (in this order)...">Bundle.CreateObject</a> or <a class="el" href="class_cotc_sdk_1_1_bundle.html#a2140b81af8afb1462a85fa78ebc3fa0c" title="Creates a bundle of type array.">Bundle.CreateArray</a>. The type of the resulting object can be inspected via the Type member. While objects and arrays are containers for further objects, a bundle is a simple node in the graph and may as such contain a value, such as a string.</p>
 <p>Sub-objects are fetched using the index operator (brackets), either with a numeric argument for arrays or a string argument for dictionaries. Conversions are performed automatically based. Let's consider the following example:</p>
 <div class="fragment"><div class="line">Bundle b = Bundle.CreateObject();</div>
 <div class="line">b[<span class="stringliteral">&quot;hello&quot;</span>] = <span class="stringliteral">&quot;world&quot;</span>;</div>
@@ -114,7 +114,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="fragment"><div class="line">Bundle b = Bundle.Empty;</div>
 <div class="line">b[<span class="stringliteral">&quot;value&quot;</span>] = <span class="stringliteral">&quot;something&quot;</span>; <span class="comment">// Exception</span></div>
 </div><!-- fragment --><p>The bundle hierarchy doesn't accept null or <a class="el" href="class_cotc_sdk_1_1_bundle.html#a9e1489ca059f1ebfc7cfa140dbb78011" title="Empty (null-like) Bundle. See class documentation for more information.">Bundle.Empty</a> values (it just rejects them). You should avoid manipulating null Bundles and use <a class="el" href="class_cotc_sdk_1_1_bundle.html#a9e1489ca059f1ebfc7cfa140dbb78011" title="Empty (null-like) Bundle. See class documentation for more information.">Bundle.Empty</a> wherever possible, however you may assign a null bundle to a key, which will have no effect. This can be useful for optional arguments. For instance, the following snippet will not affect the bundle.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">string</span> value = null; <span class="comment">// converts to Empty.Bundle and rejects assignment</span></div>
+<div class="fragment"><div class="line"><span class="keywordtype">string</span> value = null; <span class="comment">// converts to Bundle.Empty and rejects assignment</span></div>
 <div class="line">bundle[<span class="stringliteral">&quot;key&quot;</span>] = value;</div>
 </div><!-- fragment --><p>Note that <a class="el" href="class_cotc_sdk_1_1_bundle.html#a9e1489ca059f1ebfc7cfa140dbb78011" title="Empty (null-like) Bundle. See class documentation for more information.">Bundle.Empty</a> is not strictly identical to an empty bundle object. <a class="el" href="class_cotc_sdk_1_1_bundle.html#a9e1489ca059f1ebfc7cfa140dbb78011" title="Empty (null-like) Bundle. See class documentation for more information.">Bundle.Empty</a> is never considered as a value and is discarded upon assignment. For instance:</p>
 <div class="fragment"><div class="line">Bundle a = Bundle.CreateObject();</div>
@@ -126,14 +126,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --><p>If you need a special value for keys that do not match the expected type or are not found in the hierarchy, you may as well use the .As* methods. For instance, the previous snippet could be written as follows to have a default value of one:</p>
 <div class="fragment"><div class="line"><span class="keywordtype">int</span> value = bundle[<span class="stringliteral">&quot;nonexisting&quot;</span>][<span class="stringliteral">&quot;key&quot;</span>].AsInt(1);</div>
 </div><!-- fragment --><p>It is also possible to inspect the Type property of the <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object...">Bundle</a> in order to ensure that the value was provided as expected.</p>
-<p>A bundle may be pre-filled at creation by passing arguments to Bundle.CreateObject and Bundle.CreateArray. For instance:</p>
+<p>A bundle may be pre-filled at creation by passing arguments to <a class="el" href="class_cotc_sdk_1_1_bundle.html#a1e58870c761a527212833b7d27ab7585" title="Creates a bundle of type object. You may also pass up to three key/value pairs (in this order)...">Bundle.CreateObject</a> and <a class="el" href="class_cotc_sdk_1_1_bundle.html#a2140b81af8afb1462a85fa78ebc3fa0c" title="Creates a bundle of type array.">Bundle.CreateArray</a>. For instance:</p>
 <div class="fragment"><div class="line">Bundle b = Bundle.CreateObject(<span class="stringliteral">&quot;key1&quot;</span>, <span class="stringliteral">&quot;value1&quot;</span>, <span class="stringliteral">&quot;key2&quot;</span>, <span class="stringliteral">&quot;value2&quot;</span>);</div>
 </div><!-- fragment --><p>Is equivalent to writing:</p>
 <div class="fragment"><div class="line">Bundle b = Bundle.CreateObject();</div>
 <div class="line">b[<span class="stringliteral">&quot;key1&quot;</span>] = <span class="stringliteral">&quot;value1&quot;</span>;</div>
 <div class="line">b[<span class="stringliteral">&quot;key2&quot;</span>] = <span class="stringliteral">&quot;value2&quot;</span>;</div>
 </div><!-- fragment --><p>A bundle can quickly be transformed from/to JSON using ToJson and Bundle.FromJson methods. One can also check for the presence of keys and remove them with the .Has respectively .Remove methods.</p>
-<p>Iterating a JSON object is made using the explicit .As* methods. For instance, here how you iterate over an array bundle (no harm will happen if the key doesn't exist or is not an array, since an empty array is returned):</p>
+<p>Iterating a JSON object is made using the explicit .As* methods. For instance, here is how you iterate over an array bundle (no harm will happen if the key doesn't exist or is not an array, since an empty array is returned):</p>
 <div class="fragment"><div class="line">Bundle b;</div>
 <div class="line"><span class="keywordflow">foreach</span> (Bundle value <span class="keywordflow">in</span> b) { ... }</div>
 </div><!-- fragment --><p>For an object, use AsDictionary().</p>
@@ -183,6 +183,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a664c6b462d6a28b844feddb981fd7b62"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a664c6b462d6a28b844feddb981fd7b62"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Bundle</b> (long value)</td></tr>
 <tr class="separator:a664c6b462d6a28b844feddb981fd7b62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f2ba8f36cbfdf641993f427c701cc48"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9f2ba8f36cbfdf641993f427c701cc48"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Bundle</b> (float value)</td></tr>
+<tr class="separator:a9f2ba8f36cbfdf641993f427c701cc48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:affc2bd1db8446a5c56cc256c096c3554"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="affc2bd1db8446a5c56cc256c096c3554"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Bundle</b> (double value)</td></tr>
 <tr class="separator:affc2bd1db8446a5c56cc256c096c3554"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -240,6 +243,9 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>AsInt</b> (int default
 <tr class="memitem:a2a392fdba9364de93e5b039b7ff86d00"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2a392fdba9364de93e5b039b7ff86d00"></a>
 long&#160;</td><td class="memItemRight" valign="bottom"><b>AsLong</b> (long defaultValue=0)</td></tr>
 <tr class="separator:a2a392fdba9364de93e5b039b7ff86d00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac68562bed7c6b80968407f2fd4639010"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac68562bed7c6b80968407f2fd4639010"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>AsFloat</b> (float defaultValue=0)</td></tr>
+<tr class="separator:ac68562bed7c6b80968407f2fd4639010"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8063db242304f24b6f3d152f4eec736"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae8063db242304f24b6f3d152f4eec736"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>AsDouble</b> (double defaultValue=0)</td></tr>
 <tr class="separator:ae8063db242304f24b6f3d152f4eec736"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -261,11 +267,8 @@ override string&#160;</td><td class="memItemRight" valign="bottom"><b>ToString</
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a07f865277d106ef4847a580adfb2fe41"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a07f865277d106ef4847a580adfb2fe41"></a>
-static <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><b>CreateArray</b> ()</td></tr>
-<tr class="separator:a07f865277d106ef4847a580adfb2fe41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e58870c761a527212833b7d27ab7585"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1e58870c761a527212833b7d27ab7585"></a>
-static <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><b>CreateObject</b> ()</td></tr>
+<tr class="memitem:a1e58870c761a527212833b7d27ab7585"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a1e58870c761a527212833b7d27ab7585">CreateObject</a> ()</td></tr>
+<tr class="memdesc:a1e58870c761a527212833b7d27ab7585"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a bundle of type object. You may also pass up to three key/value pairs (in this order), which will be put in the object initially. <a href="#a1e58870c761a527212833b7d27ab7585">More...</a><br /></td></tr>
 <tr class="separator:a1e58870c761a527212833b7d27ab7585"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac0d1371c5fdf24b8755341f88031ea95"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac0d1371c5fdf24b8755341f88031ea95"></a>
 static <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><b>CreateObject</b> (string onlyKey, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> onlyValue)</td></tr>
@@ -276,8 +279,8 @@ static <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td>
 <tr class="memitem:a4da286bab374f8f8e5992212ea21ebcd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4da286bab374f8f8e5992212ea21ebcd"></a>
 static <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><b>CreateObject</b> (string key1, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> value1, string key2, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> value2, string key3, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> value3)</td></tr>
 <tr class="separator:a4da286bab374f8f8e5992212ea21ebcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2140b81af8afb1462a85fa78ebc3fa0c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2140b81af8afb1462a85fa78ebc3fa0c"></a>
-static <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><b>CreateArray</b> (params <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>[] values)</td></tr>
+<tr class="memitem:a2140b81af8afb1462a85fa78ebc3fa0c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a2140b81af8afb1462a85fa78ebc3fa0c">CreateArray</a> (params <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>[] values)</td></tr>
+<tr class="memdesc:a2140b81af8afb1462a85fa78ebc3fa0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a bundle of type array. <a href="#a2140b81af8afb1462a85fa78ebc3fa0c">More...</a><br /></td></tr>
 <tr class="separator:a2140b81af8afb1462a85fa78ebc3fa0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeb8b780d73309f53d6f18d9ccaa634b3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeb8b780d73309f53d6f18d9ccaa634b3"></a>
 static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator Bundle</b> (bool value)</td></tr>
@@ -285,6 +288,9 @@ static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator B
 <tr class="memitem:abfd067984881777f93e6cc88081514d4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abfd067984881777f93e6cc88081514d4"></a>
 static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator Bundle</b> (long value)</td></tr>
 <tr class="separator:abfd067984881777f93e6cc88081514d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a692d53f9fc2ab6df101a4ae8a5c96c64"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a692d53f9fc2ab6df101a4ae8a5c96c64"></a>
+static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator Bundle</b> (float value)</td></tr>
+<tr class="separator:a692d53f9fc2ab6df101a4ae8a5c96c64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2cd96f2de2379023fdf3851b2e0d6853"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2cd96f2de2379023fdf3851b2e0d6853"></a>
 static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator Bundle</b> (double value)</td></tr>
 <tr class="separator:a2cd96f2de2379023fdf3851b2e0d6853"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -300,6 +306,9 @@ static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator i
 <tr class="memitem:a904a379b4526d4fde67a3b55018f4f25"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a904a379b4526d4fde67a3b55018f4f25"></a>
 static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator long</b> (<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> b)</td></tr>
 <tr class="separator:a904a379b4526d4fde67a3b55018f4f25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab11735f2c564f4b622a67f934f817d43"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab11735f2c564f4b622a67f934f817d43"></a>
+static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator float</b> (<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> b)</td></tr>
+<tr class="separator:ab11735f2c564f4b622a67f934f817d43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22fbca05d806bca6dc4fadd71fd28bb9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a22fbca05d806bca6dc4fadd71fd28bb9"></a>
 static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator double</b> (<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> b)</td></tr>
 <tr class="separator:a22fbca05d806bca6dc4fadd71fd28bb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -349,6 +358,65 @@ Inheritance diagram for CotcSdk.Bundle:</div>
 
 </div>
 </div>
+<a class="anchor" id="a2140b81af8afb1462a85fa78ebc3fa0c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> CotcSdk.Bundle.CreateArray </td>
+          <td>(</td>
+          <td class="paramtype">params <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>[]&#160;</td>
+          <td class="paramname"><em>values</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a bundle of type array.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">values</td><td>Optional values to pre-fill the array with. Since bundle are implicitly converted, remember that you may pass an integer, string, etc.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A new bundle.</dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a1e58870c761a527212833b7d27ab7585"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> CotcSdk.Bundle.CreateObject </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a bundle of type object. You may also pass up to three key/value pairs (in this order), which will be put in the object initially.</p>
+<dl class="section return"><dt>Returns</dt><dd>A new bundle.</dd></dl>
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
 <a class="anchor" id="a9e1489ca059f1ebfc7cfa140dbb78011"></a>
 <div class="memitem">
@@ -372,13 +440,10 @@ Inheritance diagram for CotcSdk.Bundle:</div>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Users/Florian/Documents/CotC/unity-native/CotcSdk/Internal/Bundle.cs</li>
-</ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 10 2015 07:06:45 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Sep 20 2015 15:20:42 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>
