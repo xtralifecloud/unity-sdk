@@ -4,7 +4,7 @@ namespace CotcSdk {
 
 	/// @ingroup model_classes
 	/// <summary>Represents a score fetched from a leaderboard.</summary>
-	public class Score {
+	public class Score: PropertiesObject {
 		/// <summary>
 		/// Info about the gamer who posted the score.
 		/// This information may not be present for some calls (calls scoped to the current user) and the member be null.
@@ -21,7 +21,7 @@ namespace CotcSdk {
 		public long Value { get; private set; }
 
 		#region Private
-		internal Score(Bundle serverData) {
+		internal Score(Bundle serverData) : base(serverData) {
 			GamerInfo = new GamerInfo(serverData);
 			Info = serverData["score"]["info"];
 			PostedAt = Common.ParseHttpDate(serverData["score"]["timestamp"]);
