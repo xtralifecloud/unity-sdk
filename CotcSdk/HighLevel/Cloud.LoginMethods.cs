@@ -16,7 +16,7 @@ namespace CotcSdk
 			UrlBuilder url = new UrlBuilder("/v1/gamer").QueryParam("q", filter).QueryParam("limit", limit).QueryParam("skip", offset);
 			HttpRequest req = MakeUnauthenticatedHttpRequest(url);
 			return Common.RunInTask<PagedList<UserInfo>>(req, (response, task) => {
-				PagedList<UserInfo> result = new PagedList<UserInfo>(offset, response.BodyJson["count"]);
+				PagedList<UserInfo> result = new PagedList<UserInfo>(response.BodyJson, offset, response.BodyJson["count"]);
 				foreach (Bundle u in response.BodyJson["result"].AsArray()) {
 					result.Add(new UserInfo(u));
 				}

@@ -20,7 +20,7 @@ namespace CotcSdk {
 		public Promise<PagedList<ConfiguredProduct>> ListConfiguredProducts(int limit = 30, int offset = 0) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/store/products").QueryParam("limit", limit).QueryParam("skip", offset);
 			return Common.RunInTask<PagedList<ConfiguredProduct>>(Gamer.MakeHttpRequest(url), (response, task) => {
-				PagedList<ConfiguredProduct> products = new PagedList<ConfiguredProduct>(offset, response.BodyJson["count"]);
+				PagedList<ConfiguredProduct> products = new PagedList<ConfiguredProduct>(response.BodyJson, offset, response.BodyJson["count"]);
 				foreach (Bundle b in response.BodyJson["products"].AsArray()) {
 					products.Add(new ConfiguredProduct(b));
 				}

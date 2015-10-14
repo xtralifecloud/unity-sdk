@@ -81,6 +81,7 @@ public class ScoreTests : TestBase {
 				Assert(scores[0].Rank == 1, "First score should have rank 1");
 				Assert(scores[1].Value == 1000, "2nd score not as expected");
 				Assert(scores[1].GamerInfo.GamerId == gamer1.GamerId, "2nd score not as expected");
+				Assert(scores.ServerData[board]["rankOfFirst"] == 1, "Server data should be accessible");
 				CompleteTest();
 			});
 		});

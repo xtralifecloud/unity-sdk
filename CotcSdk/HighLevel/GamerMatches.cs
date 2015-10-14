@@ -137,7 +137,7 @@ namespace CotcSdk {
 			if (full) url.QueryParam("full");
 			// Request for current results
 			return Common.RunInTask<PagedList<MatchListResult>>(Gamer.MakeHttpRequest(url), (response, task) => {
-				PagedList<MatchListResult> matches = new PagedList<MatchListResult>(offset, response.BodyJson["count"]);
+				PagedList<MatchListResult> matches = new PagedList<MatchListResult>(response.BodyJson, offset, response.BodyJson["count"]);
 				foreach (Bundle b in response.BodyJson["matches"].AsArray()) {
 					matches.Add(new MatchListResult(b));
 				}

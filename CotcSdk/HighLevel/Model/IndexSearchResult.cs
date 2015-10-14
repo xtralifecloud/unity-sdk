@@ -11,7 +11,7 @@ namespace CotcSdk {
 
 		internal IndexSearchResult(Bundle serverData, int currentOffset) {
 			MaxScore = serverData["max_score"];
-			Hits = new PagedList<IndexResult>(currentOffset, serverData["total"]);
+			Hits = new PagedList<IndexResult>(serverData, currentOffset, serverData["total"]);
 		}
 	}
 }
