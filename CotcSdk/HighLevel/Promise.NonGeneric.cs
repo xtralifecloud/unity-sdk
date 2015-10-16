@@ -56,7 +56,7 @@ namespace CotcSdk {
 		}
 
 		public void Reject(Exception ex) {
-			if (State != PromiseState.Pending) throw new InvalidOperationException("Illegal promise state transition");
+			if (State != PromiseState.Pending) throw new InvalidOperationException("Illegal promise state transition (" + State + " to Rejected)");
 			RejectedValue = ex;
 			State = PromiseState.Rejected;
 			if (Debug_OutputAllExceptions) {
@@ -75,7 +75,7 @@ namespace CotcSdk {
 		}
 
 		public void Resolve() {
-			if (State != PromiseState.Pending) throw new InvalidOperationException("Illegal promise state transition");
+			if (State != PromiseState.Pending) throw new InvalidOperationException("Illegal promise state transition (" + State + " to Fulfilled)");
 			State = PromiseState.Fulfilled;
 			foreach (PromiseHandler handler in ResolvedHandlers) {
 				InvokeHandler(handler.Callback, handler.OnFailure);

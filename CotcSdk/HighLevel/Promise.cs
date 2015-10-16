@@ -69,7 +69,7 @@ namespace CotcSdk
 		/// <summary>Reject this promise (indicate that the process failed for some reason).</summary>
 		/// <param name="ex">Exception to return as the failure result.</param>
 		public void Reject(Exception ex) {
-			if (State != PromiseState.Pending) throw new InvalidOperationException("Illegal promise state transition");
+			if (State != PromiseState.Pending) throw new InvalidOperationException("Illegal promise state transition (" + State + " to Rejected)");
 			RejectedValue = ex;
 			State = PromiseState.Rejected;
 			if (Promise.Debug_OutputAllExceptions) {
@@ -93,7 +93,7 @@ namespace CotcSdk
 		/// <summary>Resolves the promise, i.e. notifies a successful result of the async operation.</summary>
 		/// <param name="value">Result of the async operation. Caught by subscribers to this promise via a Then block.</param>
 		public void Resolve(PromisedT value) {
-			if (State != PromiseState.Pending) throw new InvalidOperationException("Illegal promise state transition");
+			if (State != PromiseState.Pending) throw new InvalidOperationException("Illegal promise state transition (" + State + " to Resolved)");
 			ResolvedValue = value;
 			State = PromiseState.Fulfilled;
 			foreach (PromiseHandler<PromisedT> handler in ResolvedHandlers) {
