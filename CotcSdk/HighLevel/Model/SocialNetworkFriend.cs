@@ -32,7 +32,7 @@ namespace CotcSdk {
 		public SocialNetworkFriend() { }
 
 		/// <summary>Build from existing JSON data.</summary>
-		internal SocialNetworkFriend(Bundle serverData) {
+		public SocialNetworkFriend(Bundle serverData) {
 			Id = serverData["id"];
 			Name = serverData["name"];
 			FirstName = serverData["first_name"];

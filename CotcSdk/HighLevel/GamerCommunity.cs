@@ -76,25 +76,31 @@ namespace CotcSdk {
 		}
 
 		/// <summary>
-		/// When you have data about friends from another social network, you can post them using these function.
+		/// When you have data about friends from another social network, you can post them to CotC servers using
+		/// these function.
 		/// This will automatically add them as a friend on CotC as they get recognized on our servers.
 		/// The friends get associated to the domain of this object.
+		/// Note: this function was once called PostSocialNetworkFriends but renamed due to it being misleading.
 		/// </summary>
 		/// <returns>Promise resolved when the operation has completed. The attached value is the same list as passed,
 		///     enriched with potential information about the gamer (member #CotcSdk.SocialNetworkFriend.ClanInfo) for
 		///     gamers who are already registered on CotC servers.</returns>
-		/// <param name="network">The network with which these friends are associated</param>
+		/// <param name="network">The network with which these friends are associated.</param>
 		/// <param name="friends">A list of data about the friends fetched on the social network.</param>
-		public Promise<SocialNetworkFriendResponse> PostSocialNetworkFriends(LoginNetwork network, List<SocialNetworkFriend> friends) {
+		/// <param name="automatching">If true, synchronizes the CotC friends with the list. That is, the provided
+		/// social network friends become your friends on CotC as well (reported on ListFriends and such).</param>
+		public Promise<SocialNetworkFriendResponse> ListNetworkFriends(LoginNetwork network, List<SocialNetworkFriend> friends, bool automatching = false) {
 			var task = new Promise<SocialNetworkFriendResponse>();
-			UrlBuilder url = new UrlBuilder("/v2.6/gamer/friends").Path(domain).QueryParam("network", network.Describe());
+			UrlBuilder url = new UrlBuilder("/v2.12/gamer/friends").Path(domain).QueryParam("network", network.Describe());
 			HttpRequest req = Gamer.MakeHttpRequest(url);
-			Bundle friendData = Bundle.CreateObject();
+			Bundle body = Bundle.CreateObject();
+			Bundle friendData = (body["friends"] = Bundle.CreateObject());
 			foreach (SocialNetworkFriend f in friends) {
 				friendData[f.Id] = f.ToBundle();
 			}
+			body["automatching"] = automatching;
 
-			req.BodyJson = friendData;
+			req.BodyJson = body;
 			return Common.RunRequest(req, task, (HttpResponse response) => {
 				task.PostResult(new SocialNetworkFriendResponse(response.BodyJson));
 			});

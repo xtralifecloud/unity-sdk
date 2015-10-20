@@ -68,7 +68,7 @@ namespace CotcSdk.FacebookIntegration
 			EnsureFacebookLoaded(() => {
 				DoFacebookRequestWithPagination("/me/friends", HttpMethod.GET)
 				.Then(result => {
-					gamer.Community.PostSocialNetworkFriends(LoginNetwork.Facebook, result)
+					gamer.Community.ListNetworkFriends(LoginNetwork.Facebook, result)
 						.ForwardTo(task);
 				})
 				.Catch(ex => {

@@ -3,6 +3,7 @@ using UnityEngine;
 using CotcSdk;
 using System.Reflection;
 using IntegrationTests;
+using System.Collections.Generic;
 
 public class CommunityTests : TestBase {
 
@@ -103,6 +104,22 @@ public class CommunityTests : TestBase {
 		.ExpectSuccess(nextPage => {
 			Assert(nextPage.HasPrevious, "Should have previous page");
 			CompleteTest();
+		});
+	}
+
+	[Test("Tests the list network users call. Does little about this one since we would need real data…")]
+	public void ShouldListNetworkUsers(Cloud cloud) {
+		Login(cloud, gamer => {
+			Bundle data = Bundle.FromJson("{\"data\":[{\"name\":\"Test 1\",\"id\":\"10153057921478192\"},{\"name\":\"Test 2\",\"id\":\"10153366656847346\"},{\"name\":\"Test 3\",\"id\":\"339262546278220\"}],\"paging\":{\"next\":\"https://graph.facebook.com/v2.1/10152381145462633/friends?access_token=CAAENyTNQMpQBADfCgZCpmiZAcRifeQVmfoeVNScZCi5DQxlianZABohlOFivboYIuOb1Qqv4ATAMswCNpJWtmWUrkZAdsDUUxtQMrm0qo3QOjztl2niJ0vmmKrKccXhZAwFK5GkNe4Q58ZBPouzS5IFVsFUzDjhiAVjlzmlCgdb2Fcf9n6651wsWrEMZCKxk98QDcs0OJYEeDQZDZD&limit=5000&offset=5000&__after_id=enc_AdCP2GaZAGG8lfGebTkZAwTP6l7CbRHm15XU9mT6RRx9xa5C7PBZB35xaZAVf1IoFQTd9ZAILfmqphj3KZBrrQ3vaIuYRO\"},\"summary\":{\"total_count\":760}}");
+			List<SocialNetworkFriend> friends = new List<SocialNetworkFriend>();
+			foreach (Bundle f in data["data"].AsArray()) {
+				friends.Add(new SocialNetworkFriend(f));
+			}
+			gamer.Community.ListNetworkFriends(LoginNetwork.Facebook, friends, true)
+			.ExpectSuccess(response => {
+				Assert(response.ByNetwork[LoginNetwork.Facebook].Count == 3, "Should have registered 3 facebook users");
+				CompleteTest();
+			});
 		});
 	}
 }
