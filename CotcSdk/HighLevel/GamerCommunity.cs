@@ -122,7 +122,15 @@ namespace CotcSdk {
 		public Promise<Done> SendEvent(string gamerId, Bundle eventData, PushNotification notification = null) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/event").Path(domain).Path(gamerId);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
-			req.BodyJson = eventData;
+			Bundle config = Bundle.CreateObject();
+			config["type"] = "user";
+			config["event"] = eventData;
+			config["from"] = Gamer.GamerId;
+			config["to"] = gamerId;
+			config["name"] = Gamer["profile"]["displayname"];
+			if (notification != null) config["osn"] = notification.Data;
+
+			req.BodyJson = config;
 			return Common.RunInTask<Done>(req, (response, task) => {
 				task.PostResult(new Done(true, response.BodyJson));
 			});

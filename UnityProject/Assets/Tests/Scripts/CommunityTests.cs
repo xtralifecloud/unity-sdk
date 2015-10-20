@@ -49,7 +49,7 @@ public class CommunityTests : TestBase {
 			DomainEventLoop loop = gamer1.StartEventLoop();
 			loop.ReceivedEvent += (sender, e) => {
 				Assert(sender == loop, "Event should come from the loop");
-				Assert(e.Message["hello"] == "world", "Message invalid");
+				Assert(e.Message["event"]["hello"] == "world", "Message invalid");
 				loop.Stop();
 				// Wait the results of SendEvent as well
 				finishedSendEvent.Done(CompleteTest);
