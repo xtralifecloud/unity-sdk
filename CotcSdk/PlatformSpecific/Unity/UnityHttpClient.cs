@@ -58,7 +58,7 @@ namespace CotcSdk
 			public HttpWebResponse Response;
 			public Stream StreamResponse;
 			public UnityHttpClient self;
-			public bool Aborted;
+			public bool Aborted, AlreadyFinished;
 			public object PreviousUserData;
 			public RequestState(UnityHttpClient inst, HttpRequest originalReq, HttpWebRequest req, object previousUserData) {
 				self = inst;
@@ -103,6 +103,9 @@ namespace CotcSdk
 
 		/// <summary>Called after an HTTP request has been processed in any way (error or failure). Decides what to do next.</summary>
 		private void FinishWithRequest(RequestState state, HttpResponse response) {
+			// This "hack" is needed because sometimes the callback is called multiple times for a single request (notably from RespCallback)
+			if (state.AlreadyFinished) return;
+			state.AlreadyFinished = true;
 			// IDEA This function could probably be moved to another file with a little gymnastic…
 			HttpRequest nextReq;
 			// Avoid timeout to be triggered after that
