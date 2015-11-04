@@ -36,7 +36,7 @@ namespace CotcSdk {
 				int currentItems = boardData["scores"].AsArray().Count;
 				int total = Math.Min(boardData["maxpage"] * limit, offset + currentItems);
 				// Fetch listed scores
-				PagedList<Score> scores = new PagedList<Score>(offset, total);
+				PagedList<Score> scores = new PagedList<Score>(response.BodyJson, offset, total);
 				int rank = boardData["rankOfFirst"];
 				foreach (Bundle b in boardData["scores"].AsArray()) {
 					scores.Add(new Score(b, rank++));

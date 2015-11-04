@@ -48,7 +48,7 @@ namespace CotcSdk {
 			if (unit != null) url.QueryParam("unit", unit);
 			// Request for current results
 			return Common.RunInTask<PagedList<Transaction>>(Gamer.MakeHttpRequest(url), (response, task) => {
-				PagedList<Transaction> transactions = new PagedList<Transaction>(offset, response.BodyJson["count"]);
+				PagedList<Transaction> transactions = new PagedList<Transaction>(response.BodyJson, offset, response.BodyJson["count"]);
 				foreach (Bundle b in response.BodyJson["history"].AsArray()) {
 					transactions.Add(new Transaction(b));
 				}

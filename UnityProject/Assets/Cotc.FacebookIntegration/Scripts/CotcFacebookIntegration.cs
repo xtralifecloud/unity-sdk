@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using Facebook.Unity;
 
 namespace CotcSdk.FacebookIntegration
 {
@@ -34,7 +35,8 @@ namespace CotcSdk.FacebookIntegration
 		public Promise<Gamer> LoginWithFacebook(Cloud cloud) {
 			var task = new Promise<Gamer>();
 			EnsureFacebookLoaded(() => {
-				FB.Login("public_profile,email,user_friends", (FBResult result) => {
+				List<string> permissions = new List<string>() { "public_profile","email","user_friends" };
+				FB.LogInWithReadPermissions(permissions, (ILoginResult result) => {
 					if (result.Error != null) {
 						task.PostResult(ErrorCode.SocialNetworkError, "Facebook/ " + result.Error);
 					}
@@ -42,7 +44,8 @@ namespace CotcSdk.FacebookIntegration
 						task.PostResult(ErrorCode.LoginCanceled, "Login canceled");
 					}
 					else {
-						string userId = FB.UserId, token = FB.AccessToken;
+						AccessToken aToken = AccessToken.CurrentAccessToken;
+						string userId = aToken.UserId, token = aToken.TokenString;
 						Common.Log("Logged in through facebook");
 						cloud.Login(LoginNetwork.Facebook, userId, token)
 							.ForwardTo(task);
@@ -63,9 +66,9 @@ namespace CotcSdk.FacebookIntegration
 		public Promise<SocialNetworkFriendResponse> FetchFriends(Gamer gamer) {
 			var task = new Promise<SocialNetworkFriendResponse>();
 			EnsureFacebookLoaded(() => {
-				DoFacebookRequestWithPagination("/me/friends", Facebook.HttpMethod.GET)
+				DoFacebookRequestWithPagination("/me/friends", HttpMethod.GET)
 				.Then(result => {
-					gamer.Community.PostSocialNetworkFriends(LoginNetwork.Facebook, result)
+					gamer.Community.ListNetworkFriends(LoginNetwork.Facebook, result)
 						.ForwardTo(task);
 				})
 				.Catch(ex => {
@@ -77,16 +80,16 @@ namespace CotcSdk.FacebookIntegration
 
 		#region Private
 		// Starting point
-		private Promise<List<SocialNetworkFriend>> DoFacebookRequestWithPagination(string query, Facebook.HttpMethod method) {
+		private Promise<List<SocialNetworkFriend>> DoFacebookRequestWithPagination(string query, HttpMethod method) {
 			var task = new Promise<List<SocialNetworkFriend>>();
-			FB.API(query, method, (FBResult result) => {
+			FB.API(query, method, (IGraphResult result) => {
 				DoFacebookRequestWithPagination(task, result, new List<SocialNetworkFriend>());
 			});
 			return task;
 		}
 
 		// Recursive
-		private void DoFacebookRequestWithPagination(Promise<List<SocialNetworkFriend>> task, FBResult result, List<SocialNetworkFriend> addDataTo) {
+		private void DoFacebookRequestWithPagination(Promise<List<SocialNetworkFriend>> task, IGraphResult result, List<SocialNetworkFriend> addDataTo) {
 			if (result.Error != null) {
 				Common.LogWarning("Error in facebook request: " + result.Error.ToString());
 				task.PostResult(ErrorCode.SocialNetworkError, "Facebook/ Network #1");
@@ -95,8 +98,8 @@ namespace CotcSdk.FacebookIntegration
 
 			// Gather the result from the last request
 			try {
-				Common.Log("FB response: " + result.Text);
-				Bundle fbResult = Bundle.FromJson(result.Text);
+				Common.Log("FB response: " + result.RawResult);
+				Bundle fbResult = Bundle.FromJson(result.RawResult);
 				List<Bundle> data = fbResult["data"].AsArray();
 				foreach (Bundle element in data) {
 					addDataTo.Add(new SocialNetworkFriend(element["id"], element["first_name"], element["last_name"], element["name"]));
@@ -108,7 +111,7 @@ namespace CotcSdk.FacebookIntegration
 					return;
 				}
 
-				FB.API(nextUrl.Replace("https://graph.facebook.com", ""), Facebook.HttpMethod.GET, (FBResult res) => {
+				FB.API(nextUrl.Replace("https://graph.facebook.com", ""), HttpMethod.GET, (IGraphResult res) => {
 					DoFacebookRequestWithPagination(task, res, addDataTo);
 				});
 			}

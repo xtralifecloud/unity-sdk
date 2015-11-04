@@ -7,6 +7,7 @@ namespace CotcSdk {
 		Email,
 		Facebook,
 		GooglePlus,
+		GameCenter,
 	}
 
 	/// @ingroup model_classes

@@ -36,7 +36,8 @@ namespace CotcSdk {
 			return ServerData.ToString();
 		}
 
-		internal PagedList(int currentOffset, int totalResults) {
+		internal PagedList(Bundle serverData, int currentOffset, int totalResults) {
+			ServerData = serverData;
 			Offset = currentOffset;
 			Total = totalResults;
 		}
