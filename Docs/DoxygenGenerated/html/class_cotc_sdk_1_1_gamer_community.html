@@ -121,10 +121,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa7ef54f200a6bef47958b1de2b59c899"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; List&lt; <a class="el" href="class_cotc_sdk_1_1_gamer_info.html">GamerInfo</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_community.html#aa7ef54f200a6bef47958b1de2b59c899">ListFriends</a> (bool filterBlacklisted=false)</td></tr>
 <tr class="memdesc:aa7ef54f200a6bef47958b1de2b59c899"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method used to retrieve the application's friends of the currently logged in profile. <a href="#aa7ef54f200a6bef47958b1de2b59c899">More...</a><br /></td></tr>
 <tr class="separator:aa7ef54f200a6bef47958b1de2b59c899"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ef72c223a174df5f5a51923c3af4a93"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a><br class="typebreak" />
-&lt; <a class="el" href="class_cotc_sdk_1_1_social_network_friend_response.html">SocialNetworkFriendResponse</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_community.html#a5ef72c223a174df5f5a51923c3af4a93">PostSocialNetworkFriends</a> (<a class="el" href="group__model__classes.html#gad5e437023247d9f2be89e7f6be520fdb">LoginNetwork</a> network, List&lt; <a class="el" href="class_cotc_sdk_1_1_social_network_friend.html">SocialNetworkFriend</a> &gt; friends)</td></tr>
-<tr class="memdesc:a5ef72c223a174df5f5a51923c3af4a93"><td class="mdescLeft">&#160;</td><td class="mdescRight">When you have data about friends from another social network, you can post them using these function. This will automatically add them as a friend on CotC as they get recognized on our servers. The friends get associated to the domain of this object.  <a href="#a5ef72c223a174df5f5a51923c3af4a93">More...</a><br /></td></tr>
-<tr class="separator:a5ef72c223a174df5f5a51923c3af4a93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeacb92451f16288a63e939ece3e637db"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a><br class="typebreak" />
+&lt; <a class="el" href="class_cotc_sdk_1_1_social_network_friend_response.html">SocialNetworkFriendResponse</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_community.html#aeacb92451f16288a63e939ece3e637db">ListNetworkFriends</a> (<a class="el" href="group__model__classes.html#gad5e437023247d9f2be89e7f6be520fdb">LoginNetwork</a> network, List&lt; <a class="el" href="class_cotc_sdk_1_1_social_network_friend.html">SocialNetworkFriend</a> &gt; friends, bool automatching=false)</td></tr>
+<tr class="memdesc:aeacb92451f16288a63e939ece3e637db"><td class="mdescLeft">&#160;</td><td class="mdescRight">When you have data about friends from another social network, you can post them to CotC servers using these function. This will automatically add them as a friend on CotC as they get recognized on our servers. The friends get associated to the domain of this object. Note: this function was once called PostSocialNetworkFriends but renamed due to it being misleading.  <a href="#aeacb92451f16288a63e939ece3e637db">More...</a><br /></td></tr>
+<tr class="separator:aeacb92451f16288a63e939ece3e637db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a609279241aa013555789c78905a49c7f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_community.html#a609279241aa013555789c78905a49c7f">SendEvent</a> (string gamerId, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> eventData, <a class="el" href="class_cotc_sdk_1_1_push_notification.html">PushNotification</a> notification=null)</td></tr>
 <tr class="memdesc:a609279241aa013555789c78905a49c7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use this method to send a message to another user from your game.  <a href="#a609279241aa013555789c78905a49c7f">More...</a><br /></td></tr>
 <tr class="separator:a609279241aa013555789c78905a49c7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -299,12 +299,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a5ef72c223a174df5f5a51923c3af4a93"></a>
+<a class="anchor" id="aeacb92451f16288a63e939ece3e637db"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_social_network_friend_response.html">SocialNetworkFriendResponse</a>&gt; CotcSdk.GamerCommunity.PostSocialNetworkFriends </td>
+          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_social_network_friend_response.html">SocialNetworkFriendResponse</a>&gt; CotcSdk.GamerCommunity.ListNetworkFriends </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__model__classes.html#gad5e437023247d9f2be89e7f6be520fdb">LoginNetwork</a>&#160;</td>
           <td class="paramname"><em>network</em>, </td>
@@ -313,7 +313,13 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">List&lt; <a class="el" href="class_cotc_sdk_1_1_social_network_friend.html">SocialNetworkFriend</a> &gt;&#160;</td>
-          <td class="paramname"><em>friends</em>&#160;</td>
+          <td class="paramname"><em>friends</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>automatching</em> = <code>false</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -323,12 +329,13 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>When you have data about friends from another social network, you can post them using these function. This will automatically add them as a friend on CotC as they get recognized on our servers. The friends get associated to the domain of this object. </p>
+<p>When you have data about friends from another social network, you can post them to CotC servers using these function. This will automatically add them as a friend on CotC as they get recognized on our servers. The friends get associated to the domain of this object. Note: this function was once called PostSocialNetworkFriends but renamed due to it being misleading. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> resolved when the operation has completed. The attached value is the same list as passed, enriched with potential information about the gamer (member <a class="el" href="class_cotc_sdk_1_1_social_network_friend.html#aa5eee552331fe6122dfc11e9c3745cf2" title="Additional info that might have been enriched by the CotC servers. You should never guess or create t...">CotcSdk.SocialNetworkFriend.ClanInfo</a>) for gamers who are already registered on CotC servers.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">network</td><td>The network with which these friends are associated</td></tr>
+    <tr><td class="paramname">network</td><td>The network with which these friends are associated.</td></tr>
     <tr><td class="paramname">friends</td><td>A list of data about the friends fetched on the social network.</td></tr>
+    <tr><td class="paramname">automatching</td><td>If true, synchronizes the CotC friends with the list. That is, the provided social network friends become your friends on CotC as well (reported on ListFriends and such).</td></tr>
   </table>
   </dd>
 </dl>
@@ -382,7 +389,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Sep 20 2015 15:20:42 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Nov 4 2015 22:38:31 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

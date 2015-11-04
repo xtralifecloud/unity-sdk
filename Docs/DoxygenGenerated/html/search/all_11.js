@@ -14,7 +14,7 @@ var searchData=
   ['setkeybinary',['SetKeyBinary',['../class_cotc_sdk_1_1_gamer_vfs.html#a74c57f5312643854a9e84449bb914eb6',1,'CotcSdk::GamerVfs']]],
   ['shoe',['Shoe',['../class_cotc_sdk_1_1_match.html#a700fa7959b4f0549165c0d7becf4d412',1,'CotcSdk::Match']]],
   ['socialnetworkfriend',['SocialNetworkFriend',['../class_cotc_sdk_1_1_social_network_friend.html',1,'CotcSdk']]],
-  ['socialnetworkfriend',['SocialNetworkFriend',['../class_cotc_sdk_1_1_social_network_friend.html#a053a2475e244caa6224cbfda8bbad117',1,'CotcSdk.SocialNetworkFriend.SocialNetworkFriend(string id, string firstName, string lastName, string name)'],['../class_cotc_sdk_1_1_social_network_friend.html#aef46a2385c12e4595c6dfa4ad9ab4684',1,'CotcSdk.SocialNetworkFriend.SocialNetworkFriend()']]],
+  ['socialnetworkfriend',['SocialNetworkFriend',['../class_cotc_sdk_1_1_social_network_friend.html#a053a2475e244caa6224cbfda8bbad117',1,'CotcSdk.SocialNetworkFriend.SocialNetworkFriend(string id, string firstName, string lastName, string name)'],['../class_cotc_sdk_1_1_social_network_friend.html#aef46a2385c12e4595c6dfa4ad9ab4684',1,'CotcSdk.SocialNetworkFriend.SocialNetworkFriend()'],['../class_cotc_sdk_1_1_social_network_friend.html#a4e00eea7c1808d3031b8335a97584a97',1,'CotcSdk.SocialNetworkFriend.SocialNetworkFriend(Bundle serverData)']]],
   ['socialnetworkfriendresponse',['SocialNetworkFriendResponse',['../class_cotc_sdk_1_1_social_network_friend_response.html',1,'CotcSdk']]],
   ['start',['Start',['../class_cotc_sdk_1_1_domain_event_loop.html#ab83f3b180cfa9ce92fc1d42ed56ce0ec',1,'CotcSdk::DomainEventLoop']]],
   ['starteventloop',['StartEventLoop',['../class_cotc_sdk_1_1_gamer.html#a6d9794f099e8cbc2d3faa30591a08c62',1,'CotcSdk::Gamer']]],
