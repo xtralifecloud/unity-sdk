@@ -113,7 +113,7 @@ namespace CotcSdk.FacebookIntegration
 					return;
 				}
 
-				FB.API(nextUrl.Replace("https://graph.facebook.com", ""), HttpMethod.GET, (IGraphResult res) => {
+				FB.API(nextUrl, HttpMethod.GET, (IGraphResult res) => {
 					DoFacebookRequestWithPagination(task, res, addDataTo);
 				});
 			}
