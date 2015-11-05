@@ -137,7 +137,7 @@ namespace CotcSdk
 				Bundle options = Bundle.CreateObject();
 				options["preventRegistration"] = preventRegistration;
                 if(thenBatch != null)
-				    options["thenBacth"] = thenBatch;
+				    options["thenBatch"] = thenBatch;
 				config["options"] = options;
 			}
 
