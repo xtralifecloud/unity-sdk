@@ -338,7 +338,7 @@ namespace CotcSdk
 			}
 			return defaultValue;
 		}
-		public double AsFloat(float defaultValue = 0) {
+		public float AsFloat(float defaultValue = 0) {
 			return (float)AsDouble(defaultValue);
 		}
 		public double AsDouble(double defaultValue = 0) {
