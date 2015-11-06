@@ -81,7 +81,7 @@ namespace CotcSdk
         /// <param name="gamerSecret">Credentials of the previous session (Gamer.GamerSecret).</param>
         /// <param name="thenBatch">Batch executed after login.</param>
         public Promise<Gamer> ResumeSession(string gamerId, string gamerSecret, Bundle thenBatch = null) {
-			return Login(LoginNetwork.Anonymous, gamerId, gamerSecret, thenBatch);
+			return Login(LoginNetwork.Anonymous, gamerId, gamerSecret, thenBatch: thenBatch);
 		}
 
 		/// <summary>
