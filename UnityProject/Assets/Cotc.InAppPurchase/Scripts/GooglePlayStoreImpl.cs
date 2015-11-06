@@ -55,7 +55,6 @@ namespace CotcSdk.InappPurchase {
 				Debug.LogWarning("Responding to GetInformationAboutProducts without having promise set");
 			}
 
-			Common.TEMP("GetInformationAboutProducts_Done: " + message);
 			Bundle json = Bundle.FromJson(message);
 			// Error
 			if (json.Has("error")) {
