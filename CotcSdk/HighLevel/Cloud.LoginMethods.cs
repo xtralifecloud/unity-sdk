@@ -133,15 +133,18 @@ namespace CotcSdk
 			config["id"] = networkId;
 			config["secret"] = networkSecret;
 			config["device"] = Managers.SystemFunctions.CollectDeviceInformation();
-			if (preventRegistration) {
-				Bundle options = Bundle.CreateObject();
-				options["preventRegistration"] = preventRegistration;
-                if(thenBatch != null)
-				    options["thenBatch"] = thenBatch;
-				config["options"] = options;
-			}
 
-			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/login");
+            Bundle options = Bundle.CreateObject();
+            if (preventRegistration) {
+				options["preventRegistration"] = preventRegistration;
+            }
+		    if (thenBatch != null) {
+		        options["thenBatch"] = thenBatch;
+		    }
+		    if (!options.IsEmpty) {
+		        config["options"] = options;
+		    }
+		    HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/login");
 			req.BodyJson = config;
 			return Common.RunInTask<Gamer>(req, (response, task) => {
 				Gamer gamer = new Gamer(this, response.BodyJson);
