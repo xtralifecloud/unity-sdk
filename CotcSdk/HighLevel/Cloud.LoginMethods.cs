@@ -58,16 +58,21 @@ namespace CotcSdk
 		///     facebook or other SNS accounts, this would be the user token.</param>
 		/// <param name="preventRegistration">Fail instead of silently creating an account in case it doesn't already exist on
 		///     the CotC servers.</param>
-		public Promise<Gamer> Login(LoginNetwork network, string networkId, string networkSecret, bool preventRegistration = false) {
-			return Login(network.Describe(), networkId, networkSecret, preventRegistration);
+		/// <param name="additionalOptions">Additional options can be passed, such as `thenBatch` to execute a batch after
+		///     login. Pass it as a Bundle with the additional keys. May not override `preventRegistration` key since it is
+		///     defined by the parameter of the same name.</param>
+		public Promise<Gamer> Login(LoginNetwork network, string networkId, string networkSecret, bool preventRegistration = false, Bundle additionalOptions = null) {
+			return Login(network.Describe(), networkId, networkSecret, preventRegistration, additionalOptions);
 		}
 
 		/// <summary>Logs in by using a shortcode previously generated through #SendResetPasswordEmail.</summary>
 		/// <param name="shortcode">The shortcode received by the user by e-mail.</param>
+		/// <param name="additionalOptions">Additional options can be passed, such as `thenBatch` to execute a batch after
+		///     login. Pass it as a Bundle with the additional keys</param>
 		/// <returns>Promise resolved when the login has finished. The resulting Gamer object can then be used for many
 		///     purposes related to the signed in account.</returns>
-		public Promise<Gamer> LoginWithShortcode(string shortcode) {
-			return Login("restore", "", shortcode, true);
+		public Promise<Gamer> LoginWithShortcode(string shortcode, Bundle additionalOptions = null) {
+			return Login("restore", "", shortcode, true, additionalOptions);
 		}
 
 		/// <summary>
@@ -78,8 +83,10 @@ namespace CotcSdk
 		///     be used for many purposes related to the signed in account.</returns>
 		/// <param name="gamerId">Credentials of the previous session (Gamer.GamerId).</param>
 		/// <param name="gamerSecret">Credentials of the previous session (Gamer.GamerSecret).</param>
-		public Promise<Gamer> ResumeSession(string gamerId, string gamerSecret) {
-			return Login(LoginNetwork.Anonymous, gamerId, gamerSecret);
+		/// <param name="additionalOptions">Additional options can be passed, such as 'thenBatch' to execute a batch after
+		///     login. Pass it as a Bundle with the additional keys</param>
+		public Promise<Gamer> ResumeSession(string gamerId, string gamerSecret, Bundle additionalOptions = null) {
+			return Login(LoginNetwork.Anonymous, gamerId, gamerSecret, additionalOptions: additionalOptions);
 		}
 
 		/// <summary>
@@ -125,17 +132,16 @@ namespace CotcSdk
 
 		#region Private
 		// See the public Login method for more info
-		private Promise<Gamer> Login(string network, string networkId, string networkSecret, bool preventRegistration = false) {
+		private Promise<Gamer> Login(string network, string networkId, string networkSecret, bool preventRegistration = false, Bundle additionalOptions = null) {
 			Bundle config = Bundle.CreateObject();
 			config["network"] = network;
 			config["id"] = networkId;
 			config["secret"] = networkSecret;
 			config["device"] = Managers.SystemFunctions.CollectDeviceInformation();
-			if (preventRegistration) {
-				Bundle options = Bundle.CreateObject();
-				options["preventRegistration"] = preventRegistration;
-				config["options"] = options;
-			}
+
+            Bundle options = additionalOptions != null ? additionalOptions.Clone() : Bundle.CreateObject();
+            if (preventRegistration) options["preventRegistration"] = preventRegistration;
+		    if (!options.IsEmpty) config["options"] = options;
 
 			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/login");
 			req.BodyJson = config;

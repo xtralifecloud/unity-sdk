@@ -51,6 +51,25 @@ public class CloudTests : TestBase {
 		.CompleteTestIfSuccessful();
 	}
 
+	[Test("Tries to restore another session but tries to execute a batch that doesn't exist.")]
+	public void ShouldLoginAndRunBatch(Cloud cloud) {
+		Bundle batchNode = Bundle.CreateObject(
+			"name", "nonexistingBatch",
+			"domain", "private",
+			"params", Bundle.CreateObject());
+		cloud.Login(
+			network: LoginNetwork.Email,
+			networkId: "cloud@localhost.localdomain",
+			networkSecret: "Password123",
+			preventRegistration: false,
+			additionalOptions: Bundle.CreateObject("thenBatch", batchNode)
+		).ExpectFailure(ex => {
+			Assert(ex.ServerData["name"] == "HookError", "Message should be HookError");
+			Assert(ex.ServerData["message"].AsString().EndsWith("does not exist"), "Should indicate nonexisting batch");
+			CompleteTest();
+		});
+	}
+
 	[Test("Tests that a non-existing session fails to resume (account not created).")]
 	public void ShouldNotRestoreInexistingSession(Cloud cloud) {
 		// Resume the session with the credentials just received

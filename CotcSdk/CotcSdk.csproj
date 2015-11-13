@@ -95,6 +95,7 @@
     <Compile Include="HighLevel\Model\TransactionResult.cs" />
     <Compile Include="HighLevel\CotcException.cs" />
     <Compile Include="HighLevel\GamerVfs.cs" />
+    <Compile Include="HighLevel\NonpagedList.cs" />
     <Compile Include="HighLevel\PagedList.cs" />
     <Compile Include="HighLevel\Promise.cs" />
     <Compile Include="HighLevel\Promise.NonGeneric.cs" />

@@ -61,7 +61,7 @@ public class FacebookSampleScene : MonoBehaviour {
 			foreach (SocialNetworkFriend f in result.ByNetwork[LoginNetwork.Facebook]) {
 				// Those who have a CotC account, add them as friend
 				if (f.ClanInfo != null) {
-					Gamer.Community.AddFriend(f.ClanInfo.GamerId)
+					Gamer.Community.AddFriend(f.ClanInfo["_id"])
 					.Done(addFriendResult => {
 						if (!addFriendResult) {
 							Debug.LogError("Failed to add friend " + f.ClanInfo.GamerId);

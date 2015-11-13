@@ -63,12 +63,14 @@ namespace CotcSdk.FacebookIntegration
 		/// <returns>Promise resolved when the request has finished. The value is as returned by
 		/// #CotcSdk.GamerCommunity.PostSocialNetworkFriends.</returns>
 		/// <param name="gamer">Gamer object used to link the data to the account.</param>
-		public Promise<SocialNetworkFriendResponse> FetchFriends(Gamer gamer) {
+		/// <param name="automatching">If true, synchronizes the CotC friends with your facebook friends. They will be
+		/// reported by ListFriends and such).</param>
+		public Promise<SocialNetworkFriendResponse> FetchFriends(Gamer gamer, bool automatching = true) {
 			var task = new Promise<SocialNetworkFriendResponse>();
 			EnsureFacebookLoaded(() => {
 				DoFacebookRequestWithPagination("/me/friends", HttpMethod.GET)
 				.Then(result => {
-					gamer.Community.ListNetworkFriends(LoginNetwork.Facebook, result)
+					gamer.Community.ListNetworkFriends(LoginNetwork.Facebook, result, automatching)
 						.ForwardTo(task);
 				})
 				.Catch(ex => {
@@ -111,7 +113,7 @@ namespace CotcSdk.FacebookIntegration
 					return;
 				}
 
-				FB.API(nextUrl.Replace("https://graph.facebook.com", ""), HttpMethod.GET, (IGraphResult res) => {
+				FB.API(nextUrl, HttpMethod.GET, (IGraphResult res) => {
 					DoFacebookRequestWithPagination(task, res, addDataTo);
 				});
 			}

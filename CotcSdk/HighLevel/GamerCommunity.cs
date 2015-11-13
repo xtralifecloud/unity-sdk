@@ -62,12 +62,12 @@ namespace CotcSdk {
 		/// <summary>Method used to retrieve the application's friends of the currently logged in profile.</summary>
 		/// <returns>Promise resolved when the operation has completed, with the fetched list of friends.</returns>
 		/// <param name="filterBlacklisted">When set to true, restricts to blacklisted friends.</param>
-		public Promise<List<GamerInfo>> ListFriends(bool filterBlacklisted = false) {
+		public Promise<NonpagedList<GamerInfo>> ListFriends(bool filterBlacklisted = false) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/friends").Path(domain);
 			if (filterBlacklisted) url.QueryParam("status", "blacklist");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
-			return Common.RunInTask<List<GamerInfo>>(req, (response, task) => {
-				List<GamerInfo> result = new List<GamerInfo>();
+			return Common.RunInTask<NonpagedList<GamerInfo>>(req, (response, task) => {
+				var result = new NonpagedList<GamerInfo>(response.BodyJson);
 				foreach (Bundle f in response.BodyJson["friends"].AsArray()) {
 					result.Add(new GamerInfo(f));
 				}

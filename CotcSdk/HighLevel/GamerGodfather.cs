@@ -53,11 +53,11 @@ namespace CotcSdk
 
 		/// <summary>This method can be used to retrieve the gamer who have added you as a godfather.</summary>
 		/// <returns>Promise resolved when the operation has completed.</returns>
-		public Promise<List<GamerInfo>> GetGodchildren() {
+		public Promise<NonpagedList<GamerInfo>> GetGodchildren() {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/godchildren").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
-			return Common.RunInTask<List<GamerInfo>>(req, (response, task) => {
-				List<GamerInfo> result = new List<GamerInfo>();
+			return Common.RunInTask<NonpagedList<GamerInfo>>(req, (response, task) => {
+				var result = new NonpagedList<GamerInfo>(response.BodyJson);
 				foreach (Bundle b in response.BodyJson["godchildren"].AsArray()) {
 					result.Add(new GamerInfo(b));
 				}
