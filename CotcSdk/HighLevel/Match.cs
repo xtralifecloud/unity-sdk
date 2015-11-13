@@ -343,10 +343,8 @@ namespace CotcSdk {
 	/// @ingroup model_classes
 	/// <summary>Response resulting from a #CotcSdk.Match.DrawFromShoe call.</summary>
 	public class DrawnItemsResult : PropertiesObject {
-		public List<Bundle> Items;
+		public List<Bundle> Items { get { return Props["drawnItems"].AsArray(); } }
 
-		public DrawnItemsResult(Bundle serverData) : base(serverData) {
-			Items = serverData["drawnItems"].AsArray();
-		}
+		public DrawnItemsResult(Bundle serverData) : base(serverData) {}
 	}
 }

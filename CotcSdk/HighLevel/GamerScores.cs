@@ -56,10 +56,10 @@ namespace CotcSdk {
 		/// <returns>Promise resolved when the operation has completed. The attached value describes a list of scores,
 		///     without pagination functionality.</returns>
 		/// <param name="board">The name of the board to fetch scores from.</param>
-		public Promise<List<Score>> ListFriendScores(string board) {
+		public Promise<NonpagedList<Score>> ListFriendScores(string board) {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/scores").Path(domain).Path(board).QueryParam("type", "friendscore");
-			return Common.RunInTask<List<Score>>(Gamer.MakeHttpRequest(url), (response, task) => {
-				List<Score> scores = new List<Score>();
+			return Common.RunInTask<NonpagedList<Score>>(Gamer.MakeHttpRequest(url), (response, task) => {
+				var scores = new NonpagedList<Score>(response.BodyJson);
 				foreach (Bundle b in response.BodyJson[board].AsArray()) {
 					scores.Add(new Score(b));
 				}

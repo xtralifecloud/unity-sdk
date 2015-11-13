@@ -60,8 +60,8 @@
             <param name="preventRegistration">Fail instead of silently creating an account in case it doesn't already exist on
                 the CotC servers.</param>
             <param name="additionalOptions">Additional options can be passed, such as `thenBatch` to execute a batch after
-                login. Pass it as a Bundle with the additional keys, which may overwrite the previous arguments if they share
-                the same name.</param>
+                login. Pass it as a Bundle with the additional keys. May not override `preventRegistration` key since it is
+                defined by the parameter of the same name.</param>
         </member>
         <member name="M:CotcSdk.Cloud.LoginWithShortcode(System.String,CotcSdk.Bundle)">
             <summary>Logs in by using a shortcode previously generated through #SendResetPasswordEmail.</summary>
@@ -1574,6 +1574,7 @@
             <returns>Promise resolved when the operation has completed.</returns>
             <param name="key">The name of the key to remove.</param>
         </member>
+        <!-- Badly formed XML comment ignored for member "T:CotcSdk.NonpagedList`1" -->
         <member name="T:CotcSdk.PagedList`1">
             @ingroup main_classes
             <summary>Represents a paginated list, which allows for easy navigation through multiple results.</summary>
