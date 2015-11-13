@@ -101,10 +101,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a880ef9703bf191be2062641c2e7374c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_gamer.html">Gamer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_facebook_integration_1_1_cotc_facebook_integration.html#a880ef9703bf191be2062641c2e7374c4">LoginWithFacebook</a> (<a class="el" href="class_cotc_sdk_1_1_cloud.html">Cloud</a> cloud)</td></tr>
 <tr class="memdesc:a880ef9703bf191be2062641c2e7374c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs in to CotC through facebook. This will bring an user interface allowing to sign in to facebook.  <a href="#a880ef9703bf191be2062641c2e7374c4">More...</a><br /></td></tr>
 <tr class="separator:a880ef9703bf191be2062641c2e7374c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a40c40d936f5d8f21f061b956c20c3fa6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a><br class="typebreak" />
-&lt; <a class="el" href="class_cotc_sdk_1_1_social_network_friend_response.html">SocialNetworkFriendResponse</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_facebook_integration_1_1_cotc_facebook_integration.html#a40c40d936f5d8f21f061b956c20c3fa6">FetchFriends</a> (<a class="el" href="class_cotc_sdk_1_1_gamer.html">Gamer</a> gamer)</td></tr>
-<tr class="memdesc:a40c40d936f5d8f21f061b956c20c3fa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches the list of friends on facebook and sends them to CotC so that they automatically become friend with you. Note that this can only fetch the friends who are actually playing the game, so the list may be empty especially when in development.  <a href="#a40c40d936f5d8f21f061b956c20c3fa6">More...</a><br /></td></tr>
-<tr class="separator:a40c40d936f5d8f21f061b956c20c3fa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad38fef926cc65b0a286b193b0110269c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a><br class="typebreak" />
+&lt; <a class="el" href="class_cotc_sdk_1_1_social_network_friend_response.html">SocialNetworkFriendResponse</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_facebook_integration_1_1_cotc_facebook_integration.html#ad38fef926cc65b0a286b193b0110269c">FetchFriends</a> (<a class="el" href="class_cotc_sdk_1_1_gamer.html">Gamer</a> gamer, bool automatching=true)</td></tr>
+<tr class="memdesc:ad38fef926cc65b0a286b193b0110269c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches the list of friends on facebook and sends them to CotC so that they automatically become friend with you. Note that this can only fetch the friends who are actually playing the game, so the list may be empty especially when in development.  <a href="#ad38fef926cc65b0a286b193b0110269c">More...</a><br /></td></tr>
+<tr class="separator:ad38fef926cc65b0a286b193b0110269c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <div class="dynheader">
 Inheritance diagram for CotcSdk.FacebookIntegration.CotcFacebookIntegration:</div>
@@ -115,7 +115,7 @@ Inheritance diagram for CotcSdk.FacebookIntegration.CotcFacebookIntegration:</di
 </map>
  </div></div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a40c40d936f5d8f21f061b956c20c3fa6"></a>
+<a class="anchor" id="ad38fef926cc65b0a286b193b0110269c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -123,8 +123,18 @@ Inheritance diagram for CotcSdk.FacebookIntegration.CotcFacebookIntegration:</di
           <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt;<a class="el" href="class_cotc_sdk_1_1_social_network_friend_response.html">SocialNetworkFriendResponse</a>&gt; CotcSdk.FacebookIntegration.CotcFacebookIntegration.FetchFriends </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_gamer.html">Gamer</a>&#160;</td>
-          <td class="paramname"><em>gamer</em></td><td>)</td>
+          <td class="paramname"><em>gamer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>automatching</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -134,6 +144,7 @@ Inheritance diagram for CotcSdk.FacebookIntegration.CotcFacebookIntegration:</di
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">gamer</td><td><a class="el" href="class_cotc_sdk_1_1_gamer.html" title="Important object from the SDK, allowing to perform many operations that depend on a currently logged ...">Gamer</a> object used to link the data to the account.</td></tr>
+    <tr><td class="paramname">automatching</td><td>If true, synchronizes the CotC friends with your facebook friends. They will be reported by ListFriends and such).</td></tr>
   </table>
   </dd>
 </dl>
@@ -168,7 +179,7 @@ Inheritance diagram for CotcSdk.FacebookIntegration.CotcFacebookIntegration:</di
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Nov 4 2015 22:38:31 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Nov 13 2015 11:23:38 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

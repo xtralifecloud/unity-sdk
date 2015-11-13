@@ -11,7 +11,7 @@ var searchData=
   ['resolve',['Resolve',['../class_cotc_sdk_1_1_promise_3_01_promised_t_01_4.html#a125c4059c2d36c2cb410886f3c8bc713',1,'CotcSdk::Promise&lt; PromisedT &gt;']]],
   ['resultscore',['ResultScore',['../class_cotc_sdk_1_1_index_result.html#a5fe7444a7625e6e010e6a0525f77d1c9',1,'CotcSdk::IndexResult']]],
   ['resume',['Resume',['../class_cotc_sdk_1_1_domain_event_loop.html#ad5c6e23f5d98b5b0bd15524cb6d4b387',1,'CotcSdk::DomainEventLoop']]],
-  ['resumesession',['ResumeSession',['../class_cotc_sdk_1_1_cloud.html#a6e909fdc1753ed5b85c43f620b9ad8f4',1,'CotcSdk::Cloud']]],
+  ['resumesession',['ResumeSession',['../class_cotc_sdk_1_1_cloud.html#ad80bd62abb716b3c9c287c4bc5686483',1,'CotcSdk::Cloud']]],
   ['retryin',['RetryIn',['../class_cotc_sdk_1_1_http_request_failed_event_args.html#ac03110965bc9b6b45902bf3952e02d56',1,'CotcSdk::HttpRequestFailedEventArgs']]],
   ['reward',['Reward',['../class_cotc_sdk_1_1_got_godchild_event.html#a3b95673dbc2214272355de57f8c0e194',1,'CotcSdk::GotGodchildEvent']]],
   ['run',['Run',['../class_cotc_sdk_1_1_game_batches.html#a9340d144e12fe9654d1e213cd589cf90',1,'CotcSdk.GameBatches.Run()'],['../class_cotc_sdk_1_1_gamer_batches.html#a3388338c2763019dd96ce97a4e5e59f7',1,'CotcSdk.GamerBatches.Run()']]]

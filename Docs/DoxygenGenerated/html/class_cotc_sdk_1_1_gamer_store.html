@@ -102,21 +102,21 @@ Public Member Functions</h2></td></tr>
 &lt; <a class="el" href="class_cotc_sdk_1_1_configured_product.html">ConfiguredProduct</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_store.html#ad13ba4ea74f9456c82fd95187c2c76db">ListConfiguredProducts</a> (int limit=30, int offset=0)</td></tr>
 <tr class="memdesc:ad13ba4ea74f9456c82fd95187c2c76db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch the list of products as configured on the backoffice. Note that this doesn't include any information about pricing and so on: the external store plugin is required to do so. Note that this call returns the catalog as configured on the CotC server, which may not be exhaustive if additional products are configured on iTunes Connect but not reported to the CotC servers.  <a href="#ad13ba4ea74f9456c82fd95187c2c76db">More...</a><br /></td></tr>
 <tr class="separator:ad13ba4ea74f9456c82fd95187c2c76db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7534f153660b75431e93ae7177b89abc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; List<br class="typebreak" />
-&lt; <a class="el" href="class_cotc_sdk_1_1_purchase_transaction.html">PurchaseTransaction</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_store.html#a7534f153660b75431e93ae7177b89abc">GetPurchaseHistory</a> ()</td></tr>
-<tr class="memdesc:a7534f153660b75431e93ae7177b89abc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches the list of transactions made by the logged in user. Only successful transactions show here.  <a href="#a7534f153660b75431e93ae7177b89abc">More...</a><br /></td></tr>
-<tr class="separator:a7534f153660b75431e93ae7177b89abc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8eae5da3624f7ac085a6c87150ebea4d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; NonpagedList<br class="typebreak" />
+&lt; <a class="el" href="class_cotc_sdk_1_1_purchase_transaction.html">PurchaseTransaction</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_store.html#a8eae5da3624f7ac085a6c87150ebea4d">GetPurchaseHistory</a> ()</td></tr>
+<tr class="memdesc:a8eae5da3624f7ac085a6c87150ebea4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches the list of transactions made by the logged in user. Only successful transactions show here.  <a href="#a8eae5da3624f7ac085a6c87150ebea4d">More...</a><br /></td></tr>
+<tr class="separator:a8eae5da3624f7ac085a6c87150ebea4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a307f2f31a7362420961091f8c405b5a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; <a class="el" href="class_cotc_sdk_1_1_validate_receipt_result.html">ValidateReceiptResult</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_store.html#a307f2f31a7362420961091f8c405b5a8">ValidateReceipt</a> (<a class="el" href="group__model__classes.html#ga81559f66b6278243aa82a8cd14d79e80">StoreType</a> storeType, string cotcProductId, float paidPrice, string paidCurrency, string receipt)</td></tr>
 <tr class="memdesc:a307f2f31a7362420961091f8c405b5a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Last step in the purchase. Validates the receipt received by a native purchase. You may have to do additional steps to close your purchase process.  <a href="#a307f2f31a7362420961091f8c405b5a8">More...</a><br /></td></tr>
 <tr class="separator:a307f2f31a7362420961091f8c405b5a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a7534f153660b75431e93ae7177b89abc"></a>
+<a class="anchor" id="a8eae5da3624f7ac085a6c87150ebea4d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt;List&lt;<a class="el" href="class_cotc_sdk_1_1_purchase_transaction.html">PurchaseTransaction</a>&gt; &gt; CotcSdk.GamerStore.GetPurchaseHistory </td>
+          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt;NonpagedList&lt;<a class="el" href="class_cotc_sdk_1_1_purchase_transaction.html">PurchaseTransaction</a>&gt; &gt; CotcSdk.GamerStore.GetPurchaseHistory </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -225,7 +225,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Nov 4 2015 22:38:31 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Nov 13 2015 11:23:38 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

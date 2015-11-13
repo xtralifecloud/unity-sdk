@@ -118,9 +118,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5c4916293b57fba05a1e002d7b0a6fcf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_gamer_community.html">GamerCommunity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_community.html#a5c4916293b57fba05a1e002d7b0a6fcf">Domain</a> (string domain)</td></tr>
 <tr class="memdesc:a5c4916293b57fba05a1e002d7b0a6fcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the domain affected by the next operations. You should typically use it this way: <code>gamer.Community.Domain("private").ListFriends(...);</code>  <a href="#a5c4916293b57fba05a1e002d7b0a6fcf">More...</a><br /></td></tr>
 <tr class="separator:a5c4916293b57fba05a1e002d7b0a6fcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7ef54f200a6bef47958b1de2b59c899"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; List&lt; <a class="el" href="class_cotc_sdk_1_1_gamer_info.html">GamerInfo</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_community.html#aa7ef54f200a6bef47958b1de2b59c899">ListFriends</a> (bool filterBlacklisted=false)</td></tr>
-<tr class="memdesc:aa7ef54f200a6bef47958b1de2b59c899"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method used to retrieve the application's friends of the currently logged in profile. <a href="#aa7ef54f200a6bef47958b1de2b59c899">More...</a><br /></td></tr>
-<tr class="separator:aa7ef54f200a6bef47958b1de2b59c899"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcc7a250b1c4cc08e11fcf4deb4a37b3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; NonpagedList<br class="typebreak" />
+&lt; <a class="el" href="class_cotc_sdk_1_1_gamer_info.html">GamerInfo</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_community.html#abcc7a250b1c4cc08e11fcf4deb4a37b3">ListFriends</a> (bool filterBlacklisted=false)</td></tr>
+<tr class="memdesc:abcc7a250b1c4cc08e11fcf4deb4a37b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method used to retrieve the application's friends of the currently logged in profile. <a href="#abcc7a250b1c4cc08e11fcf4deb4a37b3">More...</a><br /></td></tr>
+<tr class="separator:abcc7a250b1c4cc08e11fcf4deb4a37b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeacb92451f16288a63e939ece3e637db"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a><br class="typebreak" />
 &lt; <a class="el" href="class_cotc_sdk_1_1_social_network_friend_response.html">SocialNetworkFriendResponse</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_gamer_community.html#aeacb92451f16288a63e939ece3e637db">ListNetworkFriends</a> (<a class="el" href="group__model__classes.html#gad5e437023247d9f2be89e7f6be520fdb">LoginNetwork</a> network, List&lt; <a class="el" href="class_cotc_sdk_1_1_social_network_friend.html">SocialNetworkFriend</a> &gt; friends, bool automatching=false)</td></tr>
 <tr class="memdesc:aeacb92451f16288a63e939ece3e637db"><td class="mdescLeft">&#160;</td><td class="mdescRight">When you have data about friends from another social network, you can post them to CotC servers using these function. This will automatically add them as a friend on CotC as they get recognized on our servers. The friends get associated to the domain of this object. Note: this function was once called PostSocialNetworkFriends but renamed due to it being misleading.  <a href="#aeacb92451f16288a63e939ece3e637db">More...</a><br /></td></tr>
@@ -274,12 +275,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa7ef54f200a6bef47958b1de2b59c899"></a>
+<a class="anchor" id="abcc7a250b1c4cc08e11fcf4deb4a37b3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt;List&lt;<a class="el" href="class_cotc_sdk_1_1_gamer_info.html">GamerInfo</a>&gt; &gt; CotcSdk.GamerCommunity.ListFriends </td>
+          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt;NonpagedList&lt;<a class="el" href="class_cotc_sdk_1_1_gamer_info.html">GamerInfo</a>&gt; &gt; CotcSdk.GamerCommunity.ListFriends </td>
           <td>(</td>
           <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>filterBlacklisted</em> = <code>false</code></td><td>)</td>
@@ -389,7 +390,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Nov 4 2015 22:38:31 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Nov 13 2015 11:23:38 for CotC SDK Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>
