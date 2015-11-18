@@ -316,6 +316,25 @@ public class CloudTests : TestBase {
 		CompleteTest();
 	}
 
+	[Test("Tests the root and parent functionality from bundles, including when they are cloned.")]
+	public void ShouldHandleParentInBundles() {
+		Bundle response = Bundle.FromJson("{\"godfather\":{\"gamer_id\":\"5649ea7ce314c6bb0916fa6e\",\"profile\":{\"displayName\":\"Jaddream2560968877\",\"lang\":\"French\"}},\"customData\":[{\"properties\":{\"dev_profile_v2\":\"AV;,BD;,UE;,FN;,LA;French,LN;,PS;Jaddream2560968877,RB;\"},\"gamer_id\":\"5649ea7ce314c6bb0916fa6e\"}]}");
+		Bundle godfather = response["godfather"]["profile"];
+		Assert(godfather.Root == response, "Hierarchy should work (root)");
+		Assert(godfather.Parent["profile"] == godfather, "Hierarchy should work");
+
+		// Now clone the structure and ensure that the links are kept
+		Bundle cloned = godfather.Clone();
+		Assert(cloned.Root.Has("godfather"), "Hierarchy should work (root)");
+		Assert(cloned.Parent["profile"] == cloned, "Hierarchy should work");
+		CompleteTest();
+	}
+
+	[Test("Scratchpad type test, to be used to test temporary pieces of code or experimenting with the SDK.", "This test failing is not a problem, but avoid commiting it.")]
+	public void FiddlingWithSdk(Cloud cloud) {
+		CompleteTest();
+	}
+
 	#region Private
 	private void GotLoggedInNotification(object sender, Cotc.LoggedInEventArgs e) {
 		CompleteTest();

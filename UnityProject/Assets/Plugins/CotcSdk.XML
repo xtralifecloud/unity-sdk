@@ -1705,6 +1705,13 @@
         <member name="M:CotcSdk.Bundle.Clone">
             <summary>Deep copies the bundle.</summary>
         </member>
+        <member name="P:CotcSdk.Bundle.Parent">
+            <summary>Returns the parent of this bundle, if it was detached from any tree. May be null
+            if it is the root or has never been attached.</summary>
+        </member>
+        <member name="P:CotcSdk.Bundle.Root">
+            <summary>Returns the root of this tree. Goes as far as possible back in the hierarchy.</summary>
+        </member>
         <member name="T:CotcSdk.EmptyBundle">
             <summary>Never instantiate this class. Use Bundle.Empty instead. Pass that everywhere an explicit configuration is not wanted.</summary>
         </member>

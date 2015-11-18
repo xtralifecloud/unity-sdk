@@ -143,6 +143,7 @@ namespace CotcSdk
 		private string stringValue;
 		private Dictionary<string, Bundle> objectValue;
 		private List<Bundle> arrayValue;
+		private Bundle parent;
 
 		/// <summary>Creates a bundle of type object. You may also pass up to three key/value pairs (in this order),
 		/// which will be put in the object initially.</summary>
@@ -206,12 +207,20 @@ namespace CotcSdk
 
 		public virtual Bundle this[string key] {
 			get { return Has(key) ? Dictionary[key] : Empty; }
-			set { if (value != null && (object)value != (object)Empty) Dictionary[key] = value; }
+			set {
+				if (value == null || (object)value == (object)Empty) {
+					Dictionary.Remove(key);
+					return;
+				}
+				Dictionary[key] = value;
+				value.parent = this;
+			}
 		}
 		public virtual Bundle this[int index] {
 			get { return Array[index]; }
 			set {
 				if (value == null || (object)value == (object)Empty) return;
+				value.parent = this;
 				if (index != -1)
 					Array[index] = value;
 				else
@@ -219,24 +228,36 @@ namespace CotcSdk
 			}
 		}
 		public void Add(Bundle value) {
+			value.parent = this;
 			Array.Add (value);
 		}
 
 		/// <summary>Deep copies the bundle.</summary>
 		public Bundle Clone() {
+			Bundle thisNode = null;
+			if (parent == null) return CloneRecursive(null, ref thisNode);
+			// Clone the whole structure and return a pointer to the same node in the new structure.
+			Bundle cloned = Root.CloneRecursive(this, ref thisNode);
+			return thisNode;
+		}
+		// Does a simple (deep) clone, down from this node to the leaves only.
+		// You can specify a 'searchedNode' from the original tree. 'foundBundle' will contain the equivalent of 'searchedNode' in the cloned structure.
+		private Bundle CloneRecursive(Bundle searchedBundle, ref Bundle foundBundle) {
 			Bundle result;
 			switch (Type) {
 				case DataType.Object:
 					// Deep copy
 					result = Bundle.CreateObject();
-					foreach (var pair in Dictionary) result[pair.Key] = pair.Value.Clone();
+					foreach (var pair in Dictionary) result[pair.Key] = pair.Value.CloneRecursive(searchedBundle, ref foundBundle);
+					if (this == searchedBundle) foundBundle = result;
 					return result;
 
 				case DataType.Array:
 					result = Bundle.CreateArray();
-					foreach (var value in Array) result.Add(value.Clone());
+					foreach (var value in Array) result.Add(value.CloneRecursive(searchedBundle, ref foundBundle));
+					if (this == searchedBundle) foundBundle = result;
 					return result;
-	
+
 				default:
 					// No need to clone basic types
 					return this;
@@ -301,8 +322,22 @@ namespace CotcSdk
 				}
 			}
 		}
+		/// <summary>Returns the parent of this bundle, if it was detached from any tree. May be null
+		/// if it is the root or has never been attached.</summary>
+		public Bundle Parent { get { return parent; } }
 		public void Remove(string key) {
 			Dictionary.Remove(key);
+		}
+		/// <summary>Returns the root of this tree. Goes as far as possible back in the hierarchy.</summary>
+		public Bundle Root {
+			get {
+				Bundle lastNonNil = this, prev = parent;
+				while (prev != null) {
+					lastNonNil = prev;
+					prev = lastNonNil.parent;
+				}
+				return lastNonNil;
+			}
 		}
 
 		// Representations
