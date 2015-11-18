@@ -327,6 +327,15 @@ public class CloudTests : TestBase {
 		Bundle cloned = godfather.Clone();
 		Assert(cloned.Root.Has("godfather"), "Hierarchy should work (root)");
 		Assert(cloned.Parent["profile"] == cloned, "Hierarchy should work");
+
+		// Now we're happy, do the same with arrays
+		Bundle arrayTest = Bundle.FromJson("[{\"obj\": [1, 2, 3, 4], \"prop\": {\"sub\": \"object\"}}, {\"obj\": [5, 6, 7, 8], \"prop\": {\"sub\": \"object2\"}}]");
+		Bundle subArray = arrayTest[1]["obj"];
+		Bundle subArrayClone = subArray.Clone();
+		Assert(subArray[3] == 8, "Simple array test failed");
+		Assert(subArray.Parent.Parent[1] == subArray.Parent, "Simple array parent test failed");
+		Assert(subArrayClone.Root[1]["obj"] == subArrayClone, "Simple array clone root test 1 failed");
+		Assert(subArrayClone.Root == subArrayClone.Parent.Parent, "Simple array clone root test 2 failed");
 		CompleteTest();
 	}
 
