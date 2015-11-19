@@ -42,7 +42,7 @@ Push notifications require no further configuration on your side. You should not
 
 - - - -
 
-# Setup Notifications for Android {#toc_push_2}
+# Setting up notifications for Android (GCM) {#toc_push_2}
 
 In case you need some more information about how Google Cloud Messaging works, please have a look at the [official Google documentation](https://developer.android.com/google/gcm/gcm.html). Otherwise, by following the steps below, you should be able to have your application manage push notifications pretty quickly.
 
