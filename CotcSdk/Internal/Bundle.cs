@@ -134,6 +134,7 @@ namespace CotcSdk
 	/// objects simple and safe.
 	/// </summary>
 	public class Bundle {
+		/// <summary>Possible types of data storable into a bundle.</summary>
 		public enum DataType {
 			None, Boolean, Integer, Double, String, Array, Object
 		}

@@ -61,7 +61,7 @@ namespace CotcSdk.FacebookIntegration
 		/// when in development.
 		/// </summary>
 		/// <returns>Promise resolved when the request has finished. The value is as returned by
-		/// #CotcSdk.GamerCommunity.PostSocialNetworkFriends.</returns>
+		/// #CotcSdk.GamerCommunity.ListNetworkFriends.</returns>
 		/// <param name="gamer">Gamer object used to link the data to the account.</param>
 		/// <param name="automatching">If true, synchronizes the CotC friends with your facebook friends. They will be
 		/// reported by ListFriends and such).</param>

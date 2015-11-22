@@ -176,6 +176,7 @@ namespace CotcSdk {
 		#endregion
 	}
 
+	/// <summary>Status of friend relationship.</summary>
 	public enum FriendRelationshipStatus {
 		Add,
 		Blacklist,

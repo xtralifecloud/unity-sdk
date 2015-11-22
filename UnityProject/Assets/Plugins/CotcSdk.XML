@@ -590,6 +590,9 @@
         <member name="E:CotcSdk.GamerCommunity.OnFriendStatusChange">
             <summary>Event triggered when someone adds this gamer as a friend or changes his friendship status.</summary>
         </member>
+        <member name="T:CotcSdk.FriendRelationshipStatus">
+            <summary>Status of friend relationship.</summary>
+        </member>
         <member name="T:CotcSdk.FriendStatusChangeEvent">
             <summary>Event triggered when someone adds this gamer as a friend or changes his friendship status.</summary>
         </member>
@@ -1712,6 +1715,9 @@
         <member name="P:CotcSdk.Bundle.Root">
             <summary>Returns the root of this tree. Goes as far as possible back in the hierarchy.</summary>
         </member>
+        <member name="T:CotcSdk.Bundle.DataType">
+            <summary>Possible types of data storable into a bundle.</summary>
+        </member>
         <member name="T:CotcSdk.EmptyBundle">
             <summary>Never instantiate this class. Use Bundle.Empty instead. Pass that everywhere an explicit configuration is not wanted.</summary>
         </member>
@@ -1738,6 +1744,9 @@
         </member>
         <member name="M:CotcSdk.IHttpClient.Terminate">
             <summary>Should abort all requests.</summary>
+        </member>
+        <member name="T:CotcSdk.LogLevel">
+            <summary>Possible logging levels to be set.</summary>
         </member>
         <member name="M:CotcSdk.UnityHttpClient.EnqueueRequest(CotcSdk.HttpRequest)">
             <summary>Enqueues a request to make it processed asynchronously. Will potentially wait for the other requests enqueued to finish.</summary>
