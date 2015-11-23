@@ -17,7 +17,7 @@ namespace CotcSdk {
 			}
 		}
 		public Bundle BodyJson {
-			get { CachedBundle = CachedBundle ?? Bundle.FromJson(BodyString); return CachedBundle; }
+			get { CachedBundle = CachedBundle ?? Bundle.FromJson(BetterJson.EncapsulateBetterFromLiteral(BodyString)); return CachedBundle; }
 		}
 		public Exception Exception;
 		public bool HasBody {
