@@ -16,6 +16,7 @@
 
 package com.clanofthecloud.cotcpushnotifications;
 
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -29,6 +30,8 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
+import com.unity3d.player.UnityPlayer;
+import com.unity3d.player.UnityPlayerActivity;
 
 public class MyGcmListenerService extends GcmListenerService {
 
@@ -70,7 +73,9 @@ public class MyGcmListenerService extends GcmListenerService {
      * @param message GCM message received.
      */
     private void sendNotification(String message) {
-        Intent intent = new Intent(this, Controller.class);
+	    Activity currentAct = UnityPlayer.currentActivity;
+	    Class activityToOpen = currentAct != null ? currentAct.getClass() : UnityPlayerActivity.class;
+        Intent intent = new Intent(this, activityToOpen);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
