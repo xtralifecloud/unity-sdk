@@ -1,6 +1,7 @@
 
 namespace CotcSdk
 {
+	/// <summary>Possible logging levels to be set.</summary>
 	public enum LogLevel {
 		Verbose,	// Level for verbose comments internal (internal debugging at CotC)
 		Info,		// Level for verbose yet public comments, useful for a debug build only
