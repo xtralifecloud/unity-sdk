@@ -19,11 +19,20 @@ public class GameTests : TestBase {
 			.CompleteTestIfSuccessful();
 	}
 
-	[Test("Fetches a key on the game and checks that it worked properly.", requisite: "Please import [{\"fskey\":\"testkey\",\"fsvalue\":{\"test\": 2}}] in the current game key/value storage.")]
+	[Test("Fetches a key on the game and checks that it worked properly.", requisite: "Please import [{\"fskey\":\"testkey\",\"fsvalue\":{\"test\":2}},{\"fskey\":\"stringkey\",\"fsvalue\":\"{\\\"str\\\": \\\"val\\\"}\"}] in the current game key/value storage. Also assesses that string-type keys can be fetched properly.")]
 	public void ShouldFetchGameKey(Cloud cloud) {
 		cloud.Game.GameVfs.GetKey("testkey")
 		.ExpectSuccess(getResult => {
+			Assert(getResult.Type != Bundle.DataType.String, "Not expecting string result");
 			Assert(getResult["test"] == 2, "Expected test: 2 key");
+			return cloud.Game.GameVfs.GetKey("stringkey");
+		})
+		.ExpectSuccess(stringResult => {
+			Assert(stringResult.Type == Bundle.DataType.String, "Expected string result");
+			// Decode the string (not very beautiful and maybe not error-proof, but works)
+			string value = stringResult;
+			value = value.Substring(1, value.Length - 2).Replace("\\", "");
+			Assert(Bundle.FromJson(value)["str"] == "val", "Expected JSON-decodable string");
 			CompleteTest();
 		});
 	}
