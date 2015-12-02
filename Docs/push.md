@@ -86,3 +86,44 @@ You need to change the following:
 - If you are using facebook, you may need to remove `android-support-v4.jar` under Assets/Plugins/Android/Facebook/libs.
 
 Your application is now ready to receive push notifications from Google Cloud Messaging! No further configuration is required on your side: just placing the `CotcPushNotificationsGameObject` on your scenes will ensure that everything works fine. It will transparently register for notifications upon login done with the main CotC SDK Game Object. Notifications will be received via the standard GCM service (running in background on your device), that starts a small piece of code embedded in our SDK upon event, showing a notification using the parameters set in the manifest.
+
+## Modifying the cotcinapppurchase plugin
+
+Depending on your needs, you may want to modify the cotcpushnotifications native plugin in order to get more control on what happens upon receiving a push notification. This plugin is supplied with the sources of the SDK under PlatformSpecific/Android/cotcpushnotifications, and the parent folder can simply be opened with Android Studio.
+
+This project is basically constituted of four classes:
+
+- **Controller.java**: which you shouldn't change.
+- **MyInstanceIDListenerService.java**: which you shouldn't change either.
+- **RegistrationIntentService.java**: which you shouldn't change either.
+- **MyGcmListenerService.java**: which is the most of interest.
+
+In MyGcmListenerService.java, in particular there are two methods of interest:
+
+- `onMessageReceived`: which is called by the system when a message is received (push notification),
+- `sendNotification`: that creates an entry in the notification menu. You can modify this method in order to customize the sound that is played, the title and text of the notification and what happens when you click on the notification. In particular, the following code attaches the notification to the `UnityPlayerActivity` (if no activity is running; that is the notification was received while the application was not launched), or the currently active activity according to Unity. If you have customized the default Unity activity in the manifest, you should replace `activityToOpen` by the name of your main activity, since it is the one you want to open when starting the app as a result of clicking on a notification.
+
+~~~{.java}
+Activity currentAct = UnityPlayer.currentActivity;
+Class activityToOpen = currentAct != null ? currentAct.getClass() : UnityPlayerActivity.class;
+Intent intent = new Intent(this, activityToOpen);
+~~~
+
+You can then recompile the plugin using the command `./gradlew build` on the root of the project (PlatformSpecific/Android). This will recompile both the in-app purchase and push notification plugins. The resulting AAR (under build/outputs/aar/) is then copied in the sample Unity project. If you want to customize that behavior and automatically copy it elsewhere, you can modify the `build.gradle` file under cotcpushnotifications.
+
+~~~
+//task to delete the old jar
+task deleteOldJar(type: Delete) {
+	delete '../../../UnityProject/Assets/Plugins/Android/Cotc.PushNotifications.aar'
+}
+
+//task to export contents as jar
+task exportJar(type: Copy) {
+	from('build/outputs/aar/')
+	into('../../../UnityProject/Assets/Plugins/Android/')
+	include('cotcpushnotifications-release.aar')
+	// Rename the jar
+	rename('cotcpushnotifications-release.aar', 'Cotc.PushNotifications.aar')
+}
+~~~
+
