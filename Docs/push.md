@@ -42,18 +42,21 @@ Push notifications require no further configuration on your side. You should not
 
 - - - -
 
-# Setup Notifications for Android {#toc_push_2}
+# Setting up notifications for Android (GCM) {#toc_push_2}
 
 In case you need some more information about how Google Cloud Messaging works, please have a look at the [official Google documentation](https://developer.android.com/google/gcm/gcm.html). Otherwise, by following the steps below, you should be able to have your application manage push notifications pretty quickly.
 
 First, you need to setup a Google Application. Since this is changing quite rapidly at the time of writing, please follow the previous guide for information on how to do it. Once this is done, this Google Application needs to reference the Google Cloud Messaging for Android API. This is done from the APIs section of the Google Developer Console for your project.
 ![Activating Google Cloud Messaging](./img/Google_Messaging_Android.png)
 
+In case you are using the new interface, it may look more like the following capture. In this case, when following the instructions above, follow the page [add Cloud Messaging to your existing app](https://developers.google.com/cloud-messaging/android/client) and click on the button "Get a configuration file". Then you need to input information about your application (remember to sign in with your Google Developer account first). In the next screen you will obtain everything needed to set up GCM: the API key to set in the backoffice and the sender ID to set in the manifest.
+![Setting up Android push notifications with the newer Google Developer Console](./img/CotC_Android_PushNotifs2.png)
+
 Next step is to create a Public API key. To do so, select the Credentials section, just below the APIs section in the previous step, scroll down to the bottom of the page, and click the "Create new Key" button for the Public API access list of keys. Then select "Server key" option, and then "Create", not modifying anything. You should now have a new, valid API key.
 ![Creating a new Server key](./img/Google_Public_API_Access.png)
 
 Once this is done, you're almost finished with parameterization, and only some bits of code will be needed. But first, you need to declare your Google Application with Clan of the Cloud through your [Back Office web page](https://account.clanofthecloud.com). Now it's straightforward. Just tick the Android box inside the "Push Notification Certificates" in your Status page, and fill the "senderID" cell with the Google Application project number, and the "apiKey" cell with the key you just created at the previous step (see above).
-![Setting up your Android push notifications with Clan of the Cloud back office](./img/CotC_Android_PushNotifs.png)
+![Setting up your Android push notifications with Clan of the Cloud back office](./img/CotC_Android_PushNotifs1.png)
 
 Now everything's been done on the Google Application side, we need to add a few snippets of code, so your application can communicate with the Google Cloud Messaging servers. First thing to modify is your AndroidManifest.xml, which is located under Assets/Plugins/Android.
 
@@ -83,3 +86,44 @@ You need to change the following:
 - If you are using facebook, you may need to remove `android-support-v4.jar` under Assets/Plugins/Android/Facebook/libs.
 
 Your application is now ready to receive push notifications from Google Cloud Messaging! No further configuration is required on your side: just placing the `CotcPushNotificationsGameObject` on your scenes will ensure that everything works fine. It will transparently register for notifications upon login done with the main CotC SDK Game Object. Notifications will be received via the standard GCM service (running in background on your device), that starts a small piece of code embedded in our SDK upon event, showing a notification using the parameters set in the manifest.
+
+## Modifying the cotcinapppurchase plugin
+
+Depending on your needs, you may want to modify the cotcpushnotifications native plugin in order to get more control on what happens upon receiving a push notification. This plugin is supplied with the sources of the SDK under PlatformSpecific/Android/cotcpushnotifications, and the parent folder can simply be opened with Android Studio.
+
+This project is basically constituted of four classes:
+
+- **Controller.java**: which you shouldn't change.
+- **MyInstanceIDListenerService.java**: which you shouldn't change either.
+- **RegistrationIntentService.java**: which you shouldn't change either.
+- **MyGcmListenerService.java**: which is the most of interest.
+
+In MyGcmListenerService.java, in particular there are two methods of interest:
+
+- `onMessageReceived`: which is called by the system when a message is received (push notification),
+- `sendNotification`: that creates an entry in the notification menu. You can modify this method in order to customize the sound that is played, the title and text of the notification and what happens when you click on the notification. In particular, the following code attaches the notification to the `UnityPlayerActivity` (if no activity is running; that is the notification was received while the application was not launched), or the currently active activity according to Unity. If you have customized the default Unity activity in the manifest, you should replace `activityToOpen` by the name of your main activity, since it is the one you want to open when starting the app as a result of clicking on a notification.
+
+~~~{.java}
+Activity currentAct = UnityPlayer.currentActivity;
+Class activityToOpen = currentAct != null ? currentAct.getClass() : UnityPlayerActivity.class;
+Intent intent = new Intent(this, activityToOpen);
+~~~
+
+You can then recompile the plugin using the command `./gradlew build` on the root of the project (PlatformSpecific/Android). This will recompile both the in-app purchase and push notification plugins. The resulting AAR (under build/outputs/aar/) is then copied in the sample Unity project. If you want to customize that behavior and automatically copy it elsewhere, you can modify the `build.gradle` file under cotcpushnotifications.
+
+~~~
+//task to delete the old jar
+task deleteOldJar(type: Delete) {
+	delete '../../../UnityProject/Assets/Plugins/Android/Cotc.PushNotifications.aar'
+}
+
+//task to export contents as jar
+task exportJar(type: Copy) {
+	from('build/outputs/aar/')
+	into('../../../UnityProject/Assets/Plugins/Android/')
+	include('cotcpushnotifications-release.aar')
+	// Rename the jar
+	rename('cotcpushnotifications-release.aar', 'Cotc.PushNotifications.aar')
+}
+~~~
+

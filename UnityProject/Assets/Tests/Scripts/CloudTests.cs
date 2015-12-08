@@ -51,6 +51,25 @@ public class CloudTests : TestBase {
 		.CompleteTestIfSuccessful();
 	}
 
+	[Test("Tries to restore another session but tries to execute a batch that doesn't exist.")]
+	public void ShouldLoginAndRunBatch(Cloud cloud) {
+		Bundle batchNode = Bundle.CreateObject(
+			"name", "nonexistingBatch",
+			"domain", "private",
+			"params", Bundle.CreateObject());
+		cloud.Login(
+			network: LoginNetwork.Email,
+			networkId: "cloud@localhost.localdomain",
+			networkSecret: "Password123",
+			preventRegistration: false,
+			additionalOptions: Bundle.CreateObject("thenBatch", batchNode)
+		).ExpectFailure(ex => {
+			Assert(ex.ServerData["name"] == "HookError", "Message should be HookError");
+			Assert(ex.ServerData["message"].AsString().EndsWith("does not exist"), "Should indicate nonexisting batch");
+			CompleteTest();
+		});
+	}
+
 	[Test("Tests that a non-existing session fails to resume (account not created).")]
 	public void ShouldNotRestoreInexistingSession(Cloud cloud) {
 		// Resume the session with the credentials just received
@@ -294,6 +313,34 @@ public class CloudTests : TestBase {
 		// 2nd test case
 		Bundle floatBundle = 1.99f;
 		Assert(floatBundle == 1.99f, "Implicit conversion equality check failed");
+		CompleteTest();
+	}
+
+	[Test("Tests the root and parent functionality from bundles, including when they are cloned.")]
+	public void ShouldHandleParentInBundles() {
+		Bundle response = Bundle.FromJson("{\"godfather\":{\"gamer_id\":\"5649ea7ce314c6bb0916fa6e\",\"profile\":{\"displayName\":\"Jaddream2560968877\",\"lang\":\"French\"}},\"customData\":[{\"properties\":{\"dev_profile_v2\":\"AV;,BD;,UE;,FN;,LA;French,LN;,PS;Jaddream2560968877,RB;\"},\"gamer_id\":\"5649ea7ce314c6bb0916fa6e\"}]}");
+		Bundle godfather = response["godfather"]["profile"];
+		Assert(godfather.Root == response, "Hierarchy should work (root)");
+		Assert(godfather.Parent["profile"] == godfather, "Hierarchy should work");
+
+		// Now clone the structure and ensure that the links are kept
+		Bundle cloned = godfather.Clone();
+		Assert(cloned.Root.Has("godfather"), "Hierarchy should work (root)");
+		Assert(cloned.Parent["profile"] == cloned, "Hierarchy should work");
+
+		// Now we're happy, do the same with arrays
+		Bundle arrayTest = Bundle.FromJson("[{\"obj\": [1, 2, 3, 4], \"prop\": {\"sub\": \"object\"}}, {\"obj\": [5, 6, 7, 8], \"prop\": {\"sub\": \"object2\"}}]");
+		Bundle subArray = arrayTest[1]["obj"];
+		Bundle subArrayClone = subArray.Clone();
+		Assert(subArray[3] == 8, "Simple array test failed");
+		Assert(subArray.Parent.Parent[1] == subArray.Parent, "Simple array parent test failed");
+		Assert(subArrayClone.Root[1]["obj"] == subArrayClone, "Simple array clone root test 1 failed");
+		Assert(subArrayClone.Root == subArrayClone.Parent.Parent, "Simple array clone root test 2 failed");
+		CompleteTest();
+	}
+
+	[Test("Scratchpad type test, to be used to test temporary pieces of code or experimenting with the SDK.", "This test failing is not a problem, but avoid commiting it.")]
+	public void FiddlingWithSdk(Cloud cloud) {
 		CompleteTest();
 	}
 

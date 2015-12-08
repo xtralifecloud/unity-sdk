@@ -75,6 +75,21 @@ public class SampleScene : MonoBehaviour {
 		.Done(this.DidLogin);
 	}
 
+	public void DoLoginGameCenter() {
+		Social.localUser.Authenticate(success => {
+			if (success) {
+				Debug.Log("Authentication successful:\nUsername: " + Social.localUser.userName + 
+					"\nUser ID: " + Social.localUser.id + 
+					"\nIsUnderage: " + Social.localUser.underage);
+				// Game Center accounts do not have a password
+				Cloud.Login(LoginNetwork.GameCenter, Social.localUser.id, "n/a").Done(this.DidLogin);
+			}
+			else {
+				Debug.LogError("Failed to authenticate on Game Center");
+			}
+		});
+	}
+
 	// Converts the account to e-mail
 	public void DoConvertToEmail() {
 		if (!RequireGamer()) return;

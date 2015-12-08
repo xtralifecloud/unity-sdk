@@ -41,9 +41,9 @@ namespace CotcSdk {
 		/// </summary>
 		/// <returns>Promise resolved when the operation has completed. The attached value describes a list of purchase
 		///     transactions, without pagination functionality.</returns>
-		public Promise<List<PurchaseTransaction>> GetPurchaseHistory() {
-			return Common.RunInTask<List<PurchaseTransaction>>(Gamer.MakeHttpRequest("/v1/gamer/store/purchaseHistory"), (response, task) => {
-				List<PurchaseTransaction> products = new List<PurchaseTransaction>();
+		public Promise<NonpagedList<PurchaseTransaction>> GetPurchaseHistory() {
+			return Common.RunInTask<NonpagedList<PurchaseTransaction>>(Gamer.MakeHttpRequest("/v1/gamer/store/purchaseHistory"), (response, task) => {
+				var products = new NonpagedList<PurchaseTransaction>(response.BodyJson);
 				foreach (Bundle b in response.BodyJson["purchases"].AsArray()) {
 					products.Add(new PurchaseTransaction(b));
 				}

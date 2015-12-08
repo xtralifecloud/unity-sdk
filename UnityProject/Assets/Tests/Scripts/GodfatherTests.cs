@@ -32,6 +32,7 @@ public class GodfatherTests : TestBase {
 			.ExpectSuccess(dummy => gamer2.Godfather.GetGodfather())
 			.ExpectSuccess(result => {
 				Assert(result.GamerId == gamer1.GamerId, "P1 should be godfather");
+				Assert(result.AsBundle().Root.Has("godfather"), "Underlying structure should be accessible");
 				return gamer1.Godfather.GetGodchildren();
 			})
 			.ExpectSuccess(result => {
