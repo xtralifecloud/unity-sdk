@@ -24,13 +24,18 @@ public static class BetterJson
     /// <returns></returns>
     public static string BetterFromLiteral(string inputString)
     {
-        string stringFromLiteral = FromLiteral(inputString);
-
         // Handle the case in which we have "{"[key]":[value]}" instead of {"[key]":[value]}
-        if (!string.IsNullOrEmpty(stringFromLiteral) && stringFromLiteral.Length > 1 && stringFromLiteral[0] == '"' && (stringFromLiteral[1] == '{' || stringFromLiteral[1] == '['))
-            stringFromLiteral = stringFromLiteral.Substring(1, stringFromLiteral.Length - 2);
+        if (!string.IsNullOrEmpty(inputString) && inputString.Length > 2)
+        {
+            if (inputString[0] == '"' && (inputString[1] == '{' || inputString[1] == '['))
+                inputString = inputString.Substring(1, inputString.Length - 2);
 
-        return stringFromLiteral;
+            string stringFromLiteral = (inputString[1] == '\\') || (inputString[2] == '\\') ? FromLiteral(inputString) : inputString;
+
+            return stringFromLiteral;
+        }
+        else
+            return inputString;
     }
 
     /// <summary>

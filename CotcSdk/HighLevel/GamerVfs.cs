@@ -29,8 +29,12 @@ namespace CotcSdk {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			return Common.RunInTask<Bundle>(req, (response, task) => {
-				task.PostResult(response.BodyJson["value"]);
-			});
+                // For backward compatibilty of json input in the backoffice as litterals
+			    if (response.BodyJson["value"] != null)
+                    task.PostResult(response.BodyJson["value"]);
+                else
+                    task.PostResult(response.BodyJson);
+            });
 		}
 
 		/// <summary>Retrieves the binary data of an individual key from the key/value system.</summary>
