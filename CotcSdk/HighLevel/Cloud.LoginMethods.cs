@@ -56,7 +56,7 @@ namespace CotcSdk
 		///     On e-mail accounts e-mail then, this would be the e-mail address.</param>
 		/// <param name="networkSecret">The secret for the network. For e-mail accounts, this would be the passord. For
 		///     facebook or other SNS accounts, this would be the user token. For the LoginNetwork.GameCenter, the password
-		///     is not used, so you may pass "N/A".</param>
+		///     is not used, so you may pass "n/a".</param>
 		/// <param name="preventRegistration">Fail instead of silently creating an account in case it doesn't already exist on
 		///     the CotC servers.</param>
 		/// <param name="additionalOptions">Additional options can be passed, such as `thenBatch` to execute a batch after

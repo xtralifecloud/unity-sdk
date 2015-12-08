@@ -82,7 +82,7 @@ public class SampleScene : MonoBehaviour {
 					"\nUser ID: " + Social.localUser.id + 
 					"\nIsUnderage: " + Social.localUser.underage);
 				// Game Center accounts do not have a password
-				Cloud.Login(LoginNetwork.GameCenter, Social.localUser.id, "N/A").Done(this.DidLogin);
+				Cloud.Login(LoginNetwork.GameCenter, Social.localUser.id, "n/a").Done(this.DidLogin);
 			}
 			else {
 				Debug.LogError("Failed to authenticate on Game Center");
