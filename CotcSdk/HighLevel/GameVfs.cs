@@ -41,13 +41,7 @@ namespace CotcSdk {
 			UrlBuilder url = new UrlBuilder("/v1/vfs").Path(domain).Path(key);
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
 			return Common.RunInTask<Bundle>(req, (response, task) => {
-				// Because of backward compatibility we might get a string as well. Wrap that in a bundle (do not do the parsing).
-				if (response.BodyString != null && response.BodyString.Length > 0 && response.BodyString[0] == '\"') {
-					task.PostResult(new Bundle(response.BodyString));
-				}
-				else {
-					task.PostResult(response.BodyJson);
-				}
+				task.PostResult(response.BodyJson);
 			});
 		}
 

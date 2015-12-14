@@ -106,6 +106,7 @@
     <Compile Include="Internal\HttpResponse.cs" />
     <Compile Include="Internal\HttpTimeoutException.cs" />
     <Compile Include="Internal\UrlBuilder.cs" />
+    <Compile Include="Libs\BetterJson.cs" />
     <Compile Include="Libs\LitJson\IJsonWrapper.cs" />
     <Compile Include="Libs\LitJson\JsonData.cs" />
     <Compile Include="Libs\LitJson\JsonException.cs" />
