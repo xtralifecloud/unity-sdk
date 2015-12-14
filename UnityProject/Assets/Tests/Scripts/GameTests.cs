@@ -27,12 +27,8 @@ public class GameTests : TestBase {
 			Assert(getResult["test"] == 2, "Expected test: 2 key");
 			return cloud.Game.GameVfs.GetKey("stringkey");
 		})
-		.ExpectSuccess(stringResult => {
-			Assert(stringResult.Type == Bundle.DataType.String, "Expected string result");
-			// Decode the string (not very beautiful and maybe not error-proof, but works)
-			string value = stringResult;
-			value = value.Substring(1, value.Length - 2).Replace("\\", "");
-			Assert(Bundle.FromJson(value)["str"] == "val", "Expected JSON-decodable string");
+		.ExpectSuccess(v1Result => {
+			Assert(v1Result["str"] == "val", "Expected JSON-decodable string");
 			CompleteTest();
 		});
 	}
