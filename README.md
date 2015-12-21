@@ -6,13 +6,13 @@ Read the [Documentation](http://clanofthecloud.github.io/unity-sdk/) to get star
 
 ## Support
 
-The Unity SDK is developed on Unity 4 and tested on Unity 5 prior to release. The Android platform specific components are not guaranteed to work on Unity 4 as libraries are built using gradle and packaged using the new AAR format.
+The Unity SDK is developed for Unity 5 but is still compatible with Unity 4, although we recommend using prior releases for guarantee as Unity 5 is now the main testing channel. The Android platform specific components are not guaranteed to work on Unity 4 as libraries are built using gradle and packaged using the new AAR format.
 
 ## Building the library
 
 ### Required components
 
-The build system is currently made for Windows, and we are using Visual Studio 2012 (with the UnityVS plugin) as well as Unity 4 for backward compatibility (this will most likely be lifted in the future, as it concerns only the CLI sample and Integration Testing projects).
+The build system is currently made for Windows, and we are using Visual Studio 2012 (with the UnityVS plugin) with Unity 5.
 
 ### Building the library
 
