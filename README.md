@@ -29,7 +29,8 @@ This should be very simple. Just open the sln file under the CotcSdk directory.
 
 ### Additional plugins
 
-- Install the Facebook Unity SDK
+- Install and import the Facebook Unity SDK.
+- From the Asset Store, download and import the Unity Test Tools.
 - Download and install Visual Studio Tools for Unity
 - From the Unity project, Assets -> Import package -> Visual Studio 2012 Tools
 - Then Visual Studio Tools -> Open in Visual Studio
