@@ -30,12 +30,10 @@ public static class BetterJson
             if (inputString[0] == '"' && (inputString[1] == '{' || inputString[1] == '['))
                 inputString = inputString.Substring(1, inputString.Length - 2);
 
-            string stringFromLiteral = (inputString[1] == '\\') || (inputString[2] == '\\') ? FromLiteral(inputString) : inputString;
-
-            return stringFromLiteral;
+            if (inputString.Length >2 && (inputString[1] == '\\' || inputString[2] == '\\'))
+                inputString = FromLiteral(inputString);
         }
-        else
-            return inputString;
+        return inputString;
     }
 
     /// <summary>
