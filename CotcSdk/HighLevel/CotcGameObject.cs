@@ -53,20 +53,9 @@ namespace CotcSdk
 			Cotc.OnApplicationFocus(focused);
 		}
 
-        void OnDestroy()
-        {
-            if (Application.isEditor)
-            {
-                if (GameObject.FindObjectsOfType<CotcGameObject>().Length < 1)
-                {
-                    Debug.Log("Forcing destroy CotC");
-                    Cotc.OnApplicationQuit();
-                }
-            }
-        }
-
         void OnApplicationQuit() {
-			Cotc.OnApplicationQuit();
+            Common.Log("CotC destroyed");
+            Cotc.OnApplicationQuit();
 		}
 	}
 
