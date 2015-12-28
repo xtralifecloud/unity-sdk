@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace CotcSdk {
 	/** @cond private */
@@ -21,10 +23,13 @@ namespace CotcSdk {
 		/// <param name="httpVerbose">Set to true to output detailed information about the requests performed to CotC servers. Can be used
 		///     for debugging, though it does pollute the logs.</param>
 		/// <param name="httpTimeout">Sets a custom timeout for all requests in seconds. Defaults to 1 minute.</param>
-		public static Promise<Cloud> Setup(string apiKey, string apiSecret, string environment, int loadBalancerCount, bool httpVerbose, int httpTimeout) {
+		/// <param name="httpType">HTTP layer to be used. Currently 0 is the default (mono-based) one. Works pretty well, but is severely
+		///     aged has a few issues on some platforms (which are all overcomable). Type 1 uses the new
+		///     UnityEngine.Experimental.Networking.UnityWebRequest class and is also supported on all platforms.</param>
+		public static Promise<Cloud> Setup(string apiKey, string apiSecret, string environment, int loadBalancerCount, bool httpVerbose, int httpTimeout, int httpType) {
 			var task = new Promise<Cloud>();
 			lock (SpinLock) {
-				Cloud cloud = new Cloud(apiKey, apiSecret, environment, loadBalancerCount, httpVerbose, httpTimeout);
+				Cloud cloud = new Cloud(apiKey, apiSecret, environment, loadBalancerCount, httpVerbose, httpTimeout, httpType);
 				return task.PostResult(cloud);
 			}
 		}
@@ -63,8 +68,14 @@ namespace CotcSdk {
 		/// <summary>
 		/// Needs to be called from the update method of your main game object.
 		/// Not needed if the CotcGameObject is used...
+		/// <param name="host">Host object for coroutines.</param>
 		/// </summary>
-		public static void Update() {
+		public static void Update(MonoBehaviour host) {
+			// Run pending coroutines
+			lock (PendingCoroutines) {
+				foreach (var routine in PendingCoroutines) host.StartCoroutine(routine);
+				PendingCoroutines.Clear();
+			}
 			// Run pending actions
 			lock (PendingForMainThread) {
 				CurrentActions.Clear();
@@ -75,7 +86,13 @@ namespace CotcSdk {
 				a();
 			}
 		}
-		
+
+		public static void RunCoroutine(IEnumerator operation) {
+			lock (PendingCoroutines) {
+				PendingCoroutines.Add(operation);
+			}
+		}
+
 		/// <summary>Runs a method on the main thread (actually at the next update).</summary>
 		public static void RunOnMainThread(Action action) {
 			lock (PendingForMainThread) {
@@ -99,6 +116,7 @@ namespace CotcSdk {
 		#region Private
 		private static object SpinLock = new object();
 		private static List<Action> CurrentActions = new List<Action>();
+		private static List<IEnumerator> PendingCoroutines = new List<IEnumerator>();
 		#endregion
 	}
 	/** @endcond */

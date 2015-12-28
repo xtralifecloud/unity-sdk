@@ -30,6 +30,7 @@ namespace CotcSdk
 #endif
 		};
 		private bool HttpGroupEnabled = true, NeedsInitialization = true, PresetGroupEnabled = true;
+		private readonly string[] SupportedHttpClients = { "Mono (System.Net.HttpWebRequest)", "Unity (UnityEngine.Experimental.Networking.UnityWebRequest)" };
 
 		public override void OnInspectorGUI() {
 			// Auto-create the asset on the first time
@@ -137,6 +138,7 @@ namespace CotcSdk
 				if (int.TryParse(EditorGUILayout.TextField("Request timeout (sec)", ce.HttpTimeout.ToString()), out tmpInt)) {
 					ce.HttpTimeout = tmpInt;
 				}
+				ce.HttpClientType = EditorGUILayout.Popup("HTTP client", ce.HttpClientType, SupportedHttpClients);
 				EditorGUI.indentLevel--;
 			}
 

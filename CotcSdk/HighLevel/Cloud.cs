@@ -73,11 +73,12 @@ namespace CotcSdk
 		#endregion
 
 		#region Private
-		internal Cloud(string apiKey, string apiSecret, string environment, int loadBalancerCount, bool httpVerbose, int httpTimeout) {
+		internal Cloud(string apiKey, string apiSecret, string environment, int loadBalancerCount, bool httpVerbose, int httpTimeout, int httpType) {
 			this.ApiKey = apiKey;
 			this.ApiSecret = apiSecret;
 			this.Server = environment;
 			LoadBalancerCount = loadBalancerCount;
+			Managers.SetHttpClientType(httpType);
 			Managers.HttpClient.VerboseMode = httpVerbose;
 			HttpTimeoutMillis = httpTimeout * 1000;
 			UserAgent = String.Format(Common.UserAgent, Managers.SystemFunctions.GetOsName(), Cloud.SdkVersion);

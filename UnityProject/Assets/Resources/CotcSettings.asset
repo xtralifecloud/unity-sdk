@@ -20,6 +20,7 @@ MonoBehaviour:
     LbCount: 2
     HttpVerbose: 1
     HttpTimeout: 60
+    HttpClientType: 0
   - Name: Dev server
     ApiKey: testgame-key
     ApiSecret: testgame-secret
@@ -27,6 +28,7 @@ MonoBehaviour:
     LbCount: 0
     HttpVerbose: 1
     HttpTimeout: 60
+    HttpClientType: 0
   - Name: Parallels
     ApiKey: testgame-key
     ApiSecret: testgame-secret
@@ -34,4 +36,5 @@ MonoBehaviour:
     LbCount: 0
     HttpVerbose: 1
     HttpTimeout: 60
+    HttpClientType: 0
   SelectedEnvironment: 0

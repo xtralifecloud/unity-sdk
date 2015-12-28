@@ -18,10 +18,6 @@
             respective documentation.
             </summary>
         </member>
-        <member name="P:CotcSdk.Cloud.Game">
-            <summary>Provides an API to manipulate game data, such as key/value or leaderboards.</summary>
-            <returns>An object that allow to manipulate game specific data.</returns>
-        </member>
         <member name="M:CotcSdk.Cloud.Index(System.String,System.String)">
             <summary>Allows to manipulate an index. Usage: `Cloud.Index("matches").IndexObject(...);`.</summary>
             <param name="indexName">Name of the index; scopes your searches.</param>
@@ -109,6 +105,10 @@
                 an HTTP status code of 400.</returns>
             <param name="network">Network used to log in (scoping the networkId).</param>
             <param name="networkId">The ID of the user on the network, like the e-mail address.</param>
+        </member>
+        <member name="P:CotcSdk.Cloud.Game">
+            <summary>Provides an API to manipulate game data, such as key/value or leaderboards.</summary>
+            <returns>An object that allow to manipulate game specific data.</returns>
         </member>
         <member name="T:CotcSdk.CloudIndexing">
             @ingroup utility_classes
@@ -200,7 +200,7 @@
             @cond private
             Events to be used by plugins. 
         </member>
-        <member name="M:CotcSdk.Cotc.Setup(System.String,System.String,System.String,System.Int32,System.Boolean,System.Int32)">
+        <member name="M:CotcSdk.Cotc.Setup(System.String,System.String,System.String,System.Int32,System.Boolean,System.Int32,System.Int32)">
             <summary>Call this at the very beginning to start using the library.</summary>
             <returns>Promise resolved when the process has finished, with the Cloud to be used for your operations (most
                 likely synchronously).</returns>
@@ -210,6 +210,9 @@
             <param name="httpVerbose">Set to true to output detailed information about the requests performed to CotC servers. Can be used
                 for debugging, though it does pollute the logs.</param>
             <param name="httpTimeout">Sets a custom timeout for all requests in seconds. Defaults to 1 minute.</param>
+            <param name="httpType">HTTP layer to be used. Currently 0 is the default (mono-based) one. Works pretty well, but is severely
+                aged has a few issues on some platforms (which are all overcomable). Type 1 uses the new
+                UnityEngine.Experimental.Networking.UnityWebRequest class and is also supported on all platforms.</param>
         </member>
         <member name="M:CotcSdk.Cotc.OnApplicationFocus(System.Boolean)">
             <summary>
@@ -223,10 +226,11 @@
             Works synchronously so might take a bit of time.
             </summary>
         </member>
-        <member name="M:CotcSdk.Cotc.Update">
+        <member name="M:CotcSdk.Cotc.Update(UnityEngine.MonoBehaviour)">
             <summary>
             Needs to be called from the update method of your main game object.
             Not needed if the CotcGameObject is used...
+            <param name="host">Host object for coroutines.</param>
             </summary>
         </member>
         <member name="M:CotcSdk.Cotc.RunOnMainThread(System.Action)">
@@ -286,9 +290,6 @@
             @ingroup gamer_classes
             <summary>Godfather (code) related functions. You may also want to subscribe to events (see #CotcSdk.GamerGodfather.OnGotGodchild).</summary>
         </member>
-        <member name="E:CotcSdk.GamerGodfather.OnGotGodchild">
-            <summary>Event triggered when someone adds this gamer as a friend or changes his friendship status.</summary>
-        </member>
         <member name="M:CotcSdk.GamerGodfather.Domain(System.String)">
             <summary>
             Changes the domain affected by the next operations.
@@ -335,11 +336,42 @@
                 The godfather will reveive an event of type 'godchildren' containing the id of the godchildren
                 and the balance/achievements field if rewarded.</param>
         </member>
+        <member name="E:CotcSdk.GamerGodfather.OnGotGodchild">
+            <summary>Event triggered when someone adds this gamer as a friend or changes his friendship status.</summary>
+        </member>
         <member name="T:CotcSdk.GotGodchildEvent">
             <summary>
             Event triggered when a godfather code is used. This event is received by the one who originated the code
             (godfather). See #CotcSdk.GamerGodfather.GenerateCode.
             </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:CotcSdk.PropertiesObject" -->
+        <member name="M:CotcSdk.PropertiesObject.AsBundle">
+            <summary>
+            Gets the underlying Bundle. Dangerous, only use internally, when you want to put the contents
+            of a properties object into an existing bundle.
+            </summary>
+        </member>
+        <member name="M:CotcSdk.PropertiesObject.Keys">
+            <summary>Allows to browse all keys (might include some that are already exposed as typed properties in the object).</summary>
+            <returns>The list of keys.</returns>
+        </member>
+        <member name="M:CotcSdk.PropertiesObject.GetEnumerator">
+            <summary>Allows to browse all keys (might include some that are already exposed as typed properties in the object).</summary>
+            <returns>An enumerator that allows to browse all key-value pairs. The values are #CotcSdk.Bundle, on which you can
+                perform all the usual conversions, such as casting it as a string if the property is expected to be a
+                string for instance.</returns>
+        </member>
+        <member name="M:CotcSdk.PropertiesObject.ToString">
+            <summary>You may use this to debug what is inside this property object.</summary>
+            <returns>A JSON string representing the object.</returns>
+        </member>
+        <member name="M:CotcSdk.PropertiesObject.ToJson">
+            <summary>Builds a JSON representation of this object, same as ToString actually.</summary>
+            <returns>A JSON string representing the object.</returns>
+        </member>
+        <member name="P:CotcSdk.PropertiesObject.Item(System.String)">
+            <summary>Allows to query additional properties via an indexer (can be enriched via hooks).</summary>
         </member>
         <member name="F:CotcSdk.GotGodchildEvent.Gamer">
             <summary>Gamer who accepted the godfather request.</summary>
@@ -497,9 +529,6 @@
             You may also want to subscribe to related events (see #CotcSdk.GamerCommunity.OnFriendStatusChange).
             </summary>
         </member>
-        <member name="E:CotcSdk.GamerCommunity.OnFriendStatusChange">
-            <summary>Event triggered when someone adds this gamer as a friend or changes his friendship status.</summary>
-        </member>
         <member name="M:CotcSdk.GamerCommunity.AddFriend(System.String,CotcSdk.PushNotification)">
             <summary>Easy way to add a friend knowing his gamer ID inside the CotC community.</summary>
             <returns>Promise resolved when the operation has completed.</returns>
@@ -562,6 +591,9 @@
                  when subscribed to a #CotcSdk.DomainEventLoop (ReceivedEvent property). If the application is not active,
                  the message will be queued and transmitted the next time the domain event loop is started.</param>
              <param name="notification">Push notification to send to the recipient player if not currently active.</param>
+        </member>
+        <member name="E:CotcSdk.GamerCommunity.OnFriendStatusChange">
+            <summary>Event triggered when someone adds this gamer as a friend or changes his friendship status.</summary>
         </member>
         <member name="T:CotcSdk.FriendRelationshipStatus">
             <summary>Status of friend relationship.</summary>
@@ -724,12 +756,6 @@
             <param name="iterationDuration">Sets a custom timeout in seconds for the long polling event loop. Should be used
                 with care and set to a high value (at least 60). Defaults to 590 (~10 min).</param>
         </member>
-        <member name="P:CotcSdk.DomainEventLoop.Domain">
-            <summary>The domain on which this loop is listening.</summary>
-        </member>
-        <member name="E:CotcSdk.DomainEventLoop.ReceivedEvent">
-            <summary>This event is raised when an event is received.</summary>
-        </member>
         <member name="M:CotcSdk.DomainEventLoop.Start">
             <summary>Starts the thread. Call this upon initialization.</summary>
         </member>
@@ -744,6 +770,12 @@
         </member>
         <member name="M:CotcSdk.DomainEventLoop.Resume">
             <summary>Resumes a suspended event thread.</summary>
+        </member>
+        <member name="P:CotcSdk.DomainEventLoop.Domain">
+            <summary>The domain on which this loop is listening.</summary>
+        </member>
+        <member name="E:CotcSdk.DomainEventLoop.ReceivedEvent">
+            <summary>This event is raised when an event is received.</summary>
         </member>
         <member name="T:CotcSdk.ErrorCode">
             @ingroup data_classes
@@ -780,6 +812,26 @@
             run. User related events are handled by a corresponding instance of DomainEventLoop, which should be started
             as soon as the user is logged in.
             </summary>
+        </member>
+        <member name="M:CotcSdk.Gamer.StartEventLoop(System.String)">
+             <summary>
+             Starts a DomainEventLoop in order to catch events related to this logged in gamer.
+             
+             The loop will be running forever unless an error happens with this gamer (meaning that the
+             gamer is not valid anymore, which can happen if he's not logged in). When stopping
+             or pausing the application, you should call the corresponding methods on the loop to stop
+             or pause it. The system will pause the loop automatically upon application pause and resume
+             it as needed, which is done through the CotcGameObject as placed on your scene.
+            
+             </summary>
+             <param name="domain">Domain to listen on. The `private` domain is used to receive system notifications
+                 as well as messages sent by other players. Unless cross-game functionality is used, you
+                 should start one loop on the private domain as soon as the gamer is signed in.</param>
+             <returns>A domain event loop that is in started state.</returns>
+        </member>
+        <member name="M:CotcSdk.Gamer.#ctor(CotcSdk.Cloud,CotcSdk.Bundle)">
+            <summary>Only instantiated internally.</summary>
+            <param name="gamerData">Gamer data as returned by our API calls (loginanonymous, etc.).</param>
         </member>
         <member name="P:CotcSdk.Gamer.GamerId">
             <summary>Gamer credential. Use it to gain access to user related tasks.</summary>
@@ -840,26 +892,6 @@
         <member name="P:CotcSdk.Gamer.Transactions">
             <summary>Allows to manipulate the transactions and related achievements of an user.</summary>
             <returns>An object that allows to manipulate transactions and query achievements.</returns>
-        </member>
-        <member name="M:CotcSdk.Gamer.StartEventLoop(System.String)">
-             <summary>
-             Starts a DomainEventLoop in order to catch events related to this logged in gamer.
-             
-             The loop will be running forever unless an error happens with this gamer (meaning that the
-             gamer is not valid anymore, which can happen if he's not logged in). When stopping
-             or pausing the application, you should call the corresponding methods on the loop to stop
-             or pause it. The system will pause the loop automatically upon application pause and resume
-             it as needed, which is done through the CotcGameObject as placed on your scene.
-            
-             </summary>
-             <param name="domain">Domain to listen on. The `private` domain is used to receive system notifications
-                 as well as messages sent by other players. Unless cross-game functionality is used, you
-                 should start one loop on the private domain as soon as the gamer is signed in.</param>
-             <returns>A domain event loop that is in started state.</returns>
-        </member>
-        <member name="M:CotcSdk.Gamer.#ctor(CotcSdk.Cloud,CotcSdk.Bundle)">
-            <summary>Only instantiated internally.</summary>
-            <param name="gamerData">Gamer data as returned by our API calls (loginanonymous, etc.).</param>
         </member>
         <member name="T:CotcSdk.GamerProfileMethods">
             @ingroup gamer_classes
@@ -941,9 +973,6 @@
             throw an exception.
             </summary>
         </member>
-        <member name="P:CotcSdk.HttpRequestFailedEventArgs.Url">
-            <summary>The original URL that the request failed to reach.</summary>
-        </member>
         <member name="F:CotcSdk.HttpRequestFailedEventArgs.UserData">
             <summary>
             You can set this member from the handler; in case the request fails again, this data will be set
@@ -959,6 +988,9 @@
                 (they will be queued) as to respect the issuing order. Please keep this in mind when setting a
                 high delay.</param>
         </member>
+        <member name="P:CotcSdk.HttpRequestFailedEventArgs.Url">
+            <summary>The original URL that the request failed to reach.</summary>
+        </member>
         <member name="T:CotcSdk.Match">
             @ingroup match_classes
             <summary>
@@ -966,6 +998,56 @@
             A match object is returned when you create a match, join it and so on.
             You should subscribe to ReceivedEvent right after you got this object.
             </summary>
+        </member>
+        <member name="M:CotcSdk.Match.DiscardEventHandlers">
+            <summary>
+            Clears all event handlers subscribed, ensuring that a match object can be dismissed without causing further
+            actions in the background.
+            </summary>
+        </member>
+        <member name="M:CotcSdk.Match.DrawFromShoe(System.Int32,CotcSdk.PushNotification)">
+            <summary>Draws an item from the shoe.</summary>
+            <returns>Promise resolved when the operation has completed. The attached bundle contains an array of items drawn
+                from the shoe. You may do `(int)result.Value[0]` to fetch the first value as integer.</returns>
+            <param name="count">The number of items to draw from the shoe.</param>
+            <param name="notification">A notification that can be sent to all players currently playing the match (except you).</param>
+        </member>
+        <member name="M:CotcSdk.Match.Finish(System.Boolean,CotcSdk.PushNotification)">
+            <summary>Terminates the match. You need to be the creator of the match to perform this operation.</summary>
+            <returns>Promise resolved when the operation has completed.</returns>
+            <param name="deleteToo">If true, deletes the match if it finishes successfully or is already finished.</param>
+            <param name="notification">A notification that can be sent to all players currently playing the match (except you).</param>
+        </member>
+        <member name="M:CotcSdk.Match.InvitePlayer(System.String,CotcSdk.PushNotification)">
+            <summary>
+            Allows to invite a player to join a match. You need to be part of the match to send an invitation.
+            This can be used to invite an opponent to a match that is not shown publicly.
+            </summary>
+            <returns>Promise resolved when the operation has completed.</returns>
+            <param name="playerId">ID of the player to invite to the match. Player IDs can be found in the properties of the
+                match (GamerInfo.GamerId).</param>
+            <param name="notification">A push notification that can be sent to the invitee.</param>
+        </member>
+        <member name="M:CotcSdk.Match.Leave(CotcSdk.PushNotification)">
+            <summary>Leaves the match.</summary>
+            <returns>Promise resolved when the operation has completed.</returns>
+            <param name="notification">A push notification that can be sent to all players except you.</param>
+        </member>
+        <member name="M:CotcSdk.Match.Lock(System.Action)">
+            <summary>
+            Protects the match against concurrent modification. Please look at the tutorial for more information on this
+            subject. Basically, you should use it to protect your game state from race conditions.
+            </summary>
+        </member>
+        <member name="M:CotcSdk.Match.PostMove(CotcSdk.Bundle,CotcSdk.Bundle,CotcSdk.PushNotification)">
+            <summary>Posts a move to other players.</summary>
+            <returns>Promise resolved when the operation has completed.</returns>
+            <param name="moveData">A freeform object indicating the move data to be posted and transfered to other players. This
+                move data will be kept in the events, and new players should be able to use it to reproduce the local game
+                state.</param>
+            <param name="updatedGameState">A freeform object replacing the global game state, to be used by players who join from
+                now on. Passing a non null value clears the pending events in the match.</param>
+            <param name="notification">A push notification that can be sent to all players except you.</param>
         </member>
         <member name="P:CotcSdk.Match.Creator">
             <summary>Describes the creator of the match.</summary>
@@ -1039,56 +1121,6 @@
             it as values for your next game. This field is only returned when finishing a match.
             </summary>
         </member>
-        <member name="M:CotcSdk.Match.DiscardEventHandlers">
-            <summary>
-            Clears all event handlers subscribed, ensuring that a match object can be dismissed without causing further
-            actions in the background.
-            </summary>
-        </member>
-        <member name="M:CotcSdk.Match.DrawFromShoe(System.Int32,CotcSdk.PushNotification)">
-            <summary>Draws an item from the shoe.</summary>
-            <returns>Promise resolved when the operation has completed. The attached bundle contains an array of items drawn
-                from the shoe. You may do `(int)result.Value[0]` to fetch the first value as integer.</returns>
-            <param name="count">The number of items to draw from the shoe.</param>
-            <param name="notification">A notification that can be sent to all players currently playing the match (except you).</param>
-        </member>
-        <member name="M:CotcSdk.Match.Finish(System.Boolean,CotcSdk.PushNotification)">
-            <summary>Terminates the match. You need to be the creator of the match to perform this operation.</summary>
-            <returns>Promise resolved when the operation has completed.</returns>
-            <param name="deleteToo">If true, deletes the match if it finishes successfully or is already finished.</param>
-            <param name="notification">A notification that can be sent to all players currently playing the match (except you).</param>
-        </member>
-        <member name="M:CotcSdk.Match.InvitePlayer(System.String,CotcSdk.PushNotification)">
-            <summary>
-            Allows to invite a player to join a match. You need to be part of the match to send an invitation.
-            This can be used to invite an opponent to a match that is not shown publicly.
-            </summary>
-            <returns>Promise resolved when the operation has completed.</returns>
-            <param name="playerId">ID of the player to invite to the match. Player IDs can be found in the properties of the
-                match (GamerInfo.GamerId).</param>
-            <param name="notification">A push notification that can be sent to the invitee.</param>
-        </member>
-        <member name="M:CotcSdk.Match.Leave(CotcSdk.PushNotification)">
-            <summary>Leaves the match.</summary>
-            <returns>Promise resolved when the operation has completed.</returns>
-            <param name="notification">A push notification that can be sent to all players except you.</param>
-        </member>
-        <member name="M:CotcSdk.Match.Lock(System.Action)">
-            <summary>
-            Protects the match against concurrent modification. Please look at the tutorial for more information on this
-            subject. Basically, you should use it to protect your game state from race conditions.
-            </summary>
-        </member>
-        <member name="M:CotcSdk.Match.PostMove(CotcSdk.Bundle,CotcSdk.Bundle,CotcSdk.PushNotification)">
-            <summary>Posts a move to other players.</summary>
-            <returns>Promise resolved when the operation has completed.</returns>
-            <param name="moveData">A freeform object indicating the move data to be posted and transfered to other players. This
-                move data will be kept in the events, and new players should be able to use it to reproduce the local game
-                state.</param>
-            <param name="updatedGameState">A freeform object replacing the global game state, to be used by players who join from
-                now on. Passing a non null value clears the pending events in the match.</param>
-            <param name="notification">A push notification that can be sent to all players except you.</param>
-        </member>
         <member name="T:CotcSdk.MatchStatus">
             @ingroup match_classes
             <summary>Status of a match.</summary>
@@ -1114,12 +1146,12 @@
             This is the kind of matches that you may find in sub-objects returned by some calls (list, etc.).
             </summary>
         </member>
-        <member name="P:CotcSdk.MatchInfo.MatchId">
-            <summary>The ID of the match.</summary>
-        </member>
         <member name="M:CotcSdk.MatchInfo.DismissInvitation">
             <summary>Dismisses a pending invitation for the current user and the match. Fails if the user has not been invited.</summary>
             <returns>Promise resolved when the operation has completed.</returns>
+        </member>
+        <member name="P:CotcSdk.MatchInfo.MatchId">
+            <summary>The ID of the match.</summary>
         </member>
         <member name="T:CotcSdk.AchievementType">
             @ingroup model_classes
@@ -1278,11 +1310,11 @@
             @ingroup model_classes
             <summary>Contains the results of a search on the index.</summary>
         </member>
-        <member name="P:CotcSdk.IndexSearchResult.Hits">
-            <summary>Paginated list of results.0</summary>
-        </member>
         <member name="F:CotcSdk.IndexSearchResult.MaxScore">
             <summary>Maximum score in the results.</summary>
+        </member>
+        <member name="P:CotcSdk.IndexSearchResult.Hits">
+            <summary>Paginated list of results.0</summary>
         </member>
         <member name="T:CotcSdk.LoginNetwork">
             @ingroup model_classes
@@ -1394,34 +1426,6 @@
         <member name="P:CotcSdk.PostedGameScore.Rank">
             <summary>The rank of the gamer in the leaderboard after posting this score.</summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "T:CotcSdk.PropertiesObject" -->
-        <member name="P:CotcSdk.PropertiesObject.Item(System.String)">
-            <summary>Allows to query additional properties via an indexer (can be enriched via hooks).</summary>
-        </member>
-        <member name="M:CotcSdk.PropertiesObject.AsBundle">
-            <summary>
-            Gets the underlying Bundle. Dangerous, only use internally, when you want to put the contents
-            of a properties object into an existing bundle.
-            </summary>
-        </member>
-        <member name="M:CotcSdk.PropertiesObject.Keys">
-            <summary>Allows to browse all keys (might include some that are already exposed as typed properties in the object).</summary>
-            <returns>The list of keys.</returns>
-        </member>
-        <member name="M:CotcSdk.PropertiesObject.GetEnumerator">
-            <summary>Allows to browse all keys (might include some that are already exposed as typed properties in the object).</summary>
-            <returns>An enumerator that allows to browse all key-value pairs. The values are #CotcSdk.Bundle, on which you can
-                perform all the usual conversions, such as casting it as a string if the property is expected to be a
-                string for instance.</returns>
-        </member>
-        <member name="M:CotcSdk.PropertiesObject.ToString">
-            <summary>You may use this to debug what is inside this property object.</summary>
-            <returns>A JSON string representing the object.</returns>
-        </member>
-        <member name="M:CotcSdk.PropertiesObject.ToJson">
-            <summary>Builds a JSON representation of this object, same as ToString actually.</summary>
-            <returns>A JSON string representing the object.</returns>
-        </member>
         <member name="T:CotcSdk.PushNotification">
             @ingroup data_classes
             <summary>
@@ -1489,12 +1493,6 @@
             (name, first name), pass them here. You should pass at least one of these.
             </summary>
         </member>
-        <member name="P:CotcSdk.SocialNetworkFriend.ClanInfo">
-            <summary>
-            Additional info that might have been enriched by the CotC servers.
-            You should never guess or create this info by yourself.
-            </summary>
-        </member>
         <member name="M:CotcSdk.SocialNetworkFriend.#ctor(System.String,System.String,System.String,System.String)">
             <summary>User constructor.</summary>
         </member>
@@ -1503,6 +1501,12 @@
         </member>
         <member name="M:CotcSdk.SocialNetworkFriend.#ctor(CotcSdk.Bundle)">
             <summary>Build from existing JSON data.</summary>
+        </member>
+        <member name="P:CotcSdk.SocialNetworkFriend.ClanInfo">
+            <summary>
+            Additional info that might have been enriched by the CotC servers.
+            You should never guess or create this info by yourself.
+            </summary>
         </member>
         <member name="T:CotcSdk.Transaction">
             @ingroup model_classes
@@ -1589,14 +1593,6 @@
         <member name="M:CotcSdk.PagedList`1.FetchPrevious">
             <summary>Fetches the previous results and calls the same handler again.</summary>
         </member>
-        <member name="P:CotcSdk.PagedList`1.HasPrevious">
-            <summary></summary>
-            <returns>Whether there is a previous page. Call FetchPrevious to go back to it.</returns>
-        </member>
-        <member name="P:CotcSdk.PagedList`1.HasNext">
-            <summary></summary>
-            <returns>Whether there is a next page. Call FetchNext to go back to it.</returns>
-        </member>
         <member name="F:CotcSdk.PagedList`1.Offset">
             <summary></summary>
             <returns>The number of the first result in the list.</returns>
@@ -1604,6 +1600,14 @@
         <member name="F:CotcSdk.PagedList`1.Total">
             <summary></summary>
             <returns>The total number of items (possibly greater than the page size).</returns>
+        </member>
+        <member name="P:CotcSdk.PagedList`1.HasPrevious">
+            <summary></summary>
+            <returns>Whether there is a previous page. Call FetchPrevious to go back to it.</returns>
+        </member>
+        <member name="P:CotcSdk.PagedList`1.HasNext">
+            <summary></summary>
+            <returns>Whether there is a next page. Call FetchNext to go back to it.</returns>
         </member>
         <member name="T:CotcSdk.Promise`1">
             @ingroup main_classes
@@ -1679,22 +1683,19 @@
             <returns>A promise that can be further chained.</returns>
         </member>
         <!-- Badly formed XML comment ignored for member "M:CotcSdk.Promise`1.Then``1(System.Func{`0,CotcSdk.Promise{``0}},System.Action{System.Exception})" -->
-        <member name="E:CotcSdk.Promise.UnhandledException">
-            <summary>
-            Event raised for unhandled errors.
-            For this to work you have to complete your promises with a call to Done().
-            </summary>
-        </member>
         <member name="F:CotcSdk.Promise.Debug_OutputAllExceptions">
             <summary>
             Set this to true in order to output any exception to the console, even if it is caught by a .Catch block.
             Just a helper, never keep it true in production.
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "T:CotcSdk.Bundle" -->
-        <member name="T:CotcSdk.Bundle.DataType">
-            <summary>Possible types of data storable into a bundle.</summary>
+        <member name="E:CotcSdk.Promise.UnhandledException">
+            <summary>
+            Event raised for unhandled errors.
+            For this to work you have to complete your promises with a call to Done().
+            </summary>
         </member>
+        <!-- Badly formed XML comment ignored for member "T:CotcSdk.Bundle" -->
         <member name="M:CotcSdk.Bundle.CreateObject">
             <summary>Creates a bundle of type object. You may also pass up to three key/value pairs (in this order),
             which will be put in the object initially.</summary>
@@ -1719,6 +1720,9 @@
         <member name="P:CotcSdk.Bundle.Root">
             <summary>Returns the root of this tree. Goes as far as possible back in the hierarchy.</summary>
         </member>
+        <member name="T:CotcSdk.Bundle.DataType">
+            <summary>Possible types of data storable into a bundle.</summary>
+        </member>
         <member name="T:CotcSdk.EmptyBundle">
             <summary>Never instantiate this class. Use Bundle.Empty instead. Pass that everywhere an explicit configuration is not wanted.</summary>
         </member>
@@ -1731,14 +1735,61 @@
         <member name="F:CotcSdk.HttpRequest.Method">
             <summary>When not set (null), uses GET if no body is provided, or POST otherwise.</summary>
         </member>
+        <member name="M:CotcSdk.HttpResponse.ShouldBeRetried(CotcSdk.HttpRequest)">
+            <summary>Returns whether this response is in an error state that should be retried according to the request configuration.</summary>
+        </member>
         <member name="P:CotcSdk.HttpResponse.HasFailed">
             <summary>
             If true, means that the request has completely failed, not that it received an error code such as 400.
             This will appear as completely normal. Use Common.HasFailed in that case.
             </summary>
         </member>
-        <member name="M:CotcSdk.HttpResponse.ShouldBeRetried(CotcSdk.HttpRequest)">
-            <summary>Returns whether this response is in an error state that should be retried according to the request configuration.</summary>
+        <member name="M:BetterJson.EncapsulateBetterFromLiteral(System.String)">
+            <summary>
+            Ensure we have a Json-objet string even if input string is a simple-type-value string
+            </summary>
+            <param name="inputString">A simple type value becomes an encapsulated value in a Json-objet</param>
+            <returns>Return a well formated json string</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:BetterJson.BetterFromLiteral(System.String)" -->
+        <member name="M:BetterJson.FromLiteral(System.String)">
+            <summary>
+            Removes escape characters to get a normal string from literal one
+            </summary>
+            <param name="inputString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BetterJson.ToLiteral(System.String)">
+            <summary>
+            Adds escape characters to get a string literal
+            </summary>
+            <param name="inputString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BetterJson.IntToHexadecimal(System.Int32)">
+            <summary>
+            Convert an int to a hexadecimal value
+            </summary>
+            <param name="number"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CotcSdk.HttpClient">
+            Base for an HTTP client. Handles many useful things (timeout, calculating the URL, altering the load balancer…).
+        </member>
+        <member name="M:CotcSdk.HttpClient.EnqueueRequest(CotcSdk.HttpRequest)">
+            <summary>Enqueues a request to make it processed asynchronously. Will potentially wait for the other requests enqueued to finish.</summary>
+        </member>
+        <member name="M:CotcSdk.HttpClient.FinishWithRequest(CotcSdk.HttpClient.WebRequest,CotcSdk.HttpResponse)">
+            <summary>Called after an HTTP request has been processed in any way (error or failure). Decides what to do next.</summary>
+        </member>
+        <member name="M:CotcSdk.HttpClient.ProcessRequest(CotcSdk.HttpRequest,System.Object)">
+            <summary>Processes a single request asynchronously. Will continue to FinishWithRequest in some way.</summary>
+        </member>
+        <member name="M:CotcSdk.HttpClient.TimeoutCallback(System.Object,System.Boolean)">
+            <summary>Called upon timeout.</summary>
+        </member>
+        <member name="T:CotcSdk.HttpClient.WebRequest">
+            <summary>Asynchronous request state.</summary>
         </member>
         <member name="T:CotcSdk.IHttpClient">
             <summary>Platform-specific HTTP client.</summary>
@@ -1749,26 +1800,26 @@
         <member name="T:CotcSdk.LogLevel">
             <summary>Possible logging levels to be set.</summary>
         </member>
-        <member name="T:CotcSdk.UnityHttpClient.RequestState">
+        <member name="T:CotcSdk.UnityHttpClientV2">
+            Better HTTP client based on UnityEngine.Experimental.Networking.UnityWebRequest.
+        </member>
+        <member name="T:CotcSdk.UnityHttpClientV2.UnityRequest">
             <summary>Asynchronous request state.</summary>
         </member>
-        <member name="M:CotcSdk.UnityHttpClient.EnqueueRequest(CotcSdk.HttpRequest)">
-            <summary>Enqueues a request to make it processed asynchronously. Will potentially wait for the other requests enqueued to finish.</summary>
+        <member name="M:CotcSdk.UnityHttpClientV2.UnityRequest.LogRequest">
+            <summary>Prints the current request for user convenience.</summary>
         </member>
-        <member name="M:CotcSdk.UnityHttpClient.FinishWithRequest(CotcSdk.UnityHttpClient.RequestState,CotcSdk.HttpResponse)">
-            <summary>Called after an HTTP request has been processed in any way (error or failure). Decides what to do next.</summary>
+        <member name="M:CotcSdk.UnityHttpClientV2.UnityRequest.LogResponse(CotcSdk.HttpResponse)">
+            <summary>Prints information about the response for debugging purposes.</summary>
+        </member>
+        <member name="T:CotcSdk.UnityHttpClient">
+            Former Unity HTTP client, based on the standard .NET framework classes (HttpWebRequest).
+            
+            Since this class is not really supported (compared to the WWW class which is supposed to be the standard
+            but unsufficient), it causes a lot of problems on some platforms and we're happy to get rid of it.
         </member>
         <member name="M:CotcSdk.UnityHttpClient.GetRequestStreamCallback(System.IAsyncResult)">
             <summary>Got a network stream to write to.</summary>
-        </member>
-        <member name="M:CotcSdk.UnityHttpClient.LogRequest(CotcSdk.UnityHttpClient.RequestState)">
-            <summary>Prints the current request for user convenience.</summary>
-        </member>
-        <member name="M:CotcSdk.UnityHttpClient.LogResponse(CotcSdk.UnityHttpClient.RequestState,CotcSdk.HttpResponse)">
-            <summary>Prints information about the response for debugging purposes.</summary>
-        </member>
-        <member name="M:CotcSdk.UnityHttpClient.ProcessRequest(CotcSdk.HttpRequest,System.Object)">
-            <summary>Processes a single request asynchronously. Will continue to FinishWithRequest in some way.</summary>
         </member>
         <member name="M:CotcSdk.UnityHttpClient.RespCallback(System.IAsyncResult)">
             <summary>Called when a response has been received by the HttpWebRequest.</summary>
@@ -1776,8 +1827,14 @@
         <member name="M:CotcSdk.UnityHttpClient.ReadCallBack(System.IAsyncResult)">
             <summary>Reads the response buffer little by little.</summary>
         </member>
-        <member name="M:CotcSdk.UnityHttpClient.TimeoutCallback(System.Object,System.Boolean)">
-            <summary>Called upon timeout.</summary>
+        <member name="T:CotcSdk.UnityHttpClient.RequestState">
+            <summary>Asynchronous request state.</summary>
+        </member>
+        <member name="M:CotcSdk.UnityHttpClient.RequestState.LogRequest">
+            <summary>Prints the current request for user convenience.</summary>
+        </member>
+        <member name="M:CotcSdk.UnityHttpClient.RequestState.LogResponse(CotcSdk.HttpResponse)">
+            <summary>Prints information about the response for debugging purposes.</summary>
         </member>
         <member name="T:CotcSdk.ConfiguredProduct">
             @ingroup model_classes
@@ -1861,35 +1918,6 @@
             <summary>Unregisters a previously registered device (see #RegisterDevice).</summary>
             <param name="os">Operating system (should be determined by the native implementation: "ios", "android", "macos", …).</param>
             <param name="token">Push notification token (device specific).</param>
-        </member>
-        <member name="M:BetterJson.EncapsulateBetterFromLiteral(System.String)">
-            <summary>
-            Ensure we have a Json-objet string even if input string is a simple-type-value string
-            </summary>
-            <param name="inputString">A simple type value becomes an encapsulated value in a Json-objet</param>
-            <returns>Return a well formated json string</returns>
-        </member>
-        <!-- Badly formed XML comment ignored for member "M:BetterJson.BetterFromLiteral(System.String)" -->
-        <member name="M:BetterJson.FromLiteral(System.String)">
-            <summary>
-            Removes escape characters to get a normal string from literal one
-            </summary>
-            <param name="inputString"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BetterJson.ToLiteral(System.String)">
-            <summary>
-            Adds escape characters to get a string literal
-            </summary>
-            <param name="inputString"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BetterJson.IntToHexadecimal(System.Int32)">
-            <summary>
-            Convert an int to a hexadecimal value
-            </summary>
-            <param name="number"></param>
-            <returns></returns>
         </member>
     </members>
 </doc>

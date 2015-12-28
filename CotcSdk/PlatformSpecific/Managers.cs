@@ -1,12 +1,15 @@
 
+using System;
 namespace CotcSdk
 {
 	internal static class Managers
 	{
 		static Managers() {
-			HttpClient = new UnityHttpClient();
+			MonoHttpClient = new MonoHttpClient();
+			UnityHttpClient = new UnityHttpClientV2();
 			Logger = UnityLogger.Instance;
 			SystemFunctions = new UnitySystemFunctions();
+			SetHttpClientType(0);
 		}
 		
 		internal static ILogger Logger {
@@ -14,7 +17,7 @@ namespace CotcSdk
 			private set;
 		}
 
-		internal static IHttpClient HttpClient {
+		internal static HttpClient HttpClient {
 			get;
 			private set;
 		}
@@ -23,6 +26,16 @@ namespace CotcSdk
 			get;
 			private set;
 		}
+
+		public static void SetHttpClientType(int type) {
+			switch (type) {
+				case 0: HttpClient = MonoHttpClient; break;
+				case 1: HttpClient = UnityHttpClient; break;
+				default: throw new ArgumentException("Invalid HTTP client type. Must be between 0 and 1.");
+			}
+		}
+
+		private static HttpClient MonoHttpClient, UnityHttpClient;
 	}
 }
 

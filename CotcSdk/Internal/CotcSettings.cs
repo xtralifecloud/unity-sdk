@@ -37,6 +37,8 @@ namespace CotcSdk {
 			public bool HttpVerbose = true;
 			[SerializeField]
 			public int HttpTimeout = 60;
+			[SerializeField]
+			public int HttpClientType = 0;
 		}
 
 		[SerializeField]
