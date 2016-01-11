@@ -11,6 +11,7 @@ public class FacebookSampleScene : MonoBehaviour {
 	private Gamer Gamer;
 	// When a gamer is logged in, the loop is launched for domain private. Only one is run at once.
 	private DomainEventLoop Loop;
+	private bool ShouldBringLoginDialog;
 
 	// Use this for initialization
 	void Start() {
@@ -39,15 +40,22 @@ public class FacebookSampleScene : MonoBehaviour {
 			Debug.Log("Setup done");
 		});
 	}
-	
+
+	void OnGUI() {
+		if (ShouldBringLoginDialog) {
+			var fb = FindObjectOfType<CotcFacebookIntegration>();
+			ShouldBringLoginDialog = false;
+			if (fb == null) {
+				Debug.LogError("Please put the CotcFacebookIntegration prefab in your scene!");
+				return;
+			}
+			fb.LoginWithFacebook(Cloud).Done(this.DidLogin);
+		}
+	}
+
 	// Signs in with facebook
 	public void DoLoginWithFacebook() {
-		var fb = FindObjectOfType<CotcFacebookIntegration>();
-		if (fb == null) {
-			Debug.LogError("Please put the CotcFacebookIntegration prefab in your scene!");
-			return;
-		}
-		fb.LoginWithFacebook(Cloud).Done(this.DidLogin);
+		ShouldBringLoginDialog = true;
 	}
 
 	public void DoAddFacebookFriends() {
