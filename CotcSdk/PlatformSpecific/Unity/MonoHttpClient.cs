@@ -29,7 +29,7 @@ namespace CotcSdk
 			public Stream StreamResponse;
 			private MonoHttpClient self;
 
-			public RequestState(MonoHttpClient inst, HttpRequest originalReq, HttpWebRequest req, object previousUserData, int requestId) {
+			public RequestState(MonoHttpClient inst, HttpRequest originalReq, HttpWebRequest req, object previousUserData, int requestId) : base(inst, originalReq) {
 				self = inst;
 				BufferRead = new byte[BufferSize];
 				OriginalRequest = originalReq;
@@ -53,7 +53,7 @@ namespace CotcSdk
 				StringBuilder sb = new StringBuilder();
 				HttpWebRequest request = Request;
 				sb.AppendLine("[" + RequestId + "] " + request.Method + "ing on " + request.RequestUri);
-				sb.AppendLine("Headers:");
+				sb.AppendLine("Headers (Mono):");
 				foreach (string key in request.Headers) {
 					sb.AppendLine("\t" + key + ": " + request.Headers[key]);
 				}

@@ -20,7 +20,7 @@ namespace CotcSdk {
 			private UnityWebRequest Request;
 			private bool WasAborted = false;
 
-			public UnityRequest(UnityHttpClientV2 inst, string url, HttpRequest request, object previousUserData, int requestId) {
+			public UnityRequest(UnityHttpClientV2 inst, string url, HttpRequest request, object previousUserData, int requestId) : base(inst, request) {
 				self = inst;
 				OriginalRequest = request;
 				RequestId = requestId;
@@ -57,7 +57,7 @@ namespace CotcSdk {
 
 				StringBuilder sb = new StringBuilder();
 				sb.AppendLine("[" + RequestId + "] " + Request.method + "ing on " + Request.url);
-				sb.AppendLine("Headers:");
+				sb.AppendLine("Headers (Unity):");
 				foreach (var pair in OriginalRequest.Headers) {
 					sb.AppendLine("\t" + pair.Key + ": " + pair.Value);
 				}

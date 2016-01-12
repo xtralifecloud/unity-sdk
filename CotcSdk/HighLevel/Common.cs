@@ -67,8 +67,10 @@ namespace CotcSdk
 		/// <param name="task">Task that is resolved in case of failure, else the onSuccess callback is called and you'll
 		///     have to resolve it from inside.</param>
 		/// <param name="onSuccess">Callback called in case of success only.</param>
-		internal static Promise<T> RunRequest<T>(HttpRequest req, Promise<T> task, Action<HttpResponse> onSuccess) {
-			Managers.HttpClient.Run(req, (HttpResponse response) => {
+		/// <param name="forceClient">Leave it to null, unless you really need a special HTTP client to be used.</param>
+		internal static Promise<T> RunRequest<T>(HttpRequest req, Promise<T> task, Action<HttpResponse> onSuccess, HttpClient forceClient = null) {
+			forceClient = forceClient ?? Managers.HttpClient;
+			forceClient.Run(req, (HttpResponse response) => {
 				if (HasFailed(response)) {
 					task.PostResult(response, "Request failed");
 					return;

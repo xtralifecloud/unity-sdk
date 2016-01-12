@@ -56,7 +56,7 @@ namespace CotcSdk {
 				binaryRequest.UserAgent = Gamer.Cloud.UserAgent;
 				Common.RunRequest(binaryRequest, task, binaryResponse => {
 					task.Resolve(binaryResponse.Body);
-				});
+				}, forceClient: Managers.UnityHttpClient);
 			});
 		}
 
@@ -94,7 +94,7 @@ namespace CotcSdk {
 				binaryRequest.UserAgent = Gamer.Cloud.UserAgent;
 				Common.RunRequest(binaryRequest, task, binaryResponse => {
 					task.Resolve(new Done(true));
-				});
+				}, forceClient: Managers.UnityHttpClient);
 			});
 		}
 
@@ -109,7 +109,7 @@ namespace CotcSdk {
 				task.PostResult(new Done(response.BodyJson));
 			});
 		}
-
+		
 		#region Private
 		internal GamerVfs(Gamer gamer) {
 			Gamer = gamer;

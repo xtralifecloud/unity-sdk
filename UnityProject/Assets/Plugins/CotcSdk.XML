@@ -259,7 +259,7 @@
             </summary>
             <returns>Whether the server response is considered as failed</returns>
         </member>
-        <member name="M:CotcSdk.Common.RunRequest``1(CotcSdk.HttpRequest,CotcSdk.Promise{``0},System.Action{CotcSdk.HttpResponse})">
+        <member name="M:CotcSdk.Common.RunRequest``1(CotcSdk.HttpRequest,CotcSdk.Promise{``0},System.Action{CotcSdk.HttpResponse},CotcSdk.HttpClient)">
             <summary>
             Wrapper around our standard work on Managers.HttpClient.Run. Automatically notifies the passed handler
             of a failure.
@@ -268,6 +268,7 @@
             <param name="task">Task that is resolved in case of failure, else the onSuccess callback is called and you'll
                 have to resolve it from inside.</param>
             <param name="onSuccess">Callback called in case of success only.</param>
+            <param name="forceClient">Leave it to null, unless you really need a special HTTP client to be used.</param>
         </member>
         <member name="M:CotcSdk.Common.RunInTask``1(CotcSdk.HttpRequest,System.Action{CotcSdk.HttpResponse,CotcSdk.Promise{``0}})">
             <summary>
@@ -1800,6 +1801,20 @@
         <member name="T:CotcSdk.LogLevel">
             <summary>Possible logging levels to be set.</summary>
         </member>
+        <member name="M:CotcSdk.Managers.SetHttpClientType(System.Int32)">
+            <summary>Defines the type of HTTP client./// </summary>
+            <param name="type">0 = HttpWebRequest, 1 = UnityWebRequest.</param>
+        </member>
+        <member name="P:CotcSdk.Managers.HttpClient">
+            <summary>
+            Designates the HTTP default client, as selected by the user (by calling SetHttpClientType, or
+            publicly via the CotC game object settings or Cloud Setup).
+            </summary>
+        </member>
+        <member name="P:CotcSdk.Managers.UnityHttpClient">
+            <summary>Allows to specifically direct a request to the Unity HTTP Client, while using the
+            default client for other requests. (The two can run in parallel).</summary>
+        </member>
         <member name="T:CotcSdk.UnityHttpClientV2">
             Better HTTP client based on UnityEngine.Experimental.Networking.UnityWebRequest.
         </member>
@@ -1812,28 +1827,28 @@
         <member name="M:CotcSdk.UnityHttpClientV2.UnityRequest.LogResponse(CotcSdk.HttpResponse)">
             <summary>Prints information about the response for debugging purposes.</summary>
         </member>
-        <member name="T:CotcSdk.UnityHttpClient">
+        <member name="T:CotcSdk.MonoHttpClient">
             Former Unity HTTP client, based on the standard .NET framework classes (HttpWebRequest).
             
             Since this class is not really supported (compared to the WWW class which is supposed to be the standard
             but unsufficient), it causes a lot of problems on some platforms and we're happy to get rid of it.
         </member>
-        <member name="M:CotcSdk.UnityHttpClient.GetRequestStreamCallback(System.IAsyncResult)">
+        <member name="M:CotcSdk.MonoHttpClient.GetRequestStreamCallback(System.IAsyncResult)">
             <summary>Got a network stream to write to.</summary>
         </member>
-        <member name="M:CotcSdk.UnityHttpClient.RespCallback(System.IAsyncResult)">
+        <member name="M:CotcSdk.MonoHttpClient.RespCallback(System.IAsyncResult)">
             <summary>Called when a response has been received by the HttpWebRequest.</summary>
         </member>
-        <member name="M:CotcSdk.UnityHttpClient.ReadCallBack(System.IAsyncResult)">
+        <member name="M:CotcSdk.MonoHttpClient.ReadCallBack(System.IAsyncResult)">
             <summary>Reads the response buffer little by little.</summary>
         </member>
-        <member name="T:CotcSdk.UnityHttpClient.RequestState">
+        <member name="T:CotcSdk.MonoHttpClient.RequestState">
             <summary>Asynchronous request state.</summary>
         </member>
-        <member name="M:CotcSdk.UnityHttpClient.RequestState.LogRequest">
+        <member name="M:CotcSdk.MonoHttpClient.RequestState.LogRequest">
             <summary>Prints the current request for user convenience.</summary>
         </member>
-        <member name="M:CotcSdk.UnityHttpClient.RequestState.LogResponse(CotcSdk.HttpResponse)">
+        <member name="M:CotcSdk.MonoHttpClient.RequestState.LogResponse(CotcSdk.HttpResponse)">
             <summary>Prints information about the response for debugging purposes.</summary>
         </member>
         <member name="T:CotcSdk.ConfiguredProduct">
