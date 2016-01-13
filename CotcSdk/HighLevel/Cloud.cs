@@ -78,8 +78,7 @@ namespace CotcSdk
 			this.ApiSecret = apiSecret;
 			this.Server = environment;
 			LoadBalancerCount = loadBalancerCount;
-			Managers.SetHttpClientType(httpType);
-			Managers.HttpClient.VerboseMode = httpVerbose;
+			Managers.SetHttpClientParams(httpType, httpVerbose);
 			HttpTimeoutMillis = httpTimeout * 1000;
 			UserAgent = String.Format(Common.UserAgent, Managers.SystemFunctions.GetOsName(), Cloud.SdkVersion);
 		}

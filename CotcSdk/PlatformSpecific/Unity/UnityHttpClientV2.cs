@@ -10,7 +10,6 @@ namespace CotcSdk {
 	 * Better HTTP client based on UnityEngine.Experimental.Networking.UnityWebRequest.
 	 */
 	internal class UnityHttpClientV2 : HttpClient {
-		private int RequestCount = 0;
 
 		/// <summary>Asynchronous request state.</summary>
 		private class UnityRequest : WebRequest {
@@ -53,7 +52,7 @@ namespace CotcSdk {
 
 			/// <summary>Prints the current request for user convenience.</summary>
 			internal void LogRequest() {
-				if (!self.VerboseMode) { return; }
+				if (!VerboseMode) { return; }
 
 				StringBuilder sb = new StringBuilder();
 				sb.AppendLine("[" + RequestId + "] " + Request.method + "ing on " + Request.url);
@@ -69,7 +68,7 @@ namespace CotcSdk {
 
 			/// <summary>Prints information about the response for debugging purposes.</summary>
 			internal void LogResponse(HttpResponse response) {
-				if (!self.VerboseMode) { return; }
+				if (!VerboseMode) { return; }
 
 				StringBuilder sb = new StringBuilder();
 				sb.AppendLine("[" + RequestId + "] " + response.StatusCode + " on " + Request.method + "ed on " + Request.url);

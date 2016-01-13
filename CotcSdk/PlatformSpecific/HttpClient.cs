@@ -42,7 +42,9 @@ namespace CotcSdk
 			}
 		}
 
-		public bool VerboseMode { get; set; }
+		public static int RequestCount { get; set; }
+
+		public static bool VerboseMode { get; set; }
 		#endregion
 
 		#region To be overriden

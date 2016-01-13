@@ -9,7 +9,7 @@ namespace CotcSdk
 			UnityHttpClient = new UnityHttpClientV2();
 			Logger = UnityLogger.Instance;
 			SystemFunctions = new UnitySystemFunctions();
-			SetHttpClientType(0);
+			SetHttpClientParams(0, false);
 		}
 
 		internal static ILogger Logger {
@@ -40,12 +40,14 @@ namespace CotcSdk
 
 		/// <summary>Defines the type of HTTP client./// </summary>
 		/// <param name="type">0 = HttpWebRequest, 1 = UnityWebRequest.</param>
-		public static void SetHttpClientType(int type) {
+		/// <param name="verboseMode">true to enable verbose logging of every request, false otherwise.</param>
+		public static void SetHttpClientParams(int type, bool verboseMode) {
 			switch (type) {
 				case 0: HttpClient = MonoHttpClient; break;
 				case 1: HttpClient = UnityHttpClient; break;
 				default: throw new ArgumentException("Invalid HTTP client type. Must be between 0 and 1.");
 			}
+			HttpClient.VerboseMode = verboseMode;
 		}
 
 		private static HttpClient MonoHttpClient;

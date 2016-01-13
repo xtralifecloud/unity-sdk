@@ -16,7 +16,6 @@ namespace CotcSdk
 	 */
 	internal class MonoHttpClient : HttpClient {
 		private const int ConcurrentHttpRequestLimit = 100;
-		private int RequestCount = 0;
 
 		/// <summary>Asynchronous request state.</summary>
 		private class RequestState: WebRequest {
@@ -48,7 +47,7 @@ namespace CotcSdk
 
 			/// <summary>Prints the current request for user convenience.</summary>
 			internal void LogRequest() {
-				if (!self.VerboseMode) { return; }
+				if (!VerboseMode) { return; }
 
 				StringBuilder sb = new StringBuilder();
 				HttpWebRequest request = Request;
@@ -65,7 +64,7 @@ namespace CotcSdk
 
 			/// <summary>Prints information about the response for debugging purposes.</summary>
 			internal void LogResponse(HttpResponse response) {
-				if (!self.VerboseMode) { return; }
+				if (!VerboseMode) { return; }
 
 				StringBuilder sb = new StringBuilder();
 				HttpWebRequest req = Request;
