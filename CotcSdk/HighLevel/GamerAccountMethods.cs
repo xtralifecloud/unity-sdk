@@ -64,6 +64,10 @@ namespace CotcSdk
 			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/convert");
 			req.BodyJson = config;
 			return Common.RunInTask<Done>(req, (response, task) => {
+				// Update the linked gamer instance with the additional parameters
+				if (response.BodyJson.Has("gamer")) {
+					Gamer.Update(response.BodyJson["gamer"]);
+				}
 				task.PostResult(new Done(response.BodyJson));
 			});
 		}

@@ -138,6 +138,26 @@ public class CloudTests : TestBase {
 		});
 	}
 
+	[Test("Tests the auto-modification of the gamer object when converting the account")]
+	public void ShouldModifyGamerAfterConvertingAccount(Cloud cloud) {
+		Gamer[] gamer = new Gamer[1];
+		// Create an anonymous account
+		cloud.LoginAnonymously()
+		// Then convert it to e-mail
+		.Then(g => {
+			gamer[0] = g;
+			return g.Account.Convert(
+				network: LoginNetwork.Email,
+				networkId: RandomEmailAddress(),
+				networkSecret: "Password123");
+		})
+		.Then(done => {
+			Assert(gamer[0].Network == LoginNetwork.Email, "The gamer object failed to change");
+			CompleteTest();
+		})
+		.CompleteTestIfSuccessful();
+	}
+
 	[Test("Checks the 'find user' functionality.")]
 	public void ShouldCheckIfUserExists(Cloud cloud) {
 		// Ensures that a fake account has been created

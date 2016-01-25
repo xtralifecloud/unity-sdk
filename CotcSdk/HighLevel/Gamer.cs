@@ -124,15 +124,7 @@ namespace CotcSdk
 		/// <param name="gamerData">Gamer data as returned by our API calls (loginanonymous, etc.).</param>
 		internal Gamer(Cloud parent, Bundle gamerData) : base(gamerData) {
 			Cloud = parent;
-			Network = Common.ParseEnum<LoginNetwork>(gamerData["network"]);
-			NetworkId = gamerData["networkid"];
-			GamerId = gamerData["gamer_id"];
-			GamerSecret = gamerData["gamer_secret"];
-			RegisterTime = Common.ParseHttpDate(gamerData["registerTime"]);
-			Domains = new List<string>();
-			foreach (Bundle domain in gamerData["domains"].AsArray()) {
-				Domains.Add(domain);
-			}
+			Update(gamerData);
 		}
 
 		internal HttpRequest MakeHttpRequest(string path) {
@@ -140,6 +132,18 @@ namespace CotcSdk
 			string authInfo = GamerId + ":" + GamerSecret;
 			result.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
 			return result;
+		}
+
+		internal void Update(Bundle updatedGamerData) {
+			Network = Common.ParseEnum<LoginNetwork>(updatedGamerData["network"]);
+			NetworkId = updatedGamerData["networkid"];
+			GamerId = updatedGamerData["gamer_id"];
+			GamerSecret = updatedGamerData["gamer_secret"];
+			RegisterTime = Common.ParseHttpDate(updatedGamerData["registerTime"]);
+			Domains = new List<string>();
+			foreach (Bundle domain in updatedGamerData["domains"].AsArray()) {
+				Domains.Add(domain);
+			}
 		}
 
 		internal Cloud Cloud;
