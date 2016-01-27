@@ -12,16 +12,24 @@ namespace CotcSdk.FacebookIntegration
 
 		// Use this for initialization
 		void Start() {
-			FB.Init(() => {
-				Common.Log("FB initialized properly.");
-				lock (DoWhenFbLoaded) {
-					foreach (Action a in DoWhenFbLoaded) {
-						a();
-					}
-					DoWhenFbLoaded.Clear();
-					FbIsLoaded = true;
+			// Do not init twice.
+			if (FB.IsInitialized) {
+				Inited();
+			}
+			else {
+				FB.Init(() => Inited());
+			}
+		}
+
+		void OnGUI() {
+			if (!FbIsLoaded) return;
+			lock (DoOnGUI) {
+				// Run pending actions and resolve promises
+				foreach (var a in DoOnGUI) {
+					a();
 				}
-			});
+				DoOnGUI.Clear();
+			}
 		}
 
 		/// <summary>
@@ -34,8 +42,26 @@ namespace CotcSdk.FacebookIntegration
 		/// cloud object.</param>
 		public Promise<Gamer> LoginWithFacebook(Cloud cloud) {
 			var task = new Promise<Gamer>();
-			EnsureFacebookLoaded(() => {
-				List<string> permissions = new List<string>() { "public_profile","email","user_friends" };
+
+			LoginToFacebook(new List<string>() { "public_profile","email","user_friends" }).Then(aToken => {
+				string userId = aToken.UserId, token = aToken.TokenString;
+				Common.Log("Logged in through facebook");
+				cloud.Login(LoginNetwork.Facebook, userId, token)
+					.ForwardTo(task);
+			}).Catch(ex => {
+				task.Reject(ex);
+			});
+			return task;
+		}
+
+		/// <summary>
+		/// Logs in to Facebook and returns an access token (FB API) that can be used to log in with CotC.
+		/// </summary>
+		/// <returns>task returning a facebook access token in case of success.</returns>
+		/// <param name="permissions">List of permissions to request for.</param>
+		public Promise<AccessToken> LoginToFacebook(List<string> permissions) {
+			var task = new Promise<AccessToken>();
+			DoOnGUI.Add(() => {
 				FB.LogInWithReadPermissions(permissions, (ILoginResult result) => {
 					if (result.Error != null) {
 						task.PostResult(ErrorCode.SocialNetworkError, "Facebook/ " + result.Error);
@@ -44,11 +70,7 @@ namespace CotcSdk.FacebookIntegration
 						task.PostResult(ErrorCode.LoginCanceled, "Login canceled");
 					}
 					else {
-						AccessToken aToken = AccessToken.CurrentAccessToken;
-						string userId = aToken.UserId, token = aToken.TokenString;
-						Common.Log("Logged in through facebook");
-						cloud.Login(LoginNetwork.Facebook, userId, token)
-							.ForwardTo(task);
+						task.PostResult(AccessToken.CurrentAccessToken);
 					}
 				});
 			});
@@ -75,6 +97,34 @@ namespace CotcSdk.FacebookIntegration
 				})
 				.Catch(ex => {
 					task.PostResult(ErrorCode.SocialNetworkError, "Facebook request failed");
+				});
+			});
+			return task;
+		}
+
+		/// <summary>Shares a short story consisting of a link and some information on facebook.</summary>
+		/// <returns>A promise with a bundle optionally containing {postId: "<the post ID on facebook>"}.</returns>
+		/// <param name="url">The URL to which this post should link.</param>
+		/// <param name="title">The desired title of the content in the link.</param>
+		/// <param name="description">A short description, rendered below title in the story.</param>
+		/// <param name="photoUrl">A URL for the thumbnail image that appears on the post.</param>
+		public Promise<Bundle> ShareLink(string url = null, string title = "", string description = "", string photoUrl = null) {
+			var task = new Promise<Bundle>();
+			DoOnGUI.Add(() => {
+				Uri uri = url != null ? new Uri(url) : null;
+				Uri photoUri = photoUrl != null ? new Uri(photoUrl) : null;
+				FB.ShareLink(uri, title, description, photoUri, shareResult => {
+					if (shareResult.Cancelled || !String.IsNullOrEmpty(shareResult.Error)) {
+						task.PostResult(ErrorCode.Canceled, "Facebook share canceled");
+					}
+					else if (!String.IsNullOrEmpty(shareResult.PostId)) {
+						// Print post identifier of the shared content
+						task.PostResult(Bundle.CreateObject("postId", shareResult.PostId));
+					}
+					else {
+						// Share succeeded without postID
+						task.PostResult(Bundle.Empty);
+					}
 				});
 			});
 			return task;
@@ -136,7 +186,21 @@ namespace CotcSdk.FacebookIntegration
 			}
 		}
 
+		private void Inited() {
+			Common.Log("FB initialized properly.");
+			lock (DoWhenFbLoaded) {
+				foreach (Action a in DoWhenFbLoaded) {
+					a();
+				}
+				DoWhenFbLoaded.Clear();
+				FbIsLoaded = true;
+			}
+		}
+
 		private List<Action> DoWhenFbLoaded = new List<Action>();
+		// Required because of facebook 7.3.0's bugs on Unity 5.
+		// Executing methods here also mean that they wait for facebook initialization.
+		private List<Action> DoOnGUI = new List<Action>();
 		private bool FbIsLoaded = false;
 		#endregion
 	}

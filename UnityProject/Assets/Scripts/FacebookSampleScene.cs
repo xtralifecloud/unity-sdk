@@ -11,7 +11,6 @@ public class FacebookSampleScene : MonoBehaviour {
 	private Gamer Gamer;
 	// When a gamer is logged in, the loop is launched for domain private. Only one is run at once.
 	private DomainEventLoop Loop;
-	private bool ShouldBringLoginDialog;
 
 	// Use this for initialization
 	void Start() {
@@ -40,30 +39,15 @@ public class FacebookSampleScene : MonoBehaviour {
 			Debug.Log("Setup done");
 		});
 	}
-
-	void OnGUI() {
-		if (ShouldBringLoginDialog) {
-			var fb = FindObjectOfType<CotcFacebookIntegration>();
-			ShouldBringLoginDialog = false;
-			if (fb == null) {
-				Debug.LogError("Please put the CotcFacebookIntegration prefab in your scene!");
-				return;
-			}
-			fb.LoginWithFacebook(Cloud).Done(this.DidLogin);
-		}
-	}
-
+		
 	// Signs in with facebook
 	public void DoLoginWithFacebook() {
-		ShouldBringLoginDialog = true;
+		var fb = GetFacebookObject();
+		fb.LoginWithFacebook(Cloud).Done(this.DidLogin);
 	}
 
 	public void DoAddFacebookFriends() {
-		var fb = FindObjectOfType<CotcFacebookIntegration>();
-		if (fb == null) {
-			Debug.LogError("Please put the CotcFacebookIntegration prefab in your scene!");
-			return;
-		}
+		var fb = GetFacebookObject();
 		// List facebook friends
 		fb.FetchFriends(Gamer).Done(result => {
 			foreach (SocialNetworkFriend f in result.ByNetwork[LoginNetwork.Facebook]) {
@@ -80,6 +64,21 @@ public class FacebookSampleScene : MonoBehaviour {
 		});
 	}
 
+	public void DoShareLink() {
+		var fb = GetFacebookObject();
+		fb.ShareLink(
+			url: "http://www.clanofthecloud.com/",
+			title: "Clan of the Cloud",
+			description: "The only gaming backend you will ever need: we have all the features you would expect…",
+			photoUrl: "http://static1.squarespace.com/static/564a1147e4b05d65636f5465/t/567017831115e08104c4327b/1453458442937/?format=1500w")
+		.Catch(ex => {
+			Debug.LogWarning("Sharing failed: " + ex.ToString());
+		})
+		.Done(result => {
+			Debug.Log("Shared facebook story. ID is: " + result["postId"]);
+		});
+	}
+
 	// Invoked when any sign in operation has completed
 	private void DidLogin(Gamer newGamer) {
 		if (Gamer != null) {
@@ -90,6 +89,14 @@ public class FacebookSampleScene : MonoBehaviour {
 		Loop = Gamer.StartEventLoop();
 		Loop.ReceivedEvent += Loop_ReceivedEvent;
 		Debug.Log("Signed in successfully (ID = " + Gamer.GamerId + ")");
+	}
+
+	private CotcFacebookIntegration GetFacebookObject() {
+		var fb = FindObjectOfType<CotcFacebookIntegration>();
+		if (fb == null) {
+			throw new UnityException("Please put the CotcFacebookIntegration prefab in your scene!");
+		}
+		return fb;
 	}
 
 	private void Loop_ReceivedEvent(DomainEventLoop sender, EventLoopArgs e) {

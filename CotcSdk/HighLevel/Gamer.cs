@@ -144,6 +144,7 @@ namespace CotcSdk
 			foreach (Bundle domain in updatedGamerData["domains"].AsArray()) {
 				Domains.Add(domain);
 			}
+			Props = updatedGamerData;
 		}
 
 		internal Cloud Cloud;
