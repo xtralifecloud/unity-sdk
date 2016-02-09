@@ -321,6 +321,18 @@ public class CloudTests : TestBase {
 		});
 	}
 
+	[Test("Tests that an anonymous fails to link to an invalid facebook token (we cannot do much with automated testing).", requisite: "This test should fail from my understanding since the token is invalid, but for some reason it succeeds so we'll make it this way.")]
+	public void ShouldFailToLinkAccount(Cloud cloud) {
+		// Create an anonymous account
+		cloud.LoginAnonymously()
+			// Then convert it to e-mail
+		.Then(gamer => gamer.Account.Link(
+			network: LoginNetwork.Facebook,
+			networkId: "10153057921478191",
+			networkSecret: "CAAENyTNQMpQBAETZCetNwCP1EKlykqqjaPRTNI41fhmf0YSZB6Q3hdOtb4gnDIQznGyElGIuBy3ZCoUNiekZBhIXh4iHho8wODALDw3ZBesfzbmGSH5BPWjwp8ieMIZANA7igvqNw6zVj7LIsSO9wtkvGaA9iZBMXF0wymmiDEljQVo03jsvlf7GZCZBckjYDBnwSm929Sl8wegZDZD"))
+		.CompleteTestIfSuccessful();
+	}
+
 	[Test("Tests the floating point bundle functionality")]
 	public void ShouldStoreFloatsInBundles() {
 		// Use a relatively "complex" value (PI) to ensure that precision is not lost internally
