@@ -1195,15 +1195,6 @@
             @ingroup model_classes
             <summary>Wraps information about a list of friends coming from a social network.</summary>
         </member>
-        <member name="T:CotcSdk.UploadResult">
-            <summary>
-            If an object of this type is returned, then it means that the thing was uploaded successfully.
-            You can get the URL using the Url member.
-            </summary>
-        </member>
-        <member name="P:CotcSdk.UploadResult.Url">
-            <summary>The URL to which the content was uploaded.</summary>
-        </member>
         <member name="T:CotcSdk.UserInfo">
             @ingroup model_classes
             <summary>

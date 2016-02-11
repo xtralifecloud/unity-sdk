@@ -62,7 +62,6 @@ public class VfsTests: TestBase {
 			byte[] data = { 1, 2, 3, 4 };
 			gamer.GamerVfs.SetKeyBinary("testkey", data)
 			.ExpectSuccess(setRes => {
-				Assert(!string.IsNullOrEmpty(setRes.Url), "The URL should be returned");
 				gamer.GamerVfs.GetKeyBinary("testkey")
 				.ExpectSuccess(getRes => {
 					Assert(getRes.Length == 4, "Wrong key length");

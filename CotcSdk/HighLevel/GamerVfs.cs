@@ -79,11 +79,11 @@ namespace CotcSdk {
 		/// <returns>Promise resolved when the operation has completed.</returns>
 		/// <param name="key">The name of the key to set the value for.</param>
 		/// <param name="binaryData">The value to set as binary data.</param>
-		public Promise<UploadResult> SetKeyBinary(string key, byte[] binaryData) {
+		public Promise<Done> SetKeyBinary(string key, byte[] binaryData) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key).QueryParam("binary");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "PUT";
-			return Common.RunInTask<UploadResult>(req, (response, task) => {
+			return Common.RunInTask<Done>(req, (response, task) => {
 				// Now we have an URL to upload the data to
 				HttpRequest binaryRequest = new HttpRequest();
 				binaryRequest.Url = response.BodyJson["putURL"];
@@ -93,7 +93,7 @@ namespace CotcSdk {
 				binaryRequest.TimeoutMillisec = Gamer.Cloud.HttpTimeoutMillis;
 				binaryRequest.UserAgent = Gamer.Cloud.UserAgent;
 				Common.RunRequest(binaryRequest, task, binaryResponse => {
-					task.Resolve(new UploadResult(response.BodyJson, binaryRequest.Url));
+					task.Resolve(new Done(true));
 				}, forceClient: Managers.UnityHttpClient);
 			});
 		}
