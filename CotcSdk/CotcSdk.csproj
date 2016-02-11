@@ -77,6 +77,7 @@
     <Compile Include="HighLevel\Model\GamerOutline.cs" />
     <Compile Include="HighLevel\Model\Done.cs" />
     <Compile Include="HighLevel\Model\SocialNetworkFriendResponse.cs" />
+    <Compile Include="HighLevel\Model\UploadResult.cs" />
     <Compile Include="HighLevel\Model\UserInfo.cs" />
     <Compile Include="HighLevel\Model\GamerInfo.cs" />
     <Compile Include="HighLevel\Model\GamerProfile.cs" />
