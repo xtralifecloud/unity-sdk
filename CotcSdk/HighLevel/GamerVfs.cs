@@ -93,7 +93,7 @@ namespace CotcSdk {
 				binaryRequest.TimeoutMillisec = Gamer.Cloud.HttpTimeoutMillis;
 				binaryRequest.UserAgent = Gamer.Cloud.UserAgent;
 				Common.RunRequest(binaryRequest, task, binaryResponse => {
-					task.Resolve(new Done(true));
+					task.Resolve(new Done(response.BodyJson));
 				}, forceClient: Managers.UnityHttpClient);
 			});
 		}
