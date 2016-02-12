@@ -208,7 +208,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ ! -e \"$BUILD_DIR/$CONFIGURATION-iphoneos/libCotcInappPurchase.a\" ] || [ ! -e \"$BUILD_DIR/$CONFIGURATION-iphonesimulator/libCotcInappPurchase.a\" ]\nthen\n\techo \"Missing files. Make sure that the library has been built for both iPhone simulator and iPhone OS\"\n\texit -1\nfi\n\nmkdir -p \"$PROJECT_DIR/../../../UnityProject/Assets/Plugins/iOS\"\n/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/lipo -create \"$BUILD_DIR/$CONFIGURATION-iphoneos/libCotcInappPurchase.a\"  \"$BUILD_DIR/$CONFIGURATION-iphonesimulator/libCotcInappPurchase.a\"  -output \"$PROJECT_DIR/../../../UnityProject/Assets/Plugins/iOS/libCotcInappPurchase.a\"\nif [ $? -ne 0 ]; then\n    echo \"Fat library creation borked build process. Library is NOT up to date.\"\nfi\n";
+			shellScript = "if [ ! -e \"$BUILD_DIR/$CONFIGURATION-iphoneos/libCotcInappPurchase.a\" ] || [ ! -e \"$BUILD_DIR/$CONFIGURATION-iphonesimulator/libCotcInappPurchase.a\" ]\nthen\n\techo \"Missing files. Make sure that the library has been built for both iPhone simulator and iPhone OS\"\n\texit -1\nfi\n\nmkdir -p \"$PROJECT_DIR/../../../UnityProject/Assets/Plugins/iOS\"\n/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo -create \"$BUILD_DIR/$CONFIGURATION-iphoneos/libCotcInappPurchase.a\"  \"$BUILD_DIR/$CONFIGURATION-iphonesimulator/libCotcInappPurchase.a\"  -output \"$PROJECT_DIR/../../../UnityProject/Assets/Plugins/iOS/libCotcInappPurchase.a\"\nif [ $? -ne 0 ]; then\n    echo \"Fat library creation borked build process. Library is NOT up to date.\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
