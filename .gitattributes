@@ -1,9 +1,40 @@
 # Explicitly declare text files you want to always be normalized and converted
 # to native line endings on checkout.
 * text eol=lf
+
 *.c text
 *.h text
 *.cpp text
 *.hpp text
 *.m text
 *.mm text
+
+*.cs text
+
+*.csproj text
+*.sln text
+
+*.xcodeproj text
+*.plist text
+
+*.sh text
+*.bat text
+
+*.md text
+*.txt text
+*.xml text
+*.html text
+*.css text
+
+*.iml text
+*.java text
+*.properties text
+
+*.gradle text
+
+*.png binary
+*.a binary
+*.bundle binary
+*.aar binary
+*.unity binary
+*.asset binary
