@@ -1,8 +1,8 @@
 ## Downloading & Installing
 
-Open [Releases](https://github.com/clanofthecloud/unity-sdk/releases) and download the latest Unity package.
+Open [Releases](https://github.com/xtralifecloud/unity-sdk/releases) and download the latest Unity package.
 
-Read the [Documentation](http://clanofthecloud.github.io/unity-sdk/) to get started.
+Read the [Documentation](http://xtralifecloud.github.io/unity-sdk/) to get started.
 
 ## Support
 
