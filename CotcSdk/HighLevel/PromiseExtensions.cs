@@ -3,7 +3,7 @@ namespace CotcSdk {
 
 	public static class PromiseExtensions {
 		public static Promise<T> ForwardTo<T>(this Promise<T> promise, Promise<T> otherTask) {
-			return promise.Then(result => otherTask.Resolve(result))
+			return promise.Then(delegate(T result) { otherTask.Resolve(result); })
 				.Catch(ex => otherTask.Reject(ex));
 		}
 
