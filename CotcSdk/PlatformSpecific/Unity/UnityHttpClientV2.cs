@@ -3,7 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+
+#if UNITY_5_4_OR_NEWER
+using UnityEngine.Networking;
+#else
 using UnityEngine.Experimental.Networking;
+#endif
 
 namespace CotcSdk {
 	/**

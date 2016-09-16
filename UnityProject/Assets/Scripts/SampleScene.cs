@@ -3,7 +3,12 @@ using System.Collections;
 using CotcSdk;
 using UnityEngine.UI;
 using System;
+
+#if UNITY_5_4_OR_NEWER
+using UnityEngine.Networking;
+#else
 using UnityEngine.Experimental.Networking;
+#endif
 
 public class SampleScene : MonoBehaviour {
 	// The cloud allows to make generic operations (non user related)
