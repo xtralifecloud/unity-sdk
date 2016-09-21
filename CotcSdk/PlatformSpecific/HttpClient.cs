@@ -178,10 +178,13 @@ namespace CotcSdk
 		private static void TimeoutCallback(object state, bool timedOut) { 
 			if (timedOut) {
 				WebRequest requestState = state as WebRequest;
-				requestState.AbortRequest();
-				HttpResponse response = new HttpResponse(new HttpTimeoutException());
-				Common.LogWarning("Request timed out");
-				requestState.Client.FinishWithRequest(requestState, response);
+				if (!requestState.Aborted) {
+					requestState.Aborted = true;
+					requestState.AbortRequest();
+					HttpResponse response = new HttpResponse(new HttpTimeoutException());
+					Common.LogWarning("Request timed out");
+					requestState.Client.FinishWithRequest(requestState, response);
+				}
 			}
 		}
 
