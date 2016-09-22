@@ -38,7 +38,7 @@ namespace CotcSdk {
 			[SerializeField]
 			public int HttpTimeout = 60;
 			[SerializeField]
-			public int HttpClientType = 0;
+			public int HttpClientType = 1;
 		}
 
 		[SerializeField]
