@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace CotcSdk {
-
 	internal class HttpRequest {
 		public enum Policy {
 			AllErrors,
