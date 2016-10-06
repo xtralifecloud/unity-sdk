@@ -6,6 +6,10 @@ using System.Text;
 using System.Threading;
 using UnityEngine;
 
+#if WINDOWS_UWP
+using System.Threading.Tasks;
+#endif
+
 namespace CotcSdk
 {
 	/**
@@ -122,8 +126,12 @@ namespace CotcSdk
 						if (eventArgs.RetryDelay < 0) throw new InvalidOperationException("HTTP request failed handler called but didn't tell what to do next.");
 						if (eventArgs.RetryDelay > 0) {
 							Common.LogWarning("[" + state.RequestId + "] Request failed, retrying in " + eventArgs.RetryDelay + "ms.");
-							Thread.Sleep(eventArgs.RetryDelay);
-							ChooseLoadBalancer(state.OriginalRequest);
+                            #if WINDOWS_UWP
+                            Task.Delay(TimeSpan.FromSeconds((double)eventArgs.RetryDelay));
+                            #else
+                            Thread.Sleep(eventArgs.RetryDelay);
+                            #endif
+                            ChooseLoadBalancer(state.OriginalRequest);
 							ProcessRequest(state.OriginalRequest, eventArgs.UserData);
 							return;
 						}
@@ -170,9 +178,19 @@ namespace CotcSdk
 
 			// Setup timeout
 			if (request.TimeoutMillisec > 0) {
-				ThreadPool.RegisterWaitForSingleObject(AllDone, new WaitOrTimerCallback(TimeoutCallback), state, request.TimeoutMillisec, true);
-			}
-		}
+                #if WINDOWS_UWP
+                Task.Run(async delegate
+                {
+                    // Wait for the timeout
+                    await Task.Delay(request.TimeoutMillisec);
+                    // Call timeout callback if request is not already finished
+                    TimeoutCallback(state, state.AlreadyFinished);
+                });
+                #else
+                ThreadPool.RegisterWaitForSingleObject(AllDone, new WaitOrTimerCallback(TimeoutCallback), state, request.TimeoutMillisec, true);
+                #endif
+            }
+        }
 
 		/// <summary>Called upon timeout.</summary>
 		private static void TimeoutCallback(object state, bool timedOut) { 

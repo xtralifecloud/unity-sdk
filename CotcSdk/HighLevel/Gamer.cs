@@ -130,8 +130,13 @@ namespace CotcSdk
 		internal HttpRequest MakeHttpRequest(string path) {
 			HttpRequest result = Cloud.MakeUnauthenticatedHttpRequest(path);
 			string authInfo = GamerId + ":" + GamerSecret;
-			result.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
-			return result;
+            #if WINDOWS_UWP
+            result.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(authInfo));
+            #else
+            // TODO Use UTF8 instead of Default?
+            result.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+            #endif
+            return result;
 		}
 
 		internal void Update(Bundle updatedGamerData) {

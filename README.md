@@ -21,11 +21,9 @@ The steps involved are:
 - Use the CLI sample project to run the integration tests
 - Build a unity package from the same project
 
-
 #### Build the CotcSdk solution
 
 This should be very simple. Just open the sln file under the CotcSdk directory.
-
 
 ### Additional plugins
 
@@ -39,6 +37,36 @@ This should be very simple. Just open the sln file under the CotcSdk directory.
 ### Distributing the library
 
 Use the editor menu, click `CotC` and then `Build Release Packages`.
+
+## Using the library with Universal Windows Platform (UWP) Unity projects
+
+In order to ensure compatibility between Unity UWP generated projects and the CotcSdk library, a few steps are needed...
+
+### Building the libraries
+
+When you build the entire CotcSdk solution, you'll end up with 3 library files:
+- `[SolutionPath]\bin`: the `standard` Sdk library DLL
+- `[SolutionPath]\CotcSdk-Editor\bin`: the `standard editor` Sdk library DLL (Unity editor part)
+- `[SolutionPath]\CotcSdk-UniversalWindows\bin`: the `UWP compatible` Sdk library DLL
+
+### Using the libraries
+
+Basicly, because Windows Store Apps use special Runtime APIs, you'll need 2 different libraries: the `UWP compatible` one to build a Windows Store App, and the `standard` one which will act as a placeholder to be able to compile Unity projects directly in the editor (there is no such considers about the `-editor` library).
+
+For this to work, a few steps are involved:
+- Put the `standard library` in the `[UnityProjectPath]\Assets\Plugins` folder
+- Put the `standard editor library` in the `[UnityProjectPath]\Assets\Plugins\Editor` folder
+- Put the `UWP compatible library` in the `[UnityProjectPath]\Assets\Plugins\WSA` folder
+(It is crucial that both the `standard` and `UWP compatible` libraries are identically named and share the same assembly version for the placeholder to work: e.g. `CotcSdk.dll`)
+- In the Unity editor, select the `Assets\Plugins\CotcSdk.dll` file and make sure all platforms BUT `WSAPlayer` are ticked
+- Select the `Assets\Plugins\WSA\CotcSdk.dll` file and make sure the `WSAPlayer` platform is the ONLY ONE ticked, then select `Assets\Plugins\CotcSdk.dll` as the placeholder
+
+For further informations, please check out this link to official Unity's manual about Windows Store Apps plugins integration: https://docs.unity3d.com/Manual/windowsstore-plugins.html
+
+### Enabling the Internet Client app capability
+
+Don't forget to allow your app to access the Internet:
+- In the Unity editor, go to `Edit >> Project Settings >> Player`; Hit the `Windows Store Apps settings` tab, then in the `Publishing Settings` section search for `Capabilities` and tick the `InternetClient` capability. This will allow Unity to automatically add this capability in the `Package.appxmanifest` file generated on your Unity project build for UWP.
 
 ## Running integration tests
 
@@ -77,4 +105,3 @@ After creating a new group of tests, you need to update the `RunAllTests.cs` scr
 		typeof(CloudTests),```
 
 You just need to add the new class in there. Try to respect the alphabetical ordering.
-

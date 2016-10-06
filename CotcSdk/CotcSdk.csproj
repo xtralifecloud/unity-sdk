@@ -143,8 +143,8 @@
 if $(ConfigurationName) == Debug (
     copy $(TargetDir)\CotcSdk.dll $(SolutionDir)..\UnityProject\Assets\Plugins\CotcSdk-Debug.dll
 ) else (
-    copy $(TargetDir)\CotcSdk.dll $(SolutionDir)..\UnityProject\Assets\Plugins\
-    copy $(TargetDir)\CotcSdk.XML $(SolutionDir)..\UnityProject\Assets\Plugins\
+    copy $(TargetDir)\CotcSdk.dll $(SolutionDir)..\UnityProject\Assets\Plugins\CotcSdk.dll
+    copy $(TargetDir)\CotcSdk.XML $(SolutionDir)..\UnityProject\Assets\Plugins\CotcSdk.xml
 )</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

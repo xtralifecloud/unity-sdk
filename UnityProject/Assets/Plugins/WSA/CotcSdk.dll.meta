@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: a4bb178865f594be68312d0ccba2eb51
-timeCreated: 1452605836
+guid: 6dd30a0adcc2df54289103d8a62b9a6c
+timeCreated: 1475586252
 licenseType: Free
 PluginImporter:
   serializedVersion: 1
@@ -9,60 +9,52 @@ PluginImporter:
   isPreloaded: 0
   platformData:
     Android:
-      enabled: 1
+      enabled: 0
       settings:
         CPU: AnyCPU
     Any:
       enabled: 0
       settings: {}
     Editor:
-      enabled: 1
+      enabled: 0
       settings:
         CPU: AnyCPU
         DefaultValueInitialized: true
         OS: AnyOS
     Linux:
-      enabled: 1
+      enabled: 0
       settings:
         CPU: x86
     Linux64:
-      enabled: 1
+      enabled: 0
       settings:
         CPU: x86_64
-    LinuxUniversal:
-      enabled: 1
-      settings:
-        CPU: AnyCPU
     OSXIntel:
-      enabled: 1
-      settings:
-        CPU: AnyCPU
-    OSXIntel64:
-      enabled: 1
-      settings:
-        CPU: AnyCPU
-    OSXUniversal:
-      enabled: 1
-      settings:
-        CPU: AnyCPU
-    Win:
-      enabled: 1
-      settings:
-        CPU: AnyCPU
-    Win64:
-      enabled: 1
-      settings:
-        CPU: AnyCPU
-    WindowsStoreApps:
       enabled: 0
       settings:
         CPU: AnyCPU
+    OSXIntel64:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
+    Win:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
+    Win64:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
+    WindowsStoreApps:
+      enabled: 1
+      settings:
+        CPU: AnyCPU
         DontProcess: False
-        PlaceholderPath: 
+        PlaceholderPath: Assets/Plugins/CotcSdk.dll
         SDK: AnySDK
         ScriptingBackend: AnyScriptingBackend
     iOS:
-      enabled: 1
+      enabled: 0
       settings:
         CompileFlags: 
         FrameworkDependencies: 

@@ -374,7 +374,11 @@ namespace LitJson
             end_of_json  = true;
 
             if (reader_is_owned)
-                reader.Close ();
+                #if WINDOWS_UWP
+                reader.Dispose();
+                #else
+                reader.Close();
+                #endif
 
             reader = null;
         }

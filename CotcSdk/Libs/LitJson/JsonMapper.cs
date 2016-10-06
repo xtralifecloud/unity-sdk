@@ -168,8 +168,13 @@ namespace LitJson
 
             data.IsArray = type.IsArray;
 
+            #if WINDOWS_UWP
+            if (typeof(IList).IsAssignableFrom(type) && type.GetTypeInfo().IsClass)
+                data.IsList = true;
+            #else
             if (type.GetInterface ("System.Collections.IList") != null)
                 data.IsList = true;
+            #endif
 
             foreach (PropertyInfo p_info in type.GetProperties ()) {
                 if (p_info.Name != "Item")
@@ -200,9 +205,14 @@ namespace LitJson
 
             ObjectMetadata data = new ObjectMetadata ();
 
+            #if WINDOWS_UWP
+            if (typeof(IDictionary).IsAssignableFrom(type) && type.GetTypeInfo().IsClass)
+                data.IsDictionary = true;
+            #else
             if (type.GetInterface ("System.Collections.IDictionary") != null)
                 data.IsDictionary = true;
-
+            #endif
+            
             data.Properties = new Dictionary<string, PropertyMetadata> ();
 
             foreach (PropertyInfo p_info in type.GetProperties ()) {
@@ -310,7 +320,11 @@ namespace LitJson
 
             if (reader.Token == JsonToken.Null) {
 
-                if (! inst_type.IsClass)
+                #if WINDOWS_UWP
+                if (!inst_type.GetTypeInfo().IsClass)
+                #else
+                if (!inst_type.IsClass)
+                #endif
                     throw new JsonException (String.Format (
                             "Can't assign null to an instance of type {0}",
                             inst_type));
@@ -352,7 +366,11 @@ namespace LitJson
                 }
 
                 // Maybe it's an enum
+                #if WINDOWS_UWP
+                if (!inst_type.GetTypeInfo().IsEnum)
+                #else
                 if (inst_type.IsEnum)
+                #endif
                     return Enum.ToObject (inst_type, reader.Value);
 
                 // Try using an implicit conversion operator

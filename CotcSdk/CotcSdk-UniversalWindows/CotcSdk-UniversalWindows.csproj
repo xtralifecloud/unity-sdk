@@ -1,0 +1,385 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2E7BC516-5921-4AC9-B957-15C24D5BA27B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CotcSdk</RootNamespace>
+    <AssemblyName>CotcSdk</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\WSA\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\WSA\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <PlatformTarget>ARM</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <PlatformTarget>ARM</PlatformTarget>
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="project.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\HighLevel\Cloud.cs">
+      <Link>HighLevel\Cloud.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Cloud.LoginMethods.cs">
+      <Link>HighLevel\Cloud.LoginMethods.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\CloudIndexing.cs">
+      <Link>HighLevel\CloudIndexing.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Common.cs">
+      <Link>HighLevel\Common.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Cotc.cs">
+      <Link>HighLevel\Cotc.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Cotc.Events.cs">
+      <Link>HighLevel\Cotc.Events.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\CotcException.cs">
+      <Link>HighLevel\CotcException.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\CotcGameObject.cs">
+      <Link>HighLevel\CotcGameObject.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\DomainEventLoop.cs">
+      <Link>HighLevel\DomainEventLoop.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\DomainEventLoopCoroutine.cs">
+      <Link>HighLevel\DomainEventLoopCoroutine.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\ErrorCode.cs">
+      <Link>HighLevel\ErrorCode.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Game.cs">
+      <Link>HighLevel\Game.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\GameBatches.cs">
+      <Link>HighLevel\GameBatches.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Gamer.cs">
+      <Link>HighLevel\Gamer.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\GamerAccountMethods.cs">
+      <Link>HighLevel\GamerAccountMethods.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\GamerAchievements.cs">
+      <Link>HighLevel\GamerAchievements.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\GamerBatches.cs">
+      <Link>HighLevel\GamerBatches.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\GamerCommunity.cs">
+      <Link>HighLevel\GamerCommunity.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\GamerGodfather.cs">
+      <Link>HighLevel\GamerGodfather.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\GamerMatches.cs">
+      <Link>HighLevel\GamerMatches.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\GamerProfileMethods.cs">
+      <Link>HighLevel\GamerProfileMethods.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\GamerProperties.cs">
+      <Link>HighLevel\GamerProperties.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\GamerScores.cs">
+      <Link>HighLevel\GamerScores.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\GamerStore.cs">
+      <Link>HighLevel\GamerStore.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\GamerTransactions.cs">
+      <Link>HighLevel\GamerTransactions.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\GamerVfs.cs">
+      <Link>HighLevel\GamerVfs.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\GameVfs.cs">
+      <Link>HighLevel\GameVfs.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\HttpRequestFailedEventArgs.cs">
+      <Link>HighLevel\HttpRequestFailedEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Match.cs">
+      <Link>HighLevel\Match.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\MatchInfo.cs">
+      <Link>HighLevel\MatchInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Model\AchievementDefinition.cs">
+      <Link>HighLevel\Model\AchievementDefinition.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Model\ConfiguredProduct.cs">
+      <Link>HighLevel\Model\ConfiguredProduct.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Model\Done.cs">
+      <Link>HighLevel\Model\Done.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Model\GamerInfo.cs">
+      <Link>HighLevel\Model\GamerInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Model\GamerOutline.cs">
+      <Link>HighLevel\Model\GamerOutline.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Model\GamerProfile.cs">
+      <Link>HighLevel\Model\GamerProfile.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Model\IndexResult.cs">
+      <Link>HighLevel\Model\IndexResult.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Model\IndexSearchResult.cs">
+      <Link>HighLevel\Model\IndexSearchResult.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Model\LoginNetwork.cs">
+      <Link>HighLevel\Model\LoginNetwork.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Model\MatchEvents.cs">
+      <Link>HighLevel\Model\MatchEvents.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Model\MatchListResult.cs">
+      <Link>HighLevel\Model\MatchListResult.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Model\PostedGameScore.cs">
+      <Link>HighLevel\Model\PostedGameScore.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Model\PropertiesObject.cs">
+      <Link>HighLevel\Model\PropertiesObject.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Model\PurchaseTransaction.cs">
+      <Link>HighLevel\Model\PurchaseTransaction.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Model\PushNotification.cs">
+      <Link>HighLevel\Model\PushNotification.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Model\Score.cs">
+      <Link>HighLevel\Model\Score.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Model\SocialNetworkFriend.cs">
+      <Link>HighLevel\Model\SocialNetworkFriend.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Model\SocialNetworkFriendResponse.cs">
+      <Link>HighLevel\Model\SocialNetworkFriendResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Model\StoreType.cs">
+      <Link>HighLevel\Model\StoreType.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Model\Transaction.cs">
+      <Link>HighLevel\Model\Transaction.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Model\TransactionResult.cs">
+      <Link>HighLevel\Model\TransactionResult.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Model\UserInfo.cs">
+      <Link>HighLevel\Model\UserInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Model\ValidateReceiptResult.cs">
+      <Link>HighLevel\Model\ValidateReceiptResult.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\NonpagedList.cs">
+      <Link>HighLevel\NonpagedList.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\PagedList.cs">
+      <Link>HighLevel\PagedList.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Promise.cs">
+      <Link>HighLevel\Promise.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\Promise.NonGeneric.cs">
+      <Link>HighLevel\Promise.NonGeneric.cs</Link>
+    </Compile>
+    <Compile Include="..\HighLevel\PromiseExtensions.cs">
+      <Link>HighLevel\PromiseExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Internal\Bundle.cs">
+      <Link>Internal\Bundle.cs</Link>
+    </Compile>
+    <Compile Include="..\Internal\CotcSettings.cs">
+      <Link>Internal\CotcSettings.cs</Link>
+    </Compile>
+    <Compile Include="..\Internal\HttpRequest.cs">
+      <Link>Internal\HttpRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\Internal\HttpResponse.cs">
+      <Link>Internal\HttpResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\Internal\HttpTimeoutException.cs">
+      <Link>Internal\HttpTimeoutException.cs</Link>
+    </Compile>
+    <Compile Include="..\Internal\UrlBuilder.cs">
+      <Link>Internal\UrlBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\BetterJson.cs">
+      <Link>Libs\BetterJson.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\LitJson\IJsonWrapper.cs">
+      <Link>Libs\LitJson\IJsonWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\LitJson\JsonData.cs">
+      <Link>Libs\LitJson\JsonData.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\LitJson\JsonException.cs">
+      <Link>Libs\LitJson\JsonException.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\LitJson\JsonMapper.cs">
+      <Link>Libs\LitJson\JsonMapper.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\LitJson\JsonReader.cs">
+      <Link>Libs\LitJson\JsonReader.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\LitJson\JsonWriter.cs">
+      <Link>Libs\LitJson\JsonWriter.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\LitJson\Lexer.cs">
+      <Link>Libs\LitJson\Lexer.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\LitJson\ParserToken.cs">
+      <Link>Libs\LitJson\ParserToken.cs</Link>
+    </Compile>
+    <Compile Include="..\PlatformSpecific\HttpClient.cs">
+      <Link>PlatformSpecific\HttpClient.cs</Link>
+    </Compile>
+    <Compile Include="..\PlatformSpecific\Interfaces\IHttpClient.cs">
+      <Link>PlatformSpecific\Interfaces\IHttpClient.cs</Link>
+    </Compile>
+    <Compile Include="..\PlatformSpecific\Interfaces\ILogger.cs">
+      <Link>PlatformSpecific\Interfaces\ILogger.cs</Link>
+    </Compile>
+    <Compile Include="..\PlatformSpecific\Interfaces\ISystemFunctions.cs">
+      <Link>PlatformSpecific\Interfaces\ISystemFunctions.cs</Link>
+    </Compile>
+    <Compile Include="..\PlatformSpecific\Managers.cs">
+      <Link>PlatformSpecific\Managers.cs</Link>
+    </Compile>
+    <Compile Include="..\PlatformSpecific\Unity\MonoHttpClient.cs">
+      <Link>PlatformSpecific\Unity\MonoHttpClient.cs</Link>
+    </Compile>
+    <Compile Include="..\PlatformSpecific\Unity\UnityHttpClientV2.cs">
+      <Link>PlatformSpecific\Unity\UnityHttpClientV2.cs</Link>
+    </Compile>
+    <Compile Include="..\PlatformSpecific\Unity\UnityLogger.cs">
+      <Link>PlatformSpecific\Unity\UnityLogger.cs</Link>
+    </Compile>
+    <Compile Include="..\PlatformSpecific\Unity\UnitySystemFunctions.cs">
+      <Link>PlatformSpecific\Unity\UnitySystemFunctions.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Properties\CotcSdk_UniversalWindows.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="WinRTLegacy">
+      <HintPath>Libs\WinRTLegacy.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>md $(SolutionDir)..\UnityProject\Assets\Plugins\WSA
+if $(ConfigurationName) == Debug (
+    copy $(TargetPath) $(SolutionDir)..\UnityProject\Assets\Plugins\WSA\CotcSdk-Debug.dll
+) else (
+    copy $(TargetPath) $(SolutionDir)..\UnityProject\Assets\Plugins\WSA\CotcSdk.dll
+)</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

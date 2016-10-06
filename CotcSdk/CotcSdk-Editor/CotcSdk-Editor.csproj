@@ -57,7 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CotcSdk.csproj">
-      <Project>{BDD85764-D606-4F8F-AEA8-8B5D52EB9D38}</Project>
+      <Project>{bdd85764-d606-4f8f-aea8-8b5d52eb9d38}</Project>
       <Name>CotcSdk</Name>
     </ProjectReference>
   </ItemGroup>
@@ -67,7 +67,7 @@
 if $(ConfigurationName) == Debug (
     copy $(TargetPath) $(SolutionDir)..\UnityProject\Assets\Plugins\Editor\CotcSdk-Editor-Debug.dll
 ) else (
-    copy $(TargetPath) $(SolutionDir)..\UnityProject\Assets\Plugins\Editor\
+    copy $(TargetPath) $(SolutionDir)..\UnityProject\Assets\Plugins\Editor\CotcSdk-Editor.dll
 )</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

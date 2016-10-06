@@ -87,12 +87,17 @@ namespace CotcSdk
 		protected override WebRequest CreateRequest(HttpRequest request, string url, object previousUserData) {
 			HttpWebRequest req = HttpWebRequest.Create(url) as HttpWebRequest;
 
-			// Auto choose HTTP method
-			req.Method = request.Method ?? (request.Body != null ? "POST" : "GET");
-			req.UserAgent = request.UserAgent;
+            // Auto choose HTTP method
+            #if WINDOWS_UWP
+            // TODO Have to find other ways to set those headers/properties: they must be set by properties but those are not available with UWP
+            // (e.g. for User-Agent: The Headers collection contains the protocol headers associated with the request. The User-Agent HTTP header is not stored in the Headers collection but is either set by the system or set by properties or methods.)
+            // (ServicePoint is no longer accessible or doesn't exist anymore)
+            #else
+            req.UserAgent = request.UserAgent;
 			req.KeepAlive = true;
 			req.ServicePoint.ConnectionLimit = ConcurrentHttpRequestLimit;
-			foreach (var pair in request.Headers) {
+            #endif
+            foreach (var pair in request.Headers) {
 				if (String.Compare(pair.Key, "Content-Type", true) == 0)
 					req.ContentType = pair.Value;
 				else
@@ -121,9 +126,13 @@ namespace CotcSdk
 				Stream postStream = state.Request.EndGetRequestStream(asynchronousResult);
 				// Write to the request stream.
 				postStream.Write(state.OriginalRequest.Body, 0, state.OriginalRequest.Body.Length);
-				postStream.Close();
-				// Start the asynchronous operation to get the response
-				state.Request.BeginGetResponse(new AsyncCallback(RespCallback), state);
+                #if WINDOWS_UWP
+                postStream.Dispose();
+                #else
+                postStream.Close();
+                #endif
+                // Start the asynchronous operation to get the response
+                state.Request.BeginGetResponse(new AsyncCallback(RespCallback), state);
 			}
 			catch (WebException e) {
 				Common.Log("Failed to send data: " + e.Message + ", status=" + e.Status);
@@ -144,9 +153,13 @@ namespace CotcSdk
 				// Read the response into a Stream object.
 				Stream responseStream = state.Response.GetResponseStream();
 				state.StreamResponse = responseStream;
-				// Begin reading the contents of the page
-				responseStream.BeginRead(state.BufferRead, 0, RequestState.BufferSize, new AsyncCallback(ReadCallBack), state);
-				return;
+                // Begin reading the contents of the page
+                #if WINDOWS_UWP
+                ReadResponse(state);
+                #else
+                responseStream.BeginRead(state.BufferRead, 0, RequestState.BufferSize, new AsyncCallback(ReadCallBack), state);
+                #endif
+                return;
 			}
 			catch (WebException e) {
 				if (e.Response == null) {
@@ -160,18 +173,58 @@ namespace CotcSdk
 				state.Response = e.Response as HttpWebResponse;
 				Stream responseStream = state.Response.GetResponseStream();
 				state.StreamResponse = responseStream;
+                #if WINDOWS_UWP
+                ReadResponse(state);
+                #else
 				responseStream.BeginRead(state.BufferRead, 0, RequestState.BufferSize, new AsyncCallback(ReadCallBack), state);
-				return;
+                #endif
+                return;
 			}
 			catch (Exception e) {
 				Common.Log("Error: " + e.Message);
 				FinishWithRequest(state, new HttpResponse(e));
 			}
-			if (state.Response != null) { state.Response.Close(); }
-		}
+            if (state.Response != null)
+            {
+                #if WINDOWS_UWP
+                state.Response.Dispose();
+                #else
+                state.Response.Close();
+                #endif
+            }
+        }
 
-		/// <summary>Reads the response buffer little by little.</summary>
-		private void ReadCallBack(IAsyncResult asyncResult) {
+        #if WINDOWS_UWP
+        private async void ReadResponse(RequestState state)
+        {
+            try
+            {
+                await state.StreamResponse.ReadAsync(state.BufferRead, 0, RequestState.BufferSize);
+
+                HttpResponse result = new HttpResponse();
+                HttpWebResponse response = state.Response;
+                result.StatusCode = (int)response.StatusCode;
+
+                foreach (string key in response.Headers)
+                    result.Headers[key] = response.Headers[key];
+
+                // Read the body
+                result.Body = state.ResponseBuffer.ToArray();
+                // Logging
+                state.LogResponse(result);
+                FinishWithRequest(state, result);
+
+                state.StreamResponse.Dispose();
+            }
+            catch (Exception e)
+            {
+                Common.LogWarning("Failed to read response: " + e.ToString());
+                FinishWithRequest(state, new HttpResponse(e));
+            }
+        }
+        #else
+        /// <summary>Reads the response buffer little by little.</summary>
+        private void ReadCallBack(IAsyncResult asyncResult) {
 			RequestState state = asyncResult.AsyncState as RequestState;
 			try {
 				Stream responseStream = state.StreamResponse;
@@ -204,5 +257,6 @@ namespace CotcSdk
 				FinishWithRequest(state, new HttpResponse(e));
 			}
 		}
-	}
+        #endif
+    }
 }
