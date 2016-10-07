@@ -1,3 +1,4 @@
 set bb.build.msbuild.exe=
 for /D %%D in (%SYSTEMROOT%\Microsoft.NET\Framework\v4*) do set msbuild.exe=%%D\MSBuild.exe
-%msbuild.exe% CotcSdk.sln /p:Configuration=Release
+%msbuild.exe% CotcSdk.csproj /p:Configuration=Release;SolutionDir=%cd%\
+%msbuild.exe% CotcSdk-Editor\CotcSdk-Editor.csproj /p:Configuration=Release;SolutionDir=%cd%\
