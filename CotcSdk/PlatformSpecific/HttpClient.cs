@@ -197,11 +197,13 @@ namespace CotcSdk
 			if (timedOut) {
 				WebRequest requestState = state as WebRequest;
 				if (!requestState.Aborted) {
-					requestState.Aborted = true;
-					requestState.AbortRequest();
-					HttpResponse response = new HttpResponse(new HttpTimeoutException());
-					Common.LogWarning("Request timed out");
-					requestState.Client.FinishWithRequest(requestState, response);
+					Cotc.RunOnMainThread(() => {
+						requestState.Aborted = true;
+						requestState.AbortRequest();
+						HttpResponse response = new HttpResponse(new HttpTimeoutException());
+						Common.LogWarning("Request timed out");
+						requestState.Client.FinishWithRequest(requestState, response);
+					});
 				}
 			}
 		}
