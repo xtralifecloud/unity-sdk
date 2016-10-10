@@ -238,7 +238,9 @@ namespace CotcSdk
 			Bundle thisNode = null;
 			if (parent == null) return CloneRecursive(null, ref thisNode);
 			// Clone the whole structure and return a pointer to the same node in the new structure.
+			#pragma warning disable 0219
 			Bundle cloned = Root.CloneRecursive(this, ref thisNode);
+			#pragma warning restore 0219
 			return thisNode;
 		}
 		// Does a simple (deep) clone, down from this node to the leaves only.
