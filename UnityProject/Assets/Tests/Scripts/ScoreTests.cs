@@ -3,7 +3,6 @@ using UnityEngine;
 using CotcSdk;
 using System.Reflection;
 using IntegrationTests;
-using System.Threading;
 
 public class ScoreTests : TestBase {
 

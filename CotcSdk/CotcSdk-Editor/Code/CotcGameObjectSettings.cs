@@ -1,3 +1,5 @@
+// To disable this CustomEditor when building to target platforms from Unity but enable it when in Unity editor or building the DLL from Visual Studio
+#if UNITY_EDITOR || COTC_DLL_BUILD
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -159,3 +161,4 @@ namespace CotcSdk
 	}
 	/** @endcond */
 }
+#endif

@@ -3,7 +3,6 @@ using UnityEngine;
 using CotcSdk;
 using System.Reflection;
 using IntegrationTests;
-using System.Threading;
 using CotcSdk.InappPurchase;
 
 /**

@@ -3,12 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
-using System.Threading;
 using UnityEngine;
-
-#if WINDOWS_UWP
-using System.Threading.Tasks;
-#endif
 
 namespace CotcSdk
 {
@@ -63,6 +58,7 @@ namespace CotcSdk
 			public HttpRequest OriginalRequest;
 			public int RequestId;
 			public object PreviousUserData;
+			public bool allDone;
 
 			protected WebRequest(HttpClient client, HttpRequest originalRequest) {
 				Client = client;
@@ -109,7 +105,7 @@ namespace CotcSdk
 			// IDEA This function could probably be moved to another file with a little gymnastic…
 			HttpRequest nextReq;
 			// Avoid timeout to be triggered after that
-			AllDone.Set();
+			state.allDone = true;
             lock (this) {
 				// No need to continue, dismiss the result
 				if (Terminated) return;
@@ -126,13 +122,10 @@ namespace CotcSdk
 						if (eventArgs.RetryDelay < 0) throw new InvalidOperationException("HTTP request failed handler called but didn't tell what to do next.");
 						if (eventArgs.RetryDelay > 0) {
 							Common.LogWarning("[" + state.RequestId + "] Request failed, retrying in " + eventArgs.RetryDelay + "ms.");
-                            #if WINDOWS_UWP
-                            Task.Delay(TimeSpan.FromSeconds((double)eventArgs.RetryDelay));
-                            #else
-                            Thread.Sleep(eventArgs.RetryDelay);
-                            #endif
-                            ChooseLoadBalancer(state.OriginalRequest);
-							ProcessRequest(state.OriginalRequest, eventArgs.UserData);
+							CotcCoroutinesManager.instance.StartRequestFailedRetryCoroutine(() => {
+								ChooseLoadBalancer(state.OriginalRequest);
+								ProcessRequest(state.OriginalRequest, eventArgs.UserData);
+							}, eventArgs.RetryDelay);
 							return;
 						}
 					}
@@ -145,7 +138,7 @@ namespace CotcSdk
 			}
 			// Final result for this request
 			if (state.OriginalRequest.Callback != null) {
-				Cotc.RunOnMainThread(() => state.OriginalRequest.Callback(response));
+				state.OriginalRequest.Callback(response);
 			}
 			// Was independent?
 			if (state.OriginalRequest.DoNotEnqueue) return;
@@ -173,43 +166,34 @@ namespace CotcSdk
 			lock (this) {
 				RunningRequests.Add(state);
 			}
-			AllDone.Reset();
+			state.allDone = false;
 			state.Start();
 
 			// Setup timeout
 			if (request.TimeoutMillisec > 0) {
-                #if WINDOWS_UWP
-                Task.Run(async delegate
-                {
-                    // Wait for the timeout
-                    await Task.Delay(request.TimeoutMillisec);
-                    // Call timeout callback if request is not already finished
-                    TimeoutCallback(state, state.AlreadyFinished);
-                });
-                #else
-                ThreadPool.RegisterWaitForSingleObject(AllDone, new WaitOrTimerCallback(TimeoutCallback), state, request.TimeoutMillisec, true);
-                #endif
-            }
+				CotcCoroutinesManager.instance.StartTimeoutCoroutine(TimeoutCallback, state, request.TimeoutMillisec);
+			}
         }
 
 		/// <summary>Called upon timeout.</summary>
-		private static void TimeoutCallback(object state, bool timedOut) { 
-			if (timedOut) {
-				WebRequest requestState = state as WebRequest;
+		private static void TimeoutCallback(object state) {
+			WebRequest requestState = state as WebRequest;
+			if (!requestState.allDone) {
+				// Timeout detected but only abort request if it's not already aborted
 				if (!requestState.Aborted) {
-					Cotc.RunOnMainThread(() => {
-						requestState.Aborted = true;
-						requestState.AbortRequest();
-						HttpResponse response = new HttpResponse(new HttpTimeoutException());
+					requestState.Aborted = true;
+					requestState.AbortRequest();
+					HttpResponse response = new HttpResponse(new HttpTimeoutException());
+
+					if (!requestState.OriginalRequest.Url.Contains("/v1/gamer/event"))
 						Common.LogWarning("Request timed out");
-						requestState.Client.FinishWithRequest(requestState, response);
-					});
+					
+					requestState.Client.FinishWithRequest(requestState, response);
 				}
 			}
 		}
 
 		// Request processing
-		private ManualResetEvent AllDone = new ManualResetEvent(false);
 		private bool IsProcessingRequest = false;	// Only affected for enqueued requests
 		private List<HttpRequest> PendingRequests = new List<HttpRequest>();
 		private List<WebRequest> RunningRequests = new List<WebRequest>();

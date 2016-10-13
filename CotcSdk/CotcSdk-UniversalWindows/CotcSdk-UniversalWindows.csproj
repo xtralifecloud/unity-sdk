@@ -125,6 +125,9 @@
     <Compile Include="..\HighLevel\Cotc.Events.cs">
       <Link>HighLevel\Cotc.Events.cs</Link>
     </Compile>
+    <Compile Include="..\HighLevel\CotcCoroutinesManager.cs">
+      <Link>HighLevel\CotcCoroutinesManager.cs</Link>
+    </Compile>
     <Compile Include="..\HighLevel\CotcException.cs">
       <Link>HighLevel\CotcException.cs</Link>
     </Compile>
@@ -133,9 +136,6 @@
     </Compile>
     <Compile Include="..\HighLevel\DomainEventLoop.cs">
       <Link>HighLevel\DomainEventLoop.cs</Link>
-    </Compile>
-    <Compile Include="..\HighLevel\DomainEventLoopCoroutine.cs">
-      <Link>HighLevel\DomainEventLoopCoroutine.cs</Link>
     </Compile>
     <Compile Include="..\HighLevel\ErrorCode.cs">
       <Link>HighLevel\ErrorCode.cs</Link>

@@ -718,7 +718,7 @@
         <member name="M:CotcSdk.DomainEventLoop.#ctor(CotcSdk.Gamer,System.String,System.Int32)">
             <summary>
             You need valid credentials in order to instantiate this class. Use Cloud.Login* methods for that purpose.
-            Once the object is created, you need to start the thread, please look at the other methods available.
+            Once the object is created, you need to start the coroutine, please look at the other methods available.
             </summary>
             <param name="gamer">The gamer object received from a login or similar function.</param>
             <param name="domain">The domain on which to listen for events. Note that you may create multiple event loops,
@@ -736,19 +736,19 @@
             <summary>This event is raised when an event is received.</summary>
         </member>
         <member name="M:CotcSdk.DomainEventLoop.Start">
-            <summary>Starts the thread. Call this upon initialization.</summary>
+            <summary>Starts the coroutine. Call this upon initialization.</summary>
         </member>
         <member name="M:CotcSdk.DomainEventLoop.Stop">
             <summary>
-            Will stop the event thread. Might take some time until the current request finishes.
+            Will stop the event coroutine. Might take some time until the current request finishes.
             You should not use this object for other purposes later on. In particular, do not start it again.
             </summary>
         </member>
         <member name="M:CotcSdk.DomainEventLoop.Suspend">
-            <summary>Suspends the event thread.</summary>
+            <summary>Suspends the event coroutine.</summary>
         </member>
         <member name="M:CotcSdk.DomainEventLoop.Resume">
-            <summary>Resumes a suspended event thread.</summary>
+            <summary>Resumes a suspended event coroutine.</summary>
         </member>
         <member name="T:CotcSdk.ErrorCode">
             @ingroup data_classes
@@ -1760,7 +1760,7 @@
         <member name="M:CotcSdk.HttpClient.ProcessRequest(CotcSdk.HttpRequest,System.Object)">
             <summary>Processes a single request asynchronously. Will continue to FinishWithRequest in some way.</summary>
         </member>
-        <member name="M:CotcSdk.HttpClient.TimeoutCallback(System.Object,System.Boolean)">
+        <member name="M:CotcSdk.HttpClient.TimeoutCallback(System.Object)">
             <summary>Called upon timeout.</summary>
         </member>
         <member name="T:CotcSdk.IHttpClient">
@@ -1929,13 +1929,19 @@
             <param name="inputString">A simple type value becomes an encapsulated value in a Json-objet</param>
             <returns>Return a well formated json string</returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:BetterJson.BetterFromLiteral(System.String)" -->
+        <member name="M:BetterJson.BetterFromLiteral(System.String)">
+            <summary>
+            Ensure we have a Json-objet string even if input string is a string containing a Json-objet string
+            </summary>
+            <param name="inputString">A string containing double-quotes containing a Json-objet string becomes a string containing a Json-objet string</param>
+            <returns>Return a well formated json string</returns>
+        </member>
         <member name="M:BetterJson.FromLiteral(System.String)">
             <summary>
             Removes escape characters to get a normal string from literal one
             </summary>
             <param name="inputString"></param>
-            <returns></returns>
+            <returns>Return a well formated json string</returns>
         </member>
         <member name="M:BetterJson.ToLiteral(System.String)">
             <summary>

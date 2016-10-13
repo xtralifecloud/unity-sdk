@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 
 namespace CotcSdk {
 
@@ -57,7 +56,7 @@ namespace CotcSdk {
 	public sealed class DomainEventLoop {
 		/// <summary>
 		/// You need valid credentials in order to instantiate this class. Use Cloud.Login* methods for that purpose.
-		/// Once the object is created, you need to start the thread, please look at the other methods available.
+		/// Once the object is created, you need to start the coroutine, please look at the other methods available.
 		/// </summary>
 		/// <param name="gamer">The gamer object received from a login or similar function.</param>
 		/// <param name="domain">The domain on which to listen for events. Note that you may create multiple event loops,
@@ -87,20 +86,26 @@ namespace CotcSdk {
 		}
 		internal EventLoopHandler receivedEvent;
 
-		/// <summary>Starts the thread. Call this upon initialization.</summary>
+		private const string noCoroutinesManagerInstanceError = "No CotcCoroutinesManager instance found; Please check a CotcCoroutinesManager component is correctly attached on an active Clan of the Cloud prefab gameobject in your scene";
+
+		/// <summary>Starts the coroutine. Call this upon initialization.</summary>
 		public DomainEventLoop Start() {
 			if (Stopped) throw new InvalidOperationException("Never restart a loop that was stopped");
 			if (AlreadyStarted) return this;
 			AlreadyStarted = true;
 			// Allow for automatic housekeeping
 			Cotc.RunningEventLoops.Add(this);
-			delc = DomainEventLoopCoroutine.FindObjectOfType<DomainEventLoopCoroutine>();
-			delc.StartEventLoopCoroutine(this);
+
+			if (CotcCoroutinesManager.instance != null)
+				CotcCoroutinesManager.instance.StartEventLoopCoroutine(this);
+			else
+				Common.LogError(noCoroutinesManagerInstanceError);
+
 			return this;
 		}
 
 		/// <summary>
-		/// Will stop the event thread. Might take some time until the current request finishes.
+		/// Will stop the event coroutine. Might take some time until the current request finishes.
 		/// You should not use this object for other purposes later on. In particular, do not start it again.
 		/// </summary>
 		public DomainEventLoop Stop() {
@@ -111,37 +116,50 @@ namespace CotcSdk {
 				CurrentRequest = null;
 			}
 			Cotc.RunningEventLoops.Remove(this);
-			delc.StopEventLoopCoroutine();
+
+			if (CotcCoroutinesManager.instance != null)
+				CotcCoroutinesManager.instance.StopEventLoopCoroutine();
+			else
+				Common.LogError(noCoroutinesManagerInstanceError);
+
 			Common.Log("Finished pop event coroutine");
 			return this;
 		}
 
-		/// <summary>Suspends the event thread.</summary>
+		/// <summary>Suspends the event coroutine.</summary>
 		public DomainEventLoop Suspend() {
 			Paused = true;
 			if (CurrentRequest != null) {
 				Managers.HttpClient.Abort(CurrentRequest);
 				CurrentRequest = null;
 			}
-			delc.StopEventLoopCoroutine();
+
+			if (CotcCoroutinesManager.instance != null)
+				CotcCoroutinesManager.instance.StopEventLoopCoroutine();
+			else
+				Common.LogError(noCoroutinesManagerInstanceError);
+
 			return this;
 		}
 
-		/// <summary>Resumes a suspended event thread.</summary>
+		/// <summary>Resumes a suspended event coroutine.</summary>
 		public DomainEventLoop Resume() {
 			if (Paused) {
 				Paused = false;
-				delc.StartEventLoopCoroutine();
+
+				if (CotcCoroutinesManager.instance != null)
+					CotcCoroutinesManager.instance.StartEventLoopCoroutine();
+				else
+					Common.LogError(noCoroutinesManagerInstanceError);
 			}
 			return this;
 		}
 
 		#region Private
 		internal HttpRequest CurrentRequest;
-		private DomainEventLoopCoroutine delc;
 		public bool Stopped = false, AlreadyStarted = false, Paused = false;
 		public int LoopIterationDuration;
-		public const float PopEventDelayCoroutineHold = 20f;
+		public const float PopEventDelayCoroutineHold = 3f;
 		#endregion
 	}
 }

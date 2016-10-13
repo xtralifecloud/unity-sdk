@@ -73,7 +73,9 @@ namespace CotcSdk {
 		public static void Update(MonoBehaviour host) {
 			// Run pending coroutines
 			lock (PendingCoroutines) {
-				foreach (var routine in PendingCoroutines) host.StartCoroutine(routine);
+                foreach (var routine in PendingCoroutines) {
+                    host.StartCoroutine(routine);
+                }
 				PendingCoroutines.Clear();
 			}
 			// Run pending actions

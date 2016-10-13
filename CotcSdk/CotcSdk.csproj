@@ -52,7 +52,7 @@
     <Compile Include="HighLevel\Cloud.cs" />
     <Compile Include="HighLevel\Cloud.LoginMethods.cs" />
     <Compile Include="HighLevel\CloudIndexing.cs" />
-    <Compile Include="HighLevel\DomainEventLoopCoroutine.cs" />
+    <Compile Include="HighLevel\CotcCoroutinesManager.cs" />
     <Compile Include="HighLevel\GamerStore.cs" />
     <Compile Include="HighLevel\Cotc.cs" />
     <Compile Include="HighLevel\CotcGameObject.cs" />

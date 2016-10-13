@@ -4,7 +4,6 @@ using CotcSdk;
 using System.Reflection;
 using IntegrationTests;
 using System.Collections.Generic;
-using System.Threading;
 
 public class IndexTests : TestBase {
 	[InstanceMethod(typeof(IndexTests))]
