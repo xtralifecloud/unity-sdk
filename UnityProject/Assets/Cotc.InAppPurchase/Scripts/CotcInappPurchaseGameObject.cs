@@ -9,7 +9,10 @@ namespace CotcSdk.InappPurchase {
 		private IStore Store;
 
 		void Start() {
-#if UNITY_ANDROID
+#if UNITY_EDITOR
+			Store = null;
+			Debug.LogError("In-app purchase not available on this platform");
+#elif UNITY_ANDROID
 			Store = new GooglePlayStoreImpl(gameObject.name);
 #elif UNITY_IPHONE
 			Store = new AppStoreImpl(gameObject.name);
