@@ -50,7 +50,7 @@ public class ExportReleasePackage {
 			new string[] {
 				"Assets/Cotc.InAppPurchase",
 				"Assets/Plugins/Android/appcompat-v7-22.1.1.aar",
-				"Assets/Plugins/Android/Cotc.PushNotifications.aar",
+				"Assets/Plugins/Android/Cotc.InAppPurchase.aar",
 				"Assets/Plugins/Android/support-v4-22.1.1.aar",
 				"Assets/Plugins/iOS/libCotcInappPurchase.a",
 				"Assets/Scenes/InappPurchaseSampleScene.unity",
