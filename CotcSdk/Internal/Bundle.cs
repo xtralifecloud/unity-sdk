@@ -369,9 +369,9 @@ namespace CotcSdk
 		public long AsLong(long defaultValue = 0) {
 			long result = defaultValue;
 			switch (Type) {
-				case DataType.Boolean: return (int)longValue;
-				case DataType.Integer: return (int)longValue;
-				case DataType.Double: return (int)doubleValue;
+				case DataType.Boolean: return longValue;
+				case DataType.Integer: return longValue;
+				case DataType.Double: return (long)doubleValue;
 				case DataType.String: long.TryParse(stringValue, out result); return result;
 			}
 			return defaultValue;
