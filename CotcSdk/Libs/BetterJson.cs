@@ -1,4 +1,6 @@
 
+using System.Text;
+
 public static class BetterJson
 {
     /// <summary>
@@ -43,7 +45,7 @@ public static class BetterJson
     /// <returns></returns>
     public static string FromLiteral(string inputString)
     {
-        string stringFromLiteral = "";
+        StringBuilder stringFromLiteral = new StringBuilder("");
 
         for (int character = 0; character < inputString.Length; ++character)
         {
@@ -53,52 +55,52 @@ public static class BetterJson
                 switch (inputString[character + 1])
                 {
                     case '"':
-                        stringFromLiteral += '"';
+                        stringFromLiteral.Append('"');
                         ++character;
                         continue;
 
                     case '\\':
-                        stringFromLiteral += '\\';
+                        stringFromLiteral.Append('\\');
                         ++character;
                         continue;
 
                     case 'a':
-                        stringFromLiteral += '\a';
+                        stringFromLiteral.Append('\a');
                         ++character;
                         continue;
 
                     case 'b':
-                        stringFromLiteral += '\b';
+                        stringFromLiteral.Append('\b');
                         ++character;
                         continue;
 
                     case 'f':
-                        stringFromLiteral += '\f';
+                        stringFromLiteral.Append('\f');
                         ++character;
                         continue;
 
                     case 'n':
-                        stringFromLiteral += '\n';
+                        stringFromLiteral.Append('\n');
                         ++character;
                         continue;
 
                     case 'r':
-                        stringFromLiteral += '\r';
+                        stringFromLiteral.Append('\r');
                         ++character;
                         continue;
 
                     case 't':
-                        stringFromLiteral += '\t';
+                        stringFromLiteral.Append('\t');
                         ++character;
                         continue;
 
                     case 'v':
-                        stringFromLiteral += '\v';
+                        stringFromLiteral.Append('\v');
                         ++character;
                         continue;
 
                     case '0':
-                        stringFromLiteral += '\0';
+                        stringFromLiteral.Append('\0');
                         ++character;
                         continue;
                 }
@@ -106,10 +108,10 @@ public static class BetterJson
 
             // TODO: handle hexadecimal \uXXXX sequence (if we need it)
 
-            stringFromLiteral += inputString[character];
+            stringFromLiteral.Append(inputString[character]);
         }
 
-        return stringFromLiteral;
+        return stringFromLiteral.ToString();
     }
 
     /// <summary>
@@ -119,7 +121,7 @@ public static class BetterJson
     /// <returns></returns>
     public static string ToLiteral(string inputString)
     {
-        string stringLiteral = "";
+        StringBuilder stringLiteral = new StringBuilder("");
 
         for (int character = 0; character < inputString.Length; ++character)
         {
@@ -128,55 +130,55 @@ public static class BetterJson
             {
                 case '"':
                 case '\\':
-                    stringLiteral += '\\';
-                    stringLiteral += inputString[character];
+                    stringLiteral.Append('\\');
+                    stringLiteral.Append(inputString[character]);
                     continue;
 
                 case '\a':
-                    stringLiteral += "\\a";
+                    stringLiteral.Append("\\a");
                     continue;
 
                 case '\b':
-                    stringLiteral += "\\b";
+                    stringLiteral.Append("\\b");
                     continue;
 
                 case '\f':
-                    stringLiteral += "\\f";
+                    stringLiteral.Append("\\f");
                     continue;
 
                 case '\n':
-                    stringLiteral += "\\n";
+                    stringLiteral.Append("\\n");
                     continue;
 
                 case '\r':
-                    stringLiteral += "\\r";
+                    stringLiteral.Append("\\r");
                     continue;
 
                 case '\t':
-                    stringLiteral += "\\t";
+                    stringLiteral.Append("\\t");
                     continue;
 
                 case '\v':
-                    stringLiteral += "\\v";
+                    stringLiteral.Append("\\v");
                     continue;
 
                 case '\0':
-                    stringLiteral += "\\0";
+                    stringLiteral.Append("\\0");
                     continue;
             }
 
             // Normal (ASCII code) characters
             if (((int)inputString[character] >= 32) && ((int)inputString[character] <= 126))
             {
-                stringLiteral += inputString[character];
+                stringLiteral.Append(inputString[character]);
                 continue;
             }
 
             // Default, turn into a hexadecimal \uXXXX sequence
-            stringLiteral += ("\\u" + IntToHexadecimal((int)inputString[character]));
+            stringLiteral.Append(("\\u" + IntToHexadecimal((int)inputString[character])));
         }
 
-        return stringLiteral;
+        return stringLiteral.ToString();
     }
 
     /// <summary>
