@@ -9,6 +9,7 @@ namespace CotcSdk.PushNotifications {
 	/// You should not need to do anything with it.
 	/// </summary>
 	public class CotcPushNotificationsGameObject : MonoBehaviour {
+#if !UNITY_EDITOR
 
 #if UNITY_ANDROID
 		private AndroidJavaClass JavaClass;
@@ -101,5 +102,6 @@ namespace CotcSdk.PushNotifications {
 
 		private bool ShouldSendToken = false;
 		private Gamer RegisteredGamer;
+#endif
 	}
 }
