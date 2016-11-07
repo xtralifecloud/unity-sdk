@@ -16,13 +16,13 @@
     <activity android:name="com.facebook.unity.FBUnityDeepLinkingActivity" android:exported="true" />
     <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="fb296632777192084" />
     <!-- [START GCM] -->
-    <meta-data android:name="cotc.GcmSenderId" android:value="\ 103294972995" />
+    <meta-data android:name="cotc.GcmSenderId" android:value="\ 752049070991" />
     <meta-data android:name="cotc.GcmNotificationIcon" android:resource="@drawable/ic_stat_ic_notification" />
     <meta-data android:name="cotc.GcmNotificationTitle" android:value="Cotc sample" />
     <receiver android:name="com.google.android.gms.gcm.GcmReceiver" android:exported="true" android:permission="com.google.android.c2dm.permission.SEND">
       <intent-filter>
         <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-        <category android:name="com.clanofthecloud.sampleunityproject" />
+        <category android:name="com.clanofthecloud.cloudbuildertestapp2" />
       </intent-filter>
     </receiver>
     <!-- [END GCM] -->

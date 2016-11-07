@@ -32,7 +32,7 @@ android.libraryVariants.all { variant ->
 
 dependencies {
 	compile (name:'classes', ext:'jar')
-	compile 'com.google.android.gms:play-services-gcm:7.5.0'
+	compile 'com.google.android.gms:play-services-gcm:9.8.0'
 	compile 'com.android.support:appcompat-v7:22.1.1'
 }
 
