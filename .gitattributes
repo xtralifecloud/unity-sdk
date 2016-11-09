@@ -36,5 +36,6 @@
 *.a binary
 *.bundle binary
 *.aar binary
+*.jar binary
 *.unity binary
 *.asset binary
