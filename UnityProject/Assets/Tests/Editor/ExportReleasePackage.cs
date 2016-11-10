@@ -27,16 +27,30 @@ public class ExportReleasePackage {
 			}
 		},
 		{
+			"CotcSdk.InAppPurchase.unitypackage",
+			new string[] {
+				"Assets/Cotc.InAppPurchase",
+				"Assets/Plugins/Android/appcompat-v7-25.0.0.aar",
+				"Assets/Plugins/Android/Cotc.InAppPurchase.aar",
+				"Assets/Plugins/Android/support-v4-25.0.0.aar",
+				"Assets/Plugins/iOS/libCotcInappPurchase.a",
+				"Assets/Scenes/InappPurchaseSampleScene.unity",
+				"Assets/Scripts/InappPurchaseSampleScene.cs"
+			}
+		},
+		{
 			"CotcSdk.PushNotifications.unitypackage",
 			new string[] {
 				"Assets/Cotc.PushNotifications",
-				"Assets/Plugins/Android/appcompat-v7-22.1.1.aar",
+				"Assets/Plugins/Android/appcompat-v7-25.0.0.aar",
 				"Assets/Plugins/Android/Cotc.PushNotifications.aar",
 				"Assets/Plugins/Android/play-services-base-9.8.0.aar",
 				"Assets/Plugins/Android/play-services-basement-9.8.0.aar",
 				"Assets/Plugins/Android/play-services-gcm-9.8.0.aar",
 				"Assets/Plugins/Android/play-services-iid-9.8.0.aar",
-				"Assets/Plugins/Android/support-v4-22.1.1.aar",
+				"Assets/Plugins/Android/support-compat-25.0.0.aar",
+				"Assets/Plugins/Android/support-core-utils-25.0.0.aar",
+				"Assets/Plugins/Android/support-v4-25.0.0.aar",
 				"Assets/Plugins/Android/res/drawable-hdpi/ic_stat_ic_notification.png",
 				"Assets/Plugins/Android/res/drawable-hdpi-v11/ic_stat_ic_notification.png",
 				"Assets/Plugins/Android/res/drawable-mdpi/ic_stat_ic_notification.png",
@@ -46,19 +60,7 @@ public class ExportReleasePackage {
 				"Assets/Plugins/Android/res/drawable-xxhdpi/ic_stat_ic_notification.png",
 				"Assets/Plugins/Android/res/drawable-xxhdpi-v11/ic_stat_ic_notification.png",
 			}
-		},
-		{
-			"CotcSdk.InAppPurchase.unitypackage",
-			new string[] {
-				"Assets/Cotc.InAppPurchase",
-				"Assets/Plugins/Android/appcompat-v7-22.1.1.aar",
-				"Assets/Plugins/Android/Cotc.InAppPurchase.aar",
-				"Assets/Plugins/Android/support-v4-22.1.1.aar",
-				"Assets/Plugins/iOS/libCotcInappPurchase.a",
-				"Assets/Scenes/InappPurchaseSampleScene.unity",
-				"Assets/Scripts/InappPurchaseSampleScene.cs"
-			}
-		},
+		}
 	};
 
 	[MenuItem("CotC/Build release packages")]

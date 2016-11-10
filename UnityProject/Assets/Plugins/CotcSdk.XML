@@ -1929,19 +1929,13 @@
             <param name="inputString">A simple type value becomes an encapsulated value in a Json-objet</param>
             <returns>Return a well formated json string</returns>
         </member>
-        <member name="M:BetterJson.BetterFromLiteral(System.String)">
-            <summary>
-            Ensure we have a Json-objet string even if input string is a string containing a Json-objet string
-            </summary>
-            <param name="inputString">A string containing double-quotes containing a Json-objet string becomes a string containing a Json-objet string</param>
-            <returns>Return a well formated json string</returns>
-        </member>
+        <!-- Badly formed XML comment ignored for member "M:BetterJson.BetterFromLiteral(System.String)" -->
         <member name="M:BetterJson.FromLiteral(System.String)">
             <summary>
             Removes escape characters to get a normal string from literal one
             </summary>
             <param name="inputString"></param>
-            <returns>Return a well formated json string</returns>
+            <returns></returns>
         </member>
         <member name="M:BetterJson.ToLiteral(System.String)">
             <summary>
