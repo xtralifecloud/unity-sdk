@@ -35,6 +35,7 @@ namespace CotcSdk {
 				Bundle boardData = response.BodyJson[board];
 				int pagesTotal = boardData["maxpage"];
 				int currentPage = boardData["page"];
+				if (offset == -1) offset = (currentPage - 1) * limit;
 				int currentItems = boardData["scores"].AsArray().Count;
 				int total = Math.Min(pagesTotal * limit, offset + currentItems);
 				// Fetch listed scores
