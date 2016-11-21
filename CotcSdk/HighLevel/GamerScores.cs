@@ -33,8 +33,10 @@ namespace CotcSdk {
 			return Common.RunInTask<PagedList<Score>>(Gamer.MakeHttpRequest(url), (response, task) => {
 				// Pagination computing
 				Bundle boardData = response.BodyJson[board];
+				int pagesTotal = boardData["maxpage"];
+				int currentPage = boardData["page"];
 				int currentItems = boardData["scores"].AsArray().Count;
-				int total = Math.Min(boardData["maxpage"] * limit, offset + currentItems);
+				int total = Math.Min(pagesTotal * limit, offset + currentItems);
 				// Fetch listed scores
 				PagedList<Score> scores = new PagedList<Score>(response.BodyJson, offset, total);
 				int rank = boardData["rankOfFirst"];
@@ -42,10 +44,10 @@ namespace CotcSdk {
 					scores.Add(new Score(b, rank++));
 				}
 				// Handle pagination
-				if (offset > 0) {
+				if (currentPage > 1) {
 					scores.Previous = () => List(board, limit, offset - limit);
 				}
-				if (offset + scores.Count < scores.Total) {
+				if (currentPage < pagesTotal) {
 					scores.Next = () => List(board, limit, offset + limit);
 				}
 				task.PostResult(scores);
