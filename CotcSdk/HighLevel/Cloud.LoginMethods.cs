@@ -34,10 +34,15 @@ namespace CotcSdk
 		/// <summary>Logs the current user in anonymously.</summary>
 		/// <returns>Task returning when the login has finished. The resulting Gamer object can then
 		///     be used for many purposes related to the signed in account.</returns>
-		public Promise<Gamer> LoginAnonymously() {
+		/// <param name="additionalOptions">Additional options can be passed, such as `thenBatch` to execute a batch after
+		///     login. Pass it as a Bundle with the additional keys.</param>
+		public Promise<Gamer> LoginAnonymously(Bundle additionalOptions = null) {
 			Bundle config = Bundle.CreateObject();
 			config["device"] = Managers.SystemFunctions.CollectDeviceInformation();
-			
+
+			Bundle options = additionalOptions != null ? additionalOptions.Clone() : Bundle.CreateObject();
+			if (!options.IsEmpty) config["options"] = options;
+
 			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/login/anonymous");
 			req.BodyJson = config;
 			return Common.RunInTask<Gamer>(req, (response, task) => {
