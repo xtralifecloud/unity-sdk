@@ -70,7 +70,7 @@ public class InappPurchaseSampleScene : MonoBehaviour {
 		// case the Promise.UnhandledException handler will be called instead of the .Done
 		// block if the call fails.
 		Cloud.Login(
-			network: LoginNetwork.Email,
+			network: LoginNetwork.Email.Describe(),
 			networkId: EmailInput.text,
 			networkSecret: DefaultPassword)
 		.Done(this.DidLogin);
