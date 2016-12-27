@@ -46,12 +46,14 @@
             </summary>
         </member>
         <!-- Badly formed XML comment ignored for member "M:CotcSdk.Cloud.ListUsers(System.String,System.Int32,System.Int32)" -->
-        <member name="M:CotcSdk.Cloud.LoginAnonymously">
+        <member name="M:CotcSdk.Cloud.LoginAnonymously(CotcSdk.Bundle)">
             <summary>Logs the current user in anonymously.</summary>
             <returns>Task returning when the login has finished. The resulting Gamer object can then
                 be used for many purposes related to the signed in account.</returns>
+            <param name="additionalOptions">Additional options can be passed, such as `thenBatch` to execute a batch after
+                login. Pass it as a Bundle with the additional keys.</param>
         </member>
-        <member name="M:CotcSdk.Cloud.Login(CotcSdk.LoginNetwork,System.String,System.String,System.Boolean,CotcSdk.Bundle)">
+        <member name="M:CotcSdk.Cloud.Login(System.String,System.String,System.String,CotcSdk.Bundle)">
             <summary>Logs the current user in, using any supported social network.</summary>
             <returns>Promise resolved when the login has finished. The resulting Gamer object can then be used for many
                 purposes related to the signed in account.</returns>
@@ -65,8 +67,8 @@
             <param name="preventRegistration">Fail instead of silently creating an account in case it doesn't already exist on
                 the CotC servers.</param>
             <param name="additionalOptions">Additional options can be passed, such as `thenBatch` to execute a batch after
-                login. Pass it as a Bundle with the additional keys. May not override `preventRegistration` key since it is
-                defined by the parameter of the same name.</param>
+                login or `preventRegistration` to accept only already created accounts. Pass it as a Bundle with the additional
+                keys. May not override `preventRegistration` key since it is defined by the parameter of the same name.</param>
         </member>
         <member name="M:CotcSdk.Cloud.LoginWithShortcode(System.String,CotcSdk.Bundle)">
             <summary>Logs in by using a shortcode previously generated through #SendResetPasswordEmail.</summary>
