@@ -46,7 +46,7 @@ namespace CotcSdk.FacebookIntegration
 			LoginToFacebook(new List<string>() { "public_profile","email","user_friends" }).Then(aToken => {
 				string userId = aToken.UserId, token = aToken.TokenString;
 				Common.Log("Logged in through facebook");
-				cloud.Login(LoginNetwork.Facebook, userId, token)
+				cloud.Login(LoginNetwork.Facebook.Describe(), userId, token)
 					.ForwardTo(task);
 			}).Catch(ex => {
 				task.Reject(ex);

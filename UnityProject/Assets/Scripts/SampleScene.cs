@@ -75,7 +75,7 @@ public class SampleScene : MonoBehaviour {
 		// case the Promise.UnhandledException handler will be called instead of the .Done
 		// block if the call fails.
 		Cloud.Login(
-			network: LoginNetwork.Email,
+			network: LoginNetwork.Email.Describe(),
 			networkId: EmailInput.text,
 			networkSecret: DefaultPassword)
 		.Done(this.DidLogin);
@@ -88,7 +88,7 @@ public class SampleScene : MonoBehaviour {
 					"\nUser ID: " + Social.localUser.id + 
 					"\nIsUnderage: " + Social.localUser.underage);
 				// Game Center accounts do not have a password
-				Cloud.Login(LoginNetwork.GameCenter, Social.localUser.id, "n/a").Done(this.DidLogin);
+				Cloud.Login(LoginNetwork.GameCenter.Describe(), Social.localUser.id, "n/a").Done(this.DidLogin);
 			}
 			else {
 				Debug.LogError("Failed to authenticate on Game Center");

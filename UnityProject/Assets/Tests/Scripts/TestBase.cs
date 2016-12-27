@@ -126,7 +126,7 @@ public class TestBase : MonoBehaviour {
 
 	protected void Login(Cloud cloud, Action<Gamer> done) {
 		cloud.Login(
-			network: LoginNetwork.Email,
+			network: LoginNetwork.Email.Describe(),
 			networkId: "cloud@localhost.localdomain",
 			networkSecret: "Password123")
 		.Then(gamer => {
@@ -139,7 +139,7 @@ public class TestBase : MonoBehaviour {
 		Login(cloud, gamer1 => {
 			// Second user
 			cloud.Login(
-				network: LoginNetwork.Email,
+				network: LoginNetwork.Email.Describe(),
 				networkId: "clan2@localhost.localdomain",
 				networkSecret: "Password123")
 			.Then(gamer2 => {

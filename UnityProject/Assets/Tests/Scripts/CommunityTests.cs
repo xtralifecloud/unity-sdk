@@ -69,12 +69,12 @@ public class CommunityTests : TestBase {
 	public void ShouldListUsers(Cloud cloud) {
 		Gamer[] gamers = new Gamer[2];
 		// Create first user
-		cloud.Login(LoginNetwork.Email, "user1@localhost.localdomain", "123")
+		cloud.Login(LoginNetwork.Email.Describe(), "user1@localhost.localdomain", "123")
 		.ExpectSuccess(result1 => {
 			gamers[0] = result1;
 
 			// Second user
-			return cloud.Login(LoginNetwork.Email, "user2@localhost.localdomain", "123");
+			return cloud.Login(LoginNetwork.Email.Describe(), "user2@localhost.localdomain", "123");
 		})
 		.ExpectSuccess(result2 => {
 			gamers[1] = result2;

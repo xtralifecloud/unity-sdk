@@ -38,7 +38,7 @@ public class CloudTests : TestBase {
 	[Test("First logs in anonymously, then tries to restore the session with the received credentials.")]
 	public void ShouldRestoreSession(Cloud cloud) {
 		cloud.Login(
-			network: LoginNetwork.Email,
+			network: LoginNetwork.Email.Describe(),
 			networkId: "cloud@localhost.localdomain",
 			networkSecret: "Password123")
 		// Resume the session with the credentials just received
@@ -58,11 +58,10 @@ public class CloudTests : TestBase {
 			"domain", "private",
 			"params", Bundle.CreateObject());
 		cloud.Login(
-			network: LoginNetwork.Email,
+			network: LoginNetwork.Email.Describe(),
 			networkId: "cloud@localhost.localdomain",
 			networkSecret: "Password123",
-			preventRegistration: false,
-			additionalOptions: Bundle.CreateObject("thenBatch", batchNode)
+			additionalOptions: Bundle.CreateObject("thenBatch", batchNode, "preventRegistration", false)
 		).ExpectFailure(ex => {
 			Assert(ex.ServerData["name"] == "HookError", "Message should be HookError");
 			Assert(ex.ServerData["message"].AsString().EndsWith("does not exist"), "Should indicate nonexisting batch");
@@ -87,11 +86,12 @@ public class CloudTests : TestBase {
 	public void ShouldPreventRegistration(Cloud cloud) {
 		// Resume the session with the credentials just received
 		cloud.Login(
-			network: LoginNetwork.Email,
+			network: LoginNetwork.Email.Describe(),
 			networkId: "nonexisting@localhost.localdomain",
 			networkSecret: "Password123",
-			preventRegistration: true)
-		.ExpectFailure(resumeResult => {
+            additionalOptions: Bundle.CreateObject("preventRegistration", true)
+)
+        .ExpectFailure(resumeResult => {
 			Assert(resumeResult.HttpStatusCode == 400, "400 expected");
 			Assert(resumeResult.ServerData["name"] == "PreventRegistration", "PreventRegistration error expected");
 			CompleteTest();
@@ -117,7 +117,7 @@ public class CloudTests : TestBase {
 	public void ShouldFailToConvertToExistingAccount(Cloud cloud) {
 		// Ensures that a fake account has been created
 		cloud.Login(
-			network: LoginNetwork.Email,
+			network: LoginNetwork.Email.Describe(),
 			networkId: "cloud@localhost.localdomain",
 			networkSecret: "Password123")
 		.ExpectSuccess(dummyGamer => {
@@ -162,7 +162,7 @@ public class CloudTests : TestBase {
 	public void ShouldCheckIfUserExists(Cloud cloud) {
 		// Ensures that a fake account has been created
 		cloud.Login(
-			network: LoginNetwork.Email,
+			network: LoginNetwork.Email.Describe(),
 			networkId: "cloud@localhost.localdomain",
 			networkSecret: "Password123")
 		.Then(loginResult => cloud.UserExists(
@@ -195,7 +195,7 @@ public class CloudTests : TestBase {
 	[Test("Changes the password of an e-mail account.")]
 	public void ShouldChangePassword(Cloud cloud) {
 		cloud.Login(
-			network: LoginNetwork.Email,
+			network: LoginNetwork.Email.Describe(),
 			networkId: RandomEmailAddress(),
 			networkSecret: "Password123")
 		.Then(gamer => gamer.Account.ChangePassword("Password124"))
@@ -208,7 +208,7 @@ public class CloudTests : TestBase {
 	[Test("Changes the e-mail address associated to an e-mail account.")]
 	public void ShouldChangeEmailAddress(Cloud cloud) {
 		cloud.Login(
-			network: LoginNetwork.Email,
+			network: LoginNetwork.Email.Describe(),
 			networkId: RandomEmailAddress(),
 			networkSecret: "Password123")
 		.Then(gamer => gamer.Account.ChangeEmailAddress(RandomEmailAddress()))
@@ -221,7 +221,7 @@ public class CloudTests : TestBase {
 	[Test("Changes the e-mail address associated to an e-mail account.")]
 	public void ShouldFailToChangeEmailAddressToExistingOne(Cloud cloud) {
 		cloud.Login(
-			network: LoginNetwork.Email,
+			network: LoginNetwork.Email.Describe(),
 			networkId: RandomEmailAddress(),
 			networkSecret: "Password123")
 		.ExpectSuccess(gamer => {
