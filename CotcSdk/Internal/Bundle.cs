@@ -418,6 +418,13 @@ namespace CotcSdk
 
 		public override string ToString() { return ToJson(); }
 
+        public static Bundle ParseFromString(string json)
+        {
+            if (json == null) return null;
+            JsonData data = JsonMapper.ToObject(json);
+            return FromJson(data);
+        }
+
 		private static Bundle FromJson(JsonData data) {
 			if (data.IsBoolean) return ((IJsonWrapper) data).GetBoolean();
 			if (data.IsDouble) return ((IJsonWrapper) data).GetDouble();
@@ -446,31 +453,58 @@ namespace CotcSdk
 
 		private JsonData ToJson(Bundle bundle) {
 			JsonData target = new JsonData();
-			if (bundle.Type == DataType.Object) {
-				target.SetJsonType(JsonType.Object);
-				foreach (KeyValuePair<string, Bundle> entry in bundle.Dictionary) {
-					switch (entry.Value.Type) {
-					case DataType.Boolean: target[entry.Key] = entry.Value.AsBool(); break;
-					case DataType.Integer: target[entry.Key] = entry.Value.AsLong(); break;
-					case DataType.Double: target[entry.Key] = entry.Value.AsDouble(); break;
-					case DataType.String: target[entry.Key] = entry.Value.AsString(); break;
-					default: target[entry.Key] = ToJson(entry.Value); break;
-					}
-				}
-			}
-			else {
-				target.SetJsonType(JsonType.Array);
-				foreach (Bundle entry in bundle.Array) {
-					switch (entry.Type) {
-					case DataType.Boolean: target.Add(entry.AsBool()); break;
-					case DataType.Integer: target.Add(entry.AsInt()); break;
-					case DataType.Double: target.Add(entry.AsDouble()); break;
-					case DataType.String: target.Add(entry.AsString()); break;
-					default: target.Add(ToJson(entry)); break;
-					}
-				}
-			}
-			return target;
+            if (bundle.Type == DataType.Object)
+            {
+                target.SetJsonType(JsonType.Object);
+                foreach (KeyValuePair<string, Bundle> entry in bundle.Dictionary)
+                {
+                    switch (entry.Value.Type)
+                    {
+                        case DataType.Boolean: target[entry.Key] = entry.Value.AsBool(); break;
+                        case DataType.Integer: target[entry.Key] = entry.Value.AsLong(); break;
+                        case DataType.Double: target[entry.Key] = entry.Value.AsDouble(); break;
+                        case DataType.String: target[entry.Key] = entry.Value.AsString(); break;
+                        default: target[entry.Key] = ToJson(entry.Value); break;
+                    }
+                }
+            }
+            else if (bundle.type == DataType.Array)
+            {
+                target.SetJsonType(JsonType.Array);
+                foreach (Bundle entry in bundle.Array)
+                {
+                    switch (entry.Type)
+                    {
+                        case DataType.Boolean: target.Add(entry.AsBool()); break;
+                        case DataType.Integer: target.Add(entry.AsInt()); break;
+                        case DataType.Double: target.Add(entry.AsDouble()); break;
+                        case DataType.String: target.Add(entry.AsString()); break;
+                        default: target.Add(ToJson(entry)); break;
+                    }
+                }
+            }
+            else if (bundle.type == DataType.String)
+            {
+                target = new JsonData(bundle.AsString());
+            }
+            else if (bundle.type == DataType.Integer)
+            {
+                target = new JsonData(bundle.AsLong());
+            }
+            else if (bundle.type == DataType.Double)
+            {
+                target = new JsonData(bundle.AsDouble());
+            }
+            else if (bundle.type == DataType.Boolean)
+            {
+                target = new JsonData(bundle.AsBool());
+            }
+            else /*if (bundle.type == DataType.None)*/
+            {
+                target = new JsonData();
+            }
+
+            return target;
 		}
 
 		// Private
