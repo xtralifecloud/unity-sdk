@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+
 namespace CotcSdk {
 
 	/// @ingroup gamer_classes
@@ -20,33 +21,52 @@ namespace CotcSdk {
 			return this;
 		}
 
-		/// <summary>Retrieves an individual key from the key/value system.</summary>
-		/// <returns>Promise resolved when the operation has completed. The attached bundle contains the fetched
-		///     property. As usual with bundles, it can be casted to the proper type you are expecting.
-		///     If the property doesn't exist, the call is marked as failed with a 404 status.</returns>
-		/// <param name="key">The name of the key to be fetched.</param>
-		public Promise<Bundle> GetKey(string key) {
+        /// <summary>Retrieves an individual key from the key/value system.</summary>
+        /// <returns>Promise resolved when the operation has completed. The attached bundle contains the fetched
+        ///     property. As usual with bundles, it can be casted to the proper type you are expecting.
+        ///     If the property doesn't exist, the call is marked as failed with a 404 status.</returns>
+        /// <param name="key">The name of the key to be fetched.</param>
+        [Obsolete("Will be removed soon. Use GetValue instead.")]
+        public Promise<Bundle> GetKey(string key) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			return Common.RunInTask<Bundle>(req, (response, task) => {
                 // For backward compatibilty of json input in the backoffice as litterals
-			    if (response.BodyJson["value"] != null)
+			    if (response.BodyJson["value"] != Bundle.Empty)
                     task.PostResult(response.BodyJson["value"]);
                 else
                     task.PostResult(response.BodyJson);
             });
 		}
 
-		/// <summary>Retrieves the binary data of an individual key from the key/value system.</summary>
-		/// <returns>Promise resolved when the operation has completed. The binary data is attached as the value
-		///     of the result. Please ensure that the key was set with binary data before, or this call will
-		///     fail with a network error.</returns>
-		/// <param name="key">The name of the key to be fetched.</param>
-		public Promise<byte[]> GetKeyBinary(string key) {
+        /// <summary>Retrieves an individual key from the key/value system.</summary>
+        /// <returns>Promise resolved when the operation has completed. The attached bundle contains the fetched
+        ///     property. As usual with bundles, it can be casted to the proper type you are expecting.
+        ///     If the property doesn't exist, the call is marked as failed with a 404 status.</returns>
+        /// <param name="key">The name of the key to be fetched. If you don't pass any jey, then all the keys
+        ///     will be returned in a global JSON</param>
+        public Promise<Bundle> GetValue(string key=null)
+        {
+            UrlBuilder url = new UrlBuilder("/v3.0/gamer/vfs").Path(domain);
+            if(key != null && key != "")
+                url = url.Path(key);
+            HttpRequest req = Gamer.MakeHttpRequest(url);
+            return Common.RunInTask<Bundle>(req, (response, task) => {
+                task.PostResult(response.BodyJson);
+            });
+        }
+
+        /// <summary>Retrieves the binary data of an individual key from the key/value system.</summary>
+        /// <returns>Promise resolved when the operation has completed. The binary data is attached as the value
+        ///     of the result. Please ensure that the key was set with binary data before, or this call will
+        ///     fail with a network error.</returns>
+        /// <param name="key">The name of the key to be fetched.</param>
+        [Obsolete("Will be removed soon. Use GetBinary instead.")]
+        public Promise<byte[]> GetKeyBinary(string key) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key).QueryParam("binary");
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			return Common.RunInTask<byte[]>(req, (response, task) => {
-				// We must then download the received URL
+                // We must then download the received URL
 				string downloadUrl = response.BodyString.Trim('"');
 				HttpRequest binaryRequest = new HttpRequest();
 				binaryRequest.Url = downloadUrl;
@@ -60,48 +80,118 @@ namespace CotcSdk {
 			});
 		}
 
-		/// <summary>Sets the value of a key in the key/value system.</summary>
-		/// <returns>Promise resolved when the operation has completed.</returns>
-		/// <param name="key">The name of the key to set the value for.</param>
-		/// <param name="value">The value to set. As usual with bundles, casting is implicitly done, so you may as well
-		///     call this method passing an integer or string as value for instance.</param>
-		public Promise<Done> SetKey(string key, Bundle value) {
-			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key);
-			HttpRequest req = Gamer.MakeHttpRequest(url);
-			req.BodyJson = Bundle.CreateObject("value", value);
-			req.Method = "PUT";
-			return Common.RunInTask<Done>(req, (response, task) => {
-				task.PostResult(new Done(response.BodyJson));
-			});
-		}
+        /// <summary>Retrieves the binary data of an individual key from the key/value system.</summary>
+        /// <returns>Promise resolved when the operation has completed. The binary data is attached as the value
+        ///     of the result. Please ensure that the key was set with binary data before, or this call will
+        ///     fail with a network error.</returns>
+        /// <param name="key">The name of the key to be fetched.</param>
+        public Promise<byte[]> GetBinary(string key)
+        {
+            UrlBuilder url = new UrlBuilder("/v3.0/gamer/vfs").Path(domain).Path(key).QueryParam("binary");
+            HttpRequest req = Gamer.MakeHttpRequest(url);
+            return Common.RunInTask<byte[]>(req, (response, task) => {
+                // We must then download the received URL
+                string downloadUrl = response.BodyString.Trim('"');
+                HttpRequest binaryRequest = new HttpRequest();
+                binaryRequest.Url = downloadUrl;
+                binaryRequest.FailedHandler = Gamer.Cloud.HttpRequestFailedHandler;
+                binaryRequest.Method = "GET";
+                binaryRequest.TimeoutMillisec = Gamer.Cloud.HttpTimeoutMillis;
+                binaryRequest.UserAgent = Gamer.Cloud.UserAgent;
+                Common.RunRequest(binaryRequest, task, binaryResponse => {
+                    task.Resolve(binaryResponse.Body);
+                }, forceClient: Managers.UnityHttpClient);
+            });
+        }
 
-		/// <summary>Sets the value of a key in the key/value system as binary data.</summary>
-		/// <returns>Promise resolved when the operation has completed.</returns>
-		/// <param name="key">The name of the key to set the value for.</param>
-		/// <param name="binaryData">The value to set as binary data.</param>
-		public Promise<Done> SetKeyBinary(string key, byte[] binaryData) {
-			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key).QueryParam("binary");
-			HttpRequest req = Gamer.MakeHttpRequest(url);
-			req.Method = "PUT";
-			return Common.RunInTask<Done>(req, (response, task) => {
-				// Now we have an URL to upload the data to
-				HttpRequest binaryRequest = new HttpRequest();
-				binaryRequest.Url = response.BodyJson["putURL"];
-				binaryRequest.Body = binaryData;
-				binaryRequest.FailedHandler = Gamer.Cloud.HttpRequestFailedHandler;
-				binaryRequest.Method = "PUT";
-				binaryRequest.TimeoutMillisec = Gamer.Cloud.HttpTimeoutMillis;
-				binaryRequest.UserAgent = Gamer.Cloud.UserAgent;
-				Common.RunRequest(binaryRequest, task, binaryResponse => {
-					task.Resolve(new Done(response.BodyJson));
-				}, forceClient: Managers.UnityHttpClient);
-			});
-		}
+        /// <summary>Sets the value of a key in the key/value system.</summary>
+        /// <returns>Promise resolved when the operation has completed.</returns>
+        /// <param name="key">The name of the key to set the value for.</param>
+        /// <param name="value">The value to set. As usual with bundles, casting is implicitly done, so you may as well
+        ///     call this method passing an integer or string as value for instance.</param>
+        [Obsolete("Will be removed soon. Use SetValue instead.")]
+        public Promise<Done> SetKey(string key, Bundle value)
+        {
+            UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key);
+            HttpRequest req = Gamer.MakeHttpRequest(url);
+            req.BodyJson = Bundle.CreateObject("value", value);
+            //req.BodyJson = value;
+            req.Method = "PUT";
+            return Common.RunInTask<Done>(req, (response, task) => {
+                task.PostResult(new Done(response.BodyJson));
+            });
+        }
 
-		/// <summary>Removes a single key from the key/value system.</summary>
-		/// <returns>Promise resolved when the operation has completed.</returns>
-		/// <param name="key">The name of the key to remove.</param>
-		public Promise<Done> RemoveKey(string key) {
+        public Promise<Done> SetValue(string key, Bundle value)
+        {
+            UrlBuilder url = new UrlBuilder("/v3.0/gamer/vfs").Path(domain);
+            if (key != null && key != "")
+                url = url.Path(key);
+            HttpRequest req = Gamer.MakeHttpRequest(url);
+            //req.BodyJson = Bundle.CreateObject("value", value);
+            req.BodyJson = value;
+            req.Method = "PUT";
+            return Common.RunInTask<Done>(req, (response, task) => {
+                task.PostResult(new Done(response.BodyJson));
+            });
+        }
+
+
+        /// <summary>Sets the value of a key in the key/value system as binary data.</summary>
+        /// <returns>Promise resolved when the operation has completed.</returns>
+        /// <param name="key">The name of the key to set the value for.</param>
+        /// <param name="binaryData">The value to set as binary data.</param>
+        [Obsolete("Will be removed soon. Use SetBinary instead.")]
+        public Promise<Done> SetKeyBinary(string key, byte[] binaryData)
+        {
+            UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key).QueryParam("binary");
+            HttpRequest req = Gamer.MakeHttpRequest(url);
+            req.Method = "PUT";
+            return Common.RunInTask<Done>(req, (response, task) => {
+                // Now we have an URL to upload the data to
+                HttpRequest binaryRequest = new HttpRequest();
+                binaryRequest.Url = response.BodyJson["putURL"];
+                binaryRequest.Body = binaryData;
+                binaryRequest.FailedHandler = Gamer.Cloud.HttpRequestFailedHandler;
+                binaryRequest.Method = "PUT";
+                binaryRequest.TimeoutMillisec = Gamer.Cloud.HttpTimeoutMillis;
+                binaryRequest.UserAgent = Gamer.Cloud.UserAgent;
+                Common.RunRequest(binaryRequest, task, binaryResponse => {
+                    task.Resolve(new Done(response.BodyJson));
+                }, forceClient: Managers.UnityHttpClient);
+            });
+        }
+
+        /// <summary>Sets the value of a key in the key/value system as binary data.</summary>
+        /// <returns>Promise resolved when the operation has completed.</returns>
+        /// <param name="key">The name of the key to set the value for.</param>
+        /// <param name="binaryData">The value to set as binary data.</param>
+        public Promise<Done> SetBinary(string key, byte[] binaryData)
+        {
+            UrlBuilder url = new UrlBuilder("/v3.0/gamer/vfs").Path(domain).Path(key).QueryParam("binary");
+            HttpRequest req = Gamer.MakeHttpRequest(url);
+            req.Method = "PUT";
+            return Common.RunInTask<Done>(req, (response, task) => {
+                // Now we have an URL to upload the data to
+                HttpRequest binaryRequest = new HttpRequest();
+                binaryRequest.Url = response.BodyJson["putURL"];
+                binaryRequest.Body = binaryData;
+                binaryRequest.FailedHandler = Gamer.Cloud.HttpRequestFailedHandler;
+                binaryRequest.Method = "PUT";
+                binaryRequest.TimeoutMillisec = Gamer.Cloud.HttpTimeoutMillis;
+                binaryRequest.UserAgent = Gamer.Cloud.UserAgent;
+                Common.RunRequest(binaryRequest, task, binaryResponse => {
+                    task.Resolve(new Done(response.BodyJson));
+                }, forceClient: Managers.UnityHttpClient);
+            });
+        }
+
+
+        /// <summary>Removes a single key from the key/value system.</summary>
+        /// <returns>Promise resolved when the operation has completed.</returns>
+        /// <param name="key">The name of the key to remove.</param>
+        [Obsolete("Will be removed soon. Use DeleteValue instead.")]
+        public Promise<Done> RemoveKey(string key) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";
@@ -109,9 +199,25 @@ namespace CotcSdk {
 				task.PostResult(new Done(response.BodyJson));
 			});
 		}
-		
-		#region Private
-		internal GamerVfs(Gamer gamer) {
+
+        /// <summary>Removes a single key from the key/value system.</summary>
+        /// <returns>Promise resolved when the operation has completed.</returns>
+        /// <param name="key">The name of the key to remove. Beware, if you don't pass any key at all,
+        ///     then ALL the key/value will be removed. Should be used with care!</param>
+        public Promise<Done> DeleteValue(string key=null)
+        {
+            UrlBuilder url = new UrlBuilder("/v3.0/gamer/vfs").Path(domain);
+            if (key != null && key != "")
+                url = url.Path(key);
+            HttpRequest req = Gamer.MakeHttpRequest(url);
+            req.Method = "DELETE";
+            return Common.RunInTask<Done>(req, (response, task) => {
+                task.PostResult(new Done(response.BodyJson));
+            });
+        }
+
+        #region Private
+        internal GamerVfs(Gamer gamer) {
 			Gamer = gamer;
 		}
 
