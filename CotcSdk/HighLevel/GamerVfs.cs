@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CotcSdk {
 
@@ -91,7 +92,14 @@ namespace CotcSdk {
             HttpRequest req = Gamer.MakeHttpRequest(url);
             return Common.RunInTask<byte[]>(req, (response, task) => {
                 // We must then download the received URL
-                string downloadUrl = response.BodyString.Trim('"');
+                Bundle bundleRes = Bundle.ParseFromString(response.BodyString);
+                Dictionary<string, Bundle> dict = bundleRes["result"].AsDictionary();
+                string downloadUrl = "";
+                foreach (var obj in dict)
+                {
+                    downloadUrl = obj.Value.AsString().Trim('"');
+                    break;
+                }
                 HttpRequest binaryRequest = new HttpRequest();
                 binaryRequest.Url = downloadUrl;
                 binaryRequest.FailedHandler = Gamer.Cloud.HttpRequestFailedHandler;
