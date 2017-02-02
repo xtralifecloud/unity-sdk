@@ -47,11 +47,9 @@ namespace CotcSdk {
 
         /// <summary></summary>
         /// <returns>The number of the first result in the list.</returns>
-        [Obsolete("Used for obsolete methods")]
         public int Offset;
         /// <summary></summary>
         /// <returns>The total number of items (possibly greater than the page size).</returns>
-        [Obsolete("Used for obsolete methods")]
         public int Total;
     }
 }

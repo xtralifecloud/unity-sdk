@@ -27,6 +27,7 @@ namespace CotcSdk {
         ///     property. As usual with bundles, it can be casted to the proper type you are expecting.
         ///     If the property doesn't exist, the call is marked as failed with a 404 status.</returns>
         /// <param name="key">The name of the key to be fetched.</param>
+        /// <remarks>This method is obsolete, use GetValue instead.</remarks>
         [Obsolete("Will be removed soon. Use GetValue instead.")]
         public Promise<Bundle> GetKey(string key) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key);
@@ -40,11 +41,11 @@ namespace CotcSdk {
             });
 		}
 
-        /// <summary>Retrieves an individual key from the key/value system.</summary>
+        /// <summary>Retrieves an individual key or all keys from the key/value system.</summary>
         /// <returns>Promise resolved when the operation has completed. The attached bundle contains the fetched
-        ///     property. As usual with bundles, it can be casted to the proper type you are expecting.
-        ///     If the property doesn't exist, the call is marked as failed with a 404 status.</returns>
-        /// <param name="key">The name of the key to be fetched. If you don't pass any jey, then all the keys
+        ///     property(ies) in the "result" key. As usual with bundles, it can be casted to the proper type you
+        ///     are expecting. If the property doesn't exist, the call is marked as failed with a 404 status.</returns>
+        /// <param name="key">The name of the key to be fetched. If you don't pass any key, then all the keys
         ///     will be returned in a global JSON</param>
         public Promise<Bundle> GetValue(string key=null)
         {
@@ -62,6 +63,7 @@ namespace CotcSdk {
         ///     of the result. Please ensure that the key was set with binary data before, or this call will
         ///     fail with a network error.</returns>
         /// <param name="key">The name of the key to be fetched.</param>
+        /// <remarks>This method is obsolete, use GetBinary instead.</remarks>
         [Obsolete("Will be removed soon. Use GetBinary instead.")]
         public Promise<byte[]> GetKeyBinary(string key) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key).QueryParam("binary");
@@ -117,6 +119,7 @@ namespace CotcSdk {
         /// <param name="key">The name of the key to set the value for.</param>
         /// <param name="value">The value to set. As usual with bundles, casting is implicitly done, so you may as well
         ///     call this method passing an integer or string as value for instance.</param>
+        /// <remarks>This method is obsolete, use SetValue instead.</remarks>
         [Obsolete("Will be removed soon. Use SetValue instead.")]
         public Promise<Done> SetKey(string key, Bundle value)
         {
@@ -130,6 +133,11 @@ namespace CotcSdk {
             });
         }
 
+        /// <summary>Sets the value of a single key or all keys in the key/value system.</summary>
+        /// <returns>Promise resolved when the operation has completed.</returns>
+        /// <param name="key">The name of the key to set the value for.</param>
+        /// <param name="value">The value to set. As usual with bundles, casting is implicitly done, so you may as well
+        ///     call this method passing an integer or string as value for instance.</param>
         public Promise<Done> SetValue(string key, Bundle value)
         {
             UrlBuilder url = new UrlBuilder("/v3.0/gamer/vfs").Path(domain);
@@ -149,6 +157,7 @@ namespace CotcSdk {
         /// <returns>Promise resolved when the operation has completed.</returns>
         /// <param name="key">The name of the key to set the value for.</param>
         /// <param name="binaryData">The value to set as binary data.</param>
+        /// <remarks>This method is obsolete, use SetBinary instead.</remarks>
         [Obsolete("Will be removed soon. Use SetBinary instead.")]
         public Promise<Done> SetKeyBinary(string key, byte[] binaryData)
         {
@@ -198,6 +207,7 @@ namespace CotcSdk {
         /// <summary>Removes a single key from the key/value system.</summary>
         /// <returns>Promise resolved when the operation has completed.</returns>
         /// <param name="key">The name of the key to remove.</param>
+        /// <remarks>This method is obsolete, use DeleteValue instead.</remarks>
         [Obsolete("Will be removed soon. Use DeleteValue instead.")]
         public Promise<Done> RemoveKey(string key) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/vfs").Path(domain).Path(key);
@@ -208,7 +218,7 @@ namespace CotcSdk {
 			});
 		}
 
-        /// <summary>Removes a single key from the key/value system.</summary>
+        /// <summary>Removes a single key or all keys from the key/value system.</summary>
         /// <returns>Promise resolved when the operation has completed.</returns>
         /// <param name="key">The name of the key to remove. Beware, if you don't pass any key at all,
         ///     then ALL the key/value will be removed. Should be used with care!</param>
