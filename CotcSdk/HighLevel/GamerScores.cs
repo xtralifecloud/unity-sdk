@@ -42,11 +42,11 @@ namespace CotcSdk {
                 // Handle pagination
                 if (currentPage > 1)
                 {
-                    scores.Previous = () => BestHighScores(board, currentPage-1, count);
+                    scores.Previous = () => BestHighScores(board, count, currentPage - 1);
                 }
                 if (currentPage < pagesTotal)
                 {
-                    scores.Next = () => BestHighScores(board, currentPage+1, count);
+                    scores.Next = () => BestHighScores(board, count, currentPage + 1);
                 }
                 task.PostResult(scores);
             });
