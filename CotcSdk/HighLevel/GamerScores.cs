@@ -18,63 +18,81 @@ namespace CotcSdk {
 			return this;
 		}
 
-		/// <summary>Fetch the score list for a given board.</summary>
-		/// <returns>Promise resolved when the operation has completed. The attached value describes a list of scores, and
-		///     provides pagination functionality.</returns>
-		/// <param name="board">The name of the board to fetch scores from.</param>
-		/// <param name="limit">The maximum number of results to return per page.</param>
-		/// <param name="offset">Number of the first result. Needs to be a multiple of `limit`. The special value of -1 can be used
-		///     to auto-select the page where the current logged in user is located, including his score in the result. After
-		///     that, you may use the paged result handler to fetch pages nearby.</param>
-		public Promise<PagedList<Score>> List(string board, int limit = 30, int offset = 0) {
-			UrlBuilder url = new UrlBuilder("/v2.6/gamer/scores").Path(domain).Path(board).QueryParam("count", limit);
-			if (offset == -1) url.QueryParam("page", "me");
-			else              url.QueryParam("page", offset / limit + 1);
-			return Common.RunInTask<PagedList<Score>>(Gamer.MakeHttpRequest(url), (response, task) => {
-				// Pagination computing
-				Bundle boardData = response.BodyJson[board];
-				int pagesTotal = boardData["maxpage"];
-				int currentPage = boardData["page"];
-				if (offset == -1) offset = (currentPage - 1) * limit;
-				int currentItems = boardData["scores"].AsArray().Count;
-				int total = Math.Min(pagesTotal * limit, offset + currentItems);
-				// Fetch listed scores
-				PagedList<Score> scores = new PagedList<Score>(response.BodyJson, offset, total);
-				int rank = boardData["rankOfFirst"];
-				foreach (Bundle b in boardData["scores"].AsArray()) {
-					scores.Add(new Score(b, rank++));
-				}
-				// Handle pagination
-				if (currentPage > 1) {
-					scores.Previous = () => List(board, limit, offset - limit);
-				}
-				if (currentPage < pagesTotal) {
-					scores.Next = () => List(board, limit, offset + limit);
-				}
-				task.PostResult(scores);
-			});
-		}
+        /// <summary>Fetch the score list for a given board.</summary>
+        /// <returns>Promise resolved when the operation has completed. The attached value describes a list of scores, and
+        ///     provides pagination functionality.</returns>
+        /// <param name="board">The name of the board to fetch scores from.</param>
+        /// <param name="count">The maximum number of results to return per page.</param>
+        /// <param name="page">Number of the page to be fetched. After that, you may use the paged result handler to fetch pages nearby.</param>
+        public Promise<PagedList<Score>> BestHighScores(string board, int count = 10, int page = 1)
+        {
+            UrlBuilder url = new UrlBuilder("/v2.6/gamer/scores").Path(domain).Path(board).QueryParam("count", count).QueryParam("page", page);
+            return Common.RunInTask<PagedList<Score>>(Gamer.MakeHttpRequest(url), (response, task) => {
+                // Pagination computing
+                Bundle boardData = response.BodyJson[board];
+                int pagesTotal = boardData["maxpage"];
+                int currentPage = boardData["page"];
+                // Fetch listed scores
+                PagedList<Score> scores = new PagedList<Score>(response.BodyJson, pagesTotal);
+                int rank = boardData["rankOfFirst"];
+                foreach (Bundle b in boardData["scores"].AsArray())
+                {
+                    scores.Add(new Score(b, rank++));
+                }
+                // Handle pagination
+                if (currentPage > 1)
+                {
+                    scores.Previous = () => BestHighScores(board, count, currentPage - 1);
+                }
+                if (currentPage < pagesTotal)
+                {
+                    scores.Next = () => BestHighScores(board, count, currentPage + 1);
+                }
+                task.PostResult(scores);
+            });
+        }
 
-		/// <summary>Fetch the score list for a given board, restricting to the scores made by the friends of the current user.</summary>
-		/// <returns>Promise resolved when the operation has completed. The attached value describes a list of scores,
-		///     without pagination functionality.</returns>
-		/// <param name="board">The name of the board to fetch scores from.</param>
-		public Promise<NonpagedList<Score>> ListFriendScores(string board) {
-			UrlBuilder url = new UrlBuilder("/v2.6/gamer/scores").Path(domain).Path(board).QueryParam("type", "friendscore");
-			return Common.RunInTask<NonpagedList<Score>>(Gamer.MakeHttpRequest(url), (response, task) => {
-				var scores = new NonpagedList<Score>(response.BodyJson);
-				foreach (Bundle b in response.BodyJson[board].AsArray()) {
-					scores.Add(new Score(b));
-				}
-				task.PostResult(scores);
-			});
-		}
+        /// <summary>Fetch the score list for a given board, restricting to the scores made by the friends of the current user.</summary>
+        /// <returns>Promise resolved when the operation has completed. The attached value describes a list of scores,
+        ///     without pagination functionality.</returns>
+        /// <param name="board">The name of the board to fetch scores from.</param>
+        public Promise<NonpagedList<Score>> FriendsBestHighScores(string board, int count = 10, int page = 1)
+        {
+            UrlBuilder url = new UrlBuilder("/v2.6/gamer/scores").Path(domain).Path(board).QueryParam("type", "friendscore").QueryParam("count", count).QueryParam("page", page);
+            return Common.RunInTask<NonpagedList<Score>>(Gamer.MakeHttpRequest(url), (response, task) => {
+                var scores = new NonpagedList<Score>(response.BodyJson);
+                foreach (Bundle b in response.BodyJson[board].AsArray())
+                {
+                    scores.Add(new Score(b));
+                }
+                task.PostResult(scores);
+            });
+        }
 
-		/// <summary>Retrieves the best scores of this gamer, on all board he has posted one score to.</summary>
-		/// <returns>Promise resolved when the operation has completed. The attached value contains information about
-		///     the best scores of the user, indexed by board name.
-		///     *IMPORTANT*: in the results, the gamer information is not provided. GamerInfo is always null.</returns>
-		public Promise<Dictionary<string, Score>> ListUserBestScores() {
+        /// <summary>Fetch the score list around the player.</summary>
+        /// <returns>Promise resolved when the operation has completed. The attached value describes a list of scores,
+        ///     without pagination functionality.</returns>
+        /// <param name="board">The name of the board to fetch scores from.</param>
+        public Promise<NonpagedList<Score>> CenteredScore(string board, int count = 10)
+        {
+            UrlBuilder url = new UrlBuilder("/v2.6/gamer/scores").Path(domain).Path(board).QueryParam("count", count).QueryParam("page", "me");
+            return Common.RunInTask<NonpagedList<Score>>(Gamer.MakeHttpRequest(url), (response, task) => {
+                var scores = new NonpagedList<Score>(response.BodyJson);
+                Bundle boardData = response.BodyJson[board];
+                int rank = boardData["rankOfFirst"];
+                foreach (Bundle b in boardData.AsArray())
+                {
+                    scores.Add(new Score(b, rank++));
+                }
+                task.PostResult(scores);
+            });
+        }
+
+        /// <summary>Retrieves the best scores of this gamer, on all board he has posted one score to.</summary>
+        /// <returns>Promise resolved when the operation has completed. The attached value contains information about
+        ///     the best scores of the user, indexed by board name.
+        ///     *IMPORTANT*: in the results, the gamer information is not provided. GamerInfo is always null.</returns>
+        public Promise<Dictionary<string, Score>> ListUserBestScores() {
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/bestscores").Path(domain);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			return Common.RunInTask<Dictionary<string, Score>>(req, (response, task) => {
@@ -130,17 +148,66 @@ namespace CotcSdk {
 			});
 		}
 
-		#region Private
-		internal GamerScores(Gamer parent) {
+        [Obsolete("Old method to retrieve best scores. Better now to use the method BestHighScoresHighScores or CenteredScores")]
+        public Promise<PagedList<Score>> List(string board, int limit = 30, int offset = 0)
+        {
+            UrlBuilder url = new UrlBuilder("/v2.6/gamer/scores").Path(domain).Path(board).QueryParam("count", limit);
+            if (offset == -1) url.QueryParam("page", "me");
+            else url.QueryParam("page", offset / limit + 1);
+            return Common.RunInTask<PagedList<Score>>(Gamer.MakeHttpRequest(url), (response, task) => {
+                // Pagination computing
+                Bundle boardData = response.BodyJson[board];
+                int pagesTotal = boardData["maxpage"];
+                int currentPage = boardData["page"];
+                if (offset == -1) offset = (currentPage - 1) * limit;
+                int currentItems = boardData["scores"].AsArray().Count;
+                int total = Math.Min(pagesTotal * limit, offset + currentItems);
+                // Fetch listed scores
+                PagedList<Score> scores = new PagedList<Score>(response.BodyJson, offset, total);
+                int rank = boardData["rankOfFirst"];
+                foreach (Bundle b in boardData["scores"].AsArray())
+                {
+                    scores.Add(new Score(b, rank++));
+                }
+                // Handle pagination
+                if (currentPage > 1)
+                {
+                    scores.Previous = () => List(board, limit, offset - limit);
+                }
+                if (currentPage < pagesTotal)
+                {
+                    scores.Next = () => List(board, limit, offset + limit);
+                }
+                task.PostResult(scores);
+            });
+        }
+
+        [Obsolete("Old method to retrieve friend scores. Better now to use FriendsBestHighScores taking the page and count parameters")]
+        public Promise<NonpagedList<Score>> ListFriendScores(string board)
+        {
+            UrlBuilder url = new UrlBuilder("/v2.6/gamer/scores").Path(domain).Path(board).QueryParam("type", "friendscore");
+            return Common.RunInTask<NonpagedList<Score>>(Gamer.MakeHttpRequest(url), (response, task) => {
+                var scores = new NonpagedList<Score>(response.BodyJson);
+                foreach (Bundle b in response.BodyJson[board].AsArray())
+                {
+                    scores.Add(new Score(b));
+                }
+                task.PostResult(scores);
+            });
+        }
+
+        #region Private
+        internal GamerScores(Gamer parent) {
 			Gamer = parent;
 		}
 		private string domain = Common.PrivateDomain;
 		private Gamer Gamer;
-		#endregion
-	}
+        #endregion
 
-	/// <summary>Describes the possible sorting orders for the score leaderboard.</summary>
-	public enum ScoreOrder {
+    }
+
+    /// <summary>Describes the possible sorting orders for the score leaderboard.</summary>
+    public enum ScoreOrder {
 		HighToLow, /* Highest score first, lowest score last */
 		LowToHigh, /* Lowest score first, highest score last */
 	}

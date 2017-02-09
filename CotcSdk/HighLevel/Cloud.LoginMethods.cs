@@ -5,6 +5,8 @@ namespace CotcSdk
 {
 	public sealed partial class Cloud {
 
+        private Gamer currentGamer = null;
+
 		/// <summary>
 		/// Method used to check or retrieve users from Clan of the Cloud community. The domain is not taken
 		/// in account for this search.
@@ -39,7 +41,14 @@ namespace CotcSdk
 		/// <param name="additionalOptions">Additional options can be passed, such as `thenBatch` to execute a batch after
 		///     login. Pass it as a Bundle with the additional keys.</param>
 		public Promise<Gamer> LoginAnonymously(Bundle additionalOptions = null) {
-			Bundle config = Bundle.CreateObject();
+            if (currentGamer != null)
+            {
+                var exception = new Promise<Gamer>();
+                exception.PostResult(ErrorCode.LoginCanceled, "Already logged in");
+                return exception;
+            }
+
+            Bundle config = Bundle.CreateObject();
 			config["device"] = Managers.SystemFunctions.CollectDeviceInformation();
 
 			Bundle options = additionalOptions != null ? additionalOptions.Clone() : Bundle.CreateObject();
@@ -47,10 +56,11 @@ namespace CotcSdk
 
 			HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/login/anonymous");
 			req.BodyJson = config;
-			return Common.RunInTask<Gamer>(req, (response, task) => {
-				Gamer gamer = new Gamer(this, response.BodyJson);
-				task.PostResult(gamer);
-				Cotc.NotifyLoggedIn(this, gamer);
+
+            return Common.RunInTask<Gamer>(req, (response, task) => {
+                currentGamer = new Gamer(this, response.BodyJson);
+                task.PostResult(currentGamer);
+                Cotc.NotifyLoggedIn(this, currentGamer);
 			});
 		}
 
@@ -71,6 +81,13 @@ namespace CotcSdk
         ///     keys. May not override `preventRegistration` key since it is defined by the parameter of the same name.</param>
         public Promise<Gamer> Login(string network, string networkId, string networkSecret, Bundle additionalOptions = null)
         {
+            if (currentGamer != null)
+            {
+                var exception = new Promise<Gamer>();
+                exception.PostResult(ErrorCode.LoginCanceled, "Already logged in");
+                return exception;
+            }
+
             Bundle config = Bundle.CreateObject();
             config["network"] = network;
             config["id"] = networkId;
@@ -82,9 +99,9 @@ namespace CotcSdk
             HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/login");
             req.BodyJson = config;
             return Common.RunInTask<Gamer>(req, (response, task) => {
-                Gamer gamer = new Gamer(this, response.BodyJson);
-                task.PostResult(gamer);
-                Cotc.NotifyLoggedIn(this, gamer);
+                currentGamer = new Gamer(this, response.BodyJson);
+                task.PostResult(currentGamer);
+                Cotc.NotifyLoggedIn(this, currentGamer);
             });
         }
 
@@ -121,20 +138,41 @@ namespace CotcSdk
 			return Login(LoginNetwork.Anonymous.Describe(), gamerId, gamerSecret, additionalOptions);
 		}
 
-		/// <summary>
-		/// Can be used to send an e-mail to a user registered by 'email' network in order to help him
-		/// recover his/her password.
-		/// 
-		/// The user will receive an e-mail, containing a short code. This short code can be inputted in
-		/// the #LoginWithShortcode method.
-		/// </summary>
-		/// <returns>Promise resolved when the request has finished.</returns>
-		/// <param name="userEmail">The user as identified by his e-mail address.</param>
-		/// <param name="mailSender">The sender e-mail address as it will appear on the e-mail.</param>
-		/// <param name="mailTitle">The title of the e-mail.</param>
-		/// <param name="mailBody">The body of the mail. You should include the string [[SHORTCODE]], which will
-		///     be replaced by the generated short code.</param>
-		public Promise<Done> SendResetPasswordEmail(string userEmail, string mailSender, string mailTitle, string mailBody) {
+        /// <summary>
+        /// Logs out a previously logged in player.
+        /// </summary>
+        /// <returns>Promise resolved when the request has finished.</returns>
+        public Promise<Done> Logout()
+        {
+            if (currentGamer == null)
+            {
+                var exception = new Promise<Done>();
+                exception.PostResult(ErrorCode.NotLoggedIn, "Can't log out");
+                return exception;
+            }
+
+            Bundle config = Bundle.Empty;
+            HttpRequest req = currentGamer.MakeHttpRequest("/v1/gamer/logout");
+            req.BodyJson = config;
+            return Common.RunInTask<Done>(req, (response, task) => {
+                task.PostResult(new Done(response.BodyJson));
+            });
+        }
+
+        /// <summary>
+        /// Can be used to send an e-mail to a user registered by 'email' network in order to help him
+        /// recover his/her password.
+        /// 
+        /// The user will receive an e-mail, containing a short code. This short code can be inputted in
+        /// the #LoginWithShortcode method.
+        /// </summary>
+        /// <returns>Promise resolved when the request has finished.</returns>
+        /// <param name="userEmail">The user as identified by his e-mail address.</param>
+        /// <param name="mailSender">The sender e-mail address as it will appear on the e-mail.</param>
+        /// <param name="mailTitle">The title of the e-mail.</param>
+        /// <param name="mailBody">The body of the mail. You should include the string [[SHORTCODE]], which will
+        ///     be replaced by the generated short code.</param>
+        public Promise<Done> SendResetPasswordEmail(string userEmail, string mailSender, string mailTitle, string mailBody) {
 			UrlBuilder url = new UrlBuilder("/v1/login").Path(userEmail);
 			HttpRequest req = MakeUnauthenticatedHttpRequest(url);
 			Bundle config = Bundle.CreateObject();
@@ -153,13 +191,20 @@ namespace CotcSdk
 		///     an HTTP status code of 400.</returns>
 		/// <param name="network">Network used to log in (scoping the networkId).</param>
 		/// <param name="networkId">The ID of the user on the network, like the e-mail address.</param>
-		public Promise<Done> UserExists(LoginNetwork network, string networkId) {
+		public Promise<Done> UserExists(string network, string networkId) {
 			UrlBuilder url = new UrlBuilder("/v1/users")
-				.Path(network.Describe()).Path(networkId);
+				.Path(network).Path(networkId);
 			HttpRequest req = MakeUnauthenticatedHttpRequest(url);
 			return Common.RunInTask<Done>(req, (response, task) => {
 				task.PostResult(new Done(true, response.BodyJson));
 			});
 		}
-	}
+
+        [Obsolete("Old method to connect to check a user. Better now to use the method taking the network parameter as a string")]
+        public Promise<Done> UserExists(LoginNetwork network, string networkId)
+        {
+            return UserExists(network.Describe(), networkId);
+        }
+
+    }
 }

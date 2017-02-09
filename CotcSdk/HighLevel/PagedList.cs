@@ -24,23 +24,32 @@ namespace CotcSdk {
 		public bool HasNext {
 			get { return Next != null; }
 		}
-		/// <summary></summary>
-		/// <returns>The number of the first result in the list.</returns>
-		public int Offset;
 		public Bundle ServerData { get; private set; }
-		/// <summary></summary>
-		/// <returns>The total number of items (possibly greater than the page size).</returns>
-		public int Total;
+        public int MaxPage;
 
 		public override string ToString() {
 			return ServerData.ToString();
 		}
 
-		internal PagedList(Bundle serverData, int currentOffset, int totalResults) {
-			ServerData = serverData;
-			Offset = currentOffset;
-			Total = totalResults;
-		}
-		internal Func<Promise<PagedList<DataType>>> Next, Previous;
-	}
+        internal PagedList(Bundle serverData, int maxPage)
+        {
+            ServerData = serverData;
+            MaxPage = maxPage;
+        }
+        internal PagedList(Bundle serverData, int currentOffset, int totalResults)
+        {
+            ServerData = serverData;
+            Offset = currentOffset;
+            Total = totalResults;
+        }
+
+        internal Func<Promise<PagedList<DataType>>> Next, Previous;
+
+        /// <summary></summary>
+        /// <returns>The number of the first result in the list.</returns>
+        public int Offset;
+        /// <summary></summary>
+        /// <returns>The total number of items (possibly greater than the page size).</returns>
+        public int Total;
+    }
 }

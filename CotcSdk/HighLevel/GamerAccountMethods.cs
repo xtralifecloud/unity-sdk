@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+
 namespace CotcSdk
 {
 	/// @ingroup gamer_classes
@@ -55,9 +56,9 @@ namespace CotcSdk
 		///     On e-mail accounts e-mail then, this would be the e-mail address.</param>
 		/// <param name="networkSecret">The secret for the network. For e-mail accounts, this would be the passord. For
 		///     facebook or other SNS accounts, this would be the user token.</param>
-		public Promise<Done> Convert(LoginNetwork network, string networkId, string networkSecret) {
+		public Promise<Done> Convert(string network, string networkId, string networkSecret) {
 			Bundle config = Bundle.CreateObject();
-			config["network"] = network.Describe();
+			config["network"] = network;
 			config["id"] = networkId;
 			config["secret"] = networkSecret;
 
@@ -72,37 +73,73 @@ namespace CotcSdk
 			});
 		}
 
-		/// <summary>
-		/// Links the account with another social network. Note that unlike Convert, this doesn't change the way the
-		/// user would then sign in (the credentials remain the same).
-		/// For instance, one may want to link their facebook account while keeping e-mail credentials in order to
-		/// be able to share and play against gamers from their facebook social circle.
-		/// In order to link the account successfully, the provided network credentials need to be acceptable,
-		/// just as when calling #CotcSdk.Cloud.Login.
-		/// </summary>
-		/// <returns>Promise resolved when the operation has completed.</returns>
-		/// <param name="network">The target network to link the account with.</param>
-		/// <param name="networkId">The ID on the network. For example, with the facebook network, this would be the User ID.
-		///     On e-mail accounts e-mail then, this would be the e-mail address.</param>
-		/// <param name="networkSecret">The secret for the network. For e-mail accounts, this would be the passord. For
-		///     facebook or other SNS accounts, this would be the user token.</param>
-		public Promise<Done> Link(LoginNetwork network, string networkId, string networkSecret) {
-			Bundle config = Bundle.CreateObject();
-			config["network"] = network.Describe();
-			config["id"] = networkId;
-			config["secret"] = networkSecret;
+        [Obsolete("Old method to convert to a network. Better now to use the method taking the network parameter as a string")]
+        public Promise<Done> Convert(LoginNetwork network, string networkId, string networkSecret)
+        {
+            return Convert(network.Describe(), networkId, networkSecret);
+        }
 
-			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/link");
-			req.BodyJson = config;
-			return Common.RunInTask<Done>(req, (response, task) => {
-				task.PostResult(new Done(response.BodyJson));
-			});
-		}
+        /// <summary>
+        /// Links the account with another social network. Note that unlike Convert, this doesn't change the way the
+        /// user would then sign in (the credentials remain the same).
+        /// For instance, one may want to link their facebook account while keeping e-mail credentials in order to
+        /// be able to share and play against gamers from their facebook social circle.
+        /// In order to link the account successfully, the provided network credentials need to be acceptable,
+        /// just as when calling #CotcSdk.Cloud.Login.
+        /// </summary>
+        /// <returns>Promise resolved when the operation has completed.</returns>
+        /// <param name="network">The target network to link the account with.</param>
+        /// <param name="networkId">The ID on the network. For example, with the facebook network, this would be the User ID.
+        ///     On e-mail accounts e-mail then, this would be the e-mail address.</param>
+        /// <param name="networkSecret">The secret for the network. For e-mail accounts, this would be the passord. For
+        ///     facebook or other SNS accounts, this would be the user token.</param>
+        public Promise<Done> Link(string network, string networkId, string networkSecret)
+        {
+            Bundle config = Bundle.CreateObject();
+            config["network"] = network;
+            config["id"] = networkId;
+            config["secret"] = networkSecret;
 
-		/// <summary>Meant to be called for push notifications.</summary>
-		/// <param name="os">Operating system (should be determined by the native implementation: "ios", "android", "macos", …).</param>
-		/// <param name="token">Push notification token (device specific).</param>
-		public Promise<Done> RegisterDevice(string os, string token) {
+            HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/link");
+            req.BodyJson = config;
+            return Common.RunInTask<Done>(req, (response, task) => {
+                task.PostResult(new Done(response.BodyJson));
+            });
+        }
+
+        [Obsolete("Old method to link to a network. Better now to use the method taking the network parameter as a string")]
+        public Promise<Done> Link(LoginNetwork network, string networkId, string networkSecret)
+        {
+            return Link(network.Describe(), networkId, networkSecret);
+        }
+
+        /// <summary>
+        /// Unlinks the account with a social network.
+        /// </summary>
+        /// <returns>Promise resolved when the operation has completed.</returns>
+        /// <param name="network">The target network to unlink the account from.</param>
+        public Promise<Done> Unlink(string network)
+        {
+            Bundle config = Bundle.CreateObject();
+            config["network"] = network;
+
+            HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/unlink");
+            req.BodyJson = config;
+            return Common.RunInTask<Done>(req, (response, task) => {
+                task.PostResult(new Done(response.BodyJson));
+            });
+        }
+
+        [Obsolete("Old method to unlink to a network. Better now to use the method taking the network parameter as a string")]
+        public Promise<Done> Unlink(LoginNetwork network)
+        {
+            return Unlink(network.Describe());
+        }
+
+        /// <summary>Meant to be called for push notifications.</summary>
+        /// <param name="os">Operating system (should be determined by the native implementation: "ios", "android", "macos", …).</param>
+        /// <param name="token">Push notification token (device specific).</param>
+        public Promise<Done> RegisterDevice(string os, string token) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/device").QueryParam("os", os).QueryParam("token", token);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "POST";

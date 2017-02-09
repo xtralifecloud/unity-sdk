@@ -90,6 +90,12 @@
             <param name="additionalOptions">Additional options can be passed, such as 'thenBatch' to execute a batch after
                 login. Pass it as a Bundle with the additional keys</param>
         </member>
+        <member name="M:CotcSdk.Cloud.Logout">
+            <summary>
+            Logs out a previously logged in player.
+            </summary>
+            <returns>Promise resolved when the request has finished.</returns>
+        </member>
         <member name="M:CotcSdk.Cloud.SendResetPasswordEmail(System.String,System.String,System.String,System.String)">
             <summary>
             Can be used to send an e-mail to a user registered by 'email' network in order to help him
@@ -105,7 +111,7 @@
             <param name="mailBody">The body of the mail. You should include the string [[SHORTCODE]], which will
                 be replaced by the generated short code.</param>
         </member>
-        <member name="M:CotcSdk.Cloud.UserExists(CotcSdk.LoginNetwork,System.String)">
+        <member name="M:CotcSdk.Cloud.UserExists(System.String,System.String)">
             <summary>Checks that an user exists on a given network.</summary>
             <returns>Promise resolved when the user is found. If the user does not exist, it fails with
                 an HTTP status code of 400.</returns>
@@ -594,18 +600,22 @@
             <param name="domain">Domain on which to scope the next operations.</param>
             <returns>This object for operation chaining.</returns>
         </member>
-        <member name="M:CotcSdk.GamerScores.List(System.String,System.Int32,System.Int32)">
+        <member name="M:CotcSdk.GamerScores.BestHighScores(System.String,System.Int32,System.Int32)">
             <summary>Fetch the score list for a given board.</summary>
             <returns>Promise resolved when the operation has completed. The attached value describes a list of scores, and
                 provides pagination functionality.</returns>
             <param name="board">The name of the board to fetch scores from.</param>
-            <param name="limit">The maximum number of results to return per page.</param>
-            <param name="offset">Number of the first result. Needs to be a multiple of `limit`. The special value of -1 can be used
-                to auto-select the page where the current logged in user is located, including his score in the result. After
-                that, you may use the paged result handler to fetch pages nearby.</param>
+            <param name="count">The maximum number of results to return per page.</param>
+            <param name="page">Number of the page to be fetched. After that, you may use the paged result handler to fetch pages nearby.</param>
         </member>
-        <member name="M:CotcSdk.GamerScores.ListFriendScores(System.String)">
+        <member name="M:CotcSdk.GamerScores.FriendsBestHighScores(System.String,System.Int32,System.Int32)">
             <summary>Fetch the score list for a given board, restricting to the scores made by the friends of the current user.</summary>
+            <returns>Promise resolved when the operation has completed. The attached value describes a list of scores,
+                without pagination functionality.</returns>
+            <param name="board">The name of the board to fetch scores from.</param>
+        </member>
+        <member name="M:CotcSdk.GamerScores.CenteredScore(System.String,System.Int32)">
+            <summary>Fetch the score list around the player.</summary>
             <returns>Promise resolved when the operation has completed. The attached value describes a list of scores,
                 without pagination functionality.</returns>
             <param name="board">The name of the board to fetch scores from.</param>
@@ -662,12 +672,28 @@
             <returns>Promise resolved when the operation has completed. The attached bundle contains the keys
                 along with their values. If you would like to fetch the value of a given key and you expect
                 it to be a string, you may simply do `string value = result.Value["key"];`.</returns>
+            <remarks>This method is obsolete, use GetValue instead.</remarks>
         </member>
         <member name="M:CotcSdk.GameVfs.GetKey(System.String)">
             <summary>Retrieves an individual key from the key/value system.</summary>
             <returns>Promise resolved when the operation has completed. The attached bundle contains the fetched property.
                 As usual with bundles, it can be casted to the proper type you are expecting.
                 If the property doesn't exist, the call is marked as failed with a 404 status.</returns>
+            <param name="key">The name of the key to be fetched.</param>
+            <remarks>This method is obsolete, use GetValue instead.</remarks>
+        </member>
+        <member name="M:CotcSdk.GameVfs.GetValue(System.String)">
+            <summary>Retrieves an individual key or all keys from the key/value system.</summary>
+            <returns>Promise resolved when the operation has completed. The attached bundle contains the fetched property(ies).
+                As usual with bundles, it can be casted to the proper type you are expecting.
+                If the property doesn't exist, the call is marked as failed with a 404 status.</returns>
+            <param name="key">The name of the key to be fetched.</param>
+        </member>
+        <member name="M:CotcSdk.GameVfs.GetBinary(System.String)">
+            <summary>Retrieves the binary data of game key from the key/value system.</summary>
+            <returns>Promise resolved when the operation has completed. The binary data is attached as the value
+                of the result. Please ensure that the key was set with binary data before, or this call will
+                fail with a network error.</returns>
             <param name="key">The name of the key to be fetched.</param>
         </member>
         <member name="T:CotcSdk.EventLoopHandler">
@@ -1559,8 +1585,25 @@
                 property. As usual with bundles, it can be casted to the proper type you are expecting.
                 If the property doesn't exist, the call is marked as failed with a 404 status.</returns>
             <param name="key">The name of the key to be fetched.</param>
+            <remarks>This method is obsolete, use GetValue instead.</remarks>
+        </member>
+        <member name="M:CotcSdk.GamerVfs.GetValue(System.String)">
+            <summary>Retrieves an individual key or all keys from the key/value system.</summary>
+            <returns>Promise resolved when the operation has completed. The attached bundle contains the fetched
+                property(ies) in the "result" key. As usual with bundles, it can be casted to the proper type you
+                are expecting. If the property doesn't exist, the call is marked as failed with a 404 status.</returns>
+            <param name="key">The name of the key to be fetched. If you don't pass any key, then all the keys
+                will be returned in a global JSON</param>
         </member>
         <member name="M:CotcSdk.GamerVfs.GetKeyBinary(System.String)">
+            <summary>Retrieves the binary data of an individual key from the key/value system.</summary>
+            <returns>Promise resolved when the operation has completed. The binary data is attached as the value
+                of the result. Please ensure that the key was set with binary data before, or this call will
+                fail with a network error.</returns>
+            <param name="key">The name of the key to be fetched.</param>
+            <remarks>This method is obsolete, use GetBinary instead.</remarks>
+        </member>
+        <member name="M:CotcSdk.GamerVfs.GetBinary(System.String)">
             <summary>Retrieves the binary data of an individual key from the key/value system.</summary>
             <returns>Promise resolved when the operation has completed. The binary data is attached as the value
                 of the result. Please ensure that the key was set with binary data before, or this call will
@@ -1573,8 +1616,23 @@
             <param name="key">The name of the key to set the value for.</param>
             <param name="value">The value to set. As usual with bundles, casting is implicitly done, so you may as well
                 call this method passing an integer or string as value for instance.</param>
+            <remarks>This method is obsolete, use SetValue instead.</remarks>
+        </member>
+        <member name="M:CotcSdk.GamerVfs.SetValue(System.String,CotcSdk.Bundle)">
+            <summary>Sets the value of a single key or all keys in the key/value system.</summary>
+            <returns>Promise resolved when the operation has completed.</returns>
+            <param name="key">The name of the key to set the value for.</param>
+            <param name="value">The value to set. As usual with bundles, casting is implicitly done, so you may as well
+                call this method passing an integer or string as value for instance.</param>
         </member>
         <member name="M:CotcSdk.GamerVfs.SetKeyBinary(System.String,System.Byte[])">
+            <summary>Sets the value of a key in the key/value system as binary data.</summary>
+            <returns>Promise resolved when the operation has completed.</returns>
+            <param name="key">The name of the key to set the value for.</param>
+            <param name="binaryData">The value to set as binary data.</param>
+            <remarks>This method is obsolete, use SetBinary instead.</remarks>
+        </member>
+        <member name="M:CotcSdk.GamerVfs.SetBinary(System.String,System.Byte[])">
             <summary>Sets the value of a key in the key/value system as binary data.</summary>
             <returns>Promise resolved when the operation has completed.</returns>
             <param name="key">The name of the key to set the value for.</param>
@@ -1584,6 +1642,13 @@
             <summary>Removes a single key from the key/value system.</summary>
             <returns>Promise resolved when the operation has completed.</returns>
             <param name="key">The name of the key to remove.</param>
+            <remarks>This method is obsolete, use DeleteValue instead.</remarks>
+        </member>
+        <member name="M:CotcSdk.GamerVfs.DeleteValue(System.String)">
+            <summary>Removes a single key or all keys from the key/value system.</summary>
+            <returns>Promise resolved when the operation has completed.</returns>
+            <param name="key">The name of the key to remove. Beware, if you don't pass any key at all,
+                then ALL the key/value will be removed. Should be used with care!</param>
         </member>
         <!-- Badly formed XML comment ignored for member "T:CotcSdk.NonpagedList`1" -->
         <member name="T:CotcSdk.PagedList`1">
@@ -1882,7 +1947,7 @@
             <returns>Promise resolved when the operation has completed.</returns>
             <param name="newPassword">The new password to be used for signing in.</param>
         </member>
-        <member name="M:CotcSdk.GamerAccountMethods.Convert(CotcSdk.LoginNetwork,System.String,System.String)">
+        <member name="M:CotcSdk.GamerAccountMethods.Convert(System.String,System.String,System.String)">
             <summary>
             Converts the account to sign in through another network.
             For instance, you might have created an anonymous account, that you later want to convert to an account
@@ -1898,7 +1963,7 @@
             <param name="networkSecret">The secret for the network. For e-mail accounts, this would be the passord. For
                 facebook or other SNS accounts, this would be the user token.</param>
         </member>
-        <member name="M:CotcSdk.GamerAccountMethods.Link(CotcSdk.LoginNetwork,System.String,System.String)">
+        <member name="M:CotcSdk.GamerAccountMethods.Link(System.String,System.String,System.String)">
             <summary>
             Links the account with another social network. Note that unlike Convert, this doesn't change the way the
             user would then sign in (the credentials remain the same).
@@ -1913,6 +1978,13 @@
                 On e-mail accounts e-mail then, this would be the e-mail address.</param>
             <param name="networkSecret">The secret for the network. For e-mail accounts, this would be the passord. For
                 facebook or other SNS accounts, this would be the user token.</param>
+        </member>
+        <member name="M:CotcSdk.GamerAccountMethods.Unlink(System.String)">
+            <summary>
+            Unlinks the account with a social network.
+            </summary>
+            <returns>Promise resolved when the operation has completed.</returns>
+            <param name="network">The target network to unlink the account from.</param>
         </member>
         <member name="M:CotcSdk.GamerAccountMethods.RegisterDevice(System.String,System.String)">
             <summary>Meant to be called for push notifications.</summary>
