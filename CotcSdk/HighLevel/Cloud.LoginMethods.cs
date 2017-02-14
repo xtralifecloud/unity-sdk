@@ -151,10 +151,11 @@ namespace CotcSdk
                 return exception;
             }
 
-            Bundle config = Bundle.Empty;
+            Bundle config = new Bundle("");
             HttpRequest req = currentGamer.MakeHttpRequest("/v1/gamer/logout");
             req.BodyJson = config;
             return Common.RunInTask<Done>(req, (response, task) => {
+                currentGamer = null;
                 task.PostResult(new Done(response.BodyJson));
             });
         }
