@@ -190,8 +190,9 @@ namespace CotcSdk
 			else if (dataType == DataType.Array) arrayValue = new List<Bundle>();
 		}
 		public Bundle(bool value) { type = DataType.Boolean; longValue = value ? 1 : 0; }
-		public Bundle(long value) { type = DataType.Integer; longValue = value; }
-		public Bundle(float value) : this((double)value) { }
+        public Bundle(int value) : this((long)value) { }
+        public Bundle(long value) { type = DataType.Integer; longValue = value; }
+        public Bundle(float value) : this((double)value) { }
 		public Bundle(double value) { type = DataType.Double; doubleValue = value; }
 		public Bundle(string value) { type = DataType.String; stringValue = value; }
 		public static implicit operator Bundle(bool value) { return new Bundle(value); }
@@ -417,13 +418,6 @@ namespace CotcSdk
 		}
 
 		public override string ToString() { return ToJson(); }
-
-        public static Bundle ParseFromString(string json)
-        {
-            if (json == null) return null;
-            JsonData data = JsonMapper.ToObject(json);
-            return FromJson(data);
-        }
 
 		private static Bundle FromJson(JsonData data) {
 			if (data.IsBoolean) return ((IJsonWrapper) data).GetBoolean();
