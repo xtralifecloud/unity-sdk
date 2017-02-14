@@ -430,7 +430,7 @@
             users who are not active at the moment.
             </summary>
         </member>
-        <member name="M:CotcSdk.GamerMatches.Create(System.Int32,System.String,CotcSdk.Bundle,CotcSdk.Bundle)">
+        <member name="M:CotcSdk.GamerMatches.Create(System.Int32,System.String,CotcSdk.Bundle,CotcSdk.Bundle,CotcSdk.Bundle)">
             <summary>
             Creates a match, available for join by other players. If you would like to make your match private, please read
             the general documentation about matches.
@@ -444,6 +444,7 @@
             <param name="shoe">Freeform object containing a list of objects which will be shuffled upon match creation. This offers
                 an easy way to make a random generator that is safe, unbiased (since made on the server) and can be verified
                 by all players once the game is finished. This bundle needs to be an array (use Bundle.CreateArray).</param>
+            <param name="globalState">Global state you want to attach to the match.</param>
         </member>
         <member name="M:CotcSdk.GamerMatches.Delete(System.String)">
             <summary>Deletes a match. Only works if you are the one who created it and it is already finished.</summary>
