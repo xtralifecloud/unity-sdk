@@ -94,7 +94,7 @@ namespace CotcSdk {
             HttpRequest req = Gamer.MakeHttpRequest(url);
             return Common.RunInTask<byte[]>(req, (response, task) => {
                 // We must then download the received URL
-                Bundle bundleRes = Bundle.ParseFromString(response.BodyString);
+                Bundle bundleRes = Bundle.FromJson(response.BodyString);
                 Dictionary<string, Bundle> dict = bundleRes["result"].AsDictionary();
                 string downloadUrl = "";
                 foreach (var obj in dict)
