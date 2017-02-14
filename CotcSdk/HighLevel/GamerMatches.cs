@@ -14,43 +14,47 @@ namespace CotcSdk {
 			remove { onMatchInvitation -= value; CheckEventLoopNeeded(); }
 		}
 
-		/// <summary>
-		/// Creates a match, available for join by other players. If you would like to make your match private, please read
-		/// the general documentation about matches.
-		/// </summary>
-		/// <returns>Promise resolved when the operation has completed. The attached Match object allows to operate with the
-		///     match.</returns>
-		/// <param name="maxPlayers">The maximum number of players who may be in the game at a time.</param>
-		/// <param name="description">String describing the match (available for other who want to join).</param>
-		/// <param name="customProperties">Freeform object containing the properties of the match, which may be used by other players
-		///     to search for a suited match.</param>
-		/// <param name="shoe">Freeform object containing a list of objects which will be shuffled upon match creation. This offers
-		///     an easy way to make a random generator that is safe, unbiased (since made on the server) and can be verified
-		///     by all players once the game is finished. This bundle needs to be an array (use Bundle.CreateArray).</param>
-		public Promise<Match> Create(int maxPlayers, string description = null, Bundle customProperties = null, Bundle shoe = null) {
-			var task = new Promise<Match>();
-			if (shoe != null && shoe.Type != Bundle.DataType.Array) {
-				task.PostResult(ErrorCode.BadParameters, "The shoe must be an array");
-				return task;
-			}
+        /// <summary>
+        /// Creates a match, available for join by other players. If you would like to make your match private, please read
+        /// the general documentation about matches.
+        /// </summary>
+        /// <returns>Promise resolved when the operation has completed. The attached Match object allows to operate with the
+        ///     match.</returns>
+        /// <param name="maxPlayers">The maximum number of players who may be in the game at a time.</param>
+        /// <param name="description">String describing the match (available for other who want to join).</param>
+        /// <param name="customProperties">Freeform object containing the properties of the match, which may be used by other players
+        ///     to search for a suited match.</param>
+        /// <param name="shoe">Freeform object containing a list of objects which will be shuffled upon match creation. This offers
+        ///     an easy way to make a random generator that is safe, unbiased (since made on the server) and can be verified
+        ///     by all players once the game is finished. This bundle needs to be an array (use Bundle.CreateArray).</param>
+        /// <param name="globalState">Global state you want to attach to the match.</param>
+        public Promise<Match> Create(int maxPlayers, string description = null, Bundle customProperties = null, Bundle shoe = null, Bundle globalState = null)
+        {
+            var task = new Promise<Match>();
+            if (shoe != null && shoe.Type != Bundle.DataType.Array)
+            {
+                task.PostResult(ErrorCode.BadParameters, "The shoe must be an array");
+                return task;
+            }
 
-			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").QueryParam("domain", domain);
-			HttpRequest req = Gamer.MakeHttpRequest(url);
-			Bundle config = Bundle.CreateObject();
-			config["maxPlayers"] = maxPlayers;
-			config["description"] = description;
-			config["customProperties"] = customProperties;
-			config["shoe"] = shoe;
-			req.BodyJson = config;
-			return Common.RunRequest(req, task, (HttpResponse response) => {
-				task.PostResult(new Match(Gamer, response.BodyJson["match"]));
-			});
-		}
+            UrlBuilder url = new UrlBuilder("/v1/gamer/matches").QueryParam("domain", domain);
+            HttpRequest req = Gamer.MakeHttpRequest(url);
+            Bundle config = Bundle.CreateObject();
+            config["maxPlayers"] = maxPlayers;
+            config["description"] = description;
+            config["globalState"] = globalState;
+            config["customProperties"] = customProperties;
+            config["shoe"] = shoe;
+            req.BodyJson = config;
+            return Common.RunRequest(req, task, (HttpResponse response) => {
+                task.PostResult(new Match(Gamer, response.BodyJson["match"]));
+            });
+        }
 
-		/// <summary>Deletes a match. Only works if you are the one who created it and it is already finished.</summary>
-		/// <returns>Promise resolved when the operation has completed.</returns>
-		/// <param name="matchId">ID of the match to delete.</param>
-		public Promise<Done> Delete(string matchId) {
+        /// <summary>Deletes a match. Only works if you are the one who created it and it is already finished.</summary>
+        /// <returns>Promise resolved when the operation has completed.</returns>
+        /// <param name="matchId">ID of the match to delete.</param>
+        public Promise<Done> Delete(string matchId) {
 			UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(matchId);
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.Method = "DELETE";
