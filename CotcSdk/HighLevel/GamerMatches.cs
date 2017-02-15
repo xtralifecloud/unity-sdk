@@ -63,11 +63,24 @@ namespace CotcSdk {
 			});
 		}
 
-		/// <summary>
-		/// Clears all event handlers subscribed, ensuring that a match object can be dismissed without causing further
-		/// actions in the background.
-		/// </summary>
-		public void DiscardEventHandlers() {
+        /// <summary>Dismisses an invitation to a match.</summary>
+        /// <returns>Promise resolved when the operation has completed.</returns>
+        /// <param name="matchId">ID of the match where invitation is dismissed.</param>
+        public Promise<Done> DismissInvitation(string matchId)
+        {
+            UrlBuilder url = new UrlBuilder("/v1/gamer/matches").Path(matchId).Path("invitation");
+            HttpRequest req = Gamer.MakeHttpRequest(url);
+            req.Method = "DELETE";
+            return Common.RunInTask<Done>(req, (response, task) => {
+                task.PostResult(new Done(response.BodyJson));
+            });
+        }
+
+        /// <summary>
+        /// Clears all event handlers subscribed, ensuring that a match object can be dismissed without causing further
+        /// actions in the background.
+        /// </summary>
+        public void DiscardEventHandlers() {
 			foreach (Action<MatchInviteEvent> e in onMatchInvitation.GetInvocationList()) onMatchInvitation -= e;
 			CheckEventLoopNeeded();
 		}
