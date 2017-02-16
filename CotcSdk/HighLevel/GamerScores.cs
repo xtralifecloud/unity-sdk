@@ -61,7 +61,7 @@ namespace CotcSdk {
             UrlBuilder url = new UrlBuilder("/v2.6/gamer/scores").Path(domain).Path(board).QueryParam("type", "friendscore").QueryParam("count", count).QueryParam("page", page);
             return Common.RunInTask<NonpagedList<Score>>(Gamer.MakeHttpRequest(url), (response, task) => {
                 var scores = new NonpagedList<Score>(response.BodyJson);
-                foreach (Bundle b in response.BodyJson[board].AsArray())
+				foreach (Bundle b in response.BodyJson[board]["scores"].AsArray())
                 {
                     scores.Add(new Score(b));
                 }
@@ -80,7 +80,7 @@ namespace CotcSdk {
                 var scores = new NonpagedList<Score>(response.BodyJson);
                 Bundle boardData = response.BodyJson[board];
                 int rank = boardData["rankOfFirst"];
-                foreach (Bundle b in boardData.AsArray())
+				foreach (Bundle b in boardData["scores"].AsArray())
                 {
                     scores.Add(new Score(b, rank++));
                 }
