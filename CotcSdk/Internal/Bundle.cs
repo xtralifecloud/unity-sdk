@@ -196,6 +196,7 @@ namespace CotcSdk
 		public Bundle(double value) { type = DataType.Double; doubleValue = value; }
 		public Bundle(string value) { type = DataType.String; stringValue = value; }
 		public static implicit operator Bundle(bool value) { return new Bundle(value); }
+		public static implicit operator Bundle(int value) { return new Bundle(value); }
 		public static implicit operator Bundle(long value) { return new Bundle(value); }
 		public static implicit operator Bundle(float value) { return new Bundle(value); }
 		public static implicit operator Bundle(double value) { return new Bundle(value); }
