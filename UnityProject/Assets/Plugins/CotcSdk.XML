@@ -451,6 +451,11 @@
             <returns>Promise resolved when the operation has completed.</returns>
             <param name="matchId">ID of the match to delete.</param>
         </member>
+        <member name="M:CotcSdk.GamerMatches.DismissInvitation(System.String)">
+            <summary>Dismisses an invitation to a match.</summary>
+            <returns>Promise resolved when the operation has completed.</returns>
+            <param name="matchId">ID of the match where invitation is dismissed.</param>
+        </member>
         <member name="M:CotcSdk.GamerMatches.DiscardEventHandlers">
             <summary>
             Clears all event handlers subscribed, ensuring that a match object can be dismissed without causing further
