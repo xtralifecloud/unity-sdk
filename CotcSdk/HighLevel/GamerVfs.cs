@@ -34,7 +34,7 @@ namespace CotcSdk {
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			return Common.RunInTask<Bundle>(req, (response, task) => {
                 // For backward compatibilty of json input in the backoffice as litterals
-			    if (response.BodyJson["value"] != Bundle.Empty)
+				if (response.BodyJson.Has("value"))
                     task.PostResult(response.BodyJson["value"]);
                 else
                     task.PostResult(response.BodyJson);
