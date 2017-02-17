@@ -170,6 +170,13 @@ namespace CotcSdk
 			result[key3] = value3;
 			return result;
 		}
+        public static Bundle CreateObject(params KeyValuePair<string, Bundle>[] keyValuePairs) {
+			Bundle result = new Bundle(DataType.Object);
+			foreach(KeyValuePair<string,Bundle> kv in keyValuePairs) {
+				result[kv.Key] = kv.Value;
+			}
+			return result;
+		}
 		/// <summary>Creates a bundle of type array.</summary>
 		/// <param name="values">Optional values to pre-fill the array with. Since bundle are implicitly converted, remember
 		/// that you may pass an integer, string, etc.</param>
