@@ -98,7 +98,8 @@ namespace CotcSdk {
 			return Common.RunInTask<Dictionary<string, Score>>(req, (response, task) => {
 				Dictionary<string, Score> scores = new Dictionary<string, Score>();
 				foreach (var pair in response.BodyJson.AsDictionary()) {
-					Score s = new Score(pair.Value);
+					Bundle scoreValue = Bundle.CreateObject("score", pair.Value);
+					Score s = new Score(scoreValue, pair.Value["rank"].AsInt());
 					s.GamerInfo = null;
 					scores[pair.Key] = s;
 				}
