@@ -87,6 +87,38 @@ namespace CotcSdk {
                 task.PostResult(scores);
             });
         }
+		
+		/// <summary>Fetch the score list around the player. Place it in a PagedList.</summary>
+		/// <returns>Promise resolved when the operation has completed. The attached value describes a list of scores,
+		///     with pagination functionality.</returns>
+		/// <param name="board">The name of the board to fetch scores from.</param>
+		public Promise<PagedList<Score>> PagedCenteredScore(string board, int count = 10)
+		{
+			UrlBuilder url = new UrlBuilder("/v2.6/gamer/scores").Path(domain).Path(board).QueryParam("count", count).QueryParam("page", "me");
+			return Common.RunInTask<PagedList<Score>>(Gamer.MakeHttpRequest(url), (response, task) => {
+				// Pagination computing
+				Bundle boardData = response.BodyJson[board];
+				int pagesTotal = boardData["maxpage"];
+				int currentPage = boardData["page"];
+				// Fetch listed scores
+				PagedList<Score> scores = new PagedList<Score>(response.BodyJson, pagesTotal);
+				int rank = boardData["rankOfFirst"];
+				foreach (Bundle b in boardData["scores"].AsArray())
+				{
+					scores.Add(new Score(b, rank++));
+				}
+				// Handle pagination
+				if (currentPage > 1)
+				{
+					scores.Previous = () => BestHighScores(board, count, currentPage - 1);
+				}
+				if (currentPage < pagesTotal)
+				{
+					scores.Next = () => BestHighScores(board, count, currentPage + 1);
+				}
+				task.PostResult(scores);
+			});
+		}
 
         /// <summary>Retrieves the best scores of this gamer, on all board he has posted one score to.</summary>
         /// <returns>Promise resolved when the operation has completed. The attached value contains information about
