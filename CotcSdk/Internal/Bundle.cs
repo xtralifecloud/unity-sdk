@@ -146,23 +146,31 @@ namespace CotcSdk
 		private List<Bundle> arrayValue;
 		private Bundle parent;
 
-		/// <summary>Creates a bundle of type object. You may also pass up to three key/value pairs (in this order),
-		/// which will be put in the object initially.</summary>
+		/// <summary>Creates a bundle of type object.</summary>
 		/// <returns>A new bundle.</returns>
 		public static Bundle CreateObject() {
 			return new Bundle(DataType.Object);
 		}
-		public static Bundle CreateObject(string onlyKey, Bundle onlyValue) {
+
+		/// <summary>Creates a bundle of type object with one key/value pair which will be put in the object initially.</summary>
+		/// <returns>A new bundle filled with one key/value pair.</returns>
+		public static Bundle CreateObject(string key, Bundle value) {
 			Bundle result = new Bundle(DataType.Object);
-			result[onlyKey] = onlyValue;
+			result[key] = value;
 			return result;
 		}
+
+		/// <summary>Creates a bundle of type object with two key/value pairs which will be put in the object initially.</summary>
+		/// <returns>A new bundle filled with two key/value pairs.</returns>
 		public static Bundle CreateObject(string key1, Bundle value1, string key2, Bundle value2) {
 			Bundle result = new Bundle(DataType.Object);
 			result[key1] = value1;
 			result[key2] = value2;
 			return result;
 		}
+
+		/// <summary>Creates a bundle of type object with three key/value pairs which will be put in the object initially.</summary>
+		/// <returns>A new bundle filled with three key/value pairs.</returns>
 		public static Bundle CreateObject(string key1, Bundle value1, string key2, Bundle value2, string key3, Bundle value3) {
 			Bundle result = new Bundle(DataType.Object);
 			result[key1] = value1;
@@ -170,13 +178,17 @@ namespace CotcSdk
 			result[key3] = value3;
 			return result;
 		}
-        public static Bundle CreateObject(params KeyValuePair<string, Bundle>[] keyValuePairs) {
+
+		/// <summary>Creates a bundle of type object with many key/value pairs which will be put in the object initially.</summary>
+		/// <returns>A new bundle filled with many key/value pairs.</returns>
+		public static Bundle CreateObject(params KeyValuePair<string, Bundle>[] keyValuePairs) {
 			Bundle result = new Bundle(DataType.Object);
-			foreach(KeyValuePair<string,Bundle> kv in keyValuePairs) {
-				result[kv.Key] = kv.Value;
+			foreach (KeyValuePair<string, Bundle> keyValuePair in keyValuePairs) {
+				result[keyValuePair.Key] = keyValuePair.Value;
 			}
 			return result;
 		}
+
 		/// <summary>Creates a bundle of type array.</summary>
 		/// <param name="values">Optional values to pre-fill the array with. Since bundle are implicitly converted, remember
 		/// that you may pass an integer, string, etc.</param>
