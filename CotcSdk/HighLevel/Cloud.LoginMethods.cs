@@ -150,13 +150,13 @@ namespace CotcSdk
                 exception.PostResult(ErrorCode.NotLoggedIn, "Can't log out");
                 return exception;
             }
-
+            ;
             Bundle config = new Bundle("");
             HttpRequest req = currentGamer.MakeHttpRequest("/v1/gamer/logout");
             req.BodyJson = config;
             return Common.RunInTask<Done>(req, (response, task) => {
                 currentGamer = null;
-                task.PostResult(new Done(response.BodyJson));
+                task.PostResult(new Done(true, response.BodyJson));
             });
         }
 
