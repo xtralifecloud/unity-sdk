@@ -300,7 +300,7 @@ namespace CotcSdk {
 					Moves.Clear();
 					foreach (var b in serverData["events"].AsArray()) {
 						if (b["type"] == "match.move") {
-							Moves.Add(new MatchMove(serverData["event"]["player_id"], serverData["event"]["move"]));
+							Moves.Add(new MatchMove(b["event"]["player_id"], b["event"]["move"]));
 						}
 					}
 				}
