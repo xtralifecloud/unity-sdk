@@ -73,6 +73,7 @@ namespace CotcSdk {
         /// <returns>Promise resolved when the operation has completed. The attached value describes a list of scores,
         ///     without pagination functionality.</returns>
         /// <param name="board">The name of the board to fetch scores from.</param>
+		/// <param name="count">The maximum number of results to return per page.</param>
         public Promise<NonpagedList<Score>> CenteredScore(string board, int count = 10)
         {
             UrlBuilder url = new UrlBuilder("/v2.6/gamer/scores").Path(domain).Path(board).QueryParam("count", count).QueryParam("page", "me");
@@ -92,6 +93,7 @@ namespace CotcSdk {
 		/// <returns>Promise resolved when the operation has completed. The attached value describes a list of scores,
 		///     with pagination functionality.</returns>
 		/// <param name="board">The name of the board to fetch scores from.</param>
+		/// <param name="count">The maximum number of results to return per page.</param>
 		public Promise<PagedList<Score>> PagedCenteredScore(string board, int count = 10)
 		{
 			UrlBuilder url = new UrlBuilder("/v2.6/gamer/scores").Path(domain).Path(board).QueryParam("count", count).QueryParam("page", "me");
@@ -181,7 +183,7 @@ namespace CotcSdk {
 			});
 		}
 
-        [Obsolete("Old method to retrieve best scores. Better now to use the method BestHighScoresHighScores or CenteredScores")]
+		[Obsolete("Old method to retrieve best scores. Better now to use the method BestHighScores or CenteredScores")]
         public Promise<PagedList<Score>> List(string board, int limit = 30, int offset = 0)
         {
             UrlBuilder url = new UrlBuilder("/v2.6/gamer/scores").Path(domain).Path(board).QueryParam("count", limit);
