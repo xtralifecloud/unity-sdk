@@ -614,17 +614,18 @@
             <param name="count">The maximum number of results to return per page.</param>
             <param name="page">Number of the page to be fetched. After that, you may use the paged result handler to fetch pages nearby.</param>
         </member>
-        <member name="M:CotcSdk.GamerScores.FriendsBestHighScores(System.String,System.Int32,System.Int32)">
+        <member name="M:CotcSdk.GamerScores.ListFriendScores(System.String)">
             <summary>Fetch the score list for a given board, restricting to the scores made by the friends of the current user.</summary>
             <returns>Promise resolved when the operation has completed. The attached value describes a list of scores,
                 without pagination functionality.</returns>
             <param name="board">The name of the board to fetch scores from.</param>
         </member>
-        <member name="M:CotcSdk.GamerScores.CenteredScore(System.String,System.Int32)">
-            <summary>Fetch the score list around the player.</summary>
+        <member name="M:CotcSdk.GamerScores.PagedCenteredScore(System.String,System.Int32)">
+            <summary>Fetch the score paged list around the player.</summary>
             <returns>Promise resolved when the operation has completed. The attached value describes a list of scores,
-                without pagination functionality.</returns>
+                with pagination functionality.</returns>
             <param name="board">The name of the board to fetch scores from.</param>
+            <param name="count">The maximum number of results to return per page.</param>
         </member>
         <member name="M:CotcSdk.GamerScores.ListUserBestScores">
             <summary>Retrieves the best scores of this gamer, on all board he has posted one score to.</summary>
@@ -1470,7 +1471,24 @@
             </summary>
         </member>
         <member name="M:CotcSdk.PushNotification.#ctor">
-            <summary>Default constructor.</summary>
+            <summary>Creates a PushNotification object.</summary>
+            <returns>A new PushNotification object.</returns>
+        </member>
+        <member name="M:CotcSdk.PushNotification.#ctor(System.String,System.String)">
+            <summary>Creates a PushNotification object with one language/text pair which will be put in the object initially.</summary>
+            <returns>A new bundle filled with one language/text pair.</returns>
+        </member>
+        <member name="M:CotcSdk.PushNotification.#ctor(System.String,System.String,System.String,System.String)">
+            <summary>Creates a PushNotification object with two language/text pairs which will be put in the object initially.</summary>
+            <returns>A new bundle filled with two language/text pairs.</returns>
+        </member>
+        <member name="M:CotcSdk.PushNotification.#ctor(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>Creates a PushNotification object with three language/text pairs which will be put in the object initially.</summary>
+            <returns>A new bundle filled with three language/text pairs.</returns>
+        </member>
+        <member name="M:CotcSdk.PushNotification.#ctor(System.Collections.Generic.KeyValuePair{System.String,System.String}[])">
+            <summary>Creates a PushNotification object with many language/text pairs which will be put in the object initially.</summary>
+            <returns>A new bundle filled with many language/text pairs.</returns>
         </member>
         <member name="M:CotcSdk.PushNotification.Message(System.String,System.String)">
             <summary>Adds or replaces a string for a given language.</summary>
@@ -1774,9 +1792,24 @@
             <summary>Possible types of data storable into a bundle.</summary>
         </member>
         <member name="M:CotcSdk.Bundle.CreateObject">
-            <summary>Creates a bundle of type object. You may also pass up to three key/value pairs (in this order),
-            which will be put in the object initially.</summary>
+            <summary>Creates a bundle of type object.</summary>
             <returns>A new bundle.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.CreateObject(System.String,CotcSdk.Bundle)">
+            <summary>Creates a bundle of type object with one key/value pair which will be put in the object initially.</summary>
+            <returns>A new bundle filled with one key/value pair.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.CreateObject(System.String,CotcSdk.Bundle,System.String,CotcSdk.Bundle)">
+            <summary>Creates a bundle of type object with two key/value pairs which will be put in the object initially.</summary>
+            <returns>A new bundle filled with two key/value pairs.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.CreateObject(System.String,CotcSdk.Bundle,System.String,CotcSdk.Bundle,System.String,CotcSdk.Bundle)">
+            <summary>Creates a bundle of type object with three key/value pairs which will be put in the object initially.</summary>
+            <returns>A new bundle filled with three key/value pairs.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.CreateObject(System.Collections.Generic.KeyValuePair{System.String,CotcSdk.Bundle}[])">
+            <summary>Creates a bundle of type object with many key/value pairs which will be put in the object initially.</summary>
+            <returns>A new bundle filled with many key/value pairs.</returns>
         </member>
         <member name="M:CotcSdk.Bundle.CreateArray(CotcSdk.Bundle[])">
             <summary>Creates a bundle of type array.</summary>
