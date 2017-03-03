@@ -52,44 +52,24 @@ namespace CotcSdk {
             });
         }
 
-        /// <summary>Fetch the score list for a given board, restricting to the scores made by the friends of the current user.</summary>
-        /// <returns>Promise resolved when the operation has completed. The attached value describes a list of scores,
-        ///     without pagination functionality.</returns>
-        /// <param name="board">The name of the board to fetch scores from.</param>
-        public Promise<NonpagedList<Score>> FriendsBestHighScores(string board, int count = 10, int page = 1)
-        {
-            UrlBuilder url = new UrlBuilder("/v2.6/gamer/scores").Path(domain).Path(board).QueryParam("type", "friendscore").QueryParam("count", count).QueryParam("page", page);
-            return Common.RunInTask<NonpagedList<Score>>(Gamer.MakeHttpRequest(url), (response, task) => {
-                var scores = new NonpagedList<Score>(response.BodyJson);
-				foreach (Bundle b in response.BodyJson[board]["scores"].AsArray())
-                {
-                    scores.Add(new Score(b));
-                }
-                task.PostResult(scores);
-            });
-        }
+		/// <summary>Fetch the score list for a given board, restricting to the scores made by the friends of the current user.</summary>
+		/// <returns>Promise resolved when the operation has completed. The attached value describes a list of scores,
+		///     without pagination functionality.</returns>
+		/// <param name="board">The name of the board to fetch scores from.</param>
+		public Promise<NonpagedList<Score>> ListFriendScores(string board)
+		{
+			UrlBuilder url = new UrlBuilder("/v2.6/gamer/scores").Path(domain).Path(board).QueryParam("type", "friendscore");
+			return Common.RunInTask<NonpagedList<Score>>(Gamer.MakeHttpRequest(url), (response, task) => {
+				var scores = new NonpagedList<Score>(response.BodyJson);
+				foreach (Bundle b in response.BodyJson[board].AsArray())
+				{
+					scores.Add(new Score(b));
+				}
+				task.PostResult(scores);
+			});
+		}
 
-        /// <summary>Fetch the score list around the player.</summary>
-        /// <returns>Promise resolved when the operation has completed. The attached value describes a list of scores,
-        ///     without pagination functionality.</returns>
-        /// <param name="board">The name of the board to fetch scores from.</param>
-		/// <param name="count">The maximum number of results to return per page.</param>
-        public Promise<NonpagedList<Score>> CenteredScore(string board, int count = 10)
-        {
-            UrlBuilder url = new UrlBuilder("/v2.6/gamer/scores").Path(domain).Path(board).QueryParam("count", count).QueryParam("page", "me");
-            return Common.RunInTask<NonpagedList<Score>>(Gamer.MakeHttpRequest(url), (response, task) => {
-                var scores = new NonpagedList<Score>(response.BodyJson);
-                Bundle boardData = response.BodyJson[board];
-                int rank = boardData["rankOfFirst"];
-				foreach (Bundle b in boardData["scores"].AsArray())
-                {
-                    scores.Add(new Score(b, rank++));
-                }
-                task.PostResult(scores);
-            });
-        }
-		
-		/// <summary>Fetch the score list around the player. Place it in a PagedList.</summary>
+		/// <summary>Fetch the score paged list around the player.</summary>
 		/// <returns>Promise resolved when the operation has completed. The attached value describes a list of scores,
 		///     with pagination functionality.</returns>
 		/// <param name="board">The name of the board to fetch scores from.</param>
@@ -183,6 +163,22 @@ namespace CotcSdk {
 			});
 		}
 
+		[Obsolete("Old method with NonpagedList result. Better now to use the method PagedCenteredScore with PagedList result")]
+		public Promise<NonpagedList<Score>> CenteredScore(string board, int count = 10)
+		{
+			UrlBuilder url = new UrlBuilder("/v2.6/gamer/scores").Path(domain).Path(board).QueryParam("count", count).QueryParam("page", "me");
+			return Common.RunInTask<NonpagedList<Score>>(Gamer.MakeHttpRequest(url), (response, task) => {
+				var scores = new NonpagedList<Score>(response.BodyJson);
+				Bundle boardData = response.BodyJson[board];
+				int rank = boardData["rankOfFirst"];
+				foreach (Bundle b in boardData["scores"].AsArray())
+				{
+					scores.Add(new Score(b, rank++));
+				}
+				task.PostResult(scores);
+			});
+		}
+
 		[Obsolete("Old method to retrieve best scores. Better now to use the method BestHighScores or CenteredScores")]
         public Promise<PagedList<Score>> List(string board, int limit = 30, int offset = 0)
         {
@@ -212,20 +208,6 @@ namespace CotcSdk {
                 if (currentPage < pagesTotal)
                 {
                     scores.Next = () => List(board, limit, offset + limit);
-                }
-                task.PostResult(scores);
-            });
-        }
-
-        [Obsolete("Old method to retrieve friend scores. Better now to use FriendsBestHighScores taking the page and count parameters")]
-        public Promise<NonpagedList<Score>> ListFriendScores(string board)
-        {
-            UrlBuilder url = new UrlBuilder("/v2.6/gamer/scores").Path(domain).Path(board).QueryParam("type", "friendscore");
-            return Common.RunInTask<NonpagedList<Score>>(Gamer.MakeHttpRequest(url), (response, task) => {
-                var scores = new NonpagedList<Score>(response.BodyJson);
-                foreach (Bundle b in response.BodyJson[board].AsArray())
-                {
-                    scores.Add(new Score(b));
                 }
                 task.PostResult(scores);
             });
