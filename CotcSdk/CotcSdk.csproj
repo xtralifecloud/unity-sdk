@@ -112,6 +112,7 @@
     <Compile Include="Libs\LitJson\JsonData.cs" />
     <Compile Include="Libs\LitJson\JsonException.cs" />
     <Compile Include="Libs\LitJson\JsonMapper.cs" />
+    <Compile Include="Libs\LitJson\JsonMockWrapper.cs" />
     <Compile Include="Libs\LitJson\JsonReader.cs" />
     <Compile Include="Libs\LitJson\JsonWriter.cs" />
     <Compile Include="Libs\LitJson\Lexer.cs" />
