@@ -24,7 +24,7 @@ namespace CotcSdk {
 		public Promise<Bundle> Run(string batchName, Bundle batchParams = null) {
 			UrlBuilder url = new UrlBuilder("/v1/batch").Path(domain).Path(batchName);
 			HttpRequest req = Cloud.MakeUnauthenticatedHttpRequest(url);
-			req.BodyJson = batchParams ?? Bundle.Empty;
+			req.BodyJson = batchParams ?? Bundle.CreateObject();
 			return Common.RunInTask<Bundle>(req, (response, task) => {
 				task.PostResult(response.BodyJson);
 			});

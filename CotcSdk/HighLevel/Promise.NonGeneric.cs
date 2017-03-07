@@ -228,7 +228,7 @@ namespace CotcSdk {
 		/// Set this to true in order to output any exception to the console, even if it is caught by a .Catch block.
 		/// Just a helper, never keep it true in production.
 		/// </summary>
-		public static bool Debug_OutputAllExceptions = false;
+		public static bool Debug_OutputAllExceptions = true;
 
 		internal static void PropagateUnhandledException(object sender, Exception ex) {
 			if (unhandledException != null) {
