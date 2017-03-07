@@ -118,7 +118,7 @@
     <Compile Include="Libs\LitJson\Lexer.cs" />
     <Compile Include="Libs\LitJson\ParserToken.cs" />
     <Compile Include="PlatformSpecific\HttpClient.cs" />
-    <Compile Include="PlatformSpecific\Interfaces\IHttpClient.cs" />
+    <None Include="PlatformSpecific\Interfaces\IHttpClient.cs" />
     <Compile Include="PlatformSpecific\Interfaces\ILogger.cs" />
     <Compile Include="PlatformSpecific\Interfaces\ISystemFunctions.cs" />
     <Compile Include="PlatformSpecific\Managers.cs" />
