@@ -48,7 +48,6 @@ namespace CotcSdk {
 			public override void AbortRequest() {
 				WasAborted = true;
 				if (Request != null) {
-                    Debug.Log("Request aborted!!!");
                     Request.Abort();
 				}
 			}
