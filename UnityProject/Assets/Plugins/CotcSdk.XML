@@ -1869,12 +1869,6 @@
         <member name="M:CotcSdk.HttpClient.TimeoutCallback(System.Object)">
             <summary>Called upon timeout.</summary>
         </member>
-        <member name="T:CotcSdk.IHttpClient">
-            <summary>Platform-specific HTTP client.</summary>
-        </member>
-        <member name="M:CotcSdk.IHttpClient.Terminate">
-            <summary>Should abort all requests.</summary>
-        </member>
         <member name="T:CotcSdk.LogLevel">
             <summary>Possible logging levels to be set.</summary>
         </member>
