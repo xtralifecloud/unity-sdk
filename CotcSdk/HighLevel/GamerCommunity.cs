@@ -68,7 +68,8 @@ namespace CotcSdk {
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			return Common.RunInTask<NonpagedList<GamerInfo>>(req, (response, task) => {
 				var result = new NonpagedList<GamerInfo>(response.BodyJson);
-				foreach (Bundle f in response.BodyJson["friends"].AsArray()) {
+				string field = filterBlacklisted ? "blacklisted" : "friends";
+				foreach (Bundle f in response.BodyJson[field].AsArray()) {
 					result.Add(new GamerInfo(f));
 				}
 				task.PostResult(result);
