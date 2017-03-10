@@ -427,6 +427,29 @@ namespace CotcSdk
 		}
 
 		// Json methods
+        public static Bundle FromAnyJson(string json)
+        {
+            if (json == null) return null;
+
+            int idx = json.Length-1;
+            if ((json[0] == '{' && json[idx] == '}') || (json[0] == '[' && json[idx] == ']'))
+                return FromJson(JsonMapper.ToObject(json));
+            else if (json[0] == '\"' && json[idx] == '\"')
+                return new Bundle(json.Substring(1, idx-1));
+            else if (json == "true")
+                return new Bundle(true);
+            else if (json == "false")
+                return new Bundle(false);
+            else
+            {
+                double res;
+                if (Double.TryParse(json, out res))
+                    return new Bundle(res);
+            }
+
+            return null;
+        }
+        
 		public static Bundle FromJson(string json) {
 			if (json == null) return null;
 			return FromJson(JsonMapper.ToObject(json));
