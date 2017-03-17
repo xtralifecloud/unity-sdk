@@ -17,7 +17,7 @@ namespace CotcSdk
 		/// <param name="limit">The maximum number of results to return per page.</param>
 		/// <param name="offset">Number of the first result.</param>
 		public Promise<PagedList<UserInfo>> ListUsers(string filter, int limit = 30, int offset = 0) {
-			UrlBuilder url = new UrlBuilder("/v1/gamer").QueryParam("q", filter).QueryParam("limit", limit).QueryParam("skip", offset);
+			UrlBuilder url = new UrlBuilder("/v1/gamer").QueryParamEscaped("q", filter).QueryParam("limit", limit).QueryParam("skip", offset);
 			HttpRequest req = MakeUnauthenticatedHttpRequest(url);
 			return Common.RunInTask<PagedList<UserInfo>>(req, (response, task) => {
 				PagedList<UserInfo> result = new PagedList<UserInfo>(response.BodyJson, offset, response.BodyJson["count"]);

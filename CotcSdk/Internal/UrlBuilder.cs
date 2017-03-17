@@ -1,3 +1,4 @@
+using System;
 
 namespace CotcSdk {
 
@@ -15,6 +16,13 @@ namespace CotcSdk {
 			if (path[0] == '/') Url += path.Substring(1);
 			else Url += path;
 			return this;
+		}
+
+		public UrlBuilder QueryParamEscaped(string name, string value = null) {
+			if (value != null) {
+				value = Uri.EscapeDataString(value);
+			}
+			return QueryParam(name, value);
 		}
 
 		public UrlBuilder QueryParam(string name, string value = null) {
