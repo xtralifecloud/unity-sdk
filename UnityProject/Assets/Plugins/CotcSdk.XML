@@ -1931,7 +1931,10 @@
             <summary>The product identifier as formatted in the query.</summary>
         </member>
         <member name="P:CotcSdk.ConfiguredProduct.AppStoreId">
-            <summary>ID of the product on the Google Play Store (mapping with ProductId on CotC).</summary>
+            <summary>ID of the product on the App Store (mapping with ProductId on CotC).</summary>
+        </member>
+        <member name="P:CotcSdk.ConfiguredProduct.MacAppStoreId">
+            <summary>ID of the product on the Mac App Store (mapping with ProductId on CotC).</summary>
         </member>
         <member name="P:CotcSdk.ConfiguredProduct.GooglePlayId">
             <summary>ID of the product on the Google Play Store (mapping with ProductId on CotC).</summary>
