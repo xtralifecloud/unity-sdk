@@ -10,9 +10,13 @@ namespace CotcSdk {
 		public string ProductId {
 			get { return Props["productId"]; }
 		}
-		/// <summary>ID of the product on the Google Play Store (mapping with ProductId on CotC).</summary>
+		/// <summary>ID of the product on the App Store (mapping with ProductId on CotC).</summary>
 		public string AppStoreId {
 			get { return Props["appStoreId"]; }
+		}
+		/// <summary>ID of the product on the Mac App Store (mapping with ProductId on CotC).</summary>
+		public string MacAppStoreId {
+			get { return Props["macStoreId"]; }
 		}
 		/// <summary>ID of the product on the Google Play Store (mapping with ProductId on CotC).</summary>
 		public string GooglePlayId {
