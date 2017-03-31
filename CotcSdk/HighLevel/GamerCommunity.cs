@@ -128,7 +128,7 @@ namespace CotcSdk {
 			config["event"] = eventData;
 			config["from"] = Gamer.GamerId;
 			config["to"] = gamerId;
-			config["name"] = Gamer["profile"]["displayname"];
+			config["name"] = Gamer["profile"]["displayName"];
 			if (notification != null) config["osn"] = notification.Data;
 
 			req.BodyJson = config;
