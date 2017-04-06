@@ -104,7 +104,7 @@ public class CloudTests : TestBase {
 		cloud.LoginAnonymously()
 		// Then convert it to e-mail
 		.Then(gamer => gamer.Account.Convert(
-			network: LoginNetwork.Email,
+			network: LoginNetwork.Email.ToString().ToLower(),
 			networkId: RandomEmailAddress(),
 			networkSecret: "Password123"))
 		.Then(conversionResult => {
@@ -127,7 +127,7 @@ public class CloudTests : TestBase {
 		.ExpectSuccess(gamer => {
 			// Then try to convert it to the same e-mail as the fake account created at first
 			gamer.Account.Convert(
-				network: LoginNetwork.Email,
+				network: LoginNetwork.Email.ToString().ToLower(),
 				networkId: "cloud@localhost.localdomain",
 				networkSecret: "Anotherp4ss")
 			.ExpectFailure(conversionResult => {
@@ -147,7 +147,7 @@ public class CloudTests : TestBase {
 		.Then(g => {
 			gamer[0] = g;
 			return g.Account.Convert(
-				network: LoginNetwork.Email,
+				network: LoginNetwork.Email.ToString().ToLower(),
 				networkId: RandomEmailAddress(),
 				networkSecret: "Password123");
 		})
@@ -166,11 +166,11 @@ public class CloudTests : TestBase {
 			networkId: "cloud@localhost.localdomain",
 			networkSecret: "Password123")
 		.Then(loginResult => cloud.UserExists(
-			network: LoginNetwork.Email,
+			network: LoginNetwork.Email.ToString().ToLower(),
 			networkId: "cloud@localhost.localdomain"))
 		.Then(checkResult => {
 			Assert(checkResult, "UserExists failed");
-			cloud.UserExists(LoginNetwork.Email, "inexisting@localhost.localdomain")
+			cloud.UserExists(LoginNetwork.Email.ToString().ToLower(), "inexisting@localhost.localdomain")
 			.ExpectFailure(dummy => {
 				CompleteTest();
 			});
@@ -259,8 +259,8 @@ public class CloudTests : TestBase {
 	}
 
 	private void PromisesShouldWorkProperlyPart2() {
-		// 2) Test that that an unhandled exception is triggered as expected
-		Promise[] expectingException = new Promise[1];
+        // 2) Test that that an unhandled exception is triggered as expected
+        Promise[] expectingException = new Promise[1];
 		EventHandler<ExceptionEventArgs> promiseExHandler = (sender, e) => {
 			expectingException[0].Resolve();
 		};
@@ -270,38 +270,42 @@ public class CloudTests : TestBase {
 		Promise<bool> prom = new Promise<bool>();
 		// With just then, the handler should not be called
 		expectingException[0] = new Promise().Then(() => FailTest("Should not call UnhandledException yet"));
-		prom.Reject(new InvalidOperationException());
+        prom.Reject(new InvalidOperationException());
 
-		// But after a done, it should be invoked
-		Wait(100).Then(() => {
-			expectingException[0] = new Promise();
-			expectingException[0].Then(() => {
-				Promise.UnhandledException -= promiseExHandler;
-				FailOnUnhandledException = true;
-				PromisesShouldWorkProperlyPart3();
-			});
-			prom.Done();
+        // But after a done, it should be invoked
+		expectingException[0] = new Promise();
+		expectingException[0].Done(() => {
+			Promise.UnhandledException -= promiseExHandler;
+			FailOnUnhandledException = true;
+			PromisesShouldWorkProperlyPart3();
 		});
-	}
+        prom.Done();
+    }
 
 	private void PromisesShouldWorkProperlyPart3() {
+        Debug.Log("Part3");
 		// 3) This is normally prevented by the IPromise interface, but we removed it because of iOS AOT issues
 		Promise<bool> p1 = new Promise<bool>();
-		Promise<bool> p2 = p1.Then(dummy => FailTest("Should not be called"));
+		Promise<bool> p2 = p1.Then(dummy => {
+            FailTest("Should not be called");
+            Debug.LogError("NOT CALLED"); });
 		p2.Then(dummy => PromisesShouldWorkProperlyPart4());
 		p2.Resolve(true);
 	}
 
 	private void PromisesShouldWorkProperlyPart4() {
-		// 4) An exception in a Then block should be forwarded to the catch block
-		Promise<bool> p = new Promise<bool>();
+        Debug.Log("Part4");
+        // 4) An exception in a Then block should be forwarded to the catch block
+        Promise<bool> p = new Promise<bool>();
 		p.Then(dummy => {
 			throw new InvalidOperationException();
 		})
 		.Catch(ex => {
-			CompleteTest();
+            Debug.Log("Finish");
+            CompleteTest();
 		});
 		p.Resolve(true);
+        Debug.Log("Finished");
 	}
 
 	[Test("Tests JSON-related functions.")]
@@ -321,16 +325,29 @@ public class CloudTests : TestBase {
 		});
 	}
 
-	[Test("Tests that an anonymous fails to link to an invalid facebook token (we cannot do much with automated testing).", requisite: "This test should fail from my understanding since the token is invalid, but for some reason it succeeds so we'll make it this way.")]
-	public void ShouldFailToLinkAccount(Cloud cloud) {
-		// Create an anonymous account
-		cloud.LoginAnonymously()
-			// Then convert it to e-mail
-		.Then(gamer => gamer.Account.Link(
-			network: LoginNetwork.Facebook,
-			networkId: "10153057921478191",
-			networkSecret: "CAAENyTNQMpQBAETZCetNwCP1EKlykqqjaPRTNI41fhmf0YSZB6Q3hdOtb4gnDIQznGyElGIuBy3ZCoUNiekZBhIXh4iHho8wODALDw3ZBesfzbmGSH5BPWjwp8ieMIZANA7igvqNw6zVj7LIsSO9wtkvGaA9iZBMXF0wymmiDEljQVo03jsvlf7GZCZBckjYDBnwSm929Sl8wegZDZD"))
-		.CompleteTestIfSuccessful();
+    [Test("Tests that an anonymous fails to link to an invalid facebook token (we cannot do much with automated testing).", requisite: "This test should fail from my understanding since the token is invalid, but for some reason it succeeds so we'll make it this way.")]
+    public void ShouldFailToLinkAccount(Cloud cloud) {
+        FailOnUnhandledException = false;
+
+        EventHandler<ExceptionEventArgs> promiseExHandler = null;
+        promiseExHandler = (sender, e) => {
+            Promise.UnhandledException -= promiseExHandler;
+
+            Debug.Log("Handling Unhandled Exception");
+            FailOnUnhandledException = true;
+            
+            CompleteTest();
+        };
+
+        Promise.UnhandledException += promiseExHandler;
+
+        // Create an anonymous account
+        cloud.LoginAnonymously()
+        // Then convert it to e-mail
+        .Then(gamer => gamer.Account.Link(
+            network: LoginNetwork.Facebook.ToString().ToLower(),
+            networkId: "10153057921478191",
+            networkSecret: "CAAENyTNQMpQBAETZCetNwCP1EKlykqqjaPRTNI41fhmf0YSZB6Q3hdOtb4gnDIQznGyElGIuBy3ZCoUNiekZBhIXh4iHho8wODALDw3ZBesfzbmGSH5BPWjwp8ieMIZANA7igvqNw6zVj7LIsSO9wtkvGaA9iZBMXF0wymmiDEljQVo03jsvlf7GZCZBckjYDBnwSm929Sl8wegZDZD"));
 	}
 
 	[Test("Tests the floating point bundle functionality")]

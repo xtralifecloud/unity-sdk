@@ -82,7 +82,11 @@ public class TestBase : MonoBehaviour {
 			TestBase.FailTest("Method name not configured for this test!");
 			return;
 		}
-		var parms = met.GetParameters();
+
+
+        Promise.Debug_OutputAllExceptions = false;
+
+        var parms = met.GetParameters();
 		// Test methods can either have no param, either have one "Cloud" param, in which case we do the setup here to simplify
 		if (parms.Length >= 1 && parms[0].ParameterType == typeof(Cloud)) {
 			FindObjectOfType<CotcGameObject>().GetCloud().Done(cloud => {
