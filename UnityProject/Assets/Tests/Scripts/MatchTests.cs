@@ -1,3 +1,4 @@
+using UnityEngine;
 using System;
 using CotcSdk;
 using IntegrationTests;
@@ -166,10 +167,13 @@ public class MatchTests : TestBase {
 			DomainEventLoop loopP2 = gamer2.StartEventLoop();
 			gamer1.Matches.Create(maxPlayers: 2)
 			.ExpectSuccess(createdMatch => {
-				// P1 will receive the join event
-				createdMatch.OnPlayerJoined += (Match sender, MatchJoinEvent e) => {
-					// P2 has joined; wait that he subscribes to the movePosted event.
-					RunOnSignal("p2subscribed", () => {
+                Debug.Log("1");
+                // P1 will receive the join event
+                createdMatch.OnPlayerJoined += (Match sender, MatchJoinEvent e) => {
+                    Debug.Log("6");
+                    // P2 has joined; wait that he subscribes to the movePosted event.
+                    RunOnSignal("p2subscribed", () => {
+                        Debug.Log("7");
 						// Ok so now P2 has joined and is ready, we can go forward and post a move
 						createdMatch.PostMove(Bundle.CreateObject("x", 3)).ExpectSuccess();
 					});
@@ -177,17 +181,22 @@ public class MatchTests : TestBase {
 				// Join as P2
 				gamer2.Matches.Join(createdMatch.MatchId)
 				.ExpectSuccess(joinedMatch => {
-					// P2 will receive the move event
-					joinedMatch.OnMovePosted += (Match sender, MatchMoveEvent e) => {
-						Assert(e.MoveData["x"] == 3, "Invalid move data");
+                    Debug.Log("2");
+                    // P2 will receive the move event
+                    joinedMatch.OnMovePosted += (Match sender, MatchMoveEvent e) => {
+                        Debug.Log("8");
+                        Assert(e.MoveData["x"] == 3, "Invalid move data");
 						Assert(e.PlayerId == gamer1.GamerId, "Expected P1 to make move");
 						loopP1.Stop();
 						loopP2.Stop();
 						CompleteTest();
 					};
+                    Debug.Log("3");
 					Signal("p2subscribed");
+                    Debug.Log("4");
 				});
 			});
+            Debug.Log("5");
 		});
 	}
 
