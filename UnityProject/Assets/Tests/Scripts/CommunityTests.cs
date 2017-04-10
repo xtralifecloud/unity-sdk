@@ -65,7 +65,42 @@ public class CommunityTests : TestBase {
 		});
 	}
 
-	[Test("Creates two users and tries to list them in a paginated fashion.")]
+    [Test("Creates 2 users, each user starts listening for event, sends an event to the other user, and verifies its reception.")]
+    public void ShouldNotMixEvents(Cloud cloud) {
+        Login2NewUsers(cloud, (gamer1, gamer2) => {
+            DomainEventLoop loopP1 = gamer1.StartEventLoop();
+            DomainEventLoop loopP2 = gamer2.StartEventLoop();
+
+            bool p1received = false, p2received = false;
+
+            loopP1.ReceivedEvent += (sender, e) => {
+                Assert(!p1received, "Event already received by the Player 1's loop");
+                Assert(sender == loopP1, "Event should come from the correct loop");
+                Assert(e.Message["from"].AsString() != gamer1.GamerId, "Player 1 received an event coming from himself instead of the other player");
+                loopP1.Stop();
+                // Wait the other player's event before completing the test.
+                p1received = true;
+                if (p2received == true)
+                    CompleteTest();
+            };
+
+            loopP2.ReceivedEvent += (sender, e) => {
+                Assert(!p2received, "Event already received by the Player 2's loop");
+                Assert(sender == loopP2, "Event should come from the correct loop");
+                Assert(e.Message["from"].AsString() != gamer2.GamerId, "Player 2 received an event coming from himself instead of the other player");
+                loopP2.Stop();
+                // Wait the other player's event before completing the test.
+                p2received = true;
+                if (p1received == true)
+                    CompleteTest();
+            };
+
+            gamer1.Community.SendEvent(gamer2.GamerId, new Bundle("hi"));
+            gamer2.Community.SendEvent(gamer1.GamerId, new Bundle("hi"));
+        });
+    }
+
+    [Test("Creates two users and tries to list them in a paginated fashion.")]
 	public void ShouldListUsers(Cloud cloud) {
 		Gamer[] gamers = new Gamer[2];
 		// Create first user

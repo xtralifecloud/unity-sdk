@@ -162,12 +162,18 @@ public class MatchTests : TestBase {
 
 	[Test("Creates a match and plays it as two users. Checks that events are broadcasted appropriately.")]
 	public void ShouldReceiveEvents(Cloud cloud) {
+        
 		Login2NewUsers(cloud, (Gamer gamer1, Gamer gamer2) => {
 			DomainEventLoop loopP1 = gamer1.StartEventLoop();
-			DomainEventLoop loopP2 = gamer2.StartEventLoop();
+            Debug.Log("Player1 ID : " + gamer1.GamerId);
+            Debug.Log("Player2 ID : " + gamer2.GamerId);
+            DomainEventLoop loopP2 = gamer2.StartEventLoop();
 			gamer1.Matches.Create(maxPlayers: 2)
+            .Catch(ex => {
+                Debug.LogError(ex);
+            })
 			.ExpectSuccess(createdMatch => {
-                Debug.Log("1");
+                Debug.Log("2");
                 // P1 will receive the join event
                 createdMatch.OnPlayerJoined += (Match sender, MatchJoinEvent e) => {
                     Debug.Log("6");
@@ -180,8 +186,11 @@ public class MatchTests : TestBase {
 				};
 				// Join as P2
 				gamer2.Matches.Join(createdMatch.MatchId)
+                .Catch(ex => {
+                    Debug.LogError(ex);
+                })
 				.ExpectSuccess(joinedMatch => {
-                    Debug.Log("2");
+                    Debug.Log("3");
                     // P2 will receive the move event
                     joinedMatch.OnMovePosted += (Match sender, MatchMoveEvent e) => {
                         Debug.Log("8");
@@ -191,12 +200,12 @@ public class MatchTests : TestBase {
 						loopP2.Stop();
 						CompleteTest();
 					};
-                    Debug.Log("3");
-					Signal("p2subscribed");
                     Debug.Log("4");
+					Signal("p2subscribed");
+                    Debug.Log("5");
 				});
 			});
-            Debug.Log("5");
+            Debug.Log("1");
 		});
 	}
 
