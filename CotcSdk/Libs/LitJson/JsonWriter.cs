@@ -365,7 +365,9 @@ namespace LitJson
             context.ExpectingValue = false;
         }
 
+		#pragma warning disable 3021
         [CLSCompliant(false)]
+		#pragma warning restore 3021
         public void Write (ulong number)
         {
             DoValidation (Condition.Value);
