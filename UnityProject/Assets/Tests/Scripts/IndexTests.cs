@@ -118,34 +118,36 @@ public class IndexTests : TestBase {
 
 	[Test("Tests that the API can be used to search for matches")]
 	public void ShouldBeUsableToSearchForMatches(Cloud cloud) {
+        Promise.Debug_OutputAllExceptions = true;
 		Login2NewUsers(cloud, (gamer1, gamer2) => {
-			string queryStr = "public:true AND owner_id:" + gamer1.GamerId;
+            string queryStringExtended = @"{""query"":{""bool"":{""must"":[{""term"":{""public"":""true""}},{""term"":{""owner_id"":"""+gamer1.GamerId+@"""}}]}}}";
 			Match[] matches = new Match[2];
 
 			gamer1.Matches.Create(maxPlayers: 2)
 			.Then(match1 => {
-				Bundle matchProp = Bundle.CreateObject("public", true, "owner_id", gamer1.GamerId);
+                Bundle matchProp = Bundle.CreateObject("public", true, "owner_id", gamer1.GamerId);
 				matches[0] = match1;
 				// Index the match
 				return cloud.Index("matches").IndexObject(match1.MatchId, matchProp, Bundle.Empty);
 			})
 			.Then(indexResult => {
-				// Create another match
-				return gamer1.Matches.Create(maxPlayers: 2);
-			})
+                // Create another match
+                return gamer1.Matches.Create(maxPlayers: 2);
+            })
 			.Then(match2 => {
-				// Index it
-				matches[1] = match2;
+                // Index it
+                matches[1] = match2;
 				return cloud.Index("matches").IndexObject(match2.MatchId, Bundle.CreateObject("public", false), Bundle.Empty);
-			})
+            })
 			.Then(indexResult2 => {
-				// Check that we can find match1 by looking for public matches
-				return cloud.Index("matches").Search(queryStr);
-			})
+                Bundle queryBundleExtended = Bundle.FromJson(queryStringExtended);
+                // Check that we can find match1 by looking for public matches
+                return cloud.Index("matches").SearchExtended(queryBundleExtended);
+            })
 			.Then(found => {
-				Assert(found.Hits.Count == 1, "Should find one match");
+                Assert(found.Hits.Count == 1, "Should find one match");
 				Assert(found.Hits[0].ObjectId == matches[0].MatchId, "Should find one match");
-			})
+            })
 			.CompleteTestIfSuccessful();
 		});
 	}

@@ -72,7 +72,7 @@ public class ScoreTests : TestBase {
 			string board = RandomBoardName();
 			gamer1.Scores.Post(1000, board, ScoreOrder.HighToLow, "TestGamer1", false)
 			.ExpectSuccess(postResult1 => gamer2.Scores.Post(1500, board, ScoreOrder.HighToLow, "TestGamer2", false))
-			.ExpectSuccess(postResult2 => gamer1.Scores.List(board))
+			.ExpectSuccess(postResult2 => gamer1.Scores.BestHighScores(board))
 			.ExpectSuccess(scores => {
 				Assert(scores.Total == 2, "Should have two scores");
 				Assert(scores[0].Value == 1500, "First score not as expected");
