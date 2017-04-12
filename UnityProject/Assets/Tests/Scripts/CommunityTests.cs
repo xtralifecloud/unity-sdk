@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 using CotcSdk;
-using System.Reflection;
 using IntegrationTests;
 using System.Collections.Generic;
 
@@ -20,19 +18,20 @@ public class CommunityTests : TestBase {
 		Login2NewUsers(cloud, (gamer1, gamer2) => {
 			// Expects friend status change event
 			Promise restOfTheTestCompleted = new Promise();
-			gamer1.StartEventLoop();
+            DomainEventLoop loopP1 = gamer1.StartEventLoop();
 			gamer1.Community.OnFriendStatusChange += (FriendStatusChangeEvent e) => {
 				Assert(e.FriendId == gamer2.GamerId, "Should come from P2");
 				Assert(e.NewStatus == FriendRelationshipStatus.Add, "Should have added me");
+                loopP1.Stop();
 				restOfTheTestCompleted.Done(CompleteTest);
 			};
 
 			// Add gamer1 as a friend of gamer2
 			gamer2.Community.AddFriend(gamer1.GamerId)
 			.ExpectSuccess(addResult => {
-				// Then list the friends of gamer1, gamer2 should be in it
-				return gamer1.Community.ListFriends();
-			})
+                // Then list the friends of gamer1, gamer2 should be in it
+                return gamer1.Community.ListFriends();
+            })
 			.ExpectSuccess(friends => {
 				Assert(friends.Count == 1, "Expects one friend");
 				Assert(friends[0].GamerId == gamer2.GamerId, "Wrong friend ID");
@@ -41,7 +40,66 @@ public class CommunityTests : TestBase {
 		});
 	}
 
-	[Test("Creates 2 users, and sends a message from one to the other and verifies that all happens as expected.")]
+    [Test("Uses two anonymous accounts. Tests that a friend can be forget, then blacklisted (AddFriend + ChangeRelationshipStauts:Forget/Blacklist).")]
+    public void ShouldChangeRelationshipStatus(Cloud cloud) {
+        // Use two test accounts
+        Login2NewUsers(cloud, (gamer1, gamer2) => {
+            // Make gamers friends
+            gamer1.Community.AddFriend(gamer2.GamerId)
+            .ExpectSuccess(done => {
+                Assert(done, "Should have added friend");
+                return gamer1.Community.ListFriends();
+            })
+            .ExpectSuccess(friends => {
+                Assert(friends.Count == 1, "Expects one friend");
+                Assert(friends[0].GamerId == gamer2.GamerId, "Wrong friend ID");
+                return gamer2.Community.ChangeRelationshipStatus(gamer1.GamerId, FriendRelationshipStatus.Forget);
+            })
+            .ExpectSuccess(done => {
+                Assert(done, "Should have changed relationship to forgot");
+                return gamer1.Community.ListFriends();
+            })
+            .ExpectSuccess(emptyList => {
+                Assert(emptyList.Count == 0, "Expects no friend");
+                return gamer2.Community.ChangeRelationshipStatus(gamer1.GamerId, FriendRelationshipStatus.Blacklist);
+            })
+            .ExpectSuccess(done => {
+                Assert(done, "Should have changed relationship to forgot");
+                return gamer1.Community.ListFriends(true);
+            })
+            .ExpectSuccess(blacklist => {
+                Assert(blacklist.Count == 1, "Expect one blacklisted");
+                Assert(blacklist[0].GamerId == gamer2.GamerId, "Wrong friend ID");
+                CompleteTest();
+            });
+        });
+    }
+
+    [Test("Uses two anonymous accounts. Tests the function DiscardEventHandlers.", "Broken actually because gamer.Community returns a new instance each time it is called.")]
+    public void ShouldDiscardEventHandlers(Cloud cloud) {
+        Login2NewUsers(cloud, (gamer1, gamer2) => {
+            DomainEventLoop loopP1 = gamer1.StartEventLoop();
+            gamer1.Community.OnFriendStatusChange += (FriendStatusChangeEvent e) => {
+                // This one is added before the discard, so it must not be executed
+                FailTest("Should not receive a OnFriendStatusChange event after DiscardEventHandlers");
+			};
+
+            gamer1.Community.DiscardEventHandlers();
+
+            gamer1.Community.OnFriendStatusChange += (FriendStatusChangeEvent e) => {
+                // This one is added after the discard, so it must be executed
+                CompleteTest();
+            };
+
+            // Add gamer1 as a friend of gamer2
+            gamer2.Community.AddFriend(gamer1.GamerId)
+            .Catch(ex => {
+                Debug.LogError(ex);
+            });
+        });
+    }
+
+    [Test("Creates 2 users, and sends a message from one to the other and verifies that all happens as expected.")]
 	public void ShouldSendEvent(Cloud cloud) {
 		Login2NewUsers(cloud, (gamer1, gamer2) => {
 			// Wait event for P1

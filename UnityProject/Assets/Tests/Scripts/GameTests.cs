@@ -67,4 +67,12 @@ public class GameTests : TestBase {
 			CompleteTest();
 		});
 	}
+
+    [Test("Get a binary from gameVFS", "The get/set of binaries is broken at the moment.")]
+    public void ShouldGetBinaryFromGameVFS(Cloud cloud) {
+        cloud.Game.GameVfs.GetBinary("unitTest_GetBinary")
+        .ExpectSuccess(data => {
+            Debug.LogError("You must test data here !");
+        });        
+    }
 }

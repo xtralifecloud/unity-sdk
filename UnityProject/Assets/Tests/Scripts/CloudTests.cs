@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using CotcSdk;
-using System.Reflection;
 using IntegrationTests;
 
 public class CloudTests : TestBase {
@@ -35,7 +34,20 @@ public class CloudTests : TestBase {
 		});
 	}
 
-	[Test("First logs in anonymously, then tries to restore the session with the received credentials.")]
+    [Test("Log in anonymously. Then Log out.")]
+    public void ShouldLogout(Cloud cloud) {
+        cloud.LoginAnonymously()
+        .Then(result => {
+            return cloud.Logout(result);
+        })
+        .Then(result => {
+            CompleteTest();
+        }, ex => {
+            FailTest(ex.ToString());
+        });
+    }
+
+    [Test("First logs in anonymously, then tries to restore the session with the received credentials.")]
 	public void ShouldRestoreSession(Cloud cloud) {
 		cloud.Login(
 			network: LoginNetwork.Email.Describe(),
