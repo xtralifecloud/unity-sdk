@@ -69,7 +69,7 @@ public class CommunityTests : TestBase {
     public void ShouldNotMixEvents(Cloud cloud) {
         Login2NewUsers(cloud, (gamer1, gamer2) => {
             DomainEventLoop loopP1 = gamer1.StartEventLoop();
-            DomainEventLoop loopP2 = gamer2.StartEventLoop();
+            DomainEventLoop loopP2 = gamer2.StartEventLoop(); 
 
             bool p1received = false, p2received = false;
 
@@ -142,10 +142,34 @@ public class CommunityTests : TestBase {
 		});
 	}
 
-	[Test("Tests the list network users call. Does little about this one since we would need real data…")]
+	[Test("Tests the list network users call. Uses real data obtained from real test accounts on Facebook", "The user token may have expired (Last creation 11/04/2017), get a new user token via facebook for developpers website.")]
 	public void ShouldListNetworkUsers(Cloud cloud) {
-		Login(cloud, gamer => {
-			Bundle data = Bundle.FromJson("{\"data\":[{\"name\":\"Test 1\",\"id\":\"10153057921478192\"},{\"name\":\"Test 2\",\"id\":\"10153366656847346\"},{\"name\":\"Test 3\",\"id\":\"339262546278220\"}],\"paging\":{\"next\":\"https://graph.facebook.com/v2.1/10152381145462633/friends?access_token=CAAENyTNQMpQBADfCgZCpmiZAcRifeQVmfoeVNScZCi5DQxlianZABohlOFivboYIuOb1Qqv4ATAMswCNpJWtmWUrkZAdsDUUxtQMrm0qo3QOjztl2niJ0vmmKrKccXhZAwFK5GkNe4Q58ZBPouzS5IFVsFUzDjhiAVjlzmlCgdb2Fcf9n6651wsWrEMZCKxk98QDcs0OJYEeDQZDZD&limit=5000&offset=5000&__after_id=enc_AdCP2GaZAGG8lfGebTkZAwTP6l7CbRHm15XU9mT6RRx9xa5C7PBZB35xaZAVf1IoFQTd9ZAILfmqphj3KZBrrQ3vaIuYRO\"},\"summary\":{\"total_count\":760}}");
+        // User ID in the CotC network.
+        string gamerID = "58ece8890810e5fe491a20a0";
+
+        // User Token obtained from Facebook.
+        string user_token = "EAAENyTNQMpQBAHD1SxerW3XJ0e3iK1KqE2znNHwr7wyvTQDDKzjsJ6NqOxnj3HZA0LjbgFjJUb2SZBsvZClWjGZCObAsZCXZCkpvOHY7bQZAcV5v6KwoXLEvTf3t9N0lsLbqgP2ywCPN3hdkYbVRDHw7VPuJgbq4svRh4RZATphNhpsHjtZA78R2oFl8ZBdex0jnRrtZAsdZBzvHQQZDZD";
+
+        cloud.Login("facebook", gamerID, user_token)
+            .Then(gamer => {
+                // Data obtained by fetching friends from Facebook. Using real test accounts.
+                Bundle data = Bundle.FromJson(@"{""data"":[{""name"":""Fr\u00e9d\u00e9ric Benois"",""id"":""107926476427271""}],""paging"":{""cursors"":{""before"":""QVFIUlY5TGkwWllQSU1tZAmN2NVlRaWlyeVpZAWk1idktkaU5GcFotRkp0RWlCVnNyR3MweUR5R3ZAfQ193ZAUhYWk84US0zVHdxdzdxMWswVTk2YUxlbVVlQXd3"",""after"":""QVFIUlY5TGkwWllQSU1tZAmN2NVlRaWlyeVpZAWk1idktkaU5GcFotRkp0RWlCVnNyR3MweUR5R3ZAfQ193ZAUhYWk84US0zVHdxdzdxMWswVTk2YUxlbVVlQXd3""}},""summary"":{""total_count"":1}}");
+                
+                List<SocialNetworkFriend> friends = new List<SocialNetworkFriend>();
+                foreach (Bundle f in data["data"].AsArray()) {
+                    friends.Add(new SocialNetworkFriend(f));
+                }
+                gamer.Community.ListNetworkFriends(LoginNetwork.Facebook, friends, true)
+                .ExpectSuccess(response => {
+                    Debug.LogWarning(response);
+                    Assert(response.ByNetwork[LoginNetwork.Facebook].Count == 1, "Should have registered 1 facebook users");
+                    CompleteTest();
+                });
+            });
+
+        /*Login(cloud, gamer => {
+            //Bundle data = Bundle.FromJson("{\"data\":[{\"name\":\"Test 1\",\"id\":\"10153057921478192\"},{\"name\":\"Test 2\",\"id\":\"10153366656847346\"},{\"name\":\"Test 3\",\"id\":\"339262546278220\"}],\"paging\":{\"next\":\"https://graph.facebook.com/v2.1/10152381145462633/friends?access_token=CAAENyTNQMpQBADfCgZCpmiZAcRifeQVmfoeVNScZCi5DQxlianZABohlOFivboYIuOb1Qqv4ATAMswCNpJWtmWUrkZAdsDUUxtQMrm0qo3QOjztl2niJ0vmmKrKccXhZAwFK5GkNe4Q58ZBPouzS5IFVsFUzDjhiAVjlzmlCgdb2Fcf9n6651wsWrEMZCKxk98QDcs0OJYEeDQZDZD&limit=5000&offset=5000&__after_id=enc_AdCP2GaZAGG8lfGebTkZAwTP6l7CbRHm15XU9mT6RRx9xa5C7PBZB35xaZAVf1IoFQTd9ZAILfmqphj3KZBrrQ3vaIuYRO\"},\"summary\":{\"total_count\":760}}");
+            Bundle data = Bundle.FromJson(@"{""data"":[{""name"":""Fr\u00e9d\u00e9ric Alexandre"",""id"":""102410670314912""}],""paging"":{""cursors"":{""before"":""QVFIUjJnLUtsdWpGZAHFsNXRuOTgxaXJqUFVjb0dKR3Nka0JGdWxkZAkg5U1hMaFg1ZA19seG91WGdNSjRmY3NCNFdTVG1feGdGNG1lXzFGSmRTTTA1ODM1ME53"",""after"":""QVFIUjJnLUtsdWpGZAHFsNXRuOTgxaXJqUFVjb0dKR3Nka0JGdWxkZAkg5U1hMaFg1ZA19seG91WGdNSjRmY3NCNFdTVG1feGdGNG1lXzFGSmRTTTA1ODM1ME53""}},""summary"":{""total_count"":1}}");
             Debug.LogWarning(data);
             List<SocialNetworkFriend> friends = new List<SocialNetworkFriend>();
 			foreach (Bundle f in data["data"].AsArray()) {
@@ -157,6 +181,6 @@ public class CommunityTests : TestBase {
                 Assert(response.ByNetwork[LoginNetwork.Facebook].Count == 3, "Should have registered 3 facebook users");
                 CompleteTest();
             });
-        });
+        });*/
 	}
 }

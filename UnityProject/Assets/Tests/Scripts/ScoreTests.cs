@@ -74,7 +74,7 @@ public class ScoreTests : TestBase {
 			.ExpectSuccess(postResult1 => gamer2.Scores.Post(1500, board, ScoreOrder.HighToLow, "TestGamer2", false))
 			.ExpectSuccess(postResult2 => gamer1.Scores.BestHighScores(board))
 			.ExpectSuccess(scores => {
-				Assert(scores.Total == 2, "Should have two scores");
+				Assert(scores.Count == 2, "Should have two scores, got "+scores.Total);
 				Assert(scores[0].Value == 1500, "First score not as expected");
 				Assert(scores[0].Info == "TestGamer2", "First score info not as expected");
 				Assert(scores[0].Rank == 1, "First score should have rank 1");
