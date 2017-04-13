@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using CotcSdk;
 using IntegrationTests;
+using System.Collections.Generic;
 
 public class CloudTests : TestBase {
 	[InstanceMethod(typeof(CloudTests))]
@@ -338,28 +339,39 @@ public class CloudTests : TestBase {
 	}
 
     [Test("Tests that an anonymous fails to link to an invalid facebook token (we cannot do much with automated testing).", requisite: "This test should fail from my understanding since the token is invalid, but for some reason it succeeds so we'll make it this way.")]
-    public void ShouldFailToLinkAccount(Cloud cloud) {
+    public void ShouldLinkAndUnlinkAccount(Cloud cloud) {
         FailOnUnhandledException = false;
-
-        EventHandler<ExceptionEventArgs> promiseExHandler = null;
-        promiseExHandler = (sender, e) => {
-            Promise.UnhandledException -= promiseExHandler;
-
-            Debug.Log("Handling Unhandled Exception");
-            FailOnUnhandledException = true;
-            
-            CompleteTest();
-        };
-
-        Promise.UnhandledException += promiseExHandler;
 
         // Create an anonymous account
         cloud.LoginAnonymously()
         // Then convert it to e-mail
-        .Then(gamer => gamer.Account.Link(
-            network: LoginNetwork.Facebook.ToString().ToLower(),
-            networkId: "10153057921478191",
-            networkSecret: "CAAENyTNQMpQBAETZCetNwCP1EKlykqqjaPRTNI41fhmf0YSZB6Q3hdOtb4gnDIQznGyElGIuBy3ZCoUNiekZBhIXh4iHho8wODALDw3ZBesfzbmGSH5BPWjwp8ieMIZANA7igvqNw6zVj7LIsSO9wtkvGaA9iZBMXF0wymmiDEljQVo03jsvlf7GZCZBckjYDBnwSm929Sl8wegZDZD"));
+        .ExpectSuccess(gamer => {
+            gamer.Account.Link(
+                network: LoginNetwork.Facebook.ToString().ToLower(),
+                networkId: "100016379375516",
+                networkSecret: "EAAENyTNQMpQBAJ8HvBZCh05WZCJXP9q4k6g5pXAdkMhyIzaNt7k57Jdqil57PKlO8HDtR5qeDzs1Sfy24aZAePLCtIi99LyWIqWFQQjraGOEj8aYW59aewZAZArOZBUBDHBahemWh2ZCulR4LIGUpkYVAfHWZCj58Kke9aQYRNorCQZDZD")
+            .ExpectSuccess(done => {
+                Debug.Log(done);
+
+                // Data obtained by fetching friends from Facebook. Using real test accounts.
+                Bundle data = Bundle.FromJson(@"{""data"":[{""name"":""Fr\u00e9d\u00e9ric Benois"",""id"":""107926476427271""}],""paging"":{""cursors"":{""before"":""QVFIUlY5TGkwWllQSU1tZAmN2NVlRaWlyeVpZAWk1idktkaU5GcFotRkp0RWlCVnNyR3MweUR5R3ZAfQ193ZAUhYWk84US0zVHdxdzdxMWswVTk2YUxlbVVlQXd3"",""after"":""QVFIUlY5TGkwWllQSU1tZAmN2NVlRaWlyeVpZAWk1idktkaU5GcFotRkp0RWlCVnNyR3MweUR5R3ZAfQ193ZAUhYWk84US0zVHdxdzdxMWswVTk2YUxlbVVlQXd3""}},""summary"":{""total_count"":1}}");
+
+                List<SocialNetworkFriend> friends = new List<SocialNetworkFriend>();
+                foreach (Bundle f in data["data"].AsArray()) {
+                    friends.Add(new SocialNetworkFriend(f));
+                }
+                gamer.Community.ListNetworkFriends(LoginNetwork.Facebook, friends, true)
+                .ExpectSuccess(response => {
+                    Debug.LogWarning(response);
+                    Assert(response.ByNetwork[LoginNetwork.Facebook].Count == 1, "Should have registered 1 facebook users");
+                    gamer.Account.Unlink(LoginNetwork.Facebook.ToString().ToLower())
+                    .ExpectSuccess(done2 => {
+                        CompleteTest();
+                    });
+                });
+                
+            });
+        });
 	}
 
 	[Test("Tests the floating point bundle functionality")]

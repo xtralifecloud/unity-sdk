@@ -206,7 +206,7 @@ public class CommunityTests : TestBase {
         string gamerID = "58ece8890810e5fe491a20a0";
 
         // User Token obtained from Facebook.
-        string user_token = "EAAENyTNQMpQBAHD1SxerW3XJ0e3iK1KqE2znNHwr7wyvTQDDKzjsJ6NqOxnj3HZA0LjbgFjJUb2SZBsvZClWjGZCObAsZCXZCkpvOHY7bQZAcV5v6KwoXLEvTf3t9N0lsLbqgP2ywCPN3hdkYbVRDHw7VPuJgbq4svRh4RZATphNhpsHjtZA78R2oFl8ZBdex0jnRrtZAsdZBzvHQQZDZD";
+        string user_token = "EAAENyTNQMpQBAJ8HvBZCh05WZCJXP9q4k6g5pXAdkMhyIzaNt7k57Jdqil57PKlO8HDtR5qeDzs1Sfy24aZAePLCtIi99LyWIqWFQQjraGOEj8aYW59aewZAZArOZBUBDHBahemWh2ZCulR4LIGUpkYVAfHWZCj58Kke9aQYRNorCQZDZD";
 
         cloud.Login("facebook", gamerID, user_token)
             .Then(gamer => {

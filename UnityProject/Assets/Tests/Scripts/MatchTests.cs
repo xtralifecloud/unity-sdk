@@ -220,7 +220,7 @@ public class MatchTests : TestBase {
 				gamer1.Matches.OnMatchInvitation += (MatchInviteEvent e) => {
 					Assert(e.Inviter.GamerId == gamer2.GamerId, "Invitation should come from P2");
 					Assert(e.Match.MatchId == createMatch.MatchId, "Should indicate the match ID");
-					// Test dismiss functionality (not needed in reality since we are stopping the loop it is registered to)
+					// Test discard functionality (not needed in reality since we are stopping the loop it is registered to)
 					gamer1.Matches.DiscardEventHandlers();
 					loopP1.Stop();
 					CompleteTest();
@@ -231,7 +231,30 @@ public class MatchTests : TestBase {
 		});
 	}
 
-	[Test("Creates a variety of matches and tests the various features of the match listing functionality.")]
+    [Test("Tests that the DiscardEventHandlers works properly")]
+    public void ShouldDiscardEventHandlers(Cloud cloud) {
+        Login2NewUsers(cloud, (Gamer gamer1, Gamer gamer2) => {
+            // P2 will create a match and invite P1
+            gamer2.Matches.Create(maxPlayers: 2)
+            .ExpectSuccess(createMatch => {
+                // P1 will be invited
+                DomainEventLoop loopP1 = gamer1.StartEventLoop();
+                gamer1.Matches.OnMatchInvitation += (MatchInviteEvent e) => {
+                    FailTest("Should be discarded");
+                };
+
+                gamer1.Matches.DiscardEventHandlers();
+
+                gamer1.Matches.OnMatchInvitation += (MatchInviteEvent e) => {
+                    CompleteTest();
+                };
+                // Invite P1
+                createMatch.InvitePlayer(gamer1.GamerId).ExpectSuccess();
+            });
+        });
+    }
+
+    [Test("Creates a variety of matches and tests the various features of the match listing functionality.")]
 	public void ShouldListMatches(Cloud cloud) {
 		Login2NewUsers(cloud, (gamer1, gamer2) => {
 			int[] totalMatches = new int[1];
@@ -329,8 +352,70 @@ public class MatchTests : TestBase {
 		});
 	}
 
-	#region Private
-	private string RandomBoardName() {
+    [Test("Test the dismiss invitation functionnality")]
+    public void ShouldDismissInvitation(Cloud cloud) {
+        Login2NewUsers(cloud, (gamer1, gamer2) => {
+            gamer2.Matches.Create(maxPlayers: 2)
+            .ExpectSuccess(createMatch => {
+                // Invite P1
+                DomainEventLoop loopP1 = gamer1.StartEventLoop();
+                gamer1.Matches.OnMatchInvitation += (MatchInviteEvent e) => {
+                    Assert(e.Inviter.GamerId == gamer2.GamerId, "Invitation should come from P2");
+                    Assert(e.Match.MatchId == createMatch.MatchId, "Should indicate the match ID");
+                    // Test dismiss functionality (not needed in reality since we are stopping the loop it is registered to)
+                    gamer1.Matches.DismissInvitation(createMatch.MatchId).ExpectSuccess(done => {
+                        CompleteTest();
+                    });
+                    loopP1.Stop();                    
+                };
+                createMatch.InvitePlayer(gamer1.GamerId).ExpectSuccess();                
+            });                
+        });
+    }
+
+
+    [Test("Test if the Draw From Shoe functionnality works properly")]
+    public void ShouldDrawFromShoe(Cloud cloud) {
+        Login2NewUsers(cloud, (gamer1, gamer2) => {
+            DomainEventLoop l1 = gamer1.StartEventLoop();
+            DomainEventLoop l2 = gamer2.StartEventLoop();
+            gamer1.Matches.Create(2, shoe: Bundle.CreateArray(new Bundle(1), new Bundle(2)))
+            .ExpectSuccess(createMatch => {
+                int drawn1 = 0, drawn2 = 0;
+                createMatch.OnShoeDrawn += (match, shoeEvent) => {
+                    match.DrawFromShoe()
+                    .ExpectSuccess(result => {
+                        drawn2 = result["drawnItems"].AsArray()[0];
+                        if (drawn1 == 1)
+                            Assert(drawn2 == 2, "Expected to get 2 from shoe, got " + drawn2);
+                        else
+                            Assert(drawn2 == 1, "Expected to get 1 from shoe, got " + drawn2);
+                        return match.DrawFromShoe(2);
+                    })
+                    .ExpectSuccess(result => {
+                        drawn1 = result["drawnItems"].AsArray()[0];
+                        drawn2 = result["drawnItems"].AsArray()[1];
+                        Assert((drawn1 == 1 && drawn2 == 2) || (drawn1 == 2 && drawn2 == 1), "Expected to get 1/2 or 2/1, got : " + drawn1 + "/" + drawn2);
+                        CompleteTest();
+                    });
+                };
+
+                gamer2.Matches.Join(createMatch.MatchId)
+                .ExpectSuccess(matchJoined => {
+                    matchJoined.DrawFromShoe()
+                    .ExpectSuccess(result => {
+                        drawn1 = result["drawnItems"].AsArray()[0];
+                        Assert(drawn1 == 1 || drawn1 == 2, "Expected drawn 1 or 2 from shoe, got : " + drawn1);
+
+                        createMatch.DrawFromShoe();
+                    });          
+                });
+            });            
+        });
+    }
+
+    #region Private
+    private string RandomBoardName() {
 		return "board-" + Guid.NewGuid().ToString();
 	}
 	#endregion

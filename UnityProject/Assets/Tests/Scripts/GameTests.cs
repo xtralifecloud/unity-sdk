@@ -59,14 +59,32 @@ public class GameTests : TestBase {
         });
 	}
 
-	[Test("Runs a batch on the server and checks the return value.", requisite: "The current game must be set-up with a batch named 'test' which does return {value: params.request.value * 2};")]
-	public void ShouldRunGameBatch(Cloud cloud) {
-		cloud.Game.Batches.Run("unitTest_DoNotTouch", Bundle.CreateObject("value", 3))
+    [Test("Runs a batch without parameters on the server and checks the return value.", requisite: "The current game must be set-up with a batch which must return anything")]
+    public void ShouldRunGameBatchWithoutParameter(Cloud cloud) {
+        cloud.Game.Batches.Run("unitTest_withoutParam")
+        .ExpectSuccess(batchResult => {
+            Assert(batchResult.AsString() == "Hello World !", "Result invalid, expected 'Hello World', got " + batchResult.AsString());
+            CompleteTest();
+        });
+    }
+
+    [Test("Runs a batch on another domain on the server and checks the return value.", requisite: "The current game must be set-up with a batch which must return anything")]
+    public void ShouldRunGameBatchOnAnotherDomain(Cloud cloud) {
+        cloud.Game.Batches.Domain("com.clanofthecloud.cloudbuilder.test").Run("unitTest_otherDomain")
+        .ExpectSuccess(batchResult => {
+            Assert(batchResult.AsString() == "Other Domain", "Result invalid, expected 'Hello World', got " + batchResult.AsString());
+            CompleteTest();
+        });
+    }
+
+    [Test("Runs a batch with parameters on the server and checks the return value.", requisite: "The current game must be set-up with a batch which must return {value: params.request.value * 2};")]
+	public void ShouldRunGameBatchWithParameters(Cloud cloud) {
+		cloud.Game.Batches.Run("unitTest_withParams", Bundle.CreateObject("value", 3))
 		.ExpectSuccess(batchResult => {
 			Assert(batchResult["value"] == 6, "Result invalid (expected 3 x 2 = 6)");
 			CompleteTest();
 		});
-	}
+	}    
 
     [Test("Get a binary from gameVFS", "The get/set of binaries is broken at the moment.")]
     public void ShouldGetBinaryFromGameVFS(Cloud cloud) {

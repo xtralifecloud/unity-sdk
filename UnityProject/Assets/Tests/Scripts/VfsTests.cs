@@ -60,10 +60,9 @@ public class VfsTests: TestBase {
 	}
 
 	[Test("Sets a binary key and rereads it.")]
-	public void ShouldWriteBinaryKey(Cloud cloud) {
+	public void ShouldWriteAndReadBinaryKey(Cloud cloud) {
 		Login(cloud, gamer => {
 			byte[] data = { 1, 2, 3, 4 };
-            Debug.Log("0");
             gamer.GamerVfs.GetValue("testkey").Done(done => {
                 Debug.Log(done);
             });
