@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 namespace CotcSdk {
@@ -12,24 +13,58 @@ namespace CotcSdk {
 		}
 
 		#region Event Loop Coroutine
-		private DomainEventLoop domainEventLoop;
-		private int eventLoopDelay;
+		private class DomainEventLoopParameters
+		{
+			public DomainEventLoop domainEventLoop;
+			public int eventLoopDelay;
+			public Coroutine loopCoroutine;
+
+			public DomainEventLoopParameters(DomainEventLoop _domainEventLoop, int _eventLoopDelay)
+			{
+				domainEventLoop = _domainEventLoop;
+				eventLoopDelay = _eventLoopDelay;
+				loopCoroutine = null;
+			}
+		}
+
+		private const int eventLoopDelayTimeout = 30000;
+		private Dictionary<string, DomainEventLoopParameters> domainEventLoopsParameters = new Dictionary<string, DomainEventLoopParameters>();
 		private string eventLoopMsgToAck;
 		private bool eventLoopLastResultPositive = true;
 
-		internal void StartEventLoopCoroutine(DomainEventLoop del = null) {
-			if (del != null) {
-				domainEventLoop = del;
-				eventLoopDelay = del.LoopIterationDuration;
+		internal void StartEventLoopCoroutine(DomainEventLoop domainEventLoop) {
+			if (domainEventLoop != null && !domainEventLoopsParameters.ContainsKey(domainEventLoop.Gamer.GamerId)) {
+				DomainEventLoopParameters domainEventLoopParameters = new DomainEventLoopParameters(domainEventLoop, domainEventLoop.LoopIterationDuration);
+				domainEventLoopsParameters[domainEventLoop.Gamer.GamerId] = domainEventLoopParameters;
+				domainEventLoopParameters.loopCoroutine = StartCoroutine(EventLoopCoroutine(domainEventLoopParameters));
 			}
-			StartCoroutine("EventLoopCoroutine");
 		}
 
-		internal void StopEventLoopCoroutine() {
-			StopCoroutine("EventLoopCoroutine");
+		internal void StopEventLoopCoroutine(DomainEventLoop domainEventLoop) {
+			if (domainEventLoop != null && domainEventLoopsParameters.ContainsKey(domainEventLoop.Gamer.GamerId)) {
+				DomainEventLoopParameters domainEventLoopParameters = domainEventLoopsParameters[domainEventLoop.Gamer.GamerId];
+				StopCoroutine(domainEventLoopParameters.loopCoroutine);
+				domainEventLoopsParameters.Remove(domainEventLoop.Gamer.GamerId);
+			}
 		}
 
-		private IEnumerator EventLoopCoroutine() {
+		internal void SuspendEventLoopCoroutine(DomainEventLoop domainEventLoop) {
+			if (domainEventLoop != null && domainEventLoopsParameters.ContainsKey(domainEventLoop.Gamer.GamerId)) {
+				DomainEventLoopParameters domainEventLoopParameters = domainEventLoopsParameters[domainEventLoop.Gamer.GamerId];
+				StopCoroutine(domainEventLoopParameters.loopCoroutine);
+			}
+		}
+
+		internal void ResumeEventLoopCoroutine(DomainEventLoop domainEventLoop) {
+			if (domainEventLoop != null && domainEventLoopsParameters.ContainsKey(domainEventLoop.Gamer.GamerId)) {
+				DomainEventLoopParameters domainEventLoopParameters = domainEventLoopsParameters[domainEventLoop.Gamer.GamerId];
+				domainEventLoopParameters.loopCoroutine = StartCoroutine(EventLoopCoroutine(domainEventLoopParameters));
+			}
+		}
+
+		private IEnumerator EventLoopCoroutine(DomainEventLoopParameters domainEventLoopParameters) {
+			DomainEventLoop domainEventLoop = domainEventLoopParameters.domainEventLoop;
+
 			// In case of stop, prevent to continue the coroutine if DomainEventLoop hasn't (shouldn't happen)
 			while (!domainEventLoop.Stopped) {
 				if (!eventLoopLastResultPositive) {
@@ -38,14 +73,14 @@ namespace CotcSdk {
 				}
 
 				UrlBuilder url = new UrlBuilder("/v1/gamer/event");
-				url.Path(domainEventLoop.Domain).QueryParam("timeout", eventLoopDelay);
+				url.Path(domainEventLoop.Domain).QueryParam("timeout", domainEventLoopParameters.eventLoopDelay);
 				if (eventLoopMsgToAck != null) {
 					url.QueryParam("ack", eventLoopMsgToAck);
 				}
 				
 				domainEventLoop.CurrentRequest = domainEventLoop.Gamer.MakeHttpRequest(url);
 				domainEventLoop.CurrentRequest.RetryPolicy = HttpRequest.Policy.NonpermanentErrors;
-				domainEventLoop.CurrentRequest.TimeoutMillisec = eventLoopDelay + 30000;
+				domainEventLoop.CurrentRequest.TimeoutMillisec = domainEventLoopParameters.eventLoopDelay + eventLoopDelayTimeout;
 				domainEventLoop.CurrentRequest.DoNotEnqueue = true;
 				
 				Managers.HttpClient.Run(domainEventLoop.CurrentRequest, (HttpResponse res) => {
@@ -54,7 +89,7 @@ namespace CotcSdk {
 						eventLoopLastResultPositive = true;
 						if (res.StatusCode == 200) {
 							eventLoopMsgToAck = res.BodyJson["id"];
-							ProcessEvent(res);
+							ProcessEvent(domainEventLoop, res);
 						} else if (res.StatusCode != 204) {
 							eventLoopLastResultPositive = false;
 							// Non retriable error -> kill ourselves
@@ -66,8 +101,8 @@ namespace CotcSdk {
 						Common.LogError("Exception happened in pop event loop: " + e.ToString());
 					}
 					// Start a new loop after response or timeout are processed if not paused or stoped
-					StopEventLoopCoroutine();
-					StartEventLoopCoroutine();
+					SuspendEventLoopCoroutine(domainEventLoop);
+					ResumeEventLoopCoroutine(domainEventLoop);
 				});
 				
 				// After timeout is reached but not processed, continue to a new loop if the HttpResponse's delegate hasn't (shouldn't happen)
@@ -77,7 +112,7 @@ namespace CotcSdk {
 			yield return null;
 		}
 
-		private void ProcessEvent(HttpResponse res) {
+		private void ProcessEvent(DomainEventLoop domainEventLoop, HttpResponse res) {
 			try {
 				EventLoopArgs args = new EventLoopArgs(res.BodyJson);
 				if (domainEventLoop.receivedEvent != null) domainEventLoop.receivedEvent(domainEventLoop, args);

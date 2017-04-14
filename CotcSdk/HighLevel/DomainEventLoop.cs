@@ -118,7 +118,7 @@ namespace CotcSdk {
 			Cotc.RunningEventLoops.Remove(this);
 
 			if (CotcCoroutinesManager.instance != null)
-				CotcCoroutinesManager.instance.StopEventLoopCoroutine();
+				CotcCoroutinesManager.instance.StopEventLoopCoroutine(this);
 			else
 				Common.LogError(noCoroutinesManagerInstanceError);
 
@@ -135,7 +135,7 @@ namespace CotcSdk {
 			}
 
 			if (CotcCoroutinesManager.instance != null)
-				CotcCoroutinesManager.instance.StopEventLoopCoroutine();
+				CotcCoroutinesManager.instance.SuspendEventLoopCoroutine(this);
 			else
 				Common.LogError(noCoroutinesManagerInstanceError);
 
@@ -148,7 +148,7 @@ namespace CotcSdk {
 				Paused = false;
 
 				if (CotcCoroutinesManager.instance != null)
-					CotcCoroutinesManager.instance.StartEventLoopCoroutine();
+					CotcCoroutinesManager.instance.ResumeEventLoopCoroutine(this);
 				else
 					Common.LogError(noCoroutinesManagerInstanceError);
 			}
