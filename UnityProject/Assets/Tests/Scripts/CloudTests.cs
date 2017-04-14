@@ -309,7 +309,6 @@ public class CloudTests : TestBase {
     }
 
 	private void PromisesShouldWorkProperlyPart3() {
-        Debug.Log("Part3");
 		// 3) This is normally prevented by the IPromise interface, but we removed it because of iOS AOT issues
 		Promise<bool> p1 = new Promise<bool>();
 		Promise<bool> p2 = p1.Then(dummy => {
@@ -320,18 +319,15 @@ public class CloudTests : TestBase {
 	}
 
 	private void PromisesShouldWorkProperlyPart4() {
-        Debug.Log("Part4");
         // 4) An exception in a Then block should be forwarded to the catch block
         Promise<bool> p = new Promise<bool>();
 		p.Then(dummy => {
 			throw new InvalidOperationException();
 		})
 		.Catch(ex => {
-            Debug.Log("Finish");
             CompleteTest();
 		});
 		p.Resolve(true);
-        Debug.Log("Finished");
 	}
 
 	[Test("Tests JSON-related functions.")]
@@ -364,8 +360,6 @@ public class CloudTests : TestBase {
                 networkId: "100016379375516",
                 networkSecret: "EAAENyTNQMpQBAJ8HvBZCh05WZCJXP9q4k6g5pXAdkMhyIzaNt7k57Jdqil57PKlO8HDtR5qeDzs1Sfy24aZAePLCtIi99LyWIqWFQQjraGOEj8aYW59aewZAZArOZBUBDHBahemWh2ZCulR4LIGUpkYVAfHWZCj58Kke9aQYRNorCQZDZD")
             .ExpectSuccess(done => {
-                Debug.Log(done);
-
                 // Data obtained by fetching friends from Facebook. Using real test accounts.
                 Bundle data = Bundle.FromJson(@"{""data"":[{""name"":""Fr\u00e9d\u00e9ric Benois"",""id"":""107926476427271""}],""paging"":{""cursors"":{""before"":""QVFIUlY5TGkwWllQSU1tZAmN2NVlRaWlyeVpZAWk1idktkaU5GcFotRkp0RWlCVnNyR3MweUR5R3ZAfQ193ZAUhYWk84US0zVHdxdzdxMWswVTk2YUxlbVVlQXd3"",""after"":""QVFIUlY5TGkwWllQSU1tZAmN2NVlRaWlyeVpZAWk1idktkaU5GcFotRkp0RWlCVnNyR3MweUR5R3ZAfQ193ZAUhYWk84US0zVHdxdzdxMWswVTk2YUxlbVVlQXd3""}},""summary"":{""total_count"":1}}");
 
@@ -375,7 +369,6 @@ public class CloudTests : TestBase {
                 }
                 gamer.Community.ListNetworkFriends(LoginNetwork.Facebook, friends, true)
                 .ExpectSuccess(response => {
-                    Debug.LogWarning(response);
                     Assert(response.ByNetwork[LoginNetwork.Facebook].Count == 1, "Should have registered 1 facebook users");
                     gamer.Account.Unlink(LoginNetwork.Facebook.ToString().ToLower())
                     .ExpectSuccess(done2 => {

@@ -32,7 +32,6 @@ public class VfsTests: TestBase {
 			.ExpectSuccess(setRes => {
                 gamer.GamerVfs.GetValue("testkey")
                 .ExpectSuccess(getRes => {
-                    Debug.Log(getRes);
                     Assert(getRes.Has("result"), "Expected result field");
                     Assert(getRes["result"].Has("testkey"), "Expected testKey field");
                     Assert(getRes["result"]["testkey"].AsString() == "hello world", "Wrong key value");
@@ -74,16 +73,13 @@ public class VfsTests: TestBase {
                 FailTest("Exception :" + ex);
             });
             /*.ExpectSuccess(setRes => {
-                Debug.Log("1");
 				gamer.GamerVfs.GetBinary("testkey")
 				.ExpectSuccess(getRes => {
-                    Debug.Log("2");
                     Assert(getRes.Length == 4, "Wrong key length");
 					Assert(getRes[2] == 3, "Wrong key value");
 					CompleteTest();
 				});
 			});*/
-            Debug.Log("End");
 		});
 	}
 }

@@ -21,13 +21,12 @@ public class CommunityTests : TestBase {
 			// Expects friend status change event
 			Promise restOfTheTestCompleted = new Promise();
             DomainEventLoop loopP1 = gamer1.StartEventLoop();
-			gamer1.Community.OnFriendStatusChange += (FriendStatusChangeEvent e) => {
-				Assert(e.FriendId == gamer2.GamerId, "Should come from P2");
+            gamer1.Community.OnFriendStatusChange += (FriendStatusChangeEvent e) => {
+                Assert(e.FriendId == gamer2.GamerId, "Should come from P2");
 				Assert(e.NewStatus == FriendRelationshipStatus.Add, "Should have added me");
                 loopP1.Stop();
 				restOfTheTestCompleted.Done(CompleteTest);
 			};
-
             // Tests using wrong id
             gamer2.Community.AddFriend("1234567890")
             .ExpectFailure(ex => {
@@ -104,7 +103,7 @@ public class CommunityTests : TestBase {
         });
     }
 
-    [Test("Uses two anonymous accounts. Tests the function DiscardEventHandlers.", "Broken actually because gamer.Community returns a new instance each time it is called.")]
+    [Test("Uses two anonymous accounts. Tests the function DiscardEventHandlers.")]
     public void ShouldDiscardEventHandlers(Cloud cloud) {
         Login2NewUsers(cloud, (gamer1, gamer2) => {
             DomainEventLoop loopP1 = gamer1.StartEventLoop();
@@ -136,7 +135,6 @@ public class CommunityTests : TestBase {
 			Promise finishedSendEvent = new Promise();
 			DomainEventLoop loop = gamer1.StartEventLoop();
 			loop.ReceivedEvent += (sender, e) => {
-                Debug.LogWarning(e.Message);
                 Assert(sender == loop, "Event should come from the loop");
                 Assert(e.Message["type"].AsString() == "user", "Expected type user");
                 Assert(e.Message["from"].AsString() == gamer2.GamerId, "Expected message coming from gamer2");
