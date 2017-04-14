@@ -5,8 +5,6 @@ namespace CotcSdk
 {
 	public sealed partial class Cloud {
 
-        private Gamer currentGamer = null;
-
 		/// <summary>
 		/// Method used to check or retrieve users from Clan of the Cloud community. The domain is not taken
 		/// in account for this search.
@@ -41,13 +39,6 @@ namespace CotcSdk
 		/// <param name="additionalOptions">Additional options can be passed, such as `thenBatch` to execute a batch after
 		///     login. Pass it as a Bundle with the additional keys.</param>
 		public Promise<Gamer> LoginAnonymously(Bundle additionalOptions = null) {
-            if (currentGamer != null)
-            {
-                var exception = new Promise<Gamer>();
-                exception.PostResult(ErrorCode.LoginCanceled, "Already logged in");
-                return exception;
-            }
-
             Bundle config = Bundle.CreateObject();
 			config["device"] = Managers.SystemFunctions.CollectDeviceInformation();
 
@@ -58,9 +49,9 @@ namespace CotcSdk
 			req.BodyJson = config;
 
             return Common.RunInTask<Gamer>(req, (response, task) => {
-                currentGamer = new Gamer(this, response.BodyJson);
-                task.PostResult(currentGamer);
-                Cotc.NotifyLoggedIn(this, currentGamer);
+                Gamer gamer = new Gamer(this, response.BodyJson);
+                task.PostResult(gamer);
+                Cotc.NotifyLoggedIn(this, gamer);
 			});
 		}
 
@@ -81,13 +72,6 @@ namespace CotcSdk
         ///     keys. May not override `preventRegistration` key since it is defined by the parameter of the same name.</param>
         public Promise<Gamer> Login(string network, string networkId, string networkSecret, Bundle additionalOptions = null)
         {
-            if (currentGamer != null)
-            {
-                var exception = new Promise<Gamer>();
-                exception.PostResult(ErrorCode.LoginCanceled, "Already logged in");
-                return exception;
-            }
-
             Bundle config = Bundle.CreateObject();
             config["network"] = network;
             config["id"] = networkId;
@@ -99,9 +83,9 @@ namespace CotcSdk
             HttpRequest req = MakeUnauthenticatedHttpRequest("/v1/login");
             req.BodyJson = config;
             return Common.RunInTask<Gamer>(req, (response, task) => {
-                currentGamer = new Gamer(this, response.BodyJson);
-                task.PostResult(currentGamer);
-                Cotc.NotifyLoggedIn(this, currentGamer);
+                Gamer gamer = new Gamer(this, response.BodyJson);
+                task.PostResult(gamer);
+                Cotc.NotifyLoggedIn(this, gamer);
             });
         }
 
@@ -142,20 +126,20 @@ namespace CotcSdk
         /// Logs out a previously logged in player.
         /// </summary>
         /// <returns>Promise resolved when the request has finished.</returns>
-        public Promise<Done> Logout()
+        public Promise<Done> Logout(Gamer gamer = null)
         {
-            if (currentGamer == null)
+            if (gamer == null)
             {
-                var exception = new Promise<Done>();
-                exception.PostResult(ErrorCode.NotLoggedIn, "Can't log out");
-                return exception;
+                var result = new Promise<Done>();
+                result.PostResult(ErrorCode.NotLoggedIn, "Not a valid user");
+                return result;
             }
-            ;
+
             Bundle config = new Bundle("");
-            HttpRequest req = currentGamer.MakeHttpRequest("/v1/gamer/logout");
+            HttpRequest req = gamer.MakeHttpRequest("/v1/gamer/logout");
             req.BodyJson = config;
             return Common.RunInTask<Done>(req, (response, task) => {
-                currentGamer = null;
+                gamer = null;
                 task.PostResult(new Done(true, response.BodyJson));
             });
         }
