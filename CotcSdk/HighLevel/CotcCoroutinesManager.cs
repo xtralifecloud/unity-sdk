@@ -73,8 +73,6 @@ namespace CotcSdk {
 				// After timeout is reached but not processed, continue to a new loop if the HttpResponse's delegate hasn't (shouldn't happen)
 				yield return new WaitForSeconds((domainEventLoop.CurrentRequest.TimeoutMillisec / 1000) + 10);
 			}
-			
-			yield return null;
 		}
 
 		private void ProcessEvent(HttpResponse res) {
@@ -111,7 +109,6 @@ namespace CotcSdk {
 		private IEnumerator TimeoutCoroutine(TimeoutParameters timeoutParameters) {
 			yield return new WaitForSeconds(timeoutParameters.timeoutSec);
 			timeoutParameters.TimeoutCallback(timeoutParameters.state);
-			yield return null;
 		}
 		#endregion
 
@@ -135,7 +132,6 @@ namespace CotcSdk {
 		private IEnumerator RequestFailedRetryCoroutine(RequestFailedRetryParameters requestFailedRetryParameters) {
 			yield return new WaitForSeconds(requestFailedRetryParameters.timeoutSec);
 			requestFailedRetryParameters.RetryCallback();
-			yield return null;
 		}
 		#endregion
 	}
