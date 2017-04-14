@@ -70,16 +70,29 @@ public class CloudTests : TestBase {
 			"name", "nonexistingBatch",
 			"domain", "private",
 			"params", Bundle.CreateObject());
-		cloud.Login(
-			network: LoginNetwork.Email.Describe(),
-			networkId: "cloud@localhost.localdomain",
-			networkSecret: "Password123",
-			additionalOptions: Bundle.CreateObject("thenBatch", batchNode, "preventRegistration", false)
-		).ExpectFailure(ex => {
-			Assert(ex.ServerData["name"] == "HookError", "Message should be HookError");
-			Assert(ex.ServerData["message"].AsString().EndsWith("does not exist"), "Should indicate nonexisting batch");
-			CompleteTest();
-		});
+        cloud.Login(
+            network: LoginNetwork.Email.Describe(),
+            networkId: "cloud@localhost.localdomain",
+            networkSecret: "Password123",
+            additionalOptions: Bundle.CreateObject("thenBatch", batchNode, "preventRegistration", false)
+        ).ExpectFailure(ex => {
+            Assert(ex.ServerData["name"] == "HookError", "Message should be HookError");
+            Assert(ex.ServerData["message"].AsString().EndsWith("does not exist"), "Should indicate nonexisting batch");
+
+            Bundle batchNode2 = Bundle.CreateObject(
+            "name", "unitTest_thenBatch",
+            "domain", "private",
+            "params", Bundle.CreateObject());
+            cloud.Login(
+                network: LoginNetwork.Email.Describe(),
+                networkId: "cloud@localhost.localdomain",
+                networkSecret: "Password123",
+                additionalOptions: Bundle.CreateObject("thenBatch", batchNode2, "preventRegistration", false)
+            ).ExpectSuccess(gamer => {
+                Assert(gamer["customData"]["thenBatchRun"].AsBool(), "Expected customData to contain 'thenBatchRun:true'");
+                CompleteTest();
+            });
+        });
 	}
 
 	[Test("Tests that a non-existing session fails to resume (account not created).")]

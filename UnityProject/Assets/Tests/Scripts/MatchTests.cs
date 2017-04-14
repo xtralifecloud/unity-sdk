@@ -165,22 +165,17 @@ public class MatchTests : TestBase {
         
 		Login2NewUsers(cloud, (Gamer gamer1, Gamer gamer2) => {
 			DomainEventLoop loopP1 = gamer1.StartEventLoop();
-            Debug.Log("Player1 ID : " + gamer1.GamerId);
-            Debug.Log("Player2 ID : " + gamer2.GamerId);
             DomainEventLoop loopP2 = gamer2.StartEventLoop();
 			gamer1.Matches.Create(maxPlayers: 2)
             .Catch(ex => {
                 Debug.LogError(ex);
             })
 			.ExpectSuccess(createdMatch => {
-                Debug.Log("2");
-                // P1 will receive the join event
+                // 1) P1 subscribe to OnPlayerJoined
                 createdMatch.OnPlayerJoined += (Match sender, MatchJoinEvent e) => {
-                    Debug.Log("6");
-                    // P2 has joined; wait that he subscribes to the movePosted event.
+                    // 4) P2 has joined; wait that he subscribes to the movePosted event.
                     RunOnSignal("p2subscribed", () => {
-                        Debug.Log("7");
-						// Ok so now P2 has joined and is ready, we can go forward and post a move
+						// 5) Now that P2 has joined and is ready, P1 can post a move
 						createdMatch.PostMove(Bundle.CreateObject("x", 3)).ExpectSuccess();
 					});
 				};
@@ -190,22 +185,19 @@ public class MatchTests : TestBase {
                     Debug.LogError(ex);
                 })
 				.ExpectSuccess(joinedMatch => {
-                    Debug.Log("3");
-                    // P2 will receive the move event
+                    // 2) P2 Subscribe to OnMovePosted
                     joinedMatch.OnMovePosted += (Match sender, MatchMoveEvent e) => {
-                        Debug.Log("8");
+                        // 6) P1 sent his move, P2 verify its validity. Test Complete.
                         Assert(e.MoveData["x"] == 3, "Invalid move data");
 						Assert(e.PlayerId == gamer1.GamerId, "Expected P1 to make move");
 						loopP1.Stop();
 						loopP2.Stop();
 						CompleteTest();
 					};
-                    Debug.Log("4");
+                    // 3) Send a signal to let P1 know that P2 has done its job
 					Signal("p2subscribed");
-                    Debug.Log("5");
 				});
 			});
-            Debug.Log("1");
 		});
 	}
 
@@ -246,6 +238,7 @@ public class MatchTests : TestBase {
                 gamer1.Matches.DiscardEventHandlers();
 
                 gamer1.Matches.OnMatchInvitation += (MatchInviteEvent e) => {
+                    loopP1.Stop();
                     CompleteTest();
                 };
                 // Invite P1
@@ -396,6 +389,8 @@ public class MatchTests : TestBase {
                         drawn1 = result["drawnItems"].AsArray()[0];
                         drawn2 = result["drawnItems"].AsArray()[1];
                         Assert((drawn1 == 1 && drawn2 == 2) || (drawn1 == 2 && drawn2 == 1), "Expected to get 1/2 or 2/1, got : " + drawn1 + "/" + drawn2);
+                        l1.Stop();
+                        l2.Stop();
                         CompleteTest();
                     });
                 };

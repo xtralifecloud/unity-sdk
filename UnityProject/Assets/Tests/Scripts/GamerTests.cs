@@ -128,6 +128,28 @@ public class GamerTests : TestBase {
 		});
 	}
 
+    [Test("Creates a match, and checks that the request has been hooked by looking for a new field in the data returned", "The current game must have a hook on after-match-create setup with the code in commentary")]
+    // Code of the hook : 
+    /*
+    function after-match-create(params, customData, mod) {
+	    "use strict";
+	    // don't edit above this line // must be on line 3
+	    // Used for unit test.
+  	    mod.debug(JSON.stringify(params));
+        params.match.globalState = {hooked:true};
+    } // must be on last line, no CR
+    */
+    public void ShouldBeHooked(Cloud cloud) {
+        LoginNewUser(cloud, gamer => {
+            gamer.Matches.Create(1)
+            .ExpectSuccess(match => {
+                Assert(match.GlobalState["hooked"].AsBool(), "Expected a field 'hooked:true' in the globalState");
+                CompleteTest();
+            });
+        });
+    }
+
+
 	[Test("Tests the outline functionality")]
 	public void ShouldReturnProperOutline(Cloud cloud) {
 		Login(cloud, gamer => {
@@ -140,5 +162,4 @@ public class GamerTests : TestBase {
 			});
 		});
 	}
-
 }

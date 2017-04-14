@@ -90,6 +90,7 @@ public class GameTests : TestBase {
     public void ShouldGetBinaryFromGameVFS(Cloud cloud) {
         cloud.Game.GameVfs.GetBinary("unitTest_GetBinary")
         .ExpectSuccess(data => {
+            // TODO Complete this test when the get/set of binaries is no longer broken.
             Debug.LogError("You must test data here !");
         });        
     }
