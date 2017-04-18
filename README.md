@@ -45,6 +45,7 @@ In order to ensure compatibility between Unity UWP generated projects and the Co
 ### Building the libraries
 
 When you build the entire CotcSdk solution, you'll end up with 3 library files:
+
 - `[SolutionPath]\bin`: the `standard` Sdk library DLL
 - `[SolutionPath]\CotcSdk-Editor\bin`: the `standard editor` Sdk library DLL (Unity editor part)
 - `[SolutionPath]\CotcSdk-UniversalWindows\bin`: the `UWP compatible` Sdk library DLL
@@ -54,6 +55,7 @@ When you build the entire CotcSdk solution, you'll end up with 3 library files:
 Basicly, because Windows Store Apps use special Runtime APIs, you'll need 2 different libraries: the `UWP compatible` one to build a Windows Store App, and the `standard` one which will act as a placeholder to be able to compile Unity projects directly in the editor (there is no such considers about the `-editor` library).
 
 For this to work, a few steps are involved:
+
 - Put the `standard library` in the `[UnityProjectPath]\Assets\Plugins` folder
 - Put the `standard editor library` in the `[UnityProjectPath]\Assets\Plugins\Editor` folder
 - Put the `UWP compatible library` in the `[UnityProjectPath]\Assets\Plugins\WSA` folder
@@ -65,8 +67,9 @@ For further informations, please check out this link to official Unity's manual 
 
 ### Enabling the Internet Client app capability
 
-Don't forget to allow your app to access the Internet:
-- In the Unity editor, go to `Edit >> Project Settings >> Player`; Hit the `Windows Store Apps settings` tab, then in the `Publishing Settings` section search for `Capabilities` and tick the `InternetClient` capability. This will allow Unity to automatically add this capability in the `Package.appxmanifest` file generated on your Unity project build for UWP.
+Don't forget to allow your app to access the Internet :
+
+In the Unity editor, go to `Edit >> Project Settings >> Player`; Hit the `Windows Store Apps settings` tab, then in the `Publishing Settings` section search for `Capabilities` and tick the `InternetClient` capability. This will allow Unity to automatically add this capability in the `Package.appxmanifest` file generated on your Unity project build for UWP.
 
 ## Running integration tests
 
@@ -80,18 +83,20 @@ Open the `IntegrationTestScene` on desktop, or build a mobile application with t
 
 In order to write an integration test, open the `IntegrationTestScene`. From the Hierarchy, select the group to which you'd like to add your test and duplicate a test inside of it (for example Gamer Tests -> ShouldSetProperty). If you want to create a new group, see further instructions. From the inspector, you'll be able to select your new method (Gamer Tests (Script) -> Method to call). You should write it. Open the corresponding script (here GamerTests) and add a new method like that:
 
-```	[Test("Tests the outline functionality")]
-	public void ShouldReturnProperOutline(Cloud cloud) {
-		Login(cloud, gamer => {
-			CompleteTest();
-		});
-	}```
+```	
+[Test("Tests the outline functionality", "You must have setup the SDK properly")]
+public void ShouldReturnProperOutline(Cloud cloud) {
+	Login(cloud, gamer => {
+		CompleteTest();
+	});
+}
+```
 
 From the Test annotation, you may describe your test. Optionally, if the test may fail because it requires additional configuration, you may also add another argument to the test annotation: `requisite: "..."`. When selecting the test in question, a warning sign will appear and the requisite text will be displayed in the inspector under the *Method to call*.
 
 Once your test is written, return to the Unity editor, wait a few seconds for the UI to refresh and select your new test from the *Method to call* combo. You may then use the *Integration Test Runner* (from the menu under *Unity Test Tools*) and click *Run selected*. This will run only your test.
 
-#### Creating a new group
+### Creating a new group
 
 A test group is associated to a separate test class to make things more clear. Tests are placed under the directory `UnityProject/Assets/Tests/Scripts`. To get started, we suggest that you simply copy and rename an existing test class, since the inheritance and imports are important.
 
@@ -101,7 +106,67 @@ NB: this functionality is provided through the `TestBase` class. If it doesn't s
 
 After creating a new group of tests, you need to update the `RunAllTests.cs` script (which is used by the `MobileIntegrationTestScene`). There is something like:
 
-```	private static readonly Type[] TestTypes = {
-		typeof(CloudTests),```
+```
+private static readonly Type[] TestTypes = {
+		typeof(CloudTests),
+```
 
 You just need to add the new class in there. Try to respect the alphabetical ordering.
+
+### Fail/Success of a test
+
+Generally, a test may fail due to :
+
+- A `LogError` in the console
+- An exception not catched by the test
+- A timeout of the test (by default, the maximum delay before a timeout is 30s)
+- The conditionnal expression in an `Assert` valued to false.
+- A call to the `FailTest` function
+- A function called in an `ExpectSuccess` returning an error
+- The functions called in an `ExpectFailure` not returning any error
+
+A test can only success if it calls the function `CompleteTest()`, thus you should always and only call this function a the end of the test.
+
+### Using unit tests with asynchronous functions
+
+This SDK contains mostly asyncrhonous functions wich consist in asking the server to send us data or to perform an action ; thus, in a unit test, you have to ask the server, and wait for it's response to be able to test it. This is done by the `Promise` system (cf. http://xtralifecloud.github.io/unity-sdk/Docs/DoxygenGenerated/html/getting_started_ref.html#promises_ref). Wich let you call the asynchronous function, and register a delegate that will be executed when the response is received. 
+
+For exemple :
+```	
+[Test("Tests the outline functionality", "You must have setup the SDK properly")]
+public void ShouldReturnProperOutline(Cloud cloud) {
+	Login(cloud, gamer => {
+		CompleteTest();
+	});
+}
+```
+
+During this test, `CompleteTest();` will be called only when the server response is received.
+
+You can easily call one asynchronous function after another by returning the asyncrhonous functions result (wich is a promise) and using ExpectSuccess or ExpectFailure. For exemple : 
+
+```	
+[Test("Tests the outline functionality", "You must have setup the SDK properly")]
+public void ShouldReturnProperOutline(Cloud cloud) {
+	Login(cloud, gamer => {
+		return Logout();
+	}).ExpectSuccess(done => {
+		CompleteTest();
+	});	
+}
+```
+
+Or, witout the use of ExpectSuccess/ExpectFailure :
+```	
+[Test("Tests the outline functionality", "You must have setup the SDK properly")]
+public void ShouldReturnProperOutline(Cloud cloud) {
+	Login(cloud, gamer => {
+		Logout(done => {
+			CompleteTest();
+		};
+	});	
+}
+```
+
+
+
