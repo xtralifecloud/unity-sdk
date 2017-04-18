@@ -168,5 +168,16 @@ public void ShouldReturnProperOutline(Cloud cloud) {
 }
 ```
 
+### Test on Android
+
+First, you will need to be able to build on Android (cf. https://unity3d.com/fr/learn/tutorials/topics/mobile-touch/building-your-unity-game-android-device-testing).
+
+Link your android device via USB on your computer and enable USB debugging. In Unity, open `Unity Test Tools > Plateform Runner > Run on Plateform`. In the third column named `Available Scenes`, select `IntegrationTestScene` (and/or any other scene you want) and click on `Add to Build`, on `Build tests for` select Android, and finally click on `Build and run tests`.
+
+Now, your tests are running on your device. When they are all completed, a text will appear, indicating if the tests succeded or failed. To be able to see the logs produced on your device, you will need a tool. For exemple, you can use `monitor`. Go to Android SDK folder > tools > monitor.bat (Run as administrator for windows users).
+
+In monitor, on the upper left (Devices), select your device. On the bottom, in the filter input field, add `tag:Unity`. Now, you can go back to Unity, and `Build and run tests` again. The logs will now be displayed inside `monitor`. 
+
+
 
 
