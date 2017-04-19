@@ -52,31 +52,31 @@ public class TransactionTests : TestBase {
 		});
 	}
 
-	[Test("Runs a transaction that should trigger an achievement.", requisite: "Please import {\"testAch\":{\"type\":\"limit\",\"config\":{\"unit\":\"gold\",\"maxValue\":\"100\"}}} into the current game achievements.")]
+	[Test("Runs a transaction that should trigger an achievement.", requisite: "Please import {\"unitTestAchievements\":{\"type\":\"limit\",\"config\":{\"unit\":\"gold\",\"maxValue\":\"100\"}}} into the current game achievements.")]
 	public void ShouldTriggerAchievement(Cloud cloud) {
 		LoginNewUser(cloud, gamer => {
 			gamer.Transactions.Post(Bundle.CreateObject("gold", 100), "Transaction run by integration test.")
 			.ExpectSuccess(txResult => {
 				Assert(txResult.TriggeredAchievements.Count == 1, "Expected one achievement triggered");
-				Assert(txResult.TriggeredAchievements["testAch"].Name == "testAch", "Expected testAch to be triggered");
-				Assert(txResult.TriggeredAchievements["testAch"].Type == AchievementType.Limit, "Expected testAch.type: limit");
-				Assert(txResult.TriggeredAchievements["testAch"].Config["maxValue"] == 100, "Expected testAch.maxValue: 100");
+				Assert(txResult.TriggeredAchievements["unitTestAchievements"].Name == "unitTestAchievements", "Expected unitTestAchievements to be triggered");
+				Assert(txResult.TriggeredAchievements["unitTestAchievements"].Type == AchievementType.Limit, "Expected unitTestAchievements.type: limit");
+				Assert(txResult.TriggeredAchievements["unitTestAchievements"].Config["maxValue"] == 100, "Expected unitTestAchievements.maxValue: 100");
 				CompleteTest();
 			});
 		});
 	}
 
-	[Test("Runs a transaction that should trigger an achievement.", requisite: "Please import {\"testAch\":{\"type\":\"limit\",\"config\":{\"unit\":\"gold\",\"maxValue\":\"100\"}}} into the current game achievements.")]
+	[Test("Runs a transaction that should trigger an achievement.", requisite: "Please import {\"unitTestAchievements\":{\"type\":\"limit\",\"config\":{\"unit\":\"gold\",\"maxValue\":\"100\"}}} into the current game achievements.")]
 	public void ShouldAssociateAchievementData(Cloud cloud) {
 		LoginNewUser(cloud, gamer => {
 			gamer.Transactions.Post(Bundle.CreateObject("gold", 100), "Transaction run by integration test.")
 			.ExpectSuccess(txResult => {
-				Assert(txResult.TriggeredAchievements["testAch"].Name == "testAch", "Expected testAch to be triggered");
+				Assert(txResult.TriggeredAchievements["unitTestAchievements"].Name == "unitTestAchievements", "Expected unitTestAchievements to be triggered");
 				// Associate data
-				return gamer.Achievements.AssociateData("testAch", Bundle.CreateObject("key", "value"));
+				return gamer.Achievements.AssociateData("unitTestAchievements", Bundle.CreateObject("key", "value"));
 			})
 			.ExpectSuccess(assocResult => {
-				Assert(assocResult.Name == "testAch", "Wrong achievement name");
+				Assert(assocResult.Name == "unitTestAchievements", "Wrong achievement name");
 				Assert(assocResult.GamerData["key"] == "value", "Wrong achievement data");
 				CompleteTest();
 			});
@@ -149,13 +149,13 @@ public class TransactionTests : TestBase {
 
 	[Test("Lists the state of achievements for the current user, including when a bit of progress was made.", requisite: "Please import {\"testAch\":{\"type\":\"limit\",\"config\":{\"unit\":\"gold\",\"maxValue\":\"100\"}}} into the current game achievements.")]
 	public void ShouldListAchievements(Cloud cloud) {
-		LoginNewUser(cloud, gamer => {
+        LoginNewUser(cloud, gamer => {
 			gamer.Achievements.List()
 			.ExpectSuccess(result => {
-				Assert(result.ContainsKey("testAch"), "'testAch' not found, check that you have configured the required achievements on the server");
-				Assert(result["testAch"].Config["unit"] == "gold", "Expected unit to be gold");
-				Assert(result["testAch"].Config["maxValue"] == 100, "Expected maxValue to be 100");
-				Assert(result["testAch"].Progress == 0, "Expected progress to be 0");
+				Assert(result.ContainsKey("unitTestAchievements"), "'unitTestAchievements' not found, check that you have configured the required achievements on the server");
+				Assert(result["unitTestAchievements"].Config["unit"] == "gold", "Expected unit to be gold");
+				Assert(result["unitTestAchievements"].Config["maxValue"] == 100, "Expected maxValue to be 100");
+				Assert(result["unitTestAchievements"].Progress == 0, "Expected progress to be 0");
 				CompleteTest();
 			});
 		});

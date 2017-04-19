@@ -70,19 +70,29 @@ public class ScoreTests : TestBase {
 		// Use two players, P1 makes a score of 1000, P2 of 1500
 		Login2Users(cloud, (Gamer gamer1, Gamer gamer2) => {
 			string board = RandomBoardName();
-			gamer1.Scores.Post(1000, board, ScoreOrder.HighToLow, "TestGamer1", false)
-			.ExpectSuccess(postResult1 => gamer2.Scores.Post(1500, board, ScoreOrder.HighToLow, "TestGamer2", false))
-			.ExpectSuccess(postResult2 => gamer1.Scores.List(board))
-			.ExpectSuccess(scores => {
-				Assert(scores.Total == 2, "Should have two scores");
-				Assert(scores[0].Value == 1500, "First score not as expected");
-				Assert(scores[0].Info == "TestGamer2", "First score info not as expected");
-				Assert(scores[0].Rank == 1, "First score should have rank 1");
-				Assert(scores[1].Value == 1000, "2nd score not as expected");
-				Assert(scores[1].GamerInfo.GamerId == gamer1.GamerId, "2nd score not as expected");
-				Assert(scores.ServerData[board]["rankOfFirst"] == 1, "Server data should be accessible");
-				CompleteTest();
-			});
+            gamer1.Scores.Post(1000, board, ScoreOrder.HighToLow, "TestGamer1", false)
+            .ExpectSuccess(postResult1 => gamer2.Scores.Post(1500, board, ScoreOrder.HighToLow, "TestGamer2", false))
+            .ExpectSuccess(postResult2 => gamer1.Scores.BestHighScores(board))
+            .ExpectSuccess(scores => {
+                Assert(scores.Count == 2, "Should have two scores, got " + scores.Total);
+                Assert(scores[0].Value == 1500, "First score not as expected");
+                Assert(scores[0].Info == "TestGamer2", "First score info not as expected");
+                Assert(scores[0].Rank == 1, "First score should have rank 1");
+                Assert(scores[1].Value == 1000, "2nd score not as expected");
+                Assert(scores[1].GamerInfo.GamerId == gamer1.GamerId, "2nd score not as expected");
+                Assert(scores.ServerData[board]["rankOfFirst"] == 1, "Server data should be accessible");
+                return gamer1.Scores.PagedCenteredScore(board);
+            })
+            .ExpectSuccess(scores => {
+                Assert(scores.Count == 2, "Should have two scores, got " + scores.Total);
+                Assert(scores[0].Value == 1500, "First score not as expected");
+                Assert(scores[0].Info == "TestGamer2", "First score info not as expected");
+                Assert(scores[0].Rank == 1, "First score should have rank 1");
+                Assert(scores[1].Value == 1000, "2nd score not as expected");
+                Assert(scores[1].GamerInfo.GamerId == gamer1.GamerId, "2nd score not as expected");
+                Assert(scores.ServerData[board]["rankOfFirst"] == 1, "Server data should be accessible");
+                CompleteTest();
+            });
 		});
 	}
 
