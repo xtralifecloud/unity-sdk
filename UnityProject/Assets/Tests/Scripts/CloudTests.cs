@@ -1,8 +1,8 @@
 using System;
 using UnityEngine;
 using CotcSdk;
-using System.Reflection;
 using IntegrationTests;
+using System.Collections.Generic;
 
 public class CloudTests : TestBase {
 	[InstanceMethod(typeof(CloudTests))]
@@ -35,7 +35,20 @@ public class CloudTests : TestBase {
 		});
 	}
 
-	[Test("First logs in anonymously, then tries to restore the session with the received credentials.")]
+    [Test("Log in anonymously. Then Log out.")]
+    public void ShouldLogout(Cloud cloud) {
+        cloud.LoginAnonymously()
+        .Then(result => {
+            return cloud.Logout(result);
+        })
+        .Then(result => {
+            CompleteTest();
+        }, ex => {
+            FailTest(ex.ToString());
+        });
+    }
+
+    [Test("First logs in anonymously, then tries to restore the session with the received credentials.")]
 	public void ShouldRestoreSession(Cloud cloud) {
 		cloud.Login(
 			network: LoginNetwork.Email.Describe(),
@@ -57,16 +70,29 @@ public class CloudTests : TestBase {
 			"name", "nonexistingBatch",
 			"domain", "private",
 			"params", Bundle.CreateObject());
-		cloud.Login(
-			network: LoginNetwork.Email.Describe(),
-			networkId: "cloud@localhost.localdomain",
-			networkSecret: "Password123",
-			additionalOptions: Bundle.CreateObject("thenBatch", batchNode, "preventRegistration", false)
-		).ExpectFailure(ex => {
-			Assert(ex.ServerData["name"] == "HookError", "Message should be HookError");
-			Assert(ex.ServerData["message"].AsString().EndsWith("does not exist"), "Should indicate nonexisting batch");
-			CompleteTest();
-		});
+        cloud.Login(
+            network: LoginNetwork.Email.Describe(),
+            networkId: "cloud@localhost.localdomain",
+            networkSecret: "Password123",
+            additionalOptions: Bundle.CreateObject("thenBatch", batchNode, "preventRegistration", false)
+        ).ExpectFailure(ex => {
+            Assert(ex.ServerData["name"] == "HookError", "Message should be HookError");
+            Assert(ex.ServerData["message"].AsString().EndsWith("does not exist"), "Should indicate nonexisting batch");
+
+            Bundle batchNode2 = Bundle.CreateObject(
+            "name", "unitTest_thenBatch",
+            "domain", "private",
+            "params", Bundle.CreateObject());
+            cloud.Login(
+                network: LoginNetwork.Email.Describe(),
+                networkId: "cloud@localhost.localdomain",
+                networkSecret: "Password123",
+                additionalOptions: Bundle.CreateObject("thenBatch", batchNode2, "preventRegistration", false)
+            ).ExpectSuccess(gamer => {
+                Assert(gamer["customData"]["thenBatchRun"].AsBool(), "Expected customData to contain 'thenBatchRun:true'");
+                CompleteTest();
+            });
+        });
 	}
 
 	[Test("Tests that a non-existing session fails to resume (account not created).")]
@@ -104,7 +130,7 @@ public class CloudTests : TestBase {
 		cloud.LoginAnonymously()
 		// Then convert it to e-mail
 		.Then(gamer => gamer.Account.Convert(
-			network: LoginNetwork.Email,
+			network: LoginNetwork.Email.ToString().ToLower(),
 			networkId: RandomEmailAddress(),
 			networkSecret: "Password123"))
 		.Then(conversionResult => {
@@ -127,7 +153,7 @@ public class CloudTests : TestBase {
 		.ExpectSuccess(gamer => {
 			// Then try to convert it to the same e-mail as the fake account created at first
 			gamer.Account.Convert(
-				network: LoginNetwork.Email,
+				network: LoginNetwork.Email.ToString().ToLower(),
 				networkId: "cloud@localhost.localdomain",
 				networkSecret: "Anotherp4ss")
 			.ExpectFailure(conversionResult => {
@@ -147,7 +173,7 @@ public class CloudTests : TestBase {
 		.Then(g => {
 			gamer[0] = g;
 			return g.Account.Convert(
-				network: LoginNetwork.Email,
+				network: LoginNetwork.Email.ToString().ToLower(),
 				networkId: RandomEmailAddress(),
 				networkSecret: "Password123");
 		})
@@ -166,11 +192,11 @@ public class CloudTests : TestBase {
 			networkId: "cloud@localhost.localdomain",
 			networkSecret: "Password123")
 		.Then(loginResult => cloud.UserExists(
-			network: LoginNetwork.Email,
+			network: LoginNetwork.Email.ToString().ToLower(),
 			networkId: "cloud@localhost.localdomain"))
 		.Then(checkResult => {
 			Assert(checkResult, "UserExists failed");
-			cloud.UserExists(LoginNetwork.Email, "inexisting@localhost.localdomain")
+			cloud.UserExists(LoginNetwork.Email.ToString().ToLower(), "inexisting@localhost.localdomain")
 			.ExpectFailure(dummy => {
 				CompleteTest();
 			});
@@ -259,8 +285,8 @@ public class CloudTests : TestBase {
 	}
 
 	private void PromisesShouldWorkProperlyPart2() {
-		// 2) Test that that an unhandled exception is triggered as expected
-		Promise[] expectingException = new Promise[1];
+        // 2) Test that that an unhandled exception is triggered as expected
+        Promise[] expectingException = new Promise[1];
 		EventHandler<ExceptionEventArgs> promiseExHandler = (sender, e) => {
 			expectingException[0].Resolve();
 		};
@@ -270,36 +296,34 @@ public class CloudTests : TestBase {
 		Promise<bool> prom = new Promise<bool>();
 		// With just then, the handler should not be called
 		expectingException[0] = new Promise().Then(() => FailTest("Should not call UnhandledException yet"));
-		prom.Reject(new InvalidOperationException());
+        prom.Reject(new InvalidOperationException());
 
-		// But after a done, it should be invoked
-		Wait(100).Then(() => {
-			expectingException[0] = new Promise();
-			expectingException[0].Then(() => {
-				Promise.UnhandledException -= promiseExHandler;
-				FailOnUnhandledException = true;
-				PromisesShouldWorkProperlyPart3();
-			});
-			prom.Done();
+        // But after a done, it should be invoked
+		expectingException[0] = new Promise();
+		expectingException[0].Done(() => {
+			Promise.UnhandledException -= promiseExHandler;
+			FailOnUnhandledException = true;
+			PromisesShouldWorkProperlyPart3();
 		});
-	}
+        prom.Done();
+    }
 
 	private void PromisesShouldWorkProperlyPart3() {
 		// 3) This is normally prevented by the IPromise interface, but we removed it because of iOS AOT issues
 		Promise<bool> p1 = new Promise<bool>();
-		Promise<bool> p2 = p1.Then(dummy => FailTest("Should not be called"));
+		Promise<bool> p2 = p1.Then(dummy => { FailTest("Should not be called"); });
 		p2.Then(dummy => PromisesShouldWorkProperlyPart4());
 		p2.Resolve(true);
 	}
 
 	private void PromisesShouldWorkProperlyPart4() {
-		// 4) An exception in a Then block should be forwarded to the catch block
-		Promise<bool> p = new Promise<bool>();
+        // 4) An exception in a Then block should be forwarded to the catch block
+        Promise<bool> p = new Promise<bool>();
 		p.Then(dummy => {
 			throw new InvalidOperationException();
 		})
 		.Catch(ex => {
-			CompleteTest();
+            CompleteTest();
 		});
 		p.Resolve(true);
 	}
@@ -321,16 +345,37 @@ public class CloudTests : TestBase {
 		});
 	}
 
-	[Test("Tests that an anonymous fails to link to an invalid facebook token (we cannot do much with automated testing).", requisite: "This test should fail from my understanding since the token is invalid, but for some reason it succeeds so we'll make it this way.")]
-	public void ShouldFailToLinkAccount(Cloud cloud) {
-		// Create an anonymous account
-		cloud.LoginAnonymously()
-			// Then convert it to e-mail
-		.Then(gamer => gamer.Account.Link(
-			network: LoginNetwork.Facebook,
-			networkId: "10153057921478191",
-			networkSecret: "CAAENyTNQMpQBAETZCetNwCP1EKlykqqjaPRTNI41fhmf0YSZB6Q3hdOtb4gnDIQznGyElGIuBy3ZCoUNiekZBhIXh4iHho8wODALDw3ZBesfzbmGSH5BPWjwp8ieMIZANA7igvqNw6zVj7LIsSO9wtkvGaA9iZBMXF0wymmiDEljQVo03jsvlf7GZCZBckjYDBnwSm929Sl8wegZDZD"))
-		.CompleteTestIfSuccessful();
+    [Test("Tests that an anonymous fails to link to an invalid facebook token (we cannot do much with automated testing).", requisite: "This test should fail from my understanding since the token is invalid, but for some reason it succeeds so we'll make it this way.")]
+    public void ShouldLinkAndUnlinkAccount(Cloud cloud) {
+        FailOnUnhandledException = false;
+
+        // Create an anonymous account
+        cloud.LoginAnonymously()
+        // Then convert it to e-mail
+        .ExpectSuccess(gamer => {
+            gamer.Account.Link(
+                network: LoginNetwork.Facebook.ToString().ToLower(),
+                networkId: "100016379375516",
+                networkSecret: "EAAENyTNQMpQBAJ8HvBZCh05WZCJXP9q4k6g5pXAdkMhyIzaNt7k57Jdqil57PKlO8HDtR5qeDzs1Sfy24aZAePLCtIi99LyWIqWFQQjraGOEj8aYW59aewZAZArOZBUBDHBahemWh2ZCulR4LIGUpkYVAfHWZCj58Kke9aQYRNorCQZDZD")
+            .ExpectSuccess(done => {
+                // Data obtained by fetching friends from Facebook. Using real test accounts.
+                Bundle data = Bundle.FromJson(@"{""data"":[{""name"":""Fr\u00e9d\u00e9ric Benois"",""id"":""107926476427271""}],""paging"":{""cursors"":{""before"":""QVFIUlY5TGkwWllQSU1tZAmN2NVlRaWlyeVpZAWk1idktkaU5GcFotRkp0RWlCVnNyR3MweUR5R3ZAfQ193ZAUhYWk84US0zVHdxdzdxMWswVTk2YUxlbVVlQXd3"",""after"":""QVFIUlY5TGkwWllQSU1tZAmN2NVlRaWlyeVpZAWk1idktkaU5GcFotRkp0RWlCVnNyR3MweUR5R3ZAfQ193ZAUhYWk84US0zVHdxdzdxMWswVTk2YUxlbVVlQXd3""}},""summary"":{""total_count"":1}}");
+
+                List<SocialNetworkFriend> friends = new List<SocialNetworkFriend>();
+                foreach (Bundle f in data["data"].AsArray()) {
+                    friends.Add(new SocialNetworkFriend(f));
+                }
+                gamer.Community.ListNetworkFriends(LoginNetwork.Facebook, friends, true)
+                .ExpectSuccess(response => {
+                    Assert(response.ByNetwork[LoginNetwork.Facebook].Count == 1, "Should have registered 1 facebook users");
+                    gamer.Account.Unlink(LoginNetwork.Facebook.ToString().ToLower())
+                    .ExpectSuccess(done2 => {
+                        CompleteTest();
+                    });
+                });
+                
+            });
+        });
 	}
 
 	[Test("Tests the floating point bundle functionality")]

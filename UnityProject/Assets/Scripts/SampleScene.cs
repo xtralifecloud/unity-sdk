@@ -100,7 +100,7 @@ public class SampleScene : MonoBehaviour {
 	public void DoConvertToEmail() {
 		if (!RequireGamer()) return;
 		Gamer.Account.Convert(
-			network: LoginNetwork.Email,
+			network: LoginNetwork.Email.ToString().ToLower(),
 			networkId: EmailInput.text,
 			networkSecret: DefaultPassword)
 		.Done(dummy => {
