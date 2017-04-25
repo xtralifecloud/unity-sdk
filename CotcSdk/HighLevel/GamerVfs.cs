@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace CotcSdk {
 
@@ -186,6 +187,8 @@ namespace CotcSdk {
         public Promise<Done> SetBinary(string key, byte[] binaryData)
         {
             UrlBuilder url = new UrlBuilder("/v3.0/gamer/vfs").Path(domain).Path(key).QueryParam("binary");
+            if (Application.unityVersion.CompareTo("5.5.1") == 1)
+                url = url.QueryParamEscaped("contentType", "application/octet-stream");
             HttpRequest req = Gamer.MakeHttpRequest(url);
             req.Method = "PUT";
             return Common.RunInTask<Done>(req, (response, task) => {
