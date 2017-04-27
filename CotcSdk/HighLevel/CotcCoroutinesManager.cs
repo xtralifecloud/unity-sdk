@@ -18,19 +18,21 @@ namespace CotcSdk {
 			public DomainEventLoop domainEventLoop;
 			public int eventLoopDelay;
 			public Coroutine loopCoroutine;
+			public string eventLoopMsgToAck;
+			public bool eventLoopLastResultPositive;
 
 			public DomainEventLoopParameters(DomainEventLoop _domainEventLoop, int _eventLoopDelay)
 			{
 				domainEventLoop = _domainEventLoop;
 				eventLoopDelay = _eventLoopDelay;
 				loopCoroutine = null;
+				eventLoopMsgToAck = null;
+				eventLoopLastResultPositive = true;
 			}
 		}
 
 		private const int eventLoopDelayTimeout = 30000;
 		private Dictionary<string, DomainEventLoopParameters> domainEventLoopsParameters = new Dictionary<string, DomainEventLoopParameters>();
-		private string eventLoopMsgToAck;
-		private bool eventLoopLastResultPositive = true;
 
 		internal void StartEventLoopCoroutine(DomainEventLoop domainEventLoop) {
 			if (domainEventLoop != null && !domainEventLoopsParameters.ContainsKey(domainEventLoop.Gamer.GamerId)) {
@@ -67,17 +69,17 @@ namespace CotcSdk {
 
 			// In case of stop, prevent to continue the coroutine if DomainEventLoop hasn't (shouldn't happen)
 			while (!domainEventLoop.Stopped) {
-				if (!eventLoopLastResultPositive) {
+				if (!domainEventLoopParameters.eventLoopLastResultPositive) {
 					// Last time failed, wait a bit to avoid bombing the Internet.
 					yield return new WaitForSeconds(DomainEventLoop.PopEventDelayCoroutineHold);
 				}
 
 				UrlBuilder url = new UrlBuilder("/v1/gamer/event");
 				url.Path(domainEventLoop.Domain).QueryParam("timeout", domainEventLoopParameters.eventLoopDelay);
-				if (eventLoopMsgToAck != null) {
-					url.QueryParam("ack", eventLoopMsgToAck);
+				if (domainEventLoopParameters.eventLoopMsgToAck != null) {
+					url.QueryParam("ack", domainEventLoopParameters.eventLoopMsgToAck);
 				}
-				
+
 				domainEventLoop.CurrentRequest = domainEventLoop.Gamer.MakeHttpRequest(url);
 				domainEventLoop.CurrentRequest.RetryPolicy = HttpRequest.Policy.NonpermanentErrors;
 				domainEventLoop.CurrentRequest.TimeoutMillisec = domainEventLoopParameters.eventLoopDelay + eventLoopDelayTimeout;
@@ -86,12 +88,12 @@ namespace CotcSdk {
 				Managers.HttpClient.Run(domainEventLoop.CurrentRequest, (HttpResponse res) => {
 					domainEventLoop.CurrentRequest = null;
 					try {
-						eventLoopLastResultPositive = true;
+						domainEventLoopParameters.eventLoopLastResultPositive = true;
 						if (res.StatusCode == 200) {
-							eventLoopMsgToAck = res.BodyJson["id"];
+							domainEventLoopParameters.eventLoopMsgToAck = res.BodyJson["id"];
 							ProcessEvent(domainEventLoop, res);
 						} else if (res.StatusCode != 204) {
-							eventLoopLastResultPositive = false;
+							domainEventLoopParameters.eventLoopLastResultPositive = false;
 							// Non retriable error -> kill ourselves
 							if (res.StatusCode >= 400 && res.StatusCode < 500) {
 								domainEventLoop.Stopped = true;
