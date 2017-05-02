@@ -347,7 +347,10 @@ namespace LitJson
 
                 if (value_type.IsAssignableFrom (json_type))
                     return reader.Value;
-
+				// [XtraLife] Add double to float conversion hack to avoid exception...
+				else if ((value_type == typeof(float)) && (reader.Token == JsonToken.Double))
+					return Convert.ToSingle(reader.Value);
+				
                 // If there's a custom importer that fits, use it
                 if (custom_importers_table.ContainsKey (json_type) &&
                     custom_importers_table[json_type].ContainsKey (
