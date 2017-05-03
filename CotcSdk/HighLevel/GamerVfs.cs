@@ -12,13 +12,28 @@ namespace CotcSdk {
 	/// </summary>
 	public sealed class GamerVfs {
 
-		/// <summary>
-		/// Sets the domain affected by this object.
-		/// You should typically use it this way: `gamer.GamerVfs.Domain("private").SetKey(...);`
-		/// </summary>
-		/// <param name="domain">Domain on which to scope the VFS. Defaults to `private` if not specified.</param>
-		/// <returns>This object for operation chaining.</returns>
-		public GamerVfs Domain(string domain) {
+        private static string s3ContentType = null;
+
+        static GamerVfs()
+        {
+            RuntimePlatform platform = Application.platform;
+
+            // "Nice" system to send the correct Content-Type to S3 for upload, since Unity uses different ones
+            // based on the platform and version. We must make sure to send the same one since the signature
+            // uses the ContentType.
+            if(platform == RuntimePlatform.Android)
+                s3ContentType = "application/x-www-form-urlencoded";
+            if (Application.unityVersion.CompareTo("5.1.1") == 1)
+                s3ContentType = "application/octet-stream";
+        }
+
+        /// <summary>
+        /// Sets the domain affected by this object.
+        /// You should typically use it this way: `gamer.GamerVfs.Domain("private").SetKey(...);`
+        /// </summary>
+        /// <param name="domain">Domain on which to scope the VFS. Defaults to `private` if not specified.</param>
+        /// <returns>This object for operation chaining.</returns>
+        public GamerVfs Domain(string domain) {
 			this.domain = domain;
 			return this;
 		}
@@ -187,8 +202,9 @@ namespace CotcSdk {
         public Promise<Done> SetBinary(string key, byte[] binaryData)
         {
             UrlBuilder url = new UrlBuilder("/v3.0/gamer/vfs").Path(domain).Path(key).QueryParam("binary");
-            if (Application.unityVersion.CompareTo("5.5.1") == 1)
-                url = url.QueryParamEscaped("contentType", "application/octet-stream");
+            if (s3ContentType != null)
+                url = url.QueryParamEscaped("contentType", s3ContentType);
+
             HttpRequest req = Gamer.MakeHttpRequest(url);
             req.Method = "PUT";
             return Common.RunInTask<Done>(req, (response, task) => {
