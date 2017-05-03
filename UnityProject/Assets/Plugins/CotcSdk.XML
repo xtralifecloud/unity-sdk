@@ -90,7 +90,7 @@
             <param name="additionalOptions">Additional options can be passed, such as 'thenBatch' to execute a batch after
                 login. Pass it as a Bundle with the additional keys</param>
         </member>
-        <member name="M:CotcSdk.Cloud.Logout">
+        <member name="M:CotcSdk.Cloud.Logout(CotcSdk.Gamer)">
             <summary>
             Logs out a previously logged in player.
             </summary>
