@@ -2032,34 +2032,5 @@
             <param name="os">Operating system (should be determined by the native implementation: "ios", "android", "macos", …).</param>
             <param name="token">Push notification token (device specific).</param>
         </member>
-        <member name="M:BetterJson.EncapsulateBetterFromLiteral(System.String)">
-            <summary>
-            Ensure we have a Json-objet string even if input string is a simple-type-value string
-            </summary>
-            <param name="inputString">A simple type value becomes an encapsulated value in a Json-objet</param>
-            <returns>Return a well formated json string</returns>
-        </member>
-        <!-- Badly formed XML comment ignored for member "M:BetterJson.BetterFromLiteral(System.String)" -->
-        <member name="M:BetterJson.FromLiteral(System.String)">
-            <summary>
-            Removes escape characters to get a normal string from literal one
-            </summary>
-            <param name="inputString"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BetterJson.ToLiteral(System.String)">
-            <summary>
-            Adds escape characters to get a string literal
-            </summary>
-            <param name="inputString"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BetterJson.IntToHexadecimal(System.Int32)">
-            <summary>
-            Convert an int to a hexadecimal value
-            </summary>
-            <param name="number"></param>
-            <returns></returns>
-        </member>
     </members>
 </doc>
