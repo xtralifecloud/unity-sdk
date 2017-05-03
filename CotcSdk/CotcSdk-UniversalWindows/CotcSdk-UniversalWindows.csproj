@@ -329,9 +329,6 @@
     <Compile Include="..\PlatformSpecific\HttpClient.cs">
       <Link>PlatformSpecific\HttpClient.cs</Link>
     </Compile>
-    <Compile Include="..\PlatformSpecific\Interfaces\IHttpClient.cs">
-      <Link>PlatformSpecific\Interfaces\IHttpClient.cs</Link>
-    </Compile>
     <Compile Include="..\PlatformSpecific\Interfaces\ILogger.cs">
       <Link>PlatformSpecific\Interfaces\ILogger.cs</Link>
     </Compile>
