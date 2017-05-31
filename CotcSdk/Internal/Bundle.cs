@@ -208,7 +208,7 @@ namespace CotcSdk
 			if (dataType == DataType.Object) objectValue = new Dictionary<string, Bundle>();
 			else if (dataType == DataType.Array) arrayValue = new List<Bundle>();
 		}
-		public Bundle(bool value) { type = DataType.Boolean; longValue = value ? 1 : 0; }
+		public Bundle(bool value) { type = DataType.Boolean; longValue = value ? 1L : 0L; }
         public Bundle(int value) : this((long)value) { }
         public Bundle(long value) { type = DataType.Integer; longValue = value; }
         public Bundle(float value) : this((double)value) { }
@@ -223,9 +223,67 @@ namespace CotcSdk
 		public static implicit operator bool(Bundle b) { return b.AsBool(); }
 		public static implicit operator int(Bundle b) { return b.AsInt(); }
 		public static implicit operator long(Bundle b) { return b.AsLong(); }
-		public static implicit operator float(Bundle b) { return (float)b.AsDouble(); }
+		public static implicit operator float(Bundle b) { return b.AsFloat(); }
 		public static implicit operator double(Bundle b) { return b.AsDouble(); }
 		public static implicit operator string(Bundle b) { return b.AsString(); }
+
+		public static bool operator !=(Bundle b, object obj) { return !(b == obj); }
+		public static bool operator ==(Bundle b, object obj) {
+			if (((object)b == null) && (obj == null)) return true;
+			if (((object)b == null) || (obj == null)) return false;
+
+			if (obj is Bundle)
+				return b.Equals((Bundle)obj);
+			else if (obj is bool)
+				return b.Equals((bool)obj);
+			else if (obj is int)
+				return b.Equals((int)obj);
+			else if (obj is long)
+				return b.Equals((long)obj);
+			else if (obj is float)
+				return b.Equals((float)obj);
+			else if (obj is double)
+				return b.Equals((double)obj);
+			else if (obj is string)
+				return b.Equals((string)obj);
+
+			return object.Equals(b, obj);
+		}
+
+		public override bool Equals(object obj) {
+			if ((object)obj == null) return false;
+			if (object.ReferenceEquals(this, obj)) return true;
+
+			if (obj is Bundle)
+			{
+				if ((((Bundle)obj).type == DataType.Boolean) || (((Bundle)obj).type == DataType.Integer))
+					return this.AsLong().Equals(((Bundle)obj).longValue);
+				else if (((Bundle)obj).type == DataType.Double)
+					return this.AsDouble().Equals(((Bundle)obj).doubleValue);
+				else if (((Bundle)obj).type == DataType.String)
+					return this.AsString().Equals(((Bundle)obj).stringValue);
+				else if (((Bundle)obj).type == DataType.Array)
+					return this.AsArray().Equals(((Bundle)obj).arrayValue);
+				else if (((Bundle)obj).type == DataType.Object)
+					return this.AsDictionary().Equals(((Bundle)obj).objectValue);
+			}
+			else if (obj is bool)
+				return (bool)obj ? this.AsLong().Equals(1L) : this.AsLong().Equals(0L);
+			else if (obj is int)
+				return this.AsLong().Equals((long)(int)obj);
+			else if (obj is long)
+				return this.AsLong().Equals((long)obj);
+			else if (obj is float)
+				return this.AsDouble().Equals((double)(float)obj);
+			else if (obj is double)
+				return this.AsDouble().Equals((double)obj);
+			else if (obj is string)
+				return this.AsString().Equals((string)obj);
+
+			return false;
+		}
+
+		public override int GetHashCode() { return base.GetHashCode(); }
 
 		public virtual Bundle this[string key] {
 			get { return Has(key) ? Dictionary[key] : Empty; }
@@ -387,7 +445,7 @@ namespace CotcSdk
 			}
 			return defaultValue;
 		}
-		public long AsLong(long defaultValue = 0) {
+		public long AsLong(long defaultValue = 0L) {
 			long result = defaultValue;
 			switch (Type) {
 				case DataType.Boolean: return longValue;
@@ -397,10 +455,10 @@ namespace CotcSdk
 			}
 			return defaultValue;
 		}
-		public float AsFloat(float defaultValue = 0) {
+		public float AsFloat(float defaultValue = 0f) {
 			return (float)AsDouble(defaultValue);
 		}
-		public double AsDouble(double defaultValue = 0) {
+		public double AsDouble(double defaultValue = 0d) {
 			double result = defaultValue;
 			switch (Type) {
 				case DataType.Boolean: return (double)longValue;
