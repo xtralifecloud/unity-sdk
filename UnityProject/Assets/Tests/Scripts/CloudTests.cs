@@ -113,7 +113,7 @@ public class CloudTests : TestBase {
 		// Resume the session with the credentials just received
 		cloud.Login(
 			network: LoginNetwork.Email.Describe(),
-			networkId: "nonexisting@localhost.localdomain",
+			networkId: RandomEmailAddress(),
 			networkSecret: "Password123",
             additionalOptions: Bundle.CreateObject("preventRegistration", true)
 )
