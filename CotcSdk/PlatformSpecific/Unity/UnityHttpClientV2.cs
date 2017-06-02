@@ -94,31 +94,34 @@ namespace CotcSdk {
 
                 if (req.isError)
                 {
-                    Debug.Log("Request error: " + req.error);
+
                     if (!WasAborted)
                     {
-                        string errorMessage = "Failed web request: " + req.error;
+                        string errorMessage = "Failed web request: " + req.error + " - Status code: " + Request.responseCode;
                         Common.Log(errorMessage);
                         self.FinishWithRequest(this, new HttpResponse(new Exception(errorMessage)));
+                    }
+                    else
+                    {
+                        Common.Log("Request aborted");
                     }
                 }
                 else
                 {
                     // Extracts asset bundle
                     HttpResponse response = new HttpResponse();
-                    response.Body = Request.downloadHandler.data;
                     response.StatusCode = (int)Request.responseCode;
-                    Debug.Log("Status code: " + response.StatusCode);
-                    Dictionary<string, string> dict = Request.GetResponseHeaders();
-                    if (Application.platform == RuntimePlatform.IPhonePlayer && response.StatusCode <= 0 /*&& dict == null*/)
+                    if (Application.platform == RuntimePlatform.IPhonePlayer && response.StatusCode <= 0)
                     {
                         // Nice bug in the iOS UnityWebRequest implementation. When you abort a request, in fact it doesn't
                         // abort the request. Instead of receiving an error (req.isError and req.error can check that), you
                         // just receive a funny responseCode (like 0 or -1001) and an empty dictionary of response headers.
-                        Debug.Log("Unity iOS bug for UnityWebRequest...");
+                        Common.Log("Request aborted - Unity iOS bug for UnityWebRequest...");
                     }
                     else
                     {
+                        response.Body = Request.downloadHandler.data;
+                        Dictionary<string, string> dict = Request.GetResponseHeaders();
                         foreach (var pair in dict)
                         {
                             response.Headers[pair.Key] = pair.Value;
