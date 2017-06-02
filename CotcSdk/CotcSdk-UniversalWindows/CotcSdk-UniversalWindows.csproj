@@ -299,9 +299,6 @@
     <Compile Include="..\Internal\UrlBuilder.cs">
       <Link>Internal\UrlBuilder.cs</Link>
     </Compile>
-    <Compile Include="..\Libs\BetterJson.cs">
-      <Link>Libs\BetterJson.cs</Link>
-    </Compile>
     <Compile Include="..\Libs\LitJson\IJsonWrapper.cs">
       <Link>Libs\LitJson\IJsonWrapper.cs</Link>
     </Compile>
