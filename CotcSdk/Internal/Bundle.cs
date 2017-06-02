@@ -133,7 +133,7 @@ namespace CotcSdk
 	/// That's all what there is to know about bundles. In general they should make any code interacting with generic
 	/// objects simple and safe.
 	/// </summary>
-	public class Bundle {
+	public class Bundle : IEquatable<Bundle> {
 		/// <summary>Possible types of data storable into a bundle.</summary>
 		public enum DataType {
 			None, Boolean, Integer, Double, String, Array, Object
@@ -227,63 +227,39 @@ namespace CotcSdk
 		public static implicit operator double(Bundle b) { return b.AsDouble(); }
 		public static implicit operator string(Bundle b) { return b.AsString(); }
 
-		public static bool operator !=(Bundle b, object obj) { return !(b == obj); }
-		public static bool operator ==(Bundle b, object obj) {
-			if (((object)b == null) && (obj == null)) return true;
-			if (((object)b == null) || (obj == null)) return false;
-
-			if (obj is Bundle)
-				return b.Equals((Bundle)obj);
-			else if (obj is bool)
-				return b.Equals((bool)obj);
-			else if (obj is int)
-				return b.Equals((int)obj);
-			else if (obj is long)
-				return b.Equals((long)obj);
-			else if (obj is float)
-				return b.Equals((float)obj);
-			else if (obj is double)
-				return b.Equals((double)obj);
-			else if (obj is string)
-				return b.Equals((string)obj);
-
-			return object.Equals(b, obj);
-		}
-
-		public override bool Equals(object obj) {
-			if ((object)obj == null) return false;
-			if (object.ReferenceEquals(this, obj)) return true;
-
-			if (obj is Bundle)
-			{
-				if ((((Bundle)obj).type == DataType.Boolean) || (((Bundle)obj).type == DataType.Integer))
-					return this.AsLong().Equals(((Bundle)obj).longValue);
-				else if (((Bundle)obj).type == DataType.Double)
-					return this.AsDouble().Equals(((Bundle)obj).doubleValue);
-				else if (((Bundle)obj).type == DataType.String)
-					return this.AsString().Equals(((Bundle)obj).stringValue);
-				else if (((Bundle)obj).type == DataType.Array)
-					return this.AsArray().Equals(((Bundle)obj).arrayValue);
-				else if (((Bundle)obj).type == DataType.Object)
-					return this.AsDictionary().Equals(((Bundle)obj).objectValue);
+		public bool Equals(Bundle b) {
+			if (b == null) return false;
+			if (object.ReferenceEquals(this, b)) return true; // This line handles the Empty Bundle case
+			switch (b.type) {
+				case DataType.Boolean: case DataType.Integer: return this.AsLong().Equals(b.longValue); break;
+				case DataType.Double: return this.AsDouble().Equals(b.doubleValue); break;
+				case DataType.String: return this.AsString().Equals(b.stringValue); break;
+				case DataType.Array: return this.AsArray().Equals(b.arrayValue); break;
+				case DataType.Object: return this.AsDictionary().Equals(b.objectValue); break;
+				default: return false;
 			}
-			else if (obj is bool)
-				return (bool)obj ? this.AsLong().Equals(1L) : this.AsLong().Equals(0L);
-			else if (obj is int)
-				return this.AsLong().Equals((long)(int)obj);
-			else if (obj is long)
-				return this.AsLong().Equals((long)obj);
-			else if (obj is float)
-				return this.AsDouble().Equals((double)(float)obj);
-			else if (obj is double)
-				return this.AsDouble().Equals((double)obj);
-			else if (obj is string)
-				return this.AsString().Equals((string)obj);
-
-			return false;
 		}
-
+		public override bool Equals(object obj) {
+			if (obj == null) return false;
+			Bundle b = obj as Bundle;
+			if (b != null) return Equals(b);
+			else if (obj is bool) return (bool)obj ? this.AsLong().Equals(1L) : this.AsLong().Equals(0L);
+			else if (obj is int) return this.AsLong().Equals((long)(int)obj);
+			else if (obj is long) return this.AsLong().Equals((long)obj);
+			else if (obj is float) return this.AsDouble().Equals((double)(float)obj);
+			else if (obj is double) return this.AsDouble().Equals((double)obj);
+			else if (obj is string) return this.AsString().Equals((string)obj);
+			else return false;
+		}
 		public override int GetHashCode() { return base.GetHashCode(); }
+		public static bool operator ==(Bundle b, object obj) {
+			if (((object)b == null) || (obj == null)) return Object.Equals((object)b, obj);
+			else return b.Equals(obj);
+		}
+		public static bool operator !=(Bundle b, object obj) {
+			if (((object)b == null) || (obj == null)) return !Object.Equals((object)b, obj);
+			else return !b.Equals(obj);
+		}
 
 		public virtual Bundle this[string key] {
 			get { return Has(key) ? Dictionary[key] : Empty; }
