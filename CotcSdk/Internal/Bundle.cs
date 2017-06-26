@@ -231,11 +231,11 @@ namespace CotcSdk
 			if (b == null) return false;
 			if (object.ReferenceEquals(this, b)) return true; // This line handles the Empty Bundle case
 			switch (b.type) {
-				case DataType.Boolean: case DataType.Integer: return this.AsLong().Equals(b.longValue); break;
-				case DataType.Double: return this.AsDouble().Equals(b.doubleValue); break;
-				case DataType.String: return this.AsString().Equals(b.stringValue); break;
-				case DataType.Array: return this.AsArray().Equals(b.arrayValue); break;
-				case DataType.Object: return this.AsDictionary().Equals(b.objectValue); break;
+				case DataType.Boolean: case DataType.Integer: return this.AsLong().Equals(b.longValue);
+				case DataType.Double: return this.AsDouble().Equals(b.doubleValue);
+				case DataType.String: return this.AsString().Equals(b.stringValue);
+				case DataType.Array: return this.AsArray().Equals(b.arrayValue);
+				case DataType.Object: return this.AsDictionary().Equals(b.objectValue);
 				default: return false;
 			}
 		}
