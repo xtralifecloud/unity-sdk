@@ -259,50 +259,52 @@ namespace LitJson
 
 
         #region Private Methods
-        private void ProcessNumber (string number)
-        {
-            if (number.IndexOf ('.') != -1 ||
-                number.IndexOf ('e') != -1 ||
-                number.IndexOf ('E') != -1) {
+		private void ProcessNumber (string number)
+		{
+			if (number.IndexOf ('.') != -1 ||
+				number.IndexOf ('e') != -1 ||
+				number.IndexOf ('E') != -1) {
 
-                double n_double;
-                if (Double.TryParse (number, out n_double)) {
-                    token = JsonToken.Double;
-                    token_value = n_double;
+				double n_double;
+				if (Double.TryParse (number, out n_double)) {
+					token = JsonToken.Double;
+					token_value = n_double;
 
-                    return;
-                }
-            }
+					return;
+				}
+			}
 
-            int n_int32;
-            if (Int32.TryParse (number, out n_int32)) {
-                token = JsonToken.Int;
-                token_value = n_int32;
+			int n_int32;
+			if (Int32.TryParse (number, out n_int32)) {
+				token = JsonToken.Int;
+				token_value = n_int32;
 
-                return;
-            }
+				return;
+			}
 
-            long n_int64;
-            if (Int64.TryParse (number, out n_int64)) {
-                token = JsonToken.Long;
-                token_value = n_int64;
+			long n_int64;
+			if (Int64.TryParse (number, out n_int64)) {
+				token = JsonToken.Long;
+				token_value = n_int64;
 
-                return;
-            }
+				return;
+			} else {
+				// In case of overflow while parsing big integers, the value is truncated to long.MinValue or long.MaxValue.
+				token = JsonToken.Long;
+				if (number[0] == '-') {
+					token_value = long.MinValue;
+				} else {
+					token_value = long.MaxValue;
+				}
 
-            ulong n_uint64;
-            if (UInt64.TryParse(number, out n_uint64))
-            {
-                token = JsonToken.Long;
-                token_value = n_uint64;
+				UnityEngine.Debug.LogWarning("[LitJson : Long overflow] - An error occured while parsing the value " + number + " which has been truncated to fit in a long (" + token_value + ")");
+				return;
+			}
 
-                return;
-            }
-
-            // Shouldn't happen, but just in case, return something
-            token = JsonToken.Int;
-            token_value = 0;
-        }
+			// Shouldn't happen, but just in case, return something
+			token = JsonToken.Double;
+			token_value = double.NaN;
+		}
 
         private void ProcessSymbol ()
         {

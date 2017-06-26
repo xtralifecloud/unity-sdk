@@ -328,6 +328,15 @@ public class CloudTests : TestBase {
 		p.Resolve(true);
 	}
 
+	[Test("Tests advanced JSON-related functions.")]
+	public void ShouldInterpretAdvancedJsonProperly() {
+		string json = "{\"maxLongOverflow\":9223372036854776000, \"minLongOverflow\":-9223372036854776000}";
+		Bundle data = Bundle.FromJson(json);
+		Assert(data["maxLongOverflow"].AsLong() == long.MaxValue, "long max value invalid");
+		Assert(data["minLongOverflow"].AsLong() == long.MinValue, "long min value invalid");
+		CompleteTest();
+	}
+
 	[Test("Tests JSON-related functions.")]
 	public void ShouldInterpretJsonProperly() {
 		string json = "{\"products\":[{\"internalProductId\":\"android.test.purchased\",\"price\":0.965951,\"currency\":\"CHF\",\"productId\":\"CotcProduct3\"}]}";
