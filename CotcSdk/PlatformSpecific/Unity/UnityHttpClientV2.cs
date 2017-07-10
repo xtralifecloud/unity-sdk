@@ -92,25 +92,34 @@ namespace CotcSdk {
             private IEnumerator ProcessRequest(UnityWebRequest req) {
                 yield return req.Send();
 
+                bool processRequest = true;
                 if (req.isError)
                 {
-
-                    if (!WasAborted)
+                    // Nice bug again, in the iOS UnityWebRequest implementation. If server returns a 400 code following a
+                    // a successful request process, req.isError is flagged to true... Not sure at this stage how many HTTP
+                    // return codes are considered as errors.
+                    if (!(Application.platform == RuntimePlatform.IPhonePlayer && Request.responseCode == 400))
                     {
-                        string errorMessage = "Failed web request: " + req.error + " - Status code: " + Request.responseCode;
-                        Common.Log(errorMessage);
-                        self.FinishWithRequest(this, new HttpResponse(new Exception(errorMessage)));
-                    }
-                    else
-                    {
-                        Common.Log("Request aborted");
+                        processRequest = false;
+                        if (!WasAborted)
+                        {
+                            string errorMessage = "Failed web request: " + req.error + " - Status code: " + Request.responseCode;
+                            Common.Log(errorMessage);
+                            self.FinishWithRequest(this, new HttpResponse(new Exception(errorMessage)));
+                        }
+                        else
+                        {
+                            Common.Log("Request aborted");
+                        }
                     }
                 }
-                else
+                
+                if(processRequest)
                 {
                     // Extracts asset bundle
                     HttpResponse response = new HttpResponse();
                     response.StatusCode = (int)Request.responseCode;
+                    Common.Log("ProcessRequest - response code: " + Request.responseCode);
                     if (Application.platform == RuntimePlatform.IPhonePlayer && response.StatusCode <= 0)
                     {
                         // Nice bug in the iOS UnityWebRequest implementation. When you abort a request, in fact it doesn't
