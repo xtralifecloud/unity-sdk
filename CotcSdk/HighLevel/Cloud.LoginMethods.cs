@@ -125,13 +125,14 @@ namespace CotcSdk
         /// <summary>
         /// Logs out a previously logged in player.
         /// </summary>
+		/// <param name="gamer">The gamer to log out.</param>
         /// <returns>Promise resolved when the request has finished.</returns>
-        public Promise<Done> Logout(Gamer gamer = null)
+        public Promise<Done> Logout(Gamer gamer)
         {
             if (gamer == null)
             {
                 var result = new Promise<Done>();
-                result.PostResult(ErrorCode.NotLoggedIn, "Not a valid user");
+				result.PostResult(ErrorCode.BadParameters, "The provided gamer is null");
                 return result;
             }
 
@@ -139,7 +140,6 @@ namespace CotcSdk
             HttpRequest req = gamer.MakeHttpRequest("/v1/gamer/logout");
             req.BodyJson = config;
             return Common.RunInTask<Done>(req, (response, task) => {
-                gamer = null;
                 task.PostResult(new Done(true, response.BodyJson));
             });
         }
