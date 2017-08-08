@@ -463,7 +463,8 @@ namespace CotcSdk
 		// Json methods
         public static Bundle FromAnyJson(string json)
         {
-            if (json == null) return null;
+			if (json == null) return null;
+			if (json.Length == 0) return null;
 
             int idx = json.Length-1;
             if ((json[0] == '{' && json[idx] == '}') || (json[0] == '[' && json[idx] == ']'))
