@@ -350,6 +350,9 @@ namespace LitJson
 				// [XtraLife] Add double to float conversion hack to avoid exception...
 				else if ((value_type == typeof(float)) && (reader.Token == JsonToken.Double))
 					return Convert.ToSingle(reader.Value);
+				// [XtraLife] Add int to long conversion hack to avoid exception...
+				else if ((value_type == typeof(long)) && (reader.Token == JsonToken.Int))
+					return Convert.ToInt64(reader.Value);
 				
                 // If there's a custom importer that fits, use it
                 if (custom_importers_table.ContainsKey (json_type) &&
