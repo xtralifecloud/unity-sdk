@@ -94,6 +94,7 @@
             <summary>
             Logs out a previously logged in player.
             </summary>
+            <param name="gamer">The gamer to log out.</param>
             <returns>Promise resolved when the request has finished.</returns>
         </member>
         <member name="M:CotcSdk.Cloud.SendResetPasswordEmail(System.String,System.String,System.String,System.String)">
