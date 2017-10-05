@@ -9,7 +9,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.unity3d.player.UnityPlayer;
 
 /**
@@ -85,10 +85,10 @@ public class Controller {
 	 * the Google Play Store or enable it in the device's system settings.
 	 */
 	private boolean checkPlayServices() {
-		int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(activity);
+		int resultCode = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(activity);
 		if (resultCode != ConnectionResult.SUCCESS) {
-			if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-				GooglePlayServicesUtil.getErrorDialog(resultCode, activity,
+			if (GoogleApiAvailability.getInstance().isUserResolvableError(resultCode)) {
+				GoogleApiAvailability.getInstance().getErrorDialog(activity, resultCode,
 					PLAY_SERVICES_RESOLUTION_REQUEST).show();
 			} else {
 				Log.w(TAG, "This device is not supported.");
