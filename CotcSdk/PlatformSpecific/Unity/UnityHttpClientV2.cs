@@ -131,10 +131,13 @@ namespace CotcSdk {
                     {
                         response.Body = Request.downloadHandler.data;
                         Dictionary<string, string> dict = Request.GetResponseHeaders();
-                        foreach (var pair in dict)
-                        {
-                            response.Headers[pair.Key] = pair.Value;
-                        }
+                        if (dict != null)
+                            foreach (var pair in dict)
+                            {
+                                response.Headers[pair.Key] = pair.Value;
+                            }
+                        else
+                            Common.Log("Empty header response, should not be the case.");
                         LogResponse(response);
                         self.FinishWithRequest(this, response);
                     }
