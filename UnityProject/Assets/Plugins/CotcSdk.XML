@@ -1377,6 +1377,9 @@
             Broadcasted when a player makes a move. The player himself doesn't receive the event.
             </summary>
         </member>
+        <member name="F:CotcSdk.MatchMoveEvent.Id">
+            <summary>The ID of the move.</summary>
+        </member>
         <member name="F:CotcSdk.MatchMoveEvent.MoveData">
             <summary>The data passed by the player when performing the move.</summary>
         </member>
