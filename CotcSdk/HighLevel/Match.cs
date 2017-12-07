@@ -191,14 +191,16 @@ namespace CotcSdk {
 			HttpRequest req = Gamer.MakeHttpRequest(url);
 			req.BodyJson = config;
 			return Common.RunInTask<Done>(req, (response, task) => {
-				UpdateWithServerData(response.BodyJson["match"]);
+                Bundle match = response.BodyJson["match"];
+                UpdateWithServerData(match);
 				// Record event
 				if (updatedGameState != null) {
 					Moves.Clear();
 					GlobalState = updatedGameState;
 				}
-				Moves.Add(new MatchMove(Gamer.GamerId, moveData));
-				task.PostResult(new Done(true, response.BodyJson));
+				Moves.Add(new MatchMove(match["lastEventId"], Gamer.GamerId, moveData));
+
+                task.PostResult(new Done(true, response.BodyJson));
 			});
 		}
 
@@ -268,7 +270,7 @@ namespace CotcSdk {
 						break;
 					case "match.move":
 						var moveEvent = new MatchMoveEvent(Gamer, e.Message);
-						Moves.Add(new MatchMove(moveEvent.PlayerId, moveEvent.MoveData));
+						Moves.Add(new MatchMove(moveEvent.Id, moveEvent.PlayerId, moveEvent.MoveData));
 						if (onMovePosted != null) onMovePosted(this, moveEvent);
 						break;
 					case "match.shoedraw":
@@ -300,7 +302,7 @@ namespace CotcSdk {
 					Moves.Clear();
 					foreach (var b in serverData["events"].AsArray()) {
 						if (b["type"] == "match.move") {
-							Moves.Add(new MatchMove(b["event"]["player_id"], b["event"]["move"]));
+							Moves.Add(new MatchMove(b["event"]["_id"], b["event"]["player_id"], b["event"]["move"]));
 						}
 					}
 				}
@@ -334,7 +336,7 @@ namespace CotcSdk {
 		/// <summary>The ID of the player who made the move.</summary>
 		public string PlayerId;
 
-		internal MatchMove(string playerId, Bundle moveData) {
+		internal MatchMove(string Id, string playerId, Bundle moveData) {
 			MoveData = moveData;
 			PlayerId = playerId;
 		}

@@ -67,12 +67,15 @@ namespace CotcSdk {
 	/// Broadcasted when a player makes a move. The player himself doesn't receive the event.
 	/// </summary>
 	public class MatchMoveEvent : MatchEvent {
-		/// <summary>The data passed by the player when performing the move.</summary>
-		public Bundle MoveData;
-		/// <summary>The ID of the player who made the move.</summary>
-		public string PlayerId;
+        /// <summary>The ID of the move.</summary>
+        public string Id;
+        /// <summary>The data passed by the player when performing the move.</summary>
+        public Bundle MoveData;
+        /// <summary>The ID of the player who made the move.</summary>
+        public string PlayerId;
 
 		internal MatchMoveEvent(Gamer gamer, Bundle serverData) : base(gamer, serverData) {
+            Id = serverData["event"]["_id"]; ;
 			MoveData = serverData["event"]["move"];
 			PlayerId = serverData["event"]["player_id"];
 		}
