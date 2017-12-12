@@ -331,12 +331,17 @@ namespace CotcSdk {
 	/// @ingroup match_classes
 	/// <summary>Represents a move in a match.</summary>
 	public class MatchMove {
-		/// <summary>The data passed by the player when performing the move.</summary>
+        /// <summary>The data passed by the player when performing the move.</summary>
+        public Bundle MoveId;
+
+        /// <summary>The data passed by the player when performing the move.</summary>
 		public Bundle MoveData;
-		/// <summary>The ID of the player who made the move.</summary>
-		public string PlayerId;
+
+        /// <summary>The ID of the player who made the move.</summary>
+        public string PlayerId;
 
 		internal MatchMove(string Id, string playerId, Bundle moveData) {
+            MoveId = Id;
 			MoveData = moveData;
 			PlayerId = playerId;
 		}
