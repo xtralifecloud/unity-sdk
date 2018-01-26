@@ -42,25 +42,27 @@ namespace CotcSdk
 			});
 		}
 
-		/// <summary>
-		/// Converts the account to sign in through another network.
-		/// For instance, you might have created an anonymous account, that you later want to convert to an account
-		/// logged on through a facebook account. Or, should you later want to convert this account to simply use an
-		/// e-mail address, this is the method that you will want to call.
-		/// In order to convert the account successfully, the provided network credentials need to be acceptable,
-		/// just as when calling #CotcSdk.Cloud.Login.
-		/// </summary>
-		/// <returns>Promise resolved when the operation has completed.</returns>
-		/// <param name="network">The target network to connect with later on.</param>
-		/// <param name="networkId">The ID on the network. For example, with the facebook network, this would be the User ID.
-		///     On e-mail accounts e-mail then, this would be the e-mail address.</param>
-		/// <param name="networkSecret">The secret for the network. For e-mail accounts, this would be the passord. For
-		///     facebook or other SNS accounts, this would be the user token.</param>
-		public Promise<Done> Convert(string network, string networkId, string networkSecret) {
+        /// <summary>
+        /// Converts the account to sign in through another network.
+        /// For instance, you might have created an anonymous account, that you later want to convert to an account
+        /// logged on through a facebook account. Or, should you later want to convert this account to simply use an
+        /// e-mail address, this is the method that you will want to call.
+        /// In order to convert the account successfully, the provided network credentials need to be acceptable,
+        /// just as when calling #CotcSdk.Cloud.Login.
+        /// </summary>
+        /// <returns>Promise resolved when the operation has completed.</returns>
+        /// <param name="network">The target network to connect with later on.</param>
+        /// <param name="networkId">The ID on the network. For example, with the facebook network, this would be the User ID.
+        ///     On e-mail accounts e-mail then, this would be the e-mail address.</param>
+        /// <param name="networkSecret">The secret for the network. For e-mail accounts, this would be the passord. For
+        ///     facebook or other SNS accounts, this would be the user token.</param>
+		/// <param name="options">An optional JSON to customize the convert process.</param>
+        public Promise<Done> Convert(string network, string networkId, string networkSecret, Bundle options = null) {
 			Bundle config = Bundle.CreateObject();
 			config["network"] = network;
 			config["id"] = networkId;
 			config["secret"] = networkSecret;
+            config["options"] = options;
 
 			HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/convert");
 			req.BodyJson = config;
@@ -93,12 +95,14 @@ namespace CotcSdk
         ///     On e-mail accounts e-mail then, this would be the e-mail address.</param>
         /// <param name="networkSecret">The secret for the network. For e-mail accounts, this would be the passord. For
         ///     facebook or other SNS accounts, this would be the user token.</param>
-        public Promise<Done> Link(string network, string networkId, string networkSecret)
+		/// <param name="options">An optional JSON to customize the convert process.</param>
+        public Promise<Done> Link(string network, string networkId, string networkSecret, Bundle options = null)
         {
             Bundle config = Bundle.CreateObject();
             config["network"] = network;
             config["id"] = networkId;
             config["secret"] = networkSecret;
+            config["options"] = options;
 
             HttpRequest req = Gamer.MakeHttpRequest("/v1/gamer/link");
             req.BodyJson = config;
