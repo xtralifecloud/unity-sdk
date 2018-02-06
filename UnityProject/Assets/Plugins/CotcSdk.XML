@@ -1138,6 +1138,9 @@
             @ingroup match_classes
             <summary>Represents a move in a match.</summary>
         </member>
+        <member name="F:CotcSdk.MatchMove.MoveId">
+            <summary>The data passed by the player when performing the move.</summary>
+        </member>
         <member name="F:CotcSdk.MatchMove.MoveData">
             <summary>The data passed by the player when performing the move.</summary>
         </member>
@@ -1987,7 +1990,7 @@
             <returns>Promise resolved when the operation has completed.</returns>
             <param name="newPassword">The new password to be used for signing in.</param>
         </member>
-        <member name="M:CotcSdk.GamerAccountMethods.Convert(System.String,System.String,System.String)">
+        <member name="M:CotcSdk.GamerAccountMethods.Convert(System.String,System.String,System.String,CotcSdk.Bundle)">
             <summary>
             Converts the account to sign in through another network.
             For instance, you might have created an anonymous account, that you later want to convert to an account
@@ -2002,8 +2005,9 @@
                 On e-mail accounts e-mail then, this would be the e-mail address.</param>
             <param name="networkSecret">The secret for the network. For e-mail accounts, this would be the passord. For
                 facebook or other SNS accounts, this would be the user token.</param>
+            <param name="options">An optional JSON to customize the convert process.</param>
         </member>
-        <member name="M:CotcSdk.GamerAccountMethods.Link(System.String,System.String,System.String)">
+        <member name="M:CotcSdk.GamerAccountMethods.Link(System.String,System.String,System.String,CotcSdk.Bundle)">
             <summary>
             Links the account with another social network. Note that unlike Convert, this doesn't change the way the
             user would then sign in (the credentials remain the same).
@@ -2018,6 +2022,7 @@
                 On e-mail accounts e-mail then, this would be the e-mail address.</param>
             <param name="networkSecret">The secret for the network. For e-mail accounts, this would be the passord. For
                 facebook or other SNS accounts, this would be the user token.</param>
+            <param name="options">An optional JSON to customize the convert process.</param>
         </member>
         <member name="M:CotcSdk.GamerAccountMethods.Unlink(System.String)">
             <summary>
