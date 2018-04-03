@@ -39,8 +39,7 @@ namespace CotcSdk
 			CotcSettings s = CotcSettings.Instance;
 			CotcSettings.Environment ce;
 			if (s == null) {
-				string properPath = Path.Combine(Application.dataPath, Path.GetDirectoryName(CotcSettings.AssetPath));
-                if (!Directory.Exists(properPath)) {
+				if (!AssetDatabase.IsValidFolder(Path.GetDirectoryName(CotcSettings.AssetPath))) {
                     AssetDatabase.CreateFolder("Assets", "Resources");
                 }
 				s = CreateInstance<CotcSettings>();
