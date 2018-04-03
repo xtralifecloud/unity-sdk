@@ -9,7 +9,7 @@ using UnityEngine.Networking;
 
 namespace CotcSdk {
 	/**
-	 * Better HTTP client based on UnityEngine.Experimental.Networking.UnityWebRequest.
+	 * Better HTTP client based on UnityEngine.Networking.UnityWebRequest.
 	 */
 	internal class UnityHttpClientV2 : HttpClient {
 

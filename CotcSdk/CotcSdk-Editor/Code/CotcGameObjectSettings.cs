@@ -32,7 +32,7 @@ namespace CotcSdk
 #endif
 		};
 		private bool HttpGroupEnabled = true, NeedsInitialization = true, PresetGroupEnabled = true;
-		private readonly string[] SupportedHttpClients = { "Mono (System.Net.HttpWebRequest)", "Unity (UnityEngine.Experimental.Networking.UnityWebRequest)" };
+		private readonly string[] SupportedHttpClients = { "Mono (System.Net.HttpWebRequest)", "Unity (UnityEngine.Networking.UnityWebRequest)" };
 
 		public override void OnInspectorGUI() {
 			// Auto-create the asset on the first time
