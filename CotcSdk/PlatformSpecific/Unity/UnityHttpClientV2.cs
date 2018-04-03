@@ -33,7 +33,7 @@ namespace CotcSdk {
                 // TODO Missing functionality (currently unsupported by UnityWebRequest).
                 //				req.SetRequestHeader("User-agent", request.UserAgent);
                 //				req.keepAlive = true;
-				request.Headers.Add("Accept-Encoding", "gzip");
+				request.Headers["Accept-Encoding"] = "gzip";
                 foreach (var pair in request.Headers)
                 {
                     Request.SetRequestHeader(pair.Key, pair.Value);
