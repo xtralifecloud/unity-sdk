@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.IO.Compression;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -31,6 +33,7 @@ namespace CotcSdk {
                 // TODO Missing functionality (currently unsupported by UnityWebRequest).
                 //				req.SetRequestHeader("User-agent", request.UserAgent);
                 //				req.keepAlive = true;
+				request.Headers.Add("Accept-Encoding", "gzip");
                 foreach (var pair in request.Headers)
                 {
                     Request.SetRequestHeader(pair.Key, pair.Value);
@@ -129,20 +132,41 @@ namespace CotcSdk {
                     }
                     else
                     {
-                        response.Body = Request.downloadHandler.data;
-                        Dictionary<string, string> dict = Request.GetResponseHeaders();
-                        if (dict != null)
-                            foreach (var pair in dict)
-                            {
+						Dictionary<string, string> responseHeaders = Request.GetResponseHeaders();
+
+						if (responseHeaders != null)
+						{
+							if (responseHeaders.ContainsKey("Content-Encoding") && (responseHeaders["Content-Encoding"] == "gzip"))
+								response.Body = GzipDecompress(Request.downloadHandler.data);
+							else
+								response.Body = Request.downloadHandler.data;
+
+                            foreach (var pair in responseHeaders)
                                 response.Headers[pair.Key] = pair.Value;
-                            }
+						}
                         else
                             Common.Log("Empty header response, should not be the case.");
+						
                         LogResponse(response);
                         self.FinishWithRequest(this, response);
                     }
                 }
             }
+
+			private byte[] GzipDecompress(byte[] data)
+			{
+				MemoryStream compressedData = new MemoryStream(data);
+				MemoryStream decompressedData = new MemoryStream();
+				GZipStream decompress = new GZipStream(compressedData, CompressionMode.Decompress);
+
+				byte[] buffer = new byte[4096];
+				int numRead;
+
+				while ((numRead = decompress.Read(buffer, 0, buffer.Length)) != 0)
+					decompressedData.Write(buffer, 0, numRead);
+
+				return decompressedData.ToArray();
+			}
 
 			public override void Start() {
 				// Configure & perform the request
