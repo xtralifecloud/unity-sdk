@@ -311,6 +311,9 @@
     <Compile Include="..\Libs\LitJson\JsonMapper.cs">
       <Link>Libs\LitJson\JsonMapper.cs</Link>
     </Compile>
+    <Compile Include="..\Libs\LitJson\JsonMockWrapper.cs">
+      <Link>Libs\LitJson\JsonMockWrapper.cs</Link>
+    </Compile>
     <Compile Include="..\Libs\LitJson\JsonReader.cs">
       <Link>Libs\LitJson\JsonReader.cs</Link>
     </Compile>
