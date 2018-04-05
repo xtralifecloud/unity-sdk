@@ -28,6 +28,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.os.Build;
+import android.app.NotificationChannel;
+import android.app.Notification;
 
 import com.google.android.gms.gcm.GcmListenerService;
 import com.unity3d.player.UnityPlayer;
@@ -36,7 +39,7 @@ import com.unity3d.player.UnityPlayerActivity;
 public class MyGcmListenerService extends GcmListenerService {
 
     private static final String TAG = "MyGcmListenerService";
-
+    private NotificationManager notifManager = null;
     /**
      * Called when message is received.
      *
@@ -80,18 +83,31 @@ public class MyGcmListenerService extends GcmListenerService {
                 return;
             }
 
+            if(notifManager == null)
+                notifManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationCompat.Builder notificationBuilder;
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            {
+                int importance = NotificationManager.IMPORTANCE_HIGH;
+                NotificationChannel channel = new NotificationChannel("CotC Channel", "CotC Channel", importance);
+                channel.setDescription("CotC Channel");
+                notifManager.createNotificationChannel(channel);
+                notificationBuilder = new NotificationCompat.Builder(this, "CotC Channel");
+            }
+            else
+                notificationBuilder = new NotificationCompat.Builder(this);
+
             Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(notificationIcon)
+            notificationBuilder.setSmallIcon(notificationIcon)
                 .setContentTitle(pushNotifName)
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
-
-            NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
+                notificationBuilder.setPriority(Notification.PRIORITY_HIGH);
+            notifManager.notify(0 /* ID of notification */, notificationBuilder.build());
         } catch (Exception e) {
             Log.w(TAG, "Failed to handle push notification", e);
         }
