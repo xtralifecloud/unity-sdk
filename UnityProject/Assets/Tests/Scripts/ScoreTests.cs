@@ -6,15 +6,8 @@ using IntegrationTests;
 
 public class ScoreTests : TestBase {
 
-	[InstanceMethod(typeof(ScoreTests))]
-	public string TestMethodName;
-
-	void Start() {
-		RunTestMethod(TestMethodName);
-	}
-
 	[Test("This test posts a score four times in a different fashion, and checks that the behaviour is as intended. No read of the rankings is done.")]
-	public void ShouldPostScore(Cloud cloud) {
+	public void ShouldPostScore() {
 		Login(cloud, gamer => {
 			string board = RandomBoardName();
 			// Should post the first score (rank 1)
@@ -66,7 +59,7 @@ public class ScoreTests : TestBase {
 	}
 
 	[Test("Tests that the order of scores posted by two users (not friends) match, and checks the format of scores as returned by the API.")]
-	public void ShouldFetchScores(Cloud cloud) {
+	public void ShouldFetchScores() {
 		// Use two players, P1 makes a score of 1000, P2 of 1500
 		Login2Users(cloud, (Gamer gamer1, Gamer gamer2) => {
 			string board = RandomBoardName();
@@ -97,7 +90,7 @@ public class ScoreTests : TestBase {
 	}
 
 	[Test("Tests the ranking functionality (allowing to know how a gamer would rank if the score was posted).")]
-	public void ShouldProvideRank(Cloud cloud) {
+	public void ShouldProvideRank() {
 		Login(cloud, gamer => {
 			string board = RandomBoardName();
 			gamer.Scores.Post(1000, board, ScoreOrder.HighToLow)
@@ -110,7 +103,7 @@ public class ScoreTests : TestBase {
 	}
 
 	[Test("Tests fetching a leaderboard amongst friends.")]
-	public void ShouldListScoreOfFriends(Cloud cloud) {
+	public void ShouldListScoreOfFriends() {
 		// Create 2 users
 		Login2NewUsers(cloud, (gamer1, gamer2) => {
 			// Post 1 score each
@@ -139,7 +132,7 @@ public class ScoreTests : TestBase {
 	}
 
 	[Test("Creates two boards, posts scores to it and lists the best scores.")]
-	public void ShouldListUserBestScores(Cloud cloud) {
+	public void ShouldListUserBestScores() {
 		LoginNewUser(cloud, gamer => {
 			string board1 = RandomBoardName(), board2 = RandomBoardName();
 			gamer.Scores.Post(1000, board1, ScoreOrder.HighToLow, "Test1", false)

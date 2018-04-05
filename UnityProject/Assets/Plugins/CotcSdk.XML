@@ -45,7 +45,7 @@
             should set it once at startup.
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:CotcSdk.Cloud.ListUsers(System.String,System.Int32,System.Int32)" -->
+        <!-- Commentaire XML incorrect pour le membre "M:CotcSdk.Cloud.ListUsers(System.String,System.Int32,System.Int32)" -->
         <member name="M:CotcSdk.Cloud.LoginAnonymously(CotcSdk.Bundle)">
             <summary>Logs the current user in anonymously.</summary>
             <returns>Task returning when the login has finished. The resulting Gamer object can then
@@ -150,7 +150,7 @@
                 as the properties, however those are not indexed (cannot be looked for in a search request). Its
                 content is returned in searches (#CotcSdk.IndexResult.Payload property).</param>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:CotcSdk.CloudIndexing.Search(System.String,System.Collections.Generic.List{System.String},System.Int32,System.Int32)" -->
+        <!-- Commentaire XML incorrect pour le membre "M:CotcSdk.CloudIndexing.Search(System.String,System.Collections.Generic.List{System.String},System.Int32,System.Int32)" -->
         <member name="M:CotcSdk.CloudIndexing.SearchExtended(CotcSdk.Bundle,System.Int32,System.Int32)">
              <summary>
              Alternative search function (see #Search for more information) that takes a bundle as a search criteria.
@@ -253,7 +253,7 @@
             Then call #GetCloud to get a Cloud object, which provides an entry point (through sub objects) to all functionality provided by the SDK.
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:CotcSdk.CotcGameObject.GetCloud" -->
+        <!-- Commentaire XML incorrect pour le membre "M:CotcSdk.CotcGameObject.GetCloud" -->
         <member name="T:CotcSdk.Common">
             @ingroup utility_classes
             <summary>Common SDK methods also usable by clients.</summary>
@@ -380,7 +380,7 @@
             <param name="batchName">Name of the batch to run, as configured on the server.</param>
             <param name="batchParams">Parameters to be passed to the batch.</param>
         </member>
-        <!-- Badly formed XML comment ignored for member "T:CotcSdk.GamerAchievements" -->
+        <!-- Commentaire XML incorrect pour le membre "T:CotcSdk.GamerAchievements" -->
         <member name="M:CotcSdk.GamerAchievements.Domain(System.String)">
             <summary>
             Changes the domain affected by the next operations.
@@ -960,7 +960,7 @@
             <param name="domain">Domain on which to scope the transactions. Default to `private` if unmodified.</param>
             <returns>This object for operation chaining.</returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:CotcSdk.GamerTransactions.History(System.String,System.Int32,System.Int32)" -->
+        <!-- Commentaire XML incorrect pour le membre "M:CotcSdk.GamerTransactions.History(System.String,System.Int32,System.Int32)" -->
         <member name="M:CotcSdk.GamerTransactions.Post(CotcSdk.Bundle,System.String)">
             <summary>Executes a transaction on the behalf of the user.</summary>
             <returns>Promise resolved when the operation has completed. The attached result contains the new balance
@@ -1441,7 +1441,7 @@
         <member name="P:CotcSdk.PostedGameScore.Rank">
             <summary>The rank of the gamer in the leaderboard after posting this score.</summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "T:CotcSdk.PropertiesObject" -->
+        <!-- Commentaire XML incorrect pour le membre "T:CotcSdk.PropertiesObject" -->
         <member name="P:CotcSdk.PropertiesObject.Item(System.String)">
             <summary>Allows to query additional properties via an indexer (can be enriched via hooks).</summary>
         </member>
@@ -1681,7 +1681,7 @@
             <param name="key">The name of the key to remove. Beware, if you don't pass any key at all,
                 then ALL the key/value will be removed. Should be used with care!</param>
         </member>
-        <!-- Badly formed XML comment ignored for member "T:CotcSdk.NonpagedList`1" -->
+        <!-- Commentaire XML incorrect pour le membre "T:CotcSdk.NonpagedList`1" -->
         <member name="T:CotcSdk.PagedList`1">
             @ingroup main_classes
             <summary>Represents a paginated list, which allows for easy navigation through multiple results.</summary>
@@ -1781,7 +1781,7 @@
             <param name="onRejected">Executed upon failure (promise rejected).</param>
             <returns>A promise that can be further chained.</returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:CotcSdk.Promise`1.Then``1(System.Func{`0,CotcSdk.Promise{``0}},System.Action{System.Exception})" -->
+        <!-- Commentaire XML incorrect pour le membre "M:CotcSdk.Promise`1.Then``1(System.Func{`0,CotcSdk.Promise{``0}},System.Action{System.Exception})" -->
         <member name="E:CotcSdk.Promise.UnhandledException">
             <summary>
             Event raised for unhandled errors.
@@ -1794,7 +1794,7 @@
             Just a helper, never keep it true in production.
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "T:CotcSdk.Bundle" -->
+        <!-- Commentaire XML incorrect pour le membre "T:CotcSdk.Bundle" -->
         <member name="T:CotcSdk.Bundle.DataType">
             <summary>Possible types of data storable into a bundle.</summary>
         </member>

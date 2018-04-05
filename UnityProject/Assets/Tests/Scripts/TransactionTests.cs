@@ -9,15 +9,8 @@ using IntegrationTests;
  */
 public class TransactionTests : TestBase {
 
-	[InstanceMethod(typeof(TransactionTests))]
-	public string TestMethodName;
-
-	void Start() {
-		RunTestMethod(TestMethodName);
-	}
-
 	[Test("Runs a transaction and checks the balance. Tests both the transaction and the balance calls.")]
-	public void ShouldRunTransaction(Cloud cloud) {
+	public void ShouldRunTransaction() {
 		LoginNewUser(cloud, gamer => {
 			Bundle tx = Bundle.CreateObject("gold", 10, "silver", 100);
 			gamer.Transactions.Post(
@@ -37,7 +30,7 @@ public class TransactionTests : TestBase {
 	}
 
 	[Test("Runs a transaction that resets the balance. Tests the transaction syntax and read balance.")]
-	public void ShouldResetBalance(Cloud cloud) {
+	public void ShouldResetBalance() {
 		LoginNewUser(cloud, gamer => {
 			// Set property, then get all and check it
 			gamer.Transactions.Post(Bundle.CreateObject("gold", 10), "Transaction run by integration test.")
@@ -53,7 +46,7 @@ public class TransactionTests : TestBase {
 	}
 
 	[Test("Runs a transaction that should trigger an achievement.", requisite: "Please import {\"unitTestAchievements\":{\"type\":\"limit\",\"config\":{\"unit\":\"gold\",\"maxValue\":\"100\"}}} into the current game achievements.")]
-	public void ShouldTriggerAchievement(Cloud cloud) {
+	public void ShouldTriggerAchievement() {
 		LoginNewUser(cloud, gamer => {
 			gamer.Transactions.Post(Bundle.CreateObject("gold", 100), "Transaction run by integration test.")
 			.ExpectSuccess(txResult => {
@@ -67,7 +60,7 @@ public class TransactionTests : TestBase {
 	}
 
 	[Test("Runs a transaction that should trigger an achievement.", requisite: "Please import {\"unitTestAchievements\":{\"type\":\"limit\",\"config\":{\"unit\":\"gold\",\"maxValue\":\"100\"}}} into the current game achievements.")]
-	public void ShouldAssociateAchievementData(Cloud cloud) {
+	public void ShouldAssociateAchievementData() {
 		LoginNewUser(cloud, gamer => {
 			gamer.Transactions.Post(Bundle.CreateObject("gold", 100), "Transaction run by integration test.")
 			.ExpectSuccess(txResult => {
@@ -84,7 +77,7 @@ public class TransactionTests : TestBase {
 	}
 
 	[Test("Fetches the transaction history.")]
-	public void ShouldFetchTransactionHistory(Cloud cloud) {
+	public void ShouldFetchTransactionHistory() {
 		LoginNewUser(cloud, gamer => {
 			gamer.Transactions.Post(Bundle.CreateObject("gold", 10), "Transaction run by integration test.")
 			.ExpectSuccess(dummy => gamer.Transactions.History())
@@ -98,7 +91,7 @@ public class TransactionTests : TestBase {
 	}
 
 	[Test("Tests the pagination feature of the transaction history by creating one user and three transactions.")]
-	public void ShouldHavePaginationInTxHistory(Cloud cloud) {
+	public void ShouldHavePaginationInTxHistory() {
 		LoginNewUser(cloud, gamer => {
 			// Run 3 transactions serially
 			gamer.Transactions.Post(Bundle.CreateObject("gold", 1))
@@ -131,7 +124,7 @@ public class TransactionTests : TestBase {
 	}
 
 	[Test("Tests the filter by unit feature of the transaction history")]
-	public void ShouldFilterTransactionsByUnit(Cloud cloud) {
+	public void ShouldFilterTransactionsByUnit() {
 		LoginNewUser(cloud, gamer => {
 			// Run 3 transactions serially
 			gamer.Transactions.Post(Bundle.CreateObject("gold", 1))
@@ -148,7 +141,7 @@ public class TransactionTests : TestBase {
 	}
 
 	[Test("Lists the state of achievements for the current user, including when a bit of progress was made.", requisite: "Please import {\"testAch\":{\"type\":\"limit\",\"config\":{\"unit\":\"gold\",\"maxValue\":\"100\"}}} into the current game achievements.")]
-	public void ShouldListAchievements(Cloud cloud) {
+	public void ShouldListAchievements() {
         LoginNewUser(cloud, gamer => {
 			gamer.Achievements.List()
 			.ExpectSuccess(result => {

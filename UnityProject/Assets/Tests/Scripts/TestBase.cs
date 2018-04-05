@@ -5,6 +5,9 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using CotcSdk;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.TestTools;
+using NUnit.Framework;
 
 /**
  * Base for an integration test class.
@@ -41,23 +44,35 @@ public class TestBase : MonoBehaviour {
 	internal static bool FailOnUnhandledException = true;
 	private List<string> PendingSignals = new List<string>();
 	private Dictionary<string, Action> RegisteredSlots = new Dictionary<string, Action>();
+    protected static Cloud cloud;
 
-	protected void Assert(bool condition, string message) {
+    [OneTimeSetUp]
+    public void Init() {
+        Debug.Log("init start");
+        GameObject instance = (GameObject)Instantiate(Resources.Load("Prefabs/Clan of the Cloud SDK"));
+        instance.GetComponent<CotcGameObject>().GetCloud().Done(cloud_ => {
+            cloud = cloud_;
+            Debug.Log("init cloud");
+        });
+        Debug.Log("init end");
+    }
+
+    protected void Assert(bool condition, string message) {
 		if (!condition) {
 			throw new Exception("Test interrupted because of failed assertion: " + message);
 		}
 	}
 
 	public static void CompleteTest() {
-		if (!DoNotRunMethodsAutomatically) IntegrationTest.Pass();
-		if (OnTestCompleted != null) OnTestCompleted(true);
+        //if (!DoNotRunMethodsAutomatically) IntegrationTest.Pass();
+        if (OnTestCompleted != null) OnTestCompleted(true);
 	}
 
 	public static void FailTest(string reason) {
 		if (!DoNotRunMethodsAutomatically) {
-			IntegrationTest.Fail(reason);
-		}
-		else {
+            //IntegrationTest.Fail(reason);
+        }
+        else {
 			Common.LogError("Test failed: " + reason);
 		}
 		if (OnTestCompleted != null) OnTestCompleted(false);

@@ -11,7 +11,7 @@ public class ExportReleasePackage {
 		{
 			"CotcSdk.Core.unitypackage",
 			new string[] {
-				"Assets/Cotc",
+                "Assets/Resources/Prefabs/Clan of the Cloud SDK.prefab",
 				"Assets/Plugins/CotcSdk.dll",
 				"Assets/Plugins/CotcSdk.XML",
 				"Assets/Plugins/Editor/CotcSdk-Editor.dll",

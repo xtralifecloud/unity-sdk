@@ -6,15 +6,8 @@ using IntegrationTests;
 
 public class VfsTests: TestBase {
 
-	[InstanceMethod(typeof(VfsTests))]
-	public string TestMethodName;
-
-	void Start() {
-		RunTestMethod(TestMethodName);
-	}
-
 	[Test("Tries to query a non existing key.")]
-	public void ShouldNotReadInexistingKey(Cloud cloud) {
+	public void ShouldNotReadInexistingKey() {
 		cloud.LoginAnonymously().ExpectSuccess(gamer => {
 			gamer.GamerVfs.GetValue("nonexistingkey")
 			.ExpectFailure(getRes => {
@@ -26,7 +19,7 @@ public class VfsTests: TestBase {
 	}
 
 	[Test("Sets a few keys, then reads them.")]
-	public void ShouldWriteKeys(Cloud cloud) {
+	public void ShouldWriteKeys() {
 		Login(cloud, gamer => {
 			gamer.GamerVfs.SetValue("testkey", "hello world")
 			.ExpectSuccess(setRes => {
@@ -42,7 +35,7 @@ public class VfsTests: TestBase {
 	}
 
 	[Test("Sets a key, deletes it and then rereads it.")]
-	public void ShouldDeleteKey(Cloud cloud) {
+	public void ShouldDeleteKey() {
 		Login(cloud, gamer => {
 			gamer.GamerVfs.SetValue("testkey", "value")
 			.ExpectSuccess(setRes => {
@@ -59,7 +52,7 @@ public class VfsTests: TestBase {
 	}
 
 	[Test("Sets a binary key and rereads it.")]
-	public void ShouldWriteAndReadBinaryKey(Cloud cloud) {
+	public void ShouldWriteAndReadBinaryKey() {
 		Login(cloud, gamer => {
 			byte[] data = { 1, 2, 3, 4 };
             gamer.GamerVfs.GetValue("testkey").Done(done => {

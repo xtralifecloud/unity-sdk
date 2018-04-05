@@ -6,15 +6,9 @@ using IntegrationTests;
 using System.Collections.Generic;
 
 public class IndexTests : TestBase {
-    [InstanceMethod(typeof(IndexTests))]
-    public string TestMethodName;
-
-    void Start() {
-        RunTestMethod(TestMethodName);
-    }
 
     [Test("Indexes an object and retrieves it.")]
-    public void ShouldIndexObject(Cloud cloud) {
+    public void ShouldIndexObject() {
         string indexName = "test" + Guid.NewGuid().ToString();
         string objectId = Guid.NewGuid().ToString();
         cloud.Index(indexName).IndexObject(
@@ -35,7 +29,7 @@ public class IndexTests : TestBase {
     }
 
     [Test("Indexes an object and deletes it. Checks that it cannot be accessed anymore then.")]
-    public void ShouldDeleteObject(Cloud cloud) {
+    public void ShouldDeleteObject() {
         string indexName = "test" + Guid.NewGuid().ToString();
         string objectId = Guid.NewGuid().ToString();
         // Index
@@ -60,7 +54,7 @@ public class IndexTests : TestBase {
     }
 
     [Test("Indexes a few objects and tries to query for them in various ways, assessing that the search arguments and pagination work as expected.")]
-    public void ShouldSearchForObjects(Cloud cloud) {
+    public void ShouldSearchForObjects() {
         var index = cloud.Index("test" + Guid.NewGuid().ToString());
         // Index a few items
         index.IndexObject("item1", Bundle.CreateObject("item", "gold"), Bundle.CreateObject("key1", "value1"))
@@ -117,7 +111,7 @@ public class IndexTests : TestBase {
     }
 
     [Test("Tests that the API can be used to search for matches")]
-    public void ShouldBeUsableToSearchForMatches(Cloud cloud) {
+    public void ShouldBeUsableToSearchForMatches() {
         Login2NewUsers(cloud, (gamer1, gamer2) => {
             string queryStringExtended = @"{""query"":{""bool"":{""must"":[{""term"":{""public"":""true""}},{""term"":{""owner_id"":""" + gamer1.GamerId + @"""}}]}}}";
             Match[] matches = new Match[2];

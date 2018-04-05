@@ -6,15 +6,8 @@ using IntegrationTests;
 
 public class GamerTests : TestBase {
 
-	[InstanceMethod(typeof(GamerTests))]
-	public string TestMethodName;
-
-	void Start() {
-		RunTestMethod(TestMethodName);
-	}
-
 	[Test("Sets a property and checks that it worked properly (tests read all & write single).")]
-	public void ShouldSetProperty(Cloud cloud) {
+	public void ShouldSetProperty() {
 		Login(cloud, gamer => {
 			// Set property, then get all and check it
 			gamer.Properties.SetKey(
@@ -33,7 +26,7 @@ public class GamerTests : TestBase {
 	}
 
 	[Test("Sets properties and checks them (tests read all & write all).")]
-	public void ShouldSetMultipleProperties(Cloud cloud) {
+	public void ShouldSetMultipleProperties() {
 		Login(cloud, gamer => {
 			Bundle props = Bundle.CreateObject();
 			props["hello"] = "world";
@@ -56,7 +49,7 @@ public class GamerTests : TestBase {
 	}
 
 	[Test("Tests removal of a single property (tests remove single & read single).")]
-	public void ShouldRemoveProperty(Cloud cloud) {
+	public void ShouldRemoveProperty() {
 		Login(cloud, gamer => {
 			Bundle props = Bundle.CreateObject();
 			props["hello"] = "world";
@@ -78,7 +71,7 @@ public class GamerTests : TestBase {
 	}
 
 	[Test("Tests removal of all properties.")]
-	public void ShouldRemoveAllProperties(Cloud cloud) {
+	public void ShouldRemoveAllProperties() {
 		Login(cloud, gamer => {
 			Bundle props = Bundle.CreateObject();
 			props["hello"] = "world";
@@ -101,7 +94,7 @@ public class GamerTests : TestBase {
 	}
 
 	[Test("Fetches and updates profile information about a gamer, testing that the GamerProfile methods work as expected.")]
-	public void ShouldUpdateProfile(Cloud cloud) {
+	public void ShouldUpdateProfile() {
 		Login(cloud, gamer => {
 			gamer.Profile.Get()
 			.ExpectSuccess(profile => {
@@ -118,7 +111,7 @@ public class GamerTests : TestBase {
 	}
 
 	[Test("Runs a batch on the server and checks the return value.", requisite: "The current game must be set-up with {\"__test\":\"\treturn {value: params.request.value * 2};\",\"__testGamer\":\"    return this.user.profile.read(params.user_id).then(function (result) {\n      return {message: params.request.prefix + result.profile.email};\n    });\"}.")]
-	public void ShouldRunGamerBatch(Cloud cloud) {
+	public void ShouldRunGamerBatch() {
 		Login(cloud, gamer => {
 			gamer.Batches.Run("testGamer", Bundle.CreateObject("prefix", "Hello "))
 			.ExpectSuccess(batchResult => {
@@ -139,7 +132,7 @@ public class GamerTests : TestBase {
         params.match.globalState = {hooked:true};
     } // must be on last line, no CR
     */
-    public void ShouldBeHooked(Cloud cloud) {
+    public void ShouldBeHooked() {
         LoginNewUser(cloud, gamer => {
             gamer.Matches.Create(1)
             .ExpectSuccess(match => {
@@ -151,7 +144,7 @@ public class GamerTests : TestBase {
 
 
 	[Test("Tests the outline functionality")]
-	public void ShouldReturnProperOutline(Cloud cloud) {
+	public void ShouldReturnProperOutline() {
 		Login(cloud, gamer => {
 			gamer.Profile.Outline()
 			.ExpectSuccess(outline => {

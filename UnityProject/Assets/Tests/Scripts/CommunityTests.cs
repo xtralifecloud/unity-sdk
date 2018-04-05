@@ -5,15 +5,8 @@ using System.Collections.Generic;
 
 public class CommunityTests : TestBase {
 
-	[InstanceMethod(typeof(CommunityTests))]
-	public string TestMethodName;
-
-	void Start() {
-		RunTestMethod(TestMethodName);
-	}
-
 	[Test("Uses two anonymous accounts. Tests that a friend can be added properly and then listed back (AddFriend + ListFriends).")]
-	public void ShouldAddFriend(Cloud cloud) {
+	public void ShouldAddFriend() {
         Promise.Debug_OutputAllExceptions = false;
         FailOnUnhandledException = false;
         // Use two test accounts
@@ -49,7 +42,7 @@ public class CommunityTests : TestBase {
 	}
 
     [Test("Uses two anonymous accounts. Tests that a friend can be forget, then blacklisted (AddFriend + ChangeRelationshipStauts:Forget/Blacklist).")]
-    public void ShouldChangeRelationshipStatus(Cloud cloud) {
+    public void ShouldChangeRelationshipStatus() {
         Promise.Debug_OutputAllExceptions = false;
         FailOnUnhandledException = false;
         // Use two test accounts
@@ -104,7 +97,7 @@ public class CommunityTests : TestBase {
     }
 
     [Test("Uses two anonymous accounts. Tests the function DiscardEventHandlers.")]
-    public void ShouldDiscardEventHandlers(Cloud cloud) {
+    public void ShouldDiscardEventHandlers() {
         Login2NewUsers(cloud, (gamer1, gamer2) => {
             DomainEventLoop loopP1 = gamer1.StartEventLoop();
             gamer1.Community.OnFriendStatusChange += (FriendStatusChangeEvent e) => {
@@ -129,7 +122,7 @@ public class CommunityTests : TestBase {
     }
 
     [Test("Creates 2 users, and sends a message from one to the other and verifies that all happens as expected.")]
-	public void ShouldSendEvent(Cloud cloud) {
+	public void ShouldSendEvent() {
 		Login2NewUsers(cloud, (gamer1, gamer2) => {
 			// Wait event for P1
 			Promise finishedSendEvent = new Promise();
@@ -156,7 +149,7 @@ public class CommunityTests : TestBase {
 	}
 
     [Test("Creates 2 users, each user starts listening for event, sends an event to the other user, and verifies its reception.")]
-    public void ShouldNotMixEvents(Cloud cloud) {
+    public void ShouldNotMixEvents() {
         Login2NewUsers(cloud, (gamer1, gamer2) => {
             DomainEventLoop loopP1 = gamer1.StartEventLoop();
             DomainEventLoop loopP2 = gamer2.StartEventLoop(); 
@@ -193,7 +186,7 @@ public class CommunityTests : TestBase {
     }
 
     [Test("Creates 2 users, gamer1 sends 20 messages to gamer2, gamer2 count them as they arrive.")]
-    public void ShouldReceiveAllMessages(Cloud cloud) {
+    public void ShouldReceiveAllMessages() {
         Login2NewUsers(cloud, (gamer1, gamer2) => {
             DomainEventLoop loopP1 = gamer1.StartEventLoop();
             int count = 0;
@@ -214,7 +207,7 @@ public class CommunityTests : TestBase {
     }
 
     [Test("Creates two users and tries to list them in a paginated fashion.")]
-	public void ShouldListUsers(Cloud cloud) {
+	public void ShouldListUsers() {
 		Gamer[] gamers = new Gamer[2];
 		// Create first user
 		cloud.Login(LoginNetwork.Email.Describe(), "user1@localhost.localdomain", "123")
@@ -256,7 +249,7 @@ public class CommunityTests : TestBase {
 	}
 
 	[Test("Tests the list network users call. Uses real data obtained from real test accounts on Facebook", "The user token may have expired (Last creation 11/04/2017), get a new user token via facebook for developpers website.")]
-	public void ShouldListNetworkUsers(Cloud cloud) {
+	public void ShouldListNetworkUsers() {
         // User ID in the CotC network.
         string gamerID = "58ece8890810e5fe491a20a0";
 

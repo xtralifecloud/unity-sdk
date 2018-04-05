@@ -10,18 +10,11 @@ using CotcSdk.InappPurchase;
  * So it tests it but does not assess any result.
  */
 public class StoreTests : TestBase {
-
-	[InstanceMethod(typeof(StoreTests))]
-	public string TestMethodName;
 	
 	private const string BoConfiguration = "Needs a product like that in the BO: {\"reward\":{\"domain\":\"private\",\"description\":\"Test\",\"tx\":{\"coins\":100}},\"productId\":\"cotc_product1\",\"googlePlayId\":\"android.test.purchased\"}";
 
-	void Start() {
-		RunTestMethod(TestMethodName);
-	}
-
 	[Test("This test uses store methods (nothing related to the device-specific in-app plugin).", BoConfiguration)]
-	public void ShouldPerformFakePurchase(Cloud cloud) {
+	public void ShouldPerformFakePurchase() {
 		LoginNewUser(cloud, gamer => {
 			string transactionId = "transaction." + Guid.NewGuid();
 			string receiptJson = "{\"packageName\":\"com.clanofthecloud.cli\",\"orderId\":\"" + transactionId + "\",\"productId\":\"android.test.purchased\",\"developerPayload\":\"\",\"purchaseTime\":0,\"purchaseState\":0,\"purchaseToken\":\"inapp:com.clanofthecloud.cli:android.test.purchased\"}";
@@ -66,7 +59,7 @@ public class StoreTests : TestBase {
 
 #if false
 	[Test("Tests the native plugin as well.", BoConfiguration)]
-	public void ShouldUseNativePurchasePlugin(Cloud cloud) {
+	public void ShouldUseNativePurchasePlugin() {
 		LoginNewUser(cloud, gamer => {
 			var productToBeBought = new ConfiguredProduct[1];
 			var inappObject = FindObjectOfType<CotcInappPurchaseGameObject>();

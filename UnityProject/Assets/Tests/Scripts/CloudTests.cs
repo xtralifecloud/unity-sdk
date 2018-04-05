@@ -5,12 +5,6 @@ using IntegrationTests;
 using System.Collections.Generic;
 
 public class CloudTests : TestBase {
-	[InstanceMethod(typeof(CloudTests))]
-	public string TestMethodName;
-
-	void Start() {
-		RunTestMethod(TestMethodName);
-	}
 
 	[Test("Tests a simple setup.")]
 	public void ShouldSetupProperly() {
@@ -22,12 +16,12 @@ public class CloudTests : TestBase {
 	}
 
 	[Test("Sets up and does a ping")]
-	public void ShouldPing(Cloud cloud) {
+	public void ShouldPing() {
 		cloud.Ping().CompleteTestIfSuccessful();
 	}
 
 	[Test("Logs in anonymously.")]
-	public void ShouldLoginAnonymously(Cloud cloud) {
+	public void ShouldLoginAnonymously() {
 		cloud.LoginAnonymously()
 		.ExpectSuccess(result => {
 			Assert(result != null, "Failed to fetch a gamer object");
@@ -36,7 +30,7 @@ public class CloudTests : TestBase {
 	}
 
     [Test("Log in anonymously. Then Log out.")]
-    public void ShouldLogout(Cloud cloud) {
+    public void ShouldLogout() {
         cloud.LoginAnonymously()
         .Then(result => {
             return cloud.Logout(result);
@@ -49,7 +43,7 @@ public class CloudTests : TestBase {
     }
 
     [Test("First logs in anonymously, then tries to restore the session with the received credentials.")]
-	public void ShouldRestoreSession(Cloud cloud) {
+	public void ShouldRestoreSession() {
 		cloud.Login(
 			network: LoginNetwork.Email.Describe(),
 			networkId: "cloud@localhost.localdomain",
@@ -65,7 +59,7 @@ public class CloudTests : TestBase {
 	}
 
 	[Test("Tries to restore another session but tries to execute a batch that doesn't exist.")]
-	public void ShouldLoginAndRunBatch(Cloud cloud) {
+	public void ShouldLoginAndRunBatch() {
 		Bundle batchNode = Bundle.CreateObject(
 			"name", "nonexistingBatch",
 			"domain", "private",
@@ -96,7 +90,7 @@ public class CloudTests : TestBase {
 	}
 
 	[Test("Tests that a non-existing session fails to resume (account not created).")]
-	public void ShouldNotRestoreInexistingSession(Cloud cloud) {
+	public void ShouldNotRestoreInexistingSession() {
 		// Resume the session with the credentials just received
 		cloud.ResumeSession(
 			gamerId: "15555f06c7b852423cb9074a",
@@ -109,7 +103,7 @@ public class CloudTests : TestBase {
 	}
 
 	[Test("Tests that the prevent registration flag is taken in account correctly.")]
-	public void ShouldPreventRegistration(Cloud cloud) {
+	public void ShouldPreventRegistration() {
 		// Resume the session with the credentials just received
 		cloud.Login(
 			network: LoginNetwork.Email.Describe(),
@@ -125,7 +119,7 @@ public class CloudTests : TestBase {
 	}
 
 	[Test("Tests that an anonymous account can be converted to an e-mail account.")]
-	public void ShouldConvertAccount(Cloud cloud) {
+	public void ShouldConvertAccount() {
 		// Create an anonymous account
 		cloud.LoginAnonymously()
 		// Then convert it to e-mail
@@ -140,7 +134,7 @@ public class CloudTests : TestBase {
 	}
 
 	[Test("Ensures that an account cannot be converted to a credential that already exists.")]
-	public void ShouldFailToConvertToExistingAccount(Cloud cloud) {
+	public void ShouldFailToConvertToExistingAccount() {
 		// Ensures that a fake account has been created
 		cloud.Login(
 			network: LoginNetwork.Email.Describe(),
@@ -165,7 +159,7 @@ public class CloudTests : TestBase {
 	}
 
 	[Test("Tests the auto-modification of the gamer object when converting the account")]
-	public void ShouldModifyGamerAfterConvertingAccount(Cloud cloud) {
+	public void ShouldModifyGamerAfterConvertingAccount() {
 		Gamer[] gamer = new Gamer[1];
 		// Create an anonymous account
 		cloud.LoginAnonymously()
@@ -185,7 +179,7 @@ public class CloudTests : TestBase {
 	}
 
 	[Test("Checks the 'find user' functionality.")]
-	public void ShouldCheckIfUserExists(Cloud cloud) {
+	public void ShouldCheckIfUserExists() {
 		// Ensures that a fake account has been created
 		cloud.Login(
 			network: LoginNetwork.Email.Describe(),
@@ -204,7 +198,7 @@ public class CloudTests : TestBase {
 	}
 
 	[Test("Checks the send reset link functionality.", "Known to timeout sometimes (server side issue).")]
-	public void ShouldSendAccountResetLink(Cloud cloud) {
+	public void ShouldSendAccountResetLink() {
 		// This method is broken because we cannot GET somewhere with a body
 		// We have to fix the server or get rid of this method & test
 		cloud.SendResetPasswordEmail(
@@ -219,7 +213,7 @@ public class CloudTests : TestBase {
 	}
 
 	[Test("Changes the password of an e-mail account.")]
-	public void ShouldChangePassword(Cloud cloud) {
+	public void ShouldChangePassword() {
 		cloud.Login(
 			network: LoginNetwork.Email.Describe(),
 			networkId: RandomEmailAddress(),
@@ -232,7 +226,7 @@ public class CloudTests : TestBase {
 	}
 
 	[Test("Changes the e-mail address associated to an e-mail account.")]
-	public void ShouldChangeEmailAddress(Cloud cloud) {
+	public void ShouldChangeEmailAddress() {
 		cloud.Login(
 			network: LoginNetwork.Email.Describe(),
 			networkId: RandomEmailAddress(),
@@ -245,7 +239,7 @@ public class CloudTests : TestBase {
 	}
 
 	[Test("Changes the e-mail address associated to an e-mail account.")]
-	public void ShouldFailToChangeEmailAddressToExistingOne(Cloud cloud) {
+	public void ShouldFailToChangeEmailAddressToExistingOne() {
 		cloud.Login(
 			network: LoginNetwork.Email.Describe(),
 			networkId: RandomEmailAddress(),
@@ -261,7 +255,7 @@ public class CloudTests : TestBase {
 	}
 
 	[Test("Tests the DidLogin notification.")]
-	public void ShouldSendLoggedInNotification(Cloud cloud) {
+	public void ShouldSendLoggedInNotification() {
 		Cotc.LoggedIn += GotLoggedInNotification;
 		Login(cloud, gamer => {});
 	}
@@ -346,7 +340,7 @@ public class CloudTests : TestBase {
 	}
 
 	[Test("Fails to log in by short code (that's the best we can test without access to an actual e-mail address.")]
-	public void ShouldLoginByShortcode(Cloud cloud) {
+	public void ShouldLoginByShortcode() {
 		cloud.LoginWithShortcode("lzX84KYj").ExpectFailure(ex => {
 			Assert(ex.HttpStatusCode == 400, "Should return 400 HTTP code");
 			Assert(ex.ServerData["name"] == "BadToken", "Bad token expected");
@@ -355,7 +349,7 @@ public class CloudTests : TestBase {
 	}
 
     [Test("Tests that an anonymous fails to link to an invalid facebook token (we cannot do much with automated testing).", requisite: "This test should fail from my understanding since the token is invalid, but for some reason it succeeds so we'll make it this way.")]
-    public void ShouldLinkAndUnlinkAccount(Cloud cloud) {
+    public void ShouldLinkAndUnlinkAccount() {
         FailOnUnhandledException = false;
 
         // Create an anonymous account
@@ -426,8 +420,9 @@ public class CloudTests : TestBase {
 	}
 
 	[Test("Scratchpad type test, to be used to test temporary pieces of code or experimenting with the SDK.", "This test failing is not a problem, but avoid commiting it.")]
-	public void FiddlingWithSdk(Cloud cloud) {
-		CompleteTest();
+	public void FiddlingWithSdk() {
+        FailTest("TEST");
+//		CompleteTest();
 	}
 
 	#region Private
