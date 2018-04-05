@@ -1895,7 +1895,7 @@
             <param name="verboseMode">true to enable verbose logging of every request, false otherwise.</param>
         </member>
         <member name="T:CotcSdk.UnityHttpClientV2">
-            Better HTTP client based on UnityEngine.Experimental.Networking.UnityWebRequest.
+            Better HTTP client based on UnityEngine.Networking.UnityWebRequest.
         </member>
         <member name="T:CotcSdk.UnityHttpClientV2.UnityRequest">
             <summary>Asynchronous request state.</summary>
