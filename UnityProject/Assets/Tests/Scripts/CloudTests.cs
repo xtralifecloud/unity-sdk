@@ -421,9 +421,8 @@ public class CloudTests : TestBase {
 
 	[Test("Scratchpad type test, to be used to test temporary pieces of code or experimenting with the SDK.", "This test failing is not a problem, but avoid commiting it.")]
 	public void FiddlingWithSdk() {
-        FailTest("TEST");
-//		CompleteTest();
-	}
+        CompleteTest();
+    }
 
 	#region Private
 	private void GotLoggedInNotification(object sender, Cotc.LoggedInEventArgs e) {

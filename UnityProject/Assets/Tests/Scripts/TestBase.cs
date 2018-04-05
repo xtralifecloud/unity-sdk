@@ -48,13 +48,16 @@ public class TestBase : MonoBehaviour {
 
     [OneTimeSetUp]
     public void Init() {
-        Debug.Log("init start");
-        GameObject instance = (GameObject)Instantiate(Resources.Load("Prefabs/Clan of the Cloud SDK"));
-        instance.GetComponent<CotcGameObject>().GetCloud().Done(cloud_ => {
-            cloud = cloud_;
-            Debug.Log("init cloud");
-        });
-        Debug.Log("init end");
+        // Debug.Log("init start");
+        if (cloud == null)
+        {
+            GameObject instance = (GameObject)Instantiate(Resources.Load("Prefabs/Clan of the Cloud SDK"));
+            instance.GetComponent<CotcGameObject>().GetCloud().Done(cloud_ => {
+                cloud = cloud_;
+                // Debug.Log("init cloud");
+            });
+        }
+        // Debug.Log("init end");
     }
 
     protected void Assert(bool condition, string message) {
@@ -64,13 +67,14 @@ public class TestBase : MonoBehaviour {
 	}
 
 	public static void CompleteTest() {
-        //if (!DoNotRunMethodsAutomatically) IntegrationTest.Pass();
+        // if (!DoNotRunMethodsAutomatically) IntegrationTest.Pass();
         if (OnTestCompleted != null) OnTestCompleted(true);
 	}
 
 	public static void FailTest(string reason) {
 		if (!DoNotRunMethodsAutomatically) {
-            //IntegrationTest.Fail(reason);
+            NUnit.Framework.Assert.Fail(reason);
+            // IntegrationTest.Fail(reason);
         }
         else {
 			Common.LogError("Test failed: " + reason);
