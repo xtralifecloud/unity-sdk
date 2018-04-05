@@ -15,6 +15,7 @@ public class ExportReleasePackage {
 				"Assets/Plugins/CotcSdk.dll",
 				"Assets/Plugins/CotcSdk.XML",
 				"Assets/Plugins/Editor/CotcSdk-Editor.dll",
+				"Assets/Plugins/WSA/CotcSdk.dll",
 				"Assets/Scenes/SampleScene.unity",
 				"Assets/Scripts/SampleScene.cs",
 			}
