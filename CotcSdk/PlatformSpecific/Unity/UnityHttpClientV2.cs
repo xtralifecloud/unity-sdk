@@ -1,17 +1,11 @@
 using System;
 using System.IO;
+//using System.IO.Compression;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
-
-// Disable gzip compression on Universal Windows Platform
-#if !WINDOWS_UWP
-// Use Ionic.Zlib's GZipStream instead of System.IO.Compression's one to handle gzip compression on none-Windows platforms
-//using System.IO.Compression;
-using Ionic.Zlib;
-#endif
 
 namespace CotcSdk {
 	/**
@@ -37,10 +31,7 @@ namespace CotcSdk {
                 // Auto-choose HTTP method
                 Request.method = request.Method ?? (request.Body != null ? "POST" : "GET");
 
-				// Disable gzip compression on Universal Windows Platform
-				#if !WINDOWS_UWP
-				request.Headers["Accept-Encoding"] = "gzip";
-				#endif
+				//request.Headers["Accept-Encoding"] = "gzip";
 
 				// TODO Missing functionality (currently unsupported by UnityWebRequest).
 				//				req.SetRequestHeader("User-agent", request.UserAgent);
@@ -145,15 +136,12 @@ namespace CotcSdk {
 
 						if (responseHeaders != null)
 						{
-                            // Disable gzip compression on Universal Windows Platform
-                            #if WINDOWS_UWP
-								response.Body = Request.downloadHandler.data;
-                            #else
+							/*
                             if (responseHeaders.ContainsKey("Content-Encoding") && (responseHeaders["Content-Encoding"] == "gzip"))
 								response.Body = GzipDecompress(Request.downloadHandler.data);
 							else
+							*/
 								response.Body = Request.downloadHandler.data;
-                            #endif
 
                             foreach (var pair in responseHeaders)
                                 response.Headers[pair.Key] = pair.Value;
@@ -167,8 +155,7 @@ namespace CotcSdk {
                 }
             }
 
-            // Disable gzip compression on Universal Windows Platform
-            #if !WINDOWS_UWP
+			/*
             private byte[] GzipDecompress(byte[] data)
 			{
 				MemoryStream compressedData = new MemoryStream(data);
@@ -184,7 +171,7 @@ namespace CotcSdk {
 
 				return decompressedData.ToArray();
 			}
-            #endif
+			*/
 
             public override void Start() {
 				// Configure & perform the request
