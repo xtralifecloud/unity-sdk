@@ -39,3 +39,4 @@
 *.jar binary
 *.unity binary
 *.asset binary
+*.dll binary
