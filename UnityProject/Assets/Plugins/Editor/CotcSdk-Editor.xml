@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CotcSdk-Editor</name>
+    </assembly>
+    <members>
+        <member name="T:CotcSdk.PreferencePane">
+            @cond private 
+        </member>
+    </members>
+</doc>
