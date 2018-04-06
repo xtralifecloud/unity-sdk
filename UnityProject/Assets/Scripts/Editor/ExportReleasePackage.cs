@@ -17,7 +17,7 @@ public class ExportReleasePackage {
 				"Assets/Plugins/Editor/CotcSdk-Editor.dll",
 				"Assets/Plugins/WSA/CotcSdk.dll",
 				"Assets/Scenes/SampleScene.unity",
-				"Assets/Scripts/SampleScene.cs",
+				"Assets/Scripts/SampleScene.cs"
 			}
 		},
 		{
@@ -25,7 +25,7 @@ public class ExportReleasePackage {
 			new string[] {
 				"Assets/Cotc.FacebookIntegration",
 				"Assets/Scenes/FacebookSampleScene.unity",
-				"Assets/Scripts/FacebookSampleScene.cs",
+				"Assets/Scripts/FacebookSampleScene.cs"
 			}
 		},
 		{
@@ -34,10 +34,10 @@ public class ExportReleasePackage {
 				"Assets/Cotc.InAppPurchase",
                 "Assets/Plugins/Android/android.arch.core.common-1.0.0.jar",
                 "Assets/Plugins/Android/android.arch.lifecycle.common-1.0.0.jar",
-                "Assets/Plugins/Android/android.arch.lifecycle.runtime-1.0.0.jar",
-                "Assets/Plugins/Android/appcompat-v7-26.1.0.aar",
+                "Assets/Plugins/Android/android.arch.lifecycle.runtime-1.0.0.aar",
+                "Assets/Plugins/Android/com.android.support.appcompat-v7-26.1.0.aar",
+                "Assets/Plugins/Android/com.android.support.support-v4-26.1.0.aar",
                 "Assets/Plugins/Android/Cotc.InAppPurchase.aar",
-                "Assets/Plugins/Android/support-v4-26.1.0.aar",
 				"Assets/Plugins/iOS/libCotcInappPurchase.a",
 				"Assets/Scenes/InappPurchaseSampleScene.unity",
 				"Assets/Scripts/InappPurchaseSampleScene.cs"
@@ -49,17 +49,17 @@ public class ExportReleasePackage {
 				"Assets/Cotc.PushNotifications",
                 "Assets/Plugins/Android/android.arch.core.common-1.0.0.jar",
                 "Assets/Plugins/Android/android.arch.lifecycle.common-1.0.0.jar",
-                "Assets/Plugins/Android/android.arch.lifecycle.runtime-1.0.0.jar",
+                "Assets/Plugins/Android/android.arch.lifecycle.runtime-1.0.0.aar",
                 "Assets/Plugins/Android/com.android.support.appcompat-v7-26.1.0.aar",
-				"Assets/Plugins/Android/Cotc.PushNotifications.aar",
+                "Assets/Plugins/Android/com.android.support.support-compat-26.1.0.aar",
+                "Assets/Plugins/Android/com.android.support.support-core-utils-26.1.0.aar",
+                "Assets/Plugins/Android/com.android.support.support-v4-26.1.0.aar",
                 "Assets/Plugins/Android/com.google.android.gms.play-services-base-11.4.0.aar",
                 "Assets/Plugins/Android/com.google.android.gms.play-services-basement-11.4.0.aar",
                 "Assets/Plugins/Android/com.google.android.gms.play-services-gcm-11.4.0.aar",
                 "Assets/Plugins/Android/com.google.android.gms.play-services-iid-11.4.0.aar",
                 "Assets/Plugins/Android/com.google.android.gms.play-services-tasks-11.4.0.aar",
-                "Assets/Plugins/Android/com.android.support.support-compat-26.1.0.aar",
-                "Assets/Plugins/Android/com.android.support.support-core-utils-26.1.0.aar",
-                "Assets/Plugins/Android/com.android.support.support-v4-26.1.0.aar",
+				"Assets/Plugins/Android/Cotc.PushNotifications.aar",
 				"Assets/Plugins/Android/res/drawable-hdpi/ic_stat_ic_notification.png",
 				"Assets/Plugins/Android/res/drawable-hdpi-v11/ic_stat_ic_notification.png",
 				"Assets/Plugins/Android/res/drawable-mdpi/ic_stat_ic_notification.png",
@@ -67,7 +67,7 @@ public class ExportReleasePackage {
 				"Assets/Plugins/Android/res/drawable-xhdpi/ic_stat_ic_notification.png",
 				"Assets/Plugins/Android/res/drawable-xhdpi-v11/ic_stat_ic_notification.png",
 				"Assets/Plugins/Android/res/drawable-xxhdpi/ic_stat_ic_notification.png",
-				"Assets/Plugins/Android/res/drawable-xxhdpi-v11/ic_stat_ic_notification.png",
+				"Assets/Plugins/Android/res/drawable-xxhdpi-v11/ic_stat_ic_notification.png"
 			}
 		}
 	};
