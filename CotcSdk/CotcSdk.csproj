@@ -27,6 +27,7 @@
         <Command type="AfterBuild" command="After-build.sh" workingdir="${ProjectDir}" />
       </CustomCommands>
     </CustomCommands>
+    <DocumentationFile>bin\Debug\CotcSdk.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,7 +36,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\CotcSdk.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\CotcSdk.xml</DocumentationFile>
     <CustomCommands>
       <CustomCommands>
         <Command type="AfterBuild" command="After-build-release.sh" workingdir="${ProjectDir}" />
@@ -107,6 +108,20 @@
     <Compile Include="Internal\HttpResponse.cs" />
     <Compile Include="Internal\HttpTimeoutException.cs" />
     <Compile Include="Internal\UrlBuilder.cs" />
+    <Compile Include="Libs\DotNetZipForUnity\CommonSrc\CRC32.cs" />
+    <Compile Include="Libs\DotNetZipForUnity\CommonSrc\Iso8859Dash1Encoding.cs" />
+    <Compile Include="Libs\DotNetZipForUnity\Zlib\Deflate.cs" />
+    <Compile Include="Libs\DotNetZipForUnity\Zlib\DeflateStream.cs" />
+    <Compile Include="Libs\DotNetZipForUnity\Zlib\GZipStream.cs" />
+    <Compile Include="Libs\DotNetZipForUnity\Zlib\Inflate.cs" />
+    <Compile Include="Libs\DotNetZipForUnity\Zlib\InfTree.cs" />
+    <Compile Include="Libs\DotNetZipForUnity\Zlib\ParallelDeflateOutputStream.cs" />
+    <Compile Include="Libs\DotNetZipForUnity\Zlib\Tree.cs" />
+    <Compile Include="Libs\DotNetZipForUnity\Zlib\Zlib.cs" />
+    <Compile Include="Libs\DotNetZipForUnity\Zlib\ZlibBaseStream.cs" />
+    <Compile Include="Libs\DotNetZipForUnity\Zlib\ZlibCodec.cs" />
+    <Compile Include="Libs\DotNetZipForUnity\Zlib\ZlibConstants.cs" />
+    <Compile Include="Libs\DotNetZipForUnity\Zlib\ZlibStream.cs" />
     <Compile Include="Libs\LitJson\IJsonWrapper.cs" />
     <Compile Include="Libs\LitJson\JsonData.cs" />
     <Compile Include="Libs\LitJson\JsonException.cs" />
@@ -141,9 +156,10 @@
     <PostBuildEvent>md $(SolutionDir)..\UnityProject\Assets\Plugins
 if $(ConfigurationName) == Debug (
     copy $(TargetDir)\CotcSdk.dll $(SolutionDir)..\UnityProject\Assets\Plugins\CotcSdk-Debug.dll
+    copy $(TargetDir)\CotcSdk.xml $(SolutionDir)..\UnityProject\Assets\Plugins\CotcSdk-Debug.xml
 ) else (
     copy $(TargetDir)\CotcSdk.dll $(SolutionDir)..\UnityProject\Assets\Plugins\CotcSdk.dll
-    copy $(TargetDir)\CotcSdk.XML $(SolutionDir)..\UnityProject\Assets\Plugins\CotcSdk.xml
+    copy $(TargetDir)\CotcSdk.xml $(SolutionDir)..\UnityProject\Assets\Plugins\CotcSdk.xml
 )</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

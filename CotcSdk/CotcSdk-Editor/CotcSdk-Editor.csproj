@@ -28,6 +28,7 @@
         <Command type="AfterBuild" command="After-build.sh" workingdir="${ProjectDir}" />
       </CustomCommands>
     </CustomCommands>
+    <DocumentationFile>bin\Debug\CotcSdk-Editor.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -41,6 +42,7 @@
         <Command type="AfterBuild" command="After-build.sh" workingdir="${ProjectDir}" />
       </CustomCommands>
     </CustomCommands>
+    <DocumentationFile>bin\Release\CotcSdk-Editor.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -65,9 +67,11 @@
   <PropertyGroup>
     <PostBuildEvent>md $(SolutionDir)..\UnityProject\Assets\Plugins\Editor
 if $(ConfigurationName) == Debug (
-    copy $(TargetPath) $(SolutionDir)..\UnityProject\Assets\Plugins\Editor\CotcSdk-Editor-Debug.dll
+    copy $(TargetDir)\CotcSdk-Editor.dll $(SolutionDir)..\UnityProject\Assets\Plugins\Editor\CotcSdk-Editor-Debug.dll
+    copy $(TargetDir)\CotcSdk-Editor.xml $(SolutionDir)..\UnityProject\Assets\Plugins\Editor\CotcSdk-Editor-Debug.xml
 ) else (
-    copy $(TargetPath) $(SolutionDir)..\UnityProject\Assets\Plugins\Editor\CotcSdk-Editor.dll
+    copy $(TargetDir)\CotcSdk-Editor.dll $(SolutionDir)..\UnityProject\Assets\Plugins\Editor\CotcSdk-Editor.dll
+    copy $(TargetDir)\CotcSdk-Editor.xml $(SolutionDir)..\UnityProject\Assets\Plugins\Editor\CotcSdk-Editor.xml
 )</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -22,19 +22,22 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\WSA\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\CotcSdk.xml</DocumentationFile>
+    <GenerateLibraryLayout>false</GenerateLibraryLayout>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\WSA\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\CotcSdk.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -354,12 +357,13 @@
     <EmbeddedResource Include="Properties\CotcSdk_UniversalWindows.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\..\..\..\Program Files\Unity\Editor\Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
     <Reference Include="WinRTLegacy">
       <HintPath>Libs\WinRTLegacy.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
@@ -367,9 +371,11 @@
   <PropertyGroup>
     <PostBuildEvent>md $(SolutionDir)..\UnityProject\Assets\Plugins\WSA
 if $(ConfigurationName) == Debug (
-    copy $(TargetPath) $(SolutionDir)..\UnityProject\Assets\Plugins\WSA\CotcSdk-Debug.dll
+    copy $(TargetDir)\CotcSdk.dll $(SolutionDir)..\UnityProject\Assets\Plugins\WSA\CotcSdk-UW-Debug.dll
+    copy $(TargetDir)\CotcSdk.xml $(SolutionDir)..\UnityProject\Assets\Plugins\WSA\CotcSdk-UW-Debug.xml
 ) else (
-    copy $(TargetPath) $(SolutionDir)..\UnityProject\Assets\Plugins\WSA\CotcSdk.dll
+    copy $(TargetDir)\CotcSdk.dll $(SolutionDir)..\UnityProject\Assets\Plugins\WSA\CotcSdk-UW.dll
+    copy $(TargetDir)\CotcSdk.xml $(SolutionDir)..\UnityProject\Assets\Plugins\WSA\CotcSdk-UW.xml
 )</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
