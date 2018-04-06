@@ -13,9 +13,11 @@ public class ExportReleasePackage {
 			new string[] {
 				"Assets/Cotc",
 				"Assets/Plugins/CotcSdk.dll",
-				"Assets/Plugins/CotcSdk.XML",
+				"Assets/Plugins/CotcSdk.xml",
 				"Assets/Plugins/Editor/CotcSdk-Editor.dll",
-				"Assets/Plugins/WSA/CotcSdk.dll",
+				"Assets/Plugins/Editor/CotcSdk-Editor.xml",
+				"Assets/Plugins/WSA/CotcSdk-UW.dll",
+				"Assets/Plugins/WSA/CotcSdk-UW.xml",
 				"Assets/Scenes/SampleScene.unity",
 				"Assets/Scripts/SampleScene.cs"
 			}
