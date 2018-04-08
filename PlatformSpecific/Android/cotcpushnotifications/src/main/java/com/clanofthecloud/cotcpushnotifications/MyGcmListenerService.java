@@ -104,9 +104,8 @@ public class MyGcmListenerService extends GcmListenerService {
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
-            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
-                notificationBuilder.setPriority(Notification.PRIORITY_HIGH);
+                .setContentIntent(pendingIntent)
+                .setPriority(Notification.PRIORITY_HIGH);
             notifManager.notify(0 /* ID of notification */, notificationBuilder.build());
         } catch (Exception e) {
             Log.w(TAG, "Failed to handle push notification", e);
