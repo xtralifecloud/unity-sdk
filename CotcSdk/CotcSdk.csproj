@@ -130,6 +130,51 @@
     <Compile Include="HighLevel\Model\PurchaseTransaction.cs" />
     <Compile Include="HighLevel\Model\StoreType.cs" />
     <Compile Include="HighLevel\Model\ValidateReceiptResult.cs" />
+    <Compile Include="Libs\SharpZipLIb\GZip\GZIPConstants.cs" />
+    <Compile Include="Libs\SharpZipLIb\GZip\GZipException.cs" />
+    <Compile Include="Libs\SharpZipLIb\GZip\GzipInputStream.cs" />
+    <Compile Include="Libs\SharpZipLIb\GZip\GzipOutputStream.cs" />
+    <Compile Include="Libs\SharpZipLIb\Core\FileSystemScanner.cs" />
+    <Compile Include="Libs\SharpZipLIb\Core\INameTransform.cs" />
+    <Compile Include="Libs\SharpZipLIb\Core\IScanFilter.cs" />
+    <Compile Include="Libs\SharpZipLIb\Core\NameFilter.cs" />
+    <Compile Include="Libs\SharpZipLIb\Core\PathFilter.cs" />
+    <Compile Include="Libs\SharpZipLIb\Core\StreamUtils.cs" />
+    <Compile Include="Libs\SharpZipLIb\Core\WindowsPathUtils.cs" />
+    <Compile Include="Libs\SharpZipLIb\Checksums\Adler32.cs" />
+    <Compile Include="Libs\SharpZipLIb\Checksums\CRC32.cs" />
+    <Compile Include="Libs\SharpZipLIb\Checksums\IChecksum.cs" />
+    <Compile Include="Libs\SharpZipLIb\Checksums\StrangeCRC.cs" />
+    <Compile Include="Libs\SharpZipLIb\Zip\Compression\Streams\DeflaterOutputStream.cs" />
+    <Compile Include="Libs\SharpZipLIb\Zip\Compression\Streams\InflaterInputStream.cs" />
+    <Compile Include="Libs\SharpZipLIb\Zip\Compression\Streams\OutputWindow.cs" />
+    <Compile Include="Libs\SharpZipLIb\Zip\Compression\Streams\StreamManipulator.cs" />
+    <Compile Include="Libs\SharpZipLIb\Encryption\PkzipClassic.cs" />
+    <Compile Include="Libs\SharpZipLIb\Encryption\ZipAESStream.cs" />
+    <Compile Include="Libs\SharpZipLIb\Encryption\ZipAESTransform.cs" />
+    <Compile Include="Libs\SharpZipLIb\SharpZipBaseException.cs" />
+    <Compile Include="Libs\SharpZipLIb\Zip\Compression\InflaterDynHeader.cs" />
+    <Compile Include="Libs\SharpZipLIb\Zip\Compression\Deflater.cs" />
+    <Compile Include="Libs\SharpZipLIb\Zip\Compression\DeflaterEngine.cs" />
+    <Compile Include="Libs\SharpZipLIb\Zip\Compression\DeflaterHuffman.cs" />
+    <Compile Include="Libs\SharpZipLIb\Zip\Compression\PendingBuffer.cs" />
+    <Compile Include="Libs\SharpZipLIb\Zip\Compression\Inflater.cs" />
+    <Compile Include="Libs\SharpZipLIb\Zip\Compression\InflaterHuffmanTree.cs" />
+    <Compile Include="Libs\SharpZipLIb\Zip\Compression\DeflaterConstants.cs" />
+    <Compile Include="Libs\SharpZipLIb\Zip\Compression\DeflaterPending.cs" />
+    <Compile Include="Libs\SharpZipLIb\Zip\ZipFile.cs" />
+    <Compile Include="Libs\SharpZipLIb\Zip\ZipInputStream.cs" />
+    <Compile Include="Libs\SharpZipLIb\Zip\ZipEntry.cs" />
+    <Compile Include="Libs\SharpZipLIb\Zip\ZipOutputStream.cs" />
+    <Compile Include="Libs\SharpZipLIb\Zip\FastZip.cs" />
+    <Compile Include="Libs\SharpZipLIb\Zip\WindowsNameTransform.cs" />
+    <Compile Include="Libs\SharpZipLIb\Zip\ZipExtraData.cs" />
+    <Compile Include="Libs\SharpZipLIb\Zip\ZipConstants.cs" />
+    <Compile Include="Libs\SharpZipLIb\Zip\IEntryFactory.cs" />
+    <Compile Include="Libs\SharpZipLIb\Zip\ZipEntryFactory.cs" />
+    <Compile Include="Libs\SharpZipLIb\Zip\ZipNameTransform.cs" />
+    <Compile Include="Libs\SharpZipLIb\Zip\ZipHelperStream.cs" />
+    <Compile Include="Libs\SharpZipLIb\Zip\ZipException.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HighLevel\GamerAccountMethods.cs" />
@@ -155,4 +200,11 @@ if $(ConfigurationName) == Debug (
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Folder Include="Libs\SharpZipLIb\" />
+    <Folder Include="Libs\SharpZipLIb\Core\" />
+    <Folder Include="Libs\SharpZipLIb\Checksums\" />
+    <Folder Include="Libs\SharpZipLIb\Zip\" />
+    <Folder Include="Libs\SharpZipLIb\Encryption\" />
+  </ItemGroup>
 </Project>
