@@ -7,6 +7,9 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 
+using ICSharpCode.SharpZipLib.Core;
+using ICSharpCode.SharpZipLib.GZip;
+
 namespace CotcSdk {
 	/**
 	 * Better HTTP client based on UnityEngine.Networking.UnityWebRequest.
@@ -31,7 +34,7 @@ namespace CotcSdk {
                 // Auto-choose HTTP method
                 Request.method = request.Method ?? (request.Body != null ? "POST" : "GET");
 
-				//request.Headers["Accept-Encoding"] = "gzip";
+				request.Headers["Accept-Encoding"] = "gzip";
 
 				// TODO Missing functionality (currently unsupported by UnityWebRequest).
 				//				req.SetRequestHeader("User-agent", request.UserAgent);
@@ -134,15 +137,14 @@ namespace CotcSdk {
                     {
 						Dictionary<string, string> responseHeaders = Request.GetResponseHeaders();
 
+						// Detecting if the response is a gzip buffer, by checking the first two bytes, the gzip header.
+						if (Request.downloadHandler.data[0] == 0x1F && Request.downloadHandler.data[1] == 0x8B)
+							response.Body = GzipDecompress (Request.downloadHandler.data);
+						else
+							response.Body = Request.downloadHandler.data;
+
 						if (responseHeaders != null)
 						{
-							/*
-                            if (responseHeaders.ContainsKey("Content-Encoding") && (responseHeaders["Content-Encoding"] == "gzip"))
-								response.Body = GzipDecompress(Request.downloadHandler.data);
-							else
-							*/
-								response.Body = Request.downloadHandler.data;
-
                             foreach (var pair in responseHeaders)
                                 response.Headers[pair.Key] = pair.Value;
 						}
@@ -155,13 +157,12 @@ namespace CotcSdk {
                 }
             }
 
-			/*
             private byte[] GzipDecompress(byte[] data)
 			{
 				MemoryStream compressedData = new MemoryStream(data);
 				MemoryStream decompressedData = new MemoryStream();
 
-				GZipStream decompress = new GZipStream(compressedData, CompressionMode.Decompress);
+				GZipInputStream decompress = new GZipInputStream(compressedData);
 
 				byte[] buffer = new byte[4096];
 				int numRead;
@@ -171,7 +172,6 @@ namespace CotcSdk {
 
 				return decompressedData.ToArray();
 			}
-			*/
 
             public override void Start() {
 				// Configure & perform the request
