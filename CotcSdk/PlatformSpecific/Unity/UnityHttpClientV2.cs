@@ -7,7 +7,6 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 
-using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.GZip;
 
 namespace CotcSdk {
@@ -159,18 +158,22 @@ namespace CotcSdk {
 
             private byte[] GzipDecompress(byte[] data)
 			{
-				MemoryStream compressedData = new MemoryStream(data);
-				MemoryStream decompressedData = new MemoryStream();
+                using (MemoryStream compressedData = new MemoryStream(data))
+                {
+                    using (MemoryStream decompressedData = new MemoryStream())
+                    {
+                        using (GZipInputStream decompress = new GZipInputStream(compressedData))
+                        {
+                            byte[] buffer = new byte[4096];
+                            int numRead;
 
-				GZipInputStream decompress = new GZipInputStream(compressedData);
+                            while ((numRead = decompress.Read(buffer, 0, buffer.Length)) != 0)
+                                decompressedData.Write(buffer, 0, numRead);
 
-				byte[] buffer = new byte[4096];
-				int numRead;
-
-				while ((numRead = decompress.Read(buffer, 0, buffer.Length)) != 0)
-					decompressedData.Write(buffer, 0, numRead);
-
-				return decompressedData.ToArray();
+                            return decompressedData.ToArray();
+                        }
+                    }
+                }
 			}
 
             public override void Start() {
