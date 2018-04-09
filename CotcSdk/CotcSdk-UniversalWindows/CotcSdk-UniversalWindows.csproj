@@ -329,6 +329,84 @@
     <Compile Include="..\Libs\LitJson\ParserToken.cs">
       <Link>Libs\LitJson\ParserToken.cs</Link>
     </Compile>
+    <Compile Include="..\Libs\Unity.IO.Compression\BlockType.cs">
+      <Link>Libs\Unity.IO.Compression\BlockType.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\Unity.IO.Compression\CompressionMode.cs">
+      <Link>Libs\Unity.IO.Compression\CompressionMode.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\Unity.IO.Compression\CopyEncoder.cs">
+      <Link>Libs\Unity.IO.Compression\CopyEncoder.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\Unity.IO.Compression\Crc32Helper.cs">
+      <Link>Libs\Unity.IO.Compression\Crc32Helper.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\Unity.IO.Compression\DeflateInput.cs">
+      <Link>Libs\Unity.IO.Compression\DeflateInput.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\Unity.IO.Compression\DeflaterManaged.cs">
+      <Link>Libs\Unity.IO.Compression\DeflaterManaged.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\Unity.IO.Compression\DeflateStream.cs">
+      <Link>Libs\Unity.IO.Compression\DeflateStream.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\Unity.IO.Compression\DeflateStreamAsyncResult.cs">
+      <Link>Libs\Unity.IO.Compression\DeflateStreamAsyncResult.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\Unity.IO.Compression\FastEncoder.cs">
+      <Link>Libs\Unity.IO.Compression\FastEncoder.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\Unity.IO.Compression\FastEncoderStatics.cs">
+      <Link>Libs\Unity.IO.Compression\FastEncoderStatics.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\Unity.IO.Compression\FastEncoderWindow.cs">
+      <Link>Libs\Unity.IO.Compression\FastEncoderWindow.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\Unity.IO.Compression\FileFormats.cs">
+      <Link>Libs\Unity.IO.Compression\FileFormats.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\Unity.IO.Compression\GZipDecoder.cs">
+      <Link>Libs\Unity.IO.Compression\GZipDecoder.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\Unity.IO.Compression\GZipStream.cs">
+      <Link>Libs\Unity.IO.Compression\GZipStream.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\Unity.IO.Compression\GZipUtils.cs">
+      <Link>Libs\Unity.IO.Compression\GZipUtils.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\Unity.IO.Compression\HuffmanTree.cs">
+      <Link>Libs\Unity.IO.Compression\HuffmanTree.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\Unity.IO.Compression\IDeflater.cs">
+      <Link>Libs\Unity.IO.Compression\IDeflater.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\Unity.IO.Compression\Inflater.cs">
+      <Link>Libs\Unity.IO.Compression\Inflater.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\Unity.IO.Compression\InflaterState.cs">
+      <Link>Libs\Unity.IO.Compression\InflaterState.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\Unity.IO.Compression\InputBuffer.cs">
+      <Link>Libs\Unity.IO.Compression\InputBuffer.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\Unity.IO.Compression\InvalidDataException.cs">
+      <Link>Libs\Unity.IO.Compression\InvalidDataException.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\Unity.IO.Compression\Match.cs">
+      <Link>Libs\Unity.IO.Compression\Match.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\Unity.IO.Compression\MatchState.cs">
+      <Link>Libs\Unity.IO.Compression\MatchState.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\Unity.IO.Compression\OutputBuffer.cs">
+      <Link>Libs\Unity.IO.Compression\OutputBuffer.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\Unity.IO.Compression\OutputWindow.cs">
+      <Link>Libs\Unity.IO.Compression\OutputWindow.cs</Link>
+    </Compile>
+    <Compile Include="..\Libs\Unity.IO.Compression\SR.cs">
+      <Link>Libs\Unity.IO.Compression\SR.cs</Link>
+    </Compile>
     <Compile Include="..\PlatformSpecific\HttpClient.cs">
       <Link>PlatformSpecific\HttpClient.cs</Link>
     </Compile>

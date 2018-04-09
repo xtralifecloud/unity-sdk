@@ -2038,5 +2038,18 @@
         <member name="M:CotcSdk.UnityHttpClientV2.UnityRequest.LogResponse(CotcSdk.HttpResponse)">
             <summary>Prints information about the response for debugging purposes.</summary>
         </member>
+        <member name="M:Unity.IO.Compression.InputBuffer.CopyTo(System.Byte[],System.Int32,System.Int32)">
+            Copies length bytes from input buffer to output buffer starting
+            at output[offset].  You have to make sure, that the buffer is
+            byte aligned.  If not enough bytes are available, copies fewer
+            bytes.
+            Returns the number of bytes copied, 0 if no byte is available.
+        </member>
+        <member name="T:Unity.IO.Compression.SR">
+            <summary>
+            NOTE: this is a hacked in replacement for the SR class
+                Unity games don't care about localized exception messages, so we just hacked these in the best we could
+            </summary>
+        </member>
     </members>
 </doc>
