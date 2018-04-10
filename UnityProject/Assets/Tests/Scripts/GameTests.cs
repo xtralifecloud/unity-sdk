@@ -3,22 +3,24 @@ using UnityEngine;
 using CotcSdk;
 using System.Reflection;
 using IntegrationTests;
+using System.Collections;
 
 public class GameTests : TestBase {
 
     [Test("Fetches all keys for the current game.")]
-	public void ShouldFetchAllKeys() {
+	public IEnumerator ShouldFetchAllKeys() {
         cloud.Game.GameVfs.GetValue()
-			.ExpectSuccess(received => {
-                Assert(received.Has("result"), "No field named result");
-                CompleteTest();
-            });
+		.ExpectSuccess(received => {
+            Assert(received.Has("result"), "No field named result");
+            CompleteTest();
+        });
+        return WaitForEndOfTest();
 	}
 
     /// To import in the Game VFS under the key unitTest_DoNotTouch :
     /// {"int":2,"double":0.99,"string":"test","bool":true,"array":[1,2,3],"dict":{"key":"val"},"jsonStringified":"{\"key\":\"val\"}"}
     [Test("Fetches a key on the game and checks that it worked properly.", requisite: "Please import the value in commentary in the current game key/value storage under the key unitTest_DoNotTouch. Also assesses that string-type keys can be fetched properly.")]
-    public void ShouldFetchGameKey() {
+    public IEnumerator ShouldFetchGameKey() {
         cloud.Game.GameVfs.GetValue("unitTest_DoNotTouch")
         .ExpectSuccess(received => {
             Assert(received.Type != Bundle.DataType.String, "Not expecting string result");
@@ -50,41 +52,57 @@ public class GameTests : TestBase {
 
             CompleteTest();
         });
+        return WaitForEndOfTest();
 	}
 
     [Test("Runs a batch without parameters on the server and checks the return value.", requisite: "The current game must be set-up with a batch which must return anything")]
-    public void ShouldRunGameBatchWithoutParameter() {
+    public IEnumerator ShouldRunGameBatchWithoutParameter() {
         cloud.Game.Batches.Run("unitTest_withoutParam")
         .ExpectSuccess(batchResult => {
             Assert(batchResult.AsString() == "Hello World !", "Result invalid, expected 'Hello World', got " + batchResult.AsString());
             CompleteTest();
         });
+        return WaitForEndOfTest();
     }
 
     [Test("Runs a batch on another domain on the server and checks the return value.", requisite: "The current game must be set-up with a batch which must return anything")]
-    public void ShouldRunGameBatchOnAnotherDomain() {
+    public IEnumerator ShouldRunGameBatchOnAnotherDomain() {
         cloud.Game.Batches.Domain("com.clanofthecloud.cloudbuilder.test").Run("unitTest_otherDomain")
         .ExpectSuccess(batchResult => {
             Assert(batchResult.AsString() == "Other Domain", "Result invalid, expected 'Hello World', got " + batchResult.AsString());
             CompleteTest();
         });
+        return WaitForEndOfTest();
     }
 
     [Test("Runs a batch with parameters on the server and checks the return value.", requisite: "The current game must be set-up with a batch which must return {value: params.request.value * 2};")]
-	public void ShouldRunGameBatchWithParameters() {
+	public IEnumerator ShouldRunGameBatchWithParameters() {
 		cloud.Game.Batches.Run("unitTest_withParams", Bundle.CreateObject("value", 3))
 		.ExpectSuccess(batchResult => {
 			Assert(batchResult["value"] == 6, "Result invalid (expected 3 x 2 = 6)");
 			CompleteTest();
 		});
-	}    
+        return WaitForEndOfTest();
+	}
 
-    [Test("Get a binary from gameVFS", "The get/set of binaries is broken at the moment.")]
-    public void ShouldGetBinaryFromGameVFS() {
+    [Test("Get a binary from gameVFS", "The current game must be set-up with a binary containing a string")]
+    public IEnumerator ShouldGetBinaryFromGameVFS() {
         cloud.Game.GameVfs.GetBinary("unitTest_GetBinary")
         .ExpectSuccess(data => {
-            // TODO Complete this test when the get/set of binaries is no longer broken.
-            Debug.LogError("You must test data here!");
-        });        
+            Assert(System.Text.Encoding.UTF8.GetString(data) == "This is a test for the GameGetBinary", "Invalid game binary");
+            CompleteTest();
+        });
+        return WaitForEndOfTest();
+    }
+
+    [Test("Try to get an unexisting binary from gameVFS")]
+    public IEnumerator ShouldFailToGetUnexistingBinaryFromGameVFS() {
+        cloud.Game.GameVfs.GetBinary("unexisting_binary")
+        .ExpectFailure(result => {
+            Assert(result.ServerData["name"] == "KeyNotFound", "Name should be KeyNotFound");
+            Assert(result.ServerData["message"] == "The specified key couldn't be found", "Should indicate unexisting binary");
+            CompleteTest();
+        });
+        return WaitForEndOfTest();
     }
 }

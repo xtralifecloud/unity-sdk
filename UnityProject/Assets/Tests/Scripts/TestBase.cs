@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -45,45 +46,68 @@ public class TestBase : MonoBehaviour {
 	private List<string> PendingSignals = new List<string>();
 	private Dictionary<string, Action> RegisteredSlots = new Dictionary<string, Action>();
     protected static Cloud cloud;
+    protected static bool testIsRunning;
 
     [OneTimeSetUp]
     public void Init() {
-        // Debug.Log("init start");
-        if (cloud == null)
-        {
+        Promise.Debug_OutputAllExceptions = false;
+        if (cloud == null) {
             GameObject instance = (GameObject)Instantiate(Resources.Load("Prefabs/Clan of the Cloud SDK"));
             instance.GetComponent<CotcGameObject>().GetCloud().Done(cloud_ => {
                 cloud = cloud_;
-                // Debug.Log("init cloud");
             });
         }
-        // Debug.Log("init end");
+    }
+
+    [SetUp]
+    public void Setup() {
+        testIsRunning = true;
+    }
+
+    protected IEnumerator WaitForEndOfTest() {
+        while (testIsRunning)
+            yield return null;
     }
 
     protected void Assert(bool condition, string message) {
 		if (!condition) {
-			throw new Exception("Test interrupted because of failed assertion: " + message);
+			Debug.LogError("Test interrupted because of failed assertion: " + message);
 		}
 	}
 
-	public static void CompleteTest() {
-        // if (!DoNotRunMethodsAutomatically) IntegrationTest.Pass();
-        if (OnTestCompleted != null) OnTestCompleted(true);
-	}
+    public static void CompleteTest() {
+        testIsRunning = false;
+    }
 
-	public static void FailTest(string reason) {
-		if (!DoNotRunMethodsAutomatically) {
-            NUnit.Framework.Assert.Fail(reason);
-            // IntegrationTest.Fail(reason);
+    public static void FailTest(string reason) {
+        testIsRunning = false;
+        Debug.LogError("Test failed: " + reason);
+    }
+
+    /*  ======================================
+     *   Old CompleteTest and FailTest method
+     *  ======================================
+     *
+    public static void CompleteTest() {
+        if (!DoNotRunMethodsAutomatically) IntegrationTest.Pass();
+        if (OnTestCompleted != null) OnTestCompleted(true);
+    }
+
+    public static void FailTest(string reason) {
+        if (!DoNotRunMethodsAutomatically) {
+            IntegrationTest.Fail(reason);
         }
         else {
-			Common.LogError("Test failed: " + reason);
-		}
-		if (OnTestCompleted != null) OnTestCompleted(false);
-	}
+            Common.LogError("Test failed: " + reason);
+        }
+        if (OnTestCompleted != null) OnTestCompleted(false);
+    }
+    *
+    * 
+    */
 
-	// For use in test classes themselves (Start method)
-	protected void RunTestMethod(string testMethodName) {
+    // For use in test classes themselves (Start method)
+    protected void RunTestMethod(string testMethodName) {
 		// Fail test on unhandled exception
 		Promise.UnhandledException += (sender, e) => {
 			if (FailOnUnhandledException) {
@@ -148,44 +172,40 @@ public class TestBase : MonoBehaviour {
 	}
 
 	protected void Login(Cloud cloud, Action<Gamer> done) {
-		cloud.Login(
-			network: LoginNetwork.Email.Describe(),
-			networkId: "cloud@localhost.localdomain",
-			networkSecret: "Password123")
-		.Then(gamer => {
-			done(gamer);
-		})
-		.Catch(ex => FailTest("Failed to log in"));
+        cloud.Login(
+            network: LoginNetwork.Email.Describe(),
+            networkId: "cloud@localhost.localdomain",
+            networkSecret: "Password123")
+        .ExpectSuccess(gamer => {
+            done(gamer);
+        });
 	}
 
 	protected void Login2Users(Cloud cloud, Action<Gamer, Gamer> done) {
 		Login(cloud, gamer1 => {
-			// Second user
-			cloud.Login(
-				network: LoginNetwork.Email.Describe(),
-				networkId: "clan2@localhost.localdomain",
-				networkSecret: "Password123")
-			.Then(gamer2 => {
-				done(gamer1, gamer2);
-			})
-			.Catch(ex => TestBase.FailTest("Failed to log in"));
+            // Second user
+            cloud.Login(
+                network: LoginNetwork.Email.Describe(),
+                networkId: "clan2@localhost.localdomain",
+                networkSecret: "Password123")
+            .ExpectSuccess(gamer2 => {
+                done(gamer1, gamer2);
+            });
 		});
 	}
 
 	protected void LoginNewUser(Cloud cloud, Action<Gamer> done) {
-		cloud.LoginAnonymously()
-		.Then(gamer => { done(gamer); })
-		.Catch(ex => TestBase.FailTest("Failed to log in"));
+        cloud.LoginAnonymously()
+        .ExpectSuccess(gamer => { done(gamer); });
 	}
 
 	protected void Login2NewUsers(Cloud cloud, Action<Gamer, Gamer> done) {
-		cloud.LoginAnonymously().Then(gamer1 => {
-			// Second user
-			return cloud.LoginAnonymously().Then(gamer2 => {
-				done(gamer1, gamer2);
-			});
-		})
-		.Catch(ex => TestBase.FailTest("Failed to log in"));
+        cloud.LoginAnonymously().ExpectSuccess(gamer1 => {
+            // Second user
+            return cloud.LoginAnonymously().ExpectSuccess(gamer2 => {
+                done(gamer1, gamer2);
+            });
+        });
 	}
 
 	protected string RandomEmailAddress() {

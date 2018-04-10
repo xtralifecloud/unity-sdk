@@ -2,19 +2,21 @@ using UnityEngine;
 using System;
 using CotcSdk;
 using IntegrationTests;
+using System.Collections;
 
 public class MatchTests : TestBase {
 
 	[Test("Creates a match with the minimum number of arguments and checks that it is created properly (might highlight problems with the usage of the Bundle class).")]
-	public void ShouldCreateMatchWithMinimumArgs() {
+	public IEnumerator ShouldCreateMatchWithMinimumArgs() {
 		Login(cloud, gamer => {
 			gamer.Matches.Create(maxPlayers: 2)
 			.CompleteTestIfSuccessful();
 		});
+        return WaitForEndOfTest();
 	}
 
 	[Test("Creates a match, and verifies that the match object seems to be configured appropriately.", "Because of a unit test on a hook, the global state of the matches aren't empty.")]
-	public void ShouldCreateMatch() {
+	public IEnumerator ShouldCreateMatch() {
 		string matchDesc = "Test match";
 		Login(cloud, gamer => {
 			gamer.Matches.Create(
@@ -40,10 +42,11 @@ public class MatchTests : TestBase {
 				CompleteTest();
 			});
 		});
+        return WaitForEndOfTest();
 	}
 
 	[Test("Creates a match, and fetches it then, verifying that the match can be continued properly.")]
-	public void ShouldContinueMatch() {
+	public IEnumerator ShouldContinueMatch() {
 		Login(cloud, gamer => {
 			gamer.Matches.Create(2)
 			.ExpectSuccess(createdMatch => {
@@ -56,10 +59,11 @@ public class MatchTests : TestBase {
 				});
 			});
 		});
+        return WaitForEndOfTest();
 	}
 
 	[Test("Creates a match as one user, and joins with another. Also tries to join again with the same user and expects an error.")]
-	public void ShouldJoinMatch() {
+	public IEnumerator ShouldJoinMatch() {
 		Login2Users(cloud, (Gamer creator, Gamer joiner) => {
 			creator.Matches.Create(2)
 			.ExpectSuccess(createdMatch => {
@@ -80,10 +84,11 @@ public class MatchTests : TestBase {
 				});
 			});
 		});
+        return WaitForEndOfTest();
 	}
 
 	[Test("Creates a match and attempts to delete it, and expects it to fail.")]
-	public void ShouldFailToDeleteMatch() {
+	public IEnumerator ShouldFailToDeleteMatch() {
 		Login(cloud, gamer => {
 
 			gamer.Matches.Create(2)
@@ -96,10 +101,11 @@ public class MatchTests : TestBase {
 				});
 			});
 		});
+        return WaitForEndOfTest();
 	}
 
 	[Test("Big test that creates a match and simulates playing it with two players. Tries a bit of everything in the API.")]
-	public void ShouldPlayMatch() {
+	public IEnumerator ShouldPlayMatch() {
 		Login2Users(cloud, (Gamer gamer1, Gamer gamer2) => {
 			Match[] matches = new Match[2];
 			// Create a match
@@ -152,18 +158,16 @@ public class MatchTests : TestBase {
 				});
 			});
 		});
+        return WaitForEndOfTest();
 	}
 
 	[Test("Creates a match and plays it as two users. Checks that events are broadcasted appropriately.")]
-	public void ShouldReceiveEvents() {
+	public IEnumerator ShouldReceiveEvents() {
         
 		Login2NewUsers(cloud, (Gamer gamer1, Gamer gamer2) => {
 			DomainEventLoop loopP1 = gamer1.StartEventLoop();
             DomainEventLoop loopP2 = gamer2.StartEventLoop();
 			gamer1.Matches.Create(maxPlayers: 2)
-            .Catch(ex => {
-                Debug.LogError(ex);
-            })
 			.ExpectSuccess(createdMatch => {
                 // 1) P1 subscribe to OnPlayerJoined
                 createdMatch.OnPlayerJoined += (Match sender, MatchJoinEvent e) => {
@@ -175,9 +179,6 @@ public class MatchTests : TestBase {
 				};
 				// Join as P2
 				gamer2.Matches.Join(createdMatch.MatchId)
-                .Catch(ex => {
-                    Debug.LogError(ex);
-                })
 				.ExpectSuccess(joinedMatch => {
                     // 2) P2 Subscribe to OnMovePosted
                     joinedMatch.OnMovePosted += (Match sender, MatchMoveEvent e) => {
@@ -193,10 +194,11 @@ public class MatchTests : TestBase {
 				});
 			});
 		});
+        return WaitForEndOfTest();
 	}
 
 	[Test("Tests the reception of an invitation between two players")]
-	public void ShouldReceiveInvitation() {
+	public IEnumerator ShouldReceiveInvitation() {
 		Login2NewUsers(cloud, (Gamer gamer1, Gamer gamer2) => {
 			// P2 will create a match and invite P1
 			gamer2.Matches.Create(maxPlayers: 2)
@@ -215,10 +217,11 @@ public class MatchTests : TestBase {
 				createMatch.InvitePlayer(gamer1.GamerId).ExpectSuccess();
 			});
 		});
+        return WaitForEndOfTest();
 	}
 
     [Test("Tests that the DiscardEventHandlers works properly")]
-    public void ShouldDiscardEventHandlers() {
+    public IEnumerator ShouldDiscardEventHandlers() {
         Login2NewUsers(cloud, (Gamer gamer1, Gamer gamer2) => {
             // P2 will create a match and invite P1
             gamer2.Matches.Create(maxPlayers: 2)
@@ -239,12 +242,13 @@ public class MatchTests : TestBase {
                 createMatch.InvitePlayer(gamer1.GamerId).ExpectSuccess();
             });
         });
+        return WaitForEndOfTest();
     }
 
     [Test("Creates a variety of matches and tests the various features of the match listing functionality.")]
-	public void ShouldListMatches() {
+	public IEnumerator ShouldListMatches() {
 		Login2NewUsers(cloud, (gamer1, gamer2) => {
-			int[] totalMatches = new int[1];
+			int totalMatches = 0;
 			Match[] matches = new Match[4];
 			// 1) Create a match to which only P1 is participating
 			gamer1.Matches.Create(2)
@@ -278,7 +282,7 @@ public class MatchTests : TestBase {
 			})
 			.ExpectSuccess(list => {
 				Assert(list.Count >= 4, "Should have many results");
-				totalMatches[0] = list.Total;
+				totalMatches = list.Total;
 
 				// List matches to which P1 is participating (i.e. not m1 as m2 is full, m3 created by P2 and m4 full)
 				return gamer1.Matches.List(participating: true);
@@ -298,20 +302,21 @@ public class MatchTests : TestBase {
 				return gamer1.Matches.List(finished: true);
 			})
 			.ExpectSuccess(list => {
-				Assert(list.Total > totalMatches[0], "Should list more matches");
+				Assert(list.Total > totalMatches, "Should list more matches");
 
 				// List full matches (i.e. m4)
 				return gamer1.Matches.List(full: true);
 			})
 			.ExpectSuccess(list => {
-				Assert(list.Total > totalMatches[0], "Should list more matches");
+				Assert(list.Total > totalMatches, "Should list more matches");
 				CompleteTest();
 			});
 		});
+        return WaitForEndOfTest();
 	}
 
 	[Test("Tests race conditions between players.")]
-	public void ShouldHandleRaceConditions() {
+	public IEnumerator ShouldHandleRaceConditions() {
 		Login2NewUsers(cloud, (gamer1, gamer2) => {
 			Match[] matches = new Match[2];
 			// Create a match, and make P2 join it but start no event loop
@@ -337,10 +342,11 @@ public class MatchTests : TestBase {
 				});
 			});
 		});
+        return WaitForEndOfTest();
 	}
 
     [Test("Test the dismiss invitation functionnality")]
-    public void ShouldDismissInvitation() {
+    public IEnumerator ShouldDismissInvitation() {
         Login2NewUsers(cloud, (gamer1, gamer2) => {
             gamer2.Matches.Create(maxPlayers: 2)
             .ExpectSuccess(createMatch => {
@@ -353,16 +359,16 @@ public class MatchTests : TestBase {
                     gamer1.Matches.DismissInvitation(createMatch.MatchId).ExpectSuccess(done => {
                         CompleteTest();
                     });
-                    loopP1.Stop();                    
+                    loopP1.Stop();
                 };
-                createMatch.InvitePlayer(gamer1.GamerId).ExpectSuccess();                
-            });                
+                createMatch.InvitePlayer(gamer1.GamerId).ExpectSuccess();
+            });
         });
+        return WaitForEndOfTest();
     }
 
-
     [Test("Test if the Draw From Shoe functionnality works properly")]
-    public void ShouldDrawFromShoe() {
+    public IEnumerator ShouldDrawFromShoe() {
         Login2NewUsers(cloud, (gamer1, gamer2) => {
             DomainEventLoop l1 = gamer1.StartEventLoop();
             DomainEventLoop l2 = gamer2.StartEventLoop();
@@ -401,6 +407,7 @@ public class MatchTests : TestBase {
                 });
             });            
         });
+        return WaitForEndOfTest();
     }
 
     #region Private

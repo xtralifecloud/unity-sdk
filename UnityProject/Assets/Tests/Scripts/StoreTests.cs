@@ -4,6 +4,7 @@ using CotcSdk;
 using System.Reflection;
 using IntegrationTests;
 using CotcSdk.InappPurchase;
+using System.Collections;
 
 /**
  * These tests can not test device specific methods unfortunately.
@@ -14,7 +15,7 @@ public class StoreTests : TestBase {
 	private const string BoConfiguration = "Needs a product like that in the BO: {\"reward\":{\"domain\":\"private\",\"description\":\"Test\",\"tx\":{\"coins\":100}},\"productId\":\"cotc_product1\",\"googlePlayId\":\"android.test.purchased\"}";
 
 	[Test("This test uses store methods (nothing related to the device-specific in-app plugin).", BoConfiguration)]
-	public void ShouldPerformFakePurchase() {
+	public IEnumerator ShouldPerformFakePurchase() {
 		LoginNewUser(cloud, gamer => {
 			string transactionId = "transaction." + Guid.NewGuid();
 			string receiptJson = "{\"packageName\":\"com.clanofthecloud.cli\",\"orderId\":\"" + transactionId + "\",\"productId\":\"android.test.purchased\",\"developerPayload\":\"\",\"purchaseTime\":0,\"purchaseState\":0,\"purchaseToken\":\"inapp:com.clanofthecloud.cli:android.test.purchased\"}";
@@ -55,17 +56,18 @@ public class StoreTests : TestBase {
 				CompleteTest();
 			});
 		});
+        return WaitForEndOfTest();
 	}
 
 #if false
-	[Test("Tests the native plugin as well.", BoConfiguration)]
-	public void ShouldUseNativePurchasePlugin() {
+    [Test("Tests the native plugin as well.", BoConfiguration)]
+	public IEnumerator ShouldUseNativePurchasePlugin() {
 		LoginNewUser(cloud, gamer => {
 			var productToBeBought = new ConfiguredProduct[1];
-			var inappObject = FindObjectOfType<CotcInappPurchaseGameObject>();
+            var inappObject = (CotcInappPurchaseGameObject)Instantiate(Resources.Load("Prefabs/CotC In-app Purchase"));
 
-			// Fetch the catalog
-			gamer.Store.ListConfiguredProducts()
+            // Fetch the catalog
+            gamer.Store.ListConfiguredProducts()
 			.ExpectSuccess(productList => {
 				// Fetch products natively
 				return inappObject.FetchProductInfo(productList);
@@ -76,6 +78,7 @@ public class StoreTests : TestBase {
 				CompleteTest();
 			});
 		});
+        return WaitForEndOfTest();
 	}
 #endif
 }
