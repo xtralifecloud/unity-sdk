@@ -17,13 +17,19 @@ public class ExportReleasePackage {
 				"Assets/Plugins/Editor/CotcSdk-Editor.dll",
 				"Assets/Plugins/Editor/CotcSdk-Editor.xml",
 				"Assets/Plugins/WSA/CotcSdk-UW.dll",
-				"Assets/Plugins/WSA/CotcSdk-UW.xml",
+				"Assets/Plugins/WSA/CotcSdk-UW.xml"
 			}
 		},
 		{
 			"CotcSdk.FacebookIntegration.unitypackage",
 			new string[] {
-				"Assets/Cotc.FacebookIntegration"
+				"Assets/Cotc.FacebookIntegration",
+				"Assets/Plugins/CotcSdk.dll",
+				"Assets/Plugins/CotcSdk.xml",
+				"Assets/Plugins/Editor/CotcSdk-Editor.dll",
+				"Assets/Plugins/Editor/CotcSdk-Editor.xml",
+				"Assets/Plugins/WSA/CotcSdk-UW.dll",
+				"Assets/Plugins/WSA/CotcSdk-UW.xml"
 			}
 		},
 		{
@@ -37,6 +43,12 @@ public class ExportReleasePackage {
                 "Assets/Plugins/Android/com.android.support.support-v4-26.1.0.aar",
                 "Assets/Plugins/Android/Cotc.InAppPurchase.aar",
 				"Assets/Plugins/iOS/libCotcInappPurchase.a",
+				"Assets/Plugins/CotcSdk.dll",
+				"Assets/Plugins/CotcSdk.xml",
+				"Assets/Plugins/Editor/CotcSdk-Editor.dll",
+				"Assets/Plugins/Editor/CotcSdk-Editor.xml",
+				"Assets/Plugins/WSA/CotcSdk-UW.dll",
+				"Assets/Plugins/WSA/CotcSdk-UW.xml"
 			}
 		},
 		{
@@ -63,7 +75,13 @@ public class ExportReleasePackage {
 				"Assets/Plugins/Android/res/drawable-xhdpi/ic_stat_ic_notification.png",
 				"Assets/Plugins/Android/res/drawable-xhdpi-v11/ic_stat_ic_notification.png",
 				"Assets/Plugins/Android/res/drawable-xxhdpi/ic_stat_ic_notification.png",
-				"Assets/Plugins/Android/res/drawable-xxhdpi-v11/ic_stat_ic_notification.png"
+				"Assets/Plugins/Android/res/drawable-xxhdpi-v11/ic_stat_ic_notification.png",
+				"Assets/Plugins/CotcSdk.dll",
+				"Assets/Plugins/CotcSdk.xml",
+				"Assets/Plugins/Editor/CotcSdk-Editor.dll",
+				"Assets/Plugins/Editor/CotcSdk-Editor.xml",
+				"Assets/Plugins/WSA/CotcSdk-UW.dll",
+				"Assets/Plugins/WSA/CotcSdk-UW.xml"
 			}
 		}
 	};
