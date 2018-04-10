@@ -4,7 +4,7 @@ using CotcSdk;
 using UnityEngine.UI;
 using CotcSdk.FacebookIntegration;
 
-public class FacebookSampleScene : MonoBehaviour {
+public class CotcFacebookSampleScene : MonoBehaviour {
 	// The cloud allows to make generic operations (non user related)
 	private Cloud Cloud;
 	// The gamer is the base to perform most operations. A gamer object is obtained after successfully signing in.

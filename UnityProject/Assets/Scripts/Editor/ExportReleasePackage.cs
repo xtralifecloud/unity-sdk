@@ -11,23 +11,19 @@ public class ExportReleasePackage {
 		{
 			"CotcSdk.Core.unitypackage",
 			new string[] {
-				"Assets/Cotc",
+                "Assets/Cotc",
 				"Assets/Plugins/CotcSdk.dll",
 				"Assets/Plugins/CotcSdk.xml",
 				"Assets/Plugins/Editor/CotcSdk-Editor.dll",
 				"Assets/Plugins/Editor/CotcSdk-Editor.xml",
 				"Assets/Plugins/WSA/CotcSdk-UW.dll",
 				"Assets/Plugins/WSA/CotcSdk-UW.xml",
-				"Assets/Scenes/SampleScene.unity",
-				"Assets/Scripts/SampleScene.cs"
 			}
 		},
 		{
 			"CotcSdk.FacebookIntegration.unitypackage",
 			new string[] {
-				"Assets/Cotc.FacebookIntegration",
-				"Assets/Scenes/FacebookSampleScene.unity",
-				"Assets/Scripts/FacebookSampleScene.cs"
+				"Assets/Cotc.FacebookIntegration"
 			}
 		},
 		{
@@ -41,8 +37,6 @@ public class ExportReleasePackage {
                 "Assets/Plugins/Android/com.android.support.support-v4-26.1.0.aar",
                 "Assets/Plugins/Android/Cotc.InAppPurchase.aar",
 				"Assets/Plugins/iOS/libCotcInappPurchase.a",
-				"Assets/Scenes/InappPurchaseSampleScene.unity",
-				"Assets/Scripts/InappPurchaseSampleScene.cs"
 			}
 		},
 		{

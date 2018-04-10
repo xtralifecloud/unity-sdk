@@ -2,10 +2,15 @@
 using System.Collections;
 using CotcSdk;
 using UnityEngine.UI;
-using CotcSdk.InappPurchase;
 using System;
 
-public class InappPurchaseSampleScene : MonoBehaviour {
+#if UNITY_5_4_OR_NEWER
+using UnityEngine.Networking;
+#else
+using UnityEngine.Experimental.Networking;
+#endif
+
+public class CotcSampleScene : MonoBehaviour {
 	// The cloud allows to make generic operations (non user related)
 	private Cloud Cloud;
 	// The gamer is the base to perform most operations. A gamer object is obtained after successfully signing in.
@@ -76,6 +81,21 @@ public class InappPurchaseSampleScene : MonoBehaviour {
 		.Done(this.DidLogin);
 	}
 
+	public void DoLoginGameCenter() {
+		Social.localUser.Authenticate(success => {
+			if (success) {
+				Debug.Log("Authentication successful:\nUsername: " + Social.localUser.userName + 
+					"\nUser ID: " + Social.localUser.id + 
+					"\nIsUnderage: " + Social.localUser.underage);
+				// Game Center accounts do not have a password
+				Cloud.Login(LoginNetwork.GameCenter.Describe(), Social.localUser.id, "n/a").Done(this.DidLogin);
+			}
+			else {
+				Debug.LogError("Failed to authenticate on Game Center");
+			}
+		});
+	}
+
 	// Converts the account to e-mail
 	public void DoConvertToEmail() {
 		if (!RequireGamer()) return;
@@ -122,73 +142,6 @@ public class InappPurchaseSampleScene : MonoBehaviour {
 		.Done(result => {
 			Debug.Log("TX result: " + result.ToString());
 		});
-	}
-
-	public void DoListProducts() {
-		var inApp = FindObjectOfType<CotcInappPurchaseGameObject>();
-		if (!RequireGamer()) return;
-
-		var pp = new PurchasedProduct[1];
-		var result = new ValidateReceiptResult[1];
-		Gamer.Store.ListConfiguredProducts()
-			.Then(products => {
-				Debug.Log("Got BO products.");
-				return inApp.FetchProductInfo(products);
-			})
-			.Then(enrichedProducts => {
-				Debug.Log("Received enriched products");
-				foreach (ProductInfo pi in enrichedProducts) {
-					Debug.Log(pi.ToJson());
-				}
-
-				// Purchase the first one
-				return inApp.LaunchPurchase(Gamer, enrichedProducts[0]);
-			})
-			.Then(purchasedProduct => {
-				Debug.Log("Purchase ok: " + purchasedProduct.ToString());
-				pp[0] = purchasedProduct;
-				return Gamer.Store.ValidateReceipt(purchasedProduct.StoreType, purchasedProduct.CotcProductId, purchasedProduct.PaidPrice, purchasedProduct.PaidCurrency, purchasedProduct.Receipt);
-			})
-			.Then(validationResult => {
-				Debug.Log("Validated receipt");
-				result[0] = validationResult;
-				return inApp.CloseTransaction(pp[0]);
-			})
-			.Then(done => {
-				Debug.Log("Purchase transaction completed successfully: " + result[0].ToString());
-			})
-			.Catch(ex => {
-				Debug.LogError("Error during purchase: " + ex.ToString());
-			});
-	}
-
-	public void DoAcknowledgePendingPurchase() {
-		var inApp = FindObjectOfType<CotcInappPurchaseGameObject>();
-		if (!RequireGamer()) return;
-		
-		Gamer.Store.ListConfiguredProducts()
-			.Then(products => {
-				Debug.Log("Got BO products.");
-				return inApp.FetchProductInfo(products);
-			})
-			.Then(enrichedProducts => {
-				Debug.Log("Received enriched products");
-				// Purchase the first one
-				return inApp.LaunchPurchase(Gamer, enrichedProducts[0]);
-			})
-			.Then(purchasedProduct => {
-				Debug.Log("Purchase ok: " + purchasedProduct.ToString() + ", closing it without sending it to CotC");
-				// Important: we should be validating the purchase through CotC. The thing is, under some circumstances
-				// (test orders, certificate not yet configured on our BO) it might be refused by our server.
-				// This button acknowledges it locally. Never do that in production.
-				return inApp.CloseTransaction(purchasedProduct);
-			})
-			.Then(done => {
-				Debug.Log("Purchase closed successfully");
-			})
-			.Catch(ex => {
-				Debug.LogError("Error during purchase: " + ex.ToString());
-			});
 	}
 
 	// Invoked when any sign in operation has completed
