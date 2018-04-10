@@ -57,6 +57,7 @@ public class TestBase : MonoBehaviour {
                 cloud = cloud_;
             });
         }
+        testIsRunning = true;
     }
 
     [SetUp]

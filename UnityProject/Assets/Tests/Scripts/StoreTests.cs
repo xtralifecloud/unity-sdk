@@ -59,7 +59,7 @@ public class StoreTests : TestBase {
         return WaitForEndOfTest();
 	}
 
-#if false
+    [NUnit.Framework.Ignore("Test broken for now, need to be tested on Android/IOS only")]
     [Test("Tests the native plugin as well.", BoConfiguration)]
 	public IEnumerator ShouldUseNativePurchasePlugin() {
 		LoginNewUser(cloud, gamer => {
@@ -80,5 +80,4 @@ public class StoreTests : TestBase {
 		});
         return WaitForEndOfTest();
 	}
-#endif
 }
