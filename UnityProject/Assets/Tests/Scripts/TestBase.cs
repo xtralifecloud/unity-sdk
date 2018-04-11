@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using CotcSdk;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using NUnit.Framework;
@@ -48,21 +49,48 @@ public class TestBase : MonoBehaviour {
     protected static Cloud cloud;
     protected static bool testIsRunning;
 
+	// Tests status UI display
+	private const string runningTestsStatusFormat = "Running tests...\n\nTotal: {0}\nCompleted: {1}\nFailed: {2}";
+	private const string finishedTestsStatusFormat = "Finished tests!\n\nTotal: {0}\nCompleted: {1}\nFailed: {2}";
+	private static Text runningTestsStatus;
+	private static int totalTests;
+	private static int completedTests;
+	private static int failedTests;
+
     [OneTimeSetUp]
     public void Init() {
-        Promise.Debug_OutputAllExceptions = false;
         if (cloud == null) {
+			Promise.Debug_OutputAllExceptions = false;
+			totalTests = 0;
+			completedTests = 0;
+			failedTests = 0;
+
 			GameObject instance = (GameObject)Instantiate(Resources.Load("Prefabs/CotcSdk-UnitTests"));
+			runningTestsStatus = instance.GetComponentInChildren<Text>();
+
+			if (runningTestsStatus != null)
+				runningTestsStatus.text = string.Format(runningTestsStatusFormat, totalTests, completedTests, failedTests);
+			
             instance.GetComponent<CotcGameObject>().GetCloud().Done(cloud_ => {
                 cloud = cloud_;
             });
         }
     }
 
-    [SetUp]
-    public void Setup() {
-        testIsRunning = true;
-    }
+	[SetUp]
+	public void Setup() {
+		testIsRunning = true;
+		++totalTests;
+
+		if (runningTestsStatus != null)
+			runningTestsStatus.text = string.Format(runningTestsStatusFormat, totalTests, completedTests, failedTests);
+	}
+
+	[OneTimeTearDown]
+	public void TearDown() {
+		if (runningTestsStatus != null)
+			runningTestsStatus.text = string.Format(finishedTestsStatusFormat, totalTests, completedTests, failedTests);
+	}
 
     protected IEnumerator WaitForEndOfTest() {
         while (testIsRunning)
@@ -77,11 +105,19 @@ public class TestBase : MonoBehaviour {
 
     public static void CompleteTest() {
         testIsRunning = false;
+		++completedTests;
+
+		if (runningTestsStatus != null)
+			runningTestsStatus.text = string.Format(runningTestsStatusFormat, totalTests, completedTests, failedTests);
     }
 
     public static void FailTest(string reason) {
         testIsRunning = false;
         Debug.LogError("Test failed: " + reason);
+		++failedTests;
+
+		if (runningTestsStatus != null)
+			runningTestsStatus.text = string.Format(runningTestsStatusFormat, totalTests, completedTests, failedTests);
     }
 
     /*  ======================================
