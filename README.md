@@ -77,41 +77,31 @@ Integration tests are a very useful feature used throughout the developement of 
 
 Each time you add a feature, you should add one or several integration test as well. Also, when modifying the library, please run all integration tests and check if anything has been broken.
 
-Open the `IntegrationTestScene` on desktop, or build a mobile application with the `MobileIntegrationTestScene` scene if you are going to test on iOS for instance (on Android you may manage to do it using the mechanism built in Unity with the `IntegrationTestScene`, though we've found it to be sometimes complicated to get working). Using `IntegrationTestScene`, open Unity Test Tools and Integration Test Runner from the menu, then click Run all. When using the `MobileIntegrationTestScene`, tests are run automatically upon startup. Just check the output (logs) to get the results. This scene may also be used on desktop, although we consider it less convenient.
+Open the Test Runner by clicking on `Window -> Test Runner`. In the *PlayMode* tab, you should be able to see all tests. You can run tests quickly by clicking on *Run All*, *Run Selected* or *Rerun failed*.
+
+You can also run tests on specific platforms in Play mode. To do this, click the *Run all in player* button (the target platform is the current Platform selected in build options).
 
 ### Writing a new integration test
 
-In order to write an integration test, open the `IntegrationTestScene`. From the Hierarchy, select the group to which you'd like to add your test and duplicate a test inside of it (for example Gamer Tests -> ShouldSetProperty). If you want to create a new group, see further instructions. From the inspector, you'll be able to select your new method (Gamer Tests (Script) -> Method to call). You should write it. Open the corresponding script (here GamerTests) and add a new method like that:
+In order to write an integration test, open the `UnityProject/Assets/Tests/Scripts` folder. Each script represent a group of tests. If you want to create a new group, see further instructions, else select the script to which you'd like to add your test and add a new method like that :
 
-```
+```C#
 [Test("Tests the outline functionality", "You must have setup the SDK properly")]
-public void ShouldReturnProperOutline(Cloud cloud) {
+public IEnumerator ShouldReturnProperOutline(Cloud cloud) {
 	Login(cloud, gamer => {
 		CompleteTest();
 	});
+	return WaitForEndOfTest(); // This line wait for either CompleteTest or FailTest to be called
 }
 ```
 
-From the Test annotation, you may describe your test. Optionally, if the test may fail because it requires additional configuration, you may also add another argument to the test annotation: `requisite: "..."`. When selecting the test in question, a warning sign will appear and the requisite text will be displayed in the inspector under the *Method to call*.
+From the Test annotation, you may describe your test. Optionally, if the test may fail because it requires additional configuration, you may also add another argument to the test annotation: `requisite: "..."`.
 
-Once your test is written, return to the Unity editor, wait a few seconds for the UI to refresh and select your new test from the *Method to call* combo. You may then use the *Integration Test Runner* (from the menu under *Unity Test Tools*) and click *Run selected*. This will run only your test.
+Once your test is written, return to the Unity editor, wait a few seconds for the UI to refresh and select your new test. You may then click *Run selected*. This will run only your test.
 
 ### Creating a new group
 
 A test group is associated to a separate test class to make things more clear. Tests are placed under the directory `UnityProject/Assets/Tests/Scripts`. To get started, we suggest that you simply copy and rename an existing test class, since the inheritance and imports are important.
-
-Then, from the `IntegrationTestScene`, duplicate an existing test group, rename it according to the name of your new test class. Place it in alphabetic order under the hierarchy and remove all tests inside except one. From this test, remove the existing script, refering to the test class that you copied (click on the little gear on the right of, e.g. *Gamer Tests (Script)*, *remove component*). Then click *Add component* and add the new test class that you just created. Select the method representing your first test through the *Method to call* combo box.
-
-NB: this functionality is provided through the `TestBase` class. If it doesn't seem to work properly, check that your class is defined properly and everything compiles (check out the *Console*).
-
-After creating a new group of tests, you need to update the `RunAllTests.cs` script (which is used by the `MobileIntegrationTestScene`). There is something like:
-
-```
-private static readonly Type[] TestTypes = {
-		typeof(CloudTests),
-```
-
-You just need to add the new class in there. Try to respect the alphabetical ordering.
 
 ### Fail/Success of a test
 
@@ -125,20 +115,23 @@ Generally, a test may fail due to:
 - A function called in an `ExpectSuccess` returning an error
 - The functions called in an `ExpectFailure` not returning any error
 
-A test can only success if it calls the function `CompleteTest()`, thus you should always and only call this function a the end of the test.
+A test can only success if it calls the function `CompleteTest()`, thus you should always and only call this function at the end of the test.
+
+Be careful, the `return WaitForEndOfTest();` line (which should be at the end of your test) wait for either CompleteTest or FailTest to be called. If none of them is called, your test will run for ever. Well, actually, until timeout.
 
 ### Using unit tests with asynchronous functions
 
-This SDK contains mostly asynchronous functions wich consist in asking the server to send us data or to perform an action ; thus, in a unit test, you have to ask the server, and wait for its response to be able to test it. This is done by the [Promise system](http://xtralifecloud.github.io/unity-sdk/Docs/DoxygenGenerated/html/getting_started_ref.html#promises_ref), which let you to call asynchronous functions and register callbacks that will be executed when the responses are received. 
+This SDK contains mostly asynchronous functions wich consist in asking the server to send us data or to perform an action ; thus, in a unit test, you have to ask the server, and wait for its response to be able to test it. This is done by the [Promise system](http://xtralifecloud.github.io/unity-sdk/Docs/DoxygenGenerated/html/getting_started_ref.html#promises_ref), which let you to call asynchronous functions and register callbacks that will be executed when the responses are received.
 
 Here is a sample:
 
-```
+```C#
 [Test("Tests the outline functionality", "You must have setup the SDK properly")]
-public void ShouldReturnProperOutline(Cloud cloud) {
+public IEnumerator ShouldReturnProperOutline(Cloud cloud) {
 	Login(cloud, gamer => {
 		CompleteTest();
 	});
+	return WaitForEndOfTest();
 }
 ```
 
@@ -146,27 +139,29 @@ During this test, `CompleteTest();` will be called only when the server response
 
 You can easily call any asynchronous function after another one by returning their results (which are promises) and using `ExpectSuccess` or `ExpectFailure`, like the following code snippet:
 
-```
+```C#
 [Test("Tests the outline functionality", "You must have setup the SDK properly")]
-public void ShouldReturnProperOutline(Cloud cloud) {
+public IEnumerator ShouldReturnProperOutline(Cloud cloud) {
 	Login(cloud, gamer => {
 		return Logout();
 	}).ExpectSuccess(done => {
 		CompleteTest();
-	});	
+	});
+	return WaitForEndOfTest();
 }
 ```
 
 Or, witout the use of ExpectSuccess/ExpectFailure:
 
-```
+```C#
 [Test("Tests the outline functionality", "You must have setup the SDK properly")]
-public void ShouldReturnProperOutline(Cloud cloud) {
+public IEnumerator ShouldReturnProperOutline(Cloud cloud) {
 	Login(cloud, gamer => {
 		Logout(done => {
 			CompleteTest();
 		};
-	});	
+	});
+	return WaitForEndOfTest();
 }
 ```
 
@@ -174,8 +169,6 @@ public void ShouldReturnProperOutline(Cloud cloud) {
 
 First, you will need to be able to [build on Android](https://unity3d.com/fr/learn/tutorials/topics/mobile-touch/building-your-unity-game-android-device-testing).
 
-Link your Android device via an USB port on your computer and enable USB debugging. In Unity, open `Unity Test Tools > Plateform Runner > Run on Plateform`. In the third column named `Available Scenes`, select `IntegrationTestScene` and click on `Add to Build`, select `Android` on `Build tests for`, then finally click on `Build and run tests`.
+Link your Android device via an USB port on your computer and enable USB debugging, and switch target platform of the project to "Android"
 
-Now, your tests should be running on your device. When all of them are completed, a text indicating if the tests succeded or failed will appear. You will need a tool to be able to see the logs produced on your device. You may use the Android SDK's `monitor` tool: go to Android SDK folder > tools > monitor.bat (Run as administrator for Windows users).
-
-In `monitor`, on the upper left (Devices), select your device. On the bottom, in the filter input field, add `tag:Unity`. Now, you can go back to Unity, and `Build and run tests` again. The logs will now be displayed inside `monitor`. 
+If you click on *Run all in player*, your tests should be running on your device. When all of them are completed, a text indicating if the tests succeded or failed will appear.
