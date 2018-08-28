@@ -63,7 +63,7 @@ public class StoreTests : TestBase {
     [Test("Tests the native plugin as well.", BoConfiguration)]
 	public IEnumerator ShouldUseNativePurchasePlugin() {
 		LoginNewUser(cloud, gamer => {
-			var productToBeBought = new ConfiguredProduct[1];
+			//var productToBeBought = new ConfiguredProduct[1];
 			var inappObject = (CotcInappPurchaseGameObject)Instantiate(Resources.Load("Prefabs/CotcInappPurchaseIntegration-UnitTests"));
 
             // Fetch the catalog
