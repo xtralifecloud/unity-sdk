@@ -16,8 +16,8 @@ public class ExportReleasePackage {
 				"Assets/Plugins/CotcSdk.xml",
 				"Assets/Plugins/Editor/CotcSdk-Editor.dll",
 				"Assets/Plugins/Editor/CotcSdk-Editor.xml",
-				"Assets/Plugins/WSA/CotcSdk-UW.dll",
-				"Assets/Plugins/WSA/CotcSdk-UW.xml"
+				"Assets/Plugins/WSA/CotcSdk.dll",
+				"Assets/Plugins/WSA/CotcSdk.xml"
 			}
 		},
 		{
@@ -28,8 +28,8 @@ public class ExportReleasePackage {
 				"Assets/Plugins/CotcSdk.xml",
 				"Assets/Plugins/Editor/CotcSdk-Editor.dll",
 				"Assets/Plugins/Editor/CotcSdk-Editor.xml",
-				"Assets/Plugins/WSA/CotcSdk-UW.dll",
-				"Assets/Plugins/WSA/CotcSdk-UW.xml"
+				"Assets/Plugins/WSA/CotcSdk.dll",
+				"Assets/Plugins/WSA/CotcSdk.xml"
 			}
 		},
 		{
@@ -47,8 +47,8 @@ public class ExportReleasePackage {
 				"Assets/Plugins/CotcSdk.xml",
 				"Assets/Plugins/Editor/CotcSdk-Editor.dll",
 				"Assets/Plugins/Editor/CotcSdk-Editor.xml",
-				"Assets/Plugins/WSA/CotcSdk-UW.dll",
-				"Assets/Plugins/WSA/CotcSdk-UW.xml"
+				"Assets/Plugins/WSA/CotcSdk.dll",
+				"Assets/Plugins/WSA/CotcSdk.xml"
 			}
 		},
 		{
@@ -80,8 +80,8 @@ public class ExportReleasePackage {
 				"Assets/Plugins/CotcSdk.xml",
 				"Assets/Plugins/Editor/CotcSdk-Editor.dll",
 				"Assets/Plugins/Editor/CotcSdk-Editor.xml",
-				"Assets/Plugins/WSA/CotcSdk-UW.dll",
-				"Assets/Plugins/WSA/CotcSdk-UW.xml"
+				"Assets/Plugins/WSA/CotcSdk.dll",
+				"Assets/Plugins/WSA/CotcSdk.xml"
 			}
 		}
 	};
@@ -99,7 +99,13 @@ public class ExportReleasePackage {
 		var buildScriptDir = Path.Combine(Directory.GetParent(UnityEngine.Application.dataPath).Parent.FullName, "CotcSdk");
 		var process = new System.Diagnostics.Process();
 		var succeeded = false;
-		process.StartInfo.FileName = Path.Combine(buildScriptDir, "Build.bat");
+		#if UNITY_2017
+		process.StartInfo.FileName = Path.Combine(buildScriptDir, "Build-Unity-2017.bat");
+		#elif UNITY_2018
+		process.StartInfo.FileName = Path.Combine(buildScriptDir, "Build-Unity-2018.bat");
+		#else
+		process.StartInfo.FileName = Path.Combine(buildScriptDir, "Build-Unity-5.bat");
+		#endif
 		process.StartInfo.WorkingDirectory = buildScriptDir;
 		if (process.Start()) {
 			process.WaitForExit();
