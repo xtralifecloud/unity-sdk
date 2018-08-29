@@ -96,10 +96,18 @@ namespace CotcSdk {
 			}
 
             private IEnumerator ProcessRequest(UnityWebRequest req) {
-                yield return req.Send();
+				#if UNITY_2017 || UNITY_2018
+				yield return req.SendWebRequest();
+				#else
+				yield return req.Send();
+				#endif
 
                 bool processRequest = true;
-                if (req.isError)
+				#if UNITY_2017 || UNITY_2018
+				if (req.isNetworkError)
+				#else
+				if (req.isError)
+				#endif
                 {
                     // Nice bug again, in the iOS UnityWebRequest implementation. If server returns a 400 code following a
                     // a successful request process, req.isError is flagged to true... Not sure at this stage how many HTTP
