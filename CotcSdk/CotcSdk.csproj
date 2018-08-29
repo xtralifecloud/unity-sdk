@@ -14,12 +14,12 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug-Unity-5|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>False</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>bin\Debug-Unity-5\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;COTC_DLL_BUILD,UNITY_5</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CustomCommands>
@@ -27,25 +27,66 @@
         <Command type="AfterBuild" command="After-build.sh" workingdir="${ProjectDir}" />
       </CustomCommands>
     </CustomCommands>
-    <DocumentationFile>bin\Debug\CotcSdk.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug-Unity-5\CotcSdk.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release-Unity-5|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>True</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>bin\Release-Unity-5\</OutputPath>
+    <DefineConstants>TRACE;COTC_DLL_BUILD,UNITY_5</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\CotcSdk.xml</DocumentationFile>
+    <DocumentationFile>bin\Release-Unity-5\CotcSdk.xml</DocumentationFile>
     <CustomCommands>
       <CustomCommands>
         <Command type="AfterBuild" command="After-build-release.sh" workingdir="${ProjectDir}" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-Unity-2017|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug-Unity-2017\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;COTC_DLL_BUILD,UNITY_2017</DefineConstants>
+    <DocumentationFile>bin\Debug-Unity-2017\CotcSdk.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-Unity-2018|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug-Unity-2018\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;COTC_DLL_BUILD,UNITY_2018</DefineConstants>
+    <DocumentationFile>bin\Debug-Unity-2018\CotcSdk.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-Unity-2017|AnyCPU'">
+    <OutputPath>bin\Release-Unity-2017\</OutputPath>
+    <DefineConstants>TRACE;COTC_DLL_BUILD,UNITY_2017</DefineConstants>
+    <DocumentationFile>bin\Release-Unity-2017\CotcSdk.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-Unity-2018|AnyCPU'">
+    <OutputPath>bin\Release-Unity-2018\</OutputPath>
+    <DefineConstants>TRACE;COTC_DLL_BUILD,UNITY_2018</DefineConstants>
+    <DocumentationFile>bin\Release-Unity-2018\CotcSdk.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="UnityEngine">
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\Unity\Editor\Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
@@ -166,13 +207,8 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>md $(SolutionDir)..\UnityProject\Assets\Plugins
-if $(ConfigurationName) == Debug (
-    copy $(TargetDir)\CotcSdk.dll $(SolutionDir)..\UnityProject\Assets\Plugins\CotcSdk-Debug.dll
-    copy $(TargetDir)\CotcSdk.xml $(SolutionDir)..\UnityProject\Assets\Plugins\CotcSdk-Debug.xml
-) else (
-    copy $(TargetDir)\CotcSdk.dll $(SolutionDir)..\UnityProject\Assets\Plugins\CotcSdk.dll
-    copy $(TargetDir)\CotcSdk.xml $(SolutionDir)..\UnityProject\Assets\Plugins\CotcSdk.xml
-)</PostBuildEvent>
+copy $(TargetDir)\CotcSdk.dll $(SolutionDir)..\UnityProject\Assets\Plugins\CotcSdk.dll
+copy $(TargetDir)\CotcSdk.xml $(SolutionDir)..\UnityProject\Assets\Plugins\CotcSdk.xml</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
