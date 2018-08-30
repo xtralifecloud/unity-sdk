@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' ">Release-Unity-5</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CB7CA499-F657-4EF4-9543-8192E748D979}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -23,11 +23,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <CustomCommands>
-      <CustomCommands>
-        <Command type="AfterBuild" command="After-build.sh" workingdir="${ProjectDir}" />
-      </CustomCommands>
-    </CustomCommands>
     <DocumentationFile>bin\Debug-Unity-5\CotcSdk-Editor.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release-Unity-5|AnyCPU' ">
@@ -37,11 +32,6 @@
     <DefineConstants>TRACE;COTC_DLL_BUILD,UNITY_5</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CustomCommands>
-      <CustomCommands>
-        <Command type="AfterBuild" command="After-build.sh" workingdir="${ProjectDir}" />
-      </CustomCommands>
-    </CustomCommands>
     <DocumentationFile>bin\Release-Unity-5\CotcSdk-Editor.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-Unity-2017|AnyCPU'">
@@ -53,6 +43,8 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>false</Optimize>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-Unity-2018|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -63,6 +55,8 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>false</Optimize>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-Unity-2017|AnyCPU'">
     <OutputPath>bin\Release-Unity-2017\</OutputPath>
@@ -73,6 +67,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-Unity-2018|AnyCPU'">
     <OutputPath>bin\Release-Unity-2018\</OutputPath>
@@ -83,15 +78,14 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="UnityEditor, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\Unity\Editor\Data\Managed\UnityEditor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\Unity\Editor\Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
@@ -101,7 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CotcSdk.csproj">
-      <Project>{bdd85764-d606-4f8f-aea8-8b5d52eb9d38}</Project>
+      <Project>{BDD85764-D606-4F8F-AEA8-8B5D52EB9D38}</Project>
       <Name>CotcSdk</Name>
     </ProjectReference>
   </ItemGroup>
