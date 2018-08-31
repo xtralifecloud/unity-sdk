@@ -1,131 +1,162 @@
-## Downloading & Installing
+# **C# XtraLife SDK for Unity**
 
-Open [Releases](https://github.com/xtralifecloud/unity-sdk/releases) and download the latest Unity package.
+## **Downloading & Installing**
 
-Read the [Documentation](http://xtralifecloud.github.io/unity-sdk/) to get started.
+Get the latest [Unity SDK Release Packages](https://github.com/xtralifecloud/unity-sdk/releases) you're interested in and import them into your Unity project. Only the **core package** will be necessary if you don't need Facebook integration, in app purchases, and push notifications features.
 
-## Support
+Read the [CotC Unity SDK](http://xtralifecloud.github.io/unity-sdk) and [Backend APIs](http://doc.xtralife.cloud/backend/?cs#) documentations to get started.
 
-The Unity SDK is developed for Unity 5 but is still compatible with Unity 4, although we recommend using prior releases for guarantee as Unity 5 is now the main testing channel. The Android platform specific components are not guaranteed to work on Unity 4 as libraries are built using gradle and packaged using the new AAR format.
+Want to go further? Do not hesitate to check for our [Game Template](https://github.com/xtralifecloud/unity-gametemplate) to inspire yourself with that extra-clean, simple, and fully commented sample of how to handle a persistent login logic and event messages. Plus, it gives you a quick way to test most of SDK's APIs via its sample scene. Last but no the least, you may even import this entire project into yours to plug your workflow on it and even reuse its default UI elements, it's originally designed for this!
 
-## Building the library
+## **Support**
 
-### Required components
+The Unity SDK is developed for **Unity 5** as the main test channel but is compatible with **Unity 2017** and **2018** too.
 
-The build system is currently made for Windows, and we are using Visual Studio 2012 (with the UnityVS plugin) with Unity 5.
+## **Building the library**
 
-### Building the library
+If you wish to use the SDK on a not provided platform or even experiment with your own code modifications, you may want to clone the present repository and build the library by yourself instead of importing repository's release packages.
 
-The steps involved are:
-- Build the CotcSdk solution,
-- Use the CLI sample project to run the integration tests
-- Build a unity package from the same project
+### **Required components**
 
-#### Build the CotcSdk solution
+The build system is currently made for [Visual Studio 2015/2017](https://visualstudio.microsoft.com/en/downloads) on **Windows**. You may use **Monodevelop** too (to be able to build on **Mac** for example), but you'll be unable to build the **CotcSdk-UniversalWindows** part.
 
-This should be very simple. Just open the sln file under the CotcSdk directory.
+> About the **Universal Windows** platform specific library: You'll have to use **Visual Studio 2015/2017** on **Windows 10** in order to build the **CotcSdk-UniversalWindows** solution's project.
 
-### Additional plugins
+### **Building the CotcSdk solution**
 
-- Install and import the Facebook Unity SDK.
-- From the Asset Store, download and import the Unity Test Tools.
-- Download and install Visual Studio Tools for Unity
-- From the Unity project, Assets -> Import package -> Visual Studio 2012 Tools
-- Then Visual Studio Tools -> Open in Visual Studio
-- Click on Attach to Unity
+A few steps are involved to build the CotcSdk solution:
 
-### Distributing the library
+1. `Open the solution:` Just open solution's file (`CotcSdk\CotcSdk.sln`) with **Visual Studio**.
 
-Use the editor menu, click `CotC` and then `Build Release Packages`.
+2. `Set Unity engine/editor libraries references:` In the **Solution Explorer** and for each of the 3 projects, unfold the project and then the **References** sub-menus, then check cautiously all **UnityEngine** and **UnityEditor** libraries references point to the correct Unity editor's version you want to build for (e.g. `C:\Program Files\Unity 5.6\Editor\Data\Managed\UnityEngine.dll`) and match the following:
 
-## Using the library with Universal Windows Platform (UWP) Unity projects
+   - **CotcSdk:** UnityEngine
+   - **CotcSdk-Editor:** UnityEngine, UnityEditor
+   - **CotcSdk-UniversalWindows:** UnityEngine
 
-In order to ensure compatibility between Unity UWP generated projects and the CotcSdk library, a few steps are needed...
+3. `Select the target build configuration:` Select the active solution configuration to build that matches the Unity editor's version you want to build for (e.g. `Release-Unit-5`).
 
-### Building the libraries
+> **Release** configurations are lightweight optimized libraries designed to be used on production, while **Debug** configurations allow for more in-depth debugging.
 
-When you build the entire CotcSdk solution, you'll end up with 3 library files:
+4. `Build the solution:` Simply hit the `Build > Rebuild Solution` menu to generate the library; Each time you do so, the generated files can be found in the `bin` folders of their respective projects and are automatically copied/replaced in repository's corresponding Unity project `Assets\Plugins`, `Assets\Plugins\Editor`, and `Assets\Plugins\WSA` folders.
 
-- `[SolutionPath]\bin`: the `standard` Sdk library DLL
-- `[SolutionPath]\CotcSdk-Editor\bin`: the `standard editor` Sdk library DLL (Unity editor part)
-- `[SolutionPath]\CotcSdk-UniversalWindows\bin`: the `UWP compatible` Sdk library DLL
+### **Additional Unity plugins**
 
-### Using the libraries
+Some additional plugins may be necessary if you wish to open repository's Unity project in order to make it compile and work well:
 
-Basicly, because Windows Store Apps use special Runtime APIs, you'll need 2 different libraries: the `UWP compatible` one to build a Windows Store App, and the `standard` one which will act as a placeholder to be able to compile Unity projects directly in the editor (there is no such considers about the `-editor` library).
+- Download and install **Visual Studio Tools for Unity** (if not already installed thanks to the **Unity editor installer**).
+
+- Download and import the [Facebook SDK for Unity](https://developers.facebook.com/docs/unity).
+
+### **Packaging the library**
+
+In the Unity editor, click the `CotC > Build Release Packages` menu to generate Unity packages which can be found in the `Release` folder of the project and are ready to be imported into any other Unity project.
+
+## **Using the library on the Universal Windows Platform (UWP)**
+
+In order to ensure the compatibility between **Unity UWP projects** and the CotcSdk library, a few steps are needed...
+
+### **Manage Unity plugins**
+
+Basicly, because **Windows Store Apps** make use of specific runtime APIs, you'll need 2 different CotcSdk libraries:
+
+- The `standard library (Assets\Plugins\CotcSdk.dll):` It will act as a **placeholder for the UWP library** to be able to compile the Unity project directly in the editor (there is no such concerns about the **editor** library part).
+
+- The `UWP compatible library (Assets\Plugins\WSA\CotcSdk.dll):` To be able to build a **Windows Store App** for the **Universal Windows Platform**.
 
 For this to work, a few steps are involved:
 
-- Put the `standard library` in the `[UnityProjectPath]\Assets\Plugins` folder
-- Put the `standard editor library` in the `[UnityProjectPath]\Assets\Plugins\Editor` folder
-- Put the `UWP compatible library` in the `[UnityProjectPath]\Assets\Plugins\WSA` folder
-(It is crucial that both the `standard` and `UWP compatible` libraries are identically named and share the same assembly version for the placeholder to work: e.g. `CotcSdk.dll`)
-- In the Unity editor, select the `Assets\Plugins\CotcSdk.dll` file and make sure all platforms BUT `WSAPlayer` are ticked
-- Select the `Assets\Plugins\WSA\CotcSdk.dll` file and make sure the `WSAPlayer` platform is the ONLY ONE ticked, then select `Assets\Plugins\CotcSdk.dll` as the placeholder
+- Make sure the **standard** and the **UWP compatible** libraries are put in the correct folders (respectively `Assets\Plugins` and `Assets\Plugins\WSA`).
 
-For further informations, please check out this link to official Unity's manual about Windows Store Apps plugins integration: https://docs.unity3d.com/Manual/windowsstore-plugins.html
+> It is crucial that both the `standard` and the `UWP compatible` libraries are identically named and share the same assembly version for the placeholder to work (e.g. `CotcSdk.dll`).
 
-### Enabling the Internet Client app capability
+- In Unity editor, select the `Assets\Plugins\CotcSdk.dll` library file and make sure all platforms **but** `WSAPlayer` are ticked.
 
-Don't forget to allow your app to access the Internet :
+- Select the `Assets\Plugins\WSA\CotcSdk.dll` file and make sure the `WSAPlayer` platform is the **only one** ticked, then set `Assets\Plugins\CotcSdk.dll` as its placeholder.
 
-In the Unity editor, go to `Edit >> Project Settings >> Player`; Hit the `Windows Store Apps settings` tab, then in the `Publishing Settings` section search for `Capabilities` and tick the `InternetClient` capability. This will allow Unity to automatically add this capability in the `Package.appxmanifest` file generated on your Unity project build for UWP.
+For further informations, please check out official Unity's manual about [Windows Store Apps plugins integration](https://docs.unity3d.com/Manual/windowsstore-plugins.html).
 
-## Running integration tests
+### **Enabling the Internet Client app capability**
 
-Integration tests are a very useful feature used throughout the developement of this SDK in order to quickly test new features and ensure that no regressions are made whenever features are modified.
+Don't forget to allow your app to access the Internet:
 
-Each time you add a feature, you should add one or several integration test as well. Also, when modifying the library, please run all integration tests and check if anything has been broken.
+In Unity editor, click the `Edit > Project Settings > Player` menu and hit the `Windows Store Apps settings` tab, then in the `Publishing Settings` section search for `Capabilities` and tick the `InternetClient` capability. This will allow Unity to automatically add this capability in the `Package.appxmanifest` file generated with your Unity project's build for UWP.
 
-Open the Test Runner by clicking on `Window -> Test Runner`. In the *PlayMode* tab, you should be able to see all tests. You can run tests quickly by clicking on *Run All*, *Run Selected* or *Rerun failed*.
+## **About integration tests (aka unit tests)**
 
-You can also run tests on specific platforms in Play mode. To do this, click the *Run all in player* button (the target platform is the current Platform selected in build options).
+Integration tests are a very useful tool to quickly test new features and ensure that no regressions are made whenever something is modified throughout the developement of this SDK. Each time you add a feature by yourself, you should add one or several integration test as well. Also, when modifying the library, please run all integration tests and check if anything has been broken.
 
-### Writing a new integration test
+### **Running integration tests**
 
-In order to write an integration test, open the `UnityProject/Assets/Tests/Scripts` folder. Each script represent a group of tests. If you want to create a new group, see further instructions, else select the script to which you'd like to add your test and add a new method like that :
+In Unity editor, open the **Test Runner** by clicking on `Window -> Test Runner`. In the `PlayMode` tab, you should be able to see all written tests after you've hit the `Enable playmode tests` button for the first time. You can run tests quickly **in the editor** by clicking the `Run All` or `Run Selected` buttons.
 
-```C#
+> Before you run the tests, don't forget to set your game's `API Key` and `API Secret` credentials in order to be able to connect to the server and to read/write backend data.
+
+> Note that some tests may fail if the related **Game VFS** data keys are missing from the base, as it's an expected behavior. Please refer to the corresponding tests code comments.
+
+You can also run those tests **on specific platforms devices** via the **PlayMode**. To do this, click the `Run all in player` button instead; The targeted platform will be the current platform selected in project's **Build Settings**.
+
+#### **Testing on Android**
+
+If you want to run tests on an Android device, then complete the following steps:
+
+1. First, you'll need to be able to [build on Android](https://unity3d.com/fr/learn/tutorials/topics/mobile-touch/building-your-unity-game-android-device-testing).
+
+> If not already done, you may need to get and install the specific **ADB drivers** for your device model.
+
+2. On your Android device, enable the **USB debugging option** then plug it on an USB port of your computer.
+
+> On some devices, you may have to switch to the `Files Transfer mode` in order to make the device visible to the computer.
+
+3. Switch Unity project's target platform to `Android` in **Build Settings**.
+
+4. On the **Test Runner** window, click the `Run all in player (Android)` button; All tests should be running on your device. When all of them are completed, a text indicating if the tests succeeded or failed will appear.
+
+### **Writing new integration tests**
+
+In order to **edit integration tests**, check for the `Assets\Tests\Scripts` folder; Each script represents a separate group of tests. If you want to create a new group see further instructions, else just select the script to which you'd like to add your new test and add a new method like the following:
+
+```CSharp
 [Test("Tests the outline functionality", "You must have setup the SDK properly")]
 public IEnumerator ShouldReturnProperOutline(Cloud cloud) {
 	Login(cloud, gamer => {
 		CompleteTest();
 	});
-	return WaitForEndOfTest(); // This line wait for either CompleteTest or FailTest to be called
+	return WaitForEndOfTest(); // This line waits for either CompleteTest or FailTest to be called
 }
 ```
 
-From the Test annotation, you may describe your test. Optionally, if the test may fail because it requires additional configuration, you may also add another argument to the test annotation: `requisite: "..."`.
+> The **Test** annotation allows you to describe your test's goal. Optionally, if the test may fail because it requires additional configuration, you may also add another argument to the test annotation: `requisite: "..."`.
 
-Once your test is written, return to the Unity editor, wait a few seconds for the UI to refresh and select your new test. You may then click *Run selected*. This will run only your test.
+Once your test is written, just return to the Unity editor, wait for a few seconds for the scripts to be compiled again, and then select your new test. Then, click the `Run Selected` button to only run the new test.
 
-### Creating a new group
+### **Creating a new group**
 
-A test group is associated to a separate test class to make things more clear. Tests are placed under the directory `UnityProject/Assets/Tests/Scripts`. To get started, we suggest that you simply copy and rename an existing test class, since the inheritance and imports are important.
+A **test group** is associated to a separate **test class** to make things clearer. To get started, we suggest that you simply duplicate, rename, then edit an existing test class since the inheritance structure and imports are all important.
 
-### Fail/Success of a test
+### **Fail/Success of a test**
 
-Generally, a test may fail due to:
+In most cases, a test can fail due to:
 
-- A `LogError` in the console
-- An exception not catched by the test
-- A timeout of the test (by default, the maximum delay before a timeout is 30s)
-- The conditionnal expression in an `Assert` valued to false.
-- A call to the `FailTest` function
-- A function called in an `ExpectSuccess` returning an error
-- The functions called in an `ExpectFailure` not returning any error
+- An **error log** in the console (`Debug.LogError(...);`)
+- An **uncatched** code **Exception**
+- A test **timeout**, classically while waiting for a request answer (the maximum timeout delay is 30 seconds by default)
+- The conditionnal expression of an **Assert** valued to `false`
+- A call to the `FailTest(...)` function
+- **Any function returning an error** called in an `ExpectSuccess(...)` **promise**
+- **Not a single function returning an error** called in an `ExpectFailure(...)` **promise**
 
-A test can only success if it calls the function `CompleteTest()`, thus you should always and only call this function at the end of the test.
+A test can only succeed if it calls the `CompleteTest()` function, thus you should always and only call this function at the (successful) end of the test and you'll be unable to declare it as failed thereafter.
 
-Be careful, the `return WaitForEndOfTest();` line (which should be at the end of your test) wait for either CompleteTest or FailTest to be called. If none of them is called, your test will run for ever. Well, actually, until timeout.
+Be careful about the `return WaitForEndOfTest();` instruction (which should always be at the end of your test) as it waits for either a `CompleteTest()` or a `FailTest(...)` function to be called. If none of them is called, your test will wait untill it fails due to a timeout.
 
-### Using unit tests with asynchronous functions
+### **Using unit tests with asynchronous functions**
 
-This SDK contains mostly asynchronous functions wich consist in asking the server to send us data or to perform an action ; thus, in a unit test, you have to ask the server, and wait for its response to be able to test it. This is done by the [Promise system](http://xtralifecloud.github.io/unity-sdk/Docs/DoxygenGenerated/html/getting_started_ref.html#promises_ref), which let you to call asynchronous functions and register callbacks that will be executed when the responses are received.
+The CotcSdk contains mostly **asynchronous functions** wich consist in asking the server to send back data (and/or to perform a some actions before that). Testing features in such a way is done via the [Promise functions](http://xtralifecloud.github.io/unity-sdk/Docs/DoxygenGenerated/html/getting_started_ref.html#promises_ref), which let you call asynchronous functions and register **callbacks** (aka **delegates**) to be executed when the response is received.
 
 Here is a sample:
 
-```C#
+```CSharp
 [Test("Tests the outline functionality", "You must have setup the SDK properly")]
 public IEnumerator ShouldReturnProperOutline(Cloud cloud) {
 	Login(cloud, gamer => {
@@ -135,11 +166,11 @@ public IEnumerator ShouldReturnProperOutline(Cloud cloud) {
 }
 ```
 
-During this test, `CompleteTest();` will be called only when the server response is received.
+During this test, the `Login(...)` asynchronous function is called and an **anonymous delegate** is defined, which will call the `CompleteTest()` function only once server's response has been received. The `WaitForEndOfTest()` function call is here to ensure the test result isn't evaluated before we actually received server's response (right after the asynchronous function call).
 
-You can easily call any asynchronous function after another one by returning their results (which are promises) and using `ExpectSuccess` or `ExpectFailure`, like the following code snippet:
+You can easily call multiple asynchronous functions one after another by returning their results (which are always **promises**) and using `ExpectSuccess(...)` or `ExpectFailure(...)`, like the following code snippet:
 
-```C#
+```CSharp
 [Test("Tests the outline functionality", "You must have setup the SDK properly")]
 public IEnumerator ShouldReturnProperOutline(Cloud cloud) {
 	Login(cloud, gamer => {
@@ -151,9 +182,9 @@ public IEnumerator ShouldReturnProperOutline(Cloud cloud) {
 }
 ```
 
-Or, witout the use of ExpectSuccess/ExpectFailure:
+Or, witout the use of `ExpectSuccess(...)` / `ExpectFailure(...)` functions:
 
-```C#
+```CSharp
 [Test("Tests the outline functionality", "You must have setup the SDK properly")]
 public IEnumerator ShouldReturnProperOutline(Cloud cloud) {
 	Login(cloud, gamer => {
@@ -164,11 +195,3 @@ public IEnumerator ShouldReturnProperOutline(Cloud cloud) {
 	return WaitForEndOfTest();
 }
 ```
-
-### Testing on Android
-
-First, you will need to be able to [build on Android](https://unity3d.com/fr/learn/tutorials/topics/mobile-touch/building-your-unity-game-android-device-testing).
-
-Link your Android device via an USB port on your computer and enable USB debugging, and switch target platform of the project to "Android"
-
-If you click on *Run all in player*, your tests should be running on your device. When all of them are completed, a text indicating if the tests succeded or failed will appear.
