@@ -36,7 +36,7 @@ A few steps are involved to build the CotcSdk solution:
 
 3. `Select the target build configuration:` Select the active solution configuration to build that matches the Unity editor's version you want to build for (e.g. `Release-Unit-5`).
 
-> **Release** configurations are lightweight optimized libraries designed to be used on production, while **Debug** configurations allow for more in-depth debugging.
+   > **Release** configurations are lightweight optimized libraries designed to be used on production, while **Debug** configurations allow for more in-depth debugging.
 
 4. `Build the solution:` Simply hit the `Build > Rebuild Solution` menu to generate the library; Each time you do so, the generated files can be found in the `bin` folders of their respective projects and are automatically copied/replaced in repository's corresponding Unity project `Assets\Plugins`, `Assets\Plugins\Editor`, and `Assets\Plugins\WSA` folders.
 
@@ -68,7 +68,7 @@ For this to work, a few steps are involved:
 
 - Make sure the **standard** and the **UWP compatible** libraries are put in the correct folders (respectively `Assets\Plugins` and `Assets\Plugins\WSA`).
 
-> It is crucial that both the `standard` and the `UWP compatible` libraries are identically named and share the same assembly version for the placeholder to work (e.g. `CotcSdk.dll`).
+  > It is crucial that both the `standard` and the `UWP compatible` libraries are identically named and share the same assembly version for the placeholder to work (e.g. `CotcSdk.dll`).
 
 - In Unity editor, select the `Assets\Plugins\CotcSdk.dll` library file and make sure all platforms **but** `WSAPlayer` are ticked.
 
@@ -102,11 +102,11 @@ If you want to run tests on an Android device, then complete the following steps
 
 1. First, you'll need to be able to [build on Android](https://unity3d.com/fr/learn/tutorials/topics/mobile-touch/building-your-unity-game-android-device-testing).
 
-> If not already done, you may need to get and install the specific **ADB drivers** for your device model.
+   > If not already done, you may need to get and install the specific **ADB drivers** for your device model.
 
 2. On your Android device, enable the **USB debugging option** then plug it on an USB port of your computer.
 
-> On some devices, you may have to switch to the `Files Transfer mode` in order to make the device visible to the computer.
+   > On some devices, you may have to switch to the `Files Transfer mode` in order to make the device visible to the computer.
 
 3. Switch Unity project's target platform to `Android` in **Build Settings**.
 
