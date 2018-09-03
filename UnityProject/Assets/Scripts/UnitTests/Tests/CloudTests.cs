@@ -7,6 +7,8 @@ using System.Collections;
 
 public class CloudTests : TestBase {
 
+	private const string BoBatchConfiguration = "Needs a set up batch to work (please check for the related test function's comment in code).";
+
     [Test("Tests a simple setup.")]
 	public IEnumerator ShouldSetupProperly() {
 		var cb = FindObjectOfType<CotcGameObject>();
@@ -58,7 +60,17 @@ public class CloudTests : TestBase {
         return WaitForEndOfTest();
 	}
 
-    [Test("Tries to restore another session but tries to execute a batch that doesn't exist.")]
+	[Test("Tries to restore another session but tries to execute a batch that doesn't exist, then tries to execute an existing batch.", requisite: BoBatchConfiguration)]
+	/*
+		Backend prerequisites >> Add the following "unitTest_thenBatch" batch:
+		
+		function __unitTest_thenBatch(params, customData, mod) {
+			"use strict";
+			// don't edit above this line // must be on line 3
+			// Used for unit test.
+		  	return {thenBatchRun:true};
+		} // must be on last line, no CR
+	*/
     public IEnumerator ShouldLoginAndRunBatch() {
         Bundle batchNode = Bundle.CreateObject(
             "name", "nonexistingBatch",

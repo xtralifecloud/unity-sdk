@@ -7,6 +7,9 @@ using System.Collections;
 
 public class GameTests : TestBase {
 
+	private const string BoBatchConfiguration = "Needs a set up batch to work (please check for the related test function's comment in code).";
+	private const string BoGameVfsConfiguration = "Needs a set up game VFS key to work (please check for the related test function's comment in code).";
+
     [Test("Fetches all keys for the current game.")]
 	public IEnumerator ShouldFetchAllKeys() {
         cloud.Game.GameVfs.GetValue()
@@ -17,46 +20,59 @@ public class GameTests : TestBase {
         return WaitForEndOfTest();
 	}
 
-    /// To import in the Game VFS under the key unitTest_DoNotTouch :
-    /// {"int":2,"double":0.99,"string":"test","bool":true,"array":[1,2,3],"dict":{"key":"val"},"jsonStringified":"{\"key\":\"val\"}"}
-    [Test("Fetches a key on the game and checks that it worked properly.", requisite: "Please import the value in commentary in the current game key/value storage under the key unitTest_DoNotTouch. Also assesses that string-type keys can be fetched properly.")]
-    public IEnumerator ShouldFetchGameKey() {
-        cloud.Game.GameVfs.GetValue("unitTest_DoNotTouch")
+	[Test("Fetches a key on the game and checks that it worked properly.", requisite: BoGameVfsConfiguration)]
+	/*
+		Backend prerequisites >> Add the following "unitTest_testKey" game VFS key:
+		
+		{"int":2,"double":0.99,"string":"test","bool":true,"array":[1,2,3],"dict":{"key":"val"},"jsonStringified":"{\"key\":\"val\"}"}
+	*/
+	public IEnumerator ShouldFetchGameKey() {
+        cloud.Game.GameVfs.GetValue("unitTest_testKey")
         .ExpectSuccess(received => {
             Assert(received.Type != Bundle.DataType.String, "Not expecting string result");
             Assert(received.Has("result"), "No field named result");
 
-            Assert(received["result"]["unitTest_DoNotTouch"].Has("int"), "No field named int");
-            Assert(received["result"]["unitTest_DoNotTouch"]["int"].AsInt() == 2, "Expected int (2), received : " + received["result"]["int"].AsInt());
+            Assert(received["result"]["unitTest_testKey"].Has("int"), "No field named int");
+            Assert(received["result"]["unitTest_testKey"]["int"].AsInt() == 2, "Expected int (2), received : " + received["result"]["int"].AsInt());
 
-            Assert(received["result"]["unitTest_DoNotTouch"].Has("double"), "No field named double");
-            Assert(received["result"]["unitTest_DoNotTouch"]["double"].AsDouble() == 0.99, "Expected double (0.99), received : " + received["result"]["double"].AsDouble());
+            Assert(received["result"]["unitTest_testKey"].Has("double"), "No field named double");
+            Assert(received["result"]["unitTest_testKey"]["double"].AsDouble() == 0.99, "Expected double (0.99), received : " + received["result"]["double"].AsDouble());
 
-            Assert(received["result"]["unitTest_DoNotTouch"].Has("string"), "No field named string");
-            Assert(received["result"]["unitTest_DoNotTouch"]["string"].AsString() == "test", "Expected string (test), received : " + received["result"]["string"].AsString());
+            Assert(received["result"]["unitTest_testKey"].Has("string"), "No field named string");
+            Assert(received["result"]["unitTest_testKey"]["string"].AsString() == "test", "Expected string (test), received : " + received["result"]["string"].AsString());
 
-            Assert(received["result"]["unitTest_DoNotTouch"].Has("bool"), "No field named bool");
-            Assert(received["result"]["unitTest_DoNotTouch"]["bool"].AsBool() == true, "Expected bool (true), received : " + received["result"]["bool"].AsBool());
+            Assert(received["result"]["unitTest_testKey"].Has("bool"), "No field named bool");
+            Assert(received["result"]["unitTest_testKey"]["bool"].AsBool() == true, "Expected bool (true), received : " + received["result"]["bool"].AsBool());
 
-            Assert(received["result"]["unitTest_DoNotTouch"].Has("array"), "No field named array");
-            Assert(received["result"]["unitTest_DoNotTouch"]["array"].AsArray()[0] == 1 
-                && received["result"]["unitTest_DoNotTouch"]["array"].AsArray()[1] == 2 
-                && received["result"]["unitTest_DoNotTouch"]["array"].AsArray()[2] == 3, "Expected array ([1,2,3]), received : " + received["result"]["array"].AsArray());
+            Assert(received["result"]["unitTest_testKey"].Has("array"), "No field named array");
+            Assert(received["result"]["unitTest_testKey"]["array"].AsArray()[0] == 1 
+                && received["result"]["unitTest_testKey"]["array"].AsArray()[1] == 2 
+                && received["result"]["unitTest_testKey"]["array"].AsArray()[2] == 3, "Expected array ([1,2,3]), received : " + received["result"]["array"].AsArray());
 
-            Assert(received["result"]["unitTest_DoNotTouch"].Has("dict"), "No field named dict");
-            Assert(received["result"]["unitTest_DoNotTouch"]["dict"].Has("key"), "No field named array");
-            Assert(received["result"]["unitTest_DoNotTouch"]["dict"]["key"].AsString() == "val", "Expected string in dictionnary ({\"key\":\"val\"}, received : " + received["result"]["dict"]);
+            Assert(received["result"]["unitTest_testKey"].Has("dict"), "No field named dict");
+            Assert(received["result"]["unitTest_testKey"]["dict"].Has("key"), "No field named array");
+            Assert(received["result"]["unitTest_testKey"]["dict"]["key"].AsString() == "val", "Expected string in dictionnary ({\"key\":\"val\"}, received : " + received["result"]["dict"]);
 
-            Assert(received["result"]["unitTest_DoNotTouch"].Has("jsonStringified"), "No field named jsonStringified");
-            Assert(!received["result"]["unitTest_DoNotTouch"]["jsonStringified"].Has("key"), "Expected to get a string, got a dictionnary instead");
+            Assert(received["result"]["unitTest_testKey"].Has("jsonStringified"), "No field named jsonStringified");
+            Assert(!received["result"]["unitTest_testKey"]["jsonStringified"].Has("key"), "Expected to get a string, got a dictionnary instead");
 
             CompleteTest();
         });
         return WaitForEndOfTest();
 	}
 
-    [Test("Runs a batch without parameters on the server and checks the return value.", requisite: "The current game must be set-up with a batch which must return anything")]
-    public IEnumerator ShouldRunGameBatchWithoutParameter() {
+	[Test("Runs a batch without parameters on the server and checks the return value.", requisite: BoBatchConfiguration)]
+	/*
+		Backend prerequisites >> Add the following "unitTest_withoutParam" batch:
+		
+		function __unitTest_withoutParam(params, customData, mod) {
+			"use strict";
+			// don't edit above this line // must be on line 3
+			// Used for unit test.
+			return "Hello World !";
+		} // must be on last line, no CR
+	*/
+	public IEnumerator ShouldRunGameBatchWithoutParameter() {
         cloud.Game.Batches.Run("unitTest_withoutParam")
         .ExpectSuccess(batchResult => {
             Assert(batchResult.AsString() == "Hello World !", "Result invalid, expected 'Hello World', got " + batchResult.AsString());
@@ -65,8 +81,38 @@ public class GameTests : TestBase {
         return WaitForEndOfTest();
     }
 
-    [Test("Runs a batch on another domain on the server and checks the return value.", requisite: "The current game must be set-up with a batch which must return anything")]
-    public IEnumerator ShouldRunGameBatchOnAnotherDomain() {
+	[Test("Runs a batch with parameters on the server and checks the return value.", requisite: BoBatchConfiguration)]
+	/*
+		Backend prerequisites >> Add the following "unitTest_withParam" batch:
+		
+		function __unitTest_withParams(params, customData, mod) {
+			"use strict";
+			// don't edit above this line // must be on line 3
+			// Used for unit test.
+			return {value: params.request.value * 2};
+		} // must be on last line, no CR
+	*/
+	public IEnumerator ShouldRunGameBatchWithParameters() {
+		cloud.Game.Batches.Run("unitTest_withParams", Bundle.CreateObject("value", 3))
+			.ExpectSuccess(batchResult => {
+				Assert(batchResult["value"] == 6, "Result invalid (expected 3 x 2 = 6)");
+				CompleteTest();
+			});
+		return WaitForEndOfTest();
+	}
+
+	[Test("Runs a batch on another domain on the server and checks the return value.", requisite: "The current game must be set-up with a batch which must return the \"Hello World\" string")]
+	/*
+		Backend prerequisites >> Create a new domain which includes your game, then add the following "unitTest_otherDomain" batch:
+		
+		function __unitTest_otherDomain(params, customData, mod) {
+			"use strict";
+			// don't edit above this line // must be on line 3
+			// Used for unit test.
+			return "Hello World";
+		} // must be on last line, no CR
+	*/
+	public IEnumerator ShouldRunGameBatchOnAnotherDomain() {
         cloud.Game.Batches.Domain("com.clanofthecloud.cloudbuilder.test").Run("unitTest_otherDomain")
         .ExpectSuccess(batchResult => {
             Assert(batchResult.AsString() == "Other Domain", "Result invalid, expected 'Hello World', got " + batchResult.AsString());
@@ -75,18 +121,13 @@ public class GameTests : TestBase {
         return WaitForEndOfTest();
     }
 
-    [Test("Runs a batch with parameters on the server and checks the return value.", requisite: "The current game must be set-up with a batch which must return {value: params.request.value * 2};")]
-	public IEnumerator ShouldRunGameBatchWithParameters() {
-		cloud.Game.Batches.Run("unitTest_withParams", Bundle.CreateObject("value", 3))
-		.ExpectSuccess(batchResult => {
-			Assert(batchResult["value"] == 6, "Result invalid (expected 3 x 2 = 6)");
-			CompleteTest();
-		});
-        return WaitForEndOfTest();
-	}
-
-    [Test("Get a binary from gameVFS", "The current game must be set-up with a binary containing a string")]
-    public IEnumerator ShouldGetBinaryFromGameVFS() {
+	[Test("Get a binary from gameVFS", requisite: BoGameVfsConfiguration)]
+	/*
+		Backend prerequisites >> Add the following "unitTest_GetBinary" game VFS key:
+		
+		"https://s3-eu-west-1.amazonaws.com/cloudbuilder.binaries.sandbox/com.clanofthecloud.cloudbuilder.azerty/GAME/unitTest_GetBinary-65711ea4cb4a6e385e22a2fb8bda2c1ff51f7e64"
+	*/
+	public IEnumerator ShouldGetBinaryFromGameVFS() {
         cloud.Game.GameVfs.GetBinary("unitTest_GetBinary")
         .ExpectSuccess(data => {
             Assert(System.Text.Encoding.UTF8.GetString(data) == "This is a test for the GameGetBinary", "Invalid game binary");

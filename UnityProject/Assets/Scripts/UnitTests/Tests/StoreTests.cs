@@ -12,9 +12,18 @@ using System.Collections;
  */
 public class StoreTests : TestBase {
 	
-	private const string BoConfiguration = "Needs a product like that in the BO: {\"reward\":{\"domain\":\"private\",\"description\":\"Test\",\"tx\":{\"coins\":100}},\"productId\":\"cotc_product1\",\"googlePlayId\":\"android.test.purchased\"}";
+	private const string BoStoreConfiguration = "Needs a set up store product to work: {\"reward\":{\"domain\":\"private\",\"description\":\"Test product\",\"tx\":{\"coins\":100}},\"productId\":\"testproduct\",\"googlePlayId\":\"android.test.purchased\"}";
 
-	[Test("This test uses store methods (nothing related to the device-specific in-app plugin).", BoConfiguration)]
+	[Test("This test uses store methods (nothing related to the device-specific in-app plugin).", requisite: BoStoreConfiguration)]
+	/*
+		Backend prerequisites >> Set Android store certificates, then add the following store product:
+		
+		Product ID: "testproduct"
+		SKU on Google Play: "android.test.purchased"
+		Transaction on success: "coins: 100"
+		Transaction uses domain: "private"
+		Description: "Test product"
+	*/
 	public IEnumerator ShouldPerformFakePurchase() {
 		LoginNewUser(cloud, gamer => {
 			string transactionId = "transaction." + Guid.NewGuid();
@@ -60,7 +69,16 @@ public class StoreTests : TestBase {
 	}
 
     [NUnit.Framework.Ignore("Test broken for now, need to be tested on Android/IOS only")]
-    [Test("Tests the native plugin as well.", BoConfiguration)]
+	[Test("Tests the native plugin as well.", requisite: BoStoreConfiguration)]
+	/*
+		Backend prerequisites >> Set Android store certificates, then add the following store product:
+		
+		Product ID: "testproduct"
+		SKU on Google Play: "android.test.purchased"
+		Transaction on success: "coins: 100"
+		Transaction uses domain: "private"
+		Description: "Test product"
+	*/
 	public IEnumerator ShouldUseNativePurchasePlugin() {
 		LoginNewUser(cloud, gamer => {
 			//var productToBeBought = new ConfiguredProduct[1];

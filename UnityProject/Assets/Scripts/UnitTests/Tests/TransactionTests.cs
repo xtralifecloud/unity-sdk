@@ -10,6 +10,8 @@ using System.Collections;
  */
 public class TransactionTests : TestBase {
 
+	private const string BoAchievementConfiguration = "Needs a set up achievement to work: {\"unitTestAchievements\":{\"type\":\"limit\",\"config\":{\"unit\":\"gold\",\"maxValue\":\"100\"}}}";
+
 	[Test("Runs a transaction and checks the balance. Tests both the transaction and the balance calls.")]
 	public IEnumerator ShouldRunTransaction() {
 		LoginNewUser(cloud, gamer => {
@@ -48,7 +50,15 @@ public class TransactionTests : TestBase {
         return WaitForEndOfTest();
 	}
 
-	[Test("Runs a transaction that should trigger an achievement.", requisite: "Please import {\"unitTestAchievements\":{\"type\":\"limit\",\"config\":{\"unit\":\"gold\",\"maxValue\":\"100\"}}} into the current game achievements.")]
+	[Test("Runs a transaction that should trigger an achievement.", requisite: BoAchievementConfiguration)]
+	/*
+		Backend prerequisites >> Add the following achievement:
+		
+		Name: "unitTestAchievements"
+		Unit: "gold"
+		Trigger value: "100"
+		Reward: "{}"
+	*/
 	public IEnumerator ShouldTriggerAchievement() {
 		LoginNewUser(cloud, gamer => {
 			gamer.Transactions.Post(Bundle.CreateObject("gold", 100), "Transaction run by integration test.")
@@ -63,7 +73,15 @@ public class TransactionTests : TestBase {
         return WaitForEndOfTest();
 	}
 
-	[Test("Runs a transaction that should trigger an achievement.", requisite: "Please import {\"unitTestAchievements\":{\"type\":\"limit\",\"config\":{\"unit\":\"gold\",\"maxValue\":\"100\"}}} into the current game achievements.")]
+	[Test("Runs a transaction that should trigger an achievement.", requisite: BoAchievementConfiguration)]
+	/*
+		Backend prerequisites >> Add the following achievement:
+		
+		Name: "unitTestAchievements"
+		Unit: "gold"
+		Trigger value: "100"
+		Reward: "{}"
+	*/
 	public IEnumerator ShouldAssociateAchievementData() {
 		LoginNewUser(cloud, gamer => {
 			gamer.Transactions.Post(Bundle.CreateObject("gold", 100), "Transaction run by integration test.")
@@ -148,7 +166,15 @@ public class TransactionTests : TestBase {
         return WaitForEndOfTest();
 	}
 
-	[Test("Lists the state of achievements for the current user, including when a bit of progress was made.", requisite: "Please import {\"testAch\":{\"type\":\"limit\",\"config\":{\"unit\":\"gold\",\"maxValue\":\"100\"}}} into the current game achievements.")]
+	[Test("Lists the state of achievements for the current user, including when a bit of progress was made.", requisite: BoAchievementConfiguration)]
+	/*
+		Backend prerequisites >> Add the following achievement:
+		
+		Name: "unitTestAchievements"
+		Unit: "gold"
+		Trigger value: "100"
+		Reward: "{}"
+	*/
 	public IEnumerator ShouldListAchievements() {
         LoginNewUser(cloud, gamer => {
 			gamer.Achievements.List()

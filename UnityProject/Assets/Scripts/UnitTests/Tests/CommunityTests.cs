@@ -254,13 +254,13 @@ public class CommunityTests : TestBase {
         return WaitForEndOfTest();
 	}
 
-	[Test("Tests the list network users call. Uses real data obtained from real test accounts on Facebook", "The user token expire the 09/06/2018, get a new user token via facebook for developpers website after this date.")]
+	[Test("Tests the list network users call. Uses real data obtained from real test accounts on Facebook", "The user access token expires the 09/06/2018, get a new user token via facebook for developpers website after this date.")]
 	public IEnumerator ShouldListNetworkUsers() {
         // User ID in the CotC network.
         string gamerID = "58ece8890810e5fe491a20a0";
 
         // User Token obtained from Facebook.
-        string user_token = "EAAEq3gnqZAOwBABPRbb8pMhWwLb2V4Fgre5v72t9yiI2NvDbrlmT7vlOTQaV27TPpJ7ukZAzPX8fJcFyS8j6VYmZBZAnFUa1mSFWOPnAN1VVZCzopWbLMfLhpypS72pV3vPQMiL82jlgZBFfAHCcFPnCYuZB1zAZCc5S8x4iyZC2qHAZDZD";
+		string user_token = "EAAEq3gnqZAOwBABPRbb8pMhWwLb2V4Fgre5v72t9yiI2NvDbrlmT7vlOTQaV27TPpJ7ukZAzPX8fJcFyS8j6VYmZBZAnFUa1mSFWOPnAN1VVZCzopWbLMfLhpypS72pV3vPQMiL82jlgZBFfAHCcFPnCYuZB1zAZCc5S8x4iyZC2qHAZDZD";
 
         cloud.Login("facebook", gamerID, user_token)
         .ExpectSuccess(gamer => {

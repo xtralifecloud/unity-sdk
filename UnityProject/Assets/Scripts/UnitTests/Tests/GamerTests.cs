@@ -7,6 +7,9 @@ using System.Collections;
 
 public class GamerTests : TestBase {
 
+	private const string BoBatchConfiguration = "Needs a set up batch to work (please check for the related test function's comment in code).";
+	private const string BoHookConfiguration = "Needs a set up hook to work (please check for the related test function's comment in code).";
+
 	[Test("Sets a property and checks that it worked properly (tests read all & write single).")]
 	public IEnumerator ShouldSetProperty() {
 		Login(cloud, gamer => {
@@ -127,10 +130,22 @@ public class GamerTests : TestBase {
         return WaitForEndOfTest();
 	}
 
-	[Test("Runs a batch on the server and checks the return value.", requisite: "The current game must be set-up with {\"__test\":\"\treturn {value: params.request.value * 2};\",\"__testGamer\":\"    return this.user.profile.read(params.user_id).then(function (result) {\n      return {message: params.request.prefix + result.profile.email};\n    });\"}.")]
+	[Test("Runs a batch on the server and checks the return value.", requisite: BoBatchConfiguration)]
+	/*
+		Backend prerequisites >> Add the following "unitTest_testGamer" batch:
+		
+		function __unitTest_testGamer(params, customData, mod) {
+			"use strict";
+			// don't edit above this line // must be on line 3
+			// Used for unit test.
+			return this.user.profile.read(params.user_id).then(function (result) {
+		    	return {message: params.request.prefix + result.profile.email};
+			});
+		} // must be on last line, no CR
+	*/
 	public IEnumerator ShouldRunGamerBatch() {
 		Login(cloud, gamer => {
-			gamer.Batches.Run("testGamer", Bundle.CreateObject("prefix", "Hello "))
+			gamer.Batches.Run("unitTest_testGamer", Bundle.CreateObject("prefix", "Hello "))
 			.ExpectSuccess(batchResult => {
 				Assert(batchResult["message"] == "Hello cloud@localhost.localdomain", "Returned value invalid (" + batchResult["message"] + ", check hook on server");
 				CompleteTest();
@@ -139,17 +154,17 @@ public class GamerTests : TestBase {
         return WaitForEndOfTest();
 	}
 
-    [Test("Creates a match, and checks that the request has been hooked by looking for a new field in the data returned", "The current game must have a hook on after-match-create setup with the code in commentary")]
-    // Code of the hook : 
-    /*
-    function after-match-create(params, customData, mod) {
-	    "use strict";
-	    // don't edit above this line // must be on line 3
-	    // Used for unit test.
-  	    mod.debug(JSON.stringify(params));
-        params.match.globalState = {hooked:true};
-    } // must be on last line, no CR
-    */
+	[Test("Creates a match, and checks that the request has been hooked by looking for a new field in the data returned", requisite: BoHookConfiguration)]
+	/*
+		Backend prerequisites >> Add the following "after-match-create" hook:
+		
+		function after-match-create(params, customData, mod) {
+			"use strict";
+			// don't edit above this line // must be on line 3
+			// Used for unit test.
+		    params.match.globalState = {hooked:true};
+		} // must be on last line, no CR
+	*/
     public IEnumerator ShouldBeHooked() {
         LoginNewUser(cloud, gamer => {
             gamer.Matches.Create(1)
