@@ -8,7 +8,7 @@ Read the [CotC Unity SDK](http://xtralifecloud.github.io/unity-sdk) and [Backend
 
 Want to go further? Do not hesitate to check for our [Game Template](https://github.com/xtralifecloud/unity-gametemplate) to inspire yourself with that extra-clean, simple, and fully commented sample of how to handle a persistent login logic and event messages. Plus, it gives you a quick way to test most of SDK's APIs via its sample scene. Last but no the least, you may even import this entire project into yours to plug your workflow on it and even reuse its default UI elements, it's originally designed for this!
 
-## **Support**
+### **Support**
 
 The Unity SDK is developed for **Unity 5** as the main test channel but is compatible with **Unity 2017** and **2018** too.
 
@@ -86,15 +86,29 @@ In Unity editor, click the `Edit > Project Settings > Player` menu and hit the `
 
 Integration tests are a very useful tool to quickly test new features and ensure that no regressions are made whenever something is modified throughout the developement of this SDK. Each time you add a feature by yourself, you should add one or several integration test as well. Also, when modifying the library, please run all integration tests and check if anything has been broken.
 
+### **Prerequisites before running integration tests**
+
+Before you run the tests, don't forget to set your game's `API Key` and `API Secret` credentials via the `Assets\Cotc\Prefabs\CotcSdk.prefab` prefab in order to be able to connect to the server and to read/write backend data.
+
+Note that the `CommunityTests > ShouldListNetworkUsers` test needs a **valid Facebook access token** in order to successfully complete, thus if you want to run this test you'll need to replace the hardcoded one in the corresponding script (`user_token` **string** in `Assets\Scripts\UnitTests\Tests\CommunityTests.cs`).
+
+> You can get and generate new access tokens via the [Facebook API Graph explorer](https://developers.facebook.com/tools/explorer).
+
+Note that some tests may fail if the related backend data structures (**game VFS** keys, **hooks/batches** scripts, **in app purchases** products configuration, etc...) are missing from your game database. Please refer to the corresponding tests code comments in `Assets\Scripts\UnitTests\Tests` folder's scripts and the [CotC Unity SDK documentation](http://xtralifecloud.github.io/unity-sdk) for the detailed setup in order to make those tests work. The following tests are affected:
+
+- `CloudTests.cs:` ShouldLoginAndRunBatch (**Batches/Hooks**)
+
+- `GameTests.cs:` ShouldFetchGameKey, ShouldGetBinaryFromGameVFS, ShouldRunGameBatchOnAnotherDomain, ShouldRunGameBatchWithoutParameter, ShouldRunGameBatchWithParameters (**Batches/Hooks**, **GameVFS**)
+
+- `GamerTests.cs:` ShouldBeHooked, ShouldRunGamerBatch (**Batches/Hooks**)
+
+- `TransactionTests.cs:` ShouldAssociateAchievementData, ShouldListAchievements, ShouldTriggerAchievement (**Achievements**)
+
+- `StoreTests.cs:` ShouldPerformFakePurchase (**InAppPurchases/Store**)
+
 ### **Running integration tests**
 
 In Unity editor, open the **Test Runner** by clicking on `Window -> Test Runner`. In the `PlayMode` tab, you should be able to see all written tests after you've hit the `Enable playmode tests` button for the first time. You can run tests quickly **in the editor** by clicking the `Run All` or `Run Selected` buttons.
-
-> Before you run the tests, don't forget to set your game's `API Key` and `API Secret` credentials in order to be able to connect to the server and to read/write backend data.
-
-> Note that the `CommunityTests > ShouldListNetworkUsers` test needs a **valid Facebook access token** in order to successfully complete, thus if you want to run this test you'll need to replace the hardcoded one in the corresponding script (`user_token` **string** in `Assets\Scripts\UnitTests\Tests\CommunityTests.cs`). You can get and generate new access tokens via the [Facebook API Graph explorer](https://developers.facebook.com/tools/explorer).
-
-> Note that some tests may fail if the related **Game VFS** data keys are missing from the base, as it's an expected behavior. Please refer to the corresponding tests code comments.
 
 You can also run those tests **on specific platforms devices** via the **PlayMode**. To do this, click the `Run all in player` button instead; The targeted platform will be the current platform selected in project's **Build Settings**.
 
@@ -132,7 +146,7 @@ public IEnumerator ShouldReturnProperOutline(Cloud cloud) {
 
 Once your test is written, just return to the Unity editor, wait for a few seconds for the scripts to be compiled again, and then select your new test. Then, click the `Run Selected` button to only run the new test.
 
-### **Creating a new group**
+#### **Creating a new group**
 
 A **test group** is associated to a separate **test class** to make things clearer. To get started, we suggest that you simply duplicate, rename, then edit an existing test class since the inheritance structure and imports are all important. Don't forget to add your new test class in the `TestTypes` **Type array** in the `Assets\Scripts\UnitTests\Tests\RunAllTests.cs` script.
 
