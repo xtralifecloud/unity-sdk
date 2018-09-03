@@ -114,7 +114,7 @@ If you want to run tests on an Android device, then complete the following steps
 
 ### **Writing new integration tests**
 
-In order to **edit integration tests**, check for the `Assets\Tests\Scripts` folder; Each script represents a separate group of tests. If you want to create a new group see further instructions, else just select the script to which you'd like to add your new test and add a new method like the following:
+In order to **edit integration tests**, check for the `Assets\Scripts\UnitTests\Tests` folder; Each script represents a separate group of tests. If you want to create a new group see further instructions, else just select the script you'd like to add your new test in and add a new method like the following:
 
 ```CSharp
 [Test("Tests the outline functionality", "You must have setup the SDK properly")]
@@ -132,7 +132,7 @@ Once your test is written, just return to the Unity editor, wait for a few secon
 
 ### **Creating a new group**
 
-A **test group** is associated to a separate **test class** to make things clearer. To get started, we suggest that you simply duplicate, rename, then edit an existing test class since the inheritance structure and imports are all important.
+A **test group** is associated to a separate **test class** to make things clearer. To get started, we suggest that you simply duplicate, rename, then edit an existing test class since the inheritance structure and imports are all important. Don't forget to add your new test class in the `TestTypes` **Type array** in the `Assets\Scripts\UnitTests\Tests\RunAllTests.cs` script.
 
 ### **Fail/Success of a test**
 
