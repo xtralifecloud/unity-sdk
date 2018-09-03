@@ -56,9 +56,9 @@ namespace CotcSdk
 			public bool Aborted, AlreadyFinished;
 			public HttpClient Client;
 			public HttpRequest OriginalRequest;
+			public Coroutine timeoutCoroutine;
 			public int RequestId;
 			public object PreviousUserData;
-			public bool allDone;
 
 			protected WebRequest(HttpClient client, HttpRequest originalRequest) {
 				Client = client;
@@ -105,7 +105,8 @@ namespace CotcSdk
 			// IDEA This function could probably be moved to another file with a little gymnastic…
 			HttpRequest nextReq;
 			// Avoid timeout to be triggered after that
-			state.allDone = true;
+			if (state.timeoutCoroutine != null)
+				CotcCoroutinesManager.instance.StopCoroutine(state.timeoutCoroutine);
             lock (this) {
 				// No need to continue, dismiss the result
 				if (Terminated) return;
@@ -166,30 +167,28 @@ namespace CotcSdk
 			lock (this) {
 				RunningRequests.Add(state);
 			}
-			state.allDone = false;
 			state.Start();
 
 			// Setup timeout
 			if (request.TimeoutMillisec > 0) {
-				CotcCoroutinesManager.instance.StartTimeoutCoroutine(TimeoutCallback, state, request.TimeoutMillisec);
+				state.timeoutCoroutine = CotcCoroutinesManager.instance.StartTimeoutCoroutine(TimeoutCallback, state, request.TimeoutMillisec);
 			}
         }
 
 		/// <summary>Called upon timeout.</summary>
 		private static void TimeoutCallback(object state) {
 			WebRequest requestState = state as WebRequest;
-			if (!requestState.allDone) {
-				// Timeout detected but only abort request if it's not already aborted
-				if (!requestState.Aborted) {
-					requestState.Aborted = true;
-					requestState.AbortRequest();
-					HttpResponse response = new HttpResponse(new HttpTimeoutException());
 
-					if (!requestState.OriginalRequest.Url.Contains("/v1/gamer/event"))
-						Common.LogWarning("Request timed out");
-					
-					requestState.Client.FinishWithRequest(requestState, response);
-				}
+			// Timeout detected but only abort request if it's not already aborted
+			if (!requestState.Aborted) {
+				requestState.Aborted = true;
+				requestState.AbortRequest();
+				HttpResponse response = new HttpResponse(new HttpTimeoutException());
+
+				if (!requestState.OriginalRequest.Url.Contains("/v1/gamer/event"))
+					Common.LogWarning("Request timed out");
+				
+				requestState.Client.FinishWithRequest(requestState, response);
 			}
 		}
 

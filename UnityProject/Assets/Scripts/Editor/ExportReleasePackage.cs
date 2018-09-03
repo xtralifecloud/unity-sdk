@@ -9,31 +9,49 @@ public class ExportReleasePackage {
 	private static readonly Dictionary<string, string[]> PackagesToBeExported = new Dictionary<string,string[]>()
 	{
 		{
-			"CotcSdk.Core.unitypackage",
+			#if UNITY_2017
+			"CotcSdk-Unity-2017.Core.unitypackage",
+			#elif UNITY_2018
+			"CotcSdk-Unity-2018.Core.unitypackage",
+			#else
+			"CotcSdk-Unity-5.Core.unitypackage",
+			#endif
 			new string[] {
                 "Assets/Cotc",
 				"Assets/Plugins/CotcSdk.dll",
 				"Assets/Plugins/CotcSdk.xml",
 				"Assets/Plugins/Editor/CotcSdk-Editor.dll",
 				"Assets/Plugins/Editor/CotcSdk-Editor.xml",
-				"Assets/Plugins/WSA/CotcSdk-UW.dll",
-				"Assets/Plugins/WSA/CotcSdk-UW.xml"
+				"Assets/Plugins/WSA/CotcSdk.dll",
+				"Assets/Plugins/WSA/CotcSdk.xml"
 			}
 		},
 		{
-			"CotcSdk.FacebookIntegration.unitypackage",
+			#if UNITY_2017
+			"CotcSdk-Unity-2017.FacebookIntegration.unitypackage",
+			#elif UNITY_2018
+			"CotcSdk-Unity-2018.FacebookIntegration.unitypackage",
+			#else
+			"CotcSdk-Unity-5.FacebookIntegration.unitypackage",
+			#endif
 			new string[] {
 				"Assets/Cotc.FacebookIntegration",
 				"Assets/Plugins/CotcSdk.dll",
 				"Assets/Plugins/CotcSdk.xml",
 				"Assets/Plugins/Editor/CotcSdk-Editor.dll",
 				"Assets/Plugins/Editor/CotcSdk-Editor.xml",
-				"Assets/Plugins/WSA/CotcSdk-UW.dll",
-				"Assets/Plugins/WSA/CotcSdk-UW.xml"
+				"Assets/Plugins/WSA/CotcSdk.dll",
+				"Assets/Plugins/WSA/CotcSdk.xml"
 			}
 		},
 		{
-			"CotcSdk.InAppPurchase.unitypackage",
+			#if UNITY_2017
+			"CotcSdk-Unity-2017.InAppPurchase.unitypackage",
+			#elif UNITY_2018
+			"CotcSdk-Unity-2018.InAppPurchase.unitypackage",
+			#else
+			"CotcSdk-Unity-5.InAppPurchase.unitypackage",
+			#endif
 			new string[] {
 				"Assets/Cotc.InAppPurchase",
                 "Assets/Plugins/Android/android.arch.core.common-1.0.0.jar",
@@ -47,12 +65,18 @@ public class ExportReleasePackage {
 				"Assets/Plugins/CotcSdk.xml",
 				"Assets/Plugins/Editor/CotcSdk-Editor.dll",
 				"Assets/Plugins/Editor/CotcSdk-Editor.xml",
-				"Assets/Plugins/WSA/CotcSdk-UW.dll",
-				"Assets/Plugins/WSA/CotcSdk-UW.xml"
+				"Assets/Plugins/WSA/CotcSdk.dll",
+				"Assets/Plugins/WSA/CotcSdk.xml"
 			}
 		},
 		{
-			"CotcSdk.PushNotifications.unitypackage",
+			#if UNITY_2017
+			"CotcSdk-Unity-2017.PushNotifications.unitypackage",
+			#elif UNITY_2018
+			"CotcSdk-Unity-2018.PushNotifications.unitypackage",
+			#else
+			"CotcSdk-Unity-5.PushNotifications.unitypackage",
+			#endif
 			new string[] {
 				"Assets/Cotc.PushNotifications",
                 "Assets/Plugins/Android/android.arch.core.common-1.0.0.jar",
@@ -80,8 +104,8 @@ public class ExportReleasePackage {
 				"Assets/Plugins/CotcSdk.xml",
 				"Assets/Plugins/Editor/CotcSdk-Editor.dll",
 				"Assets/Plugins/Editor/CotcSdk-Editor.xml",
-				"Assets/Plugins/WSA/CotcSdk-UW.dll",
-				"Assets/Plugins/WSA/CotcSdk-UW.xml"
+				"Assets/Plugins/WSA/CotcSdk.dll",
+				"Assets/Plugins/WSA/CotcSdk.xml"
 			}
 		}
 	};
@@ -91,15 +115,31 @@ public class ExportReleasePackage {
 		var releaseDirectory = Path.Combine(Directory.GetParent(UnityEngine.Application.dataPath).FullName, ReleaseDirectory);
 
 		// Prompt the user to check the version as we have no mean of automatically updating it (yet)
-		if (!EditorUtility.DisplayDialog("Building packages", "The release packages are about to be built. Please check the following:\n\n- SDK Version will be " + CotcSdk.Cloud.SdkVersion + "\n\nIf you are unsure, please fix Cloud.SdkVersion, rebuild the library and try again.", "Proceed", "Cancel")) {
+		if (
+			!EditorUtility.DisplayDialog("Building packages", "The release packages are about to be built. Please check the following:"
+				+ "\n\n- SDK Version will be " + CotcSdk.Cloud.SdkVersion
+				#if UNITY_2017
+				+ "\n- For Unity 2017"
+				#elif UNITY_2018
+				+ "\n- For Unity 2018"
+				#else
+				+ "\n- For Unity 5"
+				#endif
+				+ "\n\nIf you are unsure, please fix Cloud.SdkVersion, rebuild the library and try again.", "Proceed", "Cancel")
+		)
 			return;
-		}
 
 		// First, build the DLLs
 		var buildScriptDir = Path.Combine(Directory.GetParent(UnityEngine.Application.dataPath).Parent.FullName, "CotcSdk");
 		var process = new System.Diagnostics.Process();
 		var succeeded = false;
-		process.StartInfo.FileName = Path.Combine(buildScriptDir, "Build.bat");
+		#if UNITY_2017
+		process.StartInfo.FileName = Path.Combine(buildScriptDir, "Build-Unity-2017.bat");
+		#elif UNITY_2018
+		process.StartInfo.FileName = Path.Combine(buildScriptDir, "Build-Unity-2018.bat");
+		#else
+		process.StartInfo.FileName = Path.Combine(buildScriptDir, "Build-Unity-5.bat");
+		#endif
 		process.StartInfo.WorkingDirectory = buildScriptDir;
 		if (process.Start()) {
 			process.WaitForExit();

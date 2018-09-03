@@ -138,9 +138,9 @@ namespace CotcSdk {
 			}
 		}
 
-		internal void StartTimeoutCoroutine(Action<object> TimeoutCallback, object state, int timeoutMillisec) {
+		internal Coroutine StartTimeoutCoroutine(Action<object> TimeoutCallback, object state, int timeoutMillisec) {
 			TimeoutParameters timeoutParameters = new TimeoutParameters(TimeoutCallback, state, ((float)timeoutMillisec) / 1000f);
-			StartCoroutine("TimeoutCoroutine", timeoutParameters);
+			return StartCoroutine(TimeoutCoroutine(timeoutParameters));
 		}
 
 		private IEnumerator TimeoutCoroutine(TimeoutParameters timeoutParameters) {
