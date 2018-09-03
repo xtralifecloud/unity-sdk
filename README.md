@@ -92,6 +92,8 @@ In Unity editor, open the **Test Runner** by clicking on `Window -> Test Runner`
 
 > Before you run the tests, don't forget to set your game's `API Key` and `API Secret` credentials in order to be able to connect to the server and to read/write backend data.
 
+> Note that the `CommunityTests > ShouldListNetworkUsers` test needs a **valid Facebook access token** in order to successfully complete, thus if you want to run this test you'll need to replace the hardcoded one in the corresponding script (`user_token` **string** in `Assets\Scripts\UnitTests\Tests\CommunityTests.cs`). You can get and generate new access tokens via the [Facebook API Graph explorer](https://developers.facebook.com/tools/explorer).
+
 > Note that some tests may fail if the related **Game VFS** data keys are missing from the base, as it's an expected behavior. Please refer to the corresponding tests code comments.
 
 You can also run those tests **on specific platforms devices** via the **PlayMode**. To do this, click the `Run all in player` button instead; The targeted platform will be the current platform selected in project's **Build Settings**.
