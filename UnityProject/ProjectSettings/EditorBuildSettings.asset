@@ -5,9 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 1
+    path: Assets/Cotc/Scenes/CotcSampleScene.unity
+    guid: fab96676656b1c745bd49d97d12d1660
   - enabled: 0
-    path: Assets/Scenes/IntegrationTestScene.unity
-    guid: 00000000000000000000000000000000
+    path: Assets/Cotc.FacebookIntegration/Scenes/CotcFacebookSampleScene.unity
+    guid: a4f51fe597ec9034d879b122cfab7978
   - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 00000000000000000000000000000000
+    path: Assets/Cotc.InAppPurchase/Scenes/CotcInappPurchaseSampleScene.unity
+    guid: 684651be7240f1548ae5dfd39942caa2
