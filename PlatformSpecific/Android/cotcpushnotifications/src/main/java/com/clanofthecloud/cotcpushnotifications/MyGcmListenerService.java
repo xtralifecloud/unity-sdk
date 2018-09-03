@@ -19,20 +19,30 @@ package com.clanofthecloud.cotcpushnotifications;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.NotificationChannel;
+import android.app.Notification;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+
+import android.graphics.Bitmap; 
+import android.graphics.BitmapFactory; 
+
 import android.media.RingtoneManager;
+
 import android.net.Uri;
-import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
-import android.util.Log;
+
 import android.os.Build;
-import android.app.NotificationChannel;
-import android.app.Notification;
+import android.os.Bundle;
+
+import android.support.v4.app.NotificationCompat;
+
+import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
+
 import com.unity3d.player.UnityPlayer;
 import com.unity3d.player.UnityPlayerActivity;
 
@@ -77,6 +87,12 @@ public class MyGcmListenerService extends GcmListenerService {
                 Log.e(TAG, "!!!!!!!!! cotc.GcmNotificationIcon not configured in manifest, push notifications won't work !!!!!!!!!");
                 return;
             }
+            int notificationLargeIcon = ai.metaData.getInt("cotc.GcmNotificationLargeIcon", -1);
+            if (notificationLargeIcon == -1) {
+                Log.e(TAG, "There is no large icon for push notifs, will only use default icon");
+                return;
+            }
+
             String pushNotifName = ai.metaData.getString("cotc.GcmNotificationTitle");
             if (pushNotifName == null) {
                 Log.e(TAG, "!!!!!!!!! cotc.GcmNotificationTitle not configured in manifest, push notifications won't work !!!!!!!!!");
@@ -99,6 +115,7 @@ public class MyGcmListenerService extends GcmListenerService {
                 notificationBuilder = new NotificationCompat.Builder(this);
 
             Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
             notificationBuilder.setSmallIcon(notificationIcon)
                 .setContentTitle(pushNotifName)
                 .setContentText(message)
@@ -106,6 +123,9 @@ public class MyGcmListenerService extends GcmListenerService {
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent)
                 .setPriority(Notification.PRIORITY_HIGH);
+            if(notificationLargeIcon != -1)
+                notificationBuilder.setLargeIcon(BitmapFactory.decodeResource(currentAct.getResources(), notificationLargeIcon));
+
             notifManager.notify(0 /* ID of notification */, notificationBuilder.build());
         } catch (Exception e) {
             Log.w(TAG, "Failed to handle push notification", e);
