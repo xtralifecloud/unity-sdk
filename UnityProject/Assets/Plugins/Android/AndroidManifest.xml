@@ -18,6 +18,7 @@
     <!-- [START GCM] -->
     <meta-data android:name="cotc.GcmSenderId" android:value="\ 752049070991" />
     <meta-data android:name="cotc.GcmNotificationIcon" android:resource="@drawable/ic_stat_ic_notification" />
+    <meta-data android:name="cotc.GcmNotificationLargeIcon" android:resource="@drawable/ic_stat_ic_notification" />
     <meta-data android:name="cotc.GcmNotificationTitle" android:value="Cotc sample" />
     <receiver android:name="com.google.android.gms.gcm.GcmReceiver" android:exported="true" android:permission="com.google.android.c2dm.permission.SEND">
       <intent-filter>
