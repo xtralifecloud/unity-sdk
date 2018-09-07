@@ -17,13 +17,14 @@ namespace CotcSdk {
         static GamerVfs()
         {
             RuntimePlatform platform = Application.platform;
+            string version = Application.unityVersion;
 
             // "Nice" system to send the correct Content-Type to S3 for upload, since Unity uses different ones
             // based on the platform and version. We must make sure to send the same one since the signature
             // uses the ContentType.
             if(platform == RuntimePlatform.Android)
                 s3ContentType = "application/x-www-form-urlencoded";
-            if (Application.unityVersion.CompareTo("5.1.1") == 1)
+            if (version.Contains("201") || (version.CompareTo("5.1.1") == 1))
                 s3ContentType = "application/octet-stream";
         }
 
