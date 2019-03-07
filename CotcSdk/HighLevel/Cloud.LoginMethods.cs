@@ -10,7 +10,7 @@ namespace CotcSdk
 		/// in account for this search.
 		/// </summary>
 		/// <returns>Task returning the fetched list of users. The list is paginated (see
-		///     #CotcSdk.PagedList<DataType> for more info).</returns>
+		///     #CotcSdk.PagedList for more info).</returns>
 		/// <param name="filter">May contain a nickname, a display name or e-mail address.</param>
 		/// <param name="limit">The maximum number of results to return per page.</param>
 		/// <param name="offset">Number of the first result.</param>
@@ -65,11 +65,12 @@ namespace CotcSdk
         /// <param name="networkSecret">The secret for the network. For e-mail accounts, this would be the passord. For
         ///     facebook or other SNS accounts, this would be the user token. For the LoginNetwork.GameCenter, the password
         ///     is not used, so you may pass "n/a".</param>
-        /// <param name="preventRegistration">Fail instead of silently creating an account in case it doesn't already exist on
-        ///     the CotC servers.</param>
         /// <param name="additionalOptions">Additional options can be passed, such as `thenBatch` to execute a batch after
         ///     login or `preventRegistration` to accept only already created accounts. Pass it as a Bundle with the additional
-        ///     keys. May not override `preventRegistration` key since it is defined by the parameter of the same name.</param>
+        ///     keys. May not override `preventRegistration` key since it is defined by the parameter of the same name. Example
+		///     options Bundle's Json: `{"preventRegistration": true,
+		///     "thenBatch": {"domain": "private", "name": "TestBatch", "params": {"test": true}}}`
+		/// </param>
         public Promise<Gamer> Login(string network, string networkId, string networkSecret, Bundle additionalOptions = null)
         {
             Bundle config = Bundle.CreateObject();

@@ -39,7 +39,7 @@ namespace CotcSdk {
 		/// via a different call (Balance).
 		/// </summary>
 		/// <returns>Promise resolved when the operation has completed. The result is paginated, for more information see
-		///     #CotcSdk.PagedList<DataType>.</returns>
+		///     #CotcSdk.PagedList.</returns>
 		/// <param name="unit">If specified, retrieves only the transactions matching a given unit (e.g. "gold").</param>
 		/// <param name="limit">For pagination, allows to set a greater or smaller page size than the default 30.</param>
 		/// <param name="offset">For pagination, avoid using it explicitly.</param>

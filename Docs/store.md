@@ -115,7 +115,7 @@ Gamer.Store.ListConfiguredProducts()
 
 The #CotcSdk.InappPurchase.ProductInfo object contains a lot of information about the product to be purchased, regardless of the current platform. This is what should be used to present a store front to the user.
 
-The first 30 products are returned by default, and pagination may be used as described under #CotcSdk.PagedList<DataType>.
+The first 30 products are returned by default, and pagination may be used as described under #CotcSdk.PagedList.
 
 With `FetchProductInfo`, the product information for each product configured on the Clan of the Cloud backoffice for this game is consolidated with the product information returned by the app store. If product information for a given product can not be fetched, the product is removed from the list. This means that even though products are configured on the backoffice, if something is wrong on the servers of the app store, in the above snippet `backofficeProducts` will be non-empty but `enrichedProducts` may be.
 

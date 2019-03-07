@@ -58,12 +58,11 @@ namespace CotcSdk {
 		/// You need valid credentials in order to instantiate this class. Use Cloud.Login* methods for that purpose.
 		/// Once the object is created, you need to start the coroutine, please look at the other methods available.
 		/// </summary>
-		/// <param name="gamer">The gamer object received from a login or similar function.</param>
+		/// <param name="gamer">The gamer object received from a login or similar function. Used to authenticate
+		///     (receive events related to the said gamer).</param>
 		/// <param name="domain">The domain on which to listen for events. Note that you may create multiple event loops,
 		///     especially if you are using multiple domains. The default domain, that you should use unless you are
 		///     explicitly using multiple domains, is the private domain.</param>
-		/// <param name="gamer">Gamer, used to authenticate (receive events related to the said gamer).</param>
-		/// <param name="domain">Domain on which to listen for events.</param>
 		/// <param name="iterationDuration">Sets a custom timeout in seconds for the long polling event loop. Should be used
 		///     with care and set to a high value (at least 60). Defaults to 590 (~10 min).</param>
 		public DomainEventLoop(Gamer gamer, String domain = Common.PrivateDomain, int iterationDuration = 590) {
