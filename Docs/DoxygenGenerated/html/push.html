@@ -127,7 +127,7 @@ Setting up your Android push notifications with Clan of the Cloud back office</d
 <li>If you are using facebook, you may need to remove <code>android-support-v4.jar</code> under Assets/Plugins/Android/Facebook/libs.</li>
 </ul>
 <p>Your application is now ready to receive push notifications from Google Cloud Messaging! No further configuration is required on your side: just placing the <code>CotcPushNotificationsGameObject</code> on your scenes will ensure that everything works fine. It will transparently register for notifications upon login done with the main CotC SDK Game Object. Notifications will be received via the standard GCM service (running in background on your device), that starts a small piece of code embedded in our SDK upon event, showing a notification using the parameters set in the manifest.</p>
-<h2>Modifying the cotcinapppurchase plugin</h2>
+<h2>Modifying the cotcpushnotifications plugin</h2>
 <p>Depending on your needs, you may want to modify the cotcpushnotifications native plugin in order to get more control on what happens upon receiving a push notification. This plugin is supplied with the sources of the SDK under PlatformSpecific/Android/cotcpushnotifications, and the parent folder can simply be opened with Android Studio.</p>
 <p>This project is basically constituted of four classes:</p>
 <ul>
