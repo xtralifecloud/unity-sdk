@@ -26,7 +26,7 @@ Note: if you include any package which provides additional functionality, you ne
 
 Basic usage is provided by the Clan of the Cloud SDK prefab object. You just have to put it on your scene(s). When creating your project, you can select this object (any instance on any scene) and use the interface under the inspector to set up the CotC credentials as shown below. These credentials identify your game and are used to scope data to your game. You may also configure additional settings.
 
-![Configuring the SDK via the CotC Game Object](./Docs/img/cotc-game-object-1.png)
+![Configuring the SDK via the CotC Game Object](./Docs/img/cotc-game-object.png)
 
 The available settings are:
 - **API Key:** the API key as described on the web interface when you registered to Clan of the Cloud
