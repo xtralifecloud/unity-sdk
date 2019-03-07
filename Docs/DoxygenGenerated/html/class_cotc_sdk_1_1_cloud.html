@@ -233,7 +233,7 @@ const string&#160;</td><td class="memItemRight" valign="bottom"><b>SdkVersion</b
 </div><div class="memdoc">
 
 <p>Method used to check or retrieve users from Clan of the <a class="el" href="class_cotc_sdk_1_1_cloud.html" title="Root class of the SDK. It is stateless and allows to perform basic operations with the SDK,...">Cloud</a> community. The domain is not taken in account for this search. </p>
-<dl class="section return"><dt>Returns</dt><dd>Task returning the fetched list of users. The list is paginated (see #CotcSdk.PagedList&lt;DataType&gt; for more info).</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Task returning the fetched list of users. The list is paginated (see <a class="el" href="class_cotc_sdk_1_1_paged_list.html" title="Represents a paginated list, which allows for easy navigation through multiple results.">CotcSdk.PagedList</a> for more info).</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">filter</td><td>May contain a nickname, a display name or e-mail address.</td></tr>
@@ -290,8 +290,7 @@ const string&#160;</td><td class="memItemRight" valign="bottom"><b>SdkVersion</b
     <tr><td class="paramname">network</td><td>The network to connect with. If an user is recognized on a given network (same network ID), then it will be signed back in and its user data will be used.</td></tr>
     <tr><td class="paramname">networkId</td><td>The ID on the network. For example, with the facebook network, this would be the User ID. On e-mail accounts e-mail then, this would be the e-mail address.</td></tr>
     <tr><td class="paramname">networkSecret</td><td>The secret for the network. For e-mail accounts, this would be the passord. For facebook or other SNS accounts, this would be the user token. For the LoginNetwork.GameCenter, the password is not used, so you may pass "n/a".</td></tr>
-    <tr><td class="paramname">preventRegistration</td><td>Fail instead of silently creating an account in case it doesn't already exist on the CotC servers.</td></tr>
-    <tr><td class="paramname">additionalOptions</td><td>Additional options can be passed, such as <code>thenBatch</code> to execute a batch after login or <code>preventRegistration</code> to accept only already created accounts. Pass it as a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> with the additional keys. May not override <code>preventRegistration</code> key since it is defined by the parameter of the same name.</td></tr>
+    <tr><td class="paramname">additionalOptions</td><td>Additional options can be passed, such as <code>thenBatch</code> to execute a batch after login or <code>preventRegistration</code> to accept only already created accounts. Pass it as a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> with the additional keys. May not override <code>preventRegistration</code> key since it is defined by the parameter of the same name. Example options <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s Json: <code>{"preventRegistration": true, "thenBatch": {"domain": "private", "name": "TestBatch", "params": {"test": true}}}</code> </td></tr>
   </table>
   </dd>
 </dl>
@@ -566,7 +565,7 @@ const string&#160;</td><td class="memItemRight" valign="bottom"><b>SdkVersion</b
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 7 2019 12:39:55 for CotC C# SDK for Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 7 2019 14:11:11 for CotC C# SDK for Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.15
 </small></address>

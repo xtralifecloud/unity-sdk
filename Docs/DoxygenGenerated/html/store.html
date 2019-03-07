@@ -139,7 +139,7 @@ Giving the administrative rights to the account</div></div>
 <h2>Querying the list of available products </h2>
 <p>Prior to starting any purchase, the first thing that a game should do is to query the products available for sale. This can be used to show an UI to the player indicating what he is able to purchase and possibly the price. Querying product information can be done as in the snippet below.</p>
 <div class="fragment"><div class="line">var inApp = FindObjectOfType&lt;CotcInappPurchaseGameObject&gt;();</div><div class="line"></div><div class="line">Gamer.Store.ListConfiguredProducts()</div><div class="line">.Then((List&lt;ConfiguredProduct&gt; backofficeProducts) =&gt; {</div><div class="line">    <span class="comment">// Now enrich this basic information</span></div><div class="line">    <span class="keywordflow">return</span> inApp.FetchProductInfo(backofficeProducts);</div><div class="line">})</div><div class="line">.Then((List&lt;ProductInfo&gt; enrichedProducts) =&gt; {</div><div class="line">    <span class="keywordflow">foreach</span> (var pi <span class="keywordflow">in</span> enrichedProducts) {</div><div class="line">        Debug.Log(pi.ToJson());</div><div class="line">    }</div><div class="line">})</div><div class="line">.Done();</div></div><!-- fragment --><p>The <a class="el" href="class_cotc_sdk_1_1_inapp_purchase_1_1_product_info.html" title="Information about a given product. Returned by CotC when querying the product list and used throughou...">CotcSdk.InappPurchase.ProductInfo</a> object contains a lot of information about the product to be purchased, regardless of the current platform. This is what should be used to present a store front to the user.</p>
-<p>The first 30 products are returned by default, and pagination may be used as described under #CotcSdk.PagedList&lt;DataType&gt;.</p>
+<p>The first 30 products are returned by default, and pagination may be used as described under <a class="el" href="class_cotc_sdk_1_1_paged_list.html" title="Represents a paginated list, which allows for easy navigation through multiple results.">CotcSdk.PagedList</a>.</p>
 <p>With <code>FetchProductInfo</code>, the product information for each product configured on the Clan of the Cloud backoffice for this game is consolidated with the product information returned by the app store. If product information for a given product can not be fetched, the product is removed from the list. This means that even though products are configured on the backoffice, if something is wrong on the servers of the app store, in the above snippet <code>backofficeProducts</code> will be non-empty but <code>enrichedProducts</code> may be.</p>
 <h2>Launching a purchase </h2>
 <p>Launching a purchase brings a store front end to the customer, prompting him to purchase the product. The UI is the native one as expected by your players. The result handler is called whether the purchase is successful or failed.</p>
@@ -153,7 +153,7 @@ Giving the administrative rights to the account</div></div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 7 2019 12:39:54 for CotC C# SDK for Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 7 2019 14:11:11 for CotC C# SDK for Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.15
 </small></address>

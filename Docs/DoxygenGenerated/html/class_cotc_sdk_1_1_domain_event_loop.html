@@ -159,10 +159,8 @@ const float&#160;</td><td class="memItemRight" valign="bottom"><b>PopEventDelayC
 <p>You need valid credentials in order to instantiate this class. Use <a class="el" href="class_cotc_sdk_1_1_cloud.html#a8dd0f4fa6fccd194caf041ea33dbdb63" title="Logs the current user in, using any supported social network.">Cloud.Login</a>* methods for that purpose. Once the object is created, you need to start the coroutine, please look at the other methods available. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">gamer</td><td>The gamer object received from a login or similar function.</td></tr>
+    <tr><td class="paramname">gamer</td><td>The gamer object received from a login or similar function. Used to authenticate (receive events related to the said gamer).</td></tr>
     <tr><td class="paramname">domain</td><td>The domain on which to listen for events. Note that you may create multiple event loops, especially if you are using multiple domains. The default domain, that you should use unless you are explicitly using multiple domains, is the private domain.</td></tr>
-    <tr><td class="paramname">gamer</td><td><a class="el" href="class_cotc_sdk_1_1_gamer.html" title="Important object from the SDK, allowing to perform many operations that depend on a currently logged ...">Gamer</a>, used to authenticate (receive events related to the said gamer).</td></tr>
-    <tr><td class="paramname">domain</td><td>Domain on which to listen for events.</td></tr>
     <tr><td class="paramname">iterationDuration</td><td>Sets a custom timeout in seconds for the long polling event loop. Should be used with care and set to a high value (at least 60). Defaults to 590 (~10 min).</td></tr>
   </table>
   </dd>
@@ -299,7 +297,7 @@ const float&#160;</td><td class="memItemRight" valign="bottom"><b>PopEventDelayC
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 7 2019 12:39:55 for CotC C# SDK for Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 7 2019 14:11:11 for CotC C# SDK for Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.15
 </small></address>
