@@ -1,8 +1,10 @@
 var searchData=
 [
-  ['pagedlist_3c_20datatype_20_3e',['PagedList&lt; DataType &gt;',['../class_cotc_sdk_1_1_paged_list_3_01_data_type_01_4.html',1,'CotcSdk']]],
+  ['pagedcenteredscore',['PagedCenteredScore',['../class_cotc_sdk_1_1_gamer_scores.html#a875ffbf2cc7648fbe2f4b974f3e387e0',1,'CotcSdk::GamerScores']]],
+  ['pagedlist',['PagedList',['../class_cotc_sdk_1_1_paged_list.html',1,'CotcSdk']]],
   ['paidcurrency',['PaidCurrency',['../class_cotc_sdk_1_1_inapp_purchase_1_1_purchased_product.html#a42480952c683be66dae743284d1803f4',1,'CotcSdk::InappPurchase::PurchasedProduct']]],
   ['paidprice',['PaidPrice',['../class_cotc_sdk_1_1_inapp_purchase_1_1_purchased_product.html#a5977ba8cf1324c201620ccf54b53191f',1,'CotcSdk::InappPurchase::PurchasedProduct']]],
+  ['parent',['Parent',['../class_cotc_sdk_1_1_bundle.html#a6a984133c61e62b3c67479aa5e29393f',1,'CotcSdk::Bundle']]],
   ['payload',['Payload',['../class_cotc_sdk_1_1_index_result.html#a9d647f5809e878c7a437f833e8161416',1,'CotcSdk::IndexResult']]],
   ['ping',['Ping',['../class_cotc_sdk_1_1_cloud.html#ad933a5efef9e55a1246d7b58a89e0494',1,'CotcSdk::Cloud']]],
   ['playerid',['PlayerId',['../class_cotc_sdk_1_1_match_move.html#afa3ca7f8600c781cb0731915aa31724c',1,'CotcSdk.MatchMove.PlayerId()'],['../class_cotc_sdk_1_1_match_move_event.html#a1e217b8970daea520d238016cb7d8460',1,'CotcSdk.MatchMoveEvent.PlayerId()']]],
@@ -16,15 +18,15 @@ var searchData=
   ['price',['Price',['../class_cotc_sdk_1_1_purchase_transaction.html#a949c2944b2cbc47ec83a56a52473e3f2',1,'CotcSdk.PurchaseTransaction.Price()'],['../class_cotc_sdk_1_1_inapp_purchase_1_1_product_info.html#ae83298053a8e3fc574ab2f17afa124f6',1,'CotcSdk.InappPurchase.ProductInfo.Price()']]],
   ['productid',['ProductId',['../class_cotc_sdk_1_1_configured_product.html#a0bf719d64641db3637bf50cc2dac1dd2',1,'CotcSdk.ConfiguredProduct.ProductId()'],['../class_cotc_sdk_1_1_purchase_transaction.html#ab7de795dc134b215b15bccee7d94e897',1,'CotcSdk.PurchaseTransaction.ProductId()'],['../class_cotc_sdk_1_1_inapp_purchase_1_1_product_info.html#a2ae0b1883c16b35b2ff9da482df7714f',1,'CotcSdk.InappPurchase.ProductInfo.ProductId()']]],
   ['productinfo',['ProductInfo',['../class_cotc_sdk_1_1_inapp_purchase_1_1_product_info.html',1,'CotcSdk::InappPurchase']]],
-  ['profile',['Profile',['../class_cotc_sdk_1_1_gamer.html#a921f0b949e3b4ca563dd1c8e0ec7d07d',1,'CotcSdk::Gamer']]],
+  ['profile',['Profile',['../class_cotc_sdk_1_1_gamer.html#a2cf3194c7f1542f1cdedf8935468e37d',1,'CotcSdk::Gamer']]],
   ['promise',['Promise',['../class_cotc_sdk_1_1_promise.html',1,'CotcSdk']]],
-  ['promise_3c_20promisedt_20_3e',['Promise&lt; PromisedT &gt;',['../class_cotc_sdk_1_1_promise_3_01_promised_t_01_4.html',1,'CotcSdk']]],
-  ['properties',['Properties',['../class_cotc_sdk_1_1_gamer.html#abcb3941380fd29a4afc07404c6c5c229',1,'CotcSdk.Gamer.Properties()'],['../class_cotc_sdk_1_1_index_result.html#aad4065a12859eed53a086781fb943641',1,'CotcSdk.IndexResult.Properties()']]],
+  ['promise_3c_20cotcsdk_3a_3acloud_20_3e',['Promise&lt; CotcSdk::Cloud &gt;',['../class_cotc_sdk_1_1_promise.html',1,'CotcSdk']]],
+  ['promisehandler',['PromiseHandler',['../class_cotc_sdk_1_1_promise_handler.html',1,'CotcSdk']]],
+  ['properties',['Properties',['../class_cotc_sdk_1_1_gamer.html#a319796e84a363685a6a2f2d88257b2b5',1,'CotcSdk.Gamer.Properties()'],['../class_cotc_sdk_1_1_index_result.html#aad4065a12859eed53a086781fb943641',1,'CotcSdk.IndexResult.Properties()']]],
   ['propertiesobject',['PropertiesObject',['../class_cotc_sdk_1_1_properties_object.html',1,'CotcSdk']]],
   ['purchasedate',['PurchaseDate',['../class_cotc_sdk_1_1_purchase_transaction.html#a7178056bb12733906799bacee2ba92a4',1,'CotcSdk::PurchaseTransaction']]],
   ['purchasedproduct',['PurchasedProduct',['../class_cotc_sdk_1_1_inapp_purchase_1_1_purchased_product.html',1,'CotcSdk::InappPurchase']]],
   ['purchasetransaction',['PurchaseTransaction',['../class_cotc_sdk_1_1_purchase_transaction.html',1,'CotcSdk']]],
   ['push_20notification',['Push Notification',['../push.html',1,'']]],
-  ['pushnotification',['PushNotification',['../class_cotc_sdk_1_1_push_notification.html#abde43e5eafb4aeb307bf194aeccfb1c2',1,'CotcSdk::PushNotification']]],
-  ['pushnotification',['PushNotification',['../class_cotc_sdk_1_1_push_notification.html',1,'CotcSdk']]]
+  ['pushnotification',['PushNotification',['../class_cotc_sdk_1_1_push_notification.html',1,'CotcSdk.PushNotification'],['../class_cotc_sdk_1_1_push_notification.html#abde43e5eafb4aeb307bf194aeccfb1c2',1,'CotcSdk.PushNotification.PushNotification()'],['../class_cotc_sdk_1_1_push_notification.html#ae1c0e80105f1a0f11aa02975b830a922',1,'CotcSdk.PushNotification.PushNotification(string language, string text)'],['../class_cotc_sdk_1_1_push_notification.html#aa9ee97d1d9fc070e39ec01b9bcc4fa84',1,'CotcSdk.PushNotification.PushNotification(string language1, string text1, string language2, string text2)'],['../class_cotc_sdk_1_1_push_notification.html#a9772f0fef8307af496cefb5677e0aa67',1,'CotcSdk.PushNotification.PushNotification(string language1, string text1, string language2, string text2, string language3, string text3)'],['../class_cotc_sdk_1_1_push_notification.html#a2136316b275d3b51d3433fd7b48bc352',1,'CotcSdk.PushNotification.PushNotification(params KeyValuePair&lt; string, string &gt;[] languageTextPairs)']]]
 ];

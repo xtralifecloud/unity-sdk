@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['scoreorder',['ScoreOrder',['../namespace_cotc_sdk.html#a0b33fb730620778c7b2ebfb967cf33ab',1,'CotcSdk']]],
-  ['storetype',['StoreType',['../group__model__classes.html#ga81559f66b6278243aa82a8cd14d79e80',1,'CotcSdk']]]
+  ['loginnetwork',['LoginNetwork',['../group__model__classes.html#gad5e437023247d9f2be89e7f6be520fdb',1,'CotcSdk']]],
+  ['loglevel',['LogLevel',['../namespace_cotc_sdk.html#a43da1ffda53fc493e74b8e0e0b7f4366',1,'CotcSdk']]]
 ];

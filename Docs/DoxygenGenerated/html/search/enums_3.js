@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['matchstatus',['MatchStatus',['../group__match__classes.html#ga8d048a20e3e26f2e7afdd662024e6253',1,'CotcSdk']]]
+  ['friendrelationshipstatus',['FriendRelationshipStatus',['../namespace_cotc_sdk.html#a31921eae57061399720e654b1ae9d9ad',1,'CotcSdk']]]
 ];

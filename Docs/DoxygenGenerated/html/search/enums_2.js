@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['loginnetwork',['LoginNetwork',['../group__model__classes.html#gad5e437023247d9f2be89e7f6be520fdb',1,'CotcSdk']]]
+  ['errorcode',['ErrorCode',['../group__data__classes.html#ga49400c75979dda6834139d30bad775da',1,'CotcSdk']]]
 ];

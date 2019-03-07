@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['errorcode',['ErrorCode',['../group__data__classes.html#ga49400c75979dda6834139d30bad775da',1,'CotcSdk']]]
+  ['datatype',['DataType',['../class_cotc_sdk_1_1_bundle.html#aa84cd987b11b11dd145477190f56f803',1,'CotcSdk::Bundle']]]
 ];

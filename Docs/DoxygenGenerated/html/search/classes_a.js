@@ -10,5 +10,6 @@ var searchData=
   ['matchlistresult',['MatchListResult',['../class_cotc_sdk_1_1_match_list_result.html',1,'CotcSdk']]],
   ['matchmove',['MatchMove',['../class_cotc_sdk_1_1_match_move.html',1,'CotcSdk']]],
   ['matchmoveevent',['MatchMoveEvent',['../class_cotc_sdk_1_1_match_move_event.html',1,'CotcSdk']]],
-  ['matchshoedrawnevent',['MatchShoeDrawnEvent',['../class_cotc_sdk_1_1_match_shoe_drawn_event.html',1,'CotcSdk']]]
+  ['matchshoedrawnevent',['MatchShoeDrawnEvent',['../class_cotc_sdk_1_1_match_shoe_drawn_event.html',1,'CotcSdk']]],
+  ['monohttpclient',['MonoHttpClient',['../class_cotc_sdk_1_1_mono_http_client.html',1,'CotcSdk']]]
 ];
