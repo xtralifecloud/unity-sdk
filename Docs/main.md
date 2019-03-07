@@ -8,8 +8,8 @@ Welcome to the documentation for the Clan of the Cloud SDK for Unity. If you hav
   - @ref CotcSdk.CotcGameObject "The CotC Game Object"
   - @ref CotcSdk.Cloud "Cloud" (entry point)
   - @ref CotcSdk.Gamer "Gamer" (functionality available once logged in)
-  - @ref CotcSdk.Promise<PromisedT> "Promise" (return type of most calls)
-  - @ref CotcSdk.PagedList<DataType> "PagedList" (paginated result)
+  - @ref CotcSdk.Promise "Promise" (return type of most calls)
+  - @ref CotcSdk.PagedList "PagedList" (paginated result)
   - @ref CotcSdk.Bundle "Bundle" (manipulating JSON data)
   - @ref CotcSdk.PropertiesObject "PropertiesObject" (basis for most API objects)
 - **Adding complementary functionality via optional packages**
