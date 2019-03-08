@@ -4,7 +4,7 @@
 
 Get the latest [Unity SDK Release Packages](https://github.com/xtralifecloud/unity-sdk/releases) you're interested in and import them into your Unity project. Only the **core package** will be necessary if you don't need Facebook integration, in app purchases, and push notifications features.
 
-Read the [CotC Unity SDK](http://xtralifecloud.github.io/unity-sdk) and [Backend APIs](http://doc.xtralife.cloud/backend/?cs#) documentations to get started.
+Read the [CotC Unity SDK](http://xtralifecloud.github.io/unity-sdk/Docs/DoxygenGenerated/html/index.html) and [Backend APIs](http://doc.xtralife.cloud/backend/?cs#) documentations to get started.
 
 Want to go further? Do not hesitate to check for our [Game Template](https://github.com/xtralifecloud/unity-gametemplate) to inspire yourself with that extra-clean, simple, and fully commented sample of how to handle a persistent login logic and event messages. Plus, it gives you a quick way to test most of SDK's APIs via its sample scene. Last but no the least, you may even import this entire project into yours to plug your workflow on it and even reuse its default UI elements, it's originally designed for this!
 
