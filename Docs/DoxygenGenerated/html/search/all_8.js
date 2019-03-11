@@ -12,6 +12,7 @@ var searchData=
   ['inviteplayer',['InvitePlayer',['../class_cotc_sdk_1_1_match.html#a610258d4548936a569ef9b7a77c103c7',1,'CotcSdk::Match']]],
   ['inviter',['Inviter',['../class_cotc_sdk_1_1_match_invite_event.html#ab795bd379d09bbc61fbbe512b9000b60',1,'CotcSdk::MatchInviteEvent']]],
   ['iscreator',['IsCreator',['../class_cotc_sdk_1_1_match.html#a64dc4641f18f8bd13f81588985b92715',1,'CotcSdk::Match']]],
+  ['isempty',['IsEmpty',['../class_cotc_sdk_1_1_bundle.html#ab6385d8e1c44fee39091bfe160ddddae',1,'CotcSdk::Bundle']]],
   ['istore',['IStore',['../interface_cotc_sdk_1_1_inapp_purchase_1_1_i_store.html',1,'CotcSdk::InappPurchase']]],
   ['isystemfunctions',['ISystemFunctions',['../interface_cotc_sdk_1_1_i_system_functions.html',1,'CotcSdk']]],
   ['in_2dapp_20purchases',['In-app purchases',['../store.html',1,'']]]

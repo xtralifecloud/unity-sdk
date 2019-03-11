@@ -3,6 +3,7 @@ var searchData=
   ['registerdevice',['RegisterDevice',['../class_cotc_sdk_1_1_gamer_account_methods.html#ab852359a280618ab2b1ae297d4ae3626',1,'CotcSdk::GamerAccountMethods']]],
   ['reject',['Reject',['../class_cotc_sdk_1_1_promise.html#a18a73f07c5ade368222654e531c29c11',1,'CotcSdk::Promise']]],
   ['rejected',['Rejected',['../class_cotc_sdk_1_1_promise.html#a929ff59c3bce60117526b8f0ca1dae49',1,'CotcSdk::Promise']]],
+  ['remove',['Remove',['../class_cotc_sdk_1_1_bundle.html#ae2ac5a1a1e11546bd8e52bc6254f51ca',1,'CotcSdk::Bundle']]],
   ['removeall',['RemoveAll',['../class_cotc_sdk_1_1_gamer_properties.html#a72f573fca9567458699898f960f1f4aa',1,'CotcSdk::GamerProperties']]],
   ['removekey',['RemoveKey',['../class_cotc_sdk_1_1_gamer_properties.html#a209a5efdc90333521abc76b8abca66c2',1,'CotcSdk.GamerProperties.RemoveKey()'],['../class_cotc_sdk_1_1_gamer_vfs.html#a1d0fc794e79ae36270179759ac3d4695',1,'CotcSdk.GamerVfs.RemoveKey()']]],
   ['resolve',['Resolve',['../class_cotc_sdk_1_1_promise.html#a125c4059c2d36c2cb410886f3c8bc713',1,'CotcSdk::Promise']]],

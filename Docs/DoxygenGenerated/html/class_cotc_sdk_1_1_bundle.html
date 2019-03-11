@@ -86,22 +86,22 @@ $(function() {
 <p>You need bundles in many calls, either to decode generic data received by the server (when such data can be enriched by hooks typically) or to pass generic user parameters, such as when creating a match.</p>
 <p>Bundles are instantiated through their factory methods: <a class="el" href="class_cotc_sdk_1_1_bundle.html#a1e58870c761a527212833b7d27ab7585" title="Creates a bundle of type object.">Bundle.CreateObject</a> or <a class="el" href="class_cotc_sdk_1_1_bundle.html#a2140b81af8afb1462a85fa78ebc3fa0c" title="Creates a bundle of type array.">Bundle.CreateArray</a>. The type of the resulting object can be inspected via the Type member. While objects and arrays are containers for further objects, a bundle is a simple node in the graph and may as such contain a value, such as a string.</p>
 <p>Sub-objects are fetched using the index operator (brackets), either with a numeric argument for arrays or a string argument for dictionaries. Conversions are performed automatically based. Let's consider the following example:</p>
-<div class="fragment"><div class="line">Bundle b = Bundle.CreateObject();</div><div class="line">b[<span class="stringliteral">&quot;hello&quot;</span>] = <span class="stringliteral">&quot;world&quot;</span>;</div></div><!-- fragment --><p>The bundle object, considered as dictionary will have its key "hello" set with a new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> node of type string (implicitly created from the string). So later on, you might fetch this value as well:</p>
+<div class="fragment"><div class="line"><a class="code" href="class_cotc_sdk_1_1_bundle.html#aa1a1a5d2839a12ccec457f7d235dfe8d">Bundle</a> b = <a class="code" href="class_cotc_sdk_1_1_bundle.html#aa1a1a5d2839a12ccec457f7d235dfe8d">Bundle</a>.CreateObject();</div><div class="line">b[<span class="stringliteral">&quot;hello&quot;</span>] = <span class="stringliteral">&quot;world&quot;</span>;</div></div><!-- fragment --><p>The bundle object, considered as dictionary will have its key "hello" set with a new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> node of type string (implicitly created from the string). So later on, you might fetch this value as well:</p>
 <div class="fragment"><div class="line"><span class="keywordtype">string</span> value = b[<span class="stringliteral">&quot;hello&quot;</span>];</div></div><!-- fragment --><p>What happens here is that the bundle under the key "hello" is fetched, and then implicitly converted to a string.</p>
 <p><a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> provides a safe way to browse a predefined graph, as when a key doesn't exist it returns the <a class="el" href="class_cotc_sdk_1_1_bundle.html#a9e1489ca059f1ebfc7cfa140dbb78011" title="Empty (null-like) Bundle. See class documentation for more information.">Bundle.Empty</a> (no null value). This special bundle allows to fetch sub-objects but they will always translate to <a class="el" href="class_cotc_sdk_1_1_bundle.html#a9e1489ca059f1ebfc7cfa140dbb78011" title="Empty (null-like) Bundle. See class documentation for more information.">Bundle.Empty</a> as well. If the values are to be converted to a primitive type, the result will be the default value for this type (null for a string, 0 for an int, etc.). As such, you may do this:</p>
 <div class="fragment"><div class="line"><span class="keywordtype">int</span> value = bundle[<span class="stringliteral">&quot;nonexisting&quot;</span>][<span class="stringliteral">&quot;key&quot;</span>];</div></div><!-- fragment --><p>Since the "nonexisting" key is not found on bundle, <a class="el" href="class_cotc_sdk_1_1_bundle.html#a9e1489ca059f1ebfc7cfa140dbb78011" title="Empty (null-like) Bundle. See class documentation for more information.">Bundle.Empty</a> is returned. Further fetching "key" will return an empty bundle as well. Which will be converted implicitly to an integer as 0. <a class="el" href="class_cotc_sdk_1_1_bundle.html#a9e1489ca059f1ebfc7cfa140dbb78011" title="Empty (null-like) Bundle. See class documentation for more information.">Bundle.Empty</a> is a constant value that always refers to an empty bundle, and attempting to modify it will result in an exception.</p>
-<div class="fragment"><div class="line">Bundle b = Bundle.Empty;</div><div class="line">b[<span class="stringliteral">&quot;value&quot;</span>] = <span class="stringliteral">&quot;something&quot;</span>; <span class="comment">// Exception</span></div></div><!-- fragment --><p>The bundle hierarchy doesn't accept null or <a class="el" href="class_cotc_sdk_1_1_bundle.html#a9e1489ca059f1ebfc7cfa140dbb78011" title="Empty (null-like) Bundle. See class documentation for more information.">Bundle.Empty</a> values (it just rejects them). You should avoid manipulating null Bundles and use <a class="el" href="class_cotc_sdk_1_1_bundle.html#a9e1489ca059f1ebfc7cfa140dbb78011" title="Empty (null-like) Bundle. See class documentation for more information.">Bundle.Empty</a> wherever possible, however you may assign a null bundle to a key, which will have no effect. This can be useful for optional arguments. For instance, the following snippet will not affect the bundle.</p>
+<div class="fragment"><div class="line"><a class="code" href="class_cotc_sdk_1_1_bundle.html#aa1a1a5d2839a12ccec457f7d235dfe8d">Bundle</a> b = <a class="code" href="class_cotc_sdk_1_1_bundle.html#aa1a1a5d2839a12ccec457f7d235dfe8d">Bundle</a>.Empty;</div><div class="line">b[<span class="stringliteral">&quot;value&quot;</span>] = <span class="stringliteral">&quot;something&quot;</span>; <span class="comment">// Exception</span></div></div><!-- fragment --><p>The bundle hierarchy doesn't accept null or <a class="el" href="class_cotc_sdk_1_1_bundle.html#a9e1489ca059f1ebfc7cfa140dbb78011" title="Empty (null-like) Bundle. See class documentation for more information.">Bundle.Empty</a> values (it just rejects them). You should avoid manipulating null Bundles and use <a class="el" href="class_cotc_sdk_1_1_bundle.html#a9e1489ca059f1ebfc7cfa140dbb78011" title="Empty (null-like) Bundle. See class documentation for more information.">Bundle.Empty</a> wherever possible, however you may assign a null bundle to a key, which will have no effect. This can be useful for optional arguments. For instance, the following snippet will not affect the bundle.</p>
 <div class="fragment"><div class="line"><span class="keywordtype">string</span> value = <span class="keyword">null</span>; <span class="comment">// converts to Bundle.Empty and rejects assignment</span></div><div class="line">bundle[<span class="stringliteral">&quot;key&quot;</span>] = value;</div></div><!-- fragment --><p>Note that <a class="el" href="class_cotc_sdk_1_1_bundle.html#a9e1489ca059f1ebfc7cfa140dbb78011" title="Empty (null-like) Bundle. See class documentation for more information.">Bundle.Empty</a> is not strictly identical to an empty bundle object. <a class="el" href="class_cotc_sdk_1_1_bundle.html#a9e1489ca059f1ebfc7cfa140dbb78011" title="Empty (null-like) Bundle. See class documentation for more information.">Bundle.Empty</a> is never considered as a value and is discarded upon assignment. For instance:</p>
-<div class="fragment"><div class="line">Bundle a = Bundle.CreateObject();</div><div class="line">Bundle b = Bundle.CreateObject();</div><div class="line">a[<span class="stringliteral">&quot;key&quot;</span>] = Bundle.Empty;</div><div class="line">b[<span class="stringliteral">&quot;key&quot;</span>] = Bundle.CreateObject();</div><div class="line">Log(a.ToJson()); <span class="comment">// {}</span></div><div class="line">Log(b.ToJson()); <span class="comment">// {&quot;key&quot;: {}}</span></div></div><!-- fragment --><p>If you need a special value for keys that do not match the expected type or are not found in the hierarchy, you may as well use the .As* methods. For instance, the previous snippet could be written as follows to have a default value of one:</p>
+<div class="fragment"><div class="line"><a class="code" href="class_cotc_sdk_1_1_bundle.html#aa1a1a5d2839a12ccec457f7d235dfe8d">Bundle</a> a = <a class="code" href="class_cotc_sdk_1_1_bundle.html#aa1a1a5d2839a12ccec457f7d235dfe8d">Bundle</a>.CreateObject();</div><div class="line"><a class="code" href="class_cotc_sdk_1_1_bundle.html#aa1a1a5d2839a12ccec457f7d235dfe8d">Bundle</a> b = <a class="code" href="class_cotc_sdk_1_1_bundle.html#aa1a1a5d2839a12ccec457f7d235dfe8d">Bundle</a>.CreateObject();</div><div class="line">a[<span class="stringliteral">&quot;key&quot;</span>] = <a class="code" href="class_cotc_sdk_1_1_bundle.html#aa1a1a5d2839a12ccec457f7d235dfe8d">Bundle</a>.Empty;</div><div class="line">b[<span class="stringliteral">&quot;key&quot;</span>] = <a class="code" href="class_cotc_sdk_1_1_bundle.html#aa1a1a5d2839a12ccec457f7d235dfe8d">Bundle</a>.CreateObject();</div><div class="line">Log(a.ToJson()); <span class="comment">// {}</span></div><div class="line">Log(b.ToJson()); <span class="comment">// {&quot;key&quot;: {}}</span></div></div><!-- fragment --><p>If you need a special value for keys that do not match the expected type or are not found in the hierarchy, you may as well use the .As* methods. For instance, the previous snippet could be written as follows to have a default value of one:</p>
 <div class="fragment"><div class="line"><span class="keywordtype">int</span> value = bundle[<span class="stringliteral">&quot;nonexisting&quot;</span>][<span class="stringliteral">&quot;key&quot;</span>].AsInt(1);</div></div><!-- fragment --><p>It is also possible to inspect the Type property of the <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> in order to ensure that the value was provided as expected.</p>
 <p>A bundle may be pre-filled at creation by passing arguments to <a class="el" href="class_cotc_sdk_1_1_bundle.html#a1e58870c761a527212833b7d27ab7585" title="Creates a bundle of type object.">Bundle.CreateObject</a> and <a class="el" href="class_cotc_sdk_1_1_bundle.html#a2140b81af8afb1462a85fa78ebc3fa0c" title="Creates a bundle of type array.">Bundle.CreateArray</a>. For instance:</p>
-<div class="fragment"><div class="line">Bundle b = Bundle.CreateObject(<span class="stringliteral">&quot;key1&quot;</span>, <span class="stringliteral">&quot;value1&quot;</span>, <span class="stringliteral">&quot;key2&quot;</span>, <span class="stringliteral">&quot;value2&quot;</span>);</div></div><!-- fragment --><p>Is equivalent to writing:</p>
-<div class="fragment"><div class="line">Bundle b = Bundle.CreateObject();</div><div class="line">b[<span class="stringliteral">&quot;key1&quot;</span>] = <span class="stringliteral">&quot;value1&quot;</span>;</div><div class="line">b[<span class="stringliteral">&quot;key2&quot;</span>] = <span class="stringliteral">&quot;value2&quot;</span>;</div></div><!-- fragment --><p>A bundle can quickly be transformed from/to JSON using ToJson and Bundle.FromJson methods. One can also check for the presence of keys and remove them with the .Has respectively .Remove methods.</p>
+<div class="fragment"><div class="line"><a class="code" href="class_cotc_sdk_1_1_bundle.html#aa1a1a5d2839a12ccec457f7d235dfe8d">Bundle</a> b = <a class="code" href="class_cotc_sdk_1_1_bundle.html#aa1a1a5d2839a12ccec457f7d235dfe8d">Bundle</a>.CreateObject(<span class="stringliteral">&quot;key1&quot;</span>, <span class="stringliteral">&quot;value1&quot;</span>, <span class="stringliteral">&quot;key2&quot;</span>, <span class="stringliteral">&quot;value2&quot;</span>);</div></div><!-- fragment --><p>Is equivalent to writing:</p>
+<div class="fragment"><div class="line"><a class="code" href="class_cotc_sdk_1_1_bundle.html#aa1a1a5d2839a12ccec457f7d235dfe8d">Bundle</a> b = <a class="code" href="class_cotc_sdk_1_1_bundle.html#aa1a1a5d2839a12ccec457f7d235dfe8d">Bundle</a>.CreateObject();</div><div class="line">b[<span class="stringliteral">&quot;key1&quot;</span>] = <span class="stringliteral">&quot;value1&quot;</span>;</div><div class="line">b[<span class="stringliteral">&quot;key2&quot;</span>] = <span class="stringliteral">&quot;value2&quot;</span>;</div></div><!-- fragment --><p>A bundle can quickly be transformed from/to JSON using ToJson and <a class="el" href="class_cotc_sdk_1_1_bundle.html#aaee8bdd824d3c55537836443ab6f2b17" title="Builds a complete Bundle hierarchy representing data from a json-like string. Works only if the root ...">Bundle.FromJson</a> methods. One can also check for the presence of keys and remove them with the .Has respectively .Remove methods.</p>
 <p>Iterating a JSON object is made using the explicit .As* methods. For instance, here is how you iterate over an array bundle (no harm will happen if the key doesn't exist or is not an array, since an empty array is returned):</p>
-<div class="fragment"><div class="line">Bundle b;</div><div class="line"><span class="keywordflow">foreach</span> (Bundle value <span class="keywordflow">in</span> b) { ... }</div></div><!-- fragment --><p>For an object, use AsDictionary().</p>
-<div class="fragment"><div class="line">Bundle b;</div><div class="line"><span class="keywordflow">foreach</span> (KeyValuePair&lt;string, Bundle&gt; pair <span class="keywordflow">in</span> b[<span class="stringliteral">&quot;key&quot;</span>].AsDictionary()) { ... }</div></div><!-- fragment --><p>This loop is safe as well even if the bundle doesn't contain a "key" entry or the "key" entry is not an object.</p>
+<div class="fragment"><div class="line"><a class="code" href="class_cotc_sdk_1_1_bundle.html#aa1a1a5d2839a12ccec457f7d235dfe8d">Bundle</a> b;</div><div class="line"><span class="keywordflow">foreach</span> (<a class="code" href="class_cotc_sdk_1_1_bundle.html#aa1a1a5d2839a12ccec457f7d235dfe8d">Bundle</a> value <span class="keywordflow">in</span> b) { ... }</div></div><!-- fragment --><p>For an object, use <a class="el" href="class_cotc_sdk_1_1_bundle.html#a522acbb8599eb882ce9e9a7d15b12840" title="Gets object type Bundle as a Dictionary.">AsDictionary()</a>.</p>
+<div class="fragment"><div class="line"><a class="code" href="class_cotc_sdk_1_1_bundle.html#aa1a1a5d2839a12ccec457f7d235dfe8d">Bundle</a> b;</div><div class="line"><span class="keywordflow">foreach</span> (KeyValuePair&lt;string, Bundle&gt; pair <span class="keywordflow">in</span> b[<span class="stringliteral">&quot;key&quot;</span>].<a class="code" href="class_cotc_sdk_1_1_bundle.html#a522acbb8599eb882ce9e9a7d15b12840">AsDictionary</a>()) { ... }</div></div><!-- fragment --><p>This loop is safe as well even if the bundle doesn't contain a "key" entry or the "key" entry is not an object.</p>
 <p>Null bundles should be avoided! Use <a class="el" href="class_cotc_sdk_1_1_bundle.html#a9e1489ca059f1ebfc7cfa140dbb78011" title="Empty (null-like) Bundle. See class documentation for more information.">Bundle.Empty</a> every time you need a "void", non mutable bundle value. Converting from a null bundle will result in an exception.</p>
-<div class="fragment"><div class="line">Bundle b = <span class="keyword">null</span>;</div><div class="line"><span class="keywordtype">string</span> value = b; <span class="comment">// Null pointer exception!</span></div></div><!-- fragment --><p>That's all what there is to know about bundles. In general they should make any code interacting with generic objects simple and safe. </p>
+<div class="fragment"><div class="line"><a class="code" href="class_cotc_sdk_1_1_bundle.html#aa1a1a5d2839a12ccec457f7d235dfe8d">Bundle</a> b = <span class="keyword">null</span>;</div><div class="line"><span class="keywordtype">string</span> value = b; <span class="comment">// Null pointer exception!</span></div></div><!-- fragment --><p>That's all what there is to know about bundles. In general they should make any code interacting with generic objects simple and safe. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -121,125 +121,131 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
-<tr class="memitem:af424562a408936221bd22afc3b77786e"><td class="memItemLeft" align="right" valign="top"><a id="af424562a408936221bd22afc3b77786e"></a>
-virtual <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>?&#160;</td><td class="memItemRight" valign="bottom"><b>this[string key]</b><code> [get, set]</code></td></tr>
+<tr class="memitem:af424562a408936221bd22afc3b77786e"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>?&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#af424562a408936221bd22afc3b77786e">this[string key]</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:af424562a408936221bd22afc3b77786e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets object type (Dictionary) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s key value.  <a href="#af424562a408936221bd22afc3b77786e">More...</a><br /></td></tr>
 <tr class="separator:af424562a408936221bd22afc3b77786e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad64d3cc533a578de922b25641f278e78"><td class="memItemLeft" align="right" valign="top"><a id="ad64d3cc533a578de922b25641f278e78"></a>
-virtual <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><b>this[int index]</b><code> [get, set]</code></td></tr>
+<tr class="memitem:ad64d3cc533a578de922b25641f278e78"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#ad64d3cc533a578de922b25641f278e78">this[int index]</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:ad64d3cc533a578de922b25641f278e78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets array type (List) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s index value.  <a href="#ad64d3cc533a578de922b25641f278e78">More...</a><br /></td></tr>
 <tr class="separator:ad64d3cc533a578de922b25641f278e78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab6385d8e1c44fee39091bfe160ddddae"><td class="memItemLeft" align="right" valign="top"><a id="ab6385d8e1c44fee39091bfe160ddddae"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsEmpty</b><code> [get]</code></td></tr>
+<tr class="memitem:ab6385d8e1c44fee39091bfe160ddddae"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#ab6385d8e1c44fee39091bfe160ddddae">IsEmpty</a><code> [get]</code></td></tr>
+<tr class="memdesc:ab6385d8e1c44fee39091bfe160ddddae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests if a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> (any type) has any value set.  <a href="#ab6385d8e1c44fee39091bfe160ddddae">More...</a><br /></td></tr>
 <tr class="separator:ab6385d8e1c44fee39091bfe160ddddae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a984133c61e62b3c67479aa5e29393f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a6a984133c61e62b3c67479aa5e29393f">Parent</a><code> [get]</code></td></tr>
-<tr class="memdesc:a6a984133c61e62b3c67479aa5e29393f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the parent of this bundle, if it was detached from any tree. May be null if it is the root or has never been attached.  <a href="#a6a984133c61e62b3c67479aa5e29393f">More...</a><br /></td></tr>
-<tr class="separator:a6a984133c61e62b3c67479aa5e29393f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a553eb80667080d8d014cb7c5c95adadd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a553eb80667080d8d014cb7c5c95adadd">Root</a><code> [get]</code></td></tr>
 <tr class="memdesc:a553eb80667080d8d014cb7c5c95adadd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the root of this tree. Goes as far as possible back in the hierarchy.  <a href="#a553eb80667080d8d014cb7c5c95adadd">More...</a><br /></td></tr>
 <tr class="separator:a553eb80667080d8d014cb7c5c95adadd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1023b7f49b31c5578c36b622b0dc6c0c"><td class="memItemLeft" align="right" valign="top"><a id="a1023b7f49b31c5578c36b622b0dc6c0c"></a>
-<a class="el" href="class_cotc_sdk_1_1_bundle.html#aa84cd987b11b11dd145477190f56f803">DataType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Type</b><code> [get]</code></td></tr>
+<tr class="memitem:a1023b7f49b31c5578c36b622b0dc6c0c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_bundle.html#aa84cd987b11b11dd145477190f56f803">DataType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a1023b7f49b31c5578c36b622b0dc6c0c">Type</a><code> [get]</code></td></tr>
+<tr class="memdesc:a1023b7f49b31c5578c36b622b0dc6c0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value data type. Should be DataType.None until any value is set to this <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>.  <a href="#a1023b7f49b31c5578c36b622b0dc6c0c">More...</a><br /></td></tr>
 <tr class="separator:a1023b7f49b31c5578c36b622b0dc6c0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a984133c61e62b3c67479aa5e29393f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a6a984133c61e62b3c67479aa5e29393f">Parent</a><code> [get]</code></td></tr>
+<tr class="memdesc:a6a984133c61e62b3c67479aa5e29393f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the parent of this bundle, if it was detached from any tree. May be null if it is the root or has never been attached.  <a href="#a6a984133c61e62b3c67479aa5e29393f">More...</a><br /></td></tr>
+<tr class="separator:a6a984133c61e62b3c67479aa5e29393f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a3992b6c1979c170da62999a00884d2e5"><td class="memItemLeft" align="right" valign="top"><a id="a3992b6c1979c170da62999a00884d2e5"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Bundle</b> (bool value)</td></tr>
+<tr class="memitem:a3992b6c1979c170da62999a00884d2e5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a3992b6c1979c170da62999a00884d2e5">Bundle</a> (bool value)</td></tr>
+<tr class="memdesc:a3992b6c1979c170da62999a00884d2e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> of Boolean type from a bool value.  <a href="#a3992b6c1979c170da62999a00884d2e5">More...</a><br /></td></tr>
 <tr class="separator:a3992b6c1979c170da62999a00884d2e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a296192f14171adf0154ade37d08db514"><td class="memItemLeft" align="right" valign="top"><a id="a296192f14171adf0154ade37d08db514"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Bundle</b> (int value)</td></tr>
+<tr class="memitem:a296192f14171adf0154ade37d08db514"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a296192f14171adf0154ade37d08db514">Bundle</a> (int value)</td></tr>
+<tr class="memdesc:a296192f14171adf0154ade37d08db514"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> of Integer type from an int value.  <a href="#a296192f14171adf0154ade37d08db514">More...</a><br /></td></tr>
 <tr class="separator:a296192f14171adf0154ade37d08db514"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a664c6b462d6a28b844feddb981fd7b62"><td class="memItemLeft" align="right" valign="top"><a id="a664c6b462d6a28b844feddb981fd7b62"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Bundle</b> (long value)</td></tr>
+<tr class="memitem:a664c6b462d6a28b844feddb981fd7b62"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a664c6b462d6a28b844feddb981fd7b62">Bundle</a> (long value)</td></tr>
+<tr class="memdesc:a664c6b462d6a28b844feddb981fd7b62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> of Integer type from a long value.  <a href="#a664c6b462d6a28b844feddb981fd7b62">More...</a><br /></td></tr>
 <tr class="separator:a664c6b462d6a28b844feddb981fd7b62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f2ba8f36cbfdf641993f427c701cc48"><td class="memItemLeft" align="right" valign="top"><a id="a9f2ba8f36cbfdf641993f427c701cc48"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Bundle</b> (float value)</td></tr>
+<tr class="memitem:a9f2ba8f36cbfdf641993f427c701cc48"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a9f2ba8f36cbfdf641993f427c701cc48">Bundle</a> (float value)</td></tr>
+<tr class="memdesc:a9f2ba8f36cbfdf641993f427c701cc48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> of Double type from a float value.  <a href="#a9f2ba8f36cbfdf641993f427c701cc48">More...</a><br /></td></tr>
 <tr class="separator:a9f2ba8f36cbfdf641993f427c701cc48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affc2bd1db8446a5c56cc256c096c3554"><td class="memItemLeft" align="right" valign="top"><a id="affc2bd1db8446a5c56cc256c096c3554"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Bundle</b> (double value)</td></tr>
+<tr class="memitem:affc2bd1db8446a5c56cc256c096c3554"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#affc2bd1db8446a5c56cc256c096c3554">Bundle</a> (double value)</td></tr>
+<tr class="memdesc:affc2bd1db8446a5c56cc256c096c3554"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> of Double type from a double value.  <a href="#affc2bd1db8446a5c56cc256c096c3554">More...</a><br /></td></tr>
 <tr class="separator:affc2bd1db8446a5c56cc256c096c3554"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b6504f014e8baaa433b92a69540e285"><td class="memItemLeft" align="right" valign="top"><a id="a4b6504f014e8baaa433b92a69540e285"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Bundle</b> (string value)</td></tr>
+<tr class="memitem:a4b6504f014e8baaa433b92a69540e285"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a4b6504f014e8baaa433b92a69540e285">Bundle</a> (string value)</td></tr>
+<tr class="memdesc:a4b6504f014e8baaa433b92a69540e285"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> of String type from a string value.  <a href="#a4b6504f014e8baaa433b92a69540e285">More...</a><br /></td></tr>
 <tr class="separator:a4b6504f014e8baaa433b92a69540e285"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22c2f040734eee355768db66719b66e2"><td class="memItemLeft" align="right" valign="top"><a id="a22c2f040734eee355768db66719b66e2"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>Equals</b> (<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> b)</td></tr>
-<tr class="separator:a22c2f040734eee355768db66719b66e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac82daf704a72960a619715e8ef31322e"><td class="memItemLeft" align="right" valign="top"><a id="ac82daf704a72960a619715e8ef31322e"></a>
-override bool&#160;</td><td class="memItemRight" valign="bottom"><b>Equals</b> (object obj)</td></tr>
-<tr class="separator:ac82daf704a72960a619715e8ef31322e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b3839729cbfd5552716287f58ed95f6"><td class="memItemLeft" align="right" valign="top"><a id="a1b3839729cbfd5552716287f58ed95f6"></a>
-override int&#160;</td><td class="memItemRight" valign="bottom"><b>GetHashCode</b> ()</td></tr>
+<tr class="memitem:a1b3839729cbfd5552716287f58ed95f6"><td class="memItemLeft" align="right" valign="top">override int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a1b3839729cbfd5552716287f58ed95f6">GetHashCode</a> ()</td></tr>
+<tr class="memdesc:a1b3839729cbfd5552716287f58ed95f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call the standard Object.GetHashCode() method to compute a hash code for this <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>.  <a href="#a1b3839729cbfd5552716287f58ed95f6">More...</a><br /></td></tr>
 <tr class="separator:a1b3839729cbfd5552716287f58ed95f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27dfbb97977de6ccf95f972efbeee0c6"><td class="memItemLeft" align="right" valign="top"><a id="a27dfbb97977de6ccf95f972efbeee0c6"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Add</b> (<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> value)</td></tr>
+<tr class="memitem:a22c2f040734eee355768db66719b66e2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a22c2f040734eee355768db66719b66e2">Equals</a> (<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> b)</td></tr>
+<tr class="memdesc:a22c2f040734eee355768db66719b66e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares the <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> with another one to find out if they are equal. Compares instances references first, then tries to compare Bundles' values. Warning: The converted values are actually compared, then a "1" integer or string type <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> would match a "true" bool type <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> for example.  <a href="#a22c2f040734eee355768db66719b66e2">More...</a><br /></td></tr>
+<tr class="separator:a22c2f040734eee355768db66719b66e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac82daf704a72960a619715e8ef31322e"><td class="memItemLeft" align="right" valign="top">override bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#ac82daf704a72960a619715e8ef31322e">Equals</a> (object obj)</td></tr>
+<tr class="memdesc:ac82daf704a72960a619715e8ef31322e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares the <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> with any object (expected to be another <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>) to find out if they are equal. Compares instances references first, then tries to compare Bundles' values. Warning: The converted values are actually compared, then a "1" integer or string type <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> would match a "true" bool type <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> for example.  <a href="#ac82daf704a72960a619715e8ef31322e">More...</a><br /></td></tr>
+<tr class="separator:ac82daf704a72960a619715e8ef31322e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b3bf30a5afb8ee3efdd14da09c2ddd8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a2b3bf30a5afb8ee3efdd14da09c2ddd8">Has</a> (string key)</td></tr>
+<tr class="memdesc:a2b3bf30a5afb8ee3efdd14da09c2ddd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests if an object type (Dictionary) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> has a given key defined.  <a href="#a2b3bf30a5afb8ee3efdd14da09c2ddd8">More...</a><br /></td></tr>
+<tr class="separator:a2b3bf30a5afb8ee3efdd14da09c2ddd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2ac5a1a1e11546bd8e52bc6254f51ca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#ae2ac5a1a1e11546bd8e52bc6254f51ca">Remove</a> (string key)</td></tr>
+<tr class="memdesc:ae2ac5a1a1e11546bd8e52bc6254f51ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes an object type (Dictionary) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s key value.  <a href="#ae2ac5a1a1e11546bd8e52bc6254f51ca">More...</a><br /></td></tr>
+<tr class="separator:ae2ac5a1a1e11546bd8e52bc6254f51ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27dfbb97977de6ccf95f972efbeee0c6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a27dfbb97977de6ccf95f972efbeee0c6">Add</a> (<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> value)</td></tr>
+<tr class="memdesc:a27dfbb97977de6ccf95f972efbeee0c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> value to this array-type (List) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>.  <a href="#a27dfbb97977de6ccf95f972efbeee0c6">More...</a><br /></td></tr>
 <tr class="separator:a27dfbb97977de6ccf95f972efbeee0c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d0bf747d04294fb8e71e567d0c2f0c6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a0d0bf747d04294fb8e71e567d0c2f0c6">Clone</a> ()</td></tr>
 <tr class="memdesc:a0d0bf747d04294fb8e71e567d0c2f0c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deep copies the bundle.  <a href="#a0d0bf747d04294fb8e71e567d0c2f0c6">More...</a><br /></td></tr>
 <tr class="separator:a0d0bf747d04294fb8e71e567d0c2f0c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff64c5fbd62a478003a247e73dda3247"><td class="memItemLeft" align="right" valign="top"><a id="aff64c5fbd62a478003a247e73dda3247"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>GetBool</b> (string key, bool defaultValue=false)</td></tr>
+<tr class="memitem:aff64c5fbd62a478003a247e73dda3247"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#aff64c5fbd62a478003a247e73dda3247">GetBool</a> (string key, bool defaultValue=false)</td></tr>
+<tr class="memdesc:aff64c5fbd62a478003a247e73dda3247"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an object type (Dictionary) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s key bool value.  <a href="#aff64c5fbd62a478003a247e73dda3247">More...</a><br /></td></tr>
 <tr class="separator:aff64c5fbd62a478003a247e73dda3247"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a487c57c86576a40b551544215d2aeabf"><td class="memItemLeft" align="right" valign="top"><a id="a487c57c86576a40b551544215d2aeabf"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>GetInt</b> (string key, int defaultValue=0)</td></tr>
+<tr class="memitem:a487c57c86576a40b551544215d2aeabf"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a487c57c86576a40b551544215d2aeabf">GetInt</a> (string key, int defaultValue=0)</td></tr>
+<tr class="memdesc:a487c57c86576a40b551544215d2aeabf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an object type (Dictionary) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s key int value.  <a href="#a487c57c86576a40b551544215d2aeabf">More...</a><br /></td></tr>
 <tr class="separator:a487c57c86576a40b551544215d2aeabf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b31e91780a75ca6e5f41739ff48766a"><td class="memItemLeft" align="right" valign="top"><a id="a5b31e91780a75ca6e5f41739ff48766a"></a>
-long&#160;</td><td class="memItemRight" valign="bottom"><b>GetLong</b> (string key, long defaultValue=0)</td></tr>
-<tr class="separator:a5b31e91780a75ca6e5f41739ff48766a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3678d337e5fc9d0d966c0d3f64fddc1"><td class="memItemLeft" align="right" valign="top"><a id="af3678d337e5fc9d0d966c0d3f64fddc1"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>GetDouble</b> (string key, double defaultValue=0)</td></tr>
-<tr class="separator:af3678d337e5fc9d0d966c0d3f64fddc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa50a9460fee348456dea63c1cff17037"><td class="memItemLeft" align="right" valign="top"><a id="aa50a9460fee348456dea63c1cff17037"></a>
-string&#160;</td><td class="memItemRight" valign="bottom"><b>GetString</b> (string key, string defaultValue=null)</td></tr>
+<tr class="memitem:a256601f673bf937257396b02a70676af"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a256601f673bf937257396b02a70676af">GetLong</a> (string key, long defaultValue=0L)</td></tr>
+<tr class="memdesc:a256601f673bf937257396b02a70676af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an object type (Dictionary) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s key long value.  <a href="#a256601f673bf937257396b02a70676af">More...</a><br /></td></tr>
+<tr class="separator:a256601f673bf937257396b02a70676af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3218fdda4e28fc23d156f44b14cc7f15"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a3218fdda4e28fc23d156f44b14cc7f15">GetFloat</a> (string key, float defaultValue=0f)</td></tr>
+<tr class="memdesc:a3218fdda4e28fc23d156f44b14cc7f15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an object type (Dictionary) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s key float value.  <a href="#a3218fdda4e28fc23d156f44b14cc7f15">More...</a><br /></td></tr>
+<tr class="separator:a3218fdda4e28fc23d156f44b14cc7f15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc938fc23c4cc4c3230d39430d13c93a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#acc938fc23c4cc4c3230d39430d13c93a">GetDouble</a> (string key, double defaultValue=0d)</td></tr>
+<tr class="memdesc:acc938fc23c4cc4c3230d39430d13c93a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an object type (Dictionary) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s key double value.  <a href="#acc938fc23c4cc4c3230d39430d13c93a">More...</a><br /></td></tr>
+<tr class="separator:acc938fc23c4cc4c3230d39430d13c93a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa50a9460fee348456dea63c1cff17037"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#aa50a9460fee348456dea63c1cff17037">GetString</a> (string key, string defaultValue=null)</td></tr>
+<tr class="memdesc:aa50a9460fee348456dea63c1cff17037"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an object type (Dictionary) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s key string value.  <a href="#aa50a9460fee348456dea63c1cff17037">More...</a><br /></td></tr>
 <tr class="separator:aa50a9460fee348456dea63c1cff17037"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88e01dcd966b50e55b9fc4b3a1648c18"><td class="memItemLeft" align="right" valign="top"><a id="a88e01dcd966b50e55b9fc4b3a1648c18"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>GetBool</b> (int index)</td></tr>
-<tr class="separator:a88e01dcd966b50e55b9fc4b3a1648c18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a73b2b785b5b9c2cddf20b7b3cdd2f666"><td class="memItemLeft" align="right" valign="top"><a id="a73b2b785b5b9c2cddf20b7b3cdd2f666"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>GetInt</b> (int index)</td></tr>
-<tr class="separator:a73b2b785b5b9c2cddf20b7b3cdd2f666"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8167670e527af3039ce728f1f726f9d9"><td class="memItemLeft" align="right" valign="top"><a id="a8167670e527af3039ce728f1f726f9d9"></a>
-long&#160;</td><td class="memItemRight" valign="bottom"><b>GetLong</b> (int index)</td></tr>
-<tr class="separator:a8167670e527af3039ce728f1f726f9d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbd3f7509ad143b120d768dcef968c2e"><td class="memItemLeft" align="right" valign="top"><a id="afbd3f7509ad143b120d768dcef968c2e"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>GetDouble</b> (int index)</td></tr>
-<tr class="separator:afbd3f7509ad143b120d768dcef968c2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51654e8f81a7030fbb39e3cb17962e71"><td class="memItemLeft" align="right" valign="top"><a id="a51654e8f81a7030fbb39e3cb17962e71"></a>
-string&#160;</td><td class="memItemRight" valign="bottom"><b>GetString</b> (int index)</td></tr>
-<tr class="separator:a51654e8f81a7030fbb39e3cb17962e71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b3bf30a5afb8ee3efdd14da09c2ddd8"><td class="memItemLeft" align="right" valign="top"><a id="a2b3bf30a5afb8ee3efdd14da09c2ddd8"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>Has</b> (string key)</td></tr>
-<tr class="separator:a2b3bf30a5afb8ee3efdd14da09c2ddd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2ac5a1a1e11546bd8e52bc6254f51ca"><td class="memItemLeft" align="right" valign="top"><a id="ae2ac5a1a1e11546bd8e52bc6254f51ca"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Remove</b> (string key)</td></tr>
-<tr class="separator:ae2ac5a1a1e11546bd8e52bc6254f51ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf5655fb1d69f8225187b52913e15fa5"><td class="memItemLeft" align="right" valign="top"><a id="adf5655fb1d69f8225187b52913e15fa5"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>AsBool</b> (bool defaultValue=false)</td></tr>
+<tr class="memitem:ad9a03ded6945c85a7e43e95fd0ba1972"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#ad9a03ded6945c85a7e43e95fd0ba1972">GetBool</a> (int index, bool defaultValue=false)</td></tr>
+<tr class="memdesc:ad9a03ded6945c85a7e43e95fd0ba1972"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an array type (List) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s index bool value.  <a href="#ad9a03ded6945c85a7e43e95fd0ba1972">More...</a><br /></td></tr>
+<tr class="separator:ad9a03ded6945c85a7e43e95fd0ba1972"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe76507ee72981d7a1836ca17c5ef757"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#abe76507ee72981d7a1836ca17c5ef757">GetInt</a> (int index, int defaultValue=0)</td></tr>
+<tr class="memdesc:abe76507ee72981d7a1836ca17c5ef757"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an array type (List) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s index int value.  <a href="#abe76507ee72981d7a1836ca17c5ef757">More...</a><br /></td></tr>
+<tr class="separator:abe76507ee72981d7a1836ca17c5ef757"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4660d9a100504a8d5f4d6d7622aa3e2c"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a4660d9a100504a8d5f4d6d7622aa3e2c">GetLong</a> (int index, long defaultValue=0L)</td></tr>
+<tr class="memdesc:a4660d9a100504a8d5f4d6d7622aa3e2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an array type (List) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s index long value.  <a href="#a4660d9a100504a8d5f4d6d7622aa3e2c">More...</a><br /></td></tr>
+<tr class="separator:a4660d9a100504a8d5f4d6d7622aa3e2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf7da3c5190e9131bebc3a64146e760a"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#acf7da3c5190e9131bebc3a64146e760a">GetFloat</a> (int index, float defaultValue=0f)</td></tr>
+<tr class="memdesc:acf7da3c5190e9131bebc3a64146e760a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an array type (List) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s index float value.  <a href="#acf7da3c5190e9131bebc3a64146e760a">More...</a><br /></td></tr>
+<tr class="separator:acf7da3c5190e9131bebc3a64146e760a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69b6f4a01a3160b2c7250a5b42c0d2c9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a69b6f4a01a3160b2c7250a5b42c0d2c9">GetDouble</a> (int index, double defaultValue=0d)</td></tr>
+<tr class="memdesc:a69b6f4a01a3160b2c7250a5b42c0d2c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an array type (List) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s index double value.  <a href="#a69b6f4a01a3160b2c7250a5b42c0d2c9">More...</a><br /></td></tr>
+<tr class="separator:a69b6f4a01a3160b2c7250a5b42c0d2c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0d900928d83b6bc12cb58f96a443e41"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#ae0d900928d83b6bc12cb58f96a443e41">GetString</a> (int index, string defaultValue=null)</td></tr>
+<tr class="memdesc:ae0d900928d83b6bc12cb58f96a443e41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an array type (List) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s index string value.  <a href="#ae0d900928d83b6bc12cb58f96a443e41">More...</a><br /></td></tr>
+<tr class="separator:ae0d900928d83b6bc12cb58f96a443e41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf5655fb1d69f8225187b52913e15fa5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#adf5655fb1d69f8225187b52913e15fa5">AsBool</a> (bool defaultValue=false)</td></tr>
+<tr class="memdesc:adf5655fb1d69f8225187b52913e15fa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value as a bool converted value.  <a href="#adf5655fb1d69f8225187b52913e15fa5">More...</a><br /></td></tr>
 <tr class="separator:adf5655fb1d69f8225187b52913e15fa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09275cead21a741fdf0e2e0105c5e6ec"><td class="memItemLeft" align="right" valign="top"><a id="a09275cead21a741fdf0e2e0105c5e6ec"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>AsInt</b> (int defaultValue=0)</td></tr>
+<tr class="memitem:a09275cead21a741fdf0e2e0105c5e6ec"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a09275cead21a741fdf0e2e0105c5e6ec">AsInt</a> (int defaultValue=0)</td></tr>
+<tr class="memdesc:a09275cead21a741fdf0e2e0105c5e6ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value as a int converted value.  <a href="#a09275cead21a741fdf0e2e0105c5e6ec">More...</a><br /></td></tr>
 <tr class="separator:a09275cead21a741fdf0e2e0105c5e6ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a774bf5da5b02b21fcb320df7467cfd96"><td class="memItemLeft" align="right" valign="top"><a id="a774bf5da5b02b21fcb320df7467cfd96"></a>
-long&#160;</td><td class="memItemRight" valign="bottom"><b>AsLong</b> (long defaultValue=0L)</td></tr>
+<tr class="memitem:a774bf5da5b02b21fcb320df7467cfd96"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a774bf5da5b02b21fcb320df7467cfd96">AsLong</a> (long defaultValue=0L)</td></tr>
+<tr class="memdesc:a774bf5da5b02b21fcb320df7467cfd96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value as a long converted value.  <a href="#a774bf5da5b02b21fcb320df7467cfd96">More...</a><br /></td></tr>
 <tr class="separator:a774bf5da5b02b21fcb320df7467cfd96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf5fd2f02cef2eafb0ff700d18d0eb77"><td class="memItemLeft" align="right" valign="top"><a id="aaf5fd2f02cef2eafb0ff700d18d0eb77"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>AsFloat</b> (float defaultValue=0f)</td></tr>
+<tr class="memitem:aaf5fd2f02cef2eafb0ff700d18d0eb77"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#aaf5fd2f02cef2eafb0ff700d18d0eb77">AsFloat</a> (float defaultValue=0f)</td></tr>
+<tr class="memdesc:aaf5fd2f02cef2eafb0ff700d18d0eb77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value as a float converted value.  <a href="#aaf5fd2f02cef2eafb0ff700d18d0eb77">More...</a><br /></td></tr>
 <tr class="separator:aaf5fd2f02cef2eafb0ff700d18d0eb77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abcb047b894545e1edbd34512efeebded"><td class="memItemLeft" align="right" valign="top"><a id="abcb047b894545e1edbd34512efeebded"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>AsDouble</b> (double defaultValue=0d)</td></tr>
+<tr class="memitem:abcb047b894545e1edbd34512efeebded"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#abcb047b894545e1edbd34512efeebded">AsDouble</a> (double defaultValue=0d)</td></tr>
+<tr class="memdesc:abcb047b894545e1edbd34512efeebded"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value as a double converted value.  <a href="#abcb047b894545e1edbd34512efeebded">More...</a><br /></td></tr>
 <tr class="separator:abcb047b894545e1edbd34512efeebded"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b056f92317216672e8d8405c5aef62b"><td class="memItemLeft" align="right" valign="top"><a id="a2b056f92317216672e8d8405c5aef62b"></a>
-string&#160;</td><td class="memItemRight" valign="bottom"><b>AsString</b> (string defaultValue=null)</td></tr>
+<tr class="memitem:a2b056f92317216672e8d8405c5aef62b"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a2b056f92317216672e8d8405c5aef62b">AsString</a> (string defaultValue=null)</td></tr>
+<tr class="memdesc:a2b056f92317216672e8d8405c5aef62b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value as a string converted value.  <a href="#a2b056f92317216672e8d8405c5aef62b">More...</a><br /></td></tr>
 <tr class="separator:a2b056f92317216672e8d8405c5aef62b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4882764af6d4460b0abb06dcbb0b6cb6"><td class="memItemLeft" align="right" valign="top"><a id="a4882764af6d4460b0abb06dcbb0b6cb6"></a>
-List&lt; <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>AsArray</b> ()</td></tr>
-<tr class="separator:a4882764af6d4460b0abb06dcbb0b6cb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a522acbb8599eb882ce9e9a7d15b12840"><td class="memItemLeft" align="right" valign="top"><a id="a522acbb8599eb882ce9e9a7d15b12840"></a>
-Dictionary&lt; string, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>AsDictionary</b> ()</td></tr>
+<tr class="memitem:a522acbb8599eb882ce9e9a7d15b12840"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; string, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a522acbb8599eb882ce9e9a7d15b12840">AsDictionary</a> ()</td></tr>
+<tr class="memdesc:a522acbb8599eb882ce9e9a7d15b12840"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets object type <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> as a Dictionary.  <a href="#a522acbb8599eb882ce9e9a7d15b12840">More...</a><br /></td></tr>
 <tr class="separator:a522acbb8599eb882ce9e9a7d15b12840"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7b29658cbea9349b535daa57b82118e"><td class="memItemLeft" align="right" valign="top"><a id="ad7b29658cbea9349b535daa57b82118e"></a>
-string&#160;</td><td class="memItemRight" valign="bottom"><b>ToJson</b> ()</td></tr>
+<tr class="memitem:a4882764af6d4460b0abb06dcbb0b6cb6"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a4882764af6d4460b0abb06dcbb0b6cb6">AsArray</a> ()</td></tr>
+<tr class="memdesc:a4882764af6d4460b0abb06dcbb0b6cb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets array type <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> as a List.  <a href="#a4882764af6d4460b0abb06dcbb0b6cb6">More...</a><br /></td></tr>
+<tr class="separator:a4882764af6d4460b0abb06dcbb0b6cb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7b29658cbea9349b535daa57b82118e"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#ad7b29658cbea9349b535daa57b82118e">ToJson</a> ()</td></tr>
+<tr class="memdesc:ad7b29658cbea9349b535daa57b82118e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all bundle's data as a json-like string.  <a href="#ad7b29658cbea9349b535daa57b82118e">More...</a><br /></td></tr>
 <tr class="separator:ad7b29658cbea9349b535daa57b82118e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a407db7b93e3ab7b96e76caccd6b49468"><td class="memItemLeft" align="right" valign="top"><a id="a407db7b93e3ab7b96e76caccd6b49468"></a>
-override string&#160;</td><td class="memItemRight" valign="bottom"><b>ToString</b> ()</td></tr>
+<tr class="memitem:a407db7b93e3ab7b96e76caccd6b49468"><td class="memItemLeft" align="right" valign="top">override string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a407db7b93e3ab7b96e76caccd6b49468">ToString</a> ()</td></tr>
+<tr class="memdesc:a407db7b93e3ab7b96e76caccd6b49468"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all bundle's data as a human readable string. (actually calls <a class="el" href="class_cotc_sdk_1_1_bundle.html#ad7b29658cbea9349b535daa57b82118e" title="Gets all bundle&#39;s data as a json-like string.">ToJson()</a>)  <a href="#a407db7b93e3ab7b96e76caccd6b49468">More...</a><br /></td></tr>
 <tr class="separator:a407db7b93e3ab7b96e76caccd6b49468"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
@@ -262,53 +268,53 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a2140b81af8afb1462a85fa78ebc3fa0c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a2140b81af8afb1462a85fa78ebc3fa0c">CreateArray</a> (params <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>[] values)</td></tr>
 <tr class="memdesc:a2140b81af8afb1462a85fa78ebc3fa0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a bundle of type array.  <a href="#a2140b81af8afb1462a85fa78ebc3fa0c">More...</a><br /></td></tr>
 <tr class="separator:a2140b81af8afb1462a85fa78ebc3fa0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb8b780d73309f53d6f18d9ccaa634b3"><td class="memItemLeft" align="right" valign="top"><a id="aeb8b780d73309f53d6f18d9ccaa634b3"></a>
-static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator Bundle</b> (bool value)</td></tr>
+<tr class="memitem:aeb8b780d73309f53d6f18d9ccaa634b3"><td class="memItemLeft" align="right" valign="top">static implicit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#aeb8b780d73309f53d6f18d9ccaa634b3">operator Bundle</a> (bool value)</td></tr>
+<tr class="memdesc:aeb8b780d73309f53d6f18d9ccaa634b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicitly creates a new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> of Boolean type from a bool value.  <a href="#aeb8b780d73309f53d6f18d9ccaa634b3">More...</a><br /></td></tr>
 <tr class="separator:aeb8b780d73309f53d6f18d9ccaa634b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a741ffab604b28d9630a53d186887bc95"><td class="memItemLeft" align="right" valign="top"><a id="a741ffab604b28d9630a53d186887bc95"></a>
-static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator Bundle</b> (int value)</td></tr>
+<tr class="memitem:a741ffab604b28d9630a53d186887bc95"><td class="memItemLeft" align="right" valign="top">static implicit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a741ffab604b28d9630a53d186887bc95">operator Bundle</a> (int value)</td></tr>
+<tr class="memdesc:a741ffab604b28d9630a53d186887bc95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicitly creates a new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> of Integer type from an int value.  <a href="#a741ffab604b28d9630a53d186887bc95">More...</a><br /></td></tr>
 <tr class="separator:a741ffab604b28d9630a53d186887bc95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abfd067984881777f93e6cc88081514d4"><td class="memItemLeft" align="right" valign="top"><a id="abfd067984881777f93e6cc88081514d4"></a>
-static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator Bundle</b> (long value)</td></tr>
+<tr class="memitem:abfd067984881777f93e6cc88081514d4"><td class="memItemLeft" align="right" valign="top">static implicit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#abfd067984881777f93e6cc88081514d4">operator Bundle</a> (long value)</td></tr>
+<tr class="memdesc:abfd067984881777f93e6cc88081514d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicitly creates a new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> of Integer type from a long value.  <a href="#abfd067984881777f93e6cc88081514d4">More...</a><br /></td></tr>
 <tr class="separator:abfd067984881777f93e6cc88081514d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a692d53f9fc2ab6df101a4ae8a5c96c64"><td class="memItemLeft" align="right" valign="top"><a id="a692d53f9fc2ab6df101a4ae8a5c96c64"></a>
-static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator Bundle</b> (float value)</td></tr>
+<tr class="memitem:a692d53f9fc2ab6df101a4ae8a5c96c64"><td class="memItemLeft" align="right" valign="top">static implicit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a692d53f9fc2ab6df101a4ae8a5c96c64">operator Bundle</a> (float value)</td></tr>
+<tr class="memdesc:a692d53f9fc2ab6df101a4ae8a5c96c64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicitly creates a new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> of Double type from a float value.  <a href="#a692d53f9fc2ab6df101a4ae8a5c96c64">More...</a><br /></td></tr>
 <tr class="separator:a692d53f9fc2ab6df101a4ae8a5c96c64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2cd96f2de2379023fdf3851b2e0d6853"><td class="memItemLeft" align="right" valign="top"><a id="a2cd96f2de2379023fdf3851b2e0d6853"></a>
-static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator Bundle</b> (double value)</td></tr>
+<tr class="memitem:a2cd96f2de2379023fdf3851b2e0d6853"><td class="memItemLeft" align="right" valign="top">static implicit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a2cd96f2de2379023fdf3851b2e0d6853">operator Bundle</a> (double value)</td></tr>
+<tr class="memdesc:a2cd96f2de2379023fdf3851b2e0d6853"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicitly creates a new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> of Double type from a double value.  <a href="#a2cd96f2de2379023fdf3851b2e0d6853">More...</a><br /></td></tr>
 <tr class="separator:a2cd96f2de2379023fdf3851b2e0d6853"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17f01c9957dab306fe03c6d48ce9f924"><td class="memItemLeft" align="right" valign="top"><a id="a17f01c9957dab306fe03c6d48ce9f924"></a>
-static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator Bundle</b> (string value)</td></tr>
+<tr class="memitem:a17f01c9957dab306fe03c6d48ce9f924"><td class="memItemLeft" align="right" valign="top">static implicit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a17f01c9957dab306fe03c6d48ce9f924">operator Bundle</a> (string value)</td></tr>
+<tr class="memdesc:a17f01c9957dab306fe03c6d48ce9f924"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicitly creates a new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> of String type from a string value.  <a href="#a17f01c9957dab306fe03c6d48ce9f924">More...</a><br /></td></tr>
 <tr class="separator:a17f01c9957dab306fe03c6d48ce9f924"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe9ca1a68b087fc7170ccaa3eddabbaa"><td class="memItemLeft" align="right" valign="top"><a id="abe9ca1a68b087fc7170ccaa3eddabbaa"></a>
-static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator bool</b> (<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> b)</td></tr>
+<tr class="memitem:abe9ca1a68b087fc7170ccaa3eddabbaa"><td class="memItemLeft" align="right" valign="top">static implicit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#abe9ca1a68b087fc7170ccaa3eddabbaa">operator bool</a> (<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> b)</td></tr>
+<tr class="memdesc:abe9ca1a68b087fc7170ccaa3eddabbaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicitly gets a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value as a bool converted value.  <a href="#abe9ca1a68b087fc7170ccaa3eddabbaa">More...</a><br /></td></tr>
 <tr class="separator:abe9ca1a68b087fc7170ccaa3eddabbaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a238887b9522b2760fe0c8f31004619c7"><td class="memItemLeft" align="right" valign="top"><a id="a238887b9522b2760fe0c8f31004619c7"></a>
-static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator int</b> (<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> b)</td></tr>
+<tr class="memitem:a238887b9522b2760fe0c8f31004619c7"><td class="memItemLeft" align="right" valign="top">static implicit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a238887b9522b2760fe0c8f31004619c7">operator int</a> (<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> b)</td></tr>
+<tr class="memdesc:a238887b9522b2760fe0c8f31004619c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicitly gets a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value as an int converted value.  <a href="#a238887b9522b2760fe0c8f31004619c7">More...</a><br /></td></tr>
 <tr class="separator:a238887b9522b2760fe0c8f31004619c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a904a379b4526d4fde67a3b55018f4f25"><td class="memItemLeft" align="right" valign="top"><a id="a904a379b4526d4fde67a3b55018f4f25"></a>
-static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator long</b> (<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> b)</td></tr>
+<tr class="memitem:a904a379b4526d4fde67a3b55018f4f25"><td class="memItemLeft" align="right" valign="top">static implicit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a904a379b4526d4fde67a3b55018f4f25">operator long</a> (<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> b)</td></tr>
+<tr class="memdesc:a904a379b4526d4fde67a3b55018f4f25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicitly gets a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value as a long converted value.  <a href="#a904a379b4526d4fde67a3b55018f4f25">More...</a><br /></td></tr>
 <tr class="separator:a904a379b4526d4fde67a3b55018f4f25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab11735f2c564f4b622a67f934f817d43"><td class="memItemLeft" align="right" valign="top"><a id="ab11735f2c564f4b622a67f934f817d43"></a>
-static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator float</b> (<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> b)</td></tr>
+<tr class="memitem:ab11735f2c564f4b622a67f934f817d43"><td class="memItemLeft" align="right" valign="top">static implicit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#ab11735f2c564f4b622a67f934f817d43">operator float</a> (<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> b)</td></tr>
+<tr class="memdesc:ab11735f2c564f4b622a67f934f817d43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicitly gets a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value as a float converted value.  <a href="#ab11735f2c564f4b622a67f934f817d43">More...</a><br /></td></tr>
 <tr class="separator:ab11735f2c564f4b622a67f934f817d43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22fbca05d806bca6dc4fadd71fd28bb9"><td class="memItemLeft" align="right" valign="top"><a id="a22fbca05d806bca6dc4fadd71fd28bb9"></a>
-static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator double</b> (<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> b)</td></tr>
+<tr class="memitem:a22fbca05d806bca6dc4fadd71fd28bb9"><td class="memItemLeft" align="right" valign="top">static implicit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a22fbca05d806bca6dc4fadd71fd28bb9">operator double</a> (<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> b)</td></tr>
+<tr class="memdesc:a22fbca05d806bca6dc4fadd71fd28bb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicitly gets a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value as a double converted value.  <a href="#a22fbca05d806bca6dc4fadd71fd28bb9">More...</a><br /></td></tr>
 <tr class="separator:a22fbca05d806bca6dc4fadd71fd28bb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01b0787e72aa25c4d5876e9155bdef1d"><td class="memItemLeft" align="right" valign="top"><a id="a01b0787e72aa25c4d5876e9155bdef1d"></a>
-static implicit&#160;</td><td class="memItemRight" valign="bottom"><b>operator string</b> (<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> b)</td></tr>
+<tr class="memitem:a01b0787e72aa25c4d5876e9155bdef1d"><td class="memItemLeft" align="right" valign="top">static implicit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a01b0787e72aa25c4d5876e9155bdef1d">operator string</a> (<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> b)</td></tr>
+<tr class="memdesc:a01b0787e72aa25c4d5876e9155bdef1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicitly gets a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value as a string converted value.  <a href="#a01b0787e72aa25c4d5876e9155bdef1d">More...</a><br /></td></tr>
 <tr class="separator:a01b0787e72aa25c4d5876e9155bdef1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a5edfc2e8360be7531c74118ada582e"><td class="memItemLeft" align="right" valign="top"><a id="a5a5edfc2e8360be7531c74118ada582e"></a>
-static bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> b, object obj)</td></tr>
+<tr class="memitem:a5a5edfc2e8360be7531c74118ada582e"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#a5a5edfc2e8360be7531c74118ada582e">operator==</a> (<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> b, object obj)</td></tr>
+<tr class="memdesc:a5a5edfc2e8360be7531c74118ada582e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares the <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> with any object (expected to be another <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>) to find out if they are equal. Compares instances references first, then tries to compare Bundles' values. Warning: The converted values are actually compared, then a "1" integer or string type <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> would match a "true" bool type <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> for example.  <a href="#a5a5edfc2e8360be7531c74118ada582e">More...</a><br /></td></tr>
 <tr class="separator:a5a5edfc2e8360be7531c74118ada582e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee9973912d8bf84f836d5c1f6f0071ba"><td class="memItemLeft" align="right" valign="top"><a id="aee9973912d8bf84f836d5c1f6f0071ba"></a>
-static bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator !=</b> (<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> b, object obj)</td></tr>
+<tr class="memitem:aee9973912d8bf84f836d5c1f6f0071ba"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#aee9973912d8bf84f836d5c1f6f0071ba">operator !=</a> (<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> b, object obj)</td></tr>
+<tr class="memdesc:aee9973912d8bf84f836d5c1f6f0071ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares the <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> with any object (expected to be another <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>) to find out if they are different. Compares instances references first, then tries to compare Bundles' values. Warning: The converted values are actually compared, then a "1" integer or string type <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> would match a "true" bool type <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> for example.  <a href="#aee9973912d8bf84f836d5c1f6f0071ba">More...</a><br /></td></tr>
 <tr class="separator:aee9973912d8bf84f836d5c1f6f0071ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee660d24c72278f5163d18d853024c35"><td class="memItemLeft" align="right" valign="top"><a id="aee660d24c72278f5163d18d853024c35"></a>
-static <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><b>FromAnyJson</b> (string json)</td></tr>
+<tr class="memitem:aee660d24c72278f5163d18d853024c35"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#aee660d24c72278f5163d18d853024c35">FromAnyJson</a> (string json)</td></tr>
+<tr class="memdesc:aee660d24c72278f5163d18d853024c35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds a complete <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> hierarchy representing data from a json-like string. Works even if the root json token is a simple value type like a string or a number.  <a href="#aee660d24c72278f5163d18d853024c35">More...</a><br /></td></tr>
 <tr class="separator:aee660d24c72278f5163d18d853024c35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaee8bdd824d3c55537836443ab6f2b17"><td class="memItemLeft" align="right" valign="top"><a id="aaee8bdd824d3c55537836443ab6f2b17"></a>
-static <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><b>FromJson</b> (string json)</td></tr>
+<tr class="memitem:aaee8bdd824d3c55537836443ab6f2b17"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#aaee8bdd824d3c55537836443ab6f2b17">FromJson</a> (string json)</td></tr>
+<tr class="memdesc:aaee8bdd824d3c55537836443ab6f2b17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds a complete <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> hierarchy representing data from a json-like string. Works only if the root json token is an object or an array, but not a simple value type like a string or a number (in this case use <a class="el" href="class_cotc_sdk_1_1_bundle.html#aee660d24c72278f5163d18d853024c35" title="Builds a complete Bundle hierarchy representing data from a json-like string. Works even if the root ...">FromAnyJson()</a> instead).  <a href="#aaee8bdd824d3c55537836443ab6f2b17">More...</a><br /></td></tr>
 <tr class="separator:aaee8bdd824d3c55537836443ab6f2b17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
@@ -319,8 +325,8 @@ Static Public Attributes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:aa1a1a5d2839a12ccec457f7d235dfe8d"><td class="memItemLeft" align="right" valign="top"><a id="aa1a1a5d2839a12ccec457f7d235dfe8d"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Bundle</b> (<a class="el" href="class_cotc_sdk_1_1_bundle.html#aa84cd987b11b11dd145477190f56f803">DataType</a> dataType)</td></tr>
+<tr class="memitem:aa1a1a5d2839a12ccec457f7d235dfe8d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_bundle.html#aa1a1a5d2839a12ccec457f7d235dfe8d">Bundle</a> (<a class="el" href="class_cotc_sdk_1_1_bundle.html#aa84cd987b11b11dd145477190f56f803">DataType</a> dataType)</td></tr>
+<tr class="memdesc:aa1a1a5d2839a12ccec457f7d235dfe8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds a fresh new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> from a data type.  <a href="#aa1a1a5d2839a12ccec457f7d235dfe8d">More...</a><br /></td></tr>
 <tr class="separator:aa1a1a5d2839a12ccec457f7d235dfe8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <div class="dynheader">
@@ -357,7 +363,188 @@ Inheritance diagram for CotcSdk.Bundle:</div>
 
 </div>
 </div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="aa1a1a5d2839a12ccec457f7d235dfe8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1a1a5d2839a12ccec457f7d235dfe8d">&#9670;&nbsp;</a></span>Bundle() <span class="overload">[1/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">CotcSdk.Bundle.Bundle </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_bundle.html#aa84cd987b11b11dd145477190f56f803">DataType</a>&#160;</td>
+          <td class="paramname"><em>dataType</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Builds a fresh new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> from a data type. </p>
+<dl class="section return"><dt>Returns</dt><dd>A new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> instance.</dd></dl>
+
+</div>
+</div>
+<a id="a3992b6c1979c170da62999a00884d2e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3992b6c1979c170da62999a00884d2e5">&#9670;&nbsp;</a></span>Bundle() <span class="overload">[2/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CotcSdk.Bundle.Bundle </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> of Boolean type from a bool value. </p>
+<dl class="section return"><dt>Returns</dt><dd>A new Boolean <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> from a bool value.</dd></dl>
+
+</div>
+</div>
+<a id="a296192f14171adf0154ade37d08db514"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a296192f14171adf0154ade37d08db514">&#9670;&nbsp;</a></span>Bundle() <span class="overload">[3/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CotcSdk.Bundle.Bundle </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> of Integer type from an int value. </p>
+<dl class="section return"><dt>Returns</dt><dd>A new Integer <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> from an int value.</dd></dl>
+
+</div>
+</div>
+<a id="a664c6b462d6a28b844feddb981fd7b62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a664c6b462d6a28b844feddb981fd7b62">&#9670;&nbsp;</a></span>Bundle() <span class="overload">[4/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CotcSdk.Bundle.Bundle </td>
+          <td>(</td>
+          <td class="paramtype">long&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> of Integer type from a long value. </p>
+<dl class="section return"><dt>Returns</dt><dd>A new Integer <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> from a long value.</dd></dl>
+
+</div>
+</div>
+<a id="a9f2ba8f36cbfdf641993f427c701cc48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f2ba8f36cbfdf641993f427c701cc48">&#9670;&nbsp;</a></span>Bundle() <span class="overload">[5/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CotcSdk.Bundle.Bundle </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> of Double type from a float value. </p>
+<dl class="section return"><dt>Returns</dt><dd>A new Double <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> from a float value.</dd></dl>
+
+</div>
+</div>
+<a id="affc2bd1db8446a5c56cc256c096c3554"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#affc2bd1db8446a5c56cc256c096c3554">&#9670;&nbsp;</a></span>Bundle() <span class="overload">[6/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CotcSdk.Bundle.Bundle </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> of Double type from a double value. </p>
+<dl class="section return"><dt>Returns</dt><dd>A new Double <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> from a double value.</dd></dl>
+
+</div>
+</div>
+<a id="a4b6504f014e8baaa433b92a69540e285"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b6504f014e8baaa433b92a69540e285">&#9670;&nbsp;</a></span>Bundle() <span class="overload">[7/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CotcSdk.Bundle.Bundle </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> of String type from a string value. </p>
+<dl class="section return"><dt>Returns</dt><dd>A new String <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> from a string value.</dd></dl>
+
+</div>
+</div>
 <h2 class="groupheader">Property Documentation</h2>
+<a id="ab6385d8e1c44fee39091bfe160ddddae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6385d8e1c44fee39091bfe160ddddae">&#9670;&nbsp;</a></span>IsEmpty</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CotcSdk.Bundle.IsEmpty</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Tests if a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> (any type) has any value set. </p>
+<dl class="section return"><dt>Returns</dt><dd>If <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> has any value set.</dd></dl>
+
+</div>
+</div>
 <a id="a6a984133c61e62b3c67479aa5e29393f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6a984133c61e62b3c67479aa5e29393f">&#9670;&nbsp;</a></span>Parent</h2>
 
@@ -406,7 +593,322 @@ Inheritance diagram for CotcSdk.Bundle:</div>
 
 </div>
 </div>
+<a id="ad64d3cc533a578de922b25641f278e78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad64d3cc533a578de922b25641f278e78">&#9670;&nbsp;</a></span>this[int index]</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> CotcSdk.Bundle.this[int index]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets array type (List) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s index value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>Index of the value to return.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> being the value of the given index.</dd></dl>
+
+</div>
+</div>
+<a id="af424562a408936221bd22afc3b77786e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af424562a408936221bd22afc3b77786e">&#9670;&nbsp;</a></span>this[string key]</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>? CotcSdk.Bundle.this[string key]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets object type (Dictionary) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s key value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Key of the value to return.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> being the value of the given key.</dd></dl>
+
+</div>
+</div>
+<a id="a1023b7f49b31c5578c36b622b0dc6c0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1023b7f49b31c5578c36b622b0dc6c0c">&#9670;&nbsp;</a></span>Type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_bundle.html#aa84cd987b11b11dd145477190f56f803">DataType</a> CotcSdk.Bundle.Type</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value data type. Should be DataType.None until any value is set to this <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value data type.</dd></dl>
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a27dfbb97977de6ccf95f972efbeee0c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27dfbb97977de6ccf95f972efbeee0c6">&#9670;&nbsp;</a></span>Add()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CotcSdk.Bundle.Add </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> value to this array-type (List) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> value to add.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4882764af6d4460b0abb06dcbb0b6cb6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4882764af6d4460b0abb06dcbb0b6cb6">&#9670;&nbsp;</a></span>AsArray()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">List&lt;<a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&gt; CotcSdk.Bundle.AsArray </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets array type <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> as a List. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s data as a List.</dd></dl>
+
+</div>
+</div>
+<a id="adf5655fb1d69f8225187b52913e15fa5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf5655fb1d69f8225187b52913e15fa5">&#9670;&nbsp;</a></span>AsBool()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CotcSdk.Bundle.AsBool </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>defaultValue</em> = <code>false</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value as a bool converted value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">defaultValue</td><td>The default bool value to return if <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value couldn't be converted.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value converted as a bool value.</dd></dl>
+
+</div>
+</div>
+<a id="a522acbb8599eb882ce9e9a7d15b12840"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a522acbb8599eb882ce9e9a7d15b12840">&#9670;&nbsp;</a></span>AsDictionary()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Dictionary&lt;string, <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&gt; CotcSdk.Bundle.AsDictionary </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets object type <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> as a Dictionary. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s data as a Dictionary.</dd></dl>
+
+</div>
+</div>
+<a id="abcb047b894545e1edbd34512efeebded"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abcb047b894545e1edbd34512efeebded">&#9670;&nbsp;</a></span>AsDouble()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double CotcSdk.Bundle.AsDouble </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>defaultValue</em> = <code>0d</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value as a double converted value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">defaultValue</td><td>The default double value to return if <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value couldn't be converted.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value converted as a double value.</dd></dl>
+
+</div>
+</div>
+<a id="aaf5fd2f02cef2eafb0ff700d18d0eb77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf5fd2f02cef2eafb0ff700d18d0eb77">&#9670;&nbsp;</a></span>AsFloat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float CotcSdk.Bundle.AsFloat </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>defaultValue</em> = <code>0f</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value as a float converted value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">defaultValue</td><td>The default float value to return if <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value couldn't be converted.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value converted as a float value.</dd></dl>
+
+</div>
+</div>
+<a id="a09275cead21a741fdf0e2e0105c5e6ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09275cead21a741fdf0e2e0105c5e6ec">&#9670;&nbsp;</a></span>AsInt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int CotcSdk.Bundle.AsInt </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>defaultValue</em> = <code>0</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value as a int converted value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">defaultValue</td><td>The default int value to return if <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value couldn't be converted.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value converted as a int value.</dd></dl>
+
+</div>
+</div>
+<a id="a774bf5da5b02b21fcb320df7467cfd96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a774bf5da5b02b21fcb320df7467cfd96">&#9670;&nbsp;</a></span>AsLong()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long CotcSdk.Bundle.AsLong </td>
+          <td>(</td>
+          <td class="paramtype">long&#160;</td>
+          <td class="paramname"><em>defaultValue</em> = <code>0L</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value as a long converted value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">defaultValue</td><td>The default long value to return if <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value couldn't be converted.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value converted as a long value.</dd></dl>
+
+</div>
+</div>
+<a id="a2b056f92317216672e8d8405c5aef62b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b056f92317216672e8d8405c5aef62b">&#9670;&nbsp;</a></span>AsString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string CotcSdk.Bundle.AsString </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>defaultValue</em> = <code>null</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value as a string converted value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">defaultValue</td><td>The default string value to return if <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value couldn't be converted.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value converted as a string value.</dd></dl>
+
+</div>
+</div>
 <a id="a0d0bf747d04294fb8e71e567d0c2f0c6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0d0bf747d04294fb8e71e567d0c2f0c6">&#9670;&nbsp;</a></span>Clone()</h2>
 
@@ -671,6 +1173,1139 @@ Inheritance diagram for CotcSdk.Bundle:</div>
 
 </div>
 </div>
+<a id="a22c2f040734eee355768db66719b66e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22c2f040734eee355768db66719b66e2">&#9670;&nbsp;</a></span>Equals() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CotcSdk.Bundle.Equals </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td>
+          <td class="paramname"><em>b</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compares the <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> with another one to find out if they are equal. Compares instances references first, then tries to compare Bundles' values. Warning: The converted values are actually compared, then a "1" integer or string type <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> would match a "true" bool type <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> for example. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">b</td><td>The <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> from which to compare the value with the current <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s one.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>If the bundles' references or their converted values are equal.</dd></dl>
+
+</div>
+</div>
+<a id="ac82daf704a72960a619715e8ef31322e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac82daf704a72960a619715e8ef31322e">&#9670;&nbsp;</a></span>Equals() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">override bool CotcSdk.Bundle.Equals </td>
+          <td>(</td>
+          <td class="paramtype">object&#160;</td>
+          <td class="paramname"><em>obj</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compares the <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> with any object (expected to be another <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>) to find out if they are equal. Compares instances references first, then tries to compare Bundles' values. Warning: The converted values are actually compared, then a "1" integer or string type <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> would match a "true" bool type <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> for example. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">obj</td><td>The object from which to compare the value with the current <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s one.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>If the object's and bundle's references or their converted values are equal.</dd></dl>
+
+</div>
+</div>
+<a id="aee660d24c72278f5163d18d853024c35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee660d24c72278f5163d18d853024c35">&#9670;&nbsp;</a></span>FromAnyJson()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> CotcSdk.Bundle.FromAnyJson </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>json</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Builds a complete <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> hierarchy representing data from a json-like string. Works even if the root json token is a simple value type like a string or a number. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">json</td><td>The json-like string to parse.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s data from a json-like string.</dd></dl>
+
+</div>
+</div>
+<a id="aaee8bdd824d3c55537836443ab6f2b17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaee8bdd824d3c55537836443ab6f2b17">&#9670;&nbsp;</a></span>FromJson()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> CotcSdk.Bundle.FromJson </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>json</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Builds a complete <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> hierarchy representing data from a json-like string. Works only if the root json token is an object or an array, but not a simple value type like a string or a number (in this case use <a class="el" href="class_cotc_sdk_1_1_bundle.html#aee660d24c72278f5163d18d853024c35" title="Builds a complete Bundle hierarchy representing data from a json-like string. Works even if the root ...">FromAnyJson()</a> instead). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">json</td><td>The json-like string to parse.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s data from a json-like string.</dd></dl>
+
+</div>
+</div>
+<a id="aff64c5fbd62a478003a247e73dda3247"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff64c5fbd62a478003a247e73dda3247">&#9670;&nbsp;</a></span>GetBool() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CotcSdk.Bundle.GetBool </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>defaultValue</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets an object type (Dictionary) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s key bool value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Key of the bool value to return.</td></tr>
+    <tr><td class="paramname">defaultValue</td><td>The default bool value to return if the given key doesn't exist.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A bool being the value of the given key.</dd></dl>
+
+</div>
+</div>
+<a id="ad9a03ded6945c85a7e43e95fd0ba1972"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9a03ded6945c85a7e43e95fd0ba1972">&#9670;&nbsp;</a></span>GetBool() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CotcSdk.Bundle.GetBool </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>defaultValue</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets an array type (List) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s index bool value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>Index of the bool value to return.</td></tr>
+    <tr><td class="paramname">defaultValue</td><td>The default bool value to return if the given index doesn't exist.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A bool being the value of the given index.</dd></dl>
+
+</div>
+</div>
+<a id="acc938fc23c4cc4c3230d39430d13c93a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc938fc23c4cc4c3230d39430d13c93a">&#9670;&nbsp;</a></span>GetDouble() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double CotcSdk.Bundle.GetDouble </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>defaultValue</em> = <code>0d</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets an object type (Dictionary) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s key double value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Key of the double value to return.</td></tr>
+    <tr><td class="paramname">defaultValue</td><td>The default double value to return if the given key doesn't exist.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A double being the value of the given key.</dd></dl>
+
+</div>
+</div>
+<a id="a69b6f4a01a3160b2c7250a5b42c0d2c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69b6f4a01a3160b2c7250a5b42c0d2c9">&#9670;&nbsp;</a></span>GetDouble() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double CotcSdk.Bundle.GetDouble </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>defaultValue</em> = <code>0d</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets an array type (List) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s index double value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>Index of the double value to return.</td></tr>
+    <tr><td class="paramname">defaultValue</td><td>The default double value to return if the given index doesn't exist.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A double being the value of the given index.</dd></dl>
+
+</div>
+</div>
+<a id="a3218fdda4e28fc23d156f44b14cc7f15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3218fdda4e28fc23d156f44b14cc7f15">&#9670;&nbsp;</a></span>GetFloat() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float CotcSdk.Bundle.GetFloat </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>defaultValue</em> = <code>0f</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets an object type (Dictionary) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s key float value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Key of the float value to return.</td></tr>
+    <tr><td class="paramname">defaultValue</td><td>The default float value to return if the given key doesn't exist.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A float being the value of the given key.</dd></dl>
+
+</div>
+</div>
+<a id="acf7da3c5190e9131bebc3a64146e760a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf7da3c5190e9131bebc3a64146e760a">&#9670;&nbsp;</a></span>GetFloat() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float CotcSdk.Bundle.GetFloat </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>defaultValue</em> = <code>0f</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets an array type (List) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s index float value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>Index of the float value to return.</td></tr>
+    <tr><td class="paramname">defaultValue</td><td>The default float value to return if the given index doesn't exist.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A float being the value of the given index.</dd></dl>
+
+</div>
+</div>
+<a id="a1b3839729cbfd5552716287f58ed95f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b3839729cbfd5552716287f58ed95f6">&#9670;&nbsp;</a></span>GetHashCode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">override int CotcSdk.Bundle.GetHashCode </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Call the standard Object.GetHashCode() method to compute a hash code for this <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s hash code.</dd></dl>
+
+</div>
+</div>
+<a id="a487c57c86576a40b551544215d2aeabf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a487c57c86576a40b551544215d2aeabf">&#9670;&nbsp;</a></span>GetInt() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int CotcSdk.Bundle.GetInt </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>defaultValue</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets an object type (Dictionary) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s key int value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Key of the int value to return.</td></tr>
+    <tr><td class="paramname">defaultValue</td><td>The default int value to return if the given key doesn't exist.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A int being the value of the given key.</dd></dl>
+
+</div>
+</div>
+<a id="abe76507ee72981d7a1836ca17c5ef757"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe76507ee72981d7a1836ca17c5ef757">&#9670;&nbsp;</a></span>GetInt() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int CotcSdk.Bundle.GetInt </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>defaultValue</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets an array type (List) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s index int value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>Index of the int value to return.</td></tr>
+    <tr><td class="paramname">defaultValue</td><td>The default int value to return if the given index doesn't exist.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A int being the value of the given index.</dd></dl>
+
+</div>
+</div>
+<a id="a256601f673bf937257396b02a70676af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a256601f673bf937257396b02a70676af">&#9670;&nbsp;</a></span>GetLong() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long CotcSdk.Bundle.GetLong </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">long&#160;</td>
+          <td class="paramname"><em>defaultValue</em> = <code>0L</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets an object type (Dictionary) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s key long value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Key of the long value to return.</td></tr>
+    <tr><td class="paramname">defaultValue</td><td>The default long value to return if the given key doesn't exist.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A long being the value of the given key.</dd></dl>
+
+</div>
+</div>
+<a id="a4660d9a100504a8d5f4d6d7622aa3e2c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4660d9a100504a8d5f4d6d7622aa3e2c">&#9670;&nbsp;</a></span>GetLong() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long CotcSdk.Bundle.GetLong </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">long&#160;</td>
+          <td class="paramname"><em>defaultValue</em> = <code>0L</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets an array type (List) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s index long value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>Index of the long value to return.</td></tr>
+    <tr><td class="paramname">defaultValue</td><td>The default long value to return if the given index doesn't exist.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A long being the value of the given index.</dd></dl>
+
+</div>
+</div>
+<a id="aa50a9460fee348456dea63c1cff17037"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa50a9460fee348456dea63c1cff17037">&#9670;&nbsp;</a></span>GetString() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string CotcSdk.Bundle.GetString </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>defaultValue</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets an object type (Dictionary) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s key string value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Key of the string value to return.</td></tr>
+    <tr><td class="paramname">defaultValue</td><td>The default string value to return if the given key doesn't exist.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A string being the value of the given key.</dd></dl>
+
+</div>
+</div>
+<a id="ae0d900928d83b6bc12cb58f96a443e41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0d900928d83b6bc12cb58f96a443e41">&#9670;&nbsp;</a></span>GetString() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string CotcSdk.Bundle.GetString </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>defaultValue</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets an array type (List) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s index string value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>Index of the string value to return.</td></tr>
+    <tr><td class="paramname">defaultValue</td><td>The default string value to return if the given index doesn't exist.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A string being the value of the given index.</dd></dl>
+
+</div>
+</div>
+<a id="a2b3bf30a5afb8ee3efdd14da09c2ddd8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b3bf30a5afb8ee3efdd14da09c2ddd8">&#9670;&nbsp;</a></span>Has()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CotcSdk.Bundle.Has </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>key</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tests if an object type (Dictionary) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> has a given key defined. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>The key to be searched for.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>If the key does exist.</dd></dl>
+
+</div>
+</div>
+<a id="aee9973912d8bf84f836d5c1f6f0071ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee9973912d8bf84f836d5c1f6f0071ba">&#9670;&nbsp;</a></span>operator !=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool CotcSdk.Bundle.operator != </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">object&#160;</td>
+          <td class="paramname"><em>obj</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compares the <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> with any object (expected to be another <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>) to find out if they are different. Compares instances references first, then tries to compare Bundles' values. Warning: The converted values are actually compared, then a "1" integer or string type <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> would match a "true" bool type <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> for example. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">b</td><td>The <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> to compare the value with the object's one.</td></tr>
+    <tr><td class="paramname">obj</td><td>The object from which to compare the value with the <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s one.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>If the object's and bundle's references or their converted values are equal.</dd></dl>
+
+</div>
+</div>
+<a id="abe9ca1a68b087fc7170ccaa3eddabbaa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe9ca1a68b087fc7170ccaa3eddabbaa">&#9670;&nbsp;</a></span>operator bool()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static implicit CotcSdk.Bundle.operator bool </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td>
+          <td class="paramname"><em>b</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implicitly gets a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value as a bool converted value. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value converted as a bool value.</dd></dl>
+
+</div>
+</div>
+<a id="aeb8b780d73309f53d6f18d9ccaa634b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb8b780d73309f53d6f18d9ccaa634b3">&#9670;&nbsp;</a></span>operator Bundle() <span class="overload">[1/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static implicit CotcSdk.Bundle.operator <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implicitly creates a new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> of Boolean type from a bool value. </p>
+<dl class="section return"><dt>Returns</dt><dd>A new Boolean <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> from a bool value.</dd></dl>
+
+</div>
+</div>
+<a id="a741ffab604b28d9630a53d186887bc95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a741ffab604b28d9630a53d186887bc95">&#9670;&nbsp;</a></span>operator Bundle() <span class="overload">[2/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static implicit CotcSdk.Bundle.operator <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implicitly creates a new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> of Integer type from an int value. </p>
+<dl class="section return"><dt>Returns</dt><dd>A new Integer <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> from an int value.</dd></dl>
+
+</div>
+</div>
+<a id="abfd067984881777f93e6cc88081514d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abfd067984881777f93e6cc88081514d4">&#9670;&nbsp;</a></span>operator Bundle() <span class="overload">[3/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static implicit CotcSdk.Bundle.operator <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> </td>
+          <td>(</td>
+          <td class="paramtype">long&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implicitly creates a new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> of Integer type from a long value. </p>
+<dl class="section return"><dt>Returns</dt><dd>A new Integer <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> from a long value.</dd></dl>
+
+</div>
+</div>
+<a id="a692d53f9fc2ab6df101a4ae8a5c96c64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a692d53f9fc2ab6df101a4ae8a5c96c64">&#9670;&nbsp;</a></span>operator Bundle() <span class="overload">[4/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static implicit CotcSdk.Bundle.operator <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implicitly creates a new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> of Double type from a float value. </p>
+<dl class="section return"><dt>Returns</dt><dd>A new Double <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> from a float value.</dd></dl>
+
+</div>
+</div>
+<a id="a2cd96f2de2379023fdf3851b2e0d6853"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cd96f2de2379023fdf3851b2e0d6853">&#9670;&nbsp;</a></span>operator Bundle() <span class="overload">[5/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static implicit CotcSdk.Bundle.operator <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implicitly creates a new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> of Double type from a double value. </p>
+<dl class="section return"><dt>Returns</dt><dd>A new Double <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> from a double value.</dd></dl>
+
+</div>
+</div>
+<a id="a17f01c9957dab306fe03c6d48ce9f924"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17f01c9957dab306fe03c6d48ce9f924">&#9670;&nbsp;</a></span>operator Bundle() <span class="overload">[6/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static implicit CotcSdk.Bundle.operator <a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a> </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implicitly creates a new <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> of String type from a string value. </p>
+<dl class="section return"><dt>Returns</dt><dd>A new String <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> from a string value.</dd></dl>
+
+</div>
+</div>
+<a id="a22fbca05d806bca6dc4fadd71fd28bb9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22fbca05d806bca6dc4fadd71fd28bb9">&#9670;&nbsp;</a></span>operator double()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static implicit CotcSdk.Bundle.operator double </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td>
+          <td class="paramname"><em>b</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implicitly gets a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value as a double converted value. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value converted as a double value.</dd></dl>
+
+</div>
+</div>
+<a id="ab11735f2c564f4b622a67f934f817d43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab11735f2c564f4b622a67f934f817d43">&#9670;&nbsp;</a></span>operator float()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static implicit CotcSdk.Bundle.operator float </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td>
+          <td class="paramname"><em>b</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implicitly gets a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value as a float converted value. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value converted as a float value.</dd></dl>
+
+</div>
+</div>
+<a id="a238887b9522b2760fe0c8f31004619c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a238887b9522b2760fe0c8f31004619c7">&#9670;&nbsp;</a></span>operator int()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static implicit CotcSdk.Bundle.operator int </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td>
+          <td class="paramname"><em>b</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implicitly gets a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value as an int converted value. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value converted as an int value.</dd></dl>
+
+</div>
+</div>
+<a id="a904a379b4526d4fde67a3b55018f4f25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a904a379b4526d4fde67a3b55018f4f25">&#9670;&nbsp;</a></span>operator long()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static implicit CotcSdk.Bundle.operator long </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td>
+          <td class="paramname"><em>b</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implicitly gets a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value as a long converted value. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value converted as a long value.</dd></dl>
+
+</div>
+</div>
+<a id="a01b0787e72aa25c4d5876e9155bdef1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01b0787e72aa25c4d5876e9155bdef1d">&#9670;&nbsp;</a></span>operator string()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static implicit CotcSdk.Bundle.operator string </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td>
+          <td class="paramname"><em>b</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implicitly gets a <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value as a string converted value. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s value converted as a string value.</dd></dl>
+
+</div>
+</div>
+<a id="a5a5edfc2e8360be7531c74118ada582e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a5edfc2e8360be7531c74118ada582e">&#9670;&nbsp;</a></span>operator==()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool CotcSdk.Bundle.operator== </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_cotc_sdk_1_1_bundle.html">Bundle</a>&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">object&#160;</td>
+          <td class="paramname"><em>obj</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compares the <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> with any object (expected to be another <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>) to find out if they are equal. Compares instances references first, then tries to compare Bundles' values. Warning: The converted values are actually compared, then a "1" integer or string type <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> would match a "true" bool type <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> for example. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">b</td><td>The <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a> to compare the value with the object's one.</td></tr>
+    <tr><td class="paramname">obj</td><td>The object from which to compare the value with the <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s one.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>If the object's and bundle's references or their converted values are equal.</dd></dl>
+
+</div>
+</div>
+<a id="ae2ac5a1a1e11546bd8e52bc6254f51ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2ac5a1a1e11546bd8e52bc6254f51ca">&#9670;&nbsp;</a></span>Remove()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CotcSdk.Bundle.Remove </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>key</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Removes an object type (Dictionary) <a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s key value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>The key to delete the value.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad7b29658cbea9349b535daa57b82118e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7b29658cbea9349b535daa57b82118e">&#9670;&nbsp;</a></span>ToJson()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string CotcSdk.Bundle.ToJson </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets all bundle's data as a json-like string. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s data as a json-like string.</dd></dl>
+
+</div>
+</div>
+<a id="a407db7b93e3ab7b96e76caccd6b49468"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a407db7b93e3ab7b96e76caccd6b49468">&#9670;&nbsp;</a></span>ToString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">override string CotcSdk.Bundle.ToString </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets all bundle's data as a human readable string. (actually calls <a class="el" href="class_cotc_sdk_1_1_bundle.html#ad7b29658cbea9349b535daa57b82118e" title="Gets all bundle&#39;s data as a json-like string.">ToJson()</a>) </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cotc_sdk_1_1_bundle.html" title="The bundle is a main concept of the CotC SDK. It is basically the equivalent of a JSON object,...">Bundle</a>'s data as a human readable string.</dd></dl>
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
 <a id="a9e1489ca059f1ebfc7cfa140dbb78011"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9e1489ca059f1ebfc7cfa140dbb78011">&#9670;&nbsp;</a></span>Empty</h2>
@@ -699,7 +2334,7 @@ Inheritance diagram for CotcSdk.Bundle:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 7 2019 16:25:41 for CotC C# SDK for Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 11 2019 15:44:23 for CotC C# SDK for Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.15
 </small></address>

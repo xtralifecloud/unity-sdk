@@ -12,5 +12,7 @@ var searchData=
   ['firstname',['FirstName',['../class_cotc_sdk_1_1_social_network_friend.html#a6ae51fa3e5284c27a4298e2c8d194c5c',1,'CotcSdk::SocialNetworkFriend']]],
   ['friendid',['FriendId',['../class_cotc_sdk_1_1_friend_status_change_event.html#ae54318b8b84e9f3b72e130aa25813ab8',1,'CotcSdk::FriendStatusChangeEvent']]],
   ['friendrelationshipstatus',['FriendRelationshipStatus',['../namespace_cotc_sdk.html#a31921eae57061399720e654b1ae9d9ad',1,'CotcSdk']]],
-  ['friendstatuschangeevent',['FriendStatusChangeEvent',['../class_cotc_sdk_1_1_friend_status_change_event.html',1,'CotcSdk']]]
+  ['friendstatuschangeevent',['FriendStatusChangeEvent',['../class_cotc_sdk_1_1_friend_status_change_event.html',1,'CotcSdk']]],
+  ['fromanyjson',['FromAnyJson',['../class_cotc_sdk_1_1_bundle.html#aee660d24c72278f5163d18d853024c35',1,'CotcSdk::Bundle']]],
+  ['fromjson',['FromJson',['../class_cotc_sdk_1_1_bundle.html#aaee8bdd824d3c55537836443ab6f2b17',1,'CotcSdk::Bundle']]]
 ];
