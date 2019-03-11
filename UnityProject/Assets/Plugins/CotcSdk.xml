@@ -45,7 +45,17 @@
             should set it once at startup.
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:CotcSdk.Cloud.ListUsers(System.String,System.Int32,System.Int32)" -->
+        <member name="M:CotcSdk.Cloud.ListUsers(System.String,System.Int32,System.Int32)">
+            <summary>
+            Method used to check or retrieve users from Clan of the Cloud community. The domain is not taken
+            in account for this search.
+            </summary>
+            <returns>Task returning the fetched list of users. The list is paginated (see
+                #CotcSdk.PagedList for more info).</returns>
+            <param name="filter">May contain a nickname, a display name or e-mail address.</param>
+            <param name="limit">The maximum number of results to return per page.</param>
+            <param name="offset">Number of the first result.</param>
+        </member>
         <member name="M:CotcSdk.Cloud.LoginAnonymously(CotcSdk.Bundle)">
             <summary>Logs the current user in anonymously.</summary>
             <returns>Task returning when the login has finished. The resulting Gamer object can then
@@ -64,11 +74,12 @@
             <param name="networkSecret">The secret for the network. For e-mail accounts, this would be the passord. For
                 facebook or other SNS accounts, this would be the user token. For the LoginNetwork.GameCenter, the password
                 is not used, so you may pass "n/a".</param>
-            <param name="preventRegistration">Fail instead of silently creating an account in case it doesn't already exist on
-                the CotC servers.</param>
             <param name="additionalOptions">Additional options can be passed, such as `thenBatch` to execute a batch after
                 login or `preventRegistration` to accept only already created accounts. Pass it as a Bundle with the additional
-                keys. May not override `preventRegistration` key since it is defined by the parameter of the same name.</param>
+                keys. May not override `preventRegistration` key since it is defined by the parameter of the same name. Example
+                options Bundle's Json: `{"preventRegistration": true,
+                "thenBatch": {"domain": "private", "name": "TestBatch", "params": {"test": true}}}`
+            </param>
         </member>
         <member name="M:CotcSdk.Cloud.LoginWithShortcode(System.String,CotcSdk.Bundle)">
             <summary>Logs in by using a shortcode previously generated through #SendResetPasswordEmail.</summary>
@@ -756,12 +767,11 @@
             You need valid credentials in order to instantiate this class. Use Cloud.Login* methods for that purpose.
             Once the object is created, you need to start the coroutine, please look at the other methods available.
             </summary>
-            <param name="gamer">The gamer object received from a login or similar function.</param>
+            <param name="gamer">The gamer object received from a login or similar function. Used to authenticate
+                (receive events related to the said gamer).</param>
             <param name="domain">The domain on which to listen for events. Note that you may create multiple event loops,
                 especially if you are using multiple domains. The default domain, that you should use unless you are
                 explicitly using multiple domains, is the private domain.</param>
-            <param name="gamer">Gamer, used to authenticate (receive events related to the said gamer).</param>
-            <param name="domain">Domain on which to listen for events.</param>
             <param name="iterationDuration">Sets a custom timeout in seconds for the long polling event loop. Should be used
                 with care and set to a high value (at least 60). Defaults to 590 (~10 min).</param>
         </member>
@@ -960,7 +970,17 @@
             <param name="domain">Domain on which to scope the transactions. Default to `private` if unmodified.</param>
             <returns>This object for operation chaining.</returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:CotcSdk.GamerTransactions.History(System.String,System.Int32,System.Int32)" -->
+        <member name="M:CotcSdk.GamerTransactions.History(System.String,System.Int32,System.Int32)">
+            <summary>
+            Fetches the history of transactions run for this user. The current balance (resulting values) needs to be queried
+            via a different call (Balance).
+            </summary>
+            <returns>Promise resolved when the operation has completed. The result is paginated, for more information see
+                #CotcSdk.PagedList.</returns>
+            <param name="unit">If specified, retrieves only the transactions matching a given unit (e.g. "gold").</param>
+            <param name="limit">For pagination, allows to set a greater or smaller page size than the default 30.</param>
+            <param name="offset">For pagination, avoid using it explicitly.</param>
+        </member>
         <member name="M:CotcSdk.GamerTransactions.Post(CotcSdk.Bundle,System.String)">
             <summary>Executes a transaction on the behalf of the user.</summary>
             <returns>Promise resolved when the operation has completed. The attached result contains the new balance
@@ -1681,7 +1701,11 @@
             <param name="key">The name of the key to remove. Beware, if you don't pass any key at all,
                 then ALL the key/value will be removed. Should be used with care!</param>
         </member>
-        <!-- Badly formed XML comment ignored for member "T:CotcSdk.NonpagedList`1" -->
+        <member name="T:CotcSdk.NonpagedList`1">
+            @ingroup main_classes
+            <summary>Represents a non-paginated list. Counterpart to #CotcSdk.PagedList, replacing simple List before. These lists allow to
+            retrieve additional information that you can enrich using batches on the server.</summary>
+        </member>
         <member name="T:CotcSdk.PagedList`1">
             @ingroup main_classes
             <summary>Represents a paginated list, which allows for easy navigation through multiple results.</summary>
@@ -1798,6 +1822,13 @@
         <member name="T:CotcSdk.Bundle.DataType">
             <summary>Possible types of data storable into a bundle.</summary>
         </member>
+        <member name="F:CotcSdk.Bundle.Empty">
+            <summary>Empty (null-like) Bundle. See class documentation for more information.</summary>
+        </member>
+        <member name="M:CotcSdk.Bundle.#ctor(CotcSdk.Bundle.DataType)">
+            <summary>Builds a fresh new Bundle from a data type.</summary>
+            <returns>A new Bundle instance.</returns>
+        </member>
         <member name="M:CotcSdk.Bundle.CreateObject">
             <summary>Creates a bundle of type object.</summary>
             <returns>A new bundle.</returns>
@@ -1824,21 +1855,299 @@
             that you may pass an integer, string, etc.</param>
             <returns>A new bundle.</returns>
         </member>
-        <member name="F:CotcSdk.Bundle.Empty">
-            <summary>Empty (null-like) Bundle. See class documentation for more information.</summary>
+        <member name="M:CotcSdk.Bundle.#ctor(System.Boolean)">
+            <summary>Creates a new Bundle of Boolean type from a bool value.</summary>
+            <returns>A new Boolean Bundle from a bool value.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.#ctor(System.Int32)">
+            <summary>Creates a new Bundle of Integer type from an int value.</summary>
+            <returns>A new Integer Bundle from an int value.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.#ctor(System.Int64)">
+            <summary>Creates a new Bundle of Integer type from a long value.</summary>
+            <returns>A new Integer Bundle from a long value.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.#ctor(System.Single)">
+            <summary>Creates a new Bundle of Double type from a float value.</summary>
+            <returns>A new Double Bundle from a float value.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.#ctor(System.Double)">
+            <summary>Creates a new Bundle of Double type from a double value.</summary>
+            <returns>A new Double Bundle from a double value.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.#ctor(System.String)">
+            <summary>Creates a new Bundle of String type from a string value.</summary>
+            <returns>A new String Bundle from a string value.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.op_Implicit(System.Boolean)~CotcSdk.Bundle">
+            <summary>Implicitly creates a new Bundle of Boolean type from a bool value.</summary>
+            <returns>A new Boolean Bundle from a bool value.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.op_Implicit(System.Int32)~CotcSdk.Bundle">
+            <summary>Implicitly creates a new Bundle of Integer type from an int value.</summary>
+            <returns>A new Integer Bundle from an int value.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.op_Implicit(System.Int64)~CotcSdk.Bundle">
+            <summary>Implicitly creates a new Bundle of Integer type from a long value.</summary>
+            <returns>A new Integer Bundle from a long value.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.op_Implicit(System.Single)~CotcSdk.Bundle">
+            <summary>Implicitly creates a new Bundle of Double type from a float value.</summary>
+            <returns>A new Double Bundle from a float value.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.op_Implicit(System.Double)~CotcSdk.Bundle">
+            <summary>Implicitly creates a new Bundle of Double type from a double value.</summary>
+            <returns>A new Double Bundle from a double value.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.op_Implicit(System.String)~CotcSdk.Bundle">
+            <summary>Implicitly creates a new Bundle of String type from a string value.</summary>
+            <returns>A new String Bundle from a string value.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.op_Implicit(CotcSdk.Bundle)~System.Boolean">
+            <summary>Implicitly gets a Bundle's value as a bool converted value.</summary>
+            <returns>Bundle's value converted as a bool value.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.op_Implicit(CotcSdk.Bundle)~System.Int32">
+            <summary>Implicitly gets a Bundle's value as an int converted value.</summary>
+            <returns>Bundle's value converted as an int value.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.op_Implicit(CotcSdk.Bundle)~System.Int64">
+            <summary>Implicitly gets a Bundle's value as a long converted value.</summary>
+            <returns>Bundle's value converted as a long value.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.op_Implicit(CotcSdk.Bundle)~System.Single">
+            <summary>Implicitly gets a Bundle's value as a float converted value.</summary>
+            <returns>Bundle's value converted as a float value.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.op_Implicit(CotcSdk.Bundle)~System.Double">
+            <summary>Implicitly gets a Bundle's value as a double converted value.</summary>
+            <returns>Bundle's value converted as a double value.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.op_Implicit(CotcSdk.Bundle)~System.String">
+            <summary>Implicitly gets a Bundle's value as a string converted value.</summary>
+            <returns>Bundle's value converted as a string value.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.GetHashCode">
+            <summary>Call the standard Object.GetHashCode() method to compute a hash code for this Bundle.</summary>
+            <returns>Bundle's hash code.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.Equals(CotcSdk.Bundle)">
+            <summary>Compares the Bundle with another one to find out if they are equal. Compares instances
+            references first, then tries to compare Bundles' values. Warning: The converted values are actually
+            compared, then a "1" integer or string type Bundle would match a "true" bool type Bundle for example.</summary>
+            <param name="b">The Bundle from which to compare the value with the current Bundle's one.</param>
+            <returns>If the bundles' references or their converted values are equal.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.Equals(System.Object)">
+            <summary>Compares the Bundle with any object (expected to be another Bundle) to find out if they are
+            equal. Compares instances references first, then tries to compare Bundles' values. Warning: The converted
+            values are actually compared, then a "1" integer or string type Bundle would match a "true" bool type
+            Bundle for example.</summary>
+            <param name="obj">The object from which to compare the value with the current Bundle's one.</param>
+            <returns>If the object's and bundle's references or their converted values are equal.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.op_Equality(CotcSdk.Bundle,System.Object)">
+            <summary>Compares the Bundle with any object (expected to be another Bundle) to find out if they are
+            equal. Compares instances references first, then tries to compare Bundles' values. Warning: The
+            converted values are actually compared, then a "1" integer or string type Bundle would match a "true"
+            bool type Bundle for example.</summary>
+            <param name="b">The Bundle to compare the value with the object's one.</param>
+            <param name="obj">The object from which to compare the value with the Bundle's one.</param>
+            <returns>If the object's and bundle's references or their converted values are equal.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.op_Inequality(CotcSdk.Bundle,System.Object)">
+            <summary>Compares the Bundle with any object (expected to be another Bundle) to find out if they are
+            different. Compares instances references first, then tries to compare Bundles' values. Warning: The
+            converted values are actually compared, then a "1" integer or string type Bundle would match a "true"
+            bool type Bundle for example.</summary>
+            <param name="b">The Bundle to compare the value with the object's one.</param>
+            <param name="obj">The object from which to compare the value with the Bundle's one.</param>
+            <returns>If the object's and bundle's references or their converted values are equal.</returns>
+        </member>
+        <member name="P:CotcSdk.Bundle.Item(System.String)">
+            <summary>Gets object type (Dictionary) Bundle's key value.</summary>
+            <param name="key">Key of the value to return.</param>
+            <returns>A Bundle being the value of the given key.</returns>
+        </member>
+        <member name="P:CotcSdk.Bundle.Item(System.Int32)">
+            <summary>Gets array type (List) Bundle's index value.</summary>
+            <param name="index">Index of the value to return.</param>
+            <returns>A Bundle being the value of the given index.</returns>
+        </member>
+        <member name="P:CotcSdk.Bundle.IsEmpty">
+            <summary>Tests if a Bundle (any type) has any value set.</summary>
+            <returns>If Bundle has any value set.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.Has(System.String)">
+            <summary>Tests if an object type (Dictionary) Bundle has a given key defined.</summary>
+            <param name="key">The key to be searched for.</param>
+            <returns>If the key does exist.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.Remove(System.String)">
+            <summary>Removes an object type (Dictionary) Bundle's key value.</summary>
+            <param name="key">The key to delete the value.</param>
+        </member>
+        <member name="M:CotcSdk.Bundle.Add(CotcSdk.Bundle)">
+            <summary>Adds a Bundle value to this array-type (List) Bundle.</summary>
+            <param name="value">The Bundle value to add.</param>
         </member>
         <member name="M:CotcSdk.Bundle.Clone">
             <summary>Deep copies the bundle.</summary>
+        </member>
+        <member name="P:CotcSdk.Bundle.Root">
+            <summary>Returns the root of this tree. Goes as far as possible back in the hierarchy.</summary>
+        </member>
+        <member name="P:CotcSdk.Bundle.Type">
+            <summary>Gets Bundle's value data type. Should be DataType.None until any value is set to this Bundle.</summary>
+            <returns>Bundle's value data type.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.GetBool(System.String,System.Boolean)">
+            <summary>Gets an object type (Dictionary) Bundle's key bool value.</summary>
+            <param name="key">Key of the bool value to return.</param>
+            <param name="defaultValue">The default bool value to return if the given key doesn't exist.</param>
+            <returns>A bool being the value of the given key.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.GetInt(System.String,System.Int32)">
+            <summary>Gets an object type (Dictionary) Bundle's key int value.</summary>
+            <param name="key">Key of the int value to return.</param>
+            <param name="defaultValue">The default int value to return if the given key doesn't exist.</param>
+            <returns>A int being the value of the given key.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.GetLong(System.String,System.Int64)">
+            <summary>Gets an object type (Dictionary) Bundle's key long value.</summary>
+            <param name="key">Key of the long value to return.</param>
+            <param name="defaultValue">The default long value to return if the given key doesn't exist.</param>
+            <returns>A long being the value of the given key.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.GetFloat(System.String,System.Single)">
+            <summary>Gets an object type (Dictionary) Bundle's key float value.</summary>
+            <param name="key">Key of the float value to return.</param>
+            <param name="defaultValue">The default float value to return if the given key doesn't exist.</param>
+            <returns>A float being the value of the given key.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.GetDouble(System.String,System.Double)">
+            <summary>Gets an object type (Dictionary) Bundle's key double value.</summary>
+            <param name="key">Key of the double value to return.</param>
+            <param name="defaultValue">The default double value to return if the given key doesn't exist.</param>
+            <returns>A double being the value of the given key.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.GetString(System.String,System.String)">
+            <summary>Gets an object type (Dictionary) Bundle's key string value.</summary>
+            <param name="key">Key of the string value to return.</param>
+            <param name="defaultValue">The default string value to return if the given key doesn't exist.</param>
+            <returns>A string being the value of the given key.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.GetBool(System.Int32,System.Boolean)">
+            <summary>Gets an array type (List) Bundle's index bool value.</summary>
+            <param name="index">Index of the bool value to return.</param>
+            <param name="defaultValue">The default bool value to return if the given index doesn't exist.</param>
+            <returns>A bool being the value of the given index.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.GetInt(System.Int32,System.Int32)">
+            <summary>Gets an array type (List) Bundle's index int value.</summary>
+            <param name="index">Index of the int value to return.</param>
+            <param name="defaultValue">The default int value to return if the given index doesn't exist.</param>
+            <returns>A int being the value of the given index.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.GetLong(System.Int32,System.Int64)">
+            <summary>Gets an array type (List) Bundle's index long value.</summary>
+            <param name="index">Index of the long value to return.</param>
+            <param name="defaultValue">The default long value to return if the given index doesn't exist.</param>
+            <returns>A long being the value of the given index.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.GetFloat(System.Int32,System.Single)">
+            <summary>Gets an array type (List) Bundle's index float value.</summary>
+            <param name="index">Index of the float value to return.</param>
+            <param name="defaultValue">The default float value to return if the given index doesn't exist.</param>
+            <returns>A float being the value of the given index.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.GetDouble(System.Int32,System.Double)">
+            <summary>Gets an array type (List) Bundle's index double value.</summary>
+            <param name="index">Index of the double value to return.</param>
+            <param name="defaultValue">The default double value to return if the given index doesn't exist.</param>
+            <returns>A double being the value of the given index.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.GetString(System.Int32,System.String)">
+            <summary>Gets an array type (List) Bundle's index string value.</summary>
+            <param name="index">Index of the string value to return.</param>
+            <param name="defaultValue">The default string value to return if the given index doesn't exist.</param>
+            <returns>A string being the value of the given index.</returns>
         </member>
         <member name="P:CotcSdk.Bundle.Parent">
             <summary>Returns the parent of this bundle, if it was detached from any tree. May be null
             if it is the root or has never been attached.</summary>
         </member>
-        <member name="P:CotcSdk.Bundle.Root">
-            <summary>Returns the root of this tree. Goes as far as possible back in the hierarchy.</summary>
+        <member name="M:CotcSdk.Bundle.AsBool(System.Boolean)">
+            <summary>Gets a Bundle's value as a bool converted value.</summary>
+            <param name="defaultValue">The default bool value to return if Bundle's value couldn't be converted.</param>
+            <returns>Bundle's value converted as a bool value.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.AsInt(System.Int32)">
+            <summary>Gets a Bundle's value as a int converted value.</summary>
+            <param name="defaultValue">The default int value to return if Bundle's value couldn't be converted.</param>
+            <returns>Bundle's value converted as a int value.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.AsLong(System.Int64)">
+            <summary>Gets a Bundle's value as a long converted value.</summary>
+            <param name="defaultValue">The default long value to return if Bundle's value couldn't be converted.</param>
+            <returns>Bundle's value converted as a long value.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.AsFloat(System.Single)">
+            <summary>Gets a Bundle's value as a float converted value.</summary>
+            <param name="defaultValue">The default float value to return if Bundle's value couldn't be converted.</param>
+            <returns>Bundle's value converted as a float value.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.AsDouble(System.Double)">
+            <summary>Gets a Bundle's value as a double converted value.</summary>
+            <param name="defaultValue">The default double value to return if Bundle's value couldn't be converted.</param>
+            <returns>Bundle's value converted as a double value.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.AsString(System.String)">
+            <summary>Gets a Bundle's value as a string converted value.</summary>
+            <param name="defaultValue">The default string value to return if Bundle's value couldn't be converted.</param>
+            <returns>Bundle's value converted as a string value.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.AsDictionary">
+            <summary>Gets object type Bundle as a Dictionary.</summary>
+            <returns>Bundle's data as a Dictionary.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.AsArray">
+            <summary>Gets array type Bundle as a List.</summary>
+            <returns>Bundle's data as a List.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.FromAnyJson(System.String)">
+            <summary>Builds a complete Bundle hierarchy representing data from a json-like string. Works even if the
+            root json token is a simple value type like a string or a number.</summary>
+            <param name="json">The json-like string to parse.</param>
+            <returns>Bundle's data from a json-like string.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.FromJson(System.String)">
+            <summary>Builds a complete Bundle hierarchy representing data from a json-like string. Works only if the
+            root json token is an object or an array, but not a simple value type like a string or a number (in this
+            case use FromAnyJson() instead).</summary>
+            <param name="json">The json-like string to parse.</param>
+            <returns>Bundle's data from a json-like string.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.ToJson">
+            <summary>Gets all bundle's data as a json-like string.</summary>
+            <returns>Bundle's data as a json-like string.</returns>
+        </member>
+        <member name="M:CotcSdk.Bundle.ToString">
+            <summary>Gets all bundle's data as a human readable string. (actually calls ToJson())</summary>
+            <returns>Bundle's data as a human readable string.</returns>
         </member>
         <member name="T:CotcSdk.EmptyBundle">
             <summary>Never instantiate this class. Use Bundle.Empty instead. Pass that everywhere an explicit configuration is not wanted.</summary>
+        </member>
+        <member name="P:CotcSdk.EmptyBundle.Item(System.String)">
+            <summary>Gets empty Bundle (as an empty Bundle can't contain anything else).</summary>
+            <param name="key">Any key (unused).</param>
+            <returns>An empty Bundle.</returns>
+        </member>
+        <member name="P:CotcSdk.EmptyBundle.Item(System.Int32)">
+            <summary>Gets empty Bundle (as an empty Bundle can't contain anything else).</summary>
+            <param name="index">Any index (unused).</param>
+            <returns>An empty Bundle.</returns>
         </member>
         <member name="T:CotcSdk.CotcSettings">
             @cond private 

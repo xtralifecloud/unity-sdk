@@ -135,9 +135,7 @@ namespace CotcSdk
 	/// </summary>
 	public class Bundle : IEquatable<Bundle> {
 		/// <summary>Possible types of data storable into a bundle.</summary>
-		public enum DataType {
-			None, Boolean, Integer, Double, String, Array, Object
-		}
+		public enum DataType { None, Boolean, Integer, Double, String, Array, Object }
 		private DataType type;
 		private double doubleValue;
 		private long longValue;
@@ -146,11 +144,20 @@ namespace CotcSdk
 		private List<Bundle> arrayValue;
 		private Bundle parent;
 
+		/// <summary>Empty (null-like) Bundle. See class documentation for more information.</summary>
+		public static readonly EmptyBundle Empty = new EmptyBundle();
+
+		/// <summary>Builds a fresh new Bundle from a data type.</summary>
+		/// <returns>A new Bundle instance.</returns>
+		protected Bundle(DataType dataType) {
+			type = dataType;
+			if (dataType == DataType.Object) objectValue = new Dictionary<string, Bundle>();
+			else if (dataType == DataType.Array) arrayValue = new List<Bundle>();
+		}
+
 		/// <summary>Creates a bundle of type object.</summary>
 		/// <returns>A new bundle.</returns>
-		public static Bundle CreateObject() {
-			return new Bundle(DataType.Object);
-		}
+		public static Bundle CreateObject() { return new Bundle(DataType.Object); }
 
 		/// <summary>Creates a bundle of type object with one key/value pair which will be put in the object initially.</summary>
 		/// <returns>A new bundle filled with one key/value pair.</returns>
@@ -199,34 +206,87 @@ namespace CotcSdk
 			return result;
 		}
 
-		/// <summary>Empty (null-like) Bundle. See class documentation for more information.</summary>
-		public static readonly EmptyBundle Empty = new EmptyBundle();
-
-		// Construction (internal)
-		protected Bundle(DataType dataType) {
-			type = dataType;
-			if (dataType == DataType.Object) objectValue = new Dictionary<string, Bundle>();
-			else if (dataType == DataType.Array) arrayValue = new List<Bundle>();
-		}
+		/// <summary>Creates a new Bundle of Boolean type from a bool value.</summary>
+		/// <returns>A new Boolean Bundle from a bool value.</returns>
 		public Bundle(bool value) { type = DataType.Boolean; longValue = value ? 1L : 0L; }
+
+		/// <summary>Creates a new Bundle of Integer type from an int value.</summary>
+		/// <returns>A new Integer Bundle from an int value.</returns>
         public Bundle(int value) : this((long)value) { }
+
+		/// <summary>Creates a new Bundle of Integer type from a long value.</summary>
+		/// <returns>A new Integer Bundle from a long value.</returns>
         public Bundle(long value) { type = DataType.Integer; longValue = value; }
+
+		/// <summary>Creates a new Bundle of Double type from a float value.</summary>
+		/// <returns>A new Double Bundle from a float value.</returns>
         public Bundle(float value) : this((double)value) { }
+
+		/// <summary>Creates a new Bundle of Double type from a double value.</summary>
+		/// <returns>A new Double Bundle from a double value.</returns>
 		public Bundle(double value) { type = DataType.Double; doubleValue = value; }
+
+		/// <summary>Creates a new Bundle of String type from a string value.</summary>
+		/// <returns>A new String Bundle from a string value.</returns>
 		public Bundle(string value) { type = DataType.String; stringValue = value; }
+
+		/// <summary>Implicitly creates a new Bundle of Boolean type from a bool value.</summary>
+		/// <returns>A new Boolean Bundle from a bool value.</returns>
 		public static implicit operator Bundle(bool value) { return new Bundle(value); }
+
+		/// <summary>Implicitly creates a new Bundle of Integer type from an int value.</summary>
+		/// <returns>A new Integer Bundle from an int value.</returns>
 		public static implicit operator Bundle(int value) { return new Bundle(value); }
+
+		/// <summary>Implicitly creates a new Bundle of Integer type from a long value.</summary>
+		/// <returns>A new Integer Bundle from a long value.</returns>
 		public static implicit operator Bundle(long value) { return new Bundle(value); }
+
+		/// <summary>Implicitly creates a new Bundle of Double type from a float value.</summary>
+		/// <returns>A new Double Bundle from a float value.</returns>
 		public static implicit operator Bundle(float value) { return new Bundle(value); }
+
+		/// <summary>Implicitly creates a new Bundle of Double type from a double value.</summary>
+		/// <returns>A new Double Bundle from a double value.</returns>
 		public static implicit operator Bundle(double value) { return new Bundle(value); }
+
+		/// <summary>Implicitly creates a new Bundle of String type from a string value.</summary>
+		/// <returns>A new String Bundle from a string value.</returns>
 		public static implicit operator Bundle(string value) { return value != null ? new Bundle(value) : Empty; }
+
+		/// <summary>Implicitly gets a Bundle's value as a bool converted value.</summary>
+		/// <returns>Bundle's value converted as a bool value.</returns>
 		public static implicit operator bool(Bundle b) { return b.AsBool(); }
+
+		/// <summary>Implicitly gets a Bundle's value as an int converted value.</summary>
+		/// <returns>Bundle's value converted as an int value.</returns>
 		public static implicit operator int(Bundle b) { return b.AsInt(); }
+
+		/// <summary>Implicitly gets a Bundle's value as a long converted value.</summary>
+		/// <returns>Bundle's value converted as a long value.</returns>
 		public static implicit operator long(Bundle b) { return b.AsLong(); }
+
+		/// <summary>Implicitly gets a Bundle's value as a float converted value.</summary>
+		/// <returns>Bundle's value converted as a float value.</returns>
 		public static implicit operator float(Bundle b) { return b.AsFloat(); }
+
+		/// <summary>Implicitly gets a Bundle's value as a double converted value.</summary>
+		/// <returns>Bundle's value converted as a double value.</returns>
 		public static implicit operator double(Bundle b) { return b.AsDouble(); }
+
+		/// <summary>Implicitly gets a Bundle's value as a string converted value.</summary>
+		/// <returns>Bundle's value converted as a string value.</returns>
 		public static implicit operator string(Bundle b) { return b.AsString(); }
 
+		/// <summary>Call the standard Object.GetHashCode() method to compute a hash code for this Bundle.</summary>
+		/// <returns>Bundle's hash code.</returns>
+		public override int GetHashCode() { return base.GetHashCode(); }
+
+		/// <summary>Compares the Bundle with another one to find out if they are equal. Compares instances
+		/// references first, then tries to compare Bundles' values. Warning: The converted values are actually
+		/// compared, then a "1" integer or string type Bundle would match a "true" bool type Bundle for example.</summary>
+		/// <param name="b">The Bundle from which to compare the value with the current Bundle's one.</param>
+		/// <returns>If the bundles' references or their converted values are equal.</returns>
 		public bool Equals(Bundle b) {
 			if (b == null) return false;
 			if (object.ReferenceEquals(this, b)) return true; // This line handles the Empty Bundle case
@@ -239,6 +299,13 @@ namespace CotcSdk
 				default: return false;
 			}
 		}
+
+		/// <summary>Compares the Bundle with any object (expected to be another Bundle) to find out if they are
+		/// equal. Compares instances references first, then tries to compare Bundles' values. Warning: The converted
+		/// values are actually compared, then a "1" integer or string type Bundle would match a "true" bool type
+		/// Bundle for example.</summary>
+		/// <param name="obj">The object from which to compare the value with the current Bundle's one.</param>
+		/// <returns>If the object's and bundle's references or their converted values are equal.</returns>
 		public override bool Equals(object obj) {
 			if (obj == null) return false;
 			Bundle b = obj as Bundle;
@@ -251,16 +318,34 @@ namespace CotcSdk
 			else if (obj is string) return this.AsString().Equals((string)obj);
 			else return false;
 		}
-		public override int GetHashCode() { return base.GetHashCode(); }
+
+		/// <summary>Compares the Bundle with any object (expected to be another Bundle) to find out if they are
+		/// equal. Compares instances references first, then tries to compare Bundles' values. Warning: The
+		/// converted values are actually compared, then a "1" integer or string type Bundle would match a "true"
+		/// bool type Bundle for example.</summary>
+		/// <param name="b">The Bundle to compare the value with the object's one.</param>
+		/// <param name="obj">The object from which to compare the value with the Bundle's one.</param>
+		/// <returns>If the object's and bundle's references or their converted values are equal.</returns>
 		public static bool operator ==(Bundle b, object obj) {
 			if (((object)b == null) || (obj == null)) return Object.Equals((object)b, obj);
 			else return b.Equals(obj);
 		}
+
+		/// <summary>Compares the Bundle with any object (expected to be another Bundle) to find out if they are
+		/// different. Compares instances references first, then tries to compare Bundles' values. Warning: The
+		/// converted values are actually compared, then a "1" integer or string type Bundle would match a "true"
+		/// bool type Bundle for example.</summary>
+		/// <param name="b">The Bundle to compare the value with the object's one.</param>
+		/// <param name="obj">The object from which to compare the value with the Bundle's one.</param>
+		/// <returns>If the object's and bundle's references or their converted values are equal.</returns>
 		public static bool operator !=(Bundle b, object obj) {
 			if (((object)b == null) || (obj == null)) return !Object.Equals((object)b, obj);
 			else return !b.Equals(obj);
 		}
 
+		/// <summary>Gets object type (Dictionary) Bundle's key value.</summary>
+		/// <param name="key">Key of the value to return.</param>
+		/// <returns>A Bundle being the value of the given key.</returns>
 		public virtual Bundle this[string key] {
 			get { return Has(key) ? Dictionary[key] : Empty; }
 			set {
@@ -272,6 +357,10 @@ namespace CotcSdk
 				value.parent = this;
 			}
 		}
+
+		/// <summary>Gets array type (List) Bundle's index value.</summary>
+		/// <param name="index">Index of the value to return.</param>
+		/// <returns>A Bundle being the value of the given index.</returns>
 		public virtual Bundle this[int index] {
 			get { return Array[index]; }
 			set {
@@ -283,6 +372,31 @@ namespace CotcSdk
 					Array.Add(value);
 			}
 		}
+
+		/// <summary>Tests if a Bundle (any type) has any value set.</summary>
+		/// <returns>If Bundle has any value set.</returns>
+		public bool IsEmpty {
+			get {
+				switch (type) {
+					case DataType.Object: return Dictionary.Count == 0;
+					case DataType.Array: return Array.Count == 0;
+					case DataType.None: return true;
+					default: return false;
+				}
+			}
+		}
+
+		/// <summary>Tests if an object type (Dictionary) Bundle has a given key defined.</summary>
+		/// <param name="key">The key to be searched for.</param>
+		/// <returns>If the key does exist.</returns>
+		public bool Has(string key) { return Dictionary.ContainsKey(key); }
+
+		/// <summary>Removes an object type (Dictionary) Bundle's key value.</summary>
+		/// <param name="key">The key to delete the value.</param>
+		public void Remove(string key) { Dictionary.Remove(key); }
+
+		/// <summary>Adds a Bundle value to this array-type (List) Bundle.</summary>
+		/// <param name="value">The Bundle value to add.</param>
 		public void Add(Bundle value) {
 			value.parent = this;
 			Array.Add (value);
@@ -298,6 +412,7 @@ namespace CotcSdk
 			#pragma warning restore 0219
 			return thisNode;
 		}
+
 		// Does a simple (deep) clone, down from this node to the leaves only.
 		// You can specify a 'searchedNode' from the original tree. 'foundBundle' will contain the equivalent of 'searchedNode' in the cloned structure.
 		private Bundle CloneRecursive(Bundle searchedBundle, ref Bundle foundBundle) {
@@ -322,70 +437,6 @@ namespace CotcSdk
 			}
 		}
 
-		// Dictionary getters
-		[Obsolete("Will be removed soon. Use bundle[key].As*(defaultValue) instead.")]
-		public bool GetBool(string key, bool defaultValue = false) {
-			return Has(key) ? Dictionary[key].AsBool(defaultValue) : defaultValue;
-		}
-		[Obsolete("Will be removed soon. Use bundle[key].As*(defaultValue) instead.")]
-		public int GetInt(string key, int defaultValue = 0) {
-			return Has(key) ? Dictionary[key].AsInt(defaultValue) : defaultValue;
-		}
-		[Obsolete("Will be removed soon. Use bundle[key].As*(defaultValue) instead.")]
-		public long GetLong(string key, long defaultValue = 0) {
-			return Has(key) ? Dictionary[key].AsLong(defaultValue) : defaultValue;
-		}
-		[Obsolete("Will be removed soon. Use bundle[key].As*(defaultValue) instead.")]
-		public double GetDouble(string key, double defaultValue = 0) {
-			return Has(key) ? Dictionary[key].AsDouble(defaultValue) : defaultValue;
-		}
-		[Obsolete("Will be removed soon. Use bundle[key].As*(defaultValue) instead.")]
-		public string GetString(string key, string defaultValue = null) {
-			return Has(key) ? Dictionary[key].AsString(defaultValue) : defaultValue;
-		}
-
-		// Array getters
-		[Obsolete("Will be removed soon. Use bundle[index].As*(defaultValue) instead.")]
-		public bool GetBool(int index) {
-			return Array[index].AsBool();
-		}
-		[Obsolete("Will be removed soon. Use bundle[index].As*(defaultValue) instead.")]
-		public int GetInt(int index) {
-			return Array[index].AsInt();
-		}
-		[Obsolete("Will be removed soon. Use bundle[index].As*(defaultValue) instead.")]
-		public long GetLong(int index) {
-			return Array[index].AsLong();
-		}
-		[Obsolete("Will be removed soon. Use bundle[index].As*(defaultValue) instead.")]
-		public double GetDouble(int index) {
-			return Array[index].AsDouble();
-		}
-		[Obsolete("Will be removed soon. Use bundle[index].As*(defaultValue) instead.")]
-		public string GetString(int index) {
-			return Array[index].AsString();
-		}
-
-		// Key management
-		public bool Has(string key) {
-			return Dictionary.ContainsKey(key);
-		}
-		public bool IsEmpty {
-			get {
-				switch (type) {
-					case DataType.Object: return Dictionary.Count == 0;
-					case DataType.Array: return Array.Count == 0;
-					case DataType.None: return true;
-					default: return false;
-				}
-			}
-		}
-		/// <summary>Returns the parent of this bundle, if it was detached from any tree. May be null
-		/// if it is the root or has never been attached.</summary>
-		public Bundle Parent { get { return parent; } }
-		public void Remove(string key) {
-			Dictionary.Remove(key);
-		}
 		/// <summary>Returns the root of this tree. Goes as far as possible back in the hierarchy.</summary>
 		public Bundle Root {
 			get {
@@ -398,10 +449,101 @@ namespace CotcSdk
 			}
 		}
 
-		// Representations
-		public DataType Type {
-			get { return type; }
-		}
+		/// <summary>Gets Bundle's value data type. Should be DataType.None until any value is set to this Bundle.</summary>
+		/// <returns>Bundle's value data type.</returns>
+		public DataType Type { get { return type; } }
+
+		/// <summary>Gets an object type (Dictionary) Bundle's key bool value.</summary>
+		/// <param name="key">Key of the bool value to return.</param>
+		/// <param name="defaultValue">The default bool value to return if the given key doesn't exist.</param>
+		/// <returns>A bool being the value of the given key.</returns>
+		[Obsolete("Will be removed soon. Use bundle[key].AsBool(defaultValue) instead.")]
+		public bool GetBool(string key, bool defaultValue = false) { return Has(key) ? Dictionary[key].AsBool(defaultValue) : defaultValue; }
+
+		/// <summary>Gets an object type (Dictionary) Bundle's key int value.</summary>
+		/// <param name="key">Key of the int value to return.</param>
+		/// <param name="defaultValue">The default int value to return if the given key doesn't exist.</param>
+		/// <returns>A int being the value of the given key.</returns>
+		[Obsolete("Will be removed soon. Use bundle[key].AsInt(defaultValue) instead.")]
+		public int GetInt(string key, int defaultValue = 0) { return Has(key) ? Dictionary[key].AsInt(defaultValue) : defaultValue; }
+
+		/// <summary>Gets an object type (Dictionary) Bundle's key long value.</summary>
+		/// <param name="key">Key of the long value to return.</param>
+		/// <param name="defaultValue">The default long value to return if the given key doesn't exist.</param>
+		/// <returns>A long being the value of the given key.</returns>
+		[Obsolete("Will be removed soon. Use bundle[key].AsLong(defaultValue) instead.")]
+		public long GetLong(string key, long defaultValue = 0L) { return Has(key) ? Dictionary[key].AsLong(defaultValue) : defaultValue; }
+
+		/// <summary>Gets an object type (Dictionary) Bundle's key float value.</summary>
+		/// <param name="key">Key of the float value to return.</param>
+		/// <param name="defaultValue">The default float value to return if the given key doesn't exist.</param>
+		/// <returns>A float being the value of the given key.</returns>
+		[Obsolete("Will be removed soon. Use bundle[key].AsFloat(defaultValue) instead.")]
+		public float GetFloat(string key, float defaultValue = 0f) { return Has(key) ? Dictionary[key].AsFloat(defaultValue) : defaultValue; }
+
+		/// <summary>Gets an object type (Dictionary) Bundle's key double value.</summary>
+		/// <param name="key">Key of the double value to return.</param>
+		/// <param name="defaultValue">The default double value to return if the given key doesn't exist.</param>
+		/// <returns>A double being the value of the given key.</returns>
+		[Obsolete("Will be removed soon. Use bundle[key].AsDouble(defaultValue) instead.")]
+		public double GetDouble(string key, double defaultValue = 0d) { return Has(key) ? Dictionary[key].AsDouble(defaultValue) : defaultValue; }
+
+		/// <summary>Gets an object type (Dictionary) Bundle's key string value.</summary>
+		/// <param name="key">Key of the string value to return.</param>
+		/// <param name="defaultValue">The default string value to return if the given key doesn't exist.</param>
+		/// <returns>A string being the value of the given key.</returns>
+		[Obsolete("Will be removed soon. Use bundle[key].AsString(defaultValue) instead.")]
+		public string GetString(string key, string defaultValue = null) { return Has(key) ? Dictionary[key].AsString(defaultValue) : defaultValue; }
+
+		/// <summary>Gets an array type (List) Bundle's index bool value.</summary>
+		/// <param name="index">Index of the bool value to return.</param>
+		/// <param name="defaultValue">The default bool value to return if the given index doesn't exist.</param>
+		/// <returns>A bool being the value of the given index.</returns>
+		[Obsolete("Will be removed soon. Use bundle[index].AsBool(defaultValue) instead.")]
+		public bool GetBool(int index, bool defaultValue = false) { return index < Array.Count ? Array[index].AsBool(defaultValue) : defaultValue; }
+
+		/// <summary>Gets an array type (List) Bundle's index int value.</summary>
+		/// <param name="index">Index of the int value to return.</param>
+		/// <param name="defaultValue">The default int value to return if the given index doesn't exist.</param>
+		/// <returns>A int being the value of the given index.</returns>
+		[Obsolete("Will be removed soon. Use bundle[index].AsInt(defaultValue) instead.")]
+		public int GetInt(int index, int defaultValue = 0) { return index < Array.Count ? Array[index].AsInt(defaultValue) : defaultValue; }
+
+		/// <summary>Gets an array type (List) Bundle's index long value.</summary>
+		/// <param name="index">Index of the long value to return.</param>
+		/// <param name="defaultValue">The default long value to return if the given index doesn't exist.</param>
+		/// <returns>A long being the value of the given index.</returns>
+		[Obsolete("Will be removed soon. Use bundle[index].AsLong(defaultValue) instead.")]
+		public long GetLong(int index, long defaultValue = 0L) { return index < Array.Count ? Array[index].AsLong(defaultValue) : defaultValue; }
+
+		/// <summary>Gets an array type (List) Bundle's index float value.</summary>
+		/// <param name="index">Index of the float value to return.</param>
+		/// <param name="defaultValue">The default float value to return if the given index doesn't exist.</param>
+		/// <returns>A float being the value of the given index.</returns>
+		[Obsolete("Will be removed soon. Use bundle[index].AsFloat(defaultValue) instead.")]
+		public float GetFloat(int index, float defaultValue = 0f) { return index < Array.Count ? Array[index].AsFloat(defaultValue) : defaultValue; }
+
+		/// <summary>Gets an array type (List) Bundle's index double value.</summary>
+		/// <param name="index">Index of the double value to return.</param>
+		/// <param name="defaultValue">The default double value to return if the given index doesn't exist.</param>
+		/// <returns>A double being the value of the given index.</returns>
+		[Obsolete("Will be removed soon. Use bundle[index].AsDouble(defaultValue) instead.")]
+		public double GetDouble(int index, double defaultValue = 0d) { return index < Array.Count ? Array[index].AsDouble(defaultValue) : defaultValue; }
+
+		/// <summary>Gets an array type (List) Bundle's index string value.</summary>
+		/// <param name="index">Index of the string value to return.</param>
+		/// <param name="defaultValue">The default string value to return if the given index doesn't exist.</param>
+		/// <returns>A string being the value of the given index.</returns>
+		[Obsolete("Will be removed soon. Use bundle[index].AsString(defaultValue) instead.")]
+		public string GetString(int index, string defaultValue = null) { return index < Array.Count ? Array[index].AsString(defaultValue) : defaultValue; }
+
+		/// <summary>Returns the parent of this bundle, if it was detached from any tree. May be null
+		/// if it is the root or has never been attached.</summary>
+		public Bundle Parent { get { return parent; } }
+
+		/// <summary>Gets a Bundle's value as a bool converted value.</summary>
+		/// <param name="defaultValue">The default bool value to return if Bundle's value couldn't be converted.</param>
+		/// <returns>Bundle's value converted as a bool value.</returns>
 		public bool AsBool(bool defaultValue = false) {
 			switch (Type) {
 				case DataType.Boolean: return longValue != 0;
@@ -411,39 +553,62 @@ namespace CotcSdk
 			}
 			return defaultValue;
 		}
+
+		/// <summary>Gets a Bundle's value as a int converted value.</summary>
+		/// <param name="defaultValue">The default int value to return if Bundle's value couldn't be converted.</param>
+		/// <returns>Bundle's value converted as a int value.</returns>
 		public int AsInt(int defaultValue = 0) {
-			int result = defaultValue;
 			switch (Type) {
 				case DataType.Boolean: return (int)longValue;
 				case DataType.Integer: return (int)longValue;
 				case DataType.Double: return (int)doubleValue;
-				case DataType.String: int.TryParse(stringValue, out result); return result;
+				case DataType.String: int.TryParse(stringValue, out defaultValue); return defaultValue;
 			}
 			return defaultValue;
 		}
+
+		/// <summary>Gets a Bundle's value as a long converted value.</summary>
+		/// <param name="defaultValue">The default long value to return if Bundle's value couldn't be converted.</param>
+		/// <returns>Bundle's value converted as a long value.</returns>
 		public long AsLong(long defaultValue = 0L) {
-			long result = defaultValue;
 			switch (Type) {
 				case DataType.Boolean: return longValue;
 				case DataType.Integer: return longValue;
 				case DataType.Double: return (long)doubleValue;
-				case DataType.String: long.TryParse(stringValue, out result); return result;
+				case DataType.String: long.TryParse(stringValue, out defaultValue); return defaultValue;
 			}
 			return defaultValue;
 		}
+
+		/// <summary>Gets a Bundle's value as a float converted value.</summary>
+		/// <param name="defaultValue">The default float value to return if Bundle's value couldn't be converted.</param>
+		/// <returns>Bundle's value converted as a float value.</returns>
 		public float AsFloat(float defaultValue = 0f) {
-			return (float)AsDouble(defaultValue);
+			switch (Type) {
+				case DataType.Boolean: return (float)longValue;
+				case DataType.Integer: return (float)longValue;
+				case DataType.Double: return (float)doubleValue;
+				case DataType.String: float.TryParse(stringValue, NumberStyles.Any, CultureInfo.InvariantCulture, out defaultValue); return defaultValue;
+			}
+			return defaultValue;
 		}
+
+		/// <summary>Gets a Bundle's value as a double converted value.</summary>
+		/// <param name="defaultValue">The default double value to return if Bundle's value couldn't be converted.</param>
+		/// <returns>Bundle's value converted as a double value.</returns>
 		public double AsDouble(double defaultValue = 0d) {
-			double result = defaultValue;
 			switch (Type) {
 				case DataType.Boolean: return (double)longValue;
 				case DataType.Integer: return (double)longValue;
 				case DataType.Double: return doubleValue;
-				case DataType.String: double.TryParse(stringValue, NumberStyles.Any, CultureInfo.InvariantCulture, out result); return result;
+				case DataType.String: double.TryParse(stringValue, NumberStyles.Any, CultureInfo.InvariantCulture, out defaultValue); return defaultValue;
 			}
 			return defaultValue;
 		}
+
+		/// <summary>Gets a Bundle's value as a string converted value.</summary>
+		/// <param name="defaultValue">The default string value to return if Bundle's value couldn't be converted.</param>
+		/// <returns>Bundle's value converted as a string value.</returns>
 		public string AsString(string defaultValue = null) {
 			switch (Type) {
 				case DataType.Boolean: return longValue != 0 ? "true" : "false";
@@ -453,14 +618,19 @@ namespace CotcSdk
 			}
 			return defaultValue;
 		}
-		public List<Bundle> AsArray() {
-			return Array;
-		}
-		public Dictionary<string, Bundle> AsDictionary() {
-			return Dictionary;
-		}
 
-		// Json methods
+		/// <summary>Gets object type Bundle as a Dictionary.</summary>
+		/// <returns>Bundle's data as a Dictionary.</returns>
+		public Dictionary<string, Bundle> AsDictionary() { return Dictionary; }
+
+		/// <summary>Gets array type Bundle as a List.</summary>
+		/// <returns>Bundle's data as a List.</returns>
+		public List<Bundle> AsArray() { return Array; }
+
+		/// <summary>Builds a complete Bundle hierarchy representing data from a json-like string. Works even if the
+		/// root json token is a simple value type like a string or a number.</summary>
+		/// <param name="json">The json-like string to parse.</param>
+		/// <returns>Bundle's data from a json-like string.</returns>
         public static Bundle FromAnyJson(string json)
         {
 			if (json == null) return null;
@@ -485,16 +655,25 @@ namespace CotcSdk
             return null;
         }
         
+		/// <summary>Builds a complete Bundle hierarchy representing data from a json-like string. Works only if the
+		/// root json token is an object or an array, but not a simple value type like a string or a number (in this
+		/// case use FromAnyJson() instead).</summary>
+		/// <param name="json">The json-like string to parse.</param>
+		/// <returns>Bundle's data from a json-like string.</returns>
 		public static Bundle FromJson(string json) {
 			if (json == null) return null;
 			return FromJson(JsonMapper.ToObject(json));
 		}
 
+		/// <summary>Gets all bundle's data as a json-like string.</summary>
+		/// <returns>Bundle's data as a json-like string.</returns>
 		public string ToJson() {
 			// IDEA One day we could probably implement the JSON by ourselves, without requiring LitJson :)
 			return JsonMapper.ToJson(ToJson(this));
 		}
 
+		/// <summary>Gets all bundle's data as a human readable string. (actually calls ToJson())</summary>
+		/// <returns>Bundle's data as a human readable string.</returns>
 		public override string ToString() { return ToJson(); }
 
 		private static Bundle FromJson(JsonData data) {
@@ -593,11 +772,18 @@ namespace CotcSdk
 	{
 		internal EmptyBundle() : base(Bundle.DataType.None) { }
 
+		/// <summary>Gets empty Bundle (as an empty Bundle can't contain anything else).</summary>
+		/// <param name="key">Any key (unused).</param>
+		/// <returns>An empty Bundle.</returns>
 		public override Bundle this[string key]
 		{
 			get { return Bundle.Empty; }
 			set { throw new ArgumentException("Trying to assign to non-existing bundle node. Make sure you create the appropriate hierarchy."); }
 		}
+
+		/// <summary>Gets empty Bundle (as an empty Bundle can't contain anything else).</summary>
+		/// <param name="index">Any index (unused).</param>
+		/// <returns>An empty Bundle.</returns>
 		public override Bundle this[int index]
 		{
 			get { return Bundle.Empty; }
