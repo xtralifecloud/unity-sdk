@@ -128,47 +128,47 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae2489fd0e0de81f00fb6515de38eeebb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; ConvertedT &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_promise.html#ae2489fd0e0de81f00fb6515de38eeebb">Then&lt; ConvertedT &gt;</a> (Func&lt; PromisedT, <a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; ConvertedT &gt;&gt; onResolved, Action&lt; Exception &gt; onRejected)</td></tr>
 <tr class="memdesc:ae2489fd0e0de81f00fb6515de38eeebb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a resolved and rejected callback. Allows for chaining (i.e. return another promise, potentially of another type, indicating an operation to be waited for). Example:  <a href="#ae2489fd0e0de81f00fb6515de38eeebb">More...</a><br /></td></tr>
 <tr class="separator:ae2489fd0e0de81f00fb6515de38eeebb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1e4a9569639a0245d559b17be5d190e"><td class="memItemLeft" align="right" valign="top"><a id="ad1e4a9569639a0245d559b17be5d190e"></a>
-override string&#160;</td><td class="memItemRight" valign="bottom"><b>ToString</b> ()</td></tr>
+<tr class="memitem:ad1e4a9569639a0245d559b17be5d190e"><td class="memItemLeft" align="right" valign="top">override string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_promise.html#ad1e4a9569639a0245d559b17be5d190e">ToString</a> ()</td></tr>
+<tr class="memdesc:ad1e4a9569639a0245d559b17be5d190e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets some <a class="el" href="class_cotc_sdk_1_1_promise.html" title="Promise of future result, which may fail or succeed. Returned as a result of any asnychronous operati...">Promise</a>'s stats as a human readable string, like its state and its resolved/rejected callbacks counts.  <a href="#ad1e4a9569639a0245d559b17be5d190e">More...</a><br /></td></tr>
 <tr class="separator:ad1e4a9569639a0245d559b17be5d190e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a93fa3a48e68cf99dfa5244000bc7e6c8"><td class="memItemLeft" align="right" valign="top"><a id="a93fa3a48e68cf99dfa5244000bc7e6c8"></a>
-<a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Catch</b> (Action&lt; Exception &gt; onRejected)</td></tr>
+<tr class="memitem:a93fa3a48e68cf99dfa5244000bc7e6c8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_promise.html#a93fa3a48e68cf99dfa5244000bc7e6c8">Catch</a> (Action&lt; Exception &gt; onRejected)</td></tr>
+<tr class="memdesc:a93fa3a48e68cf99dfa5244000bc7e6c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Catches a failure at that point in the chain.  <a href="#a93fa3a48e68cf99dfa5244000bc7e6c8">More...</a><br /></td></tr>
 <tr class="separator:a93fa3a48e68cf99dfa5244000bc7e6c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af770348d893890f202ce870a6217a642"><td class="memItemLeft" align="right" valign="top"><a id="af770348d893890f202ce870a6217a642"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Done</b> (Action onResolved, Action&lt; Exception &gt; onRejected)</td></tr>
+<tr class="memitem:af770348d893890f202ce870a6217a642"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_promise.html#af770348d893890f202ce870a6217a642">Done</a> (Action onResolved, Action&lt; Exception &gt; onRejected)</td></tr>
+<tr class="memdesc:af770348d893890f202ce870a6217a642"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put this at the end of a promise chain. It ensures that unhandled exceptions can be delivered properly.  <a href="#af770348d893890f202ce870a6217a642">More...</a><br /></td></tr>
 <tr class="separator:af770348d893890f202ce870a6217a642"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af7c3b4a35d20fc04ec8993382cab2f9d"><td class="memItemLeft" align="right" valign="top"><a id="af7c3b4a35d20fc04ec8993382cab2f9d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Done</b> (Action onResolved)</td></tr>
+<tr class="memitem:af7c3b4a35d20fc04ec8993382cab2f9d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_promise.html#af7c3b4a35d20fc04ec8993382cab2f9d">Done</a> (Action onResolved)</td></tr>
+<tr class="memdesc:af7c3b4a35d20fc04ec8993382cab2f9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put this at the end of a promise chain.  <a href="#af7c3b4a35d20fc04ec8993382cab2f9d">More...</a><br /></td></tr>
 <tr class="separator:af7c3b4a35d20fc04ec8993382cab2f9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab23e719645410669c861ccd8dd16190e"><td class="memItemLeft" align="right" valign="top"><a id="ab23e719645410669c861ccd8dd16190e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Done</b> ()</td></tr>
+<tr class="memitem:ab23e719645410669c861ccd8dd16190e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_promise.html#ab23e719645410669c861ccd8dd16190e">Done</a> ()</td></tr>
+<tr class="memdesc:ab23e719645410669c861ccd8dd16190e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put this at the end of a promise chain. It ensures that unhandled exceptions can be delivered properly.  <a href="#ab23e719645410669c861ccd8dd16190e">More...</a><br /></td></tr>
 <tr class="separator:ab23e719645410669c861ccd8dd16190e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18a73f07c5ade368222654e531c29c11"><td class="memItemLeft" align="right" valign="top"><a id="a18a73f07c5ade368222654e531c29c11"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Reject</b> (Exception ex)</td></tr>
+<tr class="memitem:a18a73f07c5ade368222654e531c29c11"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_promise.html#a18a73f07c5ade368222654e531c29c11">Reject</a> (Exception ex)</td></tr>
+<tr class="memdesc:a18a73f07c5ade368222654e531c29c11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reject this promise (indicate that the process failed for some reason).  <a href="#a18a73f07c5ade368222654e531c29c11">More...</a><br /></td></tr>
 <tr class="separator:a18a73f07c5ade368222654e531c29c11"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f775539cad0c846707c646d5fba94d5"><td class="memItemLeft" align="right" valign="top"><a id="a5f775539cad0c846707c646d5fba94d5"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Resolve</b> ()</td></tr>
+<tr class="memitem:a5f775539cad0c846707c646d5fba94d5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_promise.html#a5f775539cad0c846707c646d5fba94d5">Resolve</a> ()</td></tr>
+<tr class="memdesc:a5f775539cad0c846707c646d5fba94d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resolves the promise, i.e. notifies a successful result of the async operation.  <a href="#a5f775539cad0c846707c646d5fba94d5">More...</a><br /></td></tr>
 <tr class="separator:a5f775539cad0c846707c646d5fba94d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4635f04901cd08d6ce20fcad495b557a"><td class="memItemLeft" align="right" valign="top"><a id="a4635f04901cd08d6ce20fcad495b557a"></a>
-<a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; ConvertedT &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Then&lt; ConvertedT &gt;</b> (Func&lt; <a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; ConvertedT &gt;&gt; onResolved)</td></tr>
+<tr class="memitem:a4635f04901cd08d6ce20fcad495b557a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; ConvertedT &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_promise.html#a4635f04901cd08d6ce20fcad495b557a">Then&lt; ConvertedT &gt;</a> (Func&lt; <a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; ConvertedT &gt;&gt; onResolved)</td></tr>
+<tr class="memdesc:a4635f04901cd08d6ce20fcad495b557a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a resolved callback and a rejected callback. The resolved callback chains a value promise (optionally converting to a different value type).  <a href="#a4635f04901cd08d6ce20fcad495b557a">More...</a><br /></td></tr>
 <tr class="separator:a4635f04901cd08d6ce20fcad495b557a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d024d4e5a274fd2f92bc738308d507c"><td class="memItemLeft" align="right" valign="top"><a id="a0d024d4e5a274fd2f92bc738308d507c"></a>
-<a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Then</b> (Action onResolved)</td></tr>
+<tr class="memitem:a0d024d4e5a274fd2f92bc738308d507c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_promise.html#a0d024d4e5a274fd2f92bc738308d507c">Then</a> (Action onResolved)</td></tr>
+<tr class="memdesc:a0d024d4e5a274fd2f92bc738308d507c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a block of code to be executed when the promise returns a successful result.  <a href="#a0d024d4e5a274fd2f92bc738308d507c">More...</a><br /></td></tr>
 <tr class="separator:a0d024d4e5a274fd2f92bc738308d507c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad234bf749e720575f7258c5fd5883db8"><td class="memItemLeft" align="right" valign="top"><a id="ad234bf749e720575f7258c5fd5883db8"></a>
-<a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Then</b> (Action onResolved, Action&lt; Exception &gt; onRejected)</td></tr>
+<tr class="memitem:ad234bf749e720575f7258c5fd5883db8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_promise.html#ad234bf749e720575f7258c5fd5883db8">Then</a> (Action onResolved, Action&lt; Exception &gt; onRejected)</td></tr>
+<tr class="memdesc:ad234bf749e720575f7258c5fd5883db8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a resolved callback and a rejected callback. The resolved callback chains a non-value promise.  <a href="#ad234bf749e720575f7258c5fd5883db8">More...</a><br /></td></tr>
 <tr class="separator:ad234bf749e720575f7258c5fd5883db8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3323fdf64a3d5fdceb8032909a639afe"><td class="memItemLeft" align="right" valign="top"><a id="a3323fdf64a3d5fdceb8032909a639afe"></a>
-<a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Then</b> (Func&lt; <a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> &gt; onResolved)</td></tr>
+<tr class="memitem:a3323fdf64a3d5fdceb8032909a639afe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_promise.html#a3323fdf64a3d5fdceb8032909a639afe">Then</a> (Func&lt; <a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> &gt; onResolved)</td></tr>
+<tr class="memdesc:a3323fdf64a3d5fdceb8032909a639afe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a block of code to be executed when the promise returns a successful result.  <a href="#a3323fdf64a3d5fdceb8032909a639afe">More...</a><br /></td></tr>
 <tr class="separator:a3323fdf64a3d5fdceb8032909a639afe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30c126531748bca8253c782a39a1fe0f"><td class="memItemLeft" align="right" valign="top"><a id="a30c126531748bca8253c782a39a1fe0f"></a>
-<a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Then</b> (Func&lt; <a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> &gt; onResolved, Action&lt; Exception &gt; onRejected)</td></tr>
+<tr class="memitem:a30c126531748bca8253c782a39a1fe0f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_promise.html#a30c126531748bca8253c782a39a1fe0f">Then</a> (Func&lt; <a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> &gt; onResolved, Action&lt; Exception &gt; onRejected)</td></tr>
+<tr class="memdesc:a30c126531748bca8253c782a39a1fe0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a resolved callback and a rejected callback. The resolved callback chains a non-value promise.  <a href="#a30c126531748bca8253c782a39a1fe0f">More...</a><br /></td></tr>
 <tr class="separator:a30c126531748bca8253c782a39a1fe0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af1fdc84b0a4f8a8f0208d155cbea077c"><td class="memItemLeft" align="right" valign="top"><a id="af1fdc84b0a4f8a8f0208d155cbea077c"></a>
-<a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; ConvertedT &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Then&lt; ConvertedT &gt;</b> (Func&lt; <a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; ConvertedT &gt;&gt; onResolved, Action&lt; Exception &gt; onRejected)</td></tr>
+<tr class="memitem:af1fdc84b0a4f8a8f0208d155cbea077c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; ConvertedT &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_promise.html#af1fdc84b0a4f8a8f0208d155cbea077c">Then&lt; ConvertedT &gt;</a> (Func&lt; <a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; ConvertedT &gt;&gt; onResolved, Action&lt; Exception &gt; onRejected)</td></tr>
+<tr class="memdesc:af1fdc84b0a4f8a8f0208d155cbea077c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a resolved and rejected callback. Allows for chaining (i.e. return another promise, potentially of another type, indicating an operation to be waited for). Example:  <a href="#af1fdc84b0a4f8a8f0208d155cbea077c">More...</a><br /></td></tr>
 <tr class="separator:af1fdc84b0a4f8a8f0208d155cbea077c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1e4a9569639a0245d559b17be5d190e"><td class="memItemLeft" align="right" valign="top"><a id="ad1e4a9569639a0245d559b17be5d190e"></a>
-override string&#160;</td><td class="memItemRight" valign="bottom"><b>ToString</b> ()</td></tr>
+<tr class="memitem:ad1e4a9569639a0245d559b17be5d190e"><td class="memItemLeft" align="right" valign="top">override string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_promise.html#ad1e4a9569639a0245d559b17be5d190e">ToString</a> ()</td></tr>
+<tr class="memdesc:ad1e4a9569639a0245d559b17be5d190e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets some <a class="el" href="class_cotc_sdk_1_1_promise.html" title="Promise of future result, which may fail or succeed. Returned as a result of any asnychronous operati...">Promise</a>'s stats as a human readable string, like its state and its resolved/rejected callbacks counts.  <a href="#ad1e4a9569639a0245d559b17be5d190e">More...</a><br /></td></tr>
 <tr class="separator:ad1e4a9569639a0245d559b17be5d190e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
@@ -176,8 +176,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a929ff59c3bce60117526b8f0ca1dae49"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; PromisedT &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_promise.html#a929ff59c3bce60117526b8f0ca1dae49">Rejected</a> (Exception ex)</td></tr>
 <tr class="memdesc:a929ff59c3bce60117526b8f0ca1dae49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shorthand to create a promise that is already rejected.  <a href="#a929ff59c3bce60117526b8f0ca1dae49">More...</a><br /></td></tr>
 <tr class="separator:a929ff59c3bce60117526b8f0ca1dae49"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1afa25bca4afa6f9820e371d3900cf8e"><td class="memItemLeft" align="right" valign="top"><a id="a1afa25bca4afa6f9820e371d3900cf8e"></a>
-static <a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Rejected</b> (Exception ex)</td></tr>
+<tr class="memitem:a1afa25bca4afa6f9820e371d3900cf8e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_promise.html#a1afa25bca4afa6f9820e371d3900cf8e">Rejected</a> (Exception ex)</td></tr>
+<tr class="memdesc:a1afa25bca4afa6f9820e371d3900cf8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shorthand to create a promise that is already rejected.  <a href="#a1afa25bca4afa6f9820e371d3900cf8e">More...</a><br /></td></tr>
 <tr class="separator:a1afa25bca4afa6f9820e371d3900cf8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
@@ -213,7 +213,7 @@ Static Public Attributes</h2></td></tr>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a183215f1caffafaad82ca3a3aa217a0c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a183215f1caffafaad82ca3a3aa217a0c">&#9670;&nbsp;</a></span>Catch()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a183215f1caffafaad82ca3a3aa217a0c">&#9670;&nbsp;</a></span>Catch() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -239,8 +239,35 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a93fa3a48e68cf99dfa5244000bc7e6c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93fa3a48e68cf99dfa5244000bc7e6c8">&#9670;&nbsp;</a></span>Catch() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> <a class="el" href="class_cotc_sdk_1_1_promise.html">CotcSdk.Promise</a>&lt; PromisedT &gt;.Catch </td>
+          <td>(</td>
+          <td class="paramtype">Action&lt; Exception &gt;&#160;</td>
+          <td class="paramname"><em>onRejected</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Catches a failure at that point in the chain. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">onRejected</td><td>Block handling the exception.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Another promise which is rejected under any circumstances: either for the same reason as this one (if the promise is caught further in the chain and this block executes well) or with another exception (if the onRejected block throws an exception). As such, it is highly recommended to provide a .<a class="el" href="class_cotc_sdk_1_1_promise.html#ab23e719645410669c861ccd8dd16190e" title="Put this at the end of a promise chain. It ensures that unhandled exceptions can be delivered properl...">Done()</a> block after your Catch block, so that any exception in the catch body can be propagated to the unhandled exception handler.</dd></dl>
+
+</div>
+</div>
 <a id="a0060e4253c0b5b54369b67bd0e26d9cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0060e4253c0b5b54369b67bd0e26d9cf">&#9670;&nbsp;</a></span>Done() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0060e4253c0b5b54369b67bd0e26d9cf">&#9670;&nbsp;</a></span>Done() <span class="overload">[1/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -276,8 +303,45 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="af770348d893890f202ce870a6217a642"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af770348d893890f202ce870a6217a642">&#9670;&nbsp;</a></span>Done() <span class="overload">[2/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_cotc_sdk_1_1_promise.html">CotcSdk.Promise</a>&lt; PromisedT &gt;.<a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> </td>
+          <td>(</td>
+          <td class="paramtype">Action&#160;</td>
+          <td class="paramname"><em>onResolved</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Action&lt; Exception &gt;&#160;</td>
+          <td class="paramname"><em>onRejected</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Put this at the end of a promise chain. It ensures that unhandled exceptions can be delivered properly. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">onResolved</td><td>Execute upon success of all the chain steps.</td></tr>
+    <tr><td class="paramname">onRejected</td><td>Execute upon rejection of the promise chain (any failure within the chain).</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a7360680b38f634d811f46d29488a73f7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7360680b38f634d811f46d29488a73f7">&#9670;&nbsp;</a></span>Done() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7360680b38f634d811f46d29488a73f7">&#9670;&nbsp;</a></span>Done() <span class="overload">[3/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -303,7 +367,52 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <a id="ab23e719645410669c861ccd8dd16190e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab23e719645410669c861ccd8dd16190e">&#9670;&nbsp;</a></span>Done() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab23e719645410669c861ccd8dd16190e">&#9670;&nbsp;</a></span>Done() <span class="overload">[4/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_cotc_sdk_1_1_promise.html">CotcSdk.Promise</a>&lt; PromisedT &gt;.<a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Put this at the end of a promise chain. It ensures that unhandled exceptions can be delivered properly. </p>
+
+</div>
+</div>
+<a id="af7c3b4a35d20fc04ec8993382cab2f9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7c3b4a35d20fc04ec8993382cab2f9d">&#9670;&nbsp;</a></span>Done() <span class="overload">[5/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_cotc_sdk_1_1_promise.html">CotcSdk.Promise</a>&lt; PromisedT &gt;.<a class="el" href="class_cotc_sdk_1_1_done.html">Done</a> </td>
+          <td>(</td>
+          <td class="paramtype">Action&#160;</td>
+          <td class="paramname"><em>onResolved</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Put this at the end of a promise chain. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">onResolved</td><td>Execute upon success (as is, this is nearly equivalent to providing a simple Then block, except that you can not do further chain the promise. Therefore, it ensures that an exception not handled at that point will never be and allows unhandled exceptions to be delivered properly.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab23e719645410669c861ccd8dd16190e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab23e719645410669c861ccd8dd16190e">&#9670;&nbsp;</a></span>Done() <span class="overload">[6/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -322,7 +431,33 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <a id="a18a73f07c5ade368222654e531c29c11"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a18a73f07c5ade368222654e531c29c11">&#9670;&nbsp;</a></span>Reject()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a18a73f07c5ade368222654e531c29c11">&#9670;&nbsp;</a></span>Reject() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_cotc_sdk_1_1_promise.html">CotcSdk.Promise</a>&lt; PromisedT &gt;.Reject </td>
+          <td>(</td>
+          <td class="paramtype">Exception&#160;</td>
+          <td class="paramname"><em>ex</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reject this promise (indicate that the process failed for some reason). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ex</td><td>Exception to return as the failure result.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a18a73f07c5ade368222654e531c29c11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18a73f07c5ade368222654e531c29c11">&#9670;&nbsp;</a></span>Reject() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -348,7 +483,7 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <a id="a929ff59c3bce60117526b8f0ca1dae49"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a929ff59c3bce60117526b8f0ca1dae49">&#9670;&nbsp;</a></span>Rejected()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a929ff59c3bce60117526b8f0ca1dae49">&#9670;&nbsp;</a></span>Rejected() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -382,8 +517,43 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a1afa25bca4afa6f9820e371d3900cf8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1afa25bca4afa6f9820e371d3900cf8e">&#9670;&nbsp;</a></span>Rejected() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> <a class="el" href="class_cotc_sdk_1_1_promise.html">CotcSdk.Promise</a>&lt; PromisedT &gt;.Rejected </td>
+          <td>(</td>
+          <td class="paramtype">Exception&#160;</td>
+          <td class="paramname"><em>ex</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Shorthand to create a promise that is already rejected. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ex</td><td>Exception to reject the promise with.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A promise that is rejected right away.</dd></dl>
+
+</div>
+</div>
 <a id="a125c4059c2d36c2cb410886f3c8bc713"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a125c4059c2d36c2cb410886f3c8bc713">&#9670;&nbsp;</a></span>Resolve()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a125c4059c2d36c2cb410886f3c8bc713">&#9670;&nbsp;</a></span>Resolve() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -408,8 +578,27 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a5f775539cad0c846707c646d5fba94d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f775539cad0c846707c646d5fba94d5">&#9670;&nbsp;</a></span>Resolve() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_cotc_sdk_1_1_promise.html">CotcSdk.Promise</a>&lt; PromisedT &gt;.Resolve </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resolves the promise, i.e. notifies a successful result of the async operation. </p>
+
+</div>
+</div>
 <a id="ae2f094cd9b4f856ef48492a103eefa75"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae2f094cd9b4f856ef48492a103eefa75">&#9670;&nbsp;</a></span>Then() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2f094cd9b4f856ef48492a103eefa75">&#9670;&nbsp;</a></span>Then() <span class="overload">[1/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -435,8 +624,35 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a0d024d4e5a274fd2f92bc738308d507c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d024d4e5a274fd2f92bc738308d507c">&#9670;&nbsp;</a></span>Then() <span class="overload">[2/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> <a class="el" href="class_cotc_sdk_1_1_promise.html">CotcSdk.Promise</a>&lt; PromisedT &gt;.Then </td>
+          <td>(</td>
+          <td class="paramtype">Action&#160;</td>
+          <td class="paramname"><em>onResolved</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Registers a block of code to be executed when the promise returns a successful result. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">onResolved</td><td>Executed upon successful result.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A new promise to be used for chaining (you can Catch an exception that happened in the block for instance.</dd></dl>
+
+</div>
+</div>
 <a id="aae2a3d365a8ec68b069857bbe40a89e7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae2a3d365a8ec68b069857bbe40a89e7">&#9670;&nbsp;</a></span>Then() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aae2a3d365a8ec68b069857bbe40a89e7">&#9670;&nbsp;</a></span>Then() <span class="overload">[3/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -473,8 +689,111 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="ad234bf749e720575f7258c5fd5883db8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad234bf749e720575f7258c5fd5883db8">&#9670;&nbsp;</a></span>Then() <span class="overload">[4/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> <a class="el" href="class_cotc_sdk_1_1_promise.html">CotcSdk.Promise</a>&lt; PromisedT &gt;.Then </td>
+          <td>(</td>
+          <td class="paramtype">Action&#160;</td>
+          <td class="paramname"><em>onResolved</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Action&lt; Exception &gt;&#160;</td>
+          <td class="paramname"><em>onRejected</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add a resolved callback and a rejected callback. The resolved callback chains a non-value promise. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">onResolved</td><td>Executed upon successful result.</td></tr>
+    <tr><td class="paramname">onRejected</td><td>Executed upon failure (promise rejected).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A promise that can be further chained.</dd></dl>
+
+</div>
+</div>
+<a id="a3323fdf64a3d5fdceb8032909a639afe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3323fdf64a3d5fdceb8032909a639afe">&#9670;&nbsp;</a></span>Then() <span class="overload">[5/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> <a class="el" href="class_cotc_sdk_1_1_promise.html">CotcSdk.Promise</a>&lt; PromisedT &gt;.Then </td>
+          <td>(</td>
+          <td class="paramtype">Func&lt; <a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; PromisedT &gt; &gt;&#160;</td>
+          <td class="paramname"><em>onResolved</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Registers a block of code to be executed when the promise returns a successful result. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">onResolved</td><td>Executed upon successful result.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A new promise to be used for chaining (you can Catch an exception that happened in the block for instance.</dd></dl>
+
+</div>
+</div>
+<a id="a30c126531748bca8253c782a39a1fe0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30c126531748bca8253c782a39a1fe0f">&#9670;&nbsp;</a></span>Then() <span class="overload">[6/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a> <a class="el" href="class_cotc_sdk_1_1_promise.html">CotcSdk.Promise</a>&lt; PromisedT &gt;.Then </td>
+          <td>(</td>
+          <td class="paramtype">Func&lt; <a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; PromisedT &gt; &gt;&#160;</td>
+          <td class="paramname"><em>onResolved</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Action&lt; Exception &gt;&#160;</td>
+          <td class="paramname"><em>onRejected</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add a resolved callback and a rejected callback. The resolved callback chains a non-value promise. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">onResolved</td><td>Executed upon successful result.</td></tr>
+    <tr><td class="paramname">onRejected</td><td>Executed upon failure (promise rejected).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A promise that can be further chained.</dd></dl>
+
+</div>
+</div>
 <a id="a3666b644c7bd961d905eb13d9ec8a248"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3666b644c7bd961d905eb13d9ec8a248">&#9670;&nbsp;</a></span>Then&lt; ConvertedT &gt;() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3666b644c7bd961d905eb13d9ec8a248">&#9670;&nbsp;</a></span>Then&lt; ConvertedT &gt;() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -506,8 +825,41 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a4635f04901cd08d6ce20fcad495b557a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4635f04901cd08d6ce20fcad495b557a">&#9670;&nbsp;</a></span>Then&lt; ConvertedT &gt;() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt;ConvertedT&gt; <a class="el" href="class_cotc_sdk_1_1_promise.html">CotcSdk.Promise</a>&lt; PromisedT &gt;.<a class="el" href="class_cotc_sdk_1_1_promise.html#ae2f094cd9b4f856ef48492a103eefa75">Then</a>&lt; ConvertedT &gt; </td>
+          <td>(</td>
+          <td class="paramtype">Func&lt; <a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; ConvertedT &gt;&gt;&#160;</td>
+          <td class="paramname"><em>onResolved</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add a resolved callback and a rejected callback. The resolved callback chains a value promise (optionally converting to a different value type). </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">ConvertedT</td><td>Type of the expected result (it should be guessed automatically).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">onResolved</td><td>Executed upon successful result.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A new promise from another type.</dd></dl>
+
+</div>
+</div>
 <a id="ae2489fd0e0de81f00fb6515de38eeebb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae2489fd0e0de81f00fb6515de38eeebb">&#9670;&nbsp;</a></span>Then&lt; ConvertedT &gt;() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2489fd0e0de81f00fb6515de38eeebb">&#9670;&nbsp;</a></span>Then&lt; ConvertedT &gt;() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -550,6 +902,90 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="af1fdc84b0a4f8a8f0208d155cbea077c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1fdc84b0a4f8a8f0208d155cbea077c">&#9670;&nbsp;</a></span>Then&lt; ConvertedT &gt;() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt;ConvertedT&gt; <a class="el" href="class_cotc_sdk_1_1_promise.html">CotcSdk.Promise</a>&lt; PromisedT &gt;.<a class="el" href="class_cotc_sdk_1_1_promise.html#ae2f094cd9b4f856ef48492a103eefa75">Then</a>&lt; ConvertedT &gt; </td>
+          <td>(</td>
+          <td class="paramtype">Func&lt; <a class="el" href="class_cotc_sdk_1_1_promise.html">Promise</a>&lt; ConvertedT &gt;&gt;&#160;</td>
+          <td class="paramname"><em>onResolved</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Action&lt; Exception &gt;&#160;</td>
+          <td class="paramname"><em>onRejected</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds a resolved and rejected callback. Allows for chaining (i.e. return another promise, potentially of another type, indicating an operation to be waited for). Example: </p>
+<div class="fragment"><div class="line">Promise&lt;int&gt; longIntOperation();</div><div class="line">Promise&lt;bool&gt; longBoolOperation();</div><div class="line">longIntOperation()</div><div class="line">.Then((<span class="keywordtype">int</span> result) =&gt; {</div><div class="line">    Debug.Log(<span class="stringliteral">&quot;Result of longIntOperation: &quot;</span> + result<span class="stringliteral">&quot;);</span></div><div class="line"><span class="stringliteral">    return longBoolOperation();</span></div><div class="line"><span class="stringliteral">})</span></div><div class="line"><span class="stringliteral">.Then((bool result) =&gt; {</span></div><div class="line"><span class="stringliteral">    Debug.Log(&quot;</span>Result of longBoolOperation: <span class="stringliteral">&quot; + result&quot;</span>);</div><div class="line">})</div><div class="line">.<a class="code" href="class_cotc_sdk_1_1_promise.html#a183215f1caffafaad82ca3a3aa217a0c">Catch</a>((Exception ex) =&gt; {</div><div class="line">    Debug.LogError(<span class="stringliteral">&quot;Any of the two operations has failed: &quot;</span> + ex.ToString());</div><div class="line">}).<a class="code" href="class_cotc_sdk_1_1_promise.html#ab23e719645410669c861ccd8dd16190e">Done</a>(); </div></div><!-- fragment --> <dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">ConvertedT</td><td>Type of the returned promise (should be guessed automatically).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">onResolved</td><td>Executed upon successful result.</td></tr>
+    <tr><td class="paramname">onRejected</td><td>Executed upon failure (promise rejected).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A new promise that can be chained as shown in the summary.</dd></dl>
+
+</div>
+</div>
+<a id="ad1e4a9569639a0245d559b17be5d190e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1e4a9569639a0245d559b17be5d190e">&#9670;&nbsp;</a></span>ToString() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">override string <a class="el" href="class_cotc_sdk_1_1_promise.html">CotcSdk.Promise</a>&lt; PromisedT &gt;.ToString </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets some <a class="el" href="class_cotc_sdk_1_1_promise.html" title="Promise of future result, which may fail or succeed. Returned as a result of any asnychronous operati...">Promise</a>'s stats as a human readable string, like its state and its resolved/rejected callbacks counts. </p>
+<dl class="section return"><dt>Returns</dt><dd>Some <a class="el" href="class_cotc_sdk_1_1_promise.html" title="Promise of future result, which may fail or succeed. Returned as a result of any asnychronous operati...">Promise</a>'s stats as a human readable string.</dd></dl>
+
+</div>
+</div>
+<a id="ad1e4a9569639a0245d559b17be5d190e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1e4a9569639a0245d559b17be5d190e">&#9670;&nbsp;</a></span>ToString() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">override string <a class="el" href="class_cotc_sdk_1_1_promise.html">CotcSdk.Promise</a>&lt; PromisedT &gt;.ToString </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets some <a class="el" href="class_cotc_sdk_1_1_promise.html" title="Promise of future result, which may fail or succeed. Returned as a result of any asnychronous operati...">Promise</a>'s stats as a human readable string, like its state and its resolved/rejected callbacks counts. </p>
+<dl class="section return"><dt>Returns</dt><dd>Some <a class="el" href="class_cotc_sdk_1_1_promise.html" title="Promise of future result, which may fail or succeed. Returned as a result of any asnychronous operati...">Promise</a>'s stats as a human readable string.</dd></dl>
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
 <a id="a15bb681307b9797e26fa4d1ab286223d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a15bb681307b9797e26fa4d1ab286223d">&#9670;&nbsp;</a></span>Debug_OutputAllExceptions</h2>
@@ -578,7 +1014,7 @@ Static Public Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Mar 11 2019 15:44:23 for CotC C# SDK for Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Mar 12 2019 11:47:23 for CotC C# SDK for Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.15
 </small></address>

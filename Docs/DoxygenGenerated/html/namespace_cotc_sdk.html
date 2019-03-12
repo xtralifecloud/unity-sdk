@@ -124,6 +124,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Arguments of the EventLoopArgs.ReceivedEvent event. You can use <code>args.Message.ToJson()</code> to obtain more information.  <a href="class_cotc_sdk_1_1_event_loop_args.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_exception_event_args.html">ExceptionEventArgs</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">An event arguments class holding an exception. Used with unhandled exceptions.  <a href="class_cotc_sdk_1_1_exception_event_args.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_friend_status_change_event.html">FriendStatusChangeEvent</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event triggered when someone adds this gamer as a friend or changes his friendship status.  <a href="class_cotc_sdk_1_1_friend_status_change_event.html#details">More...</a><br /></td></tr>
@@ -265,8 +266,10 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Promise of future result, which may fail or succeed. Returned as a result of any asnychronous operation.  <a href="class_cotc_sdk_1_1_promise.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><b>PromiseExtensions</b></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_cotc_sdk_1_1_promise.html" title="Promise of future result, which may fail or succeed. Returned as a result of any asnychronous operati...">Promise</a> class extensions. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_promise_handler.html">PromiseHandler</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds two callback delegates to call in case of resolved (success) or rejected (failure) <a class="el" href="class_cotc_sdk_1_1_promise.html" title="Promise of future result, which may fail or succeed. Returned as a result of any asnychronous operati...">Promise</a>. Should only be used for internal SDK conveniency.  <a href="class_cotc_sdk_1_1_promise_handler.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_properties_object.html">PropertiesObject</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines an object that can be queried for additional properties using indexers. The structure of the object remains read only though.  <a href="class_cotc_sdk_1_1_properties_object.html#details">More...</a><br /></td></tr>
@@ -373,10 +376,11 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ga81559f66b6278243aa82a8cd14d79e80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of store in which products are purchased.  <a href="group__model__classes.html#ga81559f66b6278243aa82a8cd14d79e80">More...</a><br /></td></tr>
 <tr class="separator:ga81559f66b6278243aa82a8cd14d79e80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6161cd594260c38f17a66ef1801af9fb"><td class="memItemLeft" align="right" valign="top"><a id="a6161cd594260c38f17a66ef1801af9fb"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>PromiseState</b> { <b>Pending</b>, 
+<tr class="memitem:a6161cd594260c38f17a66ef1801af9fb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_cotc_sdk.html#a6161cd594260c38f17a66ef1801af9fb">PromiseState</a> { <b>Pending</b>, 
 <b>Fulfilled</b>, 
 <b>Rejected</b>
  }</td></tr>
+<tr class="memdesc:a6161cd594260c38f17a66ef1801af9fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current state of the Promise. Should only be used for internal purposes.  <a href="namespace_cotc_sdk.html#a6161cd594260c38f17a66ef1801af9fb">More...</a><br /></td></tr>
 <tr class="separator:a6161cd594260c38f17a66ef1801af9fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43da1ffda53fc493e74b8e0e0b7f4366"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_cotc_sdk.html#a43da1ffda53fc493e74b8e0e0b7f4366">LogLevel</a> { <b>Verbose</b>, 
 <b>Info</b>, 
@@ -444,6 +448,30 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a6161cd594260c38f17a66ef1801af9fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6161cd594260c38f17a66ef1801af9fb">&#9670;&nbsp;</a></span>PromiseState</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespace_cotc_sdk.html#a6161cd594260c38f17a66ef1801af9fb">CotcSdk.PromiseState</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Current state of the <a class="el" href="class_cotc_sdk_1_1_promise.html" title="Promise of future result, which may fail or succeed. Returned as a result of any asnychronous operati...">Promise</a>. Should only be used for internal purposes. </p>
+
+</div>
+</div>
 <a id="a0b33fb730620778c7b2ebfb967cf33ab"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0b33fb730620778c7b2ebfb967cf33ab">&#9670;&nbsp;</a></span>ScoreOrder</h2>
 
@@ -471,7 +499,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Mar 11 2019 15:44:23 for CotC C# SDK for Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Mar 12 2019 11:47:23 for CotC C# SDK for Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.15
 </small></address>

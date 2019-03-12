@@ -1,7 +1,8 @@
 var searchData=
 [
   ['cachedmember',['CachedMember',['../struct_cotc_sdk_1_1_cached_member.html',1,'CotcSdk']]],
-  ['catch',['Catch',['../class_cotc_sdk_1_1_promise.html#a183215f1caffafaad82ca3a3aa217a0c',1,'CotcSdk::Promise']]],
+  ['callback',['Callback',['../class_cotc_sdk_1_1_promise_handler.html#a4f0a7f3496b0396603b72af4543ffd37',1,'CotcSdk.PromiseHandler.Callback()'],['../class_cotc_sdk_1_1_promise_handler.html#a503c7b3aa0393359c8196afb1f7ef371',1,'CotcSdk.PromiseHandler.Callback()']]],
+  ['catch',['Catch',['../class_cotc_sdk_1_1_promise.html#a183215f1caffafaad82ca3a3aa217a0c',1,'CotcSdk.Promise.Catch(Action&lt; Exception &gt; onRejected)'],['../class_cotc_sdk_1_1_promise.html#a93fa3a48e68cf99dfa5244000bc7e6c8',1,'CotcSdk.Promise.Catch(Action&lt; Exception &gt; onRejected)']]],
   ['changeemailaddress',['ChangeEmailAddress',['../class_cotc_sdk_1_1_gamer_account_methods.html#ad89562c85797d3ee5c7abd351c8c9c4e',1,'CotcSdk::GamerAccountMethods']]],
   ['changepassword',['ChangePassword',['../class_cotc_sdk_1_1_gamer_account_methods.html#aeee1a02a8c8bb14d948dee4a067efa78',1,'CotcSdk::GamerAccountMethods']]],
   ['changerelationshipstatus',['ChangeRelationshipStatus',['../class_cotc_sdk_1_1_gamer_community.html#ab97f2d879fd792f7db14e6003fa4cb46',1,'CotcSdk::GamerCommunity']]],

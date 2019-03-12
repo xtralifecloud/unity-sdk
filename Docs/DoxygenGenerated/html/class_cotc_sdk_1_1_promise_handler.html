@@ -76,23 +76,81 @@ $(function() {
 <div class="title">CotcSdk.PromiseHandler&lt; T &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
+<a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+<div class="textblock"><p>Holds two callback delegates to call in case of resolved (success) or rejected (failure) <a class="el" href="class_cotc_sdk_1_1_promise.html" title="Promise of future result, which may fail or succeed. Returned as a result of any asnychronous operati...">Promise</a>. Should only be used for internal SDK conveniency. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Callback</td><td>Delegate to call in case of resolved (success) <a class="el" href="class_cotc_sdk_1_1_promise.html" title="Promise of future result, which may fail or succeed. Returned as a result of any asnychronous operati...">Promise</a>.</td></tr>
+    <tr><td class="paramname">OnFailure</td><td>Delegate to call in case of rejected (failure) <a class="el" href="class_cotc_sdk_1_1_promise.html" title="Promise of future result, which may fail or succeed. Returned as a result of any asnychronous operati...">Promise</a>.</td></tr>
+  </table>
+  </dd>
+</dl>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a4f0a7f3496b0396603b72af4543ffd37"><td class="memItemLeft" align="right" valign="top"><a id="a4f0a7f3496b0396603b72af4543ffd37"></a>
-Action&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Callback</b></td></tr>
+<tr class="memitem:a4f0a7f3496b0396603b72af4543ffd37"><td class="memItemLeft" align="right" valign="top">Action&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_promise_handler.html#a4f0a7f3496b0396603b72af4543ffd37">Callback</a></td></tr>
+<tr class="memdesc:a4f0a7f3496b0396603b72af4543ffd37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delegate to call in case of resolved (success) <a class="el" href="class_cotc_sdk_1_1_promise.html" title="Promise of future result, which may fail or succeed. Returned as a result of any asnychronous operati...">Promise</a>. Provides a promised type result when resolved.  <a href="#a4f0a7f3496b0396603b72af4543ffd37">More...</a><br /></td></tr>
 <tr class="separator:a4f0a7f3496b0396603b72af4543ffd37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0714e6d6547986de745ea3d67b830b70"><td class="memItemLeft" align="right" valign="top"><a id="a0714e6d6547986de745ea3d67b830b70"></a>
-Action&lt; Exception &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>OnFailure</b></td></tr>
+<tr class="memitem:a0714e6d6547986de745ea3d67b830b70"><td class="memItemLeft" align="right" valign="top">Action&lt; Exception &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_promise_handler.html#a0714e6d6547986de745ea3d67b830b70">OnFailure</a></td></tr>
+<tr class="memdesc:a0714e6d6547986de745ea3d67b830b70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delegate to call in case of rejected (failure) <a class="el" href="class_cotc_sdk_1_1_promise.html" title="Promise of future result, which may fail or succeed. Returned as a result of any asnychronous operati...">Promise</a>.  <a href="#a0714e6d6547986de745ea3d67b830b70">More...</a><br /></td></tr>
 <tr class="separator:a0714e6d6547986de745ea3d67b830b70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a503c7b3aa0393359c8196afb1f7ef371"><td class="memItemLeft" align="right" valign="top"><a id="a503c7b3aa0393359c8196afb1f7ef371"></a>
-Action&#160;</td><td class="memItemRight" valign="bottom"><b>Callback</b></td></tr>
+<tr class="memitem:a503c7b3aa0393359c8196afb1f7ef371"><td class="memItemLeft" align="right" valign="top">Action&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cotc_sdk_1_1_promise_handler.html#a503c7b3aa0393359c8196afb1f7ef371">Callback</a></td></tr>
+<tr class="memdesc:a503c7b3aa0393359c8196afb1f7ef371"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delegate to call in case of resolved (success) <a class="el" href="class_cotc_sdk_1_1_promise.html" title="Promise of future result, which may fail or succeed. Returned as a result of any asnychronous operati...">Promise</a>.  <a href="#a503c7b3aa0393359c8196afb1f7ef371">More...</a><br /></td></tr>
 <tr class="separator:a503c7b3aa0393359c8196afb1f7ef371"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a4f0a7f3496b0396603b72af4543ffd37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f0a7f3496b0396603b72af4543ffd37">&#9670;&nbsp;</a></span>Callback <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Action&lt;T&gt; <a class="el" href="class_cotc_sdk_1_1_promise_handler.html">CotcSdk.PromiseHandler</a>&lt; T &gt;.Callback</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Delegate to call in case of resolved (success) <a class="el" href="class_cotc_sdk_1_1_promise.html" title="Promise of future result, which may fail or succeed. Returned as a result of any asnychronous operati...">Promise</a>. Provides a promised type result when resolved. </p>
+
+</div>
+</div>
+<a id="a503c7b3aa0393359c8196afb1f7ef371"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a503c7b3aa0393359c8196afb1f7ef371">&#9670;&nbsp;</a></span>Callback <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Action <a class="el" href="class_cotc_sdk_1_1_promise_handler.html">CotcSdk.PromiseHandler</a>&lt; T &gt;.Callback</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Delegate to call in case of resolved (success) <a class="el" href="class_cotc_sdk_1_1_promise.html" title="Promise of future result, which may fail or succeed. Returned as a result of any asnychronous operati...">Promise</a>. </p>
+
+</div>
+</div>
+<a id="a0714e6d6547986de745ea3d67b830b70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0714e6d6547986de745ea3d67b830b70">&#9670;&nbsp;</a></span>OnFailure</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Action&lt; Exception &gt; <a class="el" href="class_cotc_sdk_1_1_promise_handler.html">CotcSdk.PromiseHandler</a>&lt; T &gt;.OnFailure</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Delegate to call in case of rejected (failure) <a class="el" href="class_cotc_sdk_1_1_promise.html" title="Promise of future result, which may fail or succeed. Returned as a result of any asnychronous operati...">Promise</a>. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Mar 11 2019 15:44:23 for CotC C# SDK for Unity by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Mar 12 2019 11:47:23 for CotC C# SDK for Unity by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.15
 </small></address>

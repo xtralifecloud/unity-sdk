@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['indexname',['IndexName',['../class_cotc_sdk_1_1_index_result.html#a0d7fd6a710392a75c01bb3637610734a',1,'CotcSdk::IndexResult']]],
-  ['info',['Info',['../class_cotc_sdk_1_1_score.html#aa70f4f797f25e2f2b182d84920bc5036',1,'CotcSdk::Score']]],
-  ['internalproductid',['InternalProductId',['../class_cotc_sdk_1_1_inapp_purchase_1_1_product_info.html#a1060f70390738e11ed276d9505897bc1',1,'CotcSdk.InappPurchase.ProductInfo.InternalProductId()'],['../class_cotc_sdk_1_1_inapp_purchase_1_1_purchased_product.html#ad20889e33c45f256b3c233007d611495',1,'CotcSdk.InappPurchase.PurchasedProduct.InternalProductId()']]],
-  ['iscreator',['IsCreator',['../class_cotc_sdk_1_1_match.html#a64dc4641f18f8bd13f81588985b92715',1,'CotcSdk::Match']]],
-  ['isempty',['IsEmpty',['../class_cotc_sdk_1_1_bundle.html#ab6385d8e1c44fee39091bfe160ddddae',1,'CotcSdk::Bundle']]]
+  ['hasbeensaved',['HasBeenSaved',['../class_cotc_sdk_1_1_posted_game_score.html#ac1d5770ce463c74267251eee92d14601',1,'CotcSdk::PostedGameScore']]],
+  ['hasfailed',['HasFailed',['../class_cotc_sdk_1_1_http_response.html#a146ed8254737c1c94b9e5ea1418c8df7',1,'CotcSdk::HttpResponse']]],
+  ['hasnext',['HasNext',['../class_cotc_sdk_1_1_paged_list.html#a5ed02660ba9333c56f1a1c7fbe02bad6',1,'CotcSdk::PagedList']]],
+  ['hasprevious',['HasPrevious',['../class_cotc_sdk_1_1_paged_list.html#a2b74fcd4a56fff84de874aa2926f5d57',1,'CotcSdk::PagedList']]],
+  ['hits',['Hits',['../class_cotc_sdk_1_1_index_search_result.html#a161ab3596a6ab85b6b102c9bbde0d52a',1,'CotcSdk::IndexSearchResult']]]
 ];

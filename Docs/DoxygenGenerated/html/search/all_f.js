@@ -22,6 +22,7 @@ var searchData=
   ['promise',['Promise',['../class_cotc_sdk_1_1_promise.html',1,'CotcSdk']]],
   ['promise_3c_20cotcsdk_3a_3acloud_20_3e',['Promise&lt; CotcSdk::Cloud &gt;',['../class_cotc_sdk_1_1_promise.html',1,'CotcSdk']]],
   ['promisehandler',['PromiseHandler',['../class_cotc_sdk_1_1_promise_handler.html',1,'CotcSdk']]],
+  ['promisestate',['PromiseState',['../namespace_cotc_sdk.html#a6161cd594260c38f17a66ef1801af9fb',1,'CotcSdk']]],
   ['properties',['Properties',['../class_cotc_sdk_1_1_gamer.html#a319796e84a363685a6a2f2d88257b2b5',1,'CotcSdk.Gamer.Properties()'],['../class_cotc_sdk_1_1_index_result.html#aad4065a12859eed53a086781fb943641',1,'CotcSdk.IndexResult.Properties()']]],
   ['propertiesobject',['PropertiesObject',['../class_cotc_sdk_1_1_properties_object.html',1,'CotcSdk']]],
   ['purchasedate',['PurchaseDate',['../class_cotc_sdk_1_1_purchase_transaction.html#a7178056bb12733906799bacee2ba92a4',1,'CotcSdk::PurchaseTransaction']]],

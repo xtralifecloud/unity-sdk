@@ -1,10 +1,8 @@
 var searchData=
 [
-  ['scores',['Scores',['../class_cotc_sdk_1_1_gamer.html#a391a65cc816f188c5a677e9cafe30292',1,'CotcSdk::Gamer']]],
-  ['seed',['Seed',['../class_cotc_sdk_1_1_match.html#a43ed2d30d244b1be949ee6b67cebed15',1,'CotcSdk::Match']]],
-  ['shoe',['Shoe',['../class_cotc_sdk_1_1_match.html#a700fa7959b4f0549165c0d7becf4d412',1,'CotcSdk::Match']]],
-  ['status',['Status',['../class_cotc_sdk_1_1_match.html#ab27633f5855ebb551ce28e67d5875a22',1,'CotcSdk.Match.Status()'],['../class_cotc_sdk_1_1_match_list_result.html#a473224a25cfd25e1dc7e93c0af747d16',1,'CotcSdk.MatchListResult.Status()']]],
-  ['store',['Store',['../class_cotc_sdk_1_1_gamer.html#af60aa4b2ec14c77ae0edeefba58a91cb',1,'CotcSdk.Gamer.Store()'],['../class_cotc_sdk_1_1_purchase_transaction.html#aa4745367d4ab9ebb2bd94474df1dc3d4',1,'CotcSdk.PurchaseTransaction.Store()']]],
-  ['storetransactionid',['StoreTransactionId',['../class_cotc_sdk_1_1_purchase_transaction.html#a2c1e30306733e1fe2bcb572803289dfe',1,'CotcSdk::PurchaseTransaction']]],
-  ['storetype',['StoreType',['../class_cotc_sdk_1_1_inapp_purchase_1_1_purchased_product.html#acf1d66bc96515c786e4300902e4dad69',1,'CotcSdk::InappPurchase::PurchasedProduct']]]
+  ['rank',['Rank',['../class_cotc_sdk_1_1_posted_game_score.html#aab7eeba4e96ee246c96b6c831be0bd41',1,'CotcSdk.PostedGameScore.Rank()'],['../class_cotc_sdk_1_1_score.html#aea120196c73e050c4009be334c79c45b',1,'CotcSdk.Score.Rank()']]],
+  ['receipt',['Receipt',['../class_cotc_sdk_1_1_inapp_purchase_1_1_purchased_product.html#af366ccac268e7ecdf7ad5a7ef950f2a1',1,'CotcSdk::InappPurchase::PurchasedProduct']]],
+  ['receivedevent',['ReceivedEvent',['../class_cotc_sdk_1_1_domain_event_loop.html#af7a75c1c843136c1a92b20afc98e5170',1,'CotcSdk::DomainEventLoop']]],
+  ['resultscore',['ResultScore',['../class_cotc_sdk_1_1_index_result.html#a5fe7444a7625e6e010e6a0525f77d1c9',1,'CotcSdk::IndexResult']]],
+  ['root',['Root',['../class_cotc_sdk_1_1_bundle.html#a553eb80667080d8d014cb7c5c95adadd',1,'CotcSdk::Bundle']]]
 ];
