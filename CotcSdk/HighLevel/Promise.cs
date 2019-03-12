@@ -4,6 +4,8 @@ using System.Collections;
 namespace CotcSdk
 {
 	internal class PromiseHandler<T> {
+		/// <summary>Delegate to call in case of resolved (success) Promise.
+		/// Provides a promised type result when resolved.</summary>
 		public Action<T> Callback;
 		public Action<Exception> OnFailure;
 	}
@@ -229,6 +231,9 @@ namespace CotcSdk
 			}
 		}
 
+		/// <summary>Gets some Promise's stats as a human readable string, like its state and its
+		/// resolved/rejected callbacks counts.</summary>
+		/// <returns>Some Promise's stats as a human readable string.</returns>
 		public override string ToString() {
 			return base.ToString() + ", State: " + State.ToString() + ", Res: " + ResolvedHandlers.Count + ", Rej: " + RejectedHandlers.Count;
 		}

@@ -1732,6 +1732,10 @@
             <summary></summary>
             <returns>The total number of items (possibly greater than the page size).</returns>
         </member>
+        <member name="F:CotcSdk.PromiseHandler`1.Callback">
+            <summary>Delegate to call in case of resolved (success) Promise.
+            Provides a promised type result when resolved.</summary>
+        </member>
         <member name="T:CotcSdk.Promise`1">
             @ingroup main_classes
             <summary>
@@ -1806,6 +1810,115 @@
             <returns>A promise that can be further chained.</returns>
         </member>
         <!-- Badly formed XML comment ignored for member "M:CotcSdk.Promise`1.Then``1(System.Func{`0,CotcSdk.Promise{``0}},System.Action{System.Exception})" -->
+        <member name="M:CotcSdk.Promise`1.ToString">
+            <summary>Gets some Promise's stats as a human readable string, like its state and its
+            resolved/rejected callbacks counts.</summary>
+            <returns>Some Promise's stats as a human readable string.</returns>
+        </member>
+        <member name="T:CotcSdk.ExceptionEventArgs">
+            <summary>An event arguments class holding an exception. Used with unhandled exceptions.</summary>
+        </member>
+        <member name="P:CotcSdk.ExceptionEventArgs.Exception">
+            <summary>Gets event arguments' related exception. Used with unhandled exceptions.</summary>
+        </member>
+        <member name="T:CotcSdk.PromiseState">
+            <summary>Current state of the Promise. Should only be used for internal purposes.</summary>
+        </member>
+        <member name="T:CotcSdk.PromiseHandler">
+            <summary>Holds two callback delegates to call in case of resolved (success) or rejected (failure) Promise.
+            Should only be used for internal SDK conveniency.</summary>
+            <param name="Callback">Delegate to call in case of resolved (success) Promise.</param>
+            <param name="OnFailure">Delegate to call in case of rejected (failure) Promise.</param>
+        </member>
+        <member name="F:CotcSdk.PromiseHandler.Callback">
+            <summary>Delegate to call in case of resolved (success) Promise.</summary>
+        </member>
+        <member name="F:CotcSdk.PromiseHandler.OnFailure">
+            <summary>Delegate to call in case of rejected (failure) Promise.</summary>
+        </member>
+        <member name="M:CotcSdk.Promise.Catch(System.Action{System.Exception})">
+            <summary>Catches a failure at that point in the chain.</summary>
+            <param name="onRejected">Block handling the exception.</param>
+            <returns>Another promise which is rejected under any circumstances: either for the same reason as this one (if
+            the promise is caught further in the chain and this block executes well) or with another exception (if the
+            onRejected block throws an exception). As such, it is highly recommended to provide a .Done() block after your
+            Catch block, so that any exception in the catch body can be propagated to the unhandled exception handler.</returns>
+        </member>
+        <member name="M:CotcSdk.Promise.Done(System.Action,System.Action{System.Exception})">
+            <summary>Put this at the end of a promise chain. It ensures that unhandled exceptions can be delivered properly.</summary>
+            <param name="onResolved">Execute upon success of all the chain steps.</param>
+            <param name="onRejected">Execute upon rejection of the promise chain (any failure within the chain).</param>
+        </member>
+        <member name="M:CotcSdk.Promise.Done(System.Action)">
+            <summary>Put this at the end of a promise chain.</summary>
+            <param name="onResolved">Execute upon success (as is, this is nearly equivalent to providing a simple Then block, except
+            that you can not do further chain the promise. Therefore, it ensures that an exception not handled at that point will never
+            be and allows unhandled exceptions to be delivered properly.</param>
+        </member>
+        <member name="M:CotcSdk.Promise.Done">
+            <summary>Put this at the end of a promise chain. It ensures that unhandled exceptions can be delivered properly.</summary>
+        </member>
+        <member name="M:CotcSdk.Promise.Reject(System.Exception)">
+            <summary>Reject this promise (indicate that the process failed for some reason).</summary>
+            <param name="ex">Exception to return as the failure result.</param>
+        </member>
+        <member name="M:CotcSdk.Promise.Rejected(System.Exception)">
+            <summary>Shorthand to create a promise that is already rejected.</summary>
+            <param name="ex">Exception to reject the promise with.</param>
+            <returns>A promise that is rejected right away.</returns>
+        </member>
+        <member name="M:CotcSdk.Promise.Resolve">
+            <summary>Resolves the promise, i.e. notifies a successful result of the async operation.</summary>
+        </member>
+        <member name="M:CotcSdk.Promise.Then``1(System.Func{CotcSdk.Promise{``0}})">
+            <summary>
+            Add a resolved callback and a rejected callback.
+            The resolved callback chains a value promise (optionally converting to a different value type).
+            </summary>
+            <typeparam name="ConvertedT">Type of the expected result (it should be guessed automatically).</typeparam>
+            <param name="onResolved">Executed upon successful result.</param>
+            <returns>A new promise from another type.</returns>
+        </member>
+        <member name="M:CotcSdk.Promise.Then(System.Action)">
+            <summary>
+            Registers a block of code to be executed when the promise returns a successful result.
+            </summary>
+            <param name="onResolved">Executed upon successful result.</param>
+            <returns>A new promise to be used for chaining (you can Catch an exception that happened in the block for
+            instance.</returns>
+        </member>
+        <member name="M:CotcSdk.Promise.Then(System.Action,System.Action{System.Exception})">
+            <summary>
+            Add a resolved callback and a rejected callback.
+            The resolved callback chains a non-value promise.
+            </summary>
+            <param name="onResolved">Executed upon successful result.</param>
+            <param name="onRejected">Executed upon failure (promise rejected).</param>
+            <returns>A promise that can be further chained.</returns>
+        </member>
+        <member name="M:CotcSdk.Promise.Then(System.Func{CotcSdk.Promise})">
+            <summary>
+            Registers a block of code to be executed when the promise returns a successful result.
+            </summary>
+            <param name="onResolved">Executed upon successful result.</param>
+            <returns>A new promise to be used for chaining (you can Catch an exception that happened in the block for
+            instance.</returns>
+        </member>
+        <member name="M:CotcSdk.Promise.Then(System.Func{CotcSdk.Promise},System.Action{System.Exception})">
+            <summary>
+            Add a resolved callback and a rejected callback.
+            The resolved callback chains a non-value promise.
+            </summary>
+            <param name="onResolved">Executed upon successful result.</param>
+            <param name="onRejected">Executed upon failure (promise rejected).</param>
+            <returns>A promise that can be further chained.</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:CotcSdk.Promise.Then``1(System.Func{CotcSdk.Promise{``0}},System.Action{System.Exception})" -->
+        <member name="M:CotcSdk.Promise.ToString">
+            <summary>Gets some Promise's stats as a human readable string, like its state and its
+            resolved/rejected callbacks counts.</summary>
+            <returns>Some Promise's stats as a human readable string.</returns>
+        </member>
         <member name="E:CotcSdk.Promise.UnhandledException">
             <summary>
             Event raised for unhandled errors.
@@ -1817,6 +1930,33 @@
             Set this to true in order to output any exception to the console, even if it is caught by a .Catch block.
             Just a helper, never keep it true in production.
             </summary>
+        </member>
+        <member name="T:CotcSdk.PromiseExtensions">
+            <summary>Promise class extensions.</summary>
+        </member>
+        <member name="M:CotcSdk.PromiseExtensions.ForwardTo``1(CotcSdk.Promise{``0},CotcSdk.Promise{``0})">
+            <summary>Makes Promise's resolving/rejecting result replace another Promise's one.</summary>
+            <param name="otherTask">The other Promise to which to pass this Promise's result.</param>
+        </member>
+        <member name="M:CotcSdk.PromiseExtensions.PostResult``1(CotcSdk.Promise{``0},CotcSdk.ErrorCode,System.String)">
+            <summary>Rejects a promise as a failure.</summary>
+            <param name="code">Internal code of the error which occured.</param>
+            <param name="reason">Error message to describe why the Promise has been rejected.</param>
+        </member>
+        <member name="M:CotcSdk.PromiseExtensions.PostResult``1(CotcSdk.Promise{``0},``0)">
+            <summary>Resolves a promise as a success.</summary>
+            <param name="value">The obtained promised value thanks to its success.</param>
+        </member>
+        <member name="M:CotcSdk.PromiseExtensions.PostResult``1(CotcSdk.Promise{``0},CotcSdk.HttpResponse,System.String)">
+            <summary>Rejects a HTTP promise as a failure.</summary>
+            <param name="response">HttpResponse to get some info about the request.</param>
+            <param name="reason">Error message to describe why the Promise has been rejected.</param>
+        </member>
+        <member name="M:CotcSdk.PromiseExtensions.PostResult``1(CotcSdk.Promise{``0},``0,CotcSdk.Bundle,CotcSdk.HttpResponse)">
+            <summary>Resolves a HTTP promise as a success.</summary>
+            <param name="value">The obtained promised value thanks to its success.</param>
+            <param name="serverData">Additional data Bundle sent by the server.</param>
+            <param name="response">HttpResponse to get some info about the request.</param>
         </member>
         <!-- Badly formed XML comment ignored for member "T:CotcSdk.Bundle" -->
         <member name="T:CotcSdk.Bundle.DataType">
