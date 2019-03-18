@@ -46,6 +46,12 @@ namespace CotcSdk {
             get { return (CommunityInstance ?? (CommunityInstance = new GamerCommunity(this))); }
         }
 
+        /// <summary>Returns an object that allows to manipulate the key/value store (with ACL rights) system.</summary>
+        /// <returns>An object allowing to manipulate key/value store for this user/domain.</returns>
+        public GamerKvStore KvStore {
+            get { return (GamerKvStoreInstance ?? (GamerKvStoreInstance = new GamerKvStore(this))); }
+        }
+
         /// <summary>Returns an object that allows to manipulate the key/value system associated with this user.</summary>
         /// <returns>An object allowing to manipulate key/values for this user/domain.</returns>
         public GamerVfs GamerVfs {
@@ -159,6 +165,7 @@ namespace CotcSdk {
         private GamerAchievements AchievementsInstance;
         private GamerBatches BatchesInstance;
         private GamerCommunity CommunityInstance;
+        private GamerKvStore GamerKvStoreInstance;
         private GamerVfs GamerVfsInstance;
         private GamerGodfather GodfatherInstance;
         private GamerMatches MatchesInstance;
