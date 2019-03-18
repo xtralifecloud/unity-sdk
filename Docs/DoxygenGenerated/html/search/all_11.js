@@ -13,7 +13,7 @@ var searchData=
   ['setbinary',['SetBinary',['../class_cotc_sdk_1_1_gamer_vfs.html#a9d37a901ff114b1047f798e01aa50e96',1,'CotcSdk::GamerVfs']]],
   ['setkey',['SetKey',['../class_cotc_sdk_1_1_gamer_properties.html#a6b7ff42d5d260a9fb002698341e377c9',1,'CotcSdk.GamerProperties.SetKey()'],['../class_cotc_sdk_1_1_gamer_vfs.html#a8fb9b6d983ab7bc45e75fa24e3c4e691',1,'CotcSdk.GamerVfs.SetKey()']]],
   ['setkeybinary',['SetKeyBinary',['../class_cotc_sdk_1_1_gamer_vfs.html#a74c57f5312643854a9e84449bb914eb6',1,'CotcSdk::GamerVfs']]],
-  ['setvalue',['SetValue',['../class_cotc_sdk_1_1_gamer_vfs.html#a9b0ca1cb2cbefa8e4f51cc4590ba64e1',1,'CotcSdk::GamerVfs']]],
+  ['setvalue',['SetValue',['../class_cotc_sdk_1_1_gamer_kv_store.html#a6481ccde415efff5328e513ebd5ab24e',1,'CotcSdk.GamerKvStore.SetValue()'],['../class_cotc_sdk_1_1_gamer_vfs.html#a9b0ca1cb2cbefa8e4f51cc4590ba64e1',1,'CotcSdk.GamerVfs.SetValue()']]],
   ['sharelink',['ShareLink',['../class_cotc_sdk_1_1_facebook_integration_1_1_cotc_facebook_integration.html#af0964f850097c2d6339e723919268fd5',1,'CotcSdk::FacebookIntegration::CotcFacebookIntegration']]],
   ['shoe',['Shoe',['../class_cotc_sdk_1_1_match.html#a700fa7959b4f0549165c0d7becf4d412',1,'CotcSdk::Match']]],
   ['shouldberetried',['ShouldBeRetried',['../class_cotc_sdk_1_1_http_response.html#ae0e3c451053a08366396e0c232634c25',1,'CotcSdk::HttpResponse']]],

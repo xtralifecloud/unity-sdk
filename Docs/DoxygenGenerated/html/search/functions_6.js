@@ -21,5 +21,5 @@ var searchData=
   ['getpurchasehistory',['GetPurchaseHistory',['../class_cotc_sdk_1_1_gamer_store.html#a8eae5da3624f7ac085a6c87150ebea4d',1,'CotcSdk::GamerStore']]],
   ['getrank',['GetRank',['../class_cotc_sdk_1_1_gamer_scores.html#a7d19893377c095acdc953bc1f945617d',1,'CotcSdk::GamerScores']]],
   ['getstring',['GetString',['../class_cotc_sdk_1_1_bundle.html#aa50a9460fee348456dea63c1cff17037',1,'CotcSdk.Bundle.GetString(string key, string defaultValue=null)'],['../class_cotc_sdk_1_1_bundle.html#ae0d900928d83b6bc12cb58f96a443e41',1,'CotcSdk.Bundle.GetString(int index, string defaultValue=null)']]],
-  ['getvalue',['GetValue',['../class_cotc_sdk_1_1_gamer_vfs.html#a21fd4ec035ed14b63f4625f4c506d980',1,'CotcSdk.GamerVfs.GetValue()'],['../class_cotc_sdk_1_1_game_vfs.html#aad422166e73d10a31d4bdee7ecbcb6e7',1,'CotcSdk.GameVfs.GetValue()']]]
+  ['getvalue',['GetValue',['../class_cotc_sdk_1_1_gamer_kv_store.html#a99a171a271b1743c4733d2d1b0588ee1',1,'CotcSdk.GamerKvStore.GetValue()'],['../class_cotc_sdk_1_1_gamer_vfs.html#a21fd4ec035ed14b63f4625f4c506d980',1,'CotcSdk.GamerVfs.GetValue()'],['../class_cotc_sdk_1_1_game_vfs.html#aad422166e73d10a31d4bdee7ecbcb6e7',1,'CotcSdk.GameVfs.GetValue()']]]
 ];

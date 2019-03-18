@@ -9,6 +9,7 @@ var searchData=
   ['gamercommunity',['GamerCommunity',['../class_cotc_sdk_1_1_gamer_community.html',1,'CotcSdk']]],
   ['gamergodfather',['GamerGodfather',['../class_cotc_sdk_1_1_gamer_godfather.html',1,'CotcSdk']]],
   ['gamerinfo',['GamerInfo',['../class_cotc_sdk_1_1_gamer_info.html',1,'CotcSdk']]],
+  ['gamerkvstore',['GamerKvStore',['../class_cotc_sdk_1_1_gamer_kv_store.html',1,'CotcSdk']]],
   ['gamermatches',['GamerMatches',['../class_cotc_sdk_1_1_gamer_matches.html',1,'CotcSdk']]],
   ['gameroutline',['GamerOutline',['../class_cotc_sdk_1_1_gamer_outline.html',1,'CotcSdk']]],
   ['gamerprofile',['GamerProfile',['../class_cotc_sdk_1_1_gamer_profile.html',1,'CotcSdk']]],

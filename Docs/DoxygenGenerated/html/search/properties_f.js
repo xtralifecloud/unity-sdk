@@ -1,8 +1,10 @@
 var searchData=
 [
-  ['this_5bint_20index_5d',['this[int index]',['../class_cotc_sdk_1_1_bundle.html#ad64d3cc533a578de922b25641f278e78',1,'CotcSdk.Bundle.this[int index]()'],['../class_cotc_sdk_1_1_empty_bundle.html#ae07023042cc48acb0c1ba09dd14e66a9',1,'CotcSdk.EmptyBundle.this[int index]()']]],
-  ['this_5bstring_20key_5d',['this[string key]',['../class_cotc_sdk_1_1_properties_object.html#a49c7c96cfe7245e23a766b08a2e89a71',1,'CotcSdk.PropertiesObject.this[string key]()'],['../class_cotc_sdk_1_1_bundle.html#af424562a408936221bd22afc3b77786e',1,'CotcSdk.Bundle.this[string key]()'],['../class_cotc_sdk_1_1_empty_bundle.html#ae0a891eb8e265a789c74090a63a33566',1,'CotcSdk.EmptyBundle.this[string key]()']]],
-  ['token',['Token',['../class_cotc_sdk_1_1_inapp_purchase_1_1_purchased_product.html#afbf1f63ffde2238e95c9428a0eedc717',1,'CotcSdk::InappPurchase::PurchasedProduct']]],
-  ['transactions',['Transactions',['../class_cotc_sdk_1_1_gamer.html#ae85784a05fb7310c963204bc0372e200',1,'CotcSdk::Gamer']]],
-  ['type',['Type',['../class_cotc_sdk_1_1_bundle.html#a1023b7f49b31c5578c36b622b0dc6c0c',1,'CotcSdk::Bundle']]]
+  ['scores',['Scores',['../class_cotc_sdk_1_1_gamer.html#a391a65cc816f188c5a677e9cafe30292',1,'CotcSdk::Gamer']]],
+  ['seed',['Seed',['../class_cotc_sdk_1_1_match.html#a43ed2d30d244b1be949ee6b67cebed15',1,'CotcSdk::Match']]],
+  ['shoe',['Shoe',['../class_cotc_sdk_1_1_match.html#a700fa7959b4f0549165c0d7becf4d412',1,'CotcSdk::Match']]],
+  ['status',['Status',['../class_cotc_sdk_1_1_match.html#ab27633f5855ebb551ce28e67d5875a22',1,'CotcSdk.Match.Status()'],['../class_cotc_sdk_1_1_match_list_result.html#a473224a25cfd25e1dc7e93c0af747d16',1,'CotcSdk.MatchListResult.Status()']]],
+  ['store',['Store',['../class_cotc_sdk_1_1_gamer.html#af60aa4b2ec14c77ae0edeefba58a91cb',1,'CotcSdk.Gamer.Store()'],['../class_cotc_sdk_1_1_purchase_transaction.html#aa4745367d4ab9ebb2bd94474df1dc3d4',1,'CotcSdk.PurchaseTransaction.Store()']]],
+  ['storetransactionid',['StoreTransactionId',['../class_cotc_sdk_1_1_purchase_transaction.html#a2c1e30306733e1fe2bcb572803289dfe',1,'CotcSdk::PurchaseTransaction']]],
+  ['storetype',['StoreType',['../class_cotc_sdk_1_1_inapp_purchase_1_1_purchased_product.html#acf1d66bc96515c786e4300902e4dad69',1,'CotcSdk::InappPurchase::PurchasedProduct']]]
 ];
