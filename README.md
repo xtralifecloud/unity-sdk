@@ -28,17 +28,25 @@ A few steps are involved to build the CotcSdk solution:
 
 1. `Open the solution:` Just open solution's file (`CotcSdk\CotcSdk.sln`) with **Visual Studio**.
 
-2. `Set Unity engine/editor libraries references:` In the **Solution Explorer** and for each of the 3 projects, unfold the project and then the **References** sub-menus, then check cautiously all **UnityEngine** and **UnityEditor** libraries references point to the correct Unity editor's version you want to build for (e.g. `C:\Program Files\Unity 5.6\Editor\Data\Managed\UnityEngine.dll`) and match the following:
+2. `Select the target .NET framework:` For both `CotcSdk` and `CotcSdk-Editor` projects, open project's properties then select the .NET framework you wish to build for.
+
+	> **Unity 5.6:** You'll have to target **.NET Framework 3.5**
+
+	> **Unity 2017:** You should target **.NET Framework 3.5** as **4.6** is experimental
+
+	> **Unity 2018:** You should target **.NET Framework 4.x** as **3.5** is deprecated
+
+3. `Set Unity engine/editor libraries references:` In the **Solution Explorer** and for each of the 3 projects, unfold the project and then the **References** sub-menus, then check cautiously all **UnityEngine** and **UnityEditor** libraries references point to the correct Unity editor's version you want to build for (e.g. `C:\Program Files\Unity 5.6\Editor\Data\Managed\UnityEngine.dll`) and match the following:
 
    - **CotcSdk:** UnityEngine
    - **CotcSdk-Editor:** UnityEngine, UnityEditor
    - **CotcSdk-UniversalWindows:** UnityEngine
 
-3. `Select the target build configuration:` Select the active solution configuration to build that matches the Unity editor's version you want to build for (e.g. `Release-Unit-5`).
+4. `Select the build configuration:` Select the active solution configuration that matches the Unity editor's version you want to build for (e.g. `Release-Unity-5`).
 
    > **Release** configurations are lightweight optimized libraries designed to be used on production, while **Debug** configurations allow for more in-depth debugging.
 
-4. `Build the solution:` Simply hit the `Build > Rebuild Solution` menu to generate the library; Each time you do so, the generated files can be found in the `bin` folders of their respective projects and are automatically copied/replaced in repository's corresponding Unity project `Assets\Plugins`, `Assets\Plugins\Editor`, and `Assets\Plugins\WSA` folders.
+5. `Build the solution:` Simply hit the `Build > Rebuild Solution` menu to generate the library; Each time you do so, the generated files can be found in the `bin` folders of their respective projects and are automatically copied/replaced in repository's corresponding Unity project `Assets\Plugins`, `Assets\Plugins\Editor`, and `Assets\Plugins\WSA` folders.
 
 ### **Additional Unity plugins**
 
