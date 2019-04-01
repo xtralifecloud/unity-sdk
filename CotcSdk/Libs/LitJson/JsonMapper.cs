@@ -170,7 +170,11 @@ namespace LitJson
 
             data.IsArray = type.IsArray;
 
+            #if WINDOWS_UWP
+            if (typeof(IList).IsAssignableFrom(type) && type.GetTypeInfo().IsClass)
+            #else
             if (type.GetInterface ("System.Collections.IList") != null)
+            #endif
                 data.IsList = true;
 
             foreach (PropertyInfo p_info in type.GetProperties ()) {
@@ -202,7 +206,11 @@ namespace LitJson
 
             ObjectMetadata data = new ObjectMetadata ();
 
+            #if WINDOWS_UWP
+            if (typeof(IDictionary).IsAssignableFrom(type) && type.GetTypeInfo().IsClass)
+            #else
             if (type.GetInterface ("System.Collections.IDictionary") != null)
+            #endif
                 data.IsDictionary = true;
 
             data.Properties = new Dictionary<string, PropertyMetadata> ();
@@ -314,15 +322,14 @@ namespace LitJson
             Type value_type = underlying_type ?? inst_type;
 
             if (reader.Token == JsonToken.Null) {
-                #if NETSTANDARD1_5
-                if (inst_type.IsClass() || underlying_type != null) {
-                    return null;
-                }
+                #if WINDOWS_UWP
+                if (inst_type.GetTypeInfo().IsClass || underlying_type != null)
+                #elif NETSTANDARD1_5
+                if (inst_type.IsClass() || underlying_type != null)
                 #else
-                if (inst_type.IsClass || underlying_type != null) {
-                    return null;
-                }
+                if (inst_type.IsClass || underlying_type != null)
                 #endif
+                    return null;
 
                 throw new JsonException (String.Format (
                             "Can't assign null to an instance of type {0}",
@@ -369,13 +376,15 @@ namespace LitJson
                 }
 
                 // Maybe it's an enum
-                #if NETSTANDARD1_5
+                #if WINDOWS_UWP
+                if (value_type.GetTypeInfo().IsEnum)
+                #elif NETSTANDARD1_5
                 if (value_type.IsEnum())
-                    return Enum.ToObject (value_type, reader.Value);
                 #else
                 if (value_type.IsEnum)
-                    return Enum.ToObject (value_type, reader.Value);
                 #endif
+                    return Enum.ToObject (value_type, reader.Value);
+
                 // Try using an implicit conversion operator
                 MethodInfo conv_op = GetConvOp (value_type, json_type);
 
