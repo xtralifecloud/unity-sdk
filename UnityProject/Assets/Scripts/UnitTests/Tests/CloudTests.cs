@@ -365,10 +365,20 @@ public class CloudTests : TestBase {
     [Test("Tests advanced JSON-related functions.")]
 	public IEnumerator ShouldInterpretAdvancedJsonProperly() {
 		string json = "{\"maxLongOverflow\":9223372036854776000, \"minLongOverflow\":-9223372036854776000}";
-		Bundle data = Bundle.FromJson(json);
-		Assert(data["maxLongOverflow"].AsLong() == long.MaxValue, "long max value invalid");
-		Assert(data["minLongOverflow"].AsLong() == long.MinValue, "long min value invalid");
-		CompleteTest();
+		bool triggeredException = false;
+
+		try {
+			Bundle data = Bundle.FromJson(json);
+		}
+		catch (InvalidCastException ex) {
+			triggeredException = true;
+		}
+
+		if (triggeredException)
+			CompleteTest();
+		else
+			FailTest("Shouldn't be able to parse long-type json value exceeding possible max/min long-type variable values");
+		
         return WaitForEndOfTest();
 	}
 
