@@ -167,6 +167,9 @@
     <Compile Include="..\HighLevel\GamerGodfather.cs">
       <Link>HighLevel\GamerGodfather.cs</Link>
     </Compile>
+    <Compile Include="..\HighLevel\GamerKvStore.cs">
+      <Link>HighLevel\GamerKvStore.cs</Link>
+    </Compile>
     <Compile Include="..\HighLevel\GamerMatches.cs">
       <Link>HighLevel\GamerMatches.cs</Link>
     </Compile>
