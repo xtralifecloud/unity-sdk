@@ -166,7 +166,7 @@ namespace CotcSdk {
         {
 	        UrlBuilder url = new UrlBuilder("/v1/gamer/kv").Path(domain);
 	        if (key != null && key != "")
-		        url = url.Path(key);
+		        url = url.Path(key).Path("/acl");
 	        HttpRequest req = Gamer.MakeHttpRequest(url);
 	        req.BodyJson = Bundle.CreateObject("acl", value);
 	        req.Method = "POST";
