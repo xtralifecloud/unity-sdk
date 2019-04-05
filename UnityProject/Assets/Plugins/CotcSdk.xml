@@ -2490,6 +2490,13 @@
             <param name="os">Operating system (should be determined by the native implementation: "ios", "android", "macos", …).</param>
             <param name="token">Push notification token (device specific).</param>
         </member>
+        <member name="M:LitJson.JsonData.ContainsKey(System.String)">
+            <summary>
+            Determines whether the json contains an element that has the specified key.
+            </summary>
+            <param name="key">The key to locate in the json.</param>
+            <returns>true if the json contains an element that has the specified key; otherwise, false.</returns>
+        </member>
         <member name="M:Unity.IO.Compression.InputBuffer.CopyTo(System.Byte[],System.Int32,System.Int32)">
             Copies length bytes from input buffer to output buffer starting
             at output[offset].  You have to make sure, that the buffer is

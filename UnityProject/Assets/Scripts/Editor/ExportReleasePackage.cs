@@ -10,12 +10,12 @@ public class ExportReleasePackage {
 	private static readonly Dictionary<string, string[]> PackagesToBeExported = new Dictionary<string,string[]>()
 	{
 		{
-			#if UNITY_2017
-			"CotcSdk-Unity-2017.Core.unitypackage",
-			#elif UNITY_2018
-			"CotcSdk-Unity-2018.Core.unitypackage",
+			#if UNITY_2018
+			"CotcSdk-Unity2018(.NET4.6).Core.unitypackage",
+			#elif UNITY_2017
+			"CotcSdk-Unity2017(.NET3.5).Core.unitypackage",
 			#else
-			"CotcSdk-Unity-5.Core.unitypackage",
+			"CotcSdk-Unity5(.NET3.5).Core.unitypackage",
 			#endif
 			new string[] {
                 "Assets/Cotc",
@@ -28,12 +28,12 @@ public class ExportReleasePackage {
 			}
 		},
 		{
-			#if UNITY_2017
-			"CotcSdk-Unity-2017.FacebookIntegration.unitypackage",
-			#elif UNITY_2018
-			"CotcSdk-Unity-2018.FacebookIntegration.unitypackage",
+			#if UNITY_2018
+			"CotcSdk-Unity2018(.NET4.6).FacebookIntegration.unitypackage",
+			#elif UNITY_2017
+			"CotcSdk-Unity2017(.NET3.5).FacebookIntegration.unitypackage",
 			#else
-			"CotcSdk-Unity-5.FacebookIntegration.unitypackage",
+			"CotcSdk-Unity5(.NET3.5).FacebookIntegration.unitypackage",
 			#endif
 			new string[] {
 				"Assets/Cotc.FacebookIntegration",
@@ -46,12 +46,12 @@ public class ExportReleasePackage {
 			}
 		},
 		{
-			#if UNITY_2017
-			"CotcSdk-Unity-2017.InAppPurchase.unitypackage",
-			#elif UNITY_2018
-			"CotcSdk-Unity-2018.InAppPurchase.unitypackage",
+			#if UNITY_2018
+			"CotcSdk-Unity2018(.NET4.6).InAppPurchase.unitypackage",
+			#elif UNITY_2017
+			"CotcSdk-Unity2017(.NET3.5).InAppPurchase.unitypackage",
 			#else
-			"CotcSdk-Unity-5.InAppPurchase.unitypackage",
+			"CotcSdk-Unity5(.NET3.5).InAppPurchase.unitypackage",
 			#endif
 			new string[] {
 				"Assets/Cotc.InAppPurchase",
@@ -71,12 +71,12 @@ public class ExportReleasePackage {
 			}
 		},
 		{
-			#if UNITY_2017
-			"CotcSdk-Unity-2017.PushNotifications.unitypackage",
-			#elif UNITY_2018
-			"CotcSdk-Unity-2018.PushNotifications.unitypackage",
+			#if UNITY_2018
+			"CotcSdk-Unity2018(.NET4.6).PushNotifications.unitypackage",
+			#elif UNITY_2017
+			"CotcSdk-Unity2017(.NET3.5).PushNotifications.unitypackage",
 			#else
-			"CotcSdk-Unity-5.PushNotifications.unitypackage",
+			"CotcSdk-Unity5(.NET3.5).PushNotifications.unitypackage",
 			#endif
 			new string[] {
 				"Assets/Cotc.PushNotifications",
@@ -119,12 +119,12 @@ public class ExportReleasePackage {
 		if (
 			!EditorUtility.DisplayDialog("Building packages", "The release packages are about to be built. Please check the following:"
 				+ "\n\n- SDK Version will be " + CotcSdk.Cloud.SdkVersion
-				#if UNITY_2017
-				+ "\n- For Unity 2017"
-				#elif UNITY_2018
-				+ "\n- For Unity 2018"
+				#if UNITY_2018
+				+ "\n- For Unity 2018 (.NET Framework 4.6)"
+				#elif UNITY_2017
+				+ "\n- For Unity 2017 (.NET Framework 3.5)"
 				#else
-				+ "\n- For Unity 5"
+				+ "\n- For Unity 5 (.NET Framework 3.5)"
 				#endif
 				+ "\n\nIf you are unsure, please fix Cloud.SdkVersion, rebuild the library and try again.", "Proceed", "Cancel")
 		)
@@ -134,10 +134,10 @@ public class ExportReleasePackage {
 		var buildScriptDir = Path.Combine(Directory.GetParent(UnityEngine.Application.dataPath).Parent.FullName, "CotcSdk");
 		var process = new System.Diagnostics.Process();
 		var succeeded = false;
-		#if UNITY_2017
-		process.StartInfo.FileName = Path.Combine(buildScriptDir, "Build-Unity-2017.bat");
-		#elif UNITY_2018
+		#if UNITY_2018
 		process.StartInfo.FileName = Path.Combine(buildScriptDir, "Build-Unity-2018.bat");
+		#elif UNITY_2017
+		process.StartInfo.FileName = Path.Combine(buildScriptDir, "Build-Unity-2017.bat");
 		#else
 		process.StartInfo.FileName = Path.Combine(buildScriptDir, "Build-Unity-5.bat");
 		#endif

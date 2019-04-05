@@ -100,33 +100,33 @@ namespace LitJson
     public class JsonMapper
     {
         #region Fields
-        private static int max_nesting_depth;
+        private static readonly int max_nesting_depth;
 
-        private static IFormatProvider datetime_format;
+        private static readonly IFormatProvider datetime_format;
 
-        private static IDictionary<Type, ExporterFunc> base_exporters_table;
-        private static IDictionary<Type, ExporterFunc> custom_exporters_table;
+        private static readonly IDictionary<Type, ExporterFunc> base_exporters_table;
+        private static readonly IDictionary<Type, ExporterFunc> custom_exporters_table;
 
-        private static IDictionary<Type,
+        private static readonly IDictionary<Type,
                 IDictionary<Type, ImporterFunc>> base_importers_table;
-        private static IDictionary<Type,
+        private static readonly IDictionary<Type,
                 IDictionary<Type, ImporterFunc>> custom_importers_table;
 
-        private static IDictionary<Type, ArrayMetadata> array_metadata;
+        private static readonly IDictionary<Type, ArrayMetadata> array_metadata;
         private static readonly object array_metadata_lock = new Object ();
 
-        private static IDictionary<Type,
+        private static readonly IDictionary<Type,
                 IDictionary<Type, MethodInfo>> conv_ops;
         private static readonly object conv_ops_lock = new Object ();
 
-        private static IDictionary<Type, ObjectMetadata> object_metadata;
+        private static readonly IDictionary<Type, ObjectMetadata> object_metadata;
         private static readonly object object_metadata_lock = new Object ();
 
-        private static IDictionary<Type,
+        private static readonly IDictionary<Type,
                 IList<PropertyMetadata>> type_properties;
         private static readonly object type_properties_lock = new Object ();
 
-        private static JsonWriter      static_writer;
+        private static readonly JsonWriter      static_writer;
         private static readonly object static_writer_lock = new Object ();
         #endregion
 
@@ -172,11 +172,10 @@ namespace LitJson
 
             #if WINDOWS_UWP
             if (typeof(IList).IsAssignableFrom(type) && type.GetTypeInfo().IsClass)
-                data.IsList = true;
             #else
             if (type.GetInterface ("System.Collections.IList") != null)
-                data.IsList = true;
             #endif
+                data.IsList = true;
 
             foreach (PropertyInfo p_info in type.GetProperties ()) {
                 if (p_info.Name != "Item")
@@ -209,12 +208,11 @@ namespace LitJson
 
             #if WINDOWS_UWP
             if (typeof(IDictionary).IsAssignableFrom(type) && type.GetTypeInfo().IsClass)
-                data.IsDictionary = true;
             #else
             if (type.GetInterface ("System.Collections.IDictionary") != null)
-                data.IsDictionary = true;
             #endif
-            
+                data.IsDictionary = true;
+
             data.Properties = new Dictionary<string, PropertyMetadata> ();
 
             foreach (PropertyInfo p_info in type.GetProperties ()) {
@@ -325,12 +323,13 @@ namespace LitJson
 
             if (reader.Token == JsonToken.Null) {
                 #if WINDOWS_UWP
-                if (inst_type.GetTypeInfo().IsClass || underlying_type != null) {
+                if (inst_type.GetTypeInfo().IsClass || underlying_type != null)
+                #elif NETSTANDARD1_5
+                if (inst_type.IsClass() || underlying_type != null)
                 #else
-                if (inst_type.IsClass || underlying_type != null) {
+                if (inst_type.IsClass || underlying_type != null)
                 #endif
                     return null;
-                }
 
                 throw new JsonException (String.Format (
                             "Can't assign null to an instance of type {0}",
@@ -347,13 +346,13 @@ namespace LitJson
 
                 if (value_type.IsAssignableFrom (json_type))
                     return reader.Value;
-				// [XtraLife] Add double to float conversion hack to avoid exception...
-				else if ((value_type == typeof(float)) && (reader.Token == JsonToken.Double))
-					return Convert.ToSingle(reader.Value);
-				// [XtraLife] Add int to long conversion hack to avoid exception...
-				else if ((value_type == typeof(long)) && (reader.Token == JsonToken.Int))
-					return Convert.ToInt64(reader.Value);
-				
+                // [XtraLife] Add double to float conversion hack to avoid exception...
+                else if ((value_type == typeof(float)) && (reader.Token == JsonToken.Double))
+                    return Convert.ToSingle(reader.Value);
+                // [XtraLife] Add int to long conversion hack to avoid exception...
+                else if ((value_type == typeof(long)) && (reader.Token == JsonToken.Int))
+                    return Convert.ToInt64(reader.Value);
+
                 // If there's a custom importer that fits, use it
                 if (custom_importers_table.ContainsKey (json_type) &&
                     custom_importers_table[json_type].ContainsKey (
@@ -379,6 +378,8 @@ namespace LitJson
                 // Maybe it's an enum
                 #if WINDOWS_UWP
                 if (value_type.GetTypeInfo().IsEnum)
+                #elif NETSTANDARD1_5
+                if (value_type.IsEnum())
                 #else
                 if (value_type.IsEnum)
                 #endif
@@ -636,6 +637,12 @@ namespace LitJson
                               typeof (ulong), importer);
 
             importer = delegate (object input) {
+                return Convert.ToInt64((int)input);
+            };
+            RegisterImporter(base_importers_table, typeof(int),
+                              typeof(long), importer);
+
+            importer = delegate (object input) {
                 return Convert.ToSByte ((int) input);
             };
             RegisterImporter (base_importers_table, typeof (int),
@@ -695,6 +702,12 @@ namespace LitJson
             };
             RegisterImporter (base_importers_table, typeof (string),
                               typeof (DateTime), importer);
+
+            importer = delegate (object input) {
+                return DateTimeOffset.Parse((string)input, datetime_format);
+            };
+            RegisterImporter(base_importers_table, typeof(string),
+                typeof(DateTimeOffset), importer);
         }
 
         private static void RegisterImporter (
@@ -736,15 +749,16 @@ namespace LitJson
                 return;
             }
 
-			if (obj is Single) {
-				writer.Write ((float) obj);
-				return;
-			}
+            // [XtraLife] Add missing float write...
+            if (obj is Single) {
+                writer.Write ((float) obj);
+                return;
+            }
 
-			if (obj is Double) {
-				writer.Write ((double) obj);
-				return;
-			}
+            if (obj is Double) {
+                writer.Write ((double) obj);
+                return;
+            }
 
             if (obj is Int32) {
                 writer.Write ((int) obj);
@@ -905,6 +919,13 @@ namespace LitJson
             JsonReader reader = new JsonReader (json);
 
             return (T) ReadValue (typeof (T), reader);
+        }
+        
+        public static object ToObject(string json, Type ConvertType )
+        {
+            JsonReader reader = new JsonReader(json);
+
+            return ReadValue(ConvertType, reader);
         }
 
         public static IJsonWrapper ToWrapper (WrapperFactory factory,
