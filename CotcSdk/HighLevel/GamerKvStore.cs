@@ -13,7 +13,7 @@ namespace CotcSdk {
 	///
 	/// Each of those ACL rights can take one of the following values:
 	/// - `["gamerID1", "gamerID2", ...]`: An array of gamerIDs (all gamers with their `gamerID` in this array will be
-	///     authorized for the corresponding ACL right, the other gamers won't)
+	///     authorized for the corresponding ACL right, the other ones won't)
 	/// - `"*"`: A wildcard string (all gamers will be authorized for the corresponding ACL right)
 	///
 	/// According to all this, an example "ACL setup object" would look like:
@@ -22,9 +22,9 @@ namespace CotcSdk {
 	/// ~~~~
 	///
 	/// Meaning:
-	/// - Everyone may read the related key
-	/// - Only gamer1 and gamer2 may write key's value
-	/// - Only gamer1 may change key's ACL rights
+	/// - Everyone can read the related key
+	/// - Only gamer1 and gamer2 can write key's value
+	/// - Only gamer1 can change key's ACL rights
 	///
 	/// An equivalent C# code to generate this object would be:
 	/// ~~~~{.cs}
@@ -39,11 +39,10 @@ namespace CotcSdk {
 	/// kvStoreAcl["a"] = Bundle.CreateArray(new Bundle[] { new Bundle(gamerID1) });
 	/// ~~~~
 	///
-	/// One last thing: as the GamerKvStore feature is similar to the GameVfs one (keys are stored globally, not scoped
-	/// by gamers), client SDKs are unauthorized to directly create keys by themselves. As you can't `set` a key before
-	/// you created it before, you'll have to call for a gamer batch to `create` it first (see GamerBatches).
-	///
-	/// Moreover, to be able to use the KvStore API to create a key you'll have to convert all gamerIDs into ObjectIDs.
+	/// One last thing: as the GamerKvStore feature is similar to the GameVfs one (as keys are scoped by game, not scoped
+	/// by gamers), client SDKs are unauthorized to directly create keys by themselves. As you can't `set` key's value
+	/// before you created the key, you'll have to call for a gamer batch to `create` it first (see GamerBatches). Moreover,
+	/// in order to use the KvStore API to create a key you'll have to convert all gamerIDs into ObjectIDs.
 	///
 	/// Here is a sample Javascript batch code you can directly paste for this:
 	/// ~~~~{.json}
@@ -65,7 +64,7 @@ namespace CotcSdk {
 	/// 	.catch(function(error)
 	/// 	{
 	/// 		mod.debug("Error ›› " + error.name + ": " + error.message);
-	/// 		return { error: { name: error.name, message: error.message } };
+	/// 		throw error;
 	/// 	});
 	/// } // must be on last line, no CR
 	/// ~~~~
@@ -78,6 +77,7 @@ namespace CotcSdk {
 	/// batchParams["keyAcl"] = Bundle.FromJson("{\"r\":\"*\",\"w\":[\"gamerID1\",\"gamerID2\"],\"a\":[\"gamerID1\"]}");
 	///
 	/// gamer.Batches.Run("KvStore_CreateKey", batchParams).Done(
+    /// 	// You may want to check for success with: if (result["n"].AsInt() == 1)
 	/// 	delegate(Bundle result) { Debug.Log("Success Create Key: " + result.ToString()); },
 	/// 	delegate(Exception error) { Debug.LogError("Error Create Key: " + error.ToString()); }
 	/// );
