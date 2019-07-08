@@ -90,6 +90,47 @@ Don't forget to allow your app to access the Internet:
 
 In Unity editor, click the `Edit > Project Settings > Player` menu and hit the `Windows Store Apps settings` tab, then in the `Publishing Settings` section search for `Capabilities` and tick the `InternetClient` capability. This will allow Unity to automatically add this capability in the `Package.appxmanifest` file generated with your Unity project's build for UWP.
 
+## **Resolving Android libraries dependencies**
+
+If you plan to use several third party plugins in your project, you'll probably have to fetch multiple Android libraries. In order to help with managing complex plugins' dependencies, you may want to make use of the well known [Play Services Resolver](https://github.com/googlesamples/unity-jar-resolver).
+
+We don't distribute this plugin in our packages yet, but here are XtraLife plugins' dependencies configurations. Simply put a `XtraLifeDependencies.xml` file in any `Editor` folder of your project, depending on which plugin(s) you intend to use:
+
+- **In App Purchase**
+
+	```xml
+	<dependencies>
+		<androidPackages>
+			<androidPackage spec="android.arch.core:common:1.0.0" />
+			<androidPackage spec="android.arch.lifecycle:common:1.0.0" />
+			<androidPackage spec="android.arch.lifecycle:runtime:1.0.0" />
+			<androidPackage spec="com.android.support:appcompat-v7:26.1.0" />
+			<androidPackage spec="com.android.support:support-v4:26.1.0" />
+		</androidPackages>
+	</dependencies>
+	```
+
+- **Push Notifications**
+
+	```xml
+	<dependencies>
+		<androidPackages>
+			<androidPackage spec="android.arch.core:common:1.0.0" />
+			<androidPackage spec="android.arch.lifecycle:common:1.0.0" />
+			<androidPackage spec="android.arch.lifecycle:runtime:1.0.0" />
+			<androidPackage spec="com.android.support:appcompat-v7:26.1.0" />
+			<androidPackage spec="com.android.support:support-compat:26.1.0" />
+			<androidPackage spec="com.android.support:support-core-utils:26.1.0" />
+			<androidPackage spec="com.android.support:support-v4:26.1.0" />
+			<androidPackage spec="com.google.android.gms:play-services-base:11.4.0" />
+			<androidPackage spec="com.google.android.gms:play-services-basement:11.4.0" />
+			<androidPackage spec="com.google.android.gms:play-services-gcm:11.4.0" />
+			<androidPackage spec="com.google.android.gms:play-services-iid:11.4.0" />
+			<androidPackage spec="com.google.android.gms:play-services-tasks:11.4.0" />
+		</androidPackages>
+	</dependencies>
+	```
+
 ## **About integration tests (aka unit tests)**
 
 Integration tests are a very useful tool to quickly test new features and ensure that no regressions are made whenever something is modified throughout the developement of this SDK. Each time you add a feature by yourself, you should add one or several integration test as well. Also, when modifying the library, please run all integration tests and check if anything has been broken.
