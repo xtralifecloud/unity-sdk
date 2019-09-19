@@ -50,7 +50,7 @@ namespace CotcSdk
 		}
 
 		public static DateTime ParseHttpDate(string httpDate) {
-			return httpDate != null ? DateTime.Parse(httpDate) : DateTime.MinValue;
+			return httpDate != null ? DateTime.Parse(httpDate, System.Globalization.CultureInfo.InvariantCulture) : DateTime.MinValue;
 		}
 
 		/// <summary>
