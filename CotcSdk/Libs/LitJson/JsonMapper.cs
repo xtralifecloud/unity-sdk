@@ -19,6 +19,10 @@ using System.Reflection;
 
 namespace LitJson
 {
+	// [XtraLife] Will cause obj's attributed fields/properties to be skipped while using JsonMapper.ToJson(obj)...
+	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+	public class SkipToJson : Attribute {}
+
     internal struct PropertyMetadata
     {
         public MemberInfo Info;
@@ -846,6 +850,11 @@ namespace LitJson
 
             writer.WriteObjectStart ();
             foreach (PropertyMetadata p_data in props) {
+				// [XtraLife] Skip object write if it has the [SkipToJson] attribute...
+				IEnumerable<Attribute> attribs = p_data.Info.GetCustomAttributes<SkipToJson>();
+				if (attribs.GetEnumerator().MoveNext())
+					continue;
+
                 if (p_data.IsField) {
                     writer.WritePropertyName (p_data.Info.Name);
                     WriteValue (((FieldInfo) p_data.Info).GetValue (obj),
