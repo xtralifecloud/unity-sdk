@@ -23,6 +23,10 @@ namespace LitJson
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class SkipToJson : Attribute {}
 
+	// [XtraLife] Will cause obj's attributed fields/properties to be treated with its ToString() method while using JsonMapper.ToJson(obj)...
+	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+	public class SimpleToJson : Attribute {}
+
     internal struct PropertyMetadata
     {
         public MemberInfo Info;
@@ -854,6 +858,15 @@ namespace LitJson
 				IEnumerable<Attribute> attribs = p_data.Info.GetCustomAttributes<SkipToJson>();
 				if (attribs.GetEnumerator().MoveNext())
 					continue;
+
+				// [XtraLife] Write object with its ToString() if it has the [SimpleToJson] attribute...
+				IEnumerable<Attribute> simpleToJsonAttribs = p_data.Info.GetCustomAttributes<SimpleToJson>();
+				if (simpleToJsonAttribs.GetEnumerator().MoveNext()) {
+                    writer.WritePropertyName (p_data.Info.Name);
+                    WriteValue (((FieldInfo) p_data.Info).GetValue (obj).ToString (),
+                                writer, writer_is_private, depth + 1);
+					continue;
+				}
 
                 if (p_data.IsField) {
                     writer.WritePropertyName (p_data.Info.Name);
