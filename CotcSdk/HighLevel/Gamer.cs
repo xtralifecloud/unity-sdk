@@ -18,7 +18,7 @@ namespace CotcSdk {
         public string GamerId { get; private set; }
         /// <summary>Gamer credential (secret). Same purpose as GamerId, and you will need those in pair.</summary>
         public string GamerSecret { get; private set; }
-        public LoginNetwork Network { get; private set; }
+        public string Network { get; private set; }
         public string NetworkId { get; private set; }
         public DateTime RegisterTime { get; private set; }
 
@@ -146,7 +146,7 @@ namespace CotcSdk {
         }
 
         internal void Update(Bundle updatedGamerData) {
-            Network = Common.ParseEnum<LoginNetwork>(updatedGamerData["network"]);
+            Network = updatedGamerData["network"];
             NetworkId = updatedGamerData["networkid"];
             GamerId = updatedGamerData["gamer_id"];
             GamerSecret = updatedGamerData["gamer_secret"];

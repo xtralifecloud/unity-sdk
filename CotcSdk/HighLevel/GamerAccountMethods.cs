@@ -11,8 +11,8 @@ namespace CotcSdk
 		/// <param name="newEmailAddress">The new e-mail address to be used for signing in.</param>
 		public Promise<Done> ChangeEmailAddress(string newEmailAddress) {
 			var task = new Promise<Done>();
-			if (Gamer.Network != LoginNetwork.Email) {
-				return task.PostResult(ErrorCode.BadParameters, "Unavailable for " + Gamer.Network.Describe() + " accounts");
+			if (Gamer.Network != LoginNetwork.Email.Describe()) {
+				return task.PostResult(ErrorCode.BadParameters, "Unavailable for " + Gamer.Network + " accounts");
 			}
 
 			Bundle config = Bundle.CreateObject();
@@ -30,8 +30,8 @@ namespace CotcSdk
 		/// <param name="newPassword">The new password to be used for signing in.</param>
 		public Promise<Done> ChangePassword(string newPassword) {
 			var task = new Promise<Done>();
-			if (Gamer.Network != LoginNetwork.Email) {
-				task.PostResult(ErrorCode.BadParameters, "Unavailable for " + Gamer.Network.Describe() + " accounts");
+			if (Gamer.Network != LoginNetwork.Email.Describe()) {
+				task.PostResult(ErrorCode.BadParameters, "Unavailable for " + Gamer.Network + " accounts");
 				return task;
 			}
 
