@@ -855,16 +855,15 @@ namespace LitJson
             writer.WriteObjectStart ();
             foreach (PropertyMetadata p_data in props) {
 				// [XtraLife] Skip object write if it has the [SkipToJson] attribute...
-				IEnumerable<Attribute> attribs = p_data.Info.GetCustomAttributes<SkipToJson>();
-				if (attribs.GetEnumerator().MoveNext())
+				if (p_data.Info.GetCustomAttributes(typeof(SkipToJson), false).Length > 0)
 					continue;
 
 				// [XtraLife] Write object with its ToString() if it has the [SimpleToJson] attribute...
-				IEnumerable<Attribute> simpleToJsonAttribs = p_data.Info.GetCustomAttributes<SimpleToJson>();
-				if (simpleToJsonAttribs.GetEnumerator().MoveNext()) {
-                    writer.WritePropertyName (p_data.Info.Name);
-                    WriteValue (((FieldInfo) p_data.Info).GetValue (obj).ToString (),
-                                writer, writer_is_private, depth + 1);
+				if (p_data.Info.GetCustomAttributes(typeof(SimpleToJson), false).Length > 0) {
+					writer.WritePropertyName (p_data.Info.Name);
+					object fieldValue = ((FieldInfo) p_data.Info).GetValue (obj);
+					WriteValue (fieldValue != null ? fieldValue.ToString () : null,
+								writer, writer_is_private, depth + 1);
 					continue;
 				}
 
@@ -885,7 +884,7 @@ namespace LitJson
             }
             writer.WriteObjectEnd ();
         }
-        #endregion
+		#endregion
 
 
         public static string ToJson (object obj)
