@@ -188,7 +188,7 @@ public class CloudTests : TestBase {
                 networkSecret: "Password123");
         })
         .ExpectSuccess(done => {
-            Assert(gamer.Network == LoginNetwork.Email, "The gamer object failed to change");
+			Assert(gamer.Network == LoginNetwork.Email.Describe(), "The gamer object failed to change");
             CompleteTest();
         });
         return WaitForEndOfTest();
@@ -367,12 +367,16 @@ public class CloudTests : TestBase {
 		string json = "{\"maxLongOverflow\":9223372036854776000, \"minLongOverflow\":-9223372036854776000}";
 		bool triggeredException = false;
 
+		#pragma warning disable 0168
+		#pragma warning disable 0219
 		try {
 			Bundle data = Bundle.FromJson(json);
 		}
 		catch (InvalidCastException ex) {
 			triggeredException = true;
 		}
+		#pragma warning restore 0219
+		#pragma warning restore 0168
 
 		if (triggeredException)
 			CompleteTest();

@@ -181,7 +181,7 @@ public class GamerTests : TestBase {
 		Login(cloud, gamer => {
 			gamer.Profile.Outline()
 			.ExpectSuccess(outline => {
-				Assert(outline.Network == gamer.Network, "Expected same network");
+				Assert(outline.Network.Describe() == gamer.Network, "Expected same network");
 				Assert(outline.NetworkId == gamer.NetworkId, "Expected same network ID");
 				Assert(outline["games"].Type == Bundle.DataType.Array, "Expected games array");
 				CompleteTest();
