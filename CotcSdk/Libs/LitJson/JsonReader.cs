@@ -262,11 +262,13 @@ namespace LitJson
 
 
         #region Private Methods
-        private void ProcessNumber (string number)
+        private void ProcessNumber (string number, bool forceNumberAsDouble = false)
         {
             if (number.IndexOf ('.') != -1 ||
                 number.IndexOf ('e') != -1 ||
-                number.IndexOf ('E') != -1) {
+                number.IndexOf ('E') != -1
+				// [XtraLife] Force number detection as a double to avoid to parse double without '.' or 'e' characters as long or whatever
+				|| forceNumberAsDouble) {
 
                 double n_double;
                 if (double.TryParse (number, NumberStyles.Any, CultureInfo.InvariantCulture, out n_double)) {
@@ -312,7 +314,7 @@ namespace LitJson
             //token_value = 0;
         }
 
-        private void ProcessSymbol ()
+        private void ProcessSymbol (bool forceNumberAsDouble = false)
         {
             if (current_symbol == '[')  {
                 token = JsonToken.ArrayStart;
@@ -356,7 +358,7 @@ namespace LitJson
                 parser_return = true;
 
             } else if (current_symbol == (int) ParserToken.Number)  {
-                ProcessNumber (lexer.StringValue);
+                ProcessNumber (lexer.StringValue, forceNumberAsDouble);
 
                 parser_return = true;
 
@@ -407,7 +409,7 @@ namespace LitJson
             reader = null;
         }
 
-        public bool Read ()
+        public bool Read (bool forceNumberAsDouble = false)
         {
             if (end_of_input)
                 return false;
@@ -445,7 +447,7 @@ namespace LitJson
 
                 current_symbol = automaton_stack.Pop ();
 
-                ProcessSymbol ();
+                ProcessSymbol (forceNumberAsDouble);
 
                 if (current_symbol == current_input) {
                     if (! ReadToken ()) {
