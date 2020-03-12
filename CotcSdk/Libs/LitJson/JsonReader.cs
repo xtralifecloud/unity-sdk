@@ -262,59 +262,44 @@ namespace LitJson
 
 
         #region Private Methods
-        private void ProcessNumber (string number, bool forceNumberAsDouble = false)
+        private void ProcessNumber (string number)
         {
-            if (number.IndexOf ('.') != -1 ||
-                number.IndexOf ('e') != -1 ||
-                number.IndexOf ('E') != -1
-				// [XtraLife] Force number detection as a double to avoid to parse double without '.' or 'e' characters as long or whatever
-				|| forceNumberAsDouble) {
+            // [XtraLife] Try to convert number to int, or to long, or to double (double as last resort)
+            if (number.IndexOf ('.') == -1 &&
+                number.IndexOf ('e') == -1 &&
+                number.IndexOf ('E') == -1) {
 
-                double n_double;
-                if (double.TryParse (number, NumberStyles.Any, CultureInfo.InvariantCulture, out n_double)) {
-                    token = JsonToken.Double;
-                    token_value = n_double;
+				int n_int32;
+				if (int.TryParse (number, NumberStyles.Integer, CultureInfo.InvariantCulture, out n_int32)) {
+					token = JsonToken.Int;
+					token_value = n_int32;
 
-                    return;
-                }
-            }
+					return;
+				}
 
-            int n_int32;
-            if (int.TryParse (number, NumberStyles.Integer, CultureInfo.InvariantCulture, out n_int32)) {
-                token = JsonToken.Int;
-                token_value = n_int32;
+				long n_int64;
+				if (long.TryParse (number, NumberStyles.Integer, CultureInfo.InvariantCulture, out n_int64)) {
+					token = JsonToken.Long;
+					token_value = n_int64;
 
-                return;
-            }
+					return;
+				}
+			}
 
-            long n_int64;
-            if (long.TryParse (number, NumberStyles.Integer, CultureInfo.InvariantCulture, out n_int64)) {
-                token = JsonToken.Long;
-                token_value = n_int64;
-
-                return;
-            }
-
-            ulong n_uint64;
-            if (ulong.TryParse(number, NumberStyles.Integer, CultureInfo.InvariantCulture, out n_uint64))
-            {
-                token = JsonToken.Long;
-                token_value = n_uint64;
+            double n_double;
+            if (double.TryParse (number, NumberStyles.Any, CultureInfo.InvariantCulture, out n_double)) {
+                token = JsonToken.Double;
+                token_value = n_double;
 
                 return;
             }
 
-            // [XtraLife] In case of overflow while parsing big integers, the value is truncated to long.MinValue or long.MaxValue...
-            token = JsonToken.Long;
-            token_value = number[0] == '-' ? long.MinValue : long.MaxValue;
-            UnityEngine.Debug.LogWarning("[LitJson: Long overflow] An error occured while parsing the original value '" + number + "', which has been truncated to fit in a long-type variable: '" + token_value + "'");
-
-            // Shouldn't happen, but just in case, return something
-            //token = JsonToken.Int;
-            //token_value = 0;
+			throw new JsonException(String.Format(
+					"Can't parse json token value '{0}' as a number (int, long, or double)",
+					number));
         }
 
-        private void ProcessSymbol (bool forceNumberAsDouble = false)
+        private void ProcessSymbol ()
         {
             if (current_symbol == '[')  {
                 token = JsonToken.ArrayStart;
@@ -358,7 +343,7 @@ namespace LitJson
                 parser_return = true;
 
             } else if (current_symbol == (int) ParserToken.Number)  {
-                ProcessNumber (lexer.StringValue, forceNumberAsDouble);
+                ProcessNumber (lexer.StringValue);
 
                 parser_return = true;
 
@@ -409,7 +394,7 @@ namespace LitJson
             reader = null;
         }
 
-        public bool Read (bool forceNumberAsDouble = false)
+        public bool Read ()
         {
             if (end_of_input)
                 return false;
@@ -447,7 +432,7 @@ namespace LitJson
 
                 current_symbol = automaton_stack.Pop ();
 
-                ProcessSymbol (forceNumberAsDouble);
+                ProcessSymbol ();
 
                 if (current_symbol == current_input) {
                     if (! ReadToken ()) {

@@ -319,9 +319,9 @@ namespace LitJson
             return op;
         }
 
-        private static object ReadValue (Type inst_type, JsonReader reader, bool forceNumberAsDouble = false)
+        private static object ReadValue (Type inst_type, JsonReader reader)
         {
-            reader.Read (forceNumberAsDouble);
+            reader.Read ();
 
             if (reader.Token == JsonToken.ArrayEnd)
                 return null;
@@ -354,26 +354,9 @@ namespace LitJson
 
                 if (value_type.IsAssignableFrom (json_type))
                     return reader.Value;
-                // [XtraLife] Add double to float conversion hack to avoid exception...
-                else if ((value_type == typeof(float)) && (reader.Token == JsonToken.Double))
-                    return Convert.ToSingle(reader.Value);
-                // [XtraLife] Add int to long conversion hack to avoid exception...
-                else if ((value_type == typeof(long)) && (reader.Token == JsonToken.Int))
-                    return Convert.ToInt64(reader.Value);
 
-				// [XtraLife] Add specific conversions to any number type when forcing double tokens (if previous standard conversions failed)
-				if (forceNumberAsDouble)
-				{
-					if ((value_type == typeof(short)) && (reader.Token == JsonToken.Double))
-	                    return Convert.ToInt16(reader.Value);
-					else if ((value_type == typeof(int)) && (reader.Token == JsonToken.Double))
-	                    return Convert.ToInt32(reader.Value);
-					else if ((value_type == typeof(long)) && (reader.Token == JsonToken.Double))
-	                    return Convert.ToInt64(reader.Value);
-				}
-
-                // If there's a custom importer that fits, use it
-                if (custom_importers_table.ContainsKey (json_type) &&
+				// If there's a custom importer that fits, use it
+				if (custom_importers_table.ContainsKey (json_type) &&
                     custom_importers_table[json_type].ContainsKey (
                         value_type)) {
 
@@ -411,6 +394,58 @@ namespace LitJson
                     return conv_op.Invoke (null,
                                            new object[] { reader.Value });
 
+				// [XtraLife] Try to convert to the expected value type, no matter the original value type
+				// (not the best way, but better than nothing... should only fail if the value is out of expected type's values range)
+				try {
+					if (value_type == typeof(double)) {
+
+						double n_double = Convert.ToDouble(reader.Value);
+						if (double.IsInfinity(n_double) || double.IsNaN(n_double)) {
+							throw new JsonException (String.Format (
+									"Can't assign value '{0}' (type {1}) to type {2} (gives 'infinity' or 'NaN' result)",
+									reader.Value, json_type, inst_type));
+						}
+
+						return n_double;
+					}
+					else if (value_type == typeof(float)) {
+
+						float n_single = Convert.ToSingle(reader.Value);
+						if (float.IsInfinity(n_single) || float.IsNaN(n_single)) {
+							throw new JsonException (String.Format (
+									"Can't assign value '{0}' (type {1}) to type {2} (gives 'infinity' or 'NaN' result)",
+									reader.Value, json_type, inst_type));
+						}
+
+						return n_single;
+					}
+					else if (value_type == typeof(long))
+						return Convert.ToInt64(reader.Value);
+					else if (value_type == typeof(int))
+						return Convert.ToInt32(reader.Value);
+					else if (value_type == typeof(short))
+						return Convert.ToInt16(reader.Value);
+					else if (value_type == typeof(bool))
+						return Convert.ToBoolean(reader.Value);
+					else if (value_type == typeof(string))
+						return Convert.ToString(reader.Value);
+					else if (value_type == typeof(ulong))
+						return Convert.ToUInt64(reader.Value);
+					else if (value_type == typeof(uint))
+						return Convert.ToUInt32(reader.Value);
+					else if (value_type == typeof(ushort))
+						return Convert.ToUInt16(reader.Value);
+				}
+				catch (Exception e) {
+					// Unhandled expected value type
+					if (e is JsonException) {
+						throw e;
+					}
+					throw new JsonException (String.Format (
+							"Can't assign value '{0}' (type {1}) to type {2}",
+							reader.Value, json_type, inst_type));
+				}
+
                 // No luck
                 throw new JsonException (String.Format (
                         "Can't assign value '{0}' (type {1}) to type {2}",
@@ -441,7 +476,7 @@ namespace LitJson
                 }
 
                 while (true) {
-                    object item = ReadValue (elem_type, reader, forceNumberAsDouble);
+                    object item = ReadValue (elem_type, reader);
                     if (item == null && reader.Token == JsonToken.ArrayEnd)
                         break;
 
@@ -464,7 +499,7 @@ namespace LitJson
                 instance = Activator.CreateInstance (value_type);
 
                 while (true) {
-                    reader.Read (forceNumberAsDouble);
+                    reader.Read ();
 
                     if (reader.Token == JsonToken.ObjectEnd)
                         break;
@@ -477,7 +512,7 @@ namespace LitJson
 
                         if (prop_data.IsField) {
                             ((FieldInfo) prop_data.Info).SetValue (
-                                instance, ReadValue (prop_data.Type, reader, forceNumberAsDouble));
+                                instance, ReadValue (prop_data.Type, reader));
                         } else {
                             PropertyInfo p_info =
                                 (PropertyInfo) prop_data.Info;
@@ -485,10 +520,10 @@ namespace LitJson
                             if (p_info.CanWrite)
                                 p_info.SetValue (
                                     instance,
-                                    ReadValue (prop_data.Type, reader, forceNumberAsDouble),
+                                    ReadValue (prop_data.Type, reader),
                                     null);
                             else
-                                ReadValue (prop_data.Type, reader, forceNumberAsDouble);
+                                ReadValue (prop_data.Type, reader);
                         }
 
                     } else {
@@ -500,14 +535,14 @@ namespace LitJson
                                         "property '{1}'",
                                         inst_type, property));
                             } else {
-                                ReadSkip (reader, forceNumberAsDouble);
+                                ReadSkip (reader);
                                 continue;
                             }
                         }
 
                         ((IDictionary) instance).Add (
                             property, ReadValue (
-                                t_data.ElementType, reader, forceNumberAsDouble));
+                                t_data.ElementType, reader));
                     }
 
                 }
@@ -518,9 +553,9 @@ namespace LitJson
         }
 
         private static IJsonWrapper ReadValue (WrapperFactory factory,
-                                               JsonReader reader, bool forceNumberAsDouble = false)
+                                               JsonReader reader)
         {
-            reader.Read (forceNumberAsDouble);
+            reader.Read ();
 
             if (reader.Token == JsonToken.ArrayEnd ||
                 reader.Token == JsonToken.Null)
@@ -557,7 +592,7 @@ namespace LitJson
                 instance.SetJsonType (JsonType.Array);
 
                 while (true) {
-                    IJsonWrapper item = ReadValue (factory, reader, forceNumberAsDouble);
+                    IJsonWrapper item = ReadValue (factory, reader);
                     if (item == null && reader.Token == JsonToken.ArrayEnd)
                         break;
 
@@ -568,7 +603,7 @@ namespace LitJson
                 instance.SetJsonType (JsonType.Object);
 
                 while (true) {
-                    reader.Read (forceNumberAsDouble);
+                    reader.Read ();
 
                     if (reader.Token == JsonToken.ObjectEnd)
                         break;
@@ -576,7 +611,7 @@ namespace LitJson
                     string property = (string) reader.Value;
 
                     ((IDictionary) instance)[property] = ReadValue (
-                        factory, reader, forceNumberAsDouble);
+                        factory, reader);
                 }
 
             }
@@ -584,10 +619,10 @@ namespace LitJson
             return instance;
         }
 
-        private static void ReadSkip (JsonReader reader, bool forceNumberAsDouble = false)
+        private static void ReadSkip (JsonReader reader)
         {
             ToWrapper (
-                delegate { return new JsonMockWrapper (); }, reader, forceNumberAsDouble);
+                delegate { return new JsonMockWrapper (); }, reader);
         }
 
         private static void RegisterBaseExporters ()
@@ -924,64 +959,64 @@ namespace LitJson
             WriteValue (obj, writer, false, 0);
         }
 
-        public static JsonData ToObject (JsonReader reader, bool forceNumberAsDouble = false)
+        public static JsonData ToObject (JsonReader reader)
         {
             return (JsonData) ToWrapper (
-                delegate { return new JsonData (); }, reader, forceNumberAsDouble);
+                delegate { return new JsonData (); }, reader);
         }
 
-        public static JsonData ToObject (TextReader reader, bool forceNumberAsDouble = false)
+        public static JsonData ToObject (TextReader reader)
         {
             JsonReader json_reader = new JsonReader (reader);
 
             return (JsonData) ToWrapper (
-                delegate { return new JsonData (); }, json_reader, forceNumberAsDouble);
+                delegate { return new JsonData (); }, json_reader);
         }
 
-        public static JsonData ToObject (string json, bool forceNumberAsDouble = false)
+        public static JsonData ToObject (string json)
         {
             return (JsonData) ToWrapper (
-                delegate { return new JsonData (); }, json, forceNumberAsDouble);
+                delegate { return new JsonData (); }, json);
         }
 
-        public static T ToObject<T> (JsonReader reader, bool forceNumberAsDouble = false)
+        public static T ToObject<T> (JsonReader reader)
         {
-            return (T) ReadValue (typeof (T), reader, forceNumberAsDouble);
+            return (T) ReadValue (typeof (T), reader);
         }
 
-        public static T ToObject<T> (TextReader reader, bool forceNumberAsDouble = false)
+        public static T ToObject<T> (TextReader reader)
         {
             JsonReader json_reader = new JsonReader (reader);
 
-            return (T) ReadValue (typeof (T), json_reader, forceNumberAsDouble);
+            return (T) ReadValue (typeof (T), json_reader);
         }
 
-        public static T ToObject<T> (string json, bool forceNumberAsDouble = false)
+        public static T ToObject<T> (string json)
         {
             JsonReader reader = new JsonReader (json);
 
-            return (T) ReadValue (typeof (T), reader, forceNumberAsDouble);
+            return (T) ReadValue (typeof (T), reader);
         }
         
-        public static object ToObject(string json, Type ConvertType, bool forceNumberAsDouble = false)
+        public static object ToObject(string json, Type ConvertType )
         {
             JsonReader reader = new JsonReader(json);
 
-            return ReadValue(ConvertType, reader, forceNumberAsDouble);
+            return ReadValue(ConvertType, reader);
         }
 
         public static IJsonWrapper ToWrapper (WrapperFactory factory,
-                                              JsonReader reader, bool forceNumberAsDouble = false)
+                                              JsonReader reader)
         {
-            return ReadValue (factory, reader, forceNumberAsDouble);
+            return ReadValue (factory, reader);
         }
 
         public static IJsonWrapper ToWrapper (WrapperFactory factory,
-                                              string json, bool forceNumberAsDouble = false)
+                                              string json)
         {
             JsonReader reader = new JsonReader (json);
 
-            return ReadValue (factory, reader, forceNumberAsDouble);
+            return ReadValue (factory, reader);
         }
 
         public static void RegisterExporter<T> (ExporterFunc<T> exporter)
