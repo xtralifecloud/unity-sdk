@@ -727,7 +727,7 @@ namespace CotcSdk
                     switch (entry.Type)
                     {
                         case DataType.Boolean: target.Add(entry.AsBool()); break;
-                        case DataType.Integer: target.Add(entry.AsInt()); break;
+                        case DataType.Integer: target.Add(entry.AsLong()); break;
                         case DataType.Double: target.Add(entry.AsDouble()); break;
                         case DataType.String: target.Add(entry.AsString()); break;
                         default: target.Add(ToJson(entry)); break;
