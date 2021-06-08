@@ -73,19 +73,20 @@ namespace CotcSdk
 		#endregion
 
 		#region Private
-		internal Cloud(string apiKey, string apiSecret, string environment, int loadBalancerCount, bool httpVerbose, int httpTimeout, int httpType) {
+		internal Cloud(string apiKey, string apiSecret, string environment, int loadBalancerCount, bool httpVerbose, int httpTimeout, int httpType, bool httpUseCompression)
+		{
 			this.ApiKey = apiKey;
 			this.ApiSecret = apiSecret;
 			this.Server = environment;
 			LoadBalancerCount = loadBalancerCount;
-			Managers.SetHttpClientParams(httpType, httpVerbose);
+			Managers.SetHttpClientParams(httpType, httpVerbose, httpUseCompression);
 			HttpTimeoutMillis = httpTimeout * 1000;
 			UserAgent = String.Format(Common.UserAgent, Managers.SystemFunctions.GetOsName(), Cloud.SdkVersion);
 		}
 		#endregion
 
 		#region Members
-		public const string SdkVersion = "1.4.2.1";
+		public const string SdkVersion = "1.5.0.0";
 		private string ApiKey, ApiSecret, Server;
 		internal int HttpTimeoutMillis {
 			get; private set;

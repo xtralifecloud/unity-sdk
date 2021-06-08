@@ -225,7 +225,7 @@
             @cond private
             Events to be used by plugins. 
         </member>
-        <member name="M:CotcSdk.Cotc.Setup(System.String,System.String,System.String,System.Int32,System.Boolean,System.Int32,System.Int32)">
+        <member name="M:CotcSdk.Cotc.Setup(System.String,System.String,System.String,System.Int32,System.Boolean,System.Int32,System.Int32,System.Boolean)">
             <summary>Call this at the very beginning to start using the library.</summary>
             <returns>Promise resolved when the process has finished, with the Cloud to be used for your operations (most
                 likely synchronously).</returns>
@@ -238,6 +238,8 @@
             <param name="httpType">HTTP layer to be used. Currently 0 is the default (mono-based) one. Works pretty well, but is severely
                 aged has a few issues on some platforms (which are all overcomable). Type 1 uses the new
                 UnityEngine.Experimental.Networking.UnityWebRequest class and is also supported on all platforms.</param>
+            <param name="httpUseCompression">Set to true to enable response compression from server, false otherwise.
+                   Necessary since Unity 2021.1.3f1 which does not handle compression properly anymore.</param>
         </member>
         <member name="M:CotcSdk.Cotc.OnApplicationFocus(System.Boolean)">
             <summary>
@@ -2582,10 +2584,11 @@
             <summary>Allows to specifically direct a request to the Unity HTTP Client, while using the
             default client for other requests. (The two can run in parallel).</summary>
         </member>
-        <member name="M:CotcSdk.Managers.SetHttpClientParams(System.Int32,System.Boolean)">
+        <member name="M:CotcSdk.Managers.SetHttpClientParams(System.Int32,System.Boolean,System.Boolean)">
             <summary>Defines the type of HTTP client./// </summary>
             <param name="type">0 = HttpWebRequest, 1 = UnityWebRequest.</param>
             <param name="verboseMode">true to enable verbose logging of every request, false otherwise.</param>
+            <param name="useCompression">true to enable response compression from server, false otherwise. Necessary since Unity 2021.1.3f1 which does not handle compression properly anymore.</param>
         </member>
         <member name="T:CotcSdk.MonoHttpClient">
             Former Unity HTTP client, based on the standard .NET framework classes (HttpWebRequest).

@@ -39,6 +39,8 @@ namespace CotcSdk {
 			public int HttpTimeout = 60;
 			[SerializeField]
 			public int HttpClientType = 1;
+			[SerializeField]
+			public bool HttpUseCompression = true;
 		}
 
 		[SerializeField]

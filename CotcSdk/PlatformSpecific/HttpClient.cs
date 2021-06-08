@@ -44,6 +44,7 @@ namespace CotcSdk
 		public static int RequestCount { get; set; }
 
 		public static bool VerboseMode { get; set; }
+		public static bool UseCompression { get; set; }
 		#endregion
 
 		#region To be overriden

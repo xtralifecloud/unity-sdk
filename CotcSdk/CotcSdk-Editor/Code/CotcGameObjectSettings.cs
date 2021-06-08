@@ -140,6 +140,8 @@ namespace CotcSdk
 					ce.HttpTimeout = tmpInt;
 				}
 				ce.HttpClientType = EditorGUILayout.Popup("HTTP client", ce.HttpClientType, SupportedHttpClients);
+				ce.HttpUseCompression = EditorGUILayout.Toggle("HTTP compression", ce.HttpUseCompression);
+				
 				EditorGUI.indentLevel--;
 			}
 

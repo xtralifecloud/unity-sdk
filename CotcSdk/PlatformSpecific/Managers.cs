@@ -9,7 +9,7 @@ namespace CotcSdk
 			UnityHttpClient = new UnityHttpClientV2();
 			Logger = UnityLogger.Instance;
 			SystemFunctions = new UnitySystemFunctions();
-			SetHttpClientParams(0, false);
+			SetHttpClientParams(0, false, true);
 		}
 
 		internal static ILogger Logger {
@@ -41,13 +41,16 @@ namespace CotcSdk
 		/// <summary>Defines the type of HTTP client./// </summary>
 		/// <param name="type">0 = HttpWebRequest, 1 = UnityWebRequest.</param>
 		/// <param name="verboseMode">true to enable verbose logging of every request, false otherwise.</param>
-		public static void SetHttpClientParams(int type, bool verboseMode) {
+		/// <param name="useCompression">true to enable response compression from server, false otherwise. Necessary since Unity 2021.1.3f1 which does not handle compression properly anymore.</param>
+		public static void SetHttpClientParams(int type, bool verboseMode, bool useCompression)
+		{
 			switch (type) {
 				case 0: HttpClient = MonoHttpClient; break;
 				case 1: HttpClient = UnityHttpClient; break;
 				default: throw new ArgumentException("Invalid HTTP client type. Must be between 0 and 1.");
 			}
 			HttpClient.VerboseMode = verboseMode;
+			HttpClient.UseCompression = useCompression;
 		}
 
 		private static HttpClient MonoHttpClient;

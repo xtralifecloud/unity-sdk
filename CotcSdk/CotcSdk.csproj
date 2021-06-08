@@ -1,126 +1,82 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Release-Unity-5</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BDD85764-D606-4F8F-AEA8-8B5D52EB9D38}</ProjectGuid>
+    <ProjectGuid>{20A4C2C0-1DA3-4156-820B-1463AF793488}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CotcSdk</RootNamespace>
     <AssemblyName>CotcSdk</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug-Unity-5|AnyCPU' ">
-    <DebugSymbols>True</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>False</Optimize>
-    <OutputPath>bin\Debug-Unity-5\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;COTC_DLL_BUILD,UNITY_5</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug-Unity-5\CotcSdk.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release-Unity-5|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>True</Optimize>
-    <OutputPath>bin\Release-Unity-5\</OutputPath>
-    <DefineConstants>TRACE;COTC_DLL_BUILD,UNITY_5</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release-Unity-5\CotcSdk.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-Unity-2017|AnyCPU'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug-Unity-2017\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;COTC_DLL_BUILD,UNITY_2017</DefineConstants>
-    <DocumentationFile>bin\Debug-Unity-2017\CotcSdk.xml</DocumentationFile>
     <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-Unity-2018|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug-Unity-2018\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;COTC_DLL_BUILD,UNITY_2018</DefineConstants>
-    <DocumentationFile>bin\Debug-Unity-2018\CotcSdk.xml</DocumentationFile>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;COTC_DLL_BUILD</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <WarningLevel>4</WarningLevel>
-    <Optimize>false</Optimize>
+    <DocumentationFile>bin\Debug\CotcSdk.xml</DocumentationFile>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-Unity-2017|AnyCPU'">
-    <OutputPath>bin\Release-Unity-2017\</OutputPath>
-    <DefineConstants>TRACE;COTC_DLL_BUILD,UNITY_2017</DefineConstants>
-    <DocumentationFile>bin\Release-Unity-2017\CotcSdk.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-Unity-2018|AnyCPU'">
-    <OutputPath>bin\Release-Unity-2018\</OutputPath>
-    <DefineConstants>TRACE;COTC_DLL_BUILD,UNITY_2018</DefineConstants>
-    <DocumentationFile>bin\Release-Unity-2018\CotcSdk.xml</DocumentationFile>
     <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;COTC_DLL_BUILD</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\CotcSdk.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Unity\Editor\Data\Managed\UnityEngine.dll</HintPath>
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\..\Program Files\Unity\Hub\Editor\2018.3.14f1\Editor\Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HighLevel\Cloud.cs" />
     <Compile Include="HighLevel\Cloud.LoginMethods.cs" />
     <Compile Include="HighLevel\CloudIndexing.cs" />
-    <Compile Include="HighLevel\CotcCoroutinesManager.cs" />
-    <Compile Include="HighLevel\GamerStore.cs" />
-    <Compile Include="HighLevel\Cotc.cs" />
-    <Compile Include="HighLevel\CotcGameObject.cs" />
     <Compile Include="HighLevel\Common.cs" />
-    <Compile Include="HighLevel\GamerGodfather.cs" />
-    <Compile Include="HighLevel\GameBatches.cs" />
-    <Compile Include="HighLevel\GamerAchievements.cs" />
-    <Compile Include="HighLevel\GamerBatches.cs" />
-    <Compile Include="HighLevel\GamerKvStore.cs" />
-    <Compile Include="HighLevel\GamerMatches.cs" />
-    <Compile Include="HighLevel\GamerCommunity.cs" />
-    <Compile Include="HighLevel\GamerScores.cs" />
-    <Compile Include="HighLevel\GameVfs.cs" />
+    <Compile Include="HighLevel\Cotc.cs" />
+    <Compile Include="HighLevel\Cotc.Events.cs" />
+    <Compile Include="HighLevel\CotcCoroutinesManager.cs" />
+    <Compile Include="HighLevel\CotcException.cs" />
+    <Compile Include="HighLevel\CotcGameObject.cs" />
     <Compile Include="HighLevel\DomainEventLoop.cs" />
     <Compile Include="HighLevel\ErrorCode.cs" />
     <Compile Include="HighLevel\Game.cs" />
+    <Compile Include="HighLevel\GameBatches.cs" />
     <Compile Include="HighLevel\Gamer.cs" />
+    <Compile Include="HighLevel\GamerAccountMethods.cs" />
+    <Compile Include="HighLevel\GamerAchievements.cs" />
+    <Compile Include="HighLevel\GamerBatches.cs" />
+    <Compile Include="HighLevel\GamerCommunity.cs" />
+    <Compile Include="HighLevel\GamerGodfather.cs" />
+    <Compile Include="HighLevel\GamerKvStore.cs" />
+    <Compile Include="HighLevel\GamerMatches.cs" />
     <Compile Include="HighLevel\GamerProfileMethods.cs" />
+    <Compile Include="HighLevel\GamerProperties.cs" />
+    <Compile Include="HighLevel\GamerScores.cs" />
+    <Compile Include="HighLevel\GamerStore.cs" />
     <Compile Include="HighLevel\GamerTransactions.cs" />
+    <Compile Include="HighLevel\GamerVfs.cs" />
+    <Compile Include="HighLevel\GameVfs.cs" />
     <Compile Include="HighLevel\HttpRequestFailedEventArgs.cs" />
     <Compile Include="HighLevel\Match.cs" />
     <Compile Include="HighLevel\MatchInfo.cs" />
     <Compile Include="HighLevel\Model\AchievementDefinition.cs" />
-    <Compile Include="HighLevel\Model\GamerOutline.cs" />
+    <Compile Include="HighLevel\Model\ConfiguredProduct.cs" />
     <Compile Include="HighLevel\Model\Done.cs" />
-    <Compile Include="HighLevel\Model\SocialNetworkFriendResponse.cs" />
-    <Compile Include="HighLevel\Model\UserInfo.cs" />
     <Compile Include="HighLevel\Model\GamerInfo.cs" />
+    <Compile Include="HighLevel\Model\GamerOutline.cs" />
     <Compile Include="HighLevel\Model\GamerProfile.cs" />
-    <Compile Include="HighLevel\GamerProperties.cs" />
     <Compile Include="HighLevel\Model\IndexResult.cs" />
     <Compile Include="HighLevel\Model\IndexSearchResult.cs" />
     <Compile Include="HighLevel\Model\LoginNetwork.cs" />
@@ -128,13 +84,16 @@
     <Compile Include="HighLevel\Model\MatchListResult.cs" />
     <Compile Include="HighLevel\Model\PostedGameScore.cs" />
     <Compile Include="HighLevel\Model\PropertiesObject.cs" />
+    <Compile Include="HighLevel\Model\PurchaseTransaction.cs" />
     <Compile Include="HighLevel\Model\PushNotification.cs" />
     <Compile Include="HighLevel\Model\Score.cs" />
     <Compile Include="HighLevel\Model\SocialNetworkFriend.cs" />
+    <Compile Include="HighLevel\Model\SocialNetworkFriendResponse.cs" />
+    <Compile Include="HighLevel\Model\StoreType.cs" />
     <Compile Include="HighLevel\Model\Transaction.cs" />
     <Compile Include="HighLevel\Model\TransactionResult.cs" />
-    <Compile Include="HighLevel\CotcException.cs" />
-    <Compile Include="HighLevel\GamerVfs.cs" />
+    <Compile Include="HighLevel\Model\UserInfo.cs" />
+    <Compile Include="HighLevel\Model\ValidateReceiptResult.cs" />
     <Compile Include="HighLevel\NonpagedList.cs" />
     <Compile Include="HighLevel\PagedList.cs" />
     <Compile Include="HighLevel\Promise.cs" />
@@ -154,6 +113,7 @@
     <Compile Include="Libs\LitJson\JsonReader.cs" />
     <Compile Include="Libs\LitJson\JsonWriter.cs" />
     <Compile Include="Libs\LitJson\Lexer.cs" />
+    <Compile Include="Libs\LitJson\Netstandard15Polyfill.cs" />
     <Compile Include="Libs\LitJson\ParserToken.cs" />
     <Compile Include="Libs\Unity.IO.Compression\BlockType.cs" />
     <Compile Include="Libs\Unity.IO.Compression\CompressionMode.cs" />
@@ -185,34 +145,12 @@
     <Compile Include="PlatformSpecific\Interfaces\ILogger.cs" />
     <Compile Include="PlatformSpecific\Interfaces\ISystemFunctions.cs" />
     <Compile Include="PlatformSpecific\Managers.cs" />
-    <Compile Include="PlatformSpecific\Unity\UnityHttpClientV2.cs" />
     <Compile Include="PlatformSpecific\Unity\MonoHttpClient.cs" />
+    <Compile Include="PlatformSpecific\Unity\UnityHttpClientV2.cs" />
     <Compile Include="PlatformSpecific\Unity\UnityLogger.cs" />
     <Compile Include="PlatformSpecific\Unity\UnitySystemFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="HighLevel\Model\ConfiguredProduct.cs" />
-    <Compile Include="HighLevel\Model\PurchaseTransaction.cs" />
-    <Compile Include="HighLevel\Model\StoreType.cs" />
-    <Compile Include="HighLevel\Model\ValidateReceiptResult.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="HighLevel\GamerAccountMethods.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="HighLevel\Cotc.Events.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>md $(SolutionDir)..\UnityProject\Assets\Plugins
-copy $(TargetDir)\CotcSdk.dll $(SolutionDir)..\UnityProject\Assets\Plugins\CotcSdk.dll
-copy $(TargetDir)\CotcSdk.xml $(SolutionDir)..\UnityProject\Assets\Plugins\CotcSdk.xml</PostBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
   <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

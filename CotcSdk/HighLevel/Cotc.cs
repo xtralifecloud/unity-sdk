@@ -26,11 +26,14 @@ namespace CotcSdk {
 		/// <param name="httpType">HTTP layer to be used. Currently 0 is the default (mono-based) one. Works pretty well, but is severely
 		///     aged has a few issues on some platforms (which are all overcomable). Type 1 uses the new
 		///     UnityEngine.Experimental.Networking.UnityWebRequest class and is also supported on all platforms.</param>
-		public static Promise<Cloud> Setup(string apiKey, string apiSecret, string environment, int loadBalancerCount, bool httpVerbose, int httpTimeout, int httpType) {
+		/// <param name="httpUseCompression">Set to true to enable response compression from server, false otherwise.
+		///        Necessary since Unity 2021.1.3f1 which does not handle compression properly anymore.</param>
+		public static Promise<Cloud> Setup(string apiKey, string apiSecret, string environment, int loadBalancerCount, bool httpVerbose, int httpTimeout, int httpType, bool httpUseCompression)
+		{
 			var task = new Promise<Cloud>();
 			lock (SpinLock) {
-				Cloud cloud = new Cloud(apiKey, apiSecret, environment, loadBalancerCount, httpVerbose, httpTimeout, httpType);
-				return task.PostResult(cloud);
+					Cloud cloud = new Cloud(apiKey, apiSecret, environment, loadBalancerCount, httpVerbose, httpTimeout, httpType, httpUseCompression);
+					return task.PostResult(cloud);
 			}
 		}
 

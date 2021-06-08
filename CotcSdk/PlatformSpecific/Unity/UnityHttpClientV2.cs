@@ -34,12 +34,13 @@ namespace CotcSdk {
                 // Auto-choose HTTP method
                 Request.method = request.Method ?? (request.Body != null ? "POST" : "GET");
 
-				request.Headers["Accept-Encoding"] = "gzip";
+				if (UseCompression)
+					request.Headers["Accept-Encoding"] = "gzip";
 
 				// TODO Missing functionality (currently unsupported by UnityWebRequest).
 				//				req.SetRequestHeader("User-agent", request.UserAgent);
 				//				req.keepAlive = true;
-                foreach (var pair in request.Headers)
+				foreach (var pair in request.Headers)
                     Request.SetRequestHeader(pair.Key, pair.Value);
 
                 if (OriginalRequest.Body != null)
@@ -96,18 +97,10 @@ namespace CotcSdk {
 			}
 
             private IEnumerator ProcessRequest(UnityWebRequest req) {
-				#if UNITY_2017 || UNITY_2018
 				yield return req.SendWebRequest();
-				#else
-				yield return req.Send();
-				#endif
 
                 bool processRequest = true;
-				#if UNITY_2017 || UNITY_2018
 				if (req.isNetworkError)
-				#else
-				if (req.isError)
-				#endif
                 {
                     // Nice bug again, in the iOS UnityWebRequest implementation. If server returns a 400 code following a
                     // a successful request process, req.isError is flagged to true... Not sure at this stage how many HTTP
