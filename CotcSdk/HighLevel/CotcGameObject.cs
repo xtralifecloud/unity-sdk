@@ -37,7 +37,7 @@ namespace CotcSdk
 			}
 
 			CotcSettings.Environment env = s.Environments[s.SelectedEnvironment];
-			Cotc.Setup(env.ApiKey, env.ApiSecret, env.ServerUrl, env.LbCount, env.HttpVerbose, env.HttpTimeout, env.HttpClientType, env.HttpUseCompression)
+			Cotc.Setup(env.ApiKey, env.ApiSecret, env.ServerUrl, env.HttpVerbose, env.HttpTimeout, env.HttpClientType, env.HttpUseCompression)
 			.Then(result => {
 				Common.Log("CotC inited");
 				whenStarted.Resolve(result);

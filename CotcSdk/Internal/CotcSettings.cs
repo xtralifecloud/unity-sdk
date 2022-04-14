@@ -32,8 +32,6 @@ namespace CotcSdk {
 			[SerializeField]
 			public string ServerUrl;
 			[SerializeField]
-			public int LbCount = 1;
-			[SerializeField]
 			public bool HttpVerbose = true;
 			[SerializeField]
 			public int HttpTimeout = 60;

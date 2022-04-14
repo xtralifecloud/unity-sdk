@@ -13,24 +13,13 @@ namespace CotcSdk
 	public class PreferencePane : Editor {
 		private class EnvironmentInfo {
 			public string Url;
-			public int LbCount;
-			public EnvironmentInfo(string url, int lbCount) {
+			public EnvironmentInfo(string url) {
 				Url = url;
-				LbCount = lbCount;
 			}
 			public override bool Equals(object obj) { return Url == ((EnvironmentInfo)obj).Url; }
 			public override int GetHashCode() { return Url.GetHashCode(); }
 		}
-		private Dictionary<string, EnvironmentInfo> PredefinedEnvironments = new Dictionary<string,EnvironmentInfo>() {
-			{"Custom...", new EnvironmentInfo("", 0)},
-			{"Sandbox", new EnvironmentInfo("https://sandbox-api[id].clanofthecloud.mobi", 2)},
-			{"Production", new EnvironmentInfo("https://prod-api[id].clanofthecloud.mobi", 16)},
-#if DEBUG
-			{"Dev Server", new EnvironmentInfo("http://195.154.227.44:8000", 0)},
-			{"Local Server", new EnvironmentInfo("http://127.0.0.1:3000", 0)},
-			{"Parallels VM", new EnvironmentInfo("http://10.211.55.2:2000", 0)},
-#endif
-		};
+
 		private bool HttpGroupEnabled = true, NeedsInitialization = true, PresetGroupEnabled = true;
 		private readonly string[] SupportedHttpClients = { "Mono (System.Net.HttpWebRequest)", "Unity (UnityEngine.Networking.UnityWebRequest)" };
 
@@ -105,30 +94,7 @@ namespace CotcSdk
 			// Now show standard params
 			ce.ApiKey = EditorGUILayout.TextField("API Key", ce.ApiKey);
 			ce.ApiSecret = EditorGUILayout.TextField("API Secret", ce.ApiSecret);
-
-			// Provide default sandbox environment
-			if (string.IsNullOrEmpty(ce.ServerUrl)) {
-				ce.ServerUrl = PredefinedEnvironments["Sandbox"].Url;
-				ce.LbCount = PredefinedEnvironments["Sandbox"].LbCount;
-			}
-
-			var keys = new string[PredefinedEnvironments.Keys.Count];
-			var comparison = new EnvironmentInfo(ce.ServerUrl, ce.LbCount);
-			PredefinedEnvironments.Keys.CopyTo(keys, 0);
-			int currentIndex = IndexInDict(comparison, PredefinedEnvironments);
-			int newIndex = EditorGUILayout.Popup("Environment", currentIndex, keys);
-			// Custom env
-			if (newIndex == 0) {
-				if (currentIndex != 0) ce.ServerUrl = "http://";
-				ce.ServerUrl = EditorGUILayout.TextField("Env. URL", ce.ServerUrl);
-				ce.LbCount = 0;
-			}
-			else {
-				// Predefined env.
-				var env = PredefinedEnvironments[keys[newIndex]];
-				ce.ServerUrl = env.Url;
-				ce.LbCount = env.LbCount;
-			}
+			ce.ServerUrl = EditorGUILayout.TextField("Env. URL", ce.ServerUrl);
 
 			EditorGUILayout.GetControlRect(true, 16f, EditorStyles.foldout);
 			HttpGroupEnabled = EditorGUI.Foldout(GUILayoutUtility.GetLastRect(), HttpGroupEnabled, "Network Connection Settings");
@@ -139,7 +105,6 @@ namespace CotcSdk
 				if (int.TryParse(EditorGUILayout.TextField("Request timeout (sec)", ce.HttpTimeout.ToString()), out tmpInt)) {
 					ce.HttpTimeout = tmpInt;
 				}
-				ce.HttpClientType = EditorGUILayout.Popup("HTTP client", ce.HttpClientType, SupportedHttpClients);
 				ce.HttpUseCompression = EditorGUILayout.Toggle("HTTP compression", ce.HttpUseCompression);
 				
 				EditorGUI.indentLevel--;

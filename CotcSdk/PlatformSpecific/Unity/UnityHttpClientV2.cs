@@ -25,7 +25,7 @@ namespace CotcSdk {
 			private bool WasAborted = false;
 
 			public UnityRequest(UnityHttpClientV2 inst, string url, HttpRequest request, object previousUserData, int requestId) : base(inst, request) {
-                self = inst;
+				self = inst;
                 OriginalRequest = request;
                 RequestId = requestId;
                 PreviousUserData = previousUserData;

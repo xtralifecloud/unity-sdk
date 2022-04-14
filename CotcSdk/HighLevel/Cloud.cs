@@ -61,7 +61,6 @@ namespace CotcSdk
 			else {
 				result.Url = path;
 			}
-			result.LoadBalancerCount = LoadBalancerCount;
 			result.Headers["x-apikey"] = ApiKey;
 			result.Headers["x-sdkversion"] = SdkVersion;
 			result.Headers["x-apisecret"] = ApiSecret;
@@ -73,12 +72,11 @@ namespace CotcSdk
 		#endregion
 
 		#region Private
-		internal Cloud(string apiKey, string apiSecret, string environment, int loadBalancerCount, bool httpVerbose, int httpTimeout, int httpType, bool httpUseCompression)
+		internal Cloud(string apiKey, string apiSecret, string environment, bool httpVerbose, int httpTimeout, int httpType, bool httpUseCompression)
 		{
 			this.ApiKey = apiKey;
 			this.ApiSecret = apiSecret;
 			this.Server = environment;
-			LoadBalancerCount = loadBalancerCount;
 			Managers.SetHttpClientParams(httpType, httpVerbose, httpUseCompression);
 			HttpTimeoutMillis = httpTimeout * 1000;
 			UserAgent = String.Format(Common.UserAgent, Managers.SystemFunctions.GetOsName(), Cloud.SdkVersion);
@@ -89,9 +87,6 @@ namespace CotcSdk
 		public const string SdkVersion = "1.5.0.0";
 		private string ApiKey, ApiSecret, Server;
 		internal int HttpTimeoutMillis {
-			get; private set;
-		}
-		internal int LoadBalancerCount {
 			get; private set;
 		}
 		internal string UserAgent {

@@ -28,7 +28,6 @@ namespace CotcSdk {
 		}
 		public Dictionary<String, String> Headers = new Dictionary<string, string>();
 		public HttpRequestFailedHandler FailedHandler;
-		public int LoadBalancerCount = 1;
 		/// <summary>When not set (null), uses GET if no body is provided, or POST otherwise.</summary>
 		public string Method;
 		public Policy RetryPolicy = Policy.NonpermanentErrors;

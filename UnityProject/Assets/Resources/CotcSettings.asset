@@ -17,8 +17,7 @@ MonoBehaviour:
   - Name: Default
     ApiKey: 
     ApiSecret: 
-    ServerUrl: https://sandbox-api[id].clanofthecloud.mobi
-    LbCount: 2
+    ServerUrl: 
     HttpVerbose: 1
     HttpTimeout: 60
     HttpClientType: 1

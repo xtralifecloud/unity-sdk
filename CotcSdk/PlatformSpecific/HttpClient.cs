@@ -69,16 +69,9 @@ namespace CotcSdk
 			public abstract void Start();
 		}
 
-		private void ChooseLoadBalancer(HttpRequest req) {
-			CurrentLoadBalancerId = Random.Next(1, req.LoadBalancerCount + 1);
-		}
-
 		/// <summary>Enqueues a request to make it processed asynchronously. Will potentially wait for the other requests enqueued to finish.</summary>
 		private void EnqueueRequest(HttpRequest req) {
 			// On the first time, choose a load balancer
-			if (CurrentLoadBalancerId == -1) {
-				ChooseLoadBalancer(req);
-			}
 			lock (this) {
 				// Dismiss additional requests
 				if (Terminated) {
@@ -125,7 +118,6 @@ namespace CotcSdk
 						if (eventArgs.RetryDelay > 0) {
 							Common.LogWarning("[" + state.RequestId + "] Request failed, retrying in " + eventArgs.RetryDelay + "ms.");
 							CotcCoroutinesManager.instance.StartRequestFailedRetryCoroutine(() => {
-								ChooseLoadBalancer(state.OriginalRequest);
 								ProcessRequest(state.OriginalRequest, eventArgs.UserData);
 							}, eventArgs.RetryDelay);
 							return;
@@ -161,8 +153,7 @@ namespace CotcSdk
 		/// <summary>Processes a single request asynchronously. Will continue to FinishWithRequest in some way.</summary>
 		private void ProcessRequest(HttpRequest request, object previousUserData = null) {
 			// Configure & perform the request
-			String url = request.Url.Replace("[id]", CurrentLoadBalancerId.ToString("00"));
-			WebRequest state = CreateRequest(request, url, previousUserData);
+			WebRequest state = CreateRequest(request, request.Url, previousUserData);
 			state.Client = this;
 
 			lock (this) {
@@ -198,7 +189,6 @@ namespace CotcSdk
 		private List<HttpRequest> PendingRequests = new List<HttpRequest>();
 		private List<WebRequest> RunningRequests = new List<WebRequest>();
 		// Others
-		private int CurrentLoadBalancerId = -1;
 		private System.Random Random = new System.Random();
 		private bool Terminated = false;
 		#endregion

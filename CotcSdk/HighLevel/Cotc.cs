@@ -28,11 +28,11 @@ namespace CotcSdk {
 		///     UnityEngine.Experimental.Networking.UnityWebRequest class and is also supported on all platforms.</param>
 		/// <param name="httpUseCompression">Set to true to enable response compression from server, false otherwise.
 		///        Necessary since Unity 2021.1.3f1 which does not handle compression properly anymore.</param>
-		public static Promise<Cloud> Setup(string apiKey, string apiSecret, string environment, int loadBalancerCount, bool httpVerbose, int httpTimeout, int httpType, bool httpUseCompression)
+		public static Promise<Cloud> Setup(string apiKey, string apiSecret, string environment, bool httpVerbose, int httpTimeout, int httpType, bool httpUseCompression)
 		{
 			var task = new Promise<Cloud>();
 			lock (SpinLock) {
-					Cloud cloud = new Cloud(apiKey, apiSecret, environment, loadBalancerCount, httpVerbose, httpTimeout, httpType, httpUseCompression);
+					Cloud cloud = new Cloud(apiKey, apiSecret, environment, httpVerbose, httpTimeout, httpType, httpUseCompression);
 					return task.PostResult(cloud);
 			}
 		}
