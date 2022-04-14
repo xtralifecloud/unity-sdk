@@ -76,24 +76,8 @@ public class CotcSampleScene : MonoBehaviour {
 		// block if the call fails.
 		Cloud.Login(
 			network: LoginNetwork.Email.Describe(),
-			networkId: EmailInput.text,
-			networkSecret: DefaultPassword)
+			credentials: Bundle.CreateObject("id", EmailInput.text, "secret", DefaultPassword))
 		.Done(this.DidLogin);
-	}
-
-	public void DoLoginGameCenter() {
-		Social.localUser.Authenticate(success => {
-			if (success) {
-				Debug.Log("Authentication successful:\nUsername: " + Social.localUser.userName + 
-					"\nUser ID: " + Social.localUser.id + 
-					"\nIsUnderage: " + Social.localUser.underage);
-				// Game Center accounts do not have a password
-				Cloud.Login(LoginNetwork.GameCenter.Describe(), Social.localUser.id, "n/a").Done(this.DidLogin);
-			}
-			else {
-				Debug.LogError("Failed to authenticate on Game Center");
-			}
-		});
 	}
 
 	// Converts the account to e-mail
@@ -101,8 +85,7 @@ public class CotcSampleScene : MonoBehaviour {
 		if (!RequireGamer()) return;
 		Gamer.Account.Convert(
 			network: LoginNetwork.Email.ToString().ToLower(),
-			networkId: EmailInput.text,
-			networkSecret: DefaultPassword)
+			credentials: Bundle.CreateObject("id", EmailInput.text, "secret", DefaultPassword))
 		.Done(dummy => {
 			Debug.Log("Successfully converted account");
 		});

@@ -208,10 +208,9 @@ public class TestBase : MonoBehaviour {
 	}
 
 	protected void Login(Cloud cloud, Action<Gamer> done) {
-        cloud.Login(
-            network: LoginNetwork.Email.Describe(),
-            networkId: "cloud@localhost.localdomain",
-            networkSecret: "Password123")
+		cloud.Login(
+			network: LoginNetwork.Email.Describe(),
+			credentials: Bundle.CreateObject("id", "cloud@localhost.localdomain", "secret", "Password123"))
         .ExpectSuccess(gamer => {
             done(gamer);
         });
@@ -222,8 +221,7 @@ public class TestBase : MonoBehaviour {
             // Second user
             cloud.Login(
                 network: LoginNetwork.Email.Describe(),
-                networkId: "clan2@localhost.localdomain",
-                networkSecret: "Password123")
+				credentials: Bundle.CreateObject("id", "clan2@localhost.localdomain", "secret", "Password123"))
             .ExpectSuccess(gamer2 => {
                 done(gamer1, gamer2);
             });

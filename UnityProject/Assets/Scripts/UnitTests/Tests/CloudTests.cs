@@ -47,8 +47,7 @@ public class CloudTests : TestBase {
 	public IEnumerator ShouldRestoreSession() {
         cloud.Login(
             network: LoginNetwork.Email.Describe(),
-            networkId: "cloud@localhost.localdomain",
-            networkSecret: "Password123")
+            credentials: Bundle.CreateObject("id", "cloud@localhost.localdomain", "secret", "Password123"))
         // Resume the session with the credentials just received
         .ExpectSuccess(gamer => cloud.ResumeSession(
             gamerId: gamer.GamerId,
@@ -78,9 +77,8 @@ public class CloudTests : TestBase {
             "params", Bundle.CreateObject());
         cloud.Login(
             network: LoginNetwork.Email.Describe(),
-            networkId: "cloud@localhost.localdomain",
-            networkSecret: "Password123",
-            additionalOptions: Bundle.CreateObject("thenBatch", batchNode, "preventRegistration", false))
+            credentials: Bundle.CreateObject("id", "cloud@localhost.localdomain", "secret", "Password123"),
+            options: Bundle.CreateObject("thenBatch", batchNode, "preventRegistration", false))
         .ExpectFailure(ex => {
             Assert(ex.ServerData["name"] == "HookError", "Message should be HookError");
             Assert(ex.ServerData["message"].AsString().EndsWith("does not exist"), "Should indicate nonexisting batch");
@@ -91,9 +89,8 @@ public class CloudTests : TestBase {
             "params", Bundle.CreateObject());
             cloud.Login(
                 network: LoginNetwork.Email.Describe(),
-                networkId: "cloud@localhost.localdomain",
-                networkSecret: "Password123",
-                additionalOptions: Bundle.CreateObject("thenBatch", batchNode2, "preventRegistration", false))
+                credentials: Bundle.CreateObject("id", "cloud@localhost.localdomain", "secret", "Password123"),
+                options: Bundle.CreateObject("thenBatch", batchNode2, "preventRegistration", false))
             .ExpectSuccess(gamer => {
                 Assert(gamer["customData"]["thenBatchRun"].AsBool(), "Expected customData to contain 'thenBatchRun:true'");
                 CompleteTest();
@@ -121,9 +118,8 @@ public class CloudTests : TestBase {
         // Resume the session with the credentials just received
         cloud.Login(
             network: LoginNetwork.Email.Describe(),
-            networkId: RandomEmailAddress(),
-            networkSecret: "Password123",
-            additionalOptions: Bundle.CreateObject("preventRegistration", true))
+            credentials: Bundle.CreateObject("id", RandomEmailAddress(), "secret", "Password123"),
+            options: Bundle.CreateObject("preventRegistration", true))
         .ExpectFailure(resumeResult => {
             Assert(resumeResult.HttpStatusCode == 400, "400 expected");
             Assert(resumeResult.ServerData["name"] == "PreventRegistration", "PreventRegistration error expected");
@@ -139,8 +135,7 @@ public class CloudTests : TestBase {
         // Then convert it to e-mail
         .ExpectSuccess(gamer => gamer.Account.Convert(
             network: LoginNetwork.Email.ToString().ToLower(),
-            networkId: RandomEmailAddress(),
-            networkSecret: "Password123"))
+            credentials: Bundle.CreateObject("id", RandomEmailAddress(), "secret", "Password123")))
         .ExpectSuccess(conversionResult => {
             Assert(conversionResult, "Convert account failed");
             CompleteTest();
@@ -153,18 +148,16 @@ public class CloudTests : TestBase {
 		// Ensures that a fake account has been created
 		cloud.Login(
 			network: LoginNetwork.Email.Describe(),
-			networkId: "cloud@localhost.localdomain",
-			networkSecret: "Password123")
+            credentials: Bundle.CreateObject("id", "cloud@localhost.localdomain", "secret", "Password123"))
 		.ExpectSuccess(dummyGamer => {
 			// Create an anonymous account
 			return cloud.LoginAnonymously();
 		})
 		.ExpectSuccess(gamer => {
-			// Then try to convert it to the same e-mail as the fake account created at first
-			gamer.Account.Convert(
-				network: LoginNetwork.Email.ToString().ToLower(),
-				networkId: "cloud@localhost.localdomain",
-				networkSecret: "Anotherp4ss")
+        // Then try to convert it to the same e-mail as the fake account created at first
+        gamer.Account.Convert(
+            network: LoginNetwork.Email.ToString().ToLower(),
+            credentials: Bundle.CreateObject("id", "cloud@localhost.localdomain", "secret", "Anotherp4ss"))
 			.ExpectFailure(conversionResult => {
 				Assert(conversionResult.HttpStatusCode == 400, "400 expected");
 				Assert(conversionResult.ServerData["message"] == "UserExists", "UserExists error expected");
@@ -184,8 +177,7 @@ public class CloudTests : TestBase {
             gamer = g;
             return g.Account.Convert(
                 network: LoginNetwork.Email.ToString().ToLower(),
-                networkId: RandomEmailAddress(),
-                networkSecret: "Password123");
+                credentials: Bundle.CreateObject("id", RandomEmailAddress(),"secret", "Password123"));
         })
         .ExpectSuccess(done => {
 			Assert(gamer.Network == LoginNetwork.Email.Describe(), "The gamer object failed to change");
@@ -199,8 +191,7 @@ public class CloudTests : TestBase {
         // Ensures that a fake account has been created
         cloud.Login(
             network: LoginNetwork.Email.Describe(),
-            networkId: "cloud@localhost.localdomain",
-            networkSecret: "Password123")
+            credentials: Bundle.CreateObject("id", "cloud@localhost.localdomain", "secret", "Password123"))
         .ExpectSuccess(loginResult => cloud.UserExists(
             network: LoginNetwork.Email.ToString().ToLower(),
             networkId: "cloud@localhost.localdomain"))
@@ -231,8 +222,7 @@ public class CloudTests : TestBase {
         Gamer gamer = null;
         cloud.Login(
             network: LoginNetwork.Email.Describe(),
-            networkId: RandomEmailAddress(),
-            networkSecret: "Password123")
+            credentials: Bundle.CreateObject("id", RandomEmailAddress(), "secret", "Password123"))
         .ExpectSuccess(g => {
             gamer = g;
             return gamer.Account.ChangePassword("Password124");
@@ -244,8 +234,7 @@ public class CloudTests : TestBase {
          // Try to login with the new password
         .ExpectSuccess(result => cloud.Login(
             network: LoginNetwork.Email.Describe(),
-            networkId: gamer.NetworkId,
-            networkSecret: "Password124"))
+            credentials: Bundle.CreateObject("id", gamer.NetworkId, "secret", "Password124")))
         .ExpectSuccess(result => CompleteTest());
         return WaitForEndOfTest();
 	}
@@ -256,8 +245,7 @@ public class CloudTests : TestBase {
         String newEmail = RandomEmailAddress();
         cloud.Login(
             network: LoginNetwork.Email.Describe(),
-            networkId: RandomEmailAddress(),
-            networkSecret: "Password123")
+            credentials: Bundle.CreateObject("id", RandomEmailAddress(), "secret", "Password123"))
         .ExpectSuccess(g => {
             gamer = g;
             return gamer.Account.ChangeEmailAddress(newEmail);
@@ -269,8 +257,7 @@ public class CloudTests : TestBase {
         // Try to login with the new email
         .ExpectSuccess(result => cloud.Login(
             network: LoginNetwork.Email.Describe(),
-            networkId: newEmail,
-            networkSecret: "Password123"))
+            credentials: Bundle.CreateObject("id", newEmail, "secret", "Password123")))
         .ExpectSuccess(result => CompleteTest());
         return WaitForEndOfTest();
 	}
@@ -279,8 +266,7 @@ public class CloudTests : TestBase {
 	public IEnumerator ShouldFailToChangeEmailAddressToExistingOne() {
 		cloud.Login(
 			network: LoginNetwork.Email.Describe(),
-			networkId: RandomEmailAddress(),
-			networkSecret: "Password123")
+            credentials: Bundle.CreateObject("id", RandomEmailAddress(), "secret", "Password123"))
 		.ExpectSuccess(gamer => {
 			gamer.Account.ChangeEmailAddress("clan@localhost.localdomain")
 			.ExpectFailure(pswResult => {

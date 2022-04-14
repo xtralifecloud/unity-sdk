@@ -71,8 +71,7 @@ public class CotcInappPurchaseSampleScene : MonoBehaviour {
 		// block if the call fails.
 		Cloud.Login(
 			network: LoginNetwork.Email.Describe(),
-			networkId: EmailInput.text,
-			networkSecret: DefaultPassword)
+			credentials: Bundle.CreateObject("id", EmailInput.text, "secret", DefaultPassword))
 		.Done(this.DidLogin);
 	}
 
@@ -81,8 +80,7 @@ public class CotcInappPurchaseSampleScene : MonoBehaviour {
 		if (!RequireGamer()) return;
 		Gamer.Account.Convert(
 			network: LoginNetwork.Email.ToString().ToLower(),
-			networkId: EmailInput.text,
-			networkSecret: DefaultPassword)
+			credentials: Bundle.CreateObject("id", EmailInput.text, "secret", DefaultPassword))
 		.Done(dummy => {
 			Debug.Log("Successfully converted account");
 		});
