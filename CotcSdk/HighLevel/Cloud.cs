@@ -84,7 +84,7 @@ namespace CotcSdk
 		#endregion
 
 		#region Members
-		public const string SdkVersion = "1.5.0.0";
+		public const string SdkVersion = "2.0.0.0";
 		private string ApiKey, ApiSecret, Server;
 		internal int HttpTimeoutMillis {
 			get; private set;
