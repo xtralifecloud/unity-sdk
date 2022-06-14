@@ -53,14 +53,16 @@ You need to prepare your application for purchase. First you need to input the l
 
 Then comes the difficult part. You need to prepare your application so that the Google Play Store will list your products, and this can sometimes be a pain to get working unless you choose to publish your application. Also, we recommend starting to prepare your app for distribution long ahead of your plans to start testing, as some simple configuration may take hours until they propagate through Google servers. The steps that should be necessary are:
 
-1. Make sure that the [Developer Console](https://play.google.com/apps/publish/) tells you that your application is ready for publishing. Perform any steps as stated on the UI.
-2. Your products should be marked as active (this does not actually publish anything until you publish the application).
-3. Sign your APK using a production key. You should create a new keystore as described [here](http://developer.android.com/tools/publishing/preparing.html#publishing-build).
-4. Upload an alpha version APK through the APK tab. Be careful: the APK must be signed and the key used to sign your application with will be the reference one for any subsequent upload, be it alpha, beta or production, so keep it safe.
-5. Create a test user as described on [this page](http://developer.android.com/training/in-app-billing/test-iab-app.html). For more success, try to make this user the only Google account set-up on the device. At the very least, make sure that the Google Play Store app display this account by default when you unroll the left menu. This user must then be entered in the Google Play Developer Console under settings (gear icon), Account details, License testing. This change might take up to 24 hours to effectively take effect. Make sure that you spelled the account e-mail address correctly and try testing regularly once your integration is complete.
-6. Open the Clan of the Cloud backoffice. Under the Status page, go to the *Push notification & Store certificates* section. Check the box next to Android and fill out the Package ID (it corresponds to the package as declared in your manifest). Next, you need to generate a service account in order to allow CotC servers to check purchase receipts for validity. You may do so directly from the Google Play Developer Console under Settings (gear icon), API access and follow the instructions under the Linked project section. Or, from the Google Developers Console, create a project if you don't already have one. Go to APIs & Auth, Credentials. Click Add credentials and select Service Account. Upon creating your account, you will be prompted to download a JSON file, which represents the certificate. Open the JSON file and paste its contents in the Google Service Account text field of the CotC backoffice. This account needs to be linked to your Google Play Account. Go back to the Google Play Developer Console and under Settings (gear icon), under API access, link it with the account you created earlier. Ensure that the permissions allow for checking in-app purchases. To do so, click on the View permissions link next to the displayed user.
-7. Again from the CotC backoffice, under the Games -> Store, create a new product and operate as usual. The *SKU on Google Play* field must at least be filled. Alternatively, if you have already created a product for iOS and you simply want to provide the same functionality to Android users, you may as well simply edit the existing product and fill out the *SKU on Google Play* field.
-8. The user of the service account should have at least the rights to view financial reports, else the purchase cannot be verified on the CotC servers. If you get an error such as follows after a successful purchase, check that twice.
+1. **Make sure that the [Developer Console](https://play.google.com/apps/publish/) tells you that your application is ready for publishing. Perform any steps as stated on the UI.** You should be able to see releases status by clicking on the app (you should be redirected to the app's Dashboard) in your [Developer Console](https://play.google.com/apps/publish/) and then by clicking on "View releases overview".
+2. **Your products should be marked as active (this does not actually publish anything until you publish the application).** To see the list of products, once you are in front of the Dashboard of the application, go to the left panel "Monetise > Products > In-app products".
+3. **Enable the Google Play Android Developer API.** To enable a service/API [here](https://console.cloud.google.com). On the left menu, go to "APIs and services > Library". Access and enable the "Google Play Android Developer API".
+4. **Create a service account and link it to the backoffice.** To create a service account, go to "APIs and services > [Credentials](https://console.cloud.google.com/apis/credentials)". Create a new one, with a custom mail. After that, create a JSON key for this account (in the "Keys" tab). Upon creating the key, you will be prompted to download a JSON file, which represents the certificate. <br>Open the JSON file and paste its contents in the Google Service Account text field of the CotC backoffice. This account needs to be linked to your Google Play Account. <br>Set it up with the role Pub/Sub Admin. <br>Go back to the Google Play Developer Console and under Settings (gear icon), under API access, link it with the account you created earlier. Ensure that the permissions allow for checking in-app purchases. To do so, click on the View permissions link next to the displayed user.
+5. **Sign your build using a production key.** You should create a new keystore as described [here](https://developer.android.com/studio/publish/app-signing#generate-key).
+6. **Upload an alpha version of your application (.aab) through the "Release > Testing > Closed testing" tab.** You will need to create a new Track and link a group of testers for that step. Once the Track is created, you will be able to upload a release for that. Be careful: the Android App Bundle (.aab) must be signed and the key used to sign your application with will be the reference one for any subsequent upload, be it alpha, beta or production, so keep it safe.
+7. **Create a test user as described on [this page](https://developer.android.com/google/play/billing/test) and for more details [this page](https://support.google.com/googleplay/android-developer/answer/6062777).** For more success, try to make this user the only Google account set-up on the device. At the very least, make sure that the Google Play Store app display this account by default when you unroll the left menu. This user must then be entered in the Google Play Developer Console under settings (gear icon), Account details, License testing. This change might take up to 24 hours to effectively take effect. Make sure that you spelled the account e-mail address correctly and try testing regularly once your integration is complete.
+8. **Link Products between Google Play and the Clan of the Cloud backoffice.** Again from the CotC backoffice, under the Games -> Store, create a new product and operate as usual. The *SKU on Google Play* field must at least be filled. Alternatively, if you have already created a product for iOS and you simply want to provide the same functionality to Android users, you may as well simply edit the existing product and fill out the *SKU on Google Play* field.
+9. **Check that there is no transaction error. The user of the service account should have at least the rights to view financial reports.** Else the purchase cannot be verified on the CotC servers. If you get an error such as follows after a successful purchase, check that twice.
+
 ```{ name: 'PurchaseNotConfirmed',
   message: 'The purchase has not been verified, code: 2. Error checking the purchase: {}.' }```
 
@@ -171,3 +173,70 @@ Gamer.Store.GetPurchaseHistory()
 })
 .Done();
 ~~~~
+```
+
+-----------
+FAQ
+-----------
+
+
+- ### **The project is not correctly linked to the API** ###
+
+→ *"The project id used to call the Google Play Developer API has not been linked in the Google Play Developer Console."*
+
+This means that you need to link the Project (Google Console-side) to the your API (Google Cloud Platform)
+
+---
+
+- ### **The service-account has not enough rights** ###
+
+→ *"The current user has insufficient permissions to perform the requested operation."*
+
+1) Go to https://console.cloud.google.com
+
+2) Create a project (or select existing project)
+
+3) Create a service account with role Pub/Sub Admin
+
+4) Go to https://console.cloud.google.com/apis/library and search for "Google Play Android Developer API"
+
+5) Enable that API
+
+6) Go to https://play.google.com/apps/publish
+
+7) Go to Settings > Developer account > API Access
+
+8) Link the project that you created in step 2
+
+9) The service account will appear that you created in step 3
+
+10) Grant access to it with Finance permission to the app in play console
+
+11) Go to In-Apps products in the Console and do some update to refresh the Shop (it will be active in about 20-30 min after)
+
+---
+
+- ### **Wrong configuration on the backend-side** ###
+
+→ *"private_key must be a string."* for example
+
+Sometimes it's a wrong configuration. You need to use the JSON from your service-account (you get one each time you create a new one).
+
+The expected format:
+```
+	android: 
+	{
+		enable: true,
+		packageid: "The ID you have on Google Console com.company.project for example",
+		serviceAccount:
+		{
+			project_id: "",
+			private_key_id: "",
+			private_key: "",
+			"client_email": "",
+			client_email: "",
+			client_id: "",
+			type: "service_account"
+		} 
+	}
+```
